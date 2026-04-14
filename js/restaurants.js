@@ -135,8 +135,8 @@ function resetToCapitalDist() {
 // ── MAPA ───────────────────────────────────────────────────────────────
 const MAP_TILES = {
   Voyager:
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
   Topo: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
   "Satèl·lit":
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -623,6 +623,7 @@ function renderCuinesActives() {
   const wrap = document.getElementById("cuines-actives");
   if (!state.cuines.length) {
     wrap.classList.add("hidden");
+    wrap.innerHTML = '';
     return;
   }
   wrap.classList.remove("hidden");
