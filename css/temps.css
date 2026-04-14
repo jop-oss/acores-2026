@@ -1,0 +1,491 @@
+.temps-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.temps-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.temps-header h1 {
+  font-size: 2rem;
+  color: #a8d8b0;
+  margin-bottom: 20px;
+}
+
+.island-selector {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.island-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #2d5a3d;
+  background: #0f2318;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.island-btn:hover,
+.island-btn.active {
+  background: #2d5a3d;
+  color: #a8d8b0;
+}
+
+.temps-section {
+  background: #0f2318;
+  border: 1px solid #2d5a3d;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.temps-section h2 {
+  color: #a8d8b0;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.section-note {
+  color: #6aab7a;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+  margin-top: -12px;
+}
+
+/* TABS */
+.forecast-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid #2d5a3d;
+  background: none;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: #2d5a3d;
+  color: #a8d8b0;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* PREVISIÓ PER HORES */
+.hourly-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #2d5a3d transparent;
+}
+
+.hour-card {
+  min-width: 72px;
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.hour-card .hour-time {
+  color: #6aab7a;
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+
+.hour-card .hour-icon {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+
+.hour-card .hour-temp {
+  color: #a8d8b0;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.hour-card .hour-rain {
+  color: #6aab7a;
+  font-size: 0.7rem;
+  margin-top: 4px;
+}
+
+/* PREVISIÓ PER DIES */
+.daily-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #1a3a2a;
+}
+
+.daily-card:last-child { border-bottom: none; }
+
+.daily-day {
+  color: #a8d8b0;
+  font-weight: 600;
+  min-width: 100px;
+  font-size: 0.9rem;
+}
+
+.daily-icon { font-size: 1.5rem; }
+
+.daily-desc {
+  color: #6aab7a;
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.daily-temps {
+  color: #a8d8b0;
+  font-size: 0.9rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.daily-temps .temp-min {
+  color: #6aab7a;
+  margin-left: 6px;
+}
+
+.daily-rain-bar {
+  width: 60px;
+  height: 6px;
+  background: #1a3a2a;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.daily-rain-fill {
+  height: 100%;
+  background: #378ADD;
+  border-radius: 3px;
+}
+
+/* TAULA SOL */
+.sun-table-wrapper {
+  overflow-x: auto;
+}
+
+.sun-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.sun-table th {
+  color: #6aab7a;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #2d5a3d;
+  white-space: nowrap;
+}
+
+.sun-table td {
+  color: #a8d8b0;
+  padding: 8px 12px;
+  border-bottom: 1px solid #1a3a2a;
+  white-space: nowrap;
+}
+
+.sun-table tr:hover td {
+  background: #1a3a2a;
+}
+
+.sun-table tr.weekend td {
+  color: #6aab7a;
+}
+
+/* MAREES */
+.tide-day-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tide-prev, .tide-next {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  color: #a8d8b0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.tide-prev:hover, .tide-next:hover {
+  background: #2d5a3d;
+}
+
+#tide-day-label {
+  color: #a8d8b0;
+  font-weight: 600;
+}
+
+#tide-chart {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.tide-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.tide-entry {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.tide-entry .tide-type {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.tide-entry .tide-time {
+  color: #a8d8b0;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.tide-entry .tide-height {
+  color: #6aab7a;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+/* ESTADÍSTIQUES */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-card {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+.stat-value {
+  color: #a8d8b0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  color: #6aab7a;
+  font-size: 0.8rem;
+}
+
+.loading {
+  color: #6aab7a;
+  padding: 20px;
+  text-align: center;
+}
+
+.radar-note {
+  color: #6aab7a;
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* MODE CLAR */
+body.light .temps-section { background: #ffffff; border-color: #6aab7a; }
+body.light .island-btn { background: #f0f4f0; color: #1a3a2a; }
+body.light .island-btn.active { background: #6aab7a; color: #fff; }
+body.light .hour-card { background: #f0f4f0; }
+body.light .stat-card { background: #f0f4f0; }
+body.light .tide-entry { background: #f0f4f0; }
+body.light .sun-table td { color: #1a3a2a; }
+body.light .temps-header h1 { color: #1a3a2a; }
+body.light .temps-section h2 { color: #1a3a2a; }
+body.light .stat-value { color: #1a3a2a; }
+body.light .hour-temp { color: #1a3a2a; }
+body.light .daily-day { color: #1a3a2a; }
+body.light .tide-time { color: #1a3a2a; }
+
+
+.hour-divider {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 44px;
+  color: #6aab7a;
+  font-size: 0.7rem;
+  border-left: 1px dashed #2d5a3d;
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+/* Barra temperatura per dies */
+.daily-temp-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 160px;
+}
+
+.temp-min-label {
+  color: #6aab7a;
+  font-size: 0.85rem;
+  min-width: 28px;
+  text-align: right;
+}
+
+.temp-max-label {
+  color: #a8d8b0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  min-width: 28px;
+}
+
+.daily-temp-track {
+  flex: 1;
+  height: 6px;
+  background: #1a3a2a;
+  border-radius: 3px;
+  position: relative;
+}
+
+.daily-temp-fill {
+  position: absolute;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(to right, #6aab7a, #a8d8b0);
+}
+
+.daily-rain-pill {
+  color: #378ADD;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* Selector mes estadístiques */
+.stats-month-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.stats-month-btn {
+  padding: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid #2d5a3d;
+  background: none;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.stats-month-btn.active {
+  background: #2d5a3d;
+  color: #a8d8b0;
+}
+
+/* VIEW TOGGLE */
+.view-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.view-btn {
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid #2d5a3d;
+  background: none;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+}
+
+.view-btn.active {
+  background: #2d5a3d;
+  color: #a8d8b0;
+}
+
+.view-content { display: none; }
+.view-content.active { display: block; }
+
+
+.sun-day-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sun-prev, .sun-next {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  color: #a8d8b0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.sun-prev:hover, .sun-next:hover {
+  background: #2d5a3d;
+}
+
+.sun-prev:disabled, .sun-next:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+#sun-day-label {
+  color: #a8d8b0;
+  font-weight: 600;
+}
+
+#sun-chart {
+  background: transparent;
+}

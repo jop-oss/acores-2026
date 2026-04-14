@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcams · Açores 2026</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/webcams.css">
+</head>
+<body>
+
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
+    <a href="mapes.html" class="nav-item">Mapes</a>
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item active">Webcams</a>
+    <a href="logistica.html" class="nav-item">Logística</a>
+    <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="restaurants.html" class="nav-item">Restaurants</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="playlist.html" class="nav-item">Playlist</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="jocs.html" class="nav-item">Jocs</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+</nav>
+
+<main class="webcams-main">
+
+  <div class="webcams-header">
+    <h1>📷 Webcams en directe</h1>
+    <p class="webcams-subtitle">Imatges en temps real de les Açores · S'actualitzen cada 30 segons</p>
+    <div class="island-selector">
+      <button class="island-btn active" data-island="sao-miguel">São Miguel</button>
+      <button class="island-btn" data-island="sao-jorge">São Jorge</button>
+      <button class="island-btn" data-island="pico">Pico</button>
+      <button class="island-btn" data-island="faial">Faial</button>
+      <button class="island-btn" data-island="mapa">🗺️ Mapa</button>
+    </div>
+  </div>
+
+  <!-- SÃO MIGUEL -->
+  <div class="webcams-grid" id="grid-sao-miguel">
+
+    <div class="webcam-card" data-cam="SMGSCD01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGSCD01/VGAcurrent.jpg"
+             alt="Sete Cidades Cumeeiras" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/sete-cidades-cumeeiras/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Sete Cidades – Cumeeiras</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGSCD02">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGSCD02/VGAcurrent.jpg"
+             alt="Sete Cidades Lagoa" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/sete-cidades-lagoa/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Sete Cidades – Lagoa</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGBAR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGBAR01/VGAcurrent.jpg"
+             alt="Ribeira Grande Lagoa do Fogo" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/lagoa-do-fogo/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ribeira Grande – Lagoa do Fogo</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGMOS01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGMOS01/VGAcurrent.jpg"
+             alt="Mosteiros Praia" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/mosteiros-praia/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Mosteiros – Praia</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGPDL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGPDL01/VGAcurrent.jpg"
+             alt="Ponta Delgada Marina" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/ponta-delgada-marina/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ponta Delgada – Marina</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGRBG01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGRBG01/VGAcurrent.jpg"
+             alt="Ribeira Grande Praia de Santa Bárbara" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-de-santa-barbara/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ribeira Grande – Praia de Santa Bárbara</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGCAL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGCAL01/VGAcurrent.jpg"
+             alt="Caloura Lagoa" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/caloura/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Caloura – Lagoa</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGPPL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGPPL01/VGAcurrent.jpg"
+             alt="Ponta Delgada Praia das Milícias" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-das-milicias/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ponta Delgada – Praia das Milícias</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGCAP01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGCAP01/VGAcurrent.jpg"
+             alt="Ponta Delgada Poços de Capelas e São Vicente" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/pocos-de-capelas-e-sao-vicente/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ponta Delgada – Poços de Capelas e São Vicente</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGNOR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGNOR01/VGAcurrent.jpg"
+             alt="Nordeste" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/nordeste/nordeste/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Nordeste</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGRBQ01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGRBQ01/VGAcurrent.jpg"
+             alt="Povoação Praia da Ribeira Quente" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-da-ribeira-quente/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Povoação – Praia da Ribeira Quente</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGPOV01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGPOV01/VGAcurrent.jpg"
+             alt="Povoação" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/povoacao/povoacao/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Povoação</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGFAY01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGFAY01/VGAcurrent.jpg"
+             alt="Povoação Faial da Terra" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/faial-da-terra/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Povoação – Faial da Terra</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGPFR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGPFR01/VGAcurrent.jpg"
+             alt="Ribeira Grande Praia dos Moinhos" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-dos-moinhos/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Ribeira Grande – Praia dos Moinhos</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGVFC01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SMGVFC01/VGAcurrent.jpg"
+             alt="Vila Franca do Campo Praia Vinha d’Areia" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-vinha-dareia/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Vila Franca do Campo – Praia Vinha d’Areia</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SÃO JORGE -->
+  <div class="webcams-grid hidden" id="grid-sao-jorge">
+
+    <div class="webcam-card" data-cam="SJZVEL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SJZVEL01/VGAcurrent.jpg"
+             alt="Velas" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-jorge/velas/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Velas – Port</span>
+        <span class="webcam-island">São Jorge</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SJZFOV01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SJZFJC01/VGAcurrent.jpg"
+             alt="Fajã do Ouvidor" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-jorge/velas/faja-do-ouvidor/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Fajã do Ouvidor</span>
+        <span class="webcam-island">São Jorge</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SJZCAL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/SJZCAL01/VGAcurrent.jpg"
+             alt="Calheta" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/sao-jorge/calheta/calheta/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Calheta</span>
+        <span class="webcam-island">São Jorge</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PICO -->
+  <div class="webcams-grid hidden" id="grid-pico">
+
+    <div class="webcam-card" data-cam="PIXSRQ02">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/PIXSRQ02/VGAcurrent.jpg"
+             alt="Montanha do Pico" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/pico/sao-roque-do-pico/montanha/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Montanha do Pico</span>
+        <span class="webcam-island">Pico</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="PIXMAD01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/PIXMAD01/VGAcurrent.jpg"
+             alt="Porto da Madalena" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/pico/madalena/porto-da-madalena/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Porto da Madalena</span>
+        <span class="webcam-island">Pico</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="PIXLAJ01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/PIXLAJ01/VGAcurrent.jpg"
+             alt="Lajes do Pico" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/pico/lajes-do-pico/lajes/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Lajes do Pico</span>
+        <span class="webcam-island">Pico</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="PIXSRQ01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/PIXSRQ01/VGAcurrent.jpg?"
+             alt="São Roque do Pico" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/pico/porto-de-sao-roque/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">São Roque do Pico</span>
+        <span class="webcam-island">Pico</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAIAL -->
+  <div class="webcams-grid hidden" id="grid-faial">
+
+    <div class="webcam-card" data-cam="FAYHOR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/FAYHOR01/VGAcurrent.jpg"
+             alt="Horta" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/faial/horta/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Horta – Port i Marina</span>
+        <span class="webcam-island">Faial</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="FAYCBG01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.spotazores.com/camaras/FAYCBG01/VGAcurrent.jpg"
+             alt="Cabeço Gordo" class="webcam-img">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/en/webcam/faial/cabeco-gordo/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Cabeço Gordo – Caldeira</span>
+        <span class="webcam-island">Faial</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAPA WINDY AMB WEBCAMS -->
+  <div id="grid-mapa" class="hidden">
+  <div class="mapa-tabs">
+    <button class="mapa-tab active" data-mapa="spotazores">📍 SpotAzores</button>
+    <button class="mapa-tab" data-mapa="windy">🌬️ Windy</button>
+  </div>
+
+  <div id="mapa-spotazores" class="mapa-content active">
+    <div id="leaflet-webcam-map" style="width:100%;height:550px;border-radius:12px;"></div>
+    <p class="radar-note">Clic sobre un pin per veure la càmera en directe · S'actualitza cada 5 minuts</p>
+  </div>
+
+  <div id="mapa-windy" class="mapa-content">
+    <div class="windy-webcam-wrap">
+      <div id="webcam-map-container" style="width:100%;height:550px;border-radius:12px;overflow:hidden;background:#0a1628;">
+        <div id="webcam-map-loading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:20px;">
+          <div style="font-size:3rem;">🗺️</div>
+          <p style="color:#a8d8b0;font-size:1.1rem;font-weight:600;text-align:center;">Mapa interactiu de webcams</p>
+          <p style="color:#6aab7a;font-size:0.85rem;text-align:center;max-width:360px;">
+            Passa el ratolí per una càmera per veure la imatge · Clic per veure les darreres 24h
+          </p>
+          <a href="https://www.windy.com/?cams,38.5,-27.8,8" target="_blank"
+             style="padding:12px 28px;background:#2d5a3d;color:#a8d8b0;border-radius:20px;text-decoration:none;font-size:1rem;">
+            Obrir mapa a Windy ↗
+          </a>
+        </div>
+      </div>
+      <p class="radar-note">Mapa de webcams en temps real · Passa el ratolí per veure la imatge · Clic per veure les darreres 24h · Font: Windy</p>
+    </div>
+  </div>
+</div>
+
+  <p class="webcams-note">Font: <a href="https://spotazores.com" target="_blank">SpotAzores</a> · Imatges actualitzades cada 30 segons automàticament</p>
+
+</main>
+
+<footer class="main-footer">
+  <p class="footer-title">Estiu 2026 · Illes Açores</p>
+  <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/webcams.js"></script>
+</body>
+</html>

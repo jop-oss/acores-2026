@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants · Açores 2026</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/restaurants.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
+    <a href="mapes.html" class="nav-item">Mapes</a>
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="logistica.html" class="nav-item">Logística</a>
+    <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="restaurants.html" class="nav-item active">Restaurants</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="playlist.html" class="nav-item">Playlist</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="jocs.html" class="nav-item">Jocs</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+</nav>
+
+<main class="rest-main">
+
+  <div class="rest-header">
+    <h1>🍽️ Restaurants</h1>
+    <p class="rest-subtitle">Selecció de restaurants a les Açores · <span id="rest-count">113</span> recomanats</p>
+  </div>
+
+  <!-- FILTRES -->
+  <div class="rest-filters">
+
+    <!-- Selector illa -->
+    <div class="island-selector">
+      <button class="island-btn active" data-island="totes">Totes les illes</button>
+      <button class="island-btn" data-island="sao-miguel">São Miguel</button>
+      <button class="island-btn" data-island="sao-jorge">São Jorge</button>
+      <button class="island-btn" data-island="pico">Pico</button>
+      <button class="island-btn" data-island="faial">Faial</button>
+    </div>
+
+    <div class="rest-filters-row">
+
+      <!-- Filtre cuina -->
+      <div class="filter-group">
+        <label>Cuina</label>
+        <div class="cuina-filter-wrap">
+          <select id="filter-cuina">
+            <option value="">Totes</option>
+          </select>
+          <button class="filter-clear-btn hidden" id="clear-cuina" title="Eliminar filtre">✕</button>
+        </div>
+      </div>
+
+      <!-- Filtre preu -->
+      <div class="filter-group">
+        <label>Preu</label>
+        <div class="preu-btns">
+          <button class="preu-btn active" data-preu="">Tots</button>
+          <button class="preu-btn" data-preu="€">€</button>
+          <button class="preu-btn" data-preu="€€">€€</button>
+          <button class="preu-btn" data-preu="€€€">€€€</button>
+          <button class="preu-btn" data-preu="€€€€">€€€€</button>
+        </div>
+      </div>
+
+      <!-- Filtre distància -->
+      <div class="filter-group">
+        <label>Distància màx. <span id="dist-label">— km</span></label>
+        <div class="dist-wrap">
+          <input type="range" id="filter-dist" min="0" max="50" value="0" step="5">
+          <button class="filter-clear-btn hidden" id="clear-dist" title="Eliminar filtre">✕</button>
+        </div>
+      </div>
+
+      <!-- Posició -->
+      <div class="filter-group">
+        <label>Des de</label>
+        <div class="pos-wrap">
+          <button class="pos-btn" id="btn-gps" title="Usar GPS">📍 Posició actual</button>
+          <div class="pos-input-wrap">
+            <input type="text" id="pos-text" placeholder="Poble o adreça...">
+            <button class="pos-btn-small" id="btn-pos-text">→</button>
+          </div>
+          <span class="pos-status" id="pos-status"></span>
+        </div>
+      </div>
+
+      <!-- Ordenació -->
+      <div class="filter-group">
+        <label>Ordenar per</label>
+        <select id="sort-by">
+          <option value="puntuacio">Puntuació</option>
+          <option value="preu-asc">Preu (↑)</option>
+          <option value="preu-desc">Preu (↓)</option>
+          <option value="distancia">Distància</option>
+          <option value="nom">Nom</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Filtre cuines actiu (etiquetes) -->
+    <div id="cuines-actives" class="cuines-actives hidden"></div>
+
+  </div>
+
+  <!-- CONTINGUT: llista + mapa -->
+  <div class="rest-content">
+
+    <div class="rest-list" id="rest-list">
+      <div class="rest-loading">Carregant restaurants...</div>
+    </div>
+
+    <div class="rest-map-wrap">
+      <div id="rest-map"></div>
+      <div class="map-legend">
+        <span class="legend-item"><span class="legend-dot top10"></span>Top 10</span>
+        <span class="legend-item"><span class="legend-dot gold"></span>Or</span>
+        <span class="legend-item"><span class="legend-dot silver"></span>Plata</span>
+        <span class="legend-item"><span class="legend-dot bronze"></span>Bronze</span>
+        <span class="legend-item"><span class="legend-dot normal"></span>Resta</span>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="main-footer">
+  <p class="footer-title">Estiu 2026 · Illes Açores</p>
+  <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/restaurants-data.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/restaurants.js"></script>
+</body>
+</html>
