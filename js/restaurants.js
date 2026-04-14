@@ -37,12 +37,16 @@ let markers = {};
 let filteredIds = [];
 
 // ── INIT ───────────────────────────────────────────────────────────────
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   initMap();
   populateCuinesSelect();
   renderAll();
   bindEvents();
   initDefaultDistances();
+  // Botons estil mapa fora de bindEvents per assegurar DOM llest
+  document.querySelectorAll('.map-style-btn').forEach(btn => {
+    btn.addEventListener('click', () => setMapStyle(btn.dataset.style));
+  });
 });
 
 // ── DISTÀNCIES A CAPITALS (càlcul únic, guardat a localStorage) ────────
@@ -753,7 +757,5 @@ function bindEvents() {
     renderAll();
   });
 
-  document.querySelectorAll(".map-style-btn").forEach((btn) => {
-    btn.addEventListener("click", () => setMapStyle(btn.dataset.style));
-  });
+
 }
