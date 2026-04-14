@@ -37,15 +37,15 @@ let markers = {};
 let filteredIds = [];
 
 // ── INIT ───────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initMap();
   populateCuinesSelect();
   renderAll();
   bindEvents();
   initDefaultDistances();
   // Botons estil mapa fora de bindEvents per assegurar DOM llest
-  document.querySelectorAll('.map-style-btn').forEach(btn => {
-    btn.addEventListener('click', () => setMapStyle(btn.dataset.style));
+  document.querySelectorAll(".map-style-btn").forEach((btn) => {
+    btn.addEventListener("click", () => setMapStyle(btn.dataset.style));
   });
 });
 
@@ -161,11 +161,18 @@ function initMap() {
 
 function setMapStyle(style) {
   if (currentTileLayer) map.removeLayer(currentTileLayer);
-  currentTileLayer = L.tileLayer(MAP_TILES[style], {
-    attribution: "© OpenStreetMap © CARTO",
-    subdomains: "abcd",
-    maxZoom: 19,
-  }).addTo(map);
+
+  const noSubdomains = ["Topo", "Satèl·lit"];
+  const opts = noSubdomains.includes(style)
+    ? { attribution: "© OpenStreetMap", maxZoom: 19 }
+    : {
+        attribution: "© OpenStreetMap © CARTO",
+        subdomains: "abcd",
+        maxZoom: 19,
+      };
+
+  currentTileLayer = L.tileLayer(MAP_TILES[style], opts).addTo(map);
+
   document
     .querySelectorAll(".map-style-btn")
     .forEach((b) => b.classList.toggle("active", b.dataset.style === style));
@@ -627,7 +634,7 @@ function renderCuinesActives() {
   const wrap = document.getElementById("cuines-actives");
   if (!state.cuines.length) {
     wrap.classList.add("hidden");
-    wrap.innerHTML = '';
+    wrap.innerHTML = "";
     return;
   }
   wrap.classList.remove("hidden");
@@ -756,6 +763,4 @@ function bindEvents() {
     state.sortBy = e.target.value;
     renderAll();
   });
-
-
 }
