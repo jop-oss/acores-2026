@@ -193,6 +193,13 @@
   grid-template-columns: 1fr 420px;
   gap: 20px;
   align-items: start;
+  min-height: 600px;
+}
+
+.rest-map-wrap {
+  position: sticky;
+  top: 70px;
+  max-height: calc(100vh - 90px);
 }
 
 /* ── LLISTA ──────────────────────────────────────────────────────────── */
