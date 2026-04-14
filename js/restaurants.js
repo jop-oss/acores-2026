@@ -152,6 +152,7 @@ function initMap() {
     subdomains: "abcd",
     maxZoom: 19,
   }).addTo(map);
+  setTimeout(() => map.invalidateSize(), 100);
 }
 
 function setMapStyle(style) {
