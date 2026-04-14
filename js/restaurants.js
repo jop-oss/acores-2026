@@ -135,8 +135,10 @@ function resetToCapitalDist() {
 // ── MAPA ───────────────────────────────────────────────────────────────
 function initMap() {
   map = L.map("rest-map", { center: [38.5, -27.8], zoom: 8 });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap",
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
   }).addTo(map);
 }
 
@@ -205,7 +207,7 @@ function renderMarkers() {
     });
     markers[r.id] = marker;
   });
-  if (visible.length > 0 && visible.length < 50) {
+  if (visible.length > 0) {
     const bounds = visible
       .filter((r) => r.lat && r.lon)
       .map((r) => [r.lat, r.lon]);
@@ -540,7 +542,6 @@ function haversine(lat1, lon1, lat2, lon2) {
 }
 
 async function geocodeText(text) {
-  // Usem Nominatim (OpenStreetMap) — no té CORS ni necessita clau API
   const queries = [
     `${text}, Açores, Portugal`,
     `${text}, Azores`,
@@ -548,7 +549,7 @@ async function geocodeText(text) {
   ];
   for (const q of queries) {
     try {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&addressdetails=1`;
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`;
       const res = await fetch(url, { headers: { 'Accept-Language': 'ca,pt,en' } });
       const data = await res.json();
       if (data && data[0]) {
