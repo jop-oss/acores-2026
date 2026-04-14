@@ -568,6 +568,30 @@
 .legend-dot.bronze { background: #CD7F32; }
 .legend-dot.normal { background: #6aab7a; }
 
+.map-style-selector {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.map-style-btn {
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid #2d5a3d;
+  background: none;
+  color: #6aab7a;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.map-style-btn:hover,
+.map-style-btn.active {
+  background: #2d5a3d;
+  color: #a8d8b0;
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .rest-content {

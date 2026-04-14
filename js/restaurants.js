@@ -133,13 +133,37 @@ function resetToCapitalDist() {
 }
 
 // ── MAPA ───────────────────────────────────────────────────────────────
+const MAP_TILES = {
+  Voyager:
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  Fosc: "https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png",
+  "Satèl·lit":
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  OSM: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+};
+
+let currentTileLayer = null;
+
 function initMap() {
   map = L.map("rest-map", { center: [38.5, -27.8], zoom: 8 });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap © CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
+  currentTileLayer = L.tileLayer(MAP_TILES["Voyager"], {
+    attribution: "© OpenStreetMap © CARTO",
+    subdomains: "abcd",
+    maxZoom: 19,
   }).addTo(map);
+}
+
+function setMapStyle(style) {
+  if (currentTileLayer) map.removeLayer(currentTileLayer);
+  currentTileLayer = L.tileLayer(MAP_TILES[style], {
+    attribution: "© OpenStreetMap © CARTO",
+    subdomains: "abcd",
+    maxZoom: 19,
+  }).addTo(map);
+  document
+    .querySelectorAll(".map-style-btn")
+    .forEach((b) => b.classList.toggle("active", b.dataset.style === style));
 }
 
 function pinColor(r) {
@@ -542,24 +566,24 @@ function haversine(lat1, lon1, lat2, lon2) {
 }
 
 async function geocodeText(text) {
-  const queries = [
-    `${text}, Açores, Portugal`,
-    `${text}, Azores`,
-    text
-  ];
+  const queries = [`${text}, Açores, Portugal`, `${text}, Azores`, text];
   for (const q of queries) {
     try {
       const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`;
-      const res = await fetch(url, { headers: { 'Accept-Language': 'ca,pt,en' } });
+      const res = await fetch(url, {
+        headers: { "Accept-Language": "ca,pt,en" },
+      });
       const data = await res.json();
       if (data && data[0]) {
         return {
           lat: parseFloat(data[0].lat),
           lon: parseFloat(data[0].lon),
-          label: data[0].display_name
+          label: data[0].display_name,
         };
       }
-    } catch(e) { console.warn('Geocode error:', e); }
+    } catch (e) {
+      console.warn("Geocode error:", e);
+    }
   }
   return null;
 }
@@ -717,5 +741,9 @@ function bindEvents() {
   document.getElementById("sort-by").addEventListener("change", (e) => {
     state.sortBy = e.target.value;
     renderAll();
+  });
+
+  document.querySelectorAll(".map-style-btn").forEach((btn) => {
+    btn.addEventListener("click", () => setMapStyle(btn.dataset.style));
   });
 }
