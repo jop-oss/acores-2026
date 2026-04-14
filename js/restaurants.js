@@ -137,7 +137,7 @@ const MAP_TILES = {
   Voyager:
     "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
   Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-  Fosc: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  Fosc: "https://{s}.basemaps.cartocdn.com/dark_matter_nolabels/{z}/{x}/{y}{r}.png",
   "Satèl·lit":
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   OSM: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
