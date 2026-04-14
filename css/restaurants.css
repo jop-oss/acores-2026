@@ -634,6 +634,41 @@
   background: #2d5a3d;
 }
 
+.rest-foto-wrap {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.rest-foto-wrap.active { opacity: 1; }
+
+.rest-foto-wrap .rest-foto {
+  position: static;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.foto-font {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.7);
+  background: rgba(0,0,0,0.4);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+#btn-reset-pos {
+  background: #1a3a2a;
+  border-left: 1px solid #2d5a3d;
+}
+
+#btn-reset-pos:hover { background: #2d5a3d; }
+
 /* ── MODE CLAR ───────────────────────────────────────────────────────── */
 body.light .rest-filters,
 body.light .rest-card,
