@@ -625,6 +625,15 @@
   color: #a8d8b0;
 }
 
+#btn-reset-pos {
+  background: #1a3a2a;
+  border-left: 1px solid #2d5a3d;
+}
+
+#btn-reset-pos:hover {
+  background: #2d5a3d;
+}
+
 /* ── MODE CLAR ───────────────────────────────────────────────────────── */
 body.light .rest-filters,
 body.light .rest-card,
