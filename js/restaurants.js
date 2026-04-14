@@ -540,32 +540,25 @@ function haversine(lat1, lon1, lat2, lon2) {
 }
 
 async function geocodeText(text) {
-  const queries = [`${text}, Açores, Portugal`, `${text}, Azores`, text];
+  // Usem Nominatim (OpenStreetMap) — no té CORS ni necessita clau API
+  const queries = [
+    `${text}, Açores, Portugal`,
+    `${text}, Azores`,
+    text
+  ];
   for (const q of queries) {
     try {
-      const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(q)}&key=${GOOGLE_KEY}`;
-      // Prova directe primer (GitHub Pages), si falla usa proxy (local)
-      let data;
-      try {
-        const res = await fetch(apiUrl);
-        data = await res.json();
-      } catch (e) {
-        const res = await fetch(
-          `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`,
-        );
-        data = await res.json();
-      }
-      if (data.results && data.results[0]) {
-        const loc = data.results[0].geometry.location;
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&addressdetails=1`;
+      const res = await fetch(url, { headers: { 'Accept-Language': 'ca,pt,en' } });
+      const data = await res.json();
+      if (data && data[0]) {
         return {
-          lat: loc.lat,
-          lon: loc.lng,
-          label: data.results[0].formatted_address,
+          lat: parseFloat(data[0].lat),
+          lon: parseFloat(data[0].lon),
+          label: data[0].display_name
         };
       }
-    } catch (e) {
-      console.warn("Geocode error:", e);
-    }
+    } catch(e) { console.warn('Geocode error:', e); }
   }
   return null;
 }
