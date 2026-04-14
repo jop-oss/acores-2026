@@ -64,7 +64,7 @@ const RESTAURANTS = [
     "nom": "Canto da Doca",
     "cuines": [
       "Marisc",
-      "A la pedra",
+      "A la brasa/pedra",
       "Saludable",
       "Portuguesa"
     ],
@@ -198,7 +198,7 @@ const RESTAURANTS = [
       "Europea",
       "Contemporània",
       "Portuguesa",
-      "Menjar de carrer"
+      "Menjar ràpid"
     ],
     "preu_google": "€€",
     "preu_ta": "€",
@@ -1459,7 +1459,7 @@ const RESTAURANTS = [
     "illa": "pico",
     "nom": "Pico na Brasa",
     "cuines": [
-      "Brasilenya",
+      "Brasilera",
       "Europea",
       "Portuguesa",
       "Sud-americana"
@@ -1968,7 +1968,7 @@ const RESTAURANTS = [
     "illa": "pico",
     "nom": "Mar Sushi Terrace",
     "cuines": [
-      "Sushi"
+      "Japonesa"
     ],
     "preu_google": "€€",
     "preu_ta": "€€ - €€€",
@@ -3763,7 +3763,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Restaurante Associação Agrícola de São Miguel",
     "cuines": [
-      "Restaurant de carn",
+      "Carn",
       "Europea",
       "Portuguesa"
     ],
@@ -4083,7 +4083,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Restaurante Alcides",
     "cuines": [
-      "Carns a la brasa",
+      "A la brasa/pedra",
       "Europea",
       "Portuguesa"
     ],
@@ -5256,7 +5256,7 @@ const RESTAURANTS = [
     "cuines": [
       "Europea",
       "Portuguesa",
-      "Contemporànea",
+      "Contemporània",
       "Saludable"
     ],
     "preu_google": "€€",
@@ -5525,9 +5525,8 @@ const RESTAURANTS = [
     "nom": "Mirante Rooftop Bar",
     "cuines": [
       "Marisc",
-      "Sushi",
-      "Asiàtica",
-      "Japonesa"
+      "Japonesa",
+      "Asiàtica"
     ],
     "preu_google": "",
     "preu_ta": "€€€€",
@@ -5734,7 +5733,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Tio Lanches",
     "cuines": [
-      "Brasiler",
+      "Brasilera",
       "Menjar ràpid",
       "Europea",
       "Portuguesa"
@@ -6067,7 +6066,7 @@ const RESTAURANTS = [
       "Japonesa",
       "Contemporània",
       "Saludable",
-      "Fusió japonesa"
+      "Fusió"
     ],
     "preu_google": "€€€",
     "preu_ta": "€€€€",
@@ -6133,7 +6132,7 @@ const RESTAURANTS = [
       "Europea",
       "Portuguesa",
       "Marisc",
-      "Mediterrani"
+      "Mediterrània"
     ],
     "preu_google": "",
     "preu_ta": "€€ - €€€",
@@ -6464,7 +6463,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "NORTH SUSHI",
     "cuines": [
-      "Sushi"
+      "Japonesa"
     ],
     "preu_google": "",
     "preu_ta": "€€ - €€€",
@@ -6532,8 +6531,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Nonna's Teeth & Tomatoes",
     "cuines": [
-      "Italiana",
-      "Pizza"
+      "Italiana"
     ],
     "preu_google": "€",
     "preu_ta": "€",
@@ -6809,9 +6807,9 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Adega Caloura Restaurant",
     "cuines": [
-      "A la brasa",
+      "A la brasa/pedra",
       "Marisc",
-      "Mediterrani"
+      "Mediterrània"
     ],
     "preu_google": "",
     "preu_ta": "€€€€",
@@ -7135,7 +7133,7 @@ const RESTAURANTS = [
     "illa": "sao-miguel",
     "nom": "Adega do Mestre André",
     "cuines": [
-      "Mediterrani",
+      "Mediterrània",
       "Portuguesa"
     ],
     "preu_google": "€€",

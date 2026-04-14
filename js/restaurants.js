@@ -135,8 +135,8 @@ function resetToCapitalDist() {
 // ── MAPA ───────────────────────────────────────────────────────────────
 const MAP_TILES = {
   Voyager:
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   Topo: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
   "Satèl·lit":
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -591,8 +591,13 @@ async function geocodeText(text) {
 
 // ── CUINES ─────────────────────────────────────────────────────────────
 function populateCuinesSelect() {
+  const EXCLOURE = ["Bar", "Cafè", "Pub"];
   const cuines = new Set();
-  RESTAURANTS.forEach((r) => r.cuines.forEach((c) => cuines.add(c.trim())));
+  RESTAURANTS.forEach((r) =>
+    r.cuines.forEach((c) => {
+      if (!EXCLOURE.includes(c.trim())) cuines.add(c.trim());
+    }),
+  );
   const sel = document.getElementById("filter-cuina");
   [...cuines].sort().forEach((c) => {
     const o = document.createElement("option");
@@ -653,10 +658,13 @@ function bindEvents() {
     }
   });
 
-  document.getElementById("clear-cuina").addEventListener("click", () => {
-    state.cuines = [];
-    renderAll();
-  });
+  document.document
+    .getElementById("clear-cuina")
+    .addEventListener("click", () => {
+      state.cuines = [];
+      document.getElementById("filter-cuina").value = "";
+      renderAll();
+    });
 
   document.querySelectorAll(".preu-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
