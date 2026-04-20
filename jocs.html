@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Açores · Jocs</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --bg:       #0a1628;
+      --bg2:      #0f1f38;
+      --verd:     #2d5a3d;
+      --verd2:    #6aab7a;
+      --verd3:    #a8d8b0;
+      --gold:     #f0b429;
+      --gold2:    #ffd166;
+      --error:    #e05555;
+      --text:     #e8f4ec;
+      --text2:    #9bbfaa;
+      --border:   rgba(106,171,122,0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── PANTALLA INICI ── */
+    #screen-start {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .quiz-logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .quiz-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--verd2), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-subtitle {
+      color: var(--text2);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-cards {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .info-card-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--verd2);
+    }
+
+    .info-card-label {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .dif-dots {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dif-dot {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .dif-dot.facil  { background: rgba(106,171,122,0.15); color: var(--verd2); border: 1px solid var(--verd); }
+    .dif-dot.mitja  { background: rgba(240,180,41,0.12);  color: var(--gold);  border: 1px solid rgba(240,180,41,0.4); }
+    .dif-dot.dificil{ background: rgba(224,85,85,0.12);   color: #ff8a8a;      border: 1px solid rgba(224,85,85,0.4); }
+
+    .name-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .name-input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      min-width: 220px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .name-input:focus { border-color: var(--verd2); }
+    .name-input::placeholder { color: var(--text2); }
+
+    .btn-start {
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 2rem;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,0.5); }
+
+    .btn-ranking {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 1.5rem;
+      color: var(--text2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.75rem;
+    }
+
+    .btn-ranking:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── PANTALLA JOC ── */
+    #screen-quiz { display: none; padding: 1.5rem; max-width: 760px; margin: 0 auto; }
+
+    .quiz-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-progress-wrap { flex: 1; min-width: 200px; }
+
+    .quiz-progress-text {
+      font-size: 0.8rem;
+      color: var(--text2);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .quiz-progress-bar {
+      background: var(--bg2);
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-fill {
+      background: linear-gradient(90deg, var(--verd), var(--verd2));
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-score-badge {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      text-align: center;
+    }
+
+    .quiz-score-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .quiz-score-label { font-size: 0.7rem; color: var(--text2); }
+
+    .question-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-meta {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .q-cat {
+      font-size: 0.72rem;
+      color: var(--text2);
+      background: rgba(106,171,122,0.08);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    .q-dif {
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+
+    .q-dif.facil   { color: var(--verd2); background: rgba(106,171,122,0.12); }
+    .q-dif.mitja   { color: var(--gold);  background: rgba(240,180,41,0.1); }
+    .q-dif.dificil { color: #ff8a8a;      background: rgba(224,85,85,0.1); }
+
+    .q-pts {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .opcions {
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .opcio {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      text-align: left;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .opcio-lletra {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(106,171,122,0.1);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--verd2);
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .opcio:hover:not(.disabled) {
+      border-color: var(--verd2);
+      background: rgba(106,171,122,0.08);
+      transform: translateX(4px);
+    }
+
+    .opcio:hover:not(.disabled) .opcio-lletra {
+      background: var(--verd);
+      color: white;
+    }
+
+    .opcio.correcta {
+      border-color: var(--verd2);
+      background: rgba(106,171,122,0.15);
+      animation: pulse-green 0.4s ease;
+    }
+
+    .opcio.correcta .opcio-lletra {
+      background: var(--verd2);
+      color: white;
+    }
+
+    .opcio.incorrecta {
+      border-color: var(--error);
+      background: rgba(224,85,85,0.1);
+    }
+
+    .opcio.incorrecta .opcio-lletra {
+      background: var(--error);
+      color: white;
+    }
+
+    .opcio.disabled { cursor: default; }
+
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: none; }
+      50% { box-shadow: 0 0 0 4px rgba(106,171,122,0.3); }
+    }
+
+    .explicacio {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(106,171,122,0.06);
+      border-left: 3px solid var(--verd2);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .btn-seguent {
+      width: 100%;
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.75rem;
+      display: none;
+      transition: transform 0.15s;
+    }
+
+    .btn-seguent:hover { transform: translateY(-2px); }
+    .btn-seguent.visible { display: block; animation: fadeIn 0.3s ease; }
+
+    /* ── PANTALLA RESULTAT ── */
+    #screen-result {
+      display: none;
+      min-height: calc(100vh - 60px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .result-emoji { font-size: 4rem; margin-bottom: 1rem; }
+
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-score {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 0.5rem 0;
+    }
+
+    .result-maxim { font-size: 0.9rem; color: var(--text2); margin-bottom: 1.5rem; }
+
+    .result-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .result-stat {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.75rem 1.25rem;
+      text-align: center;
+    }
+
+    .result-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--verd2);
+    }
+
+    .result-stat-label { font-size: 0.72rem; color: var(--text2); }
+
+    .result-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn-result {
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-result.primary {
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none;
+      color: white;
+    }
+
+    .btn-result.secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text2);
+    }
+
+    .btn-result:hover { transform: translateY(-2px); }
+
+    /* ── PANTALLA RÀNQUING ── */
+    #screen-ranking {
+      display: none;
+      padding: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ranking-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+    }
+
+    .ranking-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+
+    .ranking-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: slideIn 0.3s ease both;
+    }
+
+    .ranking-item:nth-child(1) { border-color: var(--gold); }
+    .ranking-item:nth-child(2) { border-color: #aaa; }
+    .ranking-item:nth-child(3) { border-color: #cd7f32; }
+
+    .ranking-pos {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .ranking-pos.p1 { color: var(--gold); }
+    .ranking-pos.p2 { color: #ccc; }
+    .ranking-pos.p3 { color: #cd7f32; }
+    .ranking-pos.other { color: var(--text2); font-size: 1rem; }
+
+    .ranking-nom { flex: 1; font-weight: 600; }
+    .ranking-data { font-size: 0.75rem; color: var(--text2); }
+
+    .ranking-punts {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--verd2);
+    }
+
+    .ranking-barra-wrap {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 999px;
+      margin-top: 4px;
+    }
+
+    .ranking-barra {
+      height: 100%;
+      background: linear-gradient(90deg, var(--verd), var(--verd2));
+      border-radius: 999px;
+      transition: width 0.8s ease;
+    }
+
+    .empty-ranking {
+      text-align: center;
+      color: var(--text2);
+      padding: 3rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-back {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      color: var(--text2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover { border-color: var(--verd2); color: var(--verd2); }
+
+    /* ── CONFETTI ── */
+    .confetti-wrap {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      opacity: 0;
+    }
+
+    @media (max-width: 480px) {
+      .info-cards { gap: 0.5rem; }
+      .info-card { min-width: 80px; padding: 0.75rem; }
+      .question-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="restaurants.html" class="nav-item">Restaurants</a>
+    <a href="jocs.html" class="nav-item active">Jocs</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+</nav>
+
+<!-- CONFETTI -->
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- PANTALLA INICI -->
+<div id="screen-start">
+  <div class="quiz-logo">🌋</div>
+  <h1 class="quiz-title">Quiz Açores</h1>
+  <p class="quiz-subtitle">Quant saps de les Illes Açores?</p>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="info-card-num">100</div>
+      <div class="info-card-label">Preguntes</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-num">7</div>
+      <div class="info-card-label">Categories</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-num">1000</div>
+      <div class="info-card-label">Punts màxim</div>
+    </div>
+  </div>
+
+  <div class="dif-dots">
+    <span class="dif-dot facil">⬤ Fàcil — 50 preguntes · 6 pts</span>
+    <span class="dif-dot mitja">⬤ Mitjà — 30 preguntes · 10 pts</span>
+    <span class="dif-dot dificil">⬤ Difícil — 20 preguntes · 20 pts</span>
+  </div>
+
+  <div class="name-form">
+    <input type="text" class="name-input" id="jugador-nom" placeholder="El teu nom..." maxlength="20">
+    <button class="btn-start" onclick="iniciarJoc()">Comença el Quiz 🚀</button>
+  </div>
+  <button class="btn-ranking" onclick="mostrarRanking()">🏆 Veure rànquing</button>
+</div>
+
+<!-- PANTALLA JOC -->
+<div id="screen-quiz">
+  <div class="quiz-header">
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-text">
+        <span id="prog-text">Pregunta 1 de 100</span>
+        <span id="prog-cat"></span>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="quiz-score-badge">
+      <div class="quiz-score-num" id="score-live">0</div>
+      <div class="quiz-score-label">punts</div>
+    </div>
+  </div>
+
+  <div class="question-card" id="question-card">
+    <div class="question-meta">
+      <span class="q-cat" id="q-cat"></span>
+      <span class="q-dif" id="q-dif"></span>
+      <span class="q-pts" id="q-pts"></span>
+    </div>
+    <div class="question-text" id="q-text"></div>
+    <div class="opcions" id="opcions"></div>
+    <div class="explicacio" id="explicacio" style="display:none"></div>
+  </div>
+
+  <button class="btn-seguent" id="btn-seguent" onclick="seguent()">Següent pregunta →</button>
+</div>
+
+<!-- PANTALLA RESULTAT -->
+<div id="screen-result">
+  <div class="result-emoji" id="result-emoji">🌋</div>
+  <div class="result-title" id="result-title">Resultat final</div>
+  <div class="result-score" id="result-score">0</div>
+  <div class="result-maxim">de 1000 punts possibles</div>
+  <div class="result-stats">
+    <div class="result-stat">
+      <div class="result-stat-num" id="stat-encerts">0</div>
+      <div class="result-stat-label">Encerts</div>
+    </div>
+    <div class="result-stat">
+      <div class="result-stat-num" id="stat-errors">0</div>
+      <div class="result-stat-label">Errors</div>
+    </div>
+    <div class="result-stat">
+      <div class="result-stat-num" id="stat-pct">0%</div>
+      <div class="result-stat-label">Precisió</div>
+    </div>
+  </div>
+  <div class="result-btns">
+    <button class="btn-result primary" onclick="tornarInici()">Torna a jugar 🔄</button>
+    <button class="btn-result secondary" onclick="mostrarRanking()">Veure rànquing 🏆</button>
+  </div>
+</div>
+
+<!-- PANTALLA RÀNQUING -->
+<div id="screen-ranking">
+  <div class="ranking-title">🏆 Rànquing</div>
+  <div class="ranking-list" id="ranking-list"></div>
+  <button class="btn-back" onclick="tornarInici()">← Tornar</button>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+const PREGUNTES = [
+  {
+    "id": 1,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quantes illes formen l'arxipèlag de les Açores?",
+    "opcions": [
+      "7",
+      "9",
+      "11",
+      "13"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Açores estan formades per 9 illes dividides en tres grups: oriental, central i occidental."
+  },
+  {
+    "id": 2,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "A quin oceà es troben les Açores?",
+    "opcions": [
+      "Oceà Pacífic",
+      "Oceà Índic",
+      "Oceà Atlàntic",
+      "Mar Mediterrani"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores es troben a l'Oceà Atlàntic Nord, a uns 1.500 km de Lisboa."
+  },
+  {
+    "id": 3,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "De quin país formen part les Açores?",
+    "opcions": [
+      "Espanya",
+      "Brasil",
+      "França",
+      "Portugal"
+    ],
+    "correcta": 3,
+    "explicacio": "Les Açores són una regió autònoma de Portugal des de 1976."
+  },
+  {
+    "id": 4,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la illa més gran de les Açores?",
+    "opcions": [
+      "Terceira",
+      "Faial",
+      "São Miguel",
+      "Pico"
+    ],
+    "correcta": 2,
+    "explicacio": "São Miguel, coneguda com la 'Illa Verda', és la més gran amb 744 km²."
+  },
+  {
+    "id": 5,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la capital de les Açores?",
+    "opcions": [
+      "Horta",
+      "Angra do Heroísmo",
+      "Ponta Delgada",
+      "Velas"
+    ],
+    "correcta": 2,
+    "explicacio": "Ponta Delgada, a São Miguel, és la capital i la ciutat més gran de les Açores."
+  },
+  {
+    "id": 6,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina illa de les Açores té la muntanya més alta de Portugal?",
+    "opcions": [
+      "São Miguel",
+      "Terceira",
+      "Faial",
+      "Pico"
+    ],
+    "correcta": 3,
+    "explicacio": "El Pico, a l'illa de Pico, és el punt més alt de Portugal amb 2.351 metres."
+  },
+  {
+    "id": 7,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Com es diu el grup d'illes al qual pertanyen Faial, Pico i São Jorge?",
+    "opcions": [
+      "Grup Oriental",
+      "Grup Central",
+      "Grup Occidental",
+      "Grup del Nord"
+    ],
+    "correcta": 1,
+    "explicacio": "Faial, Pico, São Jorge, Graciosa i Terceira formen el Grup Central de les Açores."
+  },
+  {
+    "id": 8,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina illa de les Açores és coneguda com 'l'Illa Azul' pel color de les seves hortènsies?",
+    "opcions": [
+      "São Miguel",
+      "São Jorge",
+      "Terceira",
+      "Faial"
+    ],
+    "correcta": 3,
+    "explicacio": "Faial és coneguda com 'l'Illa Azul' per les abundants hortènsies blaves que decoren els seus camins."
+  },
+  {
+    "id": 9,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la illa més occidental de les Açores?",
+    "opcions": [
+      "Flores",
+      "Corvo",
+      "Faial",
+      "São Miguel"
+    ],
+    "correcta": 1,
+    "explicacio": "Corvo és la illa més occidental i també la més petita de les Açores."
+  },
+  {
+    "id": 10,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "On es troba la famosa Lagoa das Sete Cidades?",
+    "opcions": [
+      "Terceira",
+      "Pico",
+      "Faial",
+      "São Miguel"
+    ],
+    "correcta": 3,
+    "explicacio": "La Lagoa das Sete Cidades es troba a São Miguel i és una de les atraccions més famoses de les Açores."
+  },
+  {
+    "id": 11,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la distància aproximada entre les Açores i Lisboa?",
+    "opcions": [
+      "500 km",
+      "1.000 km",
+      "1.500 km",
+      "2.000 km"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores es troben a aproximadament 1.500 km de Lisboa, la capital de Portugal."
+  },
+  {
+    "id": 12,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quin grup d'illes inclou São Miguel i Santa Maria?",
+    "opcions": [
+      "Grup Occidental",
+      "Grup Central",
+      "Grup Oriental",
+      "Grup del Sud"
+    ],
+    "correcta": 2,
+    "explicacio": "São Miguel i Santa Maria formen el Grup Oriental, el més proper al continent europeu."
+  },
+  {
+    "id": 13,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Com es diu el canal que separa les illes de Faial i Pico?",
+    "opcions": [
+      "Canal de São Jorge",
+      "Canal do Faial",
+      "Canal do Pico",
+      "Canal das Açores"
+    ],
+    "correcta": 0,
+    "explicacio": "El Canal de São Jorge separa Faial de Pico, amb una amplada d'uns 8 km."
+  },
+  {
+    "id": 14,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la superfície total aproximada de les Açores?",
+    "opcions": [
+      "1.500 km²",
+      "2.333 km²",
+      "3.100 km²",
+      "4.200 km²"
+    ],
+    "correcta": 1,
+    "explicacio": "La superfície total de les Açores és de 2.333 km², distribuïda entre les 9 illes."
+  },
+  {
+    "id": 15,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "A quina latitud aproximada es troben les Açores?",
+    "opcions": [
+      "25°N - 30°N",
+      "30°N - 35°N",
+      "37°N - 40°N",
+      "43°N - 47°N"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores es troben entre els 37° i 40° de latitud nord, similar a Lisboa i Sevilla."
+  },
+  {
+    "id": 16,
+    "categoria": "Geografia",
+    "dificultat": "facil",
+    "pregunta": "Quina illa de les Açores és la més petita?",
+    "opcions": [
+      "Flores",
+      "Graciosa",
+      "Corvo",
+      "Santa Maria"
+    ],
+    "correcta": 2,
+    "explicacio": "Corvo és la illa més petita amb només 17 km² i menys de 500 habitants."
+  },
+  {
+    "id": 17,
+    "categoria": "Geografia",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu la caldera volcànica de Faial?",
+    "opcions": [
+      "Caldeira do Faial",
+      "Caldeira Guilherme Moniz",
+      "Caldeira de Alferes",
+      "Caldeira Grande"
+    ],
+    "correcta": 0,
+    "explicacio": "La Caldeira do Faial té 2 km de diàmetre i 400 metres de profunditat, coberta de vegetació."
+  },
+  {
+    "id": 18,
+    "categoria": "Geografia",
+    "dificultat": "mitja",
+    "pregunta": "Quina illa de les Açores té el renom de 'Ilha Roxa'?",
+    "opcions": [
+      "Graciosa",
+      "Santa Maria",
+      "São Jorge",
+      "Flores"
+    ],
+    "correcta": 3,
+    "explicacio": "Flores és coneguda com la 'Ilha Roxa' o 'Ilha das Flores' per la seva abundant vegetació i flors."
+  },
+  {
+    "id": 19,
+    "categoria": "Geografia",
+    "dificultat": "mitja",
+    "pregunta": "Quin és el punt més proper a les Açores del continent americà?",
+    "opcions": [
+      "Nova York",
+      "Boston",
+      "Saint John's (Terranova)",
+      "Halifax"
+    ],
+    "correcta": 2,
+    "explicacio": "Saint John's, a Terranova (Canadà), és el punt continental més proper a les Açores, a uns 3.300 km."
+  },
+  {
+    "id": 20,
+    "categoria": "Geografia",
+    "dificultat": "mitja",
+    "pregunta": "Quantes illes habitades hi ha a les Açores?",
+    "opcions": [
+      "7",
+      "8",
+      "9",
+      "6"
+    ],
+    "correcta": 2,
+    "explicacio": "Totes les 9 illes de les Açores estan habitades, tot i que Corvo té menys de 500 habitants."
+  },
+  {
+    "id": 21,
+    "categoria": "Geografia",
+    "dificultat": "dificil",
+    "pregunta": "On es troba la Fossa Hirondelle, el punt més profund dels voltants de les Açores?",
+    "opcions": [
+      "Al nord de Flores",
+      "Entre Faial i Pico",
+      "Al sud de São Miguel",
+      "A l'est de Santa Maria"
+    ],
+    "correcta": 0,
+    "explicacio": "La Fossa Hirondelle, al nord de Flores, arriba als 3.200 metres de profunditat."
+  },
+  {
+    "id": 22,
+    "categoria": "Geografia",
+    "dificultat": "dificil",
+    "pregunta": "Per quantes plaques tectòniques es troba l'arxipèlag de les Açores?",
+    "opcions": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Açores es troben a la confluència de 3 plaques tectòniques: l'Euroasiàtica, l'Americana i l'Africana."
+  },
+  {
+    "id": 23,
+    "categoria": "Geografia",
+    "dificultat": "dificil",
+    "pregunta": "Com es diu la dorsal oceànica que passa per les Açores?",
+    "opcions": [
+      "Dorsal del Pacífic",
+      "Dorsal Atlàntica Central",
+      "Dorsal de Reykjanes",
+      "Dorsal de l'Índic"
+    ],
+    "correcta": 1,
+    "explicacio": "La Dorsal Atlàntica Central (Mid-Atlantic Ridge) passa per les Açores, creant gran activitat volcànica."
+  },
+  {
+    "id": 24,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Quina espècie de cetaci és especialment famosa a les Açores?",
+    "opcions": [
+      "Dofí comú",
+      "Orca",
+      "Cachalot (capodoglio)",
+      "Balena blava"
+    ],
+    "correcta": 2,
+    "explicacio": "El cachalot (Physeter macrocephalus) és el cetaci més emblemàtic de les Açores i hi és present tot l'any."
+  },
+  {
+    "id": 25,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Com es diuen les típiques flors blaves que decoren els camins de les Açores?",
+    "opcions": [
+      "Azàlees",
+      "Hortènsies",
+      "Begònies",
+      "Glicines"
+    ],
+    "correcta": 1,
+    "explicacio": "Les hortènsies (Hydrangea macrophylla) s'utilitzen com a tanques als camps i són un símbol de les Açores."
+  },
+  {
+    "id": 26,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Les Açores són conegudes per l'observació de...",
+    "opcions": [
+      "Pingüins",
+      "Balenes i dofins",
+      "Koalas",
+      "Flamencs"
+    ],
+    "correcta": 1,
+    "explicacio": "L'observació de balenes i dofins (whale watching) és una activitat turística clau de les Açores."
+  },
+  {
+    "id": 27,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Quin tipus de vegetació domina el paisatge de les Açores?",
+    "opcions": [
+      "Desert",
+      "Bosc tropical",
+      "Vegetació laurisilva",
+      "Estepa"
+    ],
+    "correcta": 2,
+    "explicacio": "La laurisilva, un bosc relicte de l'era Terciària, és la vegetació natural dominant a les Açores."
+  },
+  {
+    "id": 28,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Quin ocell és el símbol oficial de les Açores?",
+    "opcions": [
+      "Àguila",
+      "Milhafre (gavià de les Açores)",
+      "Pardal",
+      "Corb marí"
+    ],
+    "correcta": 1,
+    "explicacio": "El Milhafre-das-Açores (Buteo buteo rothschildi) és el símbol oficial de la Região Autónoma dos Açores."
+  },
+  {
+    "id": 29,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Les aigües de les Açores estan protegides per...",
+    "opcions": [
+      "Un parc nacional",
+      "Una reserva marina",
+      "Una zona de pesca exclusiva",
+      "Un parc natural submarí"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Açores tenen una extensa xarxa de reserves marines que protegeixen la seva rica biodiversitat marina."
+  },
+  {
+    "id": 30,
+    "categoria": "Natura i fauna",
+    "dificultat": "facil",
+    "pregunta": "Quin fenomen geotèrmic es pot observar a les Furnas, a São Miguel?",
+    "opcions": [
+      "Glaceres",
+      "Guèisers i fumaroles",
+      "Pluja àcida",
+      "Aurores boreals"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Furnas és una zona geotèrmica activa amb guèisers, fumaroles i termes naturals d'aigues calentes."
+  },
+  {
+    "id": 31,
+    "categoria": "Natura i fauna",
+    "dificultat": "mitja",
+    "pregunta": "Quantes espècies de cetacis es poden observar regularment a les Açores?",
+    "opcions": [
+      "5",
+      "10",
+      "20",
+      "28"
+    ],
+    "correcta": 3,
+    "explicacio": "S'han registrat més de 28 espècies de cetacis a les aigües de les Açores, convertint-les en un dels millors llocs del món per al whale watching."
+  },
+  {
+    "id": 32,
+    "categoria": "Natura i fauna",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu la planta endemica de les Açores que recorda una palmera?",
+    "opcions": [
+      "Hortènsia de les Açores",
+      "Til·ler de les Açores",
+      "Urze (Erica azorica)",
+      "Faia-das-ilhas"
+    ],
+    "correcta": 2,
+    "explicacio": "La Urze (Erica azorica) és una espècie endèmica de les Açores que pot créixer fins a 8 metres d'altura."
+  },
+  {
+    "id": 33,
+    "categoria": "Natura i fauna",
+    "dificultat": "mitja",
+    "pregunta": "Quin percentatge de la superfície de les Açores està protegit legalment com a espai natural?",
+    "opcions": [
+      "Menys del 5%",
+      "Entre el 10% i el 20%",
+      "Més del 40%",
+      "El 100%"
+    ],
+    "correcta": 2,
+    "explicacio": "Més del 40% de la superfície terrestre de les Açores té algun tipus de protecció ambiental."
+  },
+  {
+    "id": 34,
+    "categoria": "Natura i fauna",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu l'endèmic llangardaix de les Açores?",
+    "opcions": [
+      "Lagarto-dos-Açores",
+      "Lagartixa-dos-Açores",
+      "Gecko-das-ilhas",
+      "Sardaneta atlàntica"
+    ],
+    "correcta": 1,
+    "explicacio": "La Lagartixa-dos-Açores (Podarcis lilfordi) és un rèptil endèmic present a diverses illes."
+  },
+  {
+    "id": 35,
+    "categoria": "Natura i fauna",
+    "dificultat": "mitja",
+    "pregunta": "Quina espècie de tortuga marina visita regularment les Açores?",
+    "opcions": [
+      "Tortuga llaüt",
+      "Tortuga careta (Caretta caretta)",
+      "Tortuga verda",
+      "Tortuga de Kemp"
+    ],
+    "correcta": 1,
+    "explicacio": "La tortuga careta (Caretta caretta) visita les Açores regularment per alimentar-se i descansar."
+  },
+  {
+    "id": 36,
+    "categoria": "Natura i fauna",
+    "dificultat": "dificil",
+    "pregunta": "Com es diu l'únic mamífer terrestre nadiu de les Açores?",
+    "opcions": [
+      "Rata d'Açores",
+      "Morcego-dos-Açores (Nyctalus azoreum)",
+      "Conill endèmic",
+      "No n'hi ha cap mamifer terrestre nadiu"
+    ],
+    "correcta": 1,
+    "explicacio": "El Morcego-dos-Açores (Nyctalus azoreum) és l'únic mamífer terrestre nadiu de les Açores, una espècie de rat penat endèmica."
+  },
+  {
+    "id": 37,
+    "categoria": "Natura i fauna",
+    "dificultat": "dificil",
+    "pregunta": "Quina espècie de corall profund és especialment abundant a les Açores?",
+    "opcions": [
+      "Corall cervell",
+      "Lophelia pertusa",
+      "Coral·lium rubrum",
+      "Dendrophyllia ramea"
+    ],
+    "correcta": 1,
+    "explicacio": "Lophelia pertusa és el corall d'aigues profundes més abundant a les Açores, formant ecosistemes únics."
+  },
+  {
+    "id": 38,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin és el plat tradicional de les Furnas, cuit sota terra amb calor geotèrmica?",
+    "opcions": [
+      "Bacallà a bras",
+      "Cozido das Furnas",
+      "Caldeirada de peixe",
+      "Alcatra"
+    ],
+    "correcta": 1,
+    "explicacio": "El Cozido das Furnas és un guisat de carn i verdures que es cou lentament durant hores aprofitant el calor volcànic del subsòl."
+  },
+  {
+    "id": 39,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin formatge és típic de l'illa de São Jorge?",
+    "opcions": [
+      "Queijo da Serra",
+      "Queijo São Jorge",
+      "Queijo Rabacal",
+      "Queijo Fresco"
+    ],
+    "correcta": 1,
+    "explicacio": "El Queijo São Jorge és un formatge curat DOP amb denominació d'origen, de sabor intens i molt apreciat."
+  },
+  {
+    "id": 40,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin licor típic s'elabora a les Açores amb maracujà?",
+    "opcions": [
+      "Ginjinha",
+      "Licor de maracujà",
+      "Licor Beirão",
+      "Medronho"
+    ],
+    "correcta": 1,
+    "explicacio": "El licor de maracujà (fruit de la passió) és una de les begudes típiques de les Açores, especialment a São Miguel."
+  },
+  {
+    "id": 41,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin és l'ingredient principal de la 'alcatra', plat típic de Terceira?",
+    "opcions": [
+      "Peix",
+      "Porc",
+      "Carn de vedella",
+      "Pollastre"
+    ],
+    "correcta": 2,
+    "explicacio": "L'alcatra és un estofat de carn de vedella cuit en terrissa amb vi, ceba i espècies, plat emblema de Terceira."
+  },
+  {
+    "id": 42,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin peix és especialment popular a la cuina tradicional de les Açores?",
+    "opcions": [
+      "Salmó",
+      "Atum (tonyina)",
+      "Lluç",
+      "Trota"
+    ],
+    "correcta": 1,
+    "explicacio": "L'atum (tonyina) és el peix més important per a la cuina i l'economia de les Açores."
+  },
+  {
+    "id": 43,
+    "categoria": "Gastronomia",
+    "dificultat": "facil",
+    "pregunta": "Quin tipus de te s'ha produït tradicionalment a les Açores, únic a Europa?",
+    "opcions": [
+      "Te verd japonès",
+      "Te vermell xinès",
+      "Te das Açores (Gorreana)",
+      "Te de menta marroquí"
+    ],
+    "correcta": 2,
+    "explicacio": "A São Miguel es troba la única plantació de te d'Europa, la Gorreana, amb més de 150 anys d'historia."
+  },
+  {
+    "id": 44,
+    "categoria": "Gastronomia",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu el pastís típic de les Açores fet amb batata doce?",
+    "opcions": [
+      "Bolo lêvedo",
+      "Dona Amélia",
+      "Bolo de mel",
+      "Bolo de batata doce"
+    ],
+    "correcta": 2,
+    "explicacio": "El Bolo de mel és un pastís tradicional fet amb mel de cana, batata doce i espècies, típic de les festes."
+  },
+  {
+    "id": 45,
+    "categoria": "Gastronomia",
+    "dificultat": "mitja",
+    "pregunta": "Quina illa és famosa per la producció d'ananàs de hivernacle?",
+    "opcions": [
+      "Terceira",
+      "Pico",
+      "Faial",
+      "São Miguel"
+    ],
+    "correcta": 3,
+    "explicacio": "São Miguel és famosa pels seus ananassos cultivats en hivernacles de pedra volcànica, una tradició de més de 150 anys."
+  },
+  {
+    "id": 46,
+    "categoria": "Gastronomia",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu el pa típic de les Açores amb una textura molt esponjosa?",
+    "opcions": [
+      "Bolo lêvedo",
+      "Pão sovado",
+      "Bolo do caco",
+      "Broa"
+    ],
+    "correcta": 1,
+    "explicacio": "El Pão sovado és un pa tradicional molt esponjós i lleugerament dolç, típic de moltes illes açorianes."
+  },
+  {
+    "id": 47,
+    "categoria": "Gastronomia",
+    "dificultat": "mitja",
+    "pregunta": "Quin vi DOP es produeix a les Açores, especialment a l'illa de Pico?",
+    "opcions": [
+      "Vinho Verde",
+      "Vinho do Pico",
+      "Vinho da Madeira",
+      "Vinho de Setúbal"
+    ],
+    "correcta": 1,
+    "explicacio": "El Vinho do Pico té DOP i es produeix en 'currais', petits recintes de pedra volcànica negra per protegir les vinyes del vent."
+  },
+  {
+    "id": 48,
+    "categoria": "Gastronomia",
+    "dificultat": "mitja",
+    "pregunta": "Quina espècie de lapa (mol·lusc) és típica de la cuina de les Açores?",
+    "opcions": [
+      "Patella aspera",
+      "Patella ulyssiponensis",
+      "Patella vulgata",
+      "Patella candei"
+    ],
+    "correcta": 1,
+    "explicacio": "Les lapas (Patella ulyssiponensis) es preparen a la planxa amb mantequilla, all i llimona i son un aperitiu imprescindible."
+  },
+  {
+    "id": 49,
+    "categoria": "Gastronomia",
+    "dificultat": "dificil",
+    "pregunta": "Quin és el nom del pastís típic d'Angra do Heroísmo, a Terceira?",
+    "opcions": [
+      "Bolo de mel",
+      "Dona Amélia",
+      "Bolo lêvedo",
+      "Suspiro de Terceira"
+    ],
+    "correcta": 1,
+    "explicacio": "La Dona Amélia és un pastís típic d'Angra do Heroísmo creat al segle XIX, fet amb mel, nous i canella."
+  },
+  {
+    "id": 50,
+    "categoria": "Gastronomia",
+    "dificultat": "dificil",
+    "pregunta": "Les vinyes de l'illa de Pico estan inscrites a la llista del...",
+    "opcions": [
+      "Patrimoni Natural de la UNESCO",
+      "Patrimoni Cultural Immaterial de la UNESCO",
+      "Patrimoni de la Humanitat de la UNESCO (paisatge cultural)",
+      "Registre Europeu de Paisatges"
+    ],
+    "correcta": 2,
+    "explicacio": "El paisatge vitivinícola de l'illa de Pico va ser inscrit com a Patrimoni de la Humanitat per la UNESCO el 2004."
+  },
+  {
+    "id": 51,
+    "categoria": "Gastronomia",
+    "dificultat": "dificil",
+    "pregunta": "Com es diu la sopa tradicional de les Açores feta amb col, mongetes i carn de porc?",
+    "opcions": [
+      "Caldo verde",
+      "Sopa do Espírito Santo",
+      "Cozido à portuguesa",
+      "Açorda"
+    ],
+    "correcta": 1,
+    "explicacio": "La Sopa do Espírito Santo és una sopa ritual associada a les festes de l'Esperit Sant, distribuïda gratuïtament als assistents."
+  },
+  {
+    "id": 52,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Quan van ser descobertes les Açores pels portuguesos?",
+    "opcions": [
+      "Al segle XIII",
+      "Al segle XIV",
+      "Al segle XV",
+      "Al segle XVI"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores van ser descobertes als voltants de 1427-1432 per navegants portuguesos, possiblement per Diogo de Silves."
+  },
+  {
+    "id": 53,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Quin és el nom oficial de la comunitat autònoma de les Açores?",
+    "opcions": [
+      "Illes Açores",
+      "Regió Autònoma de les Açores",
+      "Comunitat de les Açores",
+      "Arxipèlag de les Açores"
+    ],
+    "correcta": 1,
+    "explicacio": "El nom oficial és Região Autónoma dos Açores, establert amb l'estatut d'autonomia de 1976."
+  },
+  {
+    "id": 54,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Quin any va obtenir les Açores l'estatut d'autonomia?",
+    "opcions": [
+      "1945",
+      "1961",
+      "1976",
+      "1986"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores van obtenir l'autonomia el 1976, poc després de la Revolució dels Clavells de 1974."
+  },
+  {
+    "id": 55,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Quina és la festivity religiosa més important de les Açores?",
+    "opcions": [
+      "Nadal",
+      "Festa de l'Esperit Sant (Festa do Divino Espírito Santo)",
+      "Setmana Santa",
+      "Festa de São João"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Festas do Divino Espírito Santo són les celebracions més arrelades a les Açores, amb processons, imperiis i distribució de sopa."
+  },
+  {
+    "id": 56,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Quin animal és símbol heràldic de les Açores i apareix a la seva bandera?",
+    "opcions": [
+      "Àguila",
+      "Balena",
+      "Açor (falcó)",
+      "Corb marí"
+    ],
+    "correcta": 2,
+    "explicacio": "L'Açor (Accipiter gentilis), un falcó, va donar nom a les illes i apareix a la bandera de la Regió Autònoma."
+  },
+  {
+    "id": 57,
+    "categoria": "Història i cultura",
+    "dificultat": "facil",
+    "pregunta": "Angra do Heroísmo, a Terceira, és Patrimoni de la Humanitat de la UNESCO des de...",
+    "opcions": [
+      "1975",
+      "1983",
+      "1995",
+      "2001"
+    ],
+    "correcta": 1,
+    "explicacio": "El centre històric d'Angra do Heroísmo va ser inscrit com a Patrimoni de la Humanitat per la UNESCO el 1983."
+  },
+  {
+    "id": 58,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Per quin motiu el nom de l'illa Terceira ('Tercera') és historic?",
+    "opcions": [
+      "Va ser la tercera illa en ser descoberta",
+      "Estava al tercer grup d'illes",
+      "Fou poblada en tercer lloc",
+      "El seu primer governador es deia Terceiro"
+    ],
+    "correcta": 0,
+    "explicacio": "Terceira va rebre el seu nom perquè va ser la tercera illa de les Açores en ser descoberta i explorada pels portuguesos."
+  },
+  {
+    "id": 59,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Quin esdeveniment del segle XX va crear el nou vulcà Capelinhos a Faial?",
+    "opcions": [
+      "Un terratrèmol de gran magnitud",
+      "Una erupció volcànica submarina el 1957-58",
+      "Una esllavissada submarina",
+      "Un impacte de meteorit"
+    ],
+    "correcta": 1,
+    "explicacio": "Entre 1957 i 1958, una erupció volcànica submarina va crear el volcà Capelinhos, afegint 2,4 km² a l'illa de Faial."
+  },
+  {
+    "id": 60,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Les Açores van tenir un paper important durant la Segona Guerra Mundial com a...",
+    "opcions": [
+      "Base de submarins alemanys",
+      "Base aèria i naval dels Aliats",
+      "Camp de presoners",
+      "Centre de producció d'armes"
+    ],
+    "correcta": 1,
+    "explicacio": "Portugal va cedir bases a les Açores als Aliats el 1943 (Terceira i Faial), cosa que va ser clau per al control de l'Atlàntic."
+  },
+  {
+    "id": 61,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu la primera persona a volar sense escales sobre l'Atlàntic que va aterrar a les Açores?",
+    "opcions": [
+      "Charles Lindbergh",
+      "Amelia Earhart",
+      "Gago Coutinho i Sacadura Cabral",
+      "Alcock i Brown"
+    ],
+    "correcta": 2,
+    "explicacio": "Gago Coutinho i Sacadura Cabral van realitzar el primer vol transatlàntic del sud (Lisboa-Rio de Janeiro) el 1922 amb escala a les Açores."
+  },
+  {
+    "id": 62,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Quin any es va produir l'important terratrèmol que va destruir gran part d'Angra do Heroísmo?",
+    "opcions": [
+      "1522",
+      "1755",
+      "1837",
+      "1980"
+    ],
+    "correcta": 3,
+    "explicacio": "El terratrèmol del 1980 (escala 7,2) va devastar l'illa de Terceira, causant 61 morts i destruint edificis emblemàtics d'Angra."
+  },
+  {
+    "id": 63,
+    "categoria": "Història i cultura",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu la dança tradicional típica de les Açores?",
+    "opcions": [
+      "Fado",
+      "Chamarrita",
+      "Corridinho",
+      "Vira"
+    ],
+    "correcta": 1,
+    "explicacio": "La Chamarrita és el ball tradicional de les Açores, amb ritme viu i similar a la contradansa europea."
+  },
+  {
+    "id": 64,
+    "categoria": "Història i cultura",
+    "dificultat": "dificil",
+    "pregunta": "Quin rei portugués va néixer a l'illa Terceira de les Açores?",
+    "opcions": [
+      "Dom Manuel I",
+      "Dom João III",
+      "Dom Sebastião I",
+      "Dom Afonso VI"
+    ],
+    "correcta": 3,
+    "explicacio": "Dom Afonso VI va néixer a Angra do Heroísmo el 1643 mentre la família reial estava exiliada durant la Restauració portuguesa."
+  },
+  {
+    "id": 65,
+    "categoria": "Història i cultura",
+    "dificultat": "dificil",
+    "pregunta": "Quin científic i explorador va realitzar importants expedicions oceanogràfiques a les Açores a finals del segle XIX?",
+    "opcions": [
+      "Jacques Cousteau",
+      "Albert I de Mònaco",
+      "Charles Darwin",
+      "Alexander von Humboldt"
+    ],
+    "correcta": 1,
+    "explicacio": "Albert I de Mònaco va realitzar diverses campanyes científiques a les Açores entre 1885 i 1915, descobrint espècies marines noves."
+  },
+  {
+    "id": 66,
+    "categoria": "Història i cultura",
+    "dificultat": "dificil",
+    "pregunta": "Quin any es va inaugurar el primer cable telegràfic transatlàntic que passava per les Açores?",
+    "opcions": [
+      "1858",
+      "1866",
+      "1874",
+      "1901"
+    ],
+    "correcta": 2,
+    "explicacio": "El 1874 es va inaugurar un cable telegràfic transatlàntic amb estació a Faial, convertint Horta en un node de comunicació mundial."
+  },
+  {
+    "id": 67,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Com es diuen les erupcions de lava que formen noves illes o extensions de terra al mar?",
+    "opcions": [
+      "Erupcions explosives",
+      "Erupcions efusives submarines (vulcanisme hawaià)",
+      "Erupcions plinines",
+      "Erupcions freatomagmàtiques"
+    ],
+    "correcta": 1,
+    "explicacio": "Les erupcions efusives submarines, de tipus hawaià, van ser les responsables de crear les illes de les Açores milions d'anys enrere."
+  },
+  {
+    "id": 68,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Quin color té la sorra de moltes platges de les Açores degut a l'origen volcànic?",
+    "opcions": [
+      "Blanc",
+      "Groc",
+      "Negra",
+      "Vermell"
+    ],
+    "correcta": 2,
+    "explicacio": "La sorra negra de les platges açorianes prové de la desintegració de la roca basàltica volcànica."
+  },
+  {
+    "id": 69,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Com es diuen les emanacions de gas i vapor calent que surten del terra a les zones volcàniques?",
+    "opcions": [
+      "Guèisers",
+      "Fumaroles",
+      "Bufadors",
+      "Termes"
+    ],
+    "correcta": 1,
+    "explicacio": "Les fumaroles són fissures per on surten gasos volcànics calents, molt visibles a les Furnas de São Miguel."
+  },
+  {
+    "id": 70,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Quina és la darrera erupció volcànica important que es recorda a les Açores?",
+    "opcions": [
+      "Capelinhos (Faial) 1957-58",
+      "Fogo (São Miguel) 2000",
+      "Pico 1995",
+      "Terceira 1990"
+    ],
+    "correcta": 0,
+    "explicacio": "L'erupció del Capelinhos a Faial (1957-1958) és la darrera gran erupció de les Açores, que va obligar a evacuar milers de persones."
+  },
+  {
+    "id": 71,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Quin tipus de roca és predominant a les Açores?",
+    "opcions": [
+      "Granit",
+      "Calcària",
+      "Basalt",
+      "Pissarra"
+    ],
+    "correcta": 2,
+    "explicacio": "El basalt, una roca volcànica de color negre, és el material dominant a les Açores i s'usa fins i tot en la construcció."
+  },
+  {
+    "id": 72,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "facil",
+    "pregunta": "Per qué les aigues del llac Fogo a São Miguel canvien de color?",
+    "opcions": [
+      "Per alagues de colors",
+      "Per la reflexió del cel",
+      "Per l'activitat geotèrmica i els minerals",
+      "Per contaminació"
+    ],
+    "correcta": 2,
+    "explicacio": "L'activitat geotèrmica i els minerals volcànics dissolts fan que les aigues del llac Fogo canviïn de color entre el verd i el blau."
+  },
+  {
+    "id": 73,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "mitja",
+    "pregunta": "Quantes calderes volcàniques actives hi ha aproximadament a les Açores?",
+    "opcions": [
+      "3",
+      "5",
+      "7",
+      "10"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores tenen al voltant de 7 calderes volcàniques actives distribuïdes per diverses illes."
+  },
+  {
+    "id": 74,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "mitja",
+    "pregunta": "Com es diu el fenomen que es pot veure a les Açores on l'aigua del mar entra per coves i surt en forma de guèiser?",
+    "opcions": [
+      "Marejol",
+      "Bufadors (algar)",
+      "Resaca",
+      "Sifó marí"
+    ],
+    "correcta": 1,
+    "explicacio": "Els bufadors o algars são forats al llarg de la costa per on l'onatge fa sortir l'aigua i l'aire a pressió, creant espectaculars brolladors."
+  },
+  {
+    "id": 75,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "mitja",
+    "pregunta": "Quin és el principal gas que s'emet per les fumaroles de les Açores?",
+    "opcions": [
+      "Oxigen",
+      "Diòxid de carboni i diòxid de sofre",
+      "Metà",
+      "Nitrogen"
+    ],
+    "correcta": 1,
+    "explicacio": "Les fumaroles de les Açores emeten principalment vapor d'agua, CO2 i SO2, que és el responsable de l'olor característic a sofre."
+  },
+  {
+    "id": 76,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "mitja",
+    "pregunta": "El volcà Sete Cidades a São Miguel, quins tipus de llacs té a la seva caldera?",
+    "opcions": [
+      "Un llac verd",
+      "Un llac blau",
+      "Un llac verd i un llac blau",
+      "Tres llacs de colors diferents"
+    ],
+    "correcta": 2,
+    "explicacio": "La caldera del Sete Cidades conté dos llacs: la Lagoa Verde (verda) i la Lagoa Azul (blava), separades per un pont estret."
+  },
+  {
+    "id": 77,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "dificil",
+    "pregunta": "Quin és l'origen geològic de les Açores?",
+    "opcions": [
+      "Erosió d'un continent submergit",
+      "Punt calent (hot spot) i dorsal atlàntica",
+      "Xoc de plaques continental",
+      "Acumulació de sediments marins"
+    ],
+    "correcta": 1,
+    "explicacio": "Les Açores van ser formades per la combinació d'un punt calent mantèlic i l'activitat de la Dorsal Atlàntica Central."
+  },
+  {
+    "id": 78,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "dificil",
+    "pregunta": "Quina és l'edat geològica aproximada de les illes més antigues de les Açores?",
+    "opcions": [
+      "100.000 anys",
+      "500.000 anys",
+      "8 milions d'anys",
+      "50 milions d'anys"
+    ],
+    "correcta": 2,
+    "explicacio": "Santa Maria és la illa més antiga, amb uns 8 milions d'anys, mentre les més joves (Pico, Flores) tenen menys d'un milió d'anys."
+  },
+  {
+    "id": 79,
+    "categoria": "Curiositats volcàniques",
+    "dificultat": "dificil",
+    "pregunta": "Com es diu el sistema de monitoratge sísmico-volcànic de les Açores?",
+    "opcions": [
+      "SISMO-AZ",
+      "CIVISA",
+      "VIGI-AZ",
+      "MONITORA"
+    ],
+    "correcta": 1,
+    "explicacio": "El CIVISA (Centro de Informação e Vigilância Sismovulcânica dos Açores) monitora contínuament l'activitat sísmica i volcànica de les illes."
+  },
+  {
+    "id": 80,
+    "categoria": "Activitats i turisme",
+    "dificultat": "facil",
+    "pregunta": "Quina activitat aquàtica és molt popular a les Açores per les seves aigues clares?",
+    "opcions": [
+      "Surf",
+      "Busseig i snorkel",
+      "Kayak de ràpids",
+      "Pesca de fonera"
+    ],
+    "correcta": 1,
+    "explicacio": "El busseig i el snorkel són activitats molt populars a les Açores gràcies a les aigues transparents i la rica vida marina."
+  },
+  {
+    "id": 81,
+    "categoria": "Activitats i turisme",
+    "dificultat": "facil",
+    "pregunta": "Quin tipus de senderisme és especialment famós a São Miguel?",
+    "opcions": [
+      "Senderisme per glaceres",
+      "Senderisme per calderes volcàniques i llacs",
+      "Senderisme per dunes",
+      "Senderisme per coves subterrànies"
+    ],
+    "correcta": 1,
+    "explicacio": "Els senders de les calderes volcàniques i els llacs de São Miguel, com Sete Cidades i Furnas, són dels més visitats."
+  },
+  {
+    "id": 82,
+    "categoria": "Activitats i turisme",
+    "dificultat": "facil",
+    "pregunta": "Quin port és famós a les Açores per ser un punt de reunió de vaixells de tot el món?",
+    "opcions": [
+      "Port de Ponta Delgada",
+      "Port d'Horta (Faial)",
+      "Port d'Angra do Heroísmo",
+      "Port de Velas"
+    ],
+    "correcta": 1,
+    "explicacio": "El port d'Horta, a Faial, és un dels principals punts de parada transatlàntica per vaixellers de tot el món."
+  },
+  {
+    "id": 83,
+    "categoria": "Activitats i turisme",
+    "dificultat": "facil",
+    "pregunta": "Quina atracció és famosa als voltants de les Furnas, a São Miguel?",
+    "opcions": [
+      "Un parc d'atraccions",
+      "El jardí Terra Nostra",
+      "Un museu de volcans",
+      "Una platja de sorra blanca"
+    ],
+    "correcta": 1,
+    "explicacio": "El Parque Terra Nostra a les Furnas és un famós jardí botànic amb una piscina termal de color ocre causada pels minerals."
+  },
+  {
+    "id": 84,
+    "categoria": "Activitats i turisme",
+    "dificultat": "facil",
+    "pregunta": "Per a quin esport és especalment bona l'illa de Santa Maria?",
+    "opcions": [
+      "Esqui",
+      "Ciclisme de muntanya",
+      "Surf",
+      "Escalada"
+    ],
+    "correcta": 2,
+    "explicacio": "Santa Maria, amb les seves platges de sorra blanca i ones constants, és una destinació ideal per al surf."
+  },
+  {
+    "id": 85,
+    "categoria": "Activitats i turisme",
+    "dificultat": "mitja",
+    "pregunta": "Quin és el nom de la piscina natural més famosa de São Miguel?",
+    "opcions": [
+      "Piscinas de Mosteiros",
+      "Poças da Dona Beija",
+      "Lagoa das Furnas",
+      "Piscinas do Sete Cidades"
+    ],
+    "correcta": 0,
+    "explicacio": "Les Piscinas de Mosteiros, a la costa nord-oest de São Miguel, són piscines naturals formades per roca volcànica negra."
+  },
+  {
+    "id": 86,
+    "categoria": "Activitats i turisme",
+    "dificultat": "mitja",
+    "pregunta": "Quina és la particularitat del famós mural del port d'Horta?",
+    "opcions": [
+      "Está pintat per Picasso",
+      "Els navegants que passen per Horta hi pinten el nom del seu vaixell",
+      "Representa la historia de les Açores",
+      "Canvia de colors amb la temperatura"
+    ],
+    "correcta": 1,
+    "explicacio": "El mural del port d'Horta és una tradició on tots els navegants que fan escala hi pinten el nom i emblema del seu vaixell per assegurar bona sort."
+  },
+  {
+    "id": 87,
+    "categoria": "Activitats i turisme",
+    "dificultat": "mitja",
+    "pregunta": "Quin museu commemoratiu de l'erupció volcànica hi ha a Faial?",
+    "opcions": [
+      "Museu do Vulcão",
+      "Museu Capelinhos",
+      "Centro de Interpretação do Vulcão dos Capelinhos",
+      "Museu Geológic do Faial"
+    ],
+    "correcta": 2,
+    "explicacio": "El Centro de Interpretação do Vulcão dos Capelinhos, inaugurat el 2008, és parcialment soterrat i explica l'erupció de 1957-58."
+  },
+  {
+    "id": 88,
+    "categoria": "Activitats i turisme",
+    "dificultat": "mitja",
+    "pregunta": "Quin és el nom de la ruta de senderisme que travessa tota l'illa de São Jorge?",
+    "opcions": [
+      "Caminho da Costa",
+      "Fajã Trail",
+      "Topo a Calheta Trail",
+      "Caminho do Cume"
+    ],
+    "correcta": 3,
+    "explicacio": "El Caminho do Cume travessa São Jorge d'est a oest per la cresta central, oferint vistes impressionants de les fajãs i de Pico."
+  },
+  {
+    "id": 89,
+    "categoria": "Activitats i turisme",
+    "dificultat": "dificil",
+    "pregunta": "Com es diuen les plataformes litorals d'origen volcànic (colades de lava) de São Jorge on s'han format comunitats?",
+    "opcions": [
+      "Terços",
+      "Fajãs",
+      "Furnas",
+      "Caldeirões"
+    ],
+    "correcta": 1,
+    "explicacio": "Les fajãs son plataformes costaneres creades per antigues colades de lava o esllavissades, molt característiques de São Jorge, on s'hi han establert petits nuclis de població."
+  },
+  {
+    "id": 90,
+    "categoria": "Activitats i turisme",
+    "dificultat": "dificil",
+    "pregunta": "Quina ruta de ciclisme de llarga distància connecta diverses illes de les Açores?",
+    "opcions": [
+      "EuroVelo Açores",
+      "Açores Ultra Trail",
+      "TransAçores",
+      "Volta às Açores"
+    ],
+    "correcta": 2,
+    "explicacio": "La TransAçores és una de les curses de muntanya més dures d'Europa, que creua diverses illes de les Açores."
+  },
+  {
+    "id": 91,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "facil",
+    "pregunta": "Com es descriu habitualment el clima de les Açores?",
+    "opcions": [
+      "Desèrtic i sec",
+      "Temperat i humit, amb molts canvis",
+      "Tropical calorós",
+      "Polar fred"
+    ],
+    "correcta": 1,
+    "explicacio": "El clima de les Açores és temperat oceànic, amb temperatures suaus, humitat elevada i canvis meteorologics frequents."
+  },
+  {
+    "id": 92,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "facil",
+    "pregunta": "Quina és la temperatura mitjana a les Açores al mes de juliol?",
+    "opcions": [
+      "15-17°C",
+      "20-24°C",
+      "28-32°C",
+      "35-38°C"
+    ],
+    "correcta": 1,
+    "explicacio": "Al juliol, la temperatura a les Açores sol estar entre els 20 i els 24°C, amb aigues marines d'uns 22-23°C."
+  },
+  {
+    "id": 93,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "facil",
+    "pregunta": "Quin fenomen meteorologic és habitual a les Açores per la seva posició atlàntica?",
+    "opcions": [
+      "Tornados",
+      "Boira i nuvols baixos freqüents",
+      "Sequeres llargues",
+      "Tempestes de sorra"
+    ],
+    "correcta": 1,
+    "explicacio": "La boira i els nuvols baixos son freqüents a les Açores, especialment als cims, a causa de la humitat de l'oceà."
+  },
+  {
+    "id": 94,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "facil",
+    "pregunta": "Quin sistema meteorologic passa frequentment prop de les Açores i afecta el clima europeu?",
+    "opcions": [
+      "El Niño",
+      "Alta dels Açores (Anticicló dels Açores)",
+      "El Monsó",
+      "El Corrent del Golf"
+    ],
+    "correcta": 1,
+    "explicacio": "L'Anticicló dels Açores és un sistema de altes pressions semi-permanent que influeix enormement en el clima de tota Europa occidental."
+  },
+  {
+    "id": 95,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "mitja",
+    "pregunta": "En quins mesos hi ha més probabilitat de veure balenes a les Açores?",
+    "opcions": [
+      "Gener i Febrer",
+      "Juny i Juliol",
+      "Abril i Juny",
+      "Octubre i Novembre"
+    ],
+    "correcta": 2,
+    "explicacio": "Abril i Juny són els mesos on la diversitat és màxima: balenes pigmeues i catxalots hi son presents durant la seva migració."
+  },
+  {
+    "id": 96,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "mitja",
+    "pregunta": "Quin és el mes més plujós a les Açores de mitjana?",
+    "opcions": [
+      "Novembre",
+      "Gener",
+      "Març",
+      "Juny"
+    ],
+    "correcta": 1,
+    "explicacio": "Gener és generalment el mes més plujós a les Açores, amb les pertorbacions atlantiques en el seu punt màxim."
+  },
+  {
+    "id": 97,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "dificil",
+    "pregunta": "Gràcies al Corrent del Golf, les aigues de les Açores mai no baixen de...",
+    "opcions": [
+      "0°C",
+      "5°C",
+      "15°C",
+      "20°C"
+    ],
+    "correcta": 2,
+    "explicacio": "El Corrent del Golf manté les aigues de les Açores per sobre dels 15-16°C tot l'any, fins i tot a l'hivern."
+  },
+  {
+    "id": 98,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "dificil",
+    "pregunta": "Quin index s'utilitza per mesurar la profunditat màxima fins on arriba la llum solar a les aigues de les Açores?",
+    "opcions": [
+      "Index de Secchi",
+      "Index de transparència de Forel",
+      "Index Winkler",
+      "Index de turbiditat UV"
+    ],
+    "correcta": 0,
+    "explicacio": "El disc de Secchi és un instrument oceanogràfic que mesura la transparència de l'aigüa; a les Açores pot arribar als 50 metres."
+  },
+  {
+    "id": 99,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "dificil",
+    "pregunta": "Com es diu el vent fred i sec que de vegades afecta les Açores provinent del nord-est?",
+    "opcions": [
+      "Tramuntana",
+      "Levant",
+      "Nortada",
+      "Harmatà"
+    ],
+    "correcta": 2,
+    "explicacio": "La Nortada és un vent del nord-est fred que pot afectar les Açores, especialment a les illes més septentrionals."
+  },
+  {
+    "id": 100,
+    "categoria": "Clima i meteorologia",
+    "dificultat": "dificil",
+    "pregunta": "Quin és el record de precipitació en 24 hores a les Açores?",
+    "opcions": [
+      "150 mm",
+      "280 mm",
+      "420 mm",
+      "600 mm"
+    ],
+    "correcta": 2,
+    "explicacio": "Les Açores han registrat precipitacions excepcionals superiors als 400 mm en 24 hores durant episodis de depressió profunda."
+  }
+];
+
+const PUNTS = { facil: 6, mitja: 10, dificil: 20 };
+const DIF_LABEL = { facil: 'Fàcil', mitja: 'Mitjà', dificil: 'Difícil' };
+const STORAGE_KEY = 'quiz_acores_ranking_v1';
+
+let joc = {
+  preguntes: [],
+  idx: 0,
+  punts: 0,
+  encerts: 0,
+  respost: false,
+  nomJugador: ''
+};
+
+function iniciarJoc() {
+  const nom = document.getElementById('jugador-nom').value.trim();
+  if (!nom) {
+    document.getElementById('jugador-nom').focus();
+    document.getElementById('jugador-nom').style.borderColor = '#e05555';
+    setTimeout(() => document.getElementById('jugador-nom').style.borderColor = '', 1500);
+    return;
+  }
+  joc.nomJugador = nom;
+  joc.preguntes = [...PREGUNTES].sort(() => Math.random() - 0.5);
+  joc.idx = 0;
+  joc.punts = 0;
+  joc.encerts = 0;
+  mostraScreen('quiz');
+  mostrarPregunta();
+}
+
+function mostrarPregunta() {
+  const p = joc.preguntes[joc.idx];
+  joc.respost = false;
+
+  // Progrés
+  document.getElementById('prog-text').textContent = `Pregunta ${joc.idx + 1} de ${joc.preguntes.length}`;
+  document.getElementById('prog-cat').textContent = p.categoria;
+  document.getElementById('prog-fill').style.width = `${(joc.idx / joc.preguntes.length) * 100}%`;
+  document.getElementById('score-live').textContent = joc.punts;
+
+  // Pregunta
+  document.getElementById('q-cat').textContent = p.categoria;
+  document.getElementById('q-dif').textContent = DIF_LABEL[p.dificultat];
+  document.getElementById('q-dif').className = `q-dif ${p.dificultat}`;
+  document.getElementById('q-pts').textContent = `+${PUNTS[p.dificultat]} pts`;
+  document.getElementById('q-text').textContent = p.pregunta;
+
+  // Opcions
+  const lletres = ['A', 'B', 'C', 'D', 'E'];
+  const opcionsEl = document.getElementById('opcions');
+  opcionsEl.innerHTML = p.opcions.map((op, i) => `
+    <button class="opcio" onclick="respondre(${i})" data-idx="${i}">
+      <span class="opcio-lletra">${lletres[i]}</span>
+      <span>${op}</span>
+    </button>
+  `).join('');
+
+  // Reset
+  document.getElementById('explicacio').style.display = 'none';
+  document.getElementById('btn-seguent').classList.remove('visible');
+
+  // Animació
+  document.getElementById('question-card').style.animation = 'none';
+  requestAnimationFrame(() => {
+    document.getElementById('question-card').style.animation = 'slideIn 0.3s ease';
+  });
+}
+
+function respondre(idx) {
+  if (joc.respost) return;
+  joc.respost = true;
+
+  const p = joc.preguntes[joc.idx];
+  const correcta = p.correcta;
+  const opcions = document.querySelectorAll('.opcio');
+
+  opcions.forEach(o => o.classList.add('disabled'));
+  opcions[idx].classList.add(idx === correcta ? 'correcta' : 'incorrecta');
+  if (idx !== correcta) opcions[correcta].classList.add('correcta');
+
+  if (idx === correcta) {
+    joc.punts += PUNTS[p.dificultat];
+    joc.encerts++;
+    document.getElementById('score-live').textContent = joc.punts;
+  }
+
+  // Explicació
+  const exp = document.getElementById('explicacio');
+  exp.textContent = p.explicacio;
+  exp.style.display = 'block';
+
+  document.getElementById('btn-seguent').textContent =
+    joc.idx < joc.preguntes.length - 1 ? 'Següent pregunta →' : 'Veure resultat 🏆';
+  document.getElementById('btn-seguent').classList.add('visible');
+}
+
+function seguent() {
+  joc.idx++;
+  if (joc.idx >= joc.preguntes.length) {
+    finalJoc();
+  } else {
+    mostrarPregunta();
+  }
+}
+
+function finalJoc() {
+  const pct = Math.round((joc.encerts / joc.preguntes.length) * 100);
+
+  // Emoji i títol
+  let emoji, titol;
+  if (joc.punts >= 900)      { emoji = '🏆'; titol = 'Expert en Açores!'; }
+  else if (joc.punts >= 700) { emoji = '🌋'; titol = 'Excel·lent!'; }
+  else if (joc.punts >= 500) { emoji = '🐋'; titol = 'Molt bé!'; }
+  else if (joc.punts >= 300) { emoji = '🌊'; titol = 'No està malament!'; }
+  else                        { emoji = '🦈'; titol = 'Continua practicant!'; }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = titol;
+  document.getElementById('result-score').textContent = joc.punts;
+  document.getElementById('stat-encerts').textContent = joc.encerts;
+  document.getElementById('stat-errors').textContent = joc.preguntes.length - joc.encerts;
+  document.getElementById('stat-pct').textContent = `${pct}%`;
+
+  // Guarda al rànquing
+  guardarRanking(joc.nomJugador, joc.punts, joc.encerts);
+
+  if (joc.punts >= 700) llençaConfetti();
+
+  mostraScreen('result');
+}
+
+// ── RÀNQUING ──────────────────────────────────────────────────────────
+function guardarRanking(nom, punts, encerts) {
+  let ranking = carregarRanking();
+  ranking.push({
+    nom,
+    punts,
+    encerts,
+    data: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: '2-digit', year: '2-digit' })
+  });
+  ranking.sort((a, b) => b.punts - a.punts);
+  ranking = ranking.slice(0, 20); // Màxim 20
+  try {
+    // Primer prova shared storage, si no localStorage
+    if (window.storage) {
+      window.storage.set('quiz_ranking', JSON.stringify(ranking), true)
+        .catch(() => localStorage.setItem(STORAGE_KEY, JSON.stringify(ranking)));
+    } else {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ranking));
+    }
+  } catch(e) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(ranking));
+  }
+}
+
+function carregarRanking() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+async function mostrarRanking() {
+  mostraScreen('ranking');
+  let ranking = carregarRanking();
+
+  // Intenta carregar del shared storage si disponible
+  if (window.storage) {
+    try {
+      const r = await window.storage.get('quiz_ranking', true);
+      if (r && r.value) {
+        const shared = JSON.parse(r.value);
+        // Fusiona local i shared
+        const tots = [...ranking, ...shared];
+        const vistos = new Set();
+        ranking = tots.filter(e => {
+          const k = `${e.nom}-${e.punts}-${e.data}`;
+          if (vistos.has(k)) return false;
+          vistos.add(k);
+          return true;
+        }).sort((a,b) => b.punts - a.punts).slice(0, 20);
+      }
+    } catch(e) {}
+  }
+
+  const el = document.getElementById('ranking-list');
+  if (!ranking.length) {
+    el.innerHTML = '<div class="empty-ranking">Encara no hi ha cap puntuació. Sigues el primer! 🌋</div>';
+    return;
+  }
+
+  const posEmoji = ['🥇', '🥈', '🥉'];
+  const maxPunts = ranking[0].punts || 1;
+  el.innerHTML = ranking.map((r, i) => `
+    <div class="ranking-item" style="animation-delay:${i * 0.05}s">
+      <div class="ranking-pos ${i < 3 ? 'p' + (i+1) : 'other'}">
+        ${i < 3 ? posEmoji[i] : i + 1}
+      </div>
+      <div style="flex:1">
+        <div class="ranking-nom">${r.nom}</div>
+        <div class="ranking-barra-wrap">
+          <div class="ranking-barra" style="width:${(r.punts/1000)*100}%"></div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="ranking-punts">${r.punts}</div>
+        <div class="ranking-data">${r.encerts}/100 · ${r.data}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── CONFETTI ───────────────────────────────────────────────────────────
+function llençaConfetti() {
+  const wrap = document.getElementById('confetti');
+  const colors = ['#6aab7a', '#f0b429', '#a8d8b0', '#ffd166', '#2d5a3d', '#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      animation: confetti-fall ${1.5 + Math.random() * 2}s ${Math.random() * 0.5}s ease-in forwards;
+      transform: rotate(${Math.random() * 360}deg);
+    `;
+    wrap.appendChild(el);
+  }
+  setTimeout(() => wrap.innerHTML = '', 4000);
+}
+
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes confetti-fall {
+    0%   { opacity: 1; top: -10px; transform: rotate(0deg) scale(1); }
+    100% { opacity: 0; top: 100vh; transform: rotate(${Math.random()*720}deg) scale(0.5); }
+  }
+`;
+document.head.appendChild(style);
+
+// ── UTILS ──────────────────────────────────────────────────────────────
+function mostraScreen(nom) {
+  ['start', 'quiz', 'result', 'ranking'].forEach(s => {
+    const el = document.getElementById(`screen-${s}`);
+    if (s === 'result') {
+      el.style.display = nom === s ? 'flex' : 'none';
+    } else {
+      el.style.display = nom === s ? 'block' : 'none';
+    }
+  });
+  window.scrollTo(0, 0);
+}
+
+function tornarInici() {
+  mostraScreen('start');
+}
+
+// Enter per iniciar
+document.getElementById('jugador-nom').addEventListener('keydown', e => {
+  if (e.key === 'Enter') iniciarJoc();
+});
+</script>
+</body>
+</html>
