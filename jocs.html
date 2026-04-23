@@ -567,10 +567,15 @@ function respondre(idx) {
   // Guarda progrés (idx s'incrementa quan es prem Següent)
   guardarEstatJugador(jugadorActiu, jocActiu);
 
-  // Mostra el botó per si l'usuari vol saltar el vídeo
-  document.getElementById('btn-seguent').textContent =
-    jocActiu.idx < jocActiu.ordre.length - 1 ? 'Següent pregunta →' : 'Veure resultat 🏆';
-  document.getElementById('btn-seguent').classList.add('visible');
+  // Botó per saltar el vídeo manualment
+  const btnSeg = document.getElementById('btn-seguent');
+  btnSeg.textContent = '⏭ Saltar vídeo';
+  btnSeg.classList.add('visible');
+  btnSeg.onclick = () => {
+    tancarReaccioActiva();
+    reaccioCallback = null;
+    seguent();
+  };
 
   // Passa automàticament quan acaba el vídeo
   mostrarReaccio(encertat, () => seguent());
@@ -592,56 +597,69 @@ function seguent() {
 
 // ── ANIMACIÓ PERSONATGE ───────────────────────────────────────────────
 let reaccioOverlayActiu = null;
+let reaccioCallback = null;
 
 function tancarReaccioActiva() {
   if (reaccioOverlayActiu) {
-    reaccioOverlayActiu.style.opacity = '0';
-    reaccioOverlayActiu.style.transition = 'opacity .2s';
-    setTimeout(() => { reaccioOverlayActiu?.remove(); reaccioOverlayActiu = null; }, 200);
+    const overlay = reaccioOverlayActiu;
+    reaccioOverlayActiu = null;
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .25s';
+    setTimeout(() => overlay.remove(), 250);
   }
 }
 
 function mostrarReaccio(encertat, callback) {
   tancarReaccioActiva();
+  reaccioCallback = callback;
 
   const msgs = encertat ? MSG_OK : MSG_ERR;
   const msg  = msgs[Math.floor(Math.random() * msgs.length)];
   const tipus = encertat ? 'ok' : 'ko';
   const videoSrc = `img/personatges/${jugadorActiu.toLowerCase()}_${tipus}.mp4`;
   const borderColor = encertat ? '#6aab7a' : '#e05555';
-  const glowColor = encertat ? 'rgba(106,171,122,.6)' : 'rgba(224,85,85,.6)';
+  const glowColor   = encertat ? 'rgba(106,171,122,.6)' : 'rgba(224,85,85,.6)';
 
   const overlay = document.createElement('div');
   overlay.className = 'reaccio-overlay';
   overlay.style.cursor = 'pointer';
+
+  // Usem un div contenidor quadrat per fer el clip circular correctament
   overlay.innerHTML = `
     <div class="reaccio-wrap">
-      <video autoplay muted playsinline
-             style="width:200px;height:200px;object-fit:cover;border-radius:50%;border:4px solid ${borderColor};box-shadow:0 0 50px ${glowColor};display:block;">
-        <source src="${videoSrc}" type="video/mp4">
-      </video>
+      <div style="width:200px;height:200px;border-radius:50%;overflow:hidden;border:4px solid ${borderColor};box-shadow:0 0 50px ${glowColor};flex-shrink:0;">
+        <video id="reaccio-video" autoplay muted playsinline
+               style="width:100%;height:100%;object-fit:cover;display:block;">
+          <source src="${videoSrc}" type="video/mp4">
+        </video>
+      </div>
       <div class="reaccio-text ${encertat ? 'ok' : 'error'}">${msg}</div>
     </div>`;
+
   document.body.appendChild(overlay);
   reaccioOverlayActiu = overlay;
 
   const tancar = () => {
     if (!reaccioOverlayActiu) return;
-    overlay.style.opacity = '0';
-    overlay.style.transition = 'opacity .3s';
+    tancarReaccioActiva();
+    // Executa el callback (passar a la seg. pregunta) un cop tancat
     setTimeout(() => {
-      overlay.remove();
-      reaccioOverlayActiu = null;
-      if (callback) callback();
-    }, 300);
+      const cb = reaccioCallback;
+      reaccioCallback = null;
+      if (cb) cb();
+    }, 280);
   };
 
   const video = overlay.querySelector('video');
+
+  // Quan acaba el vídeo, tanca i passa a la següent
   video.addEventListener('ended', tancar);
-  // Clic per saltar
+
+  // Clic sobre l'overlay per saltar
   overlay.addEventListener('click', tancar);
-  // Màxim 4.5s
-  setTimeout(() => { if (reaccioOverlayActiu === overlay) tancar(); }, 4500);
+
+  // Fallback: màxim 5s
+  setTimeout(() => { if (reaccioOverlayActiu === overlay) tancar(); }, 5000);
 }
 
 // ── RESULTAT FINAL ────────────────────────────────────────────────────
