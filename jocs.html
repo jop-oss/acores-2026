@@ -96,6 +96,8 @@
     .quiz-progress-text{font-size:.78rem;color:var(--text2);margin-bottom:5px;display:flex;justify-content:space-between}
     .quiz-progress-bar{background:var(--bg2);border-radius:999px;height:5px;overflow:hidden}
     .quiz-progress-fill{background:linear-gradient(90deg,var(--verd),var(--verd2));height:100%;border-radius:999px;transition:width .4s}
+    .btn-sortir{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text2);font-size:.9rem;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+    .btn-sortir:hover{background:rgba(224,85,85,.15);border-color:var(--error);color:#ff8a8a}
     .quiz-score-badge{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.4rem .9rem;text-align:center;min-width:80px}
     .quiz-score-num{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold);font-weight:700}
     .quiz-score-label{font-size:.65rem;color:var(--text2)}
@@ -196,6 +198,19 @@
 
 <div class="confetti-wrap" id="confetti"></div>
 
+<!-- MODAL CONFIRMACIÓ SORTIR -->
+<div class="modal-overlay" id="modal-sortir">
+  <div class="modal">
+    <div class="modal-icon">🚪</div>
+    <div class="modal-title">Sortir del joc?</div>
+    <div class="modal-text">El teu progrés es guardarà. Podràs continuar des d'aquí quan vulguis.</div>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-sortir').classList.remove('visible')">Continuar jugant</button>
+      <button class="btn-modal-confirm" style="background:linear-gradient(135deg,#2d5a3d,#6aab7a)" onclick="confirmarSortir()">Sortir</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL CONFIRMACIÓ REINICI -->
 <div class="modal-overlay" id="modal-reinici">
   <div class="modal">
@@ -275,6 +290,7 @@
 <!-- PANTALLA JOC -->
 <div id="screen-quiz">
   <div class="quiz-header">
+    <button class="btn-sortir" onclick="demanarSortir()" title="Sortir del joc">✕</button>
     <div class="quiz-progress-wrap">
       <div class="quiz-progress-text">
         <span id="prog-text">Pregunta 1 de 100</span>
@@ -551,12 +567,17 @@ function respondre(idx) {
   // Guarda progrés (idx s'incrementa quan es prem Següent)
   guardarEstatJugador(jugadorActiu, jocActiu);
 
+  // Mostra el botó per si l'usuari vol saltar el vídeo
   document.getElementById('btn-seguent').textContent =
     jocActiu.idx < jocActiu.ordre.length - 1 ? 'Següent pregunta →' : 'Veure resultat 🏆';
   document.getElementById('btn-seguent').classList.add('visible');
+
+  // Passa automàticament quan acaba el vídeo
+  mostrarReaccio(encertat, () => seguent());
 }
 
 function seguent() {
+  tancarReaccioActiva(); // Tanca el vídeo si encara és actiu
   jocActiu.idx++;
   guardarEstatJugador(jugadorActiu, jocActiu);
 
@@ -570,7 +591,19 @@ function seguent() {
 }
 
 // ── ANIMACIÓ PERSONATGE ───────────────────────────────────────────────
-function mostrarReaccio(encertat) {
+let reaccioOverlayActiu = null;
+
+function tancarReaccioActiva() {
+  if (reaccioOverlayActiu) {
+    reaccioOverlayActiu.style.opacity = '0';
+    reaccioOverlayActiu.style.transition = 'opacity .2s';
+    setTimeout(() => { reaccioOverlayActiu?.remove(); reaccioOverlayActiu = null; }, 200);
+  }
+}
+
+function mostrarReaccio(encertat, callback) {
+  tancarReaccioActiva();
+
   const msgs = encertat ? MSG_OK : MSG_ERR;
   const msg  = msgs[Math.floor(Math.random() * msgs.length)];
   const tipus = encertat ? 'ok' : 'ko';
@@ -580,6 +613,7 @@ function mostrarReaccio(encertat) {
 
   const overlay = document.createElement('div');
   overlay.className = 'reaccio-overlay';
+  overlay.style.cursor = 'pointer';
   overlay.innerHTML = `
     <div class="reaccio-wrap">
       <video autoplay muted playsinline
@@ -589,15 +623,25 @@ function mostrarReaccio(encertat) {
       <div class="reaccio-text ${encertat ? 'ok' : 'error'}">${msg}</div>
     </div>`;
   document.body.appendChild(overlay);
+  reaccioOverlayActiu = overlay;
 
-  const video = overlay.querySelector('video');
   const tancar = () => {
+    if (!reaccioOverlayActiu) return;
     overlay.style.opacity = '0';
     overlay.style.transition = 'opacity .3s';
-    setTimeout(() => overlay.remove(), 300);
+    setTimeout(() => {
+      overlay.remove();
+      reaccioOverlayActiu = null;
+      if (callback) callback();
+    }, 300);
   };
+
+  const video = overlay.querySelector('video');
   video.addEventListener('ended', tancar);
-  setTimeout(tancar, 4500);
+  // Clic per saltar
+  overlay.addEventListener('click', tancar);
+  // Màxim 4.5s
+  setTimeout(() => { if (reaccioOverlayActiu === overlay) tancar(); }, 4500);
 }
 
 // ── RESULTAT FINAL ────────────────────────────────────────────────────
@@ -622,6 +666,19 @@ function mostrarResultat(estat) {
 }
 
 function tornarInici() {
+  mostraScreen('start');
+  renderStartScreen();
+}
+
+// ── SORTIR ────────────────────────────────────────────────────────────
+function demanarSortir() {
+  document.getElementById('modal-sortir').classList.add('visible');
+}
+
+function confirmarSortir() {
+  tancarReaccioActiva();
+  document.getElementById('modal-sortir').classList.remove('visible');
+  guardarEstatJugador(jugadorActiu, jocActiu);
   mostraScreen('start');
   renderStartScreen();
 }
