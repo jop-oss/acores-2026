@@ -126,25 +126,11 @@
     /* ── REACCIÓ PERSONATGE ── */
     .reaccio-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;pointer-events:none;background:rgba(0,0,0,.15)}
     .reaccio-wrap{display:flex;flex-direction:column;align-items:center;gap:.5rem}
-    .reaccio-img{width:140px;height:140px;object-fit:cover;object-position:top;border-radius:50%;border:4px solid var(--verd2);box-shadow:0 0 40px rgba(106,171,122,.5)}
-    .reaccio-img.error{border-color:var(--error);box-shadow:0 0 40px rgba(224,85,85,.5)}
+    .reaccio-video{border-radius:50%}
     .reaccio-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.5)}
     .reaccio-text.ok{color:var(--verd2)} .reaccio-text.error{color:#ff8a8a}
 
-    /* Animacions personatge */
-    @keyframes jump{0%,100%{transform:translateY(0) scale(1)}25%{transform:translateY(-40px) scale(1.05)}50%{transform:translateY(-55px) scale(1.08)}75%{transform:translateY(-30px) scale(1.03)}}
-    @keyframes dance{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-12deg) scale(1.06)}40%{transform:rotate(12deg) scale(1.06)}60%{transform:rotate(-8deg) scale(1.04)}80%{transform:rotate(8deg) scale(1.04)}}
-    @keyframes chulo{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.1) rotate(-3deg)}60%{transform:scale(1.12) rotate(3deg)}}
-    @keyframes cry{0%,100%{transform:translateY(0) rotate(0)}20%{transform:translateY(3px) rotate(-2deg)}40%{transform:translateY(5px) rotate(2deg)}60%{transform:translateY(3px) rotate(-2deg)}}
-    @keyframes angry{0%,100%{transform:rotate(0) scale(1)}15%{transform:rotate(-5deg) scale(1.05)}30%{transform:rotate(5deg) scale(1.05)}45%{transform:rotate(-4deg) scale(1.03)}60%{transform:rotate(4deg) scale(1.03)}}
-    @keyframes shrink{0%{transform:scale(1)}50%{transform:scale(.92)}100%{transform:scale(1)}}
-
-    .anim-jump{animation:jump .6s ease 2}
-    .anim-dance{animation:dance .5s ease 3}
-    .anim-chulo{animation:chulo .7s ease 2}
-    .anim-cry{animation:cry .4s ease 4}
-    .anim-angry{animation:angry .35s ease 4}
-    .anim-shrink{animation:shrink .5s ease 3}
+    /* Animacions via vídeo MP4 */
 
     /* ── RESULTAT ── */
     #screen-result{display:none;min-height:calc(100vh - 60px);align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
@@ -354,8 +340,7 @@ const IMGS = {
 };
 
 // Reaccions positives i negatives per CSS
-const ANIM_OK  = ['anim-jump','anim-dance','anim-chulo'];
-const ANIM_ERR = ['anim-cry','anim-angry','anim-shrink'];
+
 const MSG_OK   = ['🎉 Excel·lent!','⭐ Correcte!','🔥 Molt bé!','💪 Eso es!','🌋 Boom!'];
 const MSG_ERR  = ['😅 Ups...','💀 Fallada!','😢 Oh no...','🤦 Ai ai ai...','😤 Mala sort!'];
 
@@ -586,21 +571,33 @@ function seguent() {
 
 // ── ANIMACIÓ PERSONATGE ───────────────────────────────────────────────
 function mostrarReaccio(encertat) {
-  const anims = encertat ? ANIM_OK : ANIM_ERR;
-  const msgs  = encertat ? MSG_OK  : MSG_ERR;
-  const anim  = anims[Math.floor(Math.random() * anims.length)];
-  const msg   = msgs[Math.floor(Math.random() * msgs.length)];
+  const msgs = encertat ? MSG_OK : MSG_ERR;
+  const msg  = msgs[Math.floor(Math.random() * msgs.length)];
+  const tipus = encertat ? 'ok' : 'ko';
+  const videoSrc = `img/personatges/${jugadorActiu.toLowerCase()}_${tipus}.mp4`;
+  const borderColor = encertat ? '#6aab7a' : '#e05555';
+  const glowColor = encertat ? 'rgba(106,171,122,.6)' : 'rgba(224,85,85,.6)';
 
   const overlay = document.createElement('div');
   overlay.className = 'reaccio-overlay';
   overlay.innerHTML = `
     <div class="reaccio-wrap">
-      <img class="reaccio-img ${encertat ? '' : 'error'} ${anim}" src="${IMGS[jugadorActiu]}" alt="${jugadorActiu}">
+      <video autoplay muted playsinline
+             style="width:200px;height:200px;object-fit:cover;border-radius:50%;border:4px solid ${borderColor};box-shadow:0 0 50px ${glowColor};display:block;">
+        <source src="${videoSrc}" type="video/mp4">
+      </video>
       <div class="reaccio-text ${encertat ? 'ok' : 'error'}">${msg}</div>
     </div>`;
   document.body.appendChild(overlay);
 
-  setTimeout(() => overlay.remove(), 1200);
+  const video = overlay.querySelector('video');
+  const tancar = () => {
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .3s';
+    setTimeout(() => overlay.remove(), 300);
+  };
+  video.addEventListener('ended', tancar);
+  setTimeout(tancar, 4500);
 }
 
 // ── RESULTAT FINAL ────────────────────────────────────────────────────
