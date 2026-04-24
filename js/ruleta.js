@@ -166,7 +166,7 @@ function dibuixaRuleta(angleOffset = 0) {
     const avatarR = r * 0.38;
     const ex = cx + avatarR * Math.cos(midAngle);
     const ey = cy + avatarR * Math.sin(midAngle);
-    const mida = n <= 4 ? 28 : 22;
+    const mida = n <= 4 ? 52 : 40;
     const im = IMGS_JUGADORS[j.nom];
     if (im && im.complete && im.naturalWidth > 0) {
       ctx.save();
@@ -316,14 +316,17 @@ function renderHistorial() {
     list.innerHTML = '<p class="historial-buit">Encara no hi ha resultats</p>';
     return;
   }
-  list.innerHTML = hist.map(h => `
+  list.innerHTML = hist.map(h => {
+    const jugador = JUGADORS.find(j => j.nom === h.nom);
+    const imgSrc = h.img || (jugador ? jugador.img : '');
+    return `
     <div class="historial-item">
-      <img src="${h.img || ''}" alt="${h.nom}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;object-position:top;border:1.5px solid ${h.color};flex-shrink:0">
+      <img src="${imgSrc}" alt="${h.nom}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid ${h.color};flex-shrink:0">
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
       <span class="hist-hora">${h.dia ? h.dia + ' ' : ''}${h.hora}</span>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 const PIN_ESBORRA = '2468';
