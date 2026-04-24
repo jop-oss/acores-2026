@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(sed -n '528,532p' \"C:/Users/Jordi/Documents/GitHub/acores-2026/jocs.html\")",
-      "Bash(sed -n '809,812p' \"C:/Users/Jordi/Documents/GitHub/acores-2026/jocs.html\")",
-      "Bash(sed -n '884,896p' \"C:/Users/Jordi/Documents/GitHub/acores-2026/jocs.html\")"
-    ]
-  }
-}
