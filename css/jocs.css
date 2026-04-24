@@ -334,6 +334,7 @@
       font-weight: 600;
       color: var(--verd2);
       align-self: center;
+      margin-bottom: 0.5rem;
     }
 
     /* Paraula secreta */
@@ -351,7 +352,6 @@
       padding: 2rem 1.5rem;
       box-shadow: 0 0 40px rgba(45,90,61,.25);
       animation: slideIn .3s ease;
-      margin-top: 2px;
     }
     .qqs-paraula-text {
       font-family: 'Playfair Display', serif;
