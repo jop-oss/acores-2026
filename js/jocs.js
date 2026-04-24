@@ -45,6 +45,10 @@ function seleccionarJugador(nom) {
 
 function entrarJoc() {
   if (!jugadorActiu) return;
+  const avatarEl = document.getElementById('joc-selector-avatar');
+  const nomEl = document.getElementById('joc-selector-nom');
+  if (avatarEl) avatarEl.src = IMGS[jugadorActiu] || '';
+  if (nomEl) nomEl.textContent = jugadorActiu;
   mostraScreen('joc-selector');
 }
 
@@ -54,7 +58,7 @@ function seleccionarModeJoc(mode) {
     mostraScreen('start');
     renderStartScreen();
   } else if (mode === 'qui-que') {
-    // Pendent d'implementar
+    // Pendent d’implementar
     alert('Properament: Qui/Què sóc?');
   }
 }
