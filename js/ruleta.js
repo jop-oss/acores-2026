@@ -3,28 +3,21 @@
    ============================================= */
 
 const JUGADORS = [
-  { nom: 'Jordi', color: '#4a9eff', vid: 'img/personatges/jordi_ruleta.mp4' },
-  { nom: 'Anna',  color: '#ff6b9d', vid: 'img/personatges/anna_ruleta.mp4'  },
-  { nom: 'Laia',  color: '#ffd166', vid: 'img/personatges/laia_ruleta.mp4'  },
-  { nom: 'Mons',  color: '#a8d8b0', vid: 'img/personatges/mons_ruleta.mp4'  },
-  { nom: 'Xu',    color: '#ff9f43', vid: 'img/personatges/xu_ruleta.mp4'    },
-  { nom: 'Joa',   color: '#c678dd', vid: 'img/personatges/joa_ruleta.mp4'   },
+  { nom: 'Jordi', color: '#4a9eff', img: 'img/avatars/Jordi.jpeg', vid: 'img/personatges/jordi_ruleta.mp4' },
+  { nom: 'Anna',  color: '#ff6b9d', img: 'img/avatars/Anna.jpeg',  vid: 'img/personatges/anna_ruleta.mp4'  },
+  { nom: 'Laia',  color: '#ffd166', img: 'img/avatars/Laia.jpeg',  vid: 'img/personatges/laia_ruleta.mp4'  },
+  { nom: 'Mons',  color: '#a8d8b0', img: 'img/avatars/Mons.jpeg',  vid: 'img/personatges/mons_ruleta.mp4'  },
+  { nom: 'Xu',    color: '#ff9f43', img: 'img/avatars/Xu.jpeg',    vid: 'img/personatges/xu_ruleta.mp4'    },
+  { nom: 'Joa',   color: '#c678dd', img: 'img/avatars/Joa.jpeg',   vid: 'img/personatges/joa_ruleta.mp4'   },
 ];
 
-// Precàrrega de videos ocults per poder-ne capturar frames al canvas
-const VIDEOS_JUGADORS = {};
+// Precàrrega d'imatges estàtiques (JPEG) per al canvas
+const IMGS_JUGADORS = {};
 JUGADORS.forEach(j => {
-  const v = document.createElement('video');
-  v.src = j.vid;
-  v.muted = true;
-  v.playsInline = true;
-  v.preload = 'auto';
-  v.style.display = 'none';
-  v.currentTime = 0.1; // posiciona al primer frame
-  v.addEventListener('seeked', () => dibuixaRuleta(anglActual), { once: false });
-  v.addEventListener('loadeddata', () => { v.currentTime = 0.1; });
-  document.body.appendChild(v);
-  VIDEOS_JUGADORS[j.nom] = v;
+  const im = new Image();
+  im.onload = () => dibuixaRuleta(anglActual);
+  im.src = j.img;
+  IMGS_JUGADORS[j.nom] = im;
 });
 
 const HISTORIAL_KEY = 'ruleta_historial_v1';
@@ -174,15 +167,16 @@ function dibuixaRuleta(angleOffset = 0) {
     const ex = cx + avatarR * Math.cos(midAngle);
     const ey = cy + avatarR * Math.sin(midAngle);
     const mida = n <= 4 ? 58 : 46;
-    const v = VIDEOS_JUGADORS[j.nom];
-    if (v && v.readyState >= 2) {
+    const im = IMGS_JUGADORS[j.nom];
+    if (im && im.complete && im.naturalWidth > 0) {
       ctx.save();
       ctx.beginPath();
       ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
       ctx.clip();
-      // Capturem la part superior del frame (la cara)
-      const srcH = v.videoHeight * 0.55;
-      ctx.drawImage(v, 0, 0, v.videoWidth, srcH, ex - mida / 2, ey - mida / 2, mida, mida);
+      // Crop centrat: agafem un quadrat de la part superior (cara i bust)
+      const cropSize = Math.min(im.naturalWidth, im.naturalHeight * 0.7);
+      const cropX = (im.naturalWidth - cropSize) / 2;
+      ctx.drawImage(im, cropX, 0, cropSize, cropSize, ex - mida / 2, ey - mida / 2, mida, mida);
       ctx.restore();
       // Vora blanca
       ctx.beginPath();
@@ -274,7 +268,7 @@ function mostrarResultat(angle, participants, arc) {
   const nomOverlay = document.getElementById('guanyador-nom-overlay');
   const popup = document.getElementById('guanyador-popup');
 
-  cercle.innerHTML = `<video src="${guanyador.vid}" autoplay muted playsinline loop style="width:100%;height:100%;object-fit:cover;object-position:top"></video>`;
+  cercle.innerHTML = `<img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%">`;
   nomOverlay.textContent = guanyador.nom;
   nomOverlay.style.color = guanyador.color;
   cercle.style.borderColor = guanyador.color;
@@ -290,7 +284,7 @@ function mostrarResultat(angle, participants, arc) {
       popup.style.animation = '';
       // Mostra resultat
       const bloc = document.getElementById('resultat-bloc');
-      document.getElementById('resultat-emoji').innerHTML = `<div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${guanyador.color};background:#0a1628;margin:0 auto"><video src="${guanyador.vid}" autoplay muted playsinline loop style="width:100%;height:100%;object-fit:cover;object-position:top"></video></div>`;
+      document.getElementById('resultat-emoji').innerHTML = `<div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${guanyador.color};background:#0a1628;margin:0 auto"><img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%"></div>`;
       document.getElementById('resultat-nom').textContent = guanyador.nom;
       document.getElementById('resultat-pregunta').textContent = pregunta;
       bloc.style.display = 'block';
@@ -328,29 +322,17 @@ function renderHistorial() {
   list.innerHTML = hist.map(h => {
     const jugador = JUGADORS.find(j => j.nom === h.nom);
     const color = h.color || (jugador ? jugador.color : '#6aab7a');
+    const imgSrc = jugador ? jugador.img : '';
     return `
     <div class="historial-item">
-      <canvas class="hist-avatar" data-nom="${h.nom}" width="36" height="36"
-        style="border-radius:50%;border:2px solid ${color};flex-shrink:0;background:#0a1628"></canvas>
+      <div style="width:36px;height:36px;border-radius:50%;border:2px solid ${color};flex-shrink:0;overflow:hidden;background:#0a1628">
+        <img src="${imgSrc}" alt="${h.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%">
+      </div>
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
       <span class="hist-hora">${h.dia ? h.dia + ' ' : ''}${h.hora}</span>
     </div>
   `}).join('');
-
-  // Pintar el frame estàtic de cada avatar
-  document.querySelectorAll('.hist-avatar').forEach(cv => {
-    const nom = cv.dataset.nom;
-    const v = VIDEOS_JUGADORS[nom];
-    if (!v) return;
-    const draw = () => {
-      const ctx = cv.getContext('2d');
-      const srcH = v.videoHeight * 0.55;
-      ctx.drawImage(v, 0, 0, v.videoWidth, srcH, 0, 0, 36, 36);
-    };
-    if (v.readyState >= 2) { draw(); }
-    else { v.addEventListener('seeked', draw, { once: true }); }
-  });
 }
 
 const PIN_ESBORRA = '2468';
