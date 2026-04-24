@@ -3,13 +3,22 @@
    ============================================= */
 
 const JUGADORS = [
-  { nom: 'Jordi', color: '#4a9eff', emoji: '🧔' },
-  { nom: 'Anna',  color: '#ff6b9d', emoji: '👩' },
-  { nom: 'Laia',  color: '#ffd166', emoji: '👧' },
-  { nom: 'Mons',  color: '#a8d8b0', emoji: '👴' },
-  { nom: 'Xu',    color: '#ff9f43', emoji: '👵' },
-  { nom: 'Joa',   color: '#c678dd', emoji: '🧓' },
+  { nom: 'Jordi', color: '#4a9eff', img: 'img/jordi.gif' },
+  { nom: 'Anna',  color: '#ff6b9d', img: 'img/anna.gif'  },
+  { nom: 'Laia',  color: '#ffd166', img: 'img/laia.gif'  },
+  { nom: 'Mons',  color: '#a8d8b0', img: 'img/mons.gif'  },
+  { nom: 'Xu',    color: '#ff9f43', img: 'img/xu.gif'    },
+  { nom: 'Joa',   color: '#c678dd', img: 'img/joa.gif'   },
 ];
+
+// Precàrrega d'imatges per al canvas
+const IMGS_JUGADORS = {};
+JUGADORS.forEach(j => {
+  const im = new Image();
+  im.onload = () => dibuixaRuleta(anglActual);
+  im.src = j.img;
+  IMGS_JUGADORS[j.nom] = im;
+});
 
 const HISTORIAL_KEY = 'ruleta_historial_v1';
 const MAX_HISTORIAL = 20;
@@ -153,16 +162,26 @@ function dibuixaRuleta(angleOffset = 0) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Emoji del jugador (prop del centre)
-    const emojiR = r * 0.38;
-    const ex = cx + emojiR * Math.cos(midAngle);
-    const ey = cy + emojiR * Math.sin(midAngle);
-    ctx.save();
-    ctx.font = `${n <= 4 ? 20 : 16}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(j.emoji, ex, ey);
-    ctx.restore();
+    // Avatar circular del jugador (prop del centre)
+    const avatarR = r * 0.38;
+    const ex = cx + avatarR * Math.cos(midAngle);
+    const ey = cy + avatarR * Math.sin(midAngle);
+    const mida = n <= 4 ? 28 : 22;
+    const im = IMGS_JUGADORS[j.nom];
+    if (im && im.complete && im.naturalWidth > 0) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
+      ctx.clip();
+      ctx.drawImage(im, ex - mida / 2, ey - mida / 2, mida, mida);
+      ctx.restore();
+      // Vora blanca al cercle
+      ctx.beginPath();
+      ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
 
     // Nom del jugador (més enfora)
     const textR = r * 0.68;
@@ -256,11 +275,12 @@ function mostrarResultat(angle, participants, arc) {
 
   const pregunta = getPregunta();
 
-  // Mostra resultat
-  document.getElementById('resultat-emoji').textContent = guanyador.emoji;
+  // Mostra resultat amb avatar
+  const bloc = document.getElementById('resultat-bloc');
+  const emojiEl = document.getElementById('resultat-emoji');
+  emojiEl.innerHTML = `<img src="${guanyador.img}" alt="${guanyador.nom}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid ${guanyador.color}">`;
   document.getElementById('resultat-nom').textContent = guanyador.nom;
   document.getElementById('resultat-pregunta').textContent = pregunta;
-  const bloc = document.getElementById('resultat-bloc');
   bloc.style.display = 'block';
   bloc.style.borderColor = guanyador.color;
 
@@ -275,8 +295,9 @@ function mostrarResultat(angle, participants, arc) {
 function afegirHistorial(jugador, pregunta) {
   const hist = getHistorial();
   const ara = new Date();
+  const dia = ara.getDate().toString().padStart(2, '0') + '/' + (ara.getMonth() + 1).toString().padStart(2, '0');
   const hora = ara.getHours().toString().padStart(2, '0') + ':' + ara.getMinutes().toString().padStart(2, '0');
-  hist.unshift({ nom: jugador.nom, color: jugador.color, pregunta, hora });
+  hist.unshift({ nom: jugador.nom, color: jugador.color, img: jugador.img, pregunta, dia, hora });
   if (hist.length > MAX_HISTORIAL) hist.pop();
   localStorage.setItem(HISTORIAL_KEY, JSON.stringify(hist));
   renderHistorial();
@@ -297,15 +318,23 @@ function renderHistorial() {
   }
   list.innerHTML = hist.map(h => `
     <div class="historial-item">
-      <div class="hist-dot" style="background:${h.color}"></div>
+      <img src="${h.img || ''}" alt="${h.nom}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;object-position:top;border:1.5px solid ${h.color};flex-shrink:0">
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
-      <span class="hist-hora">${h.hora}</span>
+      <span class="hist-hora">${h.dia ? h.dia + ' ' : ''}${h.hora}</span>
     </div>
   `).join('');
 }
 
+const PIN_ESBORRA = '2468';
+
 function clearHistorial() {
+  const pin = prompt('Introdueix el PIN per esborrar l\'historial:');
+  if (pin === null) return;
+  if (pin !== PIN_ESBORRA) {
+    alert('PIN incorrecte.');
+    return;
+  }
   localStorage.removeItem(HISTORIAL_KEY);
   renderHistorial();
 }
