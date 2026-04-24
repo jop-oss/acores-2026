@@ -83,6 +83,16 @@ function getActius() {
 }
 
 // ── Canvas ────────────────────────────────────
+// Paleta de colors més vius i contrastats
+const COLORS_RULETA = [
+  { base: '#e05555', clar: '#ff8a8a' }, // vermell
+  { base: '#e09020', clar: '#ffc55a' }, // taronja
+  { base: '#d4b800', clar: '#ffe55a' }, // groc
+  { base: '#3aaa5c', clar: '#6adb8a' }, // verd
+  { base: '#2288cc', clar: '#55bbff' }, // blau
+  { base: '#9944cc', clar: '#cc77ff' }, // violeta
+];
+
 function dibuixaRuleta(angleOffset = 0) {
   const canvas = document.getElementById('ruleta-canvas');
   const ctx = canvas.getContext('2d');
@@ -90,7 +100,7 @@ function dibuixaRuleta(angleOffset = 0) {
   const H = canvas.height;
   const cx = W / 2;
   const cy = H / 2;
-  const r = W / 2 - 4;
+  const r = W / 2 - 6;
 
   ctx.clearRect(0, 0, W, H);
 
@@ -98,44 +108,93 @@ function dibuixaRuleta(angleOffset = 0) {
   const n = participants.length;
   const arc = (2 * Math.PI) / n;
 
+  // Ombra exterior de la ruleta
+  ctx.save();
+  ctx.shadowColor = 'rgba(106,171,122,0.35)';
+  ctx.shadowBlur = 24;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.fillStyle = '#0a1628';
+  ctx.fill();
+  ctx.restore();
+
   participants.forEach((j, i) => {
     const startAngle = angleOffset + i * arc - Math.PI / 2;
     const endAngle = startAngle + arc;
+    const midAngle = startAngle + arc / 2;
+    const col = COLORS_RULETA[i % COLORS_RULETA.length];
 
-    // Sector
+    // Sector amb gradient radial simulat (color clar al centre, fosc a fora)
+    const grd = ctx.createRadialGradient(cx, cy, r * 0.15, cx, cy, r);
+    grd.addColorStop(0, col.clar);
+    grd.addColorStop(1, col.base);
+
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, r, startAngle, endAngle);
     ctx.closePath();
-    ctx.fillStyle = j.color + 'cc';
+    ctx.fillStyle = grd;
     ctx.fill();
-    ctx.strokeStyle = '#0a1628';
+
+    // Separadors blancs fins
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, endAngle);
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Línia de divisió radial més marcada
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r * Math.cos(startAngle), cy + r * Math.sin(startAngle));
+    ctx.strokeStyle = 'rgba(0,0,0,0.4)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Text
-    const midAngle = startAngle + arc / 2;
-    const textR = r * 0.62;
+    // Emoji del jugador (prop del centre)
+    const emojiR = r * 0.38;
+    const ex = cx + emojiR * Math.cos(midAngle);
+    const ey = cy + emojiR * Math.sin(midAngle);
+    ctx.save();
+    ctx.font = `${n <= 4 ? 20 : 16}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(j.emoji, ex, ey);
+    ctx.restore();
+
+    // Nom del jugador (més enfora)
+    const textR = r * 0.68;
     const tx = cx + textR * Math.cos(midAngle);
     const ty = cy + textR * Math.sin(midAngle);
-
     ctx.save();
     ctx.translate(tx, ty);
     ctx.rotate(midAngle + Math.PI / 2);
     ctx.fillStyle = '#fff';
-    ctx.font = `bold ${n <= 4 ? 16 : 13}px sans-serif`;
+    ctx.font = `bold ${n <= 4 ? 15 : 12}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0,0,0,0.6)';
-    ctx.shadowBlur = 4;
+    ctx.shadowColor = 'rgba(0,0,0,0.8)';
+    ctx.shadowBlur = 6;
     ctx.fillText(j.nom, 0, 0);
     ctx.restore();
   });
 
-  // Cercle central
+  // Anell exterior decoratiu
   ctx.beginPath();
-  ctx.arc(cx, cy, 36, 0, 2 * Math.PI);
-  ctx.fillStyle = '#0a1628';
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#6aab7a';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // Cercle central
+  const cgrad = ctx.createRadialGradient(cx - 8, cy - 8, 2, cx, cy, 38);
+  cgrad.addColorStop(0, '#1a3a2a');
+  cgrad.addColorStop(1, '#0a1628');
+  ctx.beginPath();
+  ctx.arc(cx, cy, 38, 0, 2 * Math.PI);
+  ctx.fillStyle = cgrad;
   ctx.fill();
   ctx.strokeStyle = '#6aab7a';
   ctx.lineWidth = 3;
@@ -189,12 +248,9 @@ function spinRuleta() {
 }
 
 function mostrarResultat(angle, participants, arc) {
-  // El pin apunta cap a dalt (angle = -π/2 en coordenades canvas)
-  // L'angle actual desplaça el sector 0 a -π/2 + angle
-  // Calculem quin sector queda apuntant al pin
-  const pinAngle = -Math.PI / 2; // pin a dalt
-  // Angle relatiu: on apunta el pin dins la ruleta
-  let relatiu = ((pinAngle - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  // El sector 0 comença a -π/2 + angleOffset (el pin apunta a dalt = -π/2)
+  // Normalitzem l'angle de la ruleta per saber quin sector queda al pin
+  let relatiu = ((2 * Math.PI) - (angle % (2 * Math.PI))) % (2 * Math.PI);
   const idx = Math.floor(relatiu / arc) % participants.length;
   const guanyador = participants[idx];
 
