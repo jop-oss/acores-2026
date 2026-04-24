@@ -77,7 +77,7 @@
     .rank-punts{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--verd2)}
     .rank-partides{font-size:.68rem;color:var(--text2);display:block;text-align:right}
 
-    /* ── PANTALLA JOC ── */
+    /* ── PANTALLA JOC QUIZ ── */
     #screen-quiz{display:none;padding:1.5rem;max-width:760px;margin:0 auto}
     .quiz-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
     .quiz-progress-wrap{flex:1;min-width:180px}
@@ -120,9 +120,7 @@
     .reaccio-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.5)}
     .reaccio-text.ok{color:var(--verd2)} .reaccio-text.error{color:#ff8a8a}
 
-    /* Animacions via vídeo MP4 */
-
-    /* ── RESULTAT ── */
+    /* ── RESULTAT QUIZ ── */
     #screen-result{display:none;min-height:calc(100vh - 60px);align-items:center;justify-content:center;flex-direction:column;padding:2rem;text-align:center}
     .result-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--gold);box-shadow:0 0 30px rgba(240,180,41,.4);margin-bottom:1rem}
     .result-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;margin-bottom:.4rem}
@@ -162,7 +160,6 @@
       .start-grid{gap:1rem}
     }
 
-
     /* ── SELECCIÓ MODE JOC ── */
     #screen-joc-selector{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem}
     .joc-selector-wrap{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
@@ -181,310 +178,301 @@
     .joc-selector-back{margin-top:.5rem;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:.85rem;padding:.5rem 1rem;border-radius:8px;cursor:pointer;transition:all .2s}
     .joc-selector-back:hover{border-color:var(--verd2);color:var(--text)}
 
-/* ══════════════════════════════════════════════════════
-   QUI / QUÈ SÓC?  — afegir al final de css/jocs.css
-   ══════════════════════════════════════════════════════ */
 
-/* ── Pantalla preparació ── */
-#screen-qqs-prep {
-  min-height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 1.5rem 1rem 3rem;
-}
-.qqs-prep-wrap {
-  width: 100%;
-  max-width: 560px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
-}
-.qqs-back-btn {
-  align-self: flex-start;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: .45rem 1rem;
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: .82rem;
-  cursor: pointer;
-  transition: all .2s;
-  margin-bottom: .5rem;
-}
-.qqs-back-btn:hover { border-color: var(--verd2); color: var(--text); }
+    /* ══════════════════════════════════════════════════════
+       QUI / QUÈ SÓC?
+       ══════════════════════════════════════════════════════ */
 
-.qqs-header { text-align: center; margin-bottom: .75rem; }
-.qqs-logo   { font-size: 2.5rem; margin-bottom: .4rem; }
-.qqs-title  {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--verd2), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: .3rem;
-}
-.qqs-desc { color: var(--text2); font-size: .85rem; line-height: 1.5; }
+    #screen-qqs {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .qqs-wrap {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }
 
-.qqs-section-label {
-  align-self: flex-start;
-  font-size: .75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--verd2);
-  margin-bottom: .4rem;
-  margin-top: .5rem;
-}
+    /* Botó tornar */
+    .qqs-back-btn {
+      align-self: flex-start;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .45rem 1rem;
+      color: var(--text2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: .25rem;
+    }
+    .qqs-back-btn:hover { border-color: var(--verd2); color: var(--text); }
 
-/* ── Grid categories ── */
-.qqs-categories-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .6rem;
-  width: 100%;
-}
-@media(min-width: 400px) { .qqs-categories-grid { grid-template-columns: repeat(3, 1fr); } }
+    /* Capçalera */
+    .qqs-header { text-align: center; margin-bottom: .25rem; }
+    .qqs-logo   { font-size: 2.5rem; margin-bottom: .4rem; }
+    .qqs-title  {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--verd2), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .3rem;
+    }
+    .qqs-desc { color: var(--text2); font-size: .85rem; line-height: 1.5; }
 
-.qqs-cat-btn {
-  background: var(--bg2);
-  border: 2px solid var(--border);
-  border-radius: 14px;
-  padding: .8rem .5rem;
-  cursor: pointer;
-  transition: all .2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .35rem;
-  color: var(--text);
-}
-.qqs-cat-btn:hover {
-  border-color: var(--verd2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(45,90,61,.35);
-}
-.qqs-cat-btn.selected {
-  border-color: var(--gold);
-  background: rgba(240,180,41,.07);
-  box-shadow: 0 0 0 3px rgba(240,180,41,.18);
-}
-.qqs-cat-emoji { font-size: 1.6rem; line-height: 1; }
-.qqs-cat-nom   { font-size: .72rem; font-weight: 600; color: var(--text2); text-align: center; line-height: 1.2; }
-.qqs-cat-btn.selected .qqs-cat-nom { color: var(--gold); }
+    /* Jugador actiu (reutilitza .jugador-actiu-wrap però sense margin-top) */
+    .qqs-jugador-wrap { margin-top: 0 !important; }
 
-/* ── Botó generar ── */
-.qqs-btn-generar {
-  margin-top: 1.25rem;
-  width: 100%;
-  background: linear-gradient(135deg, var(--verd), var(--verd2));
-  border: none;
-  border-radius: 12px;
-  padding: .9rem;
-  color: #fff;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .2s;
-}
-.qqs-btn-generar:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(45,90,61,.5);
-}
-.qqs-btn-generar:disabled {
-  opacity: .35;
-  cursor: not-allowed;
-}
+    /* Label de secció */
+    .qqs-section-label {
+      align-self: flex-start;
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--verd2);
+      margin-bottom: .25rem;
+      margin-top: .5rem;
+      width: 100%;
+    }
 
-/* ── Pantalla joc ── */
-#screen-qqs-joc {
-  min-height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem 1rem 3rem;
-}
-.qqs-joc-wrap {
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.qqs-joc-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1rem;
-}
-.qqs-joc-jugador {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: .4rem .9rem;
-}
-.qqs-joc-jugador img {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--verd2);
-}
-.qqs-joc-jugador span { font-size: .85rem; font-weight: 600; }
+    /* Grid categories */
+    .qqs-categories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .6rem;
+      width: 100%;
+    }
+    @media(max-width: 380px) { .qqs-categories-grid { grid-template-columns: repeat(2, 1fr); } }
 
-/* ── Loading ── */
-.qqs-loading {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 3rem 0;
-  width: 100%;
-}
-.qqs-spinner {
-  width: 40px; height: 40px;
-  border: 3px solid var(--border);
-  border-top-color: var(--verd2);
-  border-radius: 50%;
-  animation: qqsSpin .8s linear infinite;
-}
-@keyframes qqsSpin { to { transform: rotate(360deg); } }
-.qqs-loading-text { color: var(--text2); font-size: .9rem; }
+    .qqs-cat-btn {
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: .8rem .5rem;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+      color: var(--text);
+    }
+    .qqs-cat-btn:hover {
+      border-color: var(--verd2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(45,90,61,.35);
+    }
+    .qqs-cat-btn.selected {
+      border-color: var(--gold);
+      background: rgba(240,180,41,.07);
+      box-shadow: 0 0 0 3px rgba(240,180,41,.18);
+    }
+    .qqs-cat-emoji { font-size: 1.6rem; line-height: 1; }
+    .qqs-cat-nom   { font-size: .72rem; font-weight: 600; color: var(--text2); text-align: center; line-height: 1.2; }
+    .qqs-cat-btn.selected .qqs-cat-nom { color: var(--gold); }
 
-/* ── Badge categoria ── */
-.qqs-categoria-badge {
-  background: rgba(106,171,122,.1);
-  border: 1px solid var(--verd);
-  border-radius: 20px;
-  padding: .3rem .9rem;
-  font-size: .78rem;
-  font-weight: 600;
-  color: var(--verd2);
-}
+    /* Botó generar */
+    .qqs-btn-generar {
+      margin-top: .75rem;
+      width: 100%;
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none;
+      border-radius: 12px;
+      padding: .9rem;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .qqs-btn-generar:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(45,90,61,.5);
+    }
+    .qqs-btn-generar:disabled { opacity: .35; cursor: not-allowed; }
 
-/* ── Paraula secreta ── */
-.qqs-paraula-wrap { width: 100%; text-align: center; }
-.qqs-paraula-instruccio {
-  font-size: .8rem;
-  color: var(--text2);
-  margin-bottom: .75rem;
-}
-.qqs-paraula-card {
-  background: var(--bg2);
-  border: 2px solid var(--verd);
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 0 40px rgba(45,90,61,.25);
-  animation: slideIn .3s ease;
-}
-.qqs-paraula-text {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 8vw, 3.2rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--verd2), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.2;
-}
+    /* Loading */
+    .qqs-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 3rem 0;
+      width: 100%;
+    }
+    .qqs-spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--verd2);
+      border-radius: 50%;
+      animation: qqsSpin .8s linear infinite;
+    }
+    @keyframes qqsSpin { to { transform: rotate(360deg); } }
+    .qqs-loading-text { color: var(--text2); font-size: .9rem; }
 
-/* ── Pistes ── */
-.qqs-pistes-wrap {
-  width: 100%;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1rem;
-  animation: fadeIn .3s ease;
-}
-.qqs-pistes-title {
-  font-size: .78rem;
-  font-weight: 600;
-  color: var(--gold);
-  margin-bottom: .6rem;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-}
-.qqs-pista-item {
-  display: flex;
-  align-items: flex-start;
-  gap: .6rem;
-  font-size: .88rem;
-  color: var(--text);
-  line-height: 1.5;
-  padding: .4rem 0;
-  border-bottom: 1px solid var(--border);
-  animation: fadeIn .3s ease;
-}
-.qqs-pista-item:last-child { border-bottom: none; padding-bottom: 0; }
-.qqs-pista-num {
-  background: rgba(106,171,122,.15);
-  border: 1px solid var(--verd);
-  border-radius: 50%;
-  width: 22px; height: 22px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .7rem; font-weight: 700;
-  color: var(--verd2);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.qqs-pista-extra .qqs-pista-num { background: rgba(240,180,41,.12); border-color: var(--gold); color: var(--gold); }
+    /* Badge categoria */
+    .qqs-categoria-badge {
+      background: rgba(106,171,122,.1);
+      border: 1px solid var(--verd);
+      border-radius: 20px;
+      padding: .3rem .9rem;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--verd2);
+      align-self: center;
+    }
 
-/* ── Botons acció ── */
-.qqs-accions {
-  display: flex;
-  gap: .75rem;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.qqs-btn-pista, .qqs-btn-canviar {
-  flex: 1;
-  min-width: 120px;
-  border-radius: 10px;
-  padding: .7rem .8rem;
-  font-family: 'DM Sans', sans-serif;
-  font-size: .88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-}
-.qqs-btn-pista {
-  background: rgba(240,180,41,.1);
-  border: 1px solid rgba(240,180,41,.4);
-  color: var(--gold);
-}
-.qqs-btn-pista:hover:not(:disabled) { background: rgba(240,180,41,.2); transform: translateY(-1px); }
-.qqs-btn-pista:disabled { opacity: .4; cursor: not-allowed; }
+    /* Paraula secreta */
+    .qqs-paraula-wrap { width: 100%; text-align: center; }
+    .qqs-paraula-instruccio {
+      font-size: .8rem;
+      color: var(--text2);
+      margin-bottom: .75rem;
+    }
+    .qqs-paraula-card {
+      background: var(--bg2);
+      border: 2px solid var(--verd);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 0 40px rgba(45,90,61,.25);
+      animation: slideIn .3s ease;
+    }
+    .qqs-paraula-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--verd2), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
 
-.qqs-btn-canviar {
-  background: rgba(106,171,122,.08);
-  border: 1px solid var(--border);
-  color: var(--text2);
-}
-.qqs-btn-canviar:hover { border-color: var(--verd2); color: var(--text); transform: translateY(-1px); }
+    /* Pistes */
+    .qqs-pistes-wrap {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+      animation: fadeIn .3s ease;
+    }
+    .qqs-pistes-title {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: .6rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .qqs-pista-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.5;
+      padding: .4rem 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn .3s ease;
+    }
+    .qqs-pista-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .qqs-pista-num {
+      background: rgba(106,171,122,.15);
+      border: 1px solid var(--verd);
+      border-radius: 50%;
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700;
+      color: var(--verd2);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .qqs-pista-extra .qqs-pista-num {
+      background: rgba(240,180,41,.12);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
 
-.qqs-btn-nova {
-  width: 100%;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: .65rem;
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: .85rem;
-  cursor: pointer;
-  transition: all .2s;
-}
-.qqs-btn-nova:hover { border-color: var(--verd2); color: var(--text); }
+    /* Botons acció */
+    .qqs-accions {
+      display: flex;
+      gap: .75rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    .qqs-btn-pista, .qqs-btn-canviar {
+      flex: 1;
+      min-width: 120px;
+      border-radius: 10px;
+      padding: .7rem .8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+    }
+    .qqs-btn-pista {
+      background: rgba(240,180,41,.1);
+      border: 1px solid rgba(240,180,41,.4);
+      color: var(--gold);
+    }
+    .qqs-btn-pista:hover:not(:disabled) { background: rgba(240,180,41,.2); transform: translateY(-1px); }
+    .qqs-btn-pista:disabled { opacity: .4; cursor: not-allowed; }
+
+    .qqs-btn-canviar {
+      background: rgba(106,171,122,.08);
+      border: 1px solid var(--border);
+      color: var(--text2);
+    }
+    .qqs-btn-canviar:hover { border-color: var(--verd2); color: var(--text); transform: translateY(-1px); }
+
+    .qqs-btn-nova {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .65rem;
+      color: var(--text2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .qqs-btn-nova:hover { border-color: var(--verd2); color: var(--text); }
+
+    /* Selector (bloc que s'amaga en generar) */
+    #qqs-selector { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+    /* Resultat (bloc que apareix en generar) */
+    #qqs-resultat {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }
+    #qqs-joc-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }

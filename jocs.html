@@ -28,7 +28,7 @@
     <a href="material-extra.html" class="nav-item">Material extra</a>
     <a href="jocs.html" class="nav-item active">Jocs</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
-      <a href="blog.html" class="nav-item">Blog</a>
+    <a href="blog.html" class="nav-item">Blog</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
 </nav>
@@ -96,10 +96,9 @@
 <!-- PANTALLA INICI (amb rànquing) -->
 <div id="screen-start">
   <div style="margin-bottom:1rem;">
-      <button onclick="mostraScreen('select')" style="background:none;border:1px solid rgba(106,171,122,0.2);border-radius:10px;padding:.5rem 1.2rem;color:#9bbfaa;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;">← Tornar</button>
-    </div>
+    <button onclick="mostraScreen('joc-selector')" style="background:none;border:1px solid rgba(106,171,122,0.2);border-radius:10px;padding:.5rem 1.2rem;color:#9bbfaa;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;">← Tornar</button>
+  </div>
   <div class="start-grid">
-    <!-- Esquerra: info joc + jugador actiu -->
     <div class="start-left">
       <div class="quiz-logo">🌋</div>
       <div class="quiz-title">Quiz Açores</div>
@@ -113,8 +112,6 @@
         <span class="dif-dot mitja">⬤ Mitjà — 30 preg. · 10 pts</span>
         <span class="dif-dot dificil">⬤ Difícil — 20 preg. · 20 pts</span>
       </div>
-
-      <!-- Jugador actiu -->
       <div class="jugador-actiu-wrap">
         <img class="jugador-actiu-avatar" id="jugador-actiu-avatar" src="" alt="">
         <div class="jugador-actiu-info">
@@ -123,8 +120,6 @@
         </div>
         <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
       </div>
-
-      <!-- Progrés joc en curs -->
       <div class="progres-joc-wrap" id="progres-wrap" style="display:none">
         <div class="progres-joc-text">
           <span id="progres-text">Progrés actual</span>
@@ -135,14 +130,11 @@
         </div>
         <div class="progres-badge" id="progres-badge"></div>
       </div>
-
       <div class="start-btns">
         <button class="btn-start-joc" id="btn-start-joc" onclick="iniciarJoc()">Comença el Quiz 🚀</button>
         <button class="btn-reiniciar" id="btn-reiniciar" onclick="demanarReinici()" style="display:none">↺ Reiniciar joc</button>
       </div>
     </div>
-
-    <!-- Dreta: rànquing -->
     <div class="ranking-wrap">
       <div class="ranking-title">🏆 Rànquing</div>
       <div class="ranking-list-home" id="ranking-list-home"></div>
@@ -150,7 +142,7 @@
   </div>
 </div>
 
-<!-- PANTALLA JOC -->
+<!-- PANTALLA JOC QUIZ -->
 <div id="screen-quiz">
   <div class="quiz-header">
     <button class="btn-sortir" onclick="demanarSortir()" title="Sortir del joc">✕</button>
@@ -168,7 +160,6 @@
       <div class="quiz-score-label">punts</div>
     </div>
   </div>
-
   <div class="question-card" id="question-card">
     <div class="question-meta">
       <span class="q-cat" id="q-cat"></span>
@@ -182,7 +173,7 @@
   <button class="btn-seguent" id="btn-seguent" onclick="seguent()">Següent pregunta →</button>
 </div>
 
-<!-- PANTALLA RESULTAT -->
+<!-- PANTALLA RESULTAT QUIZ -->
 <div id="screen-result">
   <img class="result-avatar" id="result-avatar" src="" alt="">
   <div class="result-title" id="result-title">Resultat final</div>
@@ -198,96 +189,86 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════
-     PANTALLA PREPARACIÓ: Qui/Què sóc?
-     ════════════════════════════════════════════════════════ -->
-<div id="screen-qqs-prep" style="display:none">
-  <div class="qqs-prep-wrap">
+<!-- ══════════════════════════════════════════════════════
+     PANTALLA QUI / QUÈ SÓC?  (una sola pantalla)
+     ══════════════════════════════════════════════════════ -->
+<div id="screen-qqs">
+  <div class="qqs-wrap">
+
+    <!-- Botó tornar -->
     <button class="qqs-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button>
 
+    <!-- Capçalera -->
     <div class="qqs-header">
       <div class="qqs-logo">🤔</div>
       <h2 class="qqs-title">Qui / Què sóc?</h2>
       <p class="qqs-desc">El jugador principal veu la paraula secreta.<br>Els altres fan preguntes de Sí / No / Ni sí ni no.</p>
     </div>
 
-    <div class="jugador-actiu-wrap" style="width:100%;max-width:560px">
-      <img class="jugador-actiu-avatar" id="qqs-jugador-actiu-avatar" src="" alt="">
+    <!-- Jugador actiu -->
+    <div class="jugador-actiu-wrap qqs-jugador-wrap">
+      <img class="jugador-actiu-avatar" id="qqs-jugador-avatar" src="" alt="">
       <div class="jugador-actiu-info">
-        <div class="jugador-actiu-nom" id="qqs-jugador-actiu-nom"></div>
+        <div class="jugador-actiu-nom" id="qqs-jugador-nom"></div>
         <div class="jugador-actiu-sub">Jugador principal</div>
       </div>
     </div>
 
-    <!-- Selecció de categoria -->
-    <div class="qqs-section-label" style="margin-top:1.25rem">Tria una categoria</div>
-    <div class="qqs-categories-grid" id="qqs-categories-grid"></div>
-
-    <!-- Botó generar -->
-    <button class="qqs-btn-generar" id="qqs-btn-generar" onclick="qqsGenerar()" disabled>
-      Generar paraula secreta 🎲
-    </button>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════════════════════
-     PANTALLA JOC: Qui/Què sóc?
-     ════════════════════════════════════════════════════════ -->
-<div id="screen-qqs-joc" style="display:none">
-  <div class="qqs-joc-wrap">
-    <div class="qqs-joc-topbar">
-      <button class="qqs-back-btn" onclick="mostraScreen('qqs-prep')">← Tornar</button>
-      <div class="qqs-joc-jugador">
-        <img id="qqs-joc-avatar" src="" alt="">
-        <span id="qqs-joc-nom"></span>
-      </div>
-    </div>
-
-    <!-- Estat: carregant -->
-    <div id="qqs-loading" class="qqs-loading">
-      <div class="qqs-spinner"></div>
-      <div class="qqs-loading-text">Generant paraula secreta…</div>
-    </div>
-
-    <!-- Contingut joc -->
-    <div id="qqs-joc-content" style="display:none">
-      <div class="qqs-categoria-badge" id="qqs-categoria-badge"></div>
-
-      <!-- Paraula secreta -->
-      <div class="qqs-paraula-wrap">
-        <div class="qqs-paraula-instruccio">Mira la paraula i passa el mòbil als altres</div>
-        <div class="qqs-paraula-card" id="qqs-paraula-card">
-          <div class="qqs-paraula-text" id="qqs-paraula-text"></div>
-        </div>
-      </div>
-
-      <!-- Pistes (apareixen acumulades) -->
-      <div class="qqs-pistes-wrap" id="qqs-pistes-wrap" style="display:none">
-        <div class="qqs-pistes-title">💡 Pistes</div>
-        <div id="qqs-pistes-list"></div>
-      </div>
-
-      <!-- Botons d'acció -->
-      <div class="qqs-accions">
-        <button class="qqs-btn-pista" id="qqs-btn-pista" onclick="qqsMostrarPista()">
-          💡 Pista <span id="qqs-pista-comptador">(1/3)</span>
-        </button>
-        <button class="qqs-btn-canviar" onclick="qqsCanviarParaula()">
-          🔄 Canviar paraula
-        </button>
-      </div>
-
-      <button class="qqs-btn-nova" onclick="qqsNovaPartida()">
-        Nova partida
+    <!-- BLOC SELECTOR (categories + botó generar) -->
+    <div id="qqs-selector">
+      <div class="qqs-section-label">Tria una categoria</div>
+      <div class="qqs-categories-grid" id="qqs-categories-grid"></div>
+      <button class="qqs-btn-generar" id="qqs-btn-generar" onclick="qqsGenerar()" disabled>
+        Generar paraula secreta 🎲
       </button>
     </div>
+
+    <!-- BLOC RESULTAT (apareix després de generar) -->
+    <div id="qqs-resultat" style="display:none; width:100%">
+
+      <!-- Loading -->
+      <div class="qqs-loading" id="qqs-loading">
+        <div class="qqs-spinner"></div>
+        <div class="qqs-loading-text">Generant paraula secreta…</div>
+      </div>
+
+      <!-- Contingut (apareix quan acaba el loading) -->
+      <div id="qqs-joc-content" style="display:none; width:100%">
+        <div class="qqs-categoria-badge" id="qqs-categoria-badge"></div>
+
+        <div class="qqs-paraula-wrap">
+          <div class="qqs-paraula-instruccio">Mira la paraula i passa el mòbil als altres</div>
+          <div class="qqs-paraula-card">
+            <div class="qqs-paraula-text" id="qqs-paraula-text"></div>
+          </div>
+        </div>
+
+        <div class="qqs-pistes-wrap" id="qqs-pistes-wrap" style="display:none">
+          <div class="qqs-pistes-title">💡 Pistes</div>
+          <div id="qqs-pistes-list"></div>
+        </div>
+
+        <div class="qqs-accions">
+          <button class="qqs-btn-pista" id="qqs-btn-pista" onclick="qqsMostrarPista()">
+            💡 Pista <span id="qqs-pista-comptador">(1/3)</span>
+          </button>
+          <button class="qqs-btn-canviar" onclick="qqsCanviarParaula()">
+            🔄 Canviar paraula
+          </button>
+        </div>
+
+        <button class="qqs-btn-nova" onclick="qqsNovaPartida()">
+          Nova partida
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-
-  <script src="js/config.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/jocs-data.js"></script>
-  <script src="js/jocs.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/jocs-data.js"></script>
+<script src="js/jocs.js"></script>
 </body>
 </html>
