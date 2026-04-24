@@ -173,8 +173,9 @@ function dibuixaRuleta(angleOffset = 0) {
       ctx.beginPath();
       ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
       ctx.clip();
-      // Crop centrat: agafem un quadrat de la part superior (cara i bust)
-      const cropSize = Math.min(im.naturalWidth, im.naturalHeight * 0.7);
+      // Crop: agafem un quadrat de la part superior (cara) — primer 30% de l'alçada
+      const cropH = im.naturalHeight * 0.30;
+      const cropSize = Math.min(im.naturalWidth, cropH);
       const cropX = (im.naturalWidth - cropSize) / 2;
       ctx.drawImage(im, cropX, 0, cropSize, cropSize, ex - mida / 2, ey - mida / 2, mida, mida);
       ctx.restore();
@@ -326,7 +327,7 @@ function renderHistorial() {
     return `
     <div class="historial-item">
       <div style="width:36px;height:36px;border-radius:50%;border:2px solid ${color};flex-shrink:0;overflow:hidden;background:#0a1628">
-        <img src="${imgSrc}" alt="${h.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%">
+        <img src="${imgSrc}" alt="${h.nom}" style="width:180%;height:180%;object-fit:cover;margin-left:-40%;margin-top:-5%">
       </div>
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
