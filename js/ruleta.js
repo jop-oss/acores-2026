@@ -158,8 +158,8 @@ function dibuixaRuleta(angleOffset = 0) {
     const startAngle = angleOffset + i * arc - Math.PI / 2;
     const endAngle = startAngle + arc;
     const midAngle = startAngle + arc / 2;
-    const col = COLORS_RULETA[i % COLORS_RULETA.length];
 
+    const baseColor = j.color;
     // Genera versió més clara del color del jugador per al gradient
     const grd = ctx.createRadialGradient(cx, cy, r * 0.15, cx, cy, r);
     grd.addColorStop(0, baseColor + "dd");
