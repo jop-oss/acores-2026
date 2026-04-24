@@ -293,7 +293,14 @@
   flex-shrink: 0;
 }
 
-/* Confetti */
+@keyframes zoomIn {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes zoomOut {
+  from { transform: scale(1);   opacity: 1; }
+  to   { transform: scale(1.2); opacity: 0; }
+}
 #confetti-container {
   position: fixed;
   top: 0; left: 0;

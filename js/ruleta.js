@@ -162,42 +162,28 @@ function dibuixaRuleta(angleOffset = 0) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Avatar circular del jugador (prop del centre)
-    const avatarR = r * 0.38;
+    // Avatar circular gran on estava el nom (zona exterior)
+    const avatarR = r * 0.65;
     const ex = cx + avatarR * Math.cos(midAngle);
     const ey = cy + avatarR * Math.sin(midAngle);
-    const mida = n <= 4 ? 52 : 40;
+    const mida = n <= 4 ? 58 : 46;
     const im = IMGS_JUGADORS[j.nom];
     if (im && im.complete && im.naturalWidth > 0) {
       ctx.save();
       ctx.beginPath();
       ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
       ctx.clip();
-      ctx.drawImage(im, ex - mida / 2, ey - mida / 2, mida, mida);
+      // Dibuixem la part superior del GIF (la cara)
+      const srcH = im.naturalHeight * 0.55; // agafem el 55% superior
+      ctx.drawImage(im, 0, 0, im.naturalWidth, srcH, ex - mida / 2, ey - mida / 2, mida, mida);
       ctx.restore();
-      // Vora blanca al cercle
+      // Vora blanca
       ctx.beginPath();
       ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+      ctx.lineWidth = 2;
       ctx.stroke();
     }
-
-    // Nom del jugador (més enfora)
-    const textR = r * 0.68;
-    const tx = cx + textR * Math.cos(midAngle);
-    const ty = cy + textR * Math.sin(midAngle);
-    ctx.save();
-    ctx.translate(tx, ty);
-    ctx.rotate(midAngle + Math.PI / 2);
-    ctx.fillStyle = '#fff';
-    ctx.font = `bold ${n <= 4 ? 15 : 12}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0,0,0,0.8)';
-    ctx.shadowBlur = 6;
-    ctx.fillText(j.nom, 0, 0);
-    ctx.restore();
   });
 
   // Anell exterior decoratiu
@@ -275,20 +261,36 @@ function mostrarResultat(angle, participants, arc) {
 
   const pregunta = getPregunta();
 
-  // Mostra resultat amb avatar
-  const bloc = document.getElementById('resultat-bloc');
-  const emojiEl = document.getElementById('resultat-emoji');
-  emojiEl.innerHTML = `<img src="${guanyador.img}" alt="${guanyador.nom}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid ${guanyador.color}">`;
-  document.getElementById('resultat-nom').textContent = guanyador.nom;
-  document.getElementById('resultat-pregunta').textContent = pregunta;
-  bloc.style.display = 'block';
-  bloc.style.borderColor = guanyador.color;
+  // Animació zoom del guanyador (2 segons)
+  const overlay = document.getElementById('guanyador-overlay');
+  const cercle = document.getElementById('guanyador-cercle');
+  const nomOverlay = document.getElementById('guanyador-nom-overlay');
+  const popup = document.getElementById('guanyador-popup');
 
-  // Confetti
+  cercle.innerHTML = `<img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:180%;object-fit:cover;object-position:top;margin-top:-10%">`;
+  nomOverlay.textContent = guanyador.nom;
+  nomOverlay.style.color = guanyador.color;
+  cercle.style.borderColor = guanyador.color;
+  overlay.style.display = 'flex';
+  popup.style.animation = 'zoomIn 0.4s ease';
+
   llencaConfetti(guanyador.color);
 
-  // Historial
-  afegirHistorial(guanyador, pregunta);
+  setTimeout(() => {
+    popup.style.animation = 'zoomOut 0.3s ease forwards';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      popup.style.animation = '';
+      // Mostra resultat
+      const bloc = document.getElementById('resultat-bloc');
+      document.getElementById('resultat-emoji').innerHTML = `<div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${guanyador.color};background:#0a1628;margin:0 auto"><img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:180%;object-fit:cover;object-position:top;margin-top:-10%"></div>`;
+      document.getElementById('resultat-nom').textContent = guanyador.nom;
+      document.getElementById('resultat-pregunta').textContent = pregunta;
+      bloc.style.display = 'block';
+      bloc.style.borderColor = guanyador.color;
+      afegirHistorial(guanyador, pregunta);
+    }, 300);
+  }, 2000);
 }
 
 // ── Historial ─────────────────────────────────
@@ -321,7 +323,9 @@ function renderHistorial() {
     const imgSrc = h.img || (jugador ? jugador.img : '');
     return `
     <div class="historial-item">
-      <img src="${imgSrc}" alt="${h.nom}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid ${h.color};flex-shrink:0">
+      <div style="width:36px;height:36px;border-radius:50%;border:2px solid ${h.color};flex-shrink:0;overflow:hidden;background:#0a1628">
+        <img src="${imgSrc}" alt="${h.nom}" style="width:100%;height:180%;object-fit:cover;object-position:top;margin-top:-10%">
+      </div>
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
       <span class="hist-hora">${h.dia ? h.dia + ' ' : ''}${h.hora}</span>
