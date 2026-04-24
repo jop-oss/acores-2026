@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruleta · Açores 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/ruleta.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a1628">
+</head>
+<body>
+  <nav class="main-nav">
+    <a href="index.html" class="nav-logo">🌋 Açores 2026</a>
+    <div class="nav-links">
+      <a href="temps.html">Temps</a>
+      <a href="restaurants.html">Restaurants</a>
+      <a href="webcams.html">Webcams</a>
+      <a href="jocs.html" class="active">Jocs</a>
+    </div>
+  </nav>
+
+  <main class="ruleta-main">
+    <div class="ruleta-header">
+      <h1>Ruleta de decisions</h1>
+      <p class="ruleta-subtitle">Qui ho fa?</p>
+    </div>
+
+    <!-- Pregunta -->
+    <div class="pregunta-bloc">
+      <div class="pregunta-select-wrap">
+        <select id="pregunta-select">
+          <option value="">— Tria una pregunta —</option>
+          <option>Qui paga el cafè?</option>
+          <option>Qui tria el restaurant?</option>
+          <option>Qui fa la foto del grup?</option>
+          <option>Qui porta la motxilla?</option>
+          <option>Qui demana al cambrer?</option>
+          <option>Qui decideix el pla de demà?</option>
+          <option>Qui tria la música?</option>
+          <option>Qui fa la reserva?</option>
+          <option>Qui porta els bitllets?</option>
+          <option>Sorpresa!</option>
+        </select>
+      </div>
+      <div class="pregunta-custom-wrap">
+        <input type="text" id="pregunta-custom" placeholder="O escriu la teva pregunta..." maxlength="60">
+      </div>
+      <div class="pregunta-display" id="pregunta-display">Qui ho fa?</div>
+    </div>
+
+    <!-- Participants -->
+    <div class="participants-bloc">
+      <p class="participants-label">Participants</p>
+      <div class="participants-grid" id="participants-grid"></div>
+    </div>
+
+    <!-- Canvas ruleta -->
+    <div class="canvas-wrap">
+      <div class="canvas-container">
+        <div class="pin-top"></div>
+        <canvas id="ruleta-canvas" width="340" height="340"></canvas>
+        <div class="center-btn-wrap">
+          <button class="spin-btn" id="spin-btn" onclick="spinRuleta()">GIRA</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultat -->
+    <div class="resultat-bloc" id="resultat-bloc" style="display:none">
+      <div class="resultat-inner">
+        <div class="resultat-emoji" id="resultat-emoji"></div>
+        <div class="resultat-nom" id="resultat-nom"></div>
+        <div class="resultat-pregunta" id="resultat-pregunta"></div>
+      </div>
+    </div>
+
+    <!-- Historial -->
+    <div class="historial-bloc">
+      <div class="historial-header">
+        <span class="historial-title">Historial</span>
+        <button class="historial-clear" onclick="clearHistorial()">Esborra</button>
+      </div>
+      <div class="historial-list" id="historial-list">
+        <p class="historial-buit">Encara no hi ha resultats</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="confetti-container"></div>
+
+  <script src="js/ruleta.js"></script>
+</body>
+</html>

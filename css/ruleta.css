@@ -1,0 +1,325 @@
+/* =============================================
+   RULETA DE DECISIONS · Açores 2026
+   ============================================= */
+
+.ruleta-main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 80px 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header */
+.ruleta-header {
+  text-align: center;
+}
+.ruleta-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #a8d8b0;
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.02em;
+}
+.ruleta-subtitle {
+  color: #6aab7a;
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Pregunta */
+.pregunta-bloc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pregunta-select-wrap select,
+.pregunta-custom-wrap input {
+  width: 100%;
+  background: #111f38;
+  border: 1px solid #2d5a3d;
+  border-radius: 10px;
+  color: #a8d8b0;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pregunta-select-wrap select:focus,
+.pregunta-custom-wrap input:focus {
+  border-color: #6aab7a;
+}
+.pregunta-select-wrap select option {
+  background: #111f38;
+  color: #a8d8b0;
+}
+.pregunta-custom-wrap input::placeholder {
+  color: #3d6b50;
+}
+.pregunta-display {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  background: #0f1e36;
+  border: 1px solid #2d5a3d;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  min-height: 2.5rem;
+  transition: all 0.3s;
+}
+
+/* Participants */
+.participants-bloc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.participants-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6aab7a;
+  margin: 0;
+}
+.participants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.participant-chip {
+  background: #111f38;
+  border: 1.5px solid #2d5a3d;
+  border-radius: 50px;
+  padding: 0.45rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.participant-chip.actiu {
+  background: #1a3d2a;
+  border-color: #6aab7a;
+}
+.participant-chip.actiu .chip-nom {
+  color: #a8d8b0;
+}
+.participant-chip:not(.actiu) {
+  opacity: 0.45;
+}
+.chip-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.chip-nom {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6aab7a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Canvas */
+.canvas-wrap {
+  display: flex;
+  justify-content: center;
+}
+.canvas-container {
+  position: relative;
+  width: 340px;
+  height: 340px;
+}
+.pin-top {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 22px solid #a8d8b0;
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+#ruleta-canvas {
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 0 0 4px #2d5a3d, 0 0 30px rgba(106,171,122,0.15);
+}
+.center-btn-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.spin-btn {
+  background: #0a1628;
+  border: 3px solid #6aab7a;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  color: #a8d8b0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 20px rgba(106,171,122,0.3);
+}
+.spin-btn:hover:not(:disabled) {
+  background: #1a3d2a;
+  transform: scale(1.05);
+}
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Resultat */
+.resultat-bloc {
+  background: linear-gradient(135deg, #0f2a1a, #111f38);
+  border: 2px solid #6aab7a;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  animation: apareix 0.4s ease;
+}
+@keyframes apareix {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.resultat-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.resultat-emoji {
+  font-size: 2.5rem;
+}
+.resultat-nom {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #a8d8b0;
+  letter-spacing: 0.02em;
+}
+.resultat-pregunta {
+  font-size: 0.9rem;
+  color: #6aab7a;
+  opacity: 0.9;
+}
+
+/* Historial */
+.historial-bloc {
+  background: #0d1c30;
+  border: 1px solid #1e3a2a;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+.historial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.historial-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6aab7a;
+}
+.historial-clear {
+  background: none;
+  border: 1px solid #2d5a3d;
+  border-radius: 6px;
+  color: #6aab7a;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.historial-clear:hover {
+  border-color: #6aab7a;
+  color: #a8d8b0;
+}
+.historial-buit {
+  color: #3d6b50;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.historial-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid #1a3020;
+  font-size: 0.88rem;
+}
+.historial-item:last-child {
+  border-bottom: none;
+}
+.hist-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.hist-nom {
+  font-weight: 600;
+  color: #a8d8b0;
+  min-width: 60px;
+}
+.hist-preg {
+  color: #5a8a68;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hist-hora {
+  color: #3d6b50;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Confetti */
+#confetti-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: confetti-fall linear forwards;
+  border-radius: 2px;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .canvas-container { width: 300px; height: 300px; }
+  #ruleta-canvas { width: 300px; height: 300px; }
+  .participants-grid { grid-template-columns: repeat(2, 1fr); }
+}
