@@ -3,12 +3,12 @@
    ============================================= */
 
 const JUGADORS = [
-  { nom: 'Jordi', color: '#4a9eff', img: 'img/avatars/Jordi.jpeg', vid: 'img/personatges/jordi_ruleta.mp4' },
-  { nom: 'Anna',  color: '#ff6b9d', img: 'img/avatars/Anna.jpeg',  vid: 'img/personatges/anna_ruleta.mp4'  },
-  { nom: 'Laia',  color: '#ffd166', img: 'img/avatars/Laia.jpeg',  vid: 'img/personatges/laia_ruleta.mp4'  },
-  { nom: 'Mons',  color: '#a8d8b0', img: 'img/avatars/Mons.jpeg',  vid: 'img/personatges/mons_ruleta.mp4'  },
-  { nom: 'Xu',    color: '#ff9f43', img: 'img/avatars/Xu.jpeg',    vid: 'img/personatges/xu_ruleta.mp4'    },
-  { nom: 'Joa',   color: '#c678dd', img: 'img/avatars/Joa.jpeg',   vid: 'img/personatges/joa_ruleta.mp4'   },
+  { nom: 'Jordi', color: '#4a9eff', img: 'img/avatars/Jordi.jpeg', cara: 'img/avatars/Jordi_cara.png', vid: 'img/personatges/jordi_ruleta.mp4' },
+  { nom: 'Anna',  color: '#ff6b9d', img: 'img/avatars/Anna.jpeg',  cara: 'img/avatars/Anna_cara.png',  vid: 'img/personatges/anna_ruleta.mp4'  },
+  { nom: 'Laia',  color: '#ffd166', img: 'img/avatars/Laia.jpeg',  cara: 'img/avatars/Laia_cara.png',  vid: 'img/personatges/laia_ruleta.mp4'  },
+  { nom: 'Mons',  color: '#a8d8b0', img: 'img/avatars/Mons.jpeg',  cara: 'img/avatars/Mons_cara.png',  vid: 'img/personatges/mons_ruleta.mp4'  },
+  { nom: 'Xu',    color: '#ff9f43', img: 'img/avatars/Xu.jpeg',    cara: 'img/avatars/Xu_cara.png',    vid: 'img/personatges/xu_ruleta.mp4'    },
+  { nom: 'Joa',   color: '#c678dd', img: 'img/avatars/Joa.jpeg',   cara: 'img/avatars/Joa_cara.png',   vid: 'img/personatges/joa_ruleta.mp4'   },
 ];
 
 // Precàrrega d'imatges estàtiques (JPEG) per al canvas
@@ -173,8 +173,8 @@ function dibuixaRuleta(angleOffset = 0) {
       ctx.beginPath();
       ctx.arc(ex, ey, mida / 2, 0, 2 * Math.PI);
       ctx.clip();
-      // Crop: agafem un quadrat de la part superior (cara) — primer 30% de l'alçada
-      const cropH = im.naturalHeight * 0.30;
+      // Crop: quadrat centrat agafant els primers 70% de l'alçada (cara i bust)
+      const cropH = im.naturalHeight * 0.70;
       const cropSize = Math.min(im.naturalWidth, cropH);
       const cropX = (im.naturalWidth - cropSize) / 2;
       ctx.drawImage(im, cropX, 0, cropSize, cropSize, ex - mida / 2, ey - mida / 2, mida, mida);
@@ -323,11 +323,11 @@ function renderHistorial() {
   list.innerHTML = hist.map(h => {
     const jugador = JUGADORS.find(j => j.nom === h.nom);
     const color = h.color || (jugador ? jugador.color : '#6aab7a');
-    const imgSrc = jugador ? jugador.img : '';
+    const imgSrc = jugador ? jugador.cara : '';
     return `
     <div class="historial-item">
       <div style="width:36px;height:36px;border-radius:50%;border:2px solid ${color};flex-shrink:0;overflow:hidden;background:#0a1628">
-        <img src="${imgSrc}" alt="${h.nom}" style="width:180%;height:180%;object-fit:cover;margin-left:-40%;margin-top:-5%">
+        <img src="${imgSrc}" alt="${h.nom}" style="width:100%;height:100%;object-fit:cover">
       </div>
       <span class="hist-nom">${h.nom}</span>
       <span class="hist-preg">${h.pregunta}</span>
