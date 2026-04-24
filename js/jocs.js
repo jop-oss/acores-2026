@@ -38,8 +38,6 @@ function seleccionarJugador(nom) {
   document.querySelectorAll('.jugador-btn').forEach(b => {
     b.classList.toggle('selected', b.dataset.nom === nom);
   });
-  const btn = document.getElementById('btn-entrar');
-  btn.classList.add('actiu');
   entrarJoc();
 }
 
