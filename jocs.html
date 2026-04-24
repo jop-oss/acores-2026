@@ -121,6 +121,11 @@
         <span class="joc-selector-label">On és això?</span>
         <span class="joc-selector-sub">Situa 50 llocs al mapa</span>
       </button>
+      <button class="joc-selector-btn" onclick="seleccionarModeJoc('paraula')">
+        <span class="joc-selector-icon">🔤</span>
+        <span class="joc-selector-label">La Paraula Amagada</span>
+        <span class="joc-selector-sub">Wordle de les Açores</span>
+      </button>
     </div>
     <button class="btn-canviar joc-selector-back" onclick="mostraScreen('select')">← Canviar jugador</button>
   </div>
@@ -390,10 +395,177 @@
   </div>
 </div>
 
+
+  <!-- ══ LA PARAULA AMAGADA — INICI ══ -->
+  <div id="screen-paraula-start" style="display:none">
+    <div style="margin-bottom:1rem">
+      <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+    </div>
+    <div class="pa-start-wrap">
+      <!-- Capçalera -->
+      <div class="pa-hero">
+        <div class="pa-hero-title">
+          <span class="pa-lletra pa-lletra-v">L</span>
+          <span class="pa-lletra pa-lletra-e">A</span>
+          <span class="pa-lletra pa-lletra-r">·</span>
+          <span class="pa-lletra pa-lletra-d">P</span>
+          <span class="pa-lletra pa-lletra-e2">A</span>
+          <span class="pa-lletra pa-lletra-r2">R</span>
+          <span class="pa-lletra pa-lletra-d2">A</span>
+          <span class="pa-lletra pa-lletra-e3">U</span>
+          <span class="pa-lletra pa-lletra-v2">L</span>
+          <span class="pa-lletra pa-lletra-a">A</span>
+        </div>
+        <div class="pa-hero-sub">Endevina les paraules de les Açores</div>
+      </div>
+
+      <!-- Jugador actiu -->
+      <div class="jugador-actiu-wrap" style="max-width:480px;width:100%">
+        <img class="jugador-actiu-avatar" id="pa-jugador-avatar" src="" alt="">
+        <div class="jugador-actiu-info">
+          <div class="jugador-actiu-nom" id="pa-jugador-nom"></div>
+          <div class="jugador-actiu-sub">Jugador actiu</div>
+        </div>
+        <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
+      </div>
+
+      <!-- Selecció de nivell -->
+      <div class="pa-nivells-wrap">
+        <div class="pa-nivells-title">Tria el nivell</div>
+        <div class="pa-nivells-grid" id="pa-nivells-grid"></div>
+      </div>
+
+      <!-- Botó començar -->
+      <button class="pa-btn-start" id="pa-btn-start" onclick="paIniciarPartida()" disabled>
+        Comença la partida 🔤
+      </button>
+
+      <!-- Rànquing -->
+      <div class="pa-ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing global</div>
+        <div id="pa-ranking-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LA PARAULA AMAGADA — JOC ══ -->
+  <div id="screen-paraula-joc" style="display:none">
+    <!-- Header -->
+    <div class="pa-joc-header">
+      <button class="btn-sortir" onclick="paDemanarSortir()" title="Sortir">✕</button>
+      <div class="pa-joc-info">
+        <span class="pa-joc-nivell" id="pa-joc-nivell-badge"></span>
+        <span class="pa-joc-prog" id="pa-joc-prog">Paraula 1/5</span>
+      </div>
+      <div class="quiz-score-badge">
+        <div class="quiz-score-num" id="pa-score-live">0</div>
+        <div class="quiz-score-label">punts</div>
+      </div>
+    </div>
+
+    <!-- Paraula i graella -->
+    <div class="pa-joc-body">
+      <!-- Indicador d'intents -->
+      <div class="pa-intents-info" id="pa-intents-info">Intent 1 de 5</div>
+
+      <!-- Graella -->
+      <div class="pa-graella-wrap">
+        <div class="pa-graella" id="pa-graella"></div>
+      </div>
+
+      <!-- Pista -->
+      <div class="pa-pista-zona" id="pa-pista-zona" style="display:none">
+        <div class="pa-pista-text" id="pa-pista-text"></div>
+      </div>
+
+      <!-- Teclat virtual -->
+      <div class="pa-teclat" id="pa-teclat"></div>
+
+      <!-- Botons acció -->
+      <div class="pa-accions">
+        <button class="pa-btn-pista" id="pa-btn-pista" onclick="paDemanarPista()">
+          💡 Pista <span id="pa-pistes-restants">(3)</span>
+        </button>
+        <button class="pa-btn-esborrar" onclick="paEsborrar()">⌫ Esborrar</button>
+        <button class="pa-btn-enter" id="pa-btn-enter" onclick="paConfirmar()">Confirmar ↵</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LA PARAULA AMAGADA — RESULTAT PARAULA ══ -->
+  <div id="screen-paraula-resultat" style="display:none">
+    <div class="pa-resultat-wrap">
+      <div class="pa-res-badge" id="pa-res-badge"></div>
+      <div class="pa-res-paraula" id="pa-res-paraula"></div>
+      <div class="pa-res-desc" id="pa-res-desc"></div>
+      <div class="pa-res-stats">
+        <div class="pa-res-stat">
+          <div class="pa-res-stat-num" id="pa-res-intents"></div>
+          <div class="pa-res-stat-label">Intent</div>
+        </div>
+        <div class="pa-res-stat">
+          <div class="pa-res-stat-num" id="pa-res-pts"></div>
+          <div class="pa-res-stat-label">Punts</div>
+        </div>
+        <div class="pa-res-stat">
+          <div class="pa-res-stat-num" id="pa-res-pistes-usades"></div>
+          <div class="pa-res-stat-label">Pistes</div>
+        </div>
+      </div>
+      <button class="pa-btn-seguent" id="pa-btn-seguent" onclick="paSeguent()">
+        Paraula següent →
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ LA PARAULA AMAGADA — RESULTAT FINAL ══ -->
+  <div id="screen-paraula-final" style="display:none">
+    <div class="pa-final-wrap">
+      <img class="result-avatar" id="pa-final-avatar" src="" alt="">
+      <div class="pa-final-titol" id="pa-final-titol"></div>
+      <div class="pa-final-score" id="pa-final-score">0</div>
+      <div class="pa-final-sub">punts en aquesta partida</div>
+      <div class="pa-final-stats">
+        <div class="result-stat">
+          <div class="result-stat-num" id="pa-final-encerts">0</div>
+          <div class="result-stat-label">Encerts</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-num" id="pa-final-errors">0</div>
+          <div class="result-stat-label">Errors</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-num" id="pa-final-pistes">0</div>
+          <div class="result-stat-label">Pistes</div>
+        </div>
+      </div>
+      <div class="pa-final-partides" id="pa-final-partides"></div>
+      <div class="result-btns">
+        <button class="btn-result primary" onclick="paTornarInici()">Tornar a l'inici 🏠</button>
+        <button class="btn-result secondary" id="pa-btn-nova-partida" onclick="paNovaPartida()">Nova partida ↺</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SORTIR PARAULA -->
+  <div class="modal-overlay" id="modal-sortir-paraula">
+    <div class="modal">
+      <div class="modal-icon">🚪</div>
+      <div class="modal-title">Sortir del joc?</div>
+      <div class="modal-text">El progrés d'aquesta paraula es perdrà, però els punts acumulats es guardaran.</div>
+      <div class="modal-btns">
+        <button class="btn-modal-cancel" onclick="document.getElementById('modal-sortir-paraula').classList.remove('visible')">Continuar jugant</button>
+        <button class="btn-modal-confirm" style="background:linear-gradient(135deg,#2d5a3d,#6aab7a)" onclick="paConfirmarSortir()">Sortir</button>
+      </div>
+    </div>
+  </div>
+
+
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script src="js/jocs-data.js"></script>
 <script src="js/joc_mapa-data.js"></script>
+<script src="js/paraula-data.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
