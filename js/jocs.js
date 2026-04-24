@@ -1073,6 +1073,18 @@ function mapaCarregarEstat(nom) {
   }
 }
 
+function mapaReiniciarComptadors() {
+  const pin = prompt("PIN per reiniciar:");
+  if (pin !== "2468") {
+    alert("PIN incorrecte.");
+    return;
+  }
+  JUGADORS_VALIDS.forEach((nom) =>
+    localStorage.removeItem(MAPA_STORAGE_KEY + nom),
+  );
+  mapaRenderStartScreen();
+}
+
 // ══════════════════════════════════════════════════════════════
 //  LA PARAULA AMAGADA
 // ══════════════════════════════════════════════════════════════
@@ -1539,6 +1551,20 @@ function paNovaPartida() {
 
 function paTornarInici() {
   mostraScreen("paraula-start");
+  paRenderNivells();
+  paRenderRanking();
+  paActualitzarBotoStart();
+}
+
+function paReiniciarComptadors() {
+  const pin = prompt("PIN per reiniciar:");
+  if (pin !== "2468") {
+    alert("PIN incorrecte.");
+    return;
+  }
+  JUGADORS_VALIDS.forEach((nom) =>
+    localStorage.removeItem(PA_STORAGE_KEY + nom),
+  );
   paRenderNivells();
   paRenderRanking();
   paActualitzarBotoStart();

@@ -623,3 +623,17 @@
     .pa-final-sub { font-size: .85rem; color: var(--text2); margin-top: -.5rem; }
     .pa-final-stats { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
     .pa-final-partides { font-size: .78rem; color: var(--text2); }
+
+.pa-btn-reset {
+  background: transparent;
+  border: 1px solid rgba(224,85,85,.3);
+  border-radius: 10px;
+  padding: .5rem 1rem;
+  color: rgba(224,85,85,.7);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .78rem;
+  cursor: pointer;
+  transition: all .2s;
+  align-self: center;
+}
+.pa-btn-reset:hover { border-color: var(--error); color: #ff8a8a; }
