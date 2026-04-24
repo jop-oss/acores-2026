@@ -268,7 +268,7 @@ function mostrarResultat(angle, participants, arc) {
   const nomOverlay = document.getElementById('guanyador-nom-overlay');
   const popup = document.getElementById('guanyador-popup');
 
-  cercle.innerHTML = `<img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%">`;
+  cercle.innerHTML = `<video src="${guanyador.vid}" autoplay muted playsinline loop style="width:100%;height:100%;object-fit:cover;object-position:top"></video>`;
   nomOverlay.textContent = guanyador.nom;
   nomOverlay.style.color = guanyador.color;
   cercle.style.borderColor = guanyador.color;
@@ -284,7 +284,7 @@ function mostrarResultat(angle, participants, arc) {
       popup.style.animation = '';
       // Mostra resultat
       const bloc = document.getElementById('resultat-bloc');
-      document.getElementById('resultat-emoji').innerHTML = `<div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${guanyador.color};background:#0a1628;margin:0 auto"><img src="${guanyador.img}" alt="${guanyador.nom}" style="width:100%;height:140%;object-fit:cover;object-position:top center;margin-top:-20%"></div>`;
+      document.getElementById('resultat-emoji').innerHTML = `<div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:3px solid ${guanyador.color};background:#0a1628;margin:0 auto"><video src="${guanyador.vid}" autoplay muted playsinline loop style="width:100%;height:100%;object-fit:cover;object-position:top"></video></div>`;
       document.getElementById('resultat-nom').textContent = guanyador.nom;
       document.getElementById('resultat-pregunta').textContent = pregunta;
       bloc.style.display = 'block';
