@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Açores 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a1628; --bg2: #0f1f38; --verd: #2d5a3d; --verd2: #6aab7a;
+      --gold: #f0b429; --error: #e05555; --text: #e8f4ec; --text2: #9bbfaa;
+      --border: rgba(106,171,122,0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .login-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--verd2), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: .5rem;
+    }
+    .login-sub { color: var(--text2); font-size: .9rem; margin-bottom: 2rem; }
+    .login-form { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 300px; }
+    .login-input {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: .85rem 1rem;
+      color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 1.2rem;
+      text-align: center; letter-spacing: .5rem; outline: none;
+      transition: border-color .2s;
+    }
+    .login-input:focus { border-color: var(--verd2); }
+    .login-btn {
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none; border-radius: 10px; padding: .85rem;
+      color: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,.5); }
+    .login-error { color: var(--error); font-size: .85rem; display: none; }
+
+    /* ── PANELL ── */
+    #admin-panel { display: none; padding: 1.5rem; max-width: 900px; margin: 0 auto; }
+
+    .admin-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .admin-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--verd2), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .admin-back {
+      background: none; border: 1px solid var(--border);
+      border-radius: 8px; padding: .4rem 1rem;
+      color: var(--text2); font-family: 'DM Sans', sans-serif;
+      font-size: .82rem; cursor: pointer; transition: all .2s; text-decoration: none;
+      display: inline-block;
+    }
+    .admin-back:hover { border-color: var(--verd2); color: var(--text); }
+
+    /* Secció per joc */
+    .admin-seccio {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.25rem; margin-bottom: 1.25rem;
+    }
+    .admin-seccio-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem;
+    }
+    .admin-seccio-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .btn-reset-tot {
+      background: rgba(224,85,85,.1); border: 1px solid rgba(224,85,85,.3);
+      border-radius: 8px; padding: .35rem .85rem;
+      color: #ff8a8a; font-family: 'DM Sans', sans-serif;
+      font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .btn-reset-tot:hover { background: rgba(224,85,85,.2); border-color: var(--error); }
+
+    /* Taula jugadors */
+    .admin-taula { width: 100%; border-collapse: collapse; }
+    .admin-taula th {
+      text-align: left; font-size: .72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .05em;
+      color: var(--text2); padding: .4rem .6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-taula td {
+      padding: .55rem .6rem; font-size: .85rem;
+      border-bottom: 1px solid rgba(106,171,122,.08);
+      vertical-align: middle;
+    }
+    .admin-taula tr:last-child td { border-bottom: none; }
+    .admin-taula tr:hover td { background: rgba(106,171,122,.03); }
+
+    .jugador-cel {
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .jugador-cel img {
+      width: 32px; height: 32px; border-radius: 50%;
+      object-fit: cover; object-position: top;
+      border: 2px solid var(--border);
+    }
+    .jugador-cel span { font-weight: 600; }
+
+    .pts-badge {
+      display: inline-block;
+      background: rgba(106,171,122,.1); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2px 10px;
+      font-size: .78rem; color: var(--verd2); font-weight: 600;
+    }
+    .pts-badge.zero { color: var(--text2); background: none; }
+
+    .nivell-chip {
+      display: inline-block; border-radius: 20px;
+      padding: 1px 8px; font-size: .68rem; font-weight: 600; margin-right: 3px;
+    }
+    .nivell-chip.facil  { background: rgba(106,171,122,.15); color: var(--verd2); }
+    .nivell-chip.mitja  { background: rgba(240,180,41,.12);  color: var(--gold); }
+    .nivell-chip.expert { background: rgba(224,85,85,.1);    color: #ff8a8a; }
+
+    .btn-reset-jugador {
+      background: none; border: 1px solid rgba(224,85,85,.25);
+      border-radius: 6px; padding: 3px 10px;
+      color: rgba(224,85,85,.7); font-family: 'DM Sans', sans-serif;
+      font-size: .72rem; cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .btn-reset-jugador:hover { border-color: var(--error); color: #ff8a8a; background: rgba(224,85,85,.08); }
+
+    /* Secció ruleta (sense jugadors individuals) */
+    .admin-ruleta-info {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .75rem;
+    }
+    .admin-ruleta-info span { font-size: .9rem; color: var(--text2); }
+    .admin-ruleta-info strong { color: var(--text); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--verd); color: #fff;
+      border-radius: 10px; padding: .65rem 1.5rem;
+      font-size: .85rem; font-weight: 600;
+      opacity: 0; transition: opacity .3s;
+      pointer-events: none; z-index: 9999;
+      white-space: nowrap;
+    }
+    .toast.visible { opacity: 1; }
+
+    @media(max-width: 480px) {
+      .admin-taula th:nth-child(3),
+      .admin-taula td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-icon">🔐</div>
+  <div class="login-title">Administració</div>
+  <div class="login-sub">Açores 2026 · Accés restringit</div>
+  <div class="login-form">
+    <input type="password" class="login-input" id="pin-input"
+           placeholder="····" maxlength="4"
+           onkeydown="if(event.key==='Enter') verificarPin()">
+    <button class="login-btn" onclick="verificarPin()">Entrar</button>
+    <div class="login-error" id="login-error">PIN incorrecte</div>
+  </div>
+</div>
+
+<!-- PANELL -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <div class="admin-title">🛠️ Administració</div>
+    <a href="index.html" class="admin-back">← Tornar a l'app</a>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🌋 Quiz Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('quiz')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Punts</th>
+          <th>Progrés</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-quiz"></tbody>
+    </table>
+  </div>
+
+  <!-- MAPA -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📍 On és això?</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('mapa')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Punts</th>
+          <th>Progrés</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-mapa"></tbody>
+    </table>
+  </div>
+
+  <!-- PARAULA AMAGADA -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🔤 La Paraula Amagada</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('paraula')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Punts totals</th>
+          <th>Partides per nivell</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-paraula"></tbody>
+    </table>
+  </div>
+
+  <!-- RULETA -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎡 Ruleta · Historial</div>
+    </div>
+    <div class="admin-ruleta-info">
+      <span>Entrades a l'historial: <strong id="ruleta-count">—</strong></span>
+      <button class="btn-reset-tot" onclick="resetRuleta()">Esborrar historial</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PIN = '2468';
+  const JUGADORS = ['Jordi','Anna','Laia','Mons','Xu','Joa'];
+  const IMGS = {
+    Jordi: 'img/avatars/Jordi.jpeg', Anna: 'img/avatars/Anna.jpeg',
+    Laia:  'img/avatars/Laia.jpeg',  Mons: 'img/avatars/Mons.jpeg',
+    Xu:    'img/avatars/Xu.jpeg',    Joa:  'img/avatars/Joa.jpeg',
+  };
+
+  // ── LOGIN ──────────────────────────────────────────────────
+  function verificarPin() {
+    const pin = document.getElementById('pin-input').value;
+    if (pin === PIN) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      carregarDades();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('pin-input').value = '';
+      document.getElementById('pin-input').focus();
+    }
+  }
+
+  // ── CARREGAR DADES ─────────────────────────────────────────
+  function carregarDades() {
+    renderQuiz();
+    renderMapa();
+    renderParaula();
+    renderRuleta();
+  }
+
+  // ── QUIZ ───────────────────────────────────────────────────
+  function renderQuiz() {
+    const tbody = document.getElementById('taula-quiz');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`quiz_estat_${nom}`);
+      const estat = raw ? JSON.parse(raw) : null;
+      const pts = estat ? estat.punts : 0;
+      const prog = estat && estat.completat ? 'Completat ✓'
+                 : estat && estat.idx > 0   ? `${estat.idx}/100 preg.`
+                 : 'No iniciat';
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td>${prog}</td>
+        <td><button class="btn-reset-jugador" onclick="resetJugador('quiz','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── MAPA ───────────────────────────────────────────────────
+  function renderMapa() {
+    const tbody = document.getElementById('taula-mapa');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`joc_mapa_estat_${nom}`);
+      const estat = raw ? JSON.parse(raw) : null;
+      const pts = estat ? estat.punts : 0;
+      const prog = estat && estat.completat ? 'Completat ✓'
+                 : estat && estat.idx > 0   ? `${estat.idx}/50 llocs`
+                 : 'No iniciat';
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td>${prog}</td>
+        <td><button class="btn-reset-jugador" onclick="resetJugador('mapa','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── PARAULA AMAGADA ────────────────────────────────────────
+  function renderParaula() {
+    const tbody = document.getElementById('taula-paraula');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`joc_paraula_estat_${nom}`);
+      const estat = raw ? JSON.parse(raw) : null;
+      const ptsTotal = estat ? Object.values(estat.punts || {}).reduce((a,b)=>a+b,0) : 0;
+      const nivells = estat ? `
+        <span class="nivell-chip facil">F: ${estat.partides?.facil||0}/10</span>
+        <span class="nivell-chip mitja">M: ${estat.partides?.mitja||0}/10</span>
+        <span class="nivell-chip expert">E: ${estat.partides?.expert||0}/10</span>
+      ` : '—';
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${ptsTotal===0?'zero':''}">${ptsTotal} pts</span></td>
+        <td>${nivells}</td>
+        <td><button class="btn-reset-jugador" onclick="resetJugador('paraula','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── RULETA ─────────────────────────────────────────────────
+  function renderRuleta() {
+    const raw = localStorage.getItem('ruleta_historial_v1');
+    const hist = raw ? JSON.parse(raw) : [];
+    document.getElementById('ruleta-count').textContent = hist.length;
+  }
+
+  function resetRuleta() {
+    if (!confirm('Esborrar tot l\'historial de la ruleta?')) return;
+    localStorage.removeItem('ruleta_historial_v1');
+    renderRuleta();
+    mostrarToast('Historial de la ruleta esborrat');
+  }
+
+  // ── RESET ──────────────────────────────────────────────────
+  const CLAUS = {
+    quiz:    nom => `quiz_estat_${nom}`,
+    mapa:    nom => `joc_mapa_estat_${nom}`,
+    paraula: nom => `joc_paraula_estat_${nom}`,
+  };
+  const RENDERS = {
+    quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula
+  };
+  const NOMS_JOCS = {
+    quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada'
+  };
+
+  function resetJugador(joc, nom) {
+    if (!confirm(`Reiniciar ${NOMS_JOCS[joc]} de ${nom}?`)) return;
+    localStorage.removeItem(CLAUS[joc](nom));
+    RENDERS[joc]();
+    mostrarToast(`${nom} · ${NOMS_JOCS[joc]} reiniciat`);
+  }
+
+  function resetTotJoc(joc) {
+    if (!confirm(`Reiniciar ${NOMS_JOCS[joc]} de TOTS els jugadors?`)) return;
+    JUGADORS.forEach(nom => localStorage.removeItem(CLAUS[joc](nom)));
+    RENDERS[joc]();
+    mostrarToast(`${NOMS_JOCS[joc]} reiniciat per a tots`);
+  }
+
+  // ── TOAST ──────────────────────────────────────────────────
+  function mostrarToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = '✓ ' + msg;
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 2500);
+  }
+
+  // Focus al camp PIN en carregar
+  window.onload = () => document.getElementById('pin-input').focus();
+</script>
+</body>
+</html>
