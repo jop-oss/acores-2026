@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Açores · Jocs</title>
+  <title>Jocs · Açores 2026</title>
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/jocs.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -35,7 +37,7 @@
 
 <div class="confetti-wrap" id="confetti"></div>
 
-<!-- MODAL CONFIRMACIÓ SORTIR -->
+<!-- MODAL SORTIR QUIZ -->
 <div class="modal-overlay" id="modal-sortir">
   <div class="modal">
     <div class="modal-icon">🚪</div>
@@ -48,7 +50,7 @@
   </div>
 </div>
 
-<!-- MODAL CONFIRMACIÓ REINICI -->
+<!-- MODAL REINICI QUIZ -->
 <div class="modal-overlay" id="modal-reinici">
   <div class="modal">
     <div class="modal-icon">⚠️</div>
@@ -61,7 +63,33 @@
   </div>
 </div>
 
-<!-- PANTALLA SELECCIÓ JUGADOR -->
+<!-- MODAL SORTIR MAPA -->
+<div class="modal-overlay" id="modal-sortir-mapa">
+  <div class="modal">
+    <div class="modal-icon">🚪</div>
+    <div class="modal-title">Sortir del joc?</div>
+    <div class="modal-text">El teu progrés es guardarà. Podràs continuar quan vulguis.</div>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-sortir-mapa').classList.remove('visible')">Continuar jugant</button>
+      <button class="btn-modal-confirm" style="background:linear-gradient(135deg,#2d5a3d,#6aab7a)" onclick="mapaConfirmarSortir()">Sortir</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REINICI MAPA -->
+<div class="modal-overlay" id="modal-reinici-mapa">
+  <div class="modal">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title">Reiniciar el joc?</div>
+    <div class="modal-text">Perdràs tot el progrés actual.</div>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-reinici-mapa').classList.remove('visible')">Cancel·lar</button>
+      <button class="btn-modal-confirm" onclick="mapaConfirmarReinici()">Reiniciar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SELECCIÓ JUGADOR ══ -->
 <div id="screen-select">
   <div style="font-size:3rem;margin-bottom:.75rem">🌋</div>
   <h1 class="select-title">Jocs · Açores</h1>
@@ -69,7 +97,7 @@
   <div class="jugadors-grid" id="jugadors-grid"></div>
 </div>
 
-<!-- PANTALLA SELECCIÓ MODE JOC -->
+<!-- ══ SELECCIÓ MODE JOC ══ -->
 <div id="screen-joc-selector">
   <div class="joc-selector-wrap">
     <div class="joc-selector-jugador">
@@ -88,7 +116,7 @@
         <span class="joc-selector-label">Qui / Què sóc?</span>
         <span class="joc-selector-sub">Adivina qui o què ets</span>
       </button>
-      <button class="joc-selector-btn" onclick="window.location.href='joc_mapa.html'">
+      <button class="joc-selector-btn" onclick="seleccionarModeJoc('mapa')">
         <span class="joc-selector-icon">📍</span>
         <span class="joc-selector-label">On és això?</span>
         <span class="joc-selector-sub">Situa 50 llocs al mapa</span>
@@ -98,7 +126,7 @@
   </div>
 </div>
 
-<!-- PANTALLA INICI (amb rànquing) -->
+<!-- ══ QUIZ: INICI ══ -->
 <div id="screen-start">
   <div style="margin-bottom:1rem;">
     <button onclick="mostraScreen('joc-selector')" style="background:none;border:1px solid rgba(106,171,122,0.2);border-radius:10px;padding:.5rem 1.2rem;color:#9bbfaa;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;">← Tornar</button>
@@ -147,7 +175,7 @@
   </div>
 </div>
 
-<!-- PANTALLA JOC QUIZ -->
+<!-- ══ QUIZ: JOC ══ -->
 <div id="screen-quiz">
   <div class="quiz-header">
     <button class="btn-sortir" onclick="demanarSortir()" title="Sortir del joc">✕</button>
@@ -178,7 +206,7 @@
   <button class="btn-seguent" id="btn-seguent" onclick="seguent()">Següent pregunta →</button>
 </div>
 
-<!-- PANTALLA RESULTAT QUIZ -->
+<!-- ══ QUIZ: RESULTAT ══ -->
 <div id="screen-result">
   <img class="result-avatar" id="result-avatar" src="" alt="">
   <div class="result-title" id="result-title">Resultat final</div>
@@ -194,23 +222,15 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     PANTALLA QUI / QUÈ SÓC?  (una sola pantalla)
-     ══════════════════════════════════════════════════════ -->
+<!-- ══ QUI / QUÈ SÓC? ══ -->
 <div id="screen-qqs">
   <div class="qqs-wrap">
-
-    <!-- Botó tornar -->
     <button class="qqs-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button>
-
-    <!-- Capçalera -->
     <div class="qqs-header">
       <div class="qqs-logo">🤔</div>
       <h2 class="qqs-title">Qui / Què sóc?</h2>
       <p class="qqs-desc">El jugador principal veu la paraula secreta.<br>Els altres fan preguntes de Sí / No / Ni sí ni no.</p>
     </div>
-
-    <!-- Jugador actiu -->
     <div class="jugador-actiu-wrap qqs-jugador-wrap">
       <img class="jugador-actiu-avatar" id="qqs-jugador-avatar" src="" alt="">
       <div class="jugador-actiu-info">
@@ -218,8 +238,6 @@
         <div class="jugador-actiu-sub">Jugador principal</div>
       </div>
     </div>
-
-    <!-- BLOC SELECTOR (categories + botó generar) -->
     <div id="qqs-selector">
       <div class="qqs-section-label">Tria una categoria</div>
       <div class="qqs-categories-grid" id="qqs-categories-grid"></div>
@@ -227,53 +245,155 @@
         Generar paraula secreta 🎲
       </button>
     </div>
-
-    <!-- BLOC RESULTAT (apareix després de generar) -->
     <div id="qqs-resultat" style="display:none; width:100%">
-
-      <!-- Loading -->
       <div class="qqs-loading" id="qqs-loading">
         <div class="qqs-spinner"></div>
         <div class="qqs-loading-text">Generant paraula secreta…</div>
       </div>
-
-      <!-- Contingut (apareix quan acaba el loading) -->
       <div id="qqs-joc-content" style="display:none; width:100%">
         <div class="qqs-categoria-badge" id="qqs-categoria-badge"></div>
-
         <div class="qqs-paraula-wrap">
-          <div class="qqs-paraula-instruccio">Mira la paraula i passa el mòbil als altres</div>
           <div class="qqs-paraula-card">
             <div class="qqs-paraula-text" id="qqs-paraula-text"></div>
           </div>
         </div>
-
         <div class="qqs-pistes-wrap" id="qqs-pistes-wrap" style="display:none">
           <div class="qqs-pistes-title">💡 Pistes</div>
           <div id="qqs-pistes-list"></div>
         </div>
-
         <div class="qqs-accions">
           <button class="qqs-btn-pista" id="qqs-btn-pista" onclick="qqsMostrarPista()">
             💡 Pista <span id="qqs-pista-comptador">(1/3)</span>
           </button>
-          <button class="qqs-btn-canviar" onclick="qqsCanviarParaula()">
-            🔄 Canviar paraula
-          </button>
+          <button class="qqs-btn-canviar" onclick="qqsCanviarParaula()">🔄 Canviar paraula</button>
         </div>
-
-        <button class="qqs-btn-nova" onclick="qqsNovaPartida()">
-          Nova partida
-        </button>
+        <button class="qqs-btn-nova" onclick="qqsNovaPartida()">Nova partida</button>
       </div>
     </div>
+  </div>
+</div>
 
+<!-- ══ ON ÉS AIXÒ? — INICI ══ -->
+<div id="screen-mapa-start" style="display:none">
+  <div style="margin-bottom:1rem">
+    <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+  </div>
+  <div class="start-grid">
+    <div class="start-left">
+      <div class="quiz-logo">📍</div>
+      <div class="quiz-title">On és això?</div>
+      <div class="info-cards">
+        <div class="info-card"><div class="info-card-num">50</div><div class="info-card-label">Llocs</div></div>
+        <div class="info-card"><div class="info-card-num">4</div><div class="info-card-label">Illes</div></div>
+        <div class="info-card"><div class="info-card-num">500</div><div class="info-card-label">Pts màx.</div></div>
+      </div>
+      <div class="dif-dots">
+        <span class="dif-dot facil">📍 &lt; 5 km — 10 punts</span>
+        <span class="dif-dot mitja">📍 5–20 km — 5 punts</span>
+        <span class="dif-dot dificil">📍 20–50 km — 2 punts</span>
+        <span class="dif-dot" style="background:rgba(150,150,150,.1);color:#888;border:1px solid rgba(150,150,150,.3)">📍 &gt; 50 km — 0 punts</span>
+      </div>
+      <div class="jugador-actiu-wrap">
+        <img class="jugador-actiu-avatar" id="mapa-jugador-avatar" src="" alt="">
+        <div class="jugador-actiu-info">
+          <div class="jugador-actiu-nom" id="mapa-jugador-nom"></div>
+          <div class="jugador-actiu-sub" id="mapa-jugador-sub"></div>
+        </div>
+        <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
+      </div>
+      <div class="progres-joc-wrap" id="mapa-progres-wrap" style="display:none">
+        <div class="progres-joc-text">
+          <span id="mapa-progres-text">Progrés actual</span>
+          <span id="mapa-progres-punts-text"></span>
+        </div>
+        <div class="progres-joc-bar">
+          <div class="progres-joc-fill" id="mapa-progres-fill"></div>
+        </div>
+        <div class="progres-badge" id="mapa-progres-badge"></div>
+      </div>
+      <div class="start-btns">
+        <button class="btn-start-joc" id="mapa-btn-start" onclick="mapaIniciarJoc()">Comença el joc 🗺️</button>
+        <button class="btn-reiniciar" id="mapa-btn-reiniciar" onclick="mapaDemanarReinici()" style="display:none">↺ Reiniciar joc</button>
+      </div>
+    </div>
+    <div class="ranking-wrap">
+      <div class="ranking-title">🏆 Rànquing</div>
+      <div class="ranking-list-home" id="mapa-ranking-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ON ÉS AIXÒ? — JOC ══ -->
+<div id="screen-mapa-joc" style="display:none">
+  <div class="joc-header">
+    <button class="btn-sortir" onclick="mapaDemanarSortir()" title="Sortir">✕</button>
+    <div class="joc-progress-wrap">
+      <div class="joc-progress-text">
+        <span id="mapa-prog-text">Lloc 1 de 50</span>
+        <span id="mapa-prog-cat"></span>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="mapa-prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="quiz-score-badge">
+      <div class="quiz-score-num" id="mapa-score-live">0</div>
+      <div class="quiz-score-label">punts</div>
+    </div>
+  </div>
+  <div class="pregunta-card" id="mapa-pregunta-card">
+    <div class="pregunta-meta">
+      <span class="q-cat" id="mapa-q-cat"></span>
+      <span class="q-illa" id="mapa-q-illa" style="display:none"></span>
+    </div>
+    <div class="pregunta-nom" id="mapa-pregunta-nom"></div>
+    <div class="pregunta-instruccio">Clica al mapa on creus que és</div>
+  </div>
+  <div id="mapa-container">
+    <div id="mapa-leaflet"></div>
+    <div class="mapa-overlay-hint" id="mapa-hint">👆 Clica al mapa per situar el lloc</div>
+  </div>
+  <button class="btn-confirmar" id="mapa-btn-confirmar" onclick="mapaConfirmarResposta()" style="display:none">
+    Confirmar ubicació ✓
+  </button>
+</div>
+
+<!-- ══ ON ÉS AIXÒ? — RESULTAT LLOC ══ -->
+<div id="screen-mapa-resultat" style="display:none">
+  <div class="resultat-lloc-wrap">
+    <div class="resultat-pts-badge" id="mapa-res-pts-badge">+10</div>
+    <div class="resultat-nom" id="mapa-res-nom"></div>
+    <div class="resultat-dist" id="mapa-res-dist"></div>
+    <div class="resultat-desc" id="mapa-res-desc"></div>
+    <div id="mapa-res-trampa" class="trampa-avis" style="display:none">
+      ⚠️ Era una trampa! Aquest lloc no és a cap de les 4 illes que visitareu.
+    </div>
+    <div id="mapa-resultat-map"></div>
+    <button class="btn-seguent-lloc" onclick="mapaSeguent()">Lloc següent →</button>
+  </div>
+</div>
+
+<!-- ══ ON ÉS AIXÒ? — RESULTAT FINAL ══ -->
+<div id="screen-mapa-result-final" style="display:none">
+  <img class="result-avatar" id="mapa-result-avatar" src="" alt="">
+  <div class="result-title" id="mapa-result-title">Resultat final</div>
+  <div class="result-score" id="mapa-result-score">0</div>
+  <div class="result-maxim">de 500 punts possibles</div>
+  <div class="result-stats">
+    <div class="result-stat"><div class="result-stat-num" id="mapa-stat-perfectes">0</div><div class="result-stat-label">Perfectes<br><small>(&lt;5km)</small></div></div>
+    <div class="result-stat"><div class="result-stat-num" id="mapa-stat-bons">0</div><div class="result-stat-label">Bons<br><small>(5-20km)</small></div></div>
+    <div class="result-stat"><div class="result-stat-num" id="mapa-stat-approx">0</div><div class="result-stat-label">Aprox.<br><small>(20-50km)</small></div></div>
+    <div class="result-stat"><div class="result-stat-num" id="mapa-stat-errors">0</div><div class="result-stat-label">Errors<br><small>(&gt;50km)</small></div></div>
+  </div>
+  <div class="result-btns">
+    <button class="btn-result primary" onclick="mapaTornarInici()">Tornar a l'inici 🏠</button>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script src="js/jocs-data.js"></script>
+<script src="js/joc_mapa-data.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
