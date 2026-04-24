@@ -571,31 +571,14 @@ function iniciarQuiQueSoc() {
   qqsPistes = [];
   qqsPistaIdx = 0;
 
-  renderQQSJugadorsGrid();
+  // Mostra jugador actiu (en lloc del grid)
+  document.getElementById("qqs-jugador-actiu-avatar").src =
+    IMGS[qqsJugador] || "";
+  document.getElementById("qqs-jugador-actiu-nom").textContent = qqsJugador;
+
   renderQQSCategoriesGrid();
   qqsActualitzarBotoGenerar();
   mostraScreen("qqs-prep");
-}
-
-// ── GRID JUGADORS ─────────────────────────────────────────────
-function renderQQSJugadorsGrid() {
-  const grid = document.getElementById("qqs-jugadors-grid");
-  grid.innerHTML = JUGADORS_VALIDS.map(
-    (nom) => `
-    <button class="jugador-btn ${nom === qqsJugador ? "selected" : ""}"
-            data-nom="${nom}" onclick="qqsSeleccionarJugador('${nom}')">
-      <img class="jugador-avatar" src="${IMGS[nom]}" alt="${nom}">
-      <span class="jugador-nom-btn">${nom}</span>
-    </button>`,
-  ).join("");
-}
-
-function qqsSeleccionarJugador(nom) {
-  qqsJugador = nom;
-  document.querySelectorAll("#qqs-jugadors-grid .jugador-btn").forEach((b) => {
-    b.classList.toggle("selected", b.dataset.nom === nom);
-  });
-  qqsActualitzarBotoGenerar();
 }
 
 // ── GRID CATEGORIES ───────────────────────────────────────────
