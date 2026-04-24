@@ -173,6 +173,83 @@
       .question-card{padding:1rem}
       .start-grid{gap:1rem}
     }
+
+    /* ── MENÚ JOCS ── */
+    #screen-menu{display:none;min-height:calc(100vh - 60px);flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:1.5rem}
+    .menu-jugador{display:flex;align-items:center;gap:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:.75rem 1.25rem}
+    .menu-jugador-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2)}
+    .menu-jugador-info{flex:1}
+    .menu-jugador-nom{font-weight:600;font-size:.95rem}
+    .menu-jugador-sub{font-size:.72rem;color:var(--text2)}
+    .menu-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,var(--verd2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+    .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:560px;width:100%}
+    @media(max-width:500px){.menu-grid{grid-template-columns:1fr}}
+    .menu-card{background:var(--bg2);border:2px solid var(--border);border-radius:20px;padding:1.5rem 1rem;cursor:pointer;transition:all .2s;text-align:center;display:flex;flex-direction:column;gap:.5rem;align-items:center}
+    .menu-card:hover{border-color:var(--verd2);transform:translateY(-4px);box-shadow:0 12px 30px rgba(45,90,61,.4)}
+    .menu-card-emoji{font-size:2.5rem}
+    .menu-card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text)}
+    .menu-card-desc{font-size:.78rem;color:var(--text2);line-height:1.4}
+    .btn-canviar-menu{background:none;border:1px solid var(--border);border-radius:8px;padding:.35rem .8rem;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.72rem;cursor:pointer;transition:all .2s}
+    .btn-canviar-menu:hover{border-color:var(--verd2);color:var(--verd2)}
+
+    /* ── LA PARAULA AMAGADA ── */
+    #screen-paraula{display:none;padding:1.5rem;max-width:540px;margin:0 auto}
+    .pa-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem}
+    .pa-header-left{display:flex;align-items:center;gap:.5rem;flex:1}
+    .pa-header-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2);flex-shrink:0}
+    .pa-header-nom{font-size:.82rem;font-weight:600;color:var(--text2)}
+    .pa-header-center{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold);white-space:nowrap}
+    .pa-data{font-size:.72rem;color:var(--text2);text-align:center;margin-bottom:.5rem}
+    .pa-pista{background:rgba(106,171,122,.07);border:1px solid var(--border);border-radius:10px;padding:.55rem .9rem;margin-bottom:.9rem;font-size:.8rem;color:var(--text2);text-align:center;line-height:1.4}
+    .pa-pista strong{color:var(--verd2)}
+    .pa-grid{display:flex;flex-direction:column;align-items:center;gap:5px;margin-bottom:1rem}
+    .pa-row{display:flex;gap:5px}
+    .pa-tile{width:54px;height:54px;border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;text-transform:uppercase;color:var(--text);user-select:none;transition:border-color .1s}
+    @media(max-width:380px){.pa-tile{width:44px;height:44px;font-size:1.25rem}}
+    .pa-tile.filled{border-color:rgba(255,255,255,.35)}
+    .pa-tile.absent{background:#3a3a3c;border-color:#3a3a3c;color:#fff}
+    .pa-tile.present{background:#b59f3b;border-color:#b59f3b;color:#fff}
+    .pa-tile.correct{background:var(--verd);border-color:var(--verd2);color:#fff}
+    @keyframes pa-flip{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0)}}
+    @keyframes pa-bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+    @keyframes pa-shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+    .pa-tile.animflip{animation:pa-flip .35s ease}
+    .pa-tile.animbounce{animation:pa-bounce .12s ease}
+    .pa-row.animshake .pa-tile{animation:pa-shake .4s ease}
+    .pa-keyboard{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .pa-kb-row{display:flex;gap:4px}
+    .pa-key{min-width:32px;height:46px;border-radius:6px;border:none;background:rgba(255,255,255,.14);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 4px;transition:all .1s;user-select:none}
+    .pa-key:hover:not(.absent){filter:brightness(1.2)}
+    .pa-key.wide{min-width:52px;font-size:.7rem;letter-spacing:-.3px}
+    .pa-key.absent{background:#3a3a3c;color:#666}
+    .pa-key.present{background:#b59f3b;color:#fff}
+    .pa-key.correct{background:var(--verd);color:#fff}
+    .pa-toast-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:500;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+    .pa-toast{background:var(--text);color:var(--bg);border-radius:10px;padding:.45rem 1.1rem;font-weight:600;font-size:.85rem;animation:pa-fadein .15s ease;white-space:nowrap}
+    @keyframes pa-fadein{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+    .pa-result{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.25rem;margin-top:.9rem;text-align:center;animation:slideIn .35s ease}
+    .pa-result-emoji{font-size:2.8rem;margin-bottom:.4rem}
+    .pa-result-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;margin-bottom:.2rem}
+    .pa-result-mot{font-size:.82rem;color:var(--text2);margin-bottom:.9rem}
+    .pa-stats-grid{display:flex;justify-content:center;gap:1.25rem;margin-bottom:.9rem}
+    .pa-stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--verd2)}
+    .pa-stat-label{font-size:.65rem;color:var(--text2)}
+    .pa-distrib{margin:.5rem 0 .9rem;text-align:left}
+    .pa-d-row{display:flex;align-items:center;gap:.5rem;margin-bottom:4px;font-size:.75rem;color:var(--text2)}
+    .pa-d-num{width:12px;text-align:right;flex-shrink:0}
+    .pa-d-bar{height:18px;background:rgba(255,255,255,.08);border-radius:3px;min-width:18px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:.7rem;font-weight:600;color:var(--text2);transition:background .4s}
+    .pa-d-bar.guanyada{background:var(--verd);color:#fff}
+    .pa-d-bar.activa{background:var(--gold);color:var(--bg)}
+    .pa-ranking-mini{margin-top:.5rem;text-align:left}
+    .pa-ranking-mini-title{font-size:.75rem;color:var(--text2);margin-bottom:.4rem;font-weight:600}
+    .pa-ranking-item{display:flex;align-items:center;gap:.6rem;padding:.4rem .75rem;border-radius:8px;background:rgba(255,255,255,.04);margin-bottom:4px}
+    .pa-ri-avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--border);flex-shrink:0}
+    .pa-ri-nom{flex:1;font-size:.8rem;font-weight:600}
+    .pa-ri-res{font-size:.75rem;font-weight:700}
+    .pa-ri-res.guanyat{color:var(--verd2)}
+    .pa-ri-res.perdut{color:var(--error)}
+    .pa-ri-res.pendent{color:var(--text2)}
+    .pa-result-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.9rem}
   </style>
 </head>
 <body>
@@ -339,6 +416,49 @@
   </div>
 </div>
 
+<!-- PANTALLA MENÚ JOCS -->
+<div id="screen-menu">
+  <div class="menu-jugador">
+    <img class="menu-jugador-avatar" id="menu-jugador-avatar" src="" alt="">
+    <div class="menu-jugador-info">
+      <div class="menu-jugador-nom" id="menu-jugador-nom"></div>
+      <div class="menu-jugador-sub">Escull un joc</div>
+    </div>
+    <button class="btn-canviar-menu" onclick="mostraScreen('select')">Canviar</button>
+  </div>
+  <div class="menu-title">🎮 Zona de Jocs</div>
+  <div class="menu-grid">
+    <div class="menu-card" onclick="mostraScreen('start');renderStartScreen()">
+      <div class="menu-card-emoji">🌋</div>
+      <div class="menu-card-title">Quiz Açores</div>
+      <div class="menu-card-desc">100 preguntes sobre les illes en tres nivells de dificultat.</div>
+    </div>
+    <div class="menu-card" onclick="iniciarParaula()">
+      <div class="menu-card-emoji">🔤</div>
+      <div class="menu-card-title">La Paraula Amagada</div>
+      <div class="menu-card-desc">Endevina la paraula del dia en 6 intents. Paraules sobre les Açores!</div>
+    </div>
+  </div>
+</div>
+
+<!-- PANTALLA LA PARAULA AMAGADA -->
+<div id="screen-paraula">
+  <div class="pa-header">
+    <button class="btn-sortir" onclick="mostraScreen('menu')" title="Tornar al menú">✕</button>
+    <div class="pa-header-left">
+      <img class="pa-header-avatar" id="pa-avatar" src="" alt="">
+      <span class="pa-header-nom" id="pa-nom"></span>
+    </div>
+    <div class="pa-header-center">🔤 La Paraula Amagada</div>
+  </div>
+  <div class="pa-data" id="pa-data"></div>
+  <div class="pa-pista" id="pa-pista"></div>
+  <div class="pa-grid" id="pa-grid"></div>
+  <div class="pa-keyboard" id="pa-keyboard"></div>
+  <div id="pa-result" style="display:none"></div>
+  <div class="pa-toast-wrap" id="pa-toasts"></div>
+</div>
+
 <script src="js/app.js"></script>
 <script>
 // ── DADES ─────────────────────────────────────────────────────────────
@@ -407,8 +527,7 @@ function seleccionarJugador(nom) {
 
 function entrarJoc() {
   if (!jugadorActiu) return;
-  mostraScreen('start');
-  renderStartScreen();
+  mostraScreen('menu');
 }
 
 // ── PANTALLA INICI ────────────────────────────────────────────────────
@@ -688,8 +807,7 @@ function mostrarResultat(estat) {
 }
 
 function tornarInici() {
-  mostraScreen('start');
-  renderStartScreen();
+  mostraScreen('menu');
 }
 
 // ── SORTIR ────────────────────────────────────────────────────────────
@@ -701,8 +819,7 @@ function confirmarSortir() {
   tancarReaccioActiva();
   document.getElementById('modal-sortir').classList.remove('visible');
   guardarEstatJugador(jugadorActiu, jocActiu);
-  mostraScreen('start');
-  renderStartScreen();
+  mostraScreen('menu');
 }
 
 // ── REINICI ───────────────────────────────────────────────────────────
@@ -765,15 +882,382 @@ function llençaConfetti() {
 
 // ── UTILS ─────────────────────────────────────────────────────────────
 function mostraScreen(nom) {
-  ['select','start','quiz','result'].forEach(s => {
+  const flexScreens = new Set(['result','menu']);
+  ['select','start','quiz','result','menu','paraula'].forEach(s => {
     const el = document.getElementById(`screen-${s}`);
     if (!el) return;
-    if (s === 'result') el.style.display = nom === s ? 'flex' : 'none';
-    else el.style.display = nom === s ? 'block' : 'none';
+    el.style.display = nom === s ? (flexScreens.has(s) ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0,0);
   if (nom === 'select') renderJugadorsGrid();
+  if (nom === 'menu') renderMenu();
+  if (nom === 'paraula') renderParaula();
 }
+
+// ── MENÚ ─────────────────────────────────────────────────────────────
+function renderMenu() {
+  document.getElementById('menu-jugador-avatar').src = IMGS[jugadorActiu] || '';
+  document.getElementById('menu-jugador-nom').textContent = jugadorActiu;
+}
+
+// ── LA PARAULA AMAGADA ────────────────────────────────────────────────
+
+const PA_PARAULES = [
+  {mot:'VOLCA', pista:'Característica geogràfica que forma les illes Açorianes'},
+  {mot:'MAGMA', pista:'Roca fosa que hi ha sota la superfície terrestre'},
+  {mot:'VAPOR', pista:'Gas calent que surt de les fumaroles açorianes'},
+  {mot:'COVES', pista:'Formacions subterrànies creades per la lava volcànica'},
+  {mot:'LLACS', pista:'Les Açores en tenen de colors únics al món (blau i verd)'},
+  {mot:'PEDRA', pista:'Material volcànic abundant a les illes de les Açores'},
+  {mot:'FORCA', pista:'Caiguda d\'aigua típica de les valls açorianes'},
+  {mot:'SORRA', pista:'Les platges açorianes la poden tenir de color negre'},
+  {mot:'TURBA', pista:'Material orgànic que es forma en zones pantanoses humides'},
+  {mot:'SELVA', pista:'Vegetació densa i exuberant característica de les illes'},
+  {mot:'PLUJA', pista:'Fenomen meteorològic molt freqüent a les Açores'},
+  {mot:'VENTS', pista:'Fenomen atmosfèric que marca el clima de les Açores'},
+  {mot:'TERRA', pista:'Element fonamental i viu a les illes volcàniques'},
+  {mot:'FOSCA', pista:'Boira densa que cobreix sovint les muntanyes açorianes'},
+  {mot:'GORJA', pista:'Vall estreta i profunda tallada per l\'aigua o la lava'},
+  {mot:'ONDES', pista:'El que forma l\'oceà Atlàntic al voltant de les illes'},
+  {mot:'NEGRA', pista:'Color de la sorra volcànica de moltes platges açorianes'},
+  {mot:'VERDA', pista:'Color predominant del paisatge de les Açores (Ilha Verde!)'},
+  {mot:'BRUMA', pista:'Boira baixa i humida característica del clima açorià'},
+  {mot:'CALMA', pista:'Estat de la mar en dies assolellats a les Açores'},
+  {mot:'FAIAL', pista:'Illa açoriana famosa per les seves hortènsies blaves'},
+  {mot:'BARCA', pista:'Embarcació tradicional usada per pescar a les illes'},
+  {mot:'CORAL', pista:'Ecosistema submarí important al voltant de les Açores'},
+  {mot:'CALOR', pista:'Energia tèrmica geotèrmica abundant a les Açores'},
+  {mot:'BLANC', pista:'Color de les cases tradicionals açorianes'},
+  {mot:'BRISA', pista:'Vent suau i fresc que bufa des del mar Atlàntic'},
+  {mot:'ANELL', pista:'Forma circular que recorda la caldera d\'un volcà'},
+  {mot:'GRUTA', pista:'Cavitat a la roca formada per l\'acció de la lava'},
+  {mot:'MOLSA', pista:'Planta que cobreix les roques volcàniques humides'},
+  {mot:'LLUNA', pista:'El seu reflex sobre l\'oceà Atlàntic és inoblidable'},
+  {mot:'CANYA', pista:'Planta aquàtica que creix als llacs açorians'},
+  {mot:'PORTA', pista:'Entrada característica de les cases açorianes'},
+  {mot:'HORTA', pista:'Capital de l\'illa del Faial, famosa per les pintures dels mariners'},
+  {mot:'PUNTA', pista:'Cap o extrem d\'una illa açoriana que s\'endinsa al mar'},
+  {mot:'CETAC', pista:'Grup de mamífers marins que inclou balenes i dofins'},
+  {mot:'ARENA', pista:'Sorra fina de color fosc de les platges açorianes'},
+  {mot:'DOFIN', pista:'Mamífer marí intel·ligent molt present a les Açores'},
+];
+
+let paEstat = null;
+let paIntentActual = '';
+let paUltimShareText = '';
+
+function paParaulaDelDia() {
+  const d = new Date();
+  const epoch = Math.floor(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) / 86400000);
+  return PA_PARAULES[epoch % PA_PARAULES.length];
+}
+
+function paDataStr() {
+  const d = new Date();
+  const dies = ['diumenge','dilluns','dimarts','dimecres','dijous','divendres','dissabte'];
+  const mesos = ['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+  return `${dies[d.getDay()]}, ${d.getDate()} de ${mesos[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+function paCarregarEstat() {
+  try {
+    const raw = localStorage.getItem(`paraula_estat_${jugadorActiu}`);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function paGuardarEstat() {
+  localStorage.setItem(`paraula_estat_${jugadorActiu}`, JSON.stringify(paEstat));
+}
+
+function iniciarParaula() {
+  mostraScreen('paraula');
+}
+
+function renderParaula() {
+  document.getElementById('pa-avatar').src = IMGS[jugadorActiu] || '';
+  document.getElementById('pa-nom').textContent = jugadorActiu;
+  document.getElementById('pa-data').textContent = paDataStr();
+
+  const avui = new Date().toISOString().slice(0, 10);
+  const entrada = paParaulaDelDia();
+  const saved = paCarregarEstat();
+
+  if (saved && saved.data === avui) {
+    paEstat = saved;
+  } else {
+    paEstat = {
+      data: avui,
+      mot: entrada.mot,
+      pista: entrada.pista,
+      intents: [],
+      completat: false,
+      guanyat: false,
+      partides: saved ? (saved.partides || 0) : 0,
+      victories: saved ? (saved.victories || 0) : 0,
+      ratxa: saved ? (saved.ratxa || 0) : 0,
+      maxRatxa: saved ? (saved.maxRatxa || 0) : 0,
+      distribucio: saved ? (saved.distribucio || [0,0,0,0,0,0]) : [0,0,0,0,0,0],
+    };
+  }
+  paIntentActual = '';
+
+  document.getElementById('pa-pista').innerHTML = `🔍 Pista: <strong>${paEstat.pista}</strong>`;
+  paRenderGrid();
+  paRenderKeyboard();
+
+  const resEl = document.getElementById('pa-result');
+  if (paEstat.completat) {
+    resEl.style.display = 'block';
+    paRenderResultat();
+  } else {
+    resEl.style.display = 'none';
+    resEl.innerHTML = '';
+  }
+}
+
+function paRenderGrid() {
+  const grid = document.getElementById('pa-grid');
+  grid.innerHTML = '';
+  for (let r = 0; r < 6; r++) {
+    const row = document.createElement('div');
+    row.className = 'pa-row';
+    row.id = `pa-row-${r}`;
+    const intent = paEstat.intents[r];
+    for (let c = 0; c < 5; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'pa-tile';
+      tile.id = `pa-tile-${r}-${c}`;
+      if (intent) {
+        tile.textContent = intent[c];
+        const resultat = paAvaluarIntent(intent, paEstat.mot);
+        tile.classList.add(resultat[c]);
+      }
+      row.appendChild(tile);
+    }
+    grid.appendChild(row);
+  }
+  if (!paEstat.completat) {
+    const filActual = paEstat.intents.length;
+    if (filActual < 6) {
+      for (let c = 0; c < paIntentActual.length; c++) {
+        const tile = document.getElementById(`pa-tile-${filActual}-${c}`);
+        if (tile) { tile.textContent = paIntentActual[c]; tile.classList.add('filled'); }
+      }
+    }
+  }
+}
+
+function paRenderKeyboard() {
+  const kb = document.getElementById('pa-keyboard');
+  kb.innerHTML = '';
+  const rows = [
+    ['Q','W','E','R','T','Y','U','I','O','P'],
+    ['A','S','D','F','G','H','J','K','L'],
+    ['←','Z','X','C','V','B','N','M','INTR'],
+  ];
+  const estat = {};
+  paEstat.intents.forEach(intent => {
+    const res = paAvaluarIntent(intent, paEstat.mot);
+    intent.split('').forEach((ch, i) => {
+      const r = res[i];
+      if (r === 'correct') estat[ch] = 'correct';
+      else if (r === 'present' && estat[ch] !== 'correct') estat[ch] = 'present';
+      else if (!estat[ch]) estat[ch] = 'absent';
+    });
+  });
+  rows.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'pa-kb-row';
+    row.forEach(key => {
+      const btn = document.createElement('button');
+      btn.className = 'pa-key' + (key === '←' || key === 'INTR' ? ' wide' : '');
+      btn.textContent = key;
+      if (estat[key]) btn.classList.add(estat[key]);
+      btn.addEventListener('click', () => paTecla(key));
+      rowEl.appendChild(btn);
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function paAvaluarIntent(intent, mot) {
+  const result = Array(5).fill('absent');
+  const motArr = mot.split('');
+  const usats = Array(5).fill(false);
+  intent.split('').forEach((ch, i) => {
+    if (ch === motArr[i]) { result[i] = 'correct'; usats[i] = true; }
+  });
+  intent.split('').forEach((ch, i) => {
+    if (result[i] === 'correct') return;
+    for (let j = 0; j < 5; j++) {
+      if (!usats[j] && motArr[j] === ch) { result[i] = 'present'; usats[j] = true; break; }
+    }
+  });
+  return result;
+}
+
+function paTecla(key) {
+  if (paEstat.completat) return;
+  const filActual = paEstat.intents.length;
+  if (filActual >= 6) return;
+  if (key === '←') {
+    if (paIntentActual.length > 0) {
+      paIntentActual = paIntentActual.slice(0, -1);
+      paRenderGrid();
+    }
+  } else if (key === 'INTR') {
+    paSubmitIntent();
+  } else if (/^[A-Z]$/.test(key) && paIntentActual.length < 5) {
+    paIntentActual += key;
+    const tile = document.getElementById(`pa-tile-${filActual}-${paIntentActual.length - 1}`);
+    if (tile) {
+      tile.textContent = key;
+      tile.classList.add('filled', 'animbounce');
+      setTimeout(() => tile.classList.remove('animbounce'), 150);
+    }
+  }
+}
+
+function paSubmitIntent() {
+  if (paIntentActual.length < 5) {
+    paMostraToast('Cal escriure 5 lletres!');
+    const row = document.getElementById(`pa-row-${paEstat.intents.length}`);
+    if (row) { row.classList.add('animshake'); setTimeout(() => row.classList.remove('animshake'), 500); }
+    return;
+  }
+  const intent = paIntentActual;
+  paEstat.intents.push(intent);
+  paIntentActual = '';
+  const filIdx = paEstat.intents.length - 1;
+  const resultat = paAvaluarIntent(intent, paEstat.mot);
+
+  for (let c = 0; c < 5; c++) {
+    const tile = document.getElementById(`pa-tile-${filIdx}-${c}`);
+    if (!tile) continue;
+    setTimeout(() => {
+      tile.classList.add('animflip');
+      setTimeout(() => {
+        tile.classList.remove('filled', 'animflip');
+        tile.classList.add(resultat[c]);
+      }, 175);
+    }, c * 75);
+  }
+
+  const guanyat = resultat.every(r => r === 'correct');
+  const perdut = !guanyat && paEstat.intents.length >= 6;
+
+  setTimeout(() => {
+    paRenderKeyboard();
+    if (guanyat || perdut) {
+      paEstat.completat = true;
+      paEstat.guanyat = guanyat;
+      paEstat.partides++;
+      if (guanyat) {
+        paEstat.victories++;
+        paEstat.ratxa++;
+        paEstat.maxRatxa = Math.max(paEstat.maxRatxa, paEstat.ratxa);
+        paEstat.distribucio[filIdx]++;
+      } else {
+        paEstat.ratxa = 0;
+      }
+      paGuardarEstat();
+      setTimeout(() => {
+        if (guanyat) llençaConfetti();
+        const msgs = ['Increïble! 🔥', 'Genial! ⭐', 'Molt bé! 👏', 'Bravo! 🎉', 'Per poc! 😅', 'Justíssim! 😮'];
+        if (guanyat) paMostraToast(msgs[Math.min(filIdx, msgs.length - 1)], 2000);
+        else paMostraToast(`La paraula era: ${paEstat.mot}`, 3500);
+        document.getElementById('pa-result').style.display = 'block';
+        paRenderResultat();
+      }, 5 * 75 + 300);
+    } else {
+      paGuardarEstat();
+    }
+  }, 5 * 75 + 200);
+}
+
+function paRenderResultat() {
+  const guanyat = paEstat.guanyat;
+  const filIdx = paEstat.intents.length - 1;
+  const maxDistrib = Math.max(...paEstat.distribucio, 1);
+
+  const distribHTML = paEstat.distribucio.map((n, i) => {
+    const pct = Math.max(Math.round((n / maxDistrib) * 100), 8);
+    const cls = (guanyat && filIdx === i) ? ' activa' : (n > 0 ? ' guanyada' : '');
+    return `<div class="pa-d-row"><span class="pa-d-num">${i + 1}</span><div class="pa-d-bar${cls}" style="width:${pct}%">${n || ''}</div></div>`;
+  }).join('');
+
+  const avui = paEstat.data;
+  const rankHTML = JUGADORS_VALIDS.map(nom => {
+    try {
+      const s = JSON.parse(localStorage.getItem(`paraula_estat_${nom}`) || 'null');
+      let res, cls;
+      if (!s || s.data !== avui) { res = 'Pendent'; cls = 'pendent'; }
+      else if (!s.completat) { res = 'Jugant…'; cls = 'pendent'; }
+      else if (s.guanyat) { res = `${s.intents.length}/6`; cls = 'guanyat'; }
+      else { res = '✗'; cls = 'perdut'; }
+      return `<div class="pa-ranking-item"><img class="pa-ri-avatar" src="${IMGS[nom] || ''}" alt=""><span class="pa-ri-nom">${nom}</span><span class="pa-ri-res ${cls}">${res}</span></div>`;
+    } catch(e) { return ''; }
+  }).join('');
+
+  const emojiGrid = paEstat.intents.map(intent =>
+    paAvaluarIntent(intent, paEstat.mot).map(r => r === 'correct' ? '🟩' : r === 'present' ? '🟨' : '⬜').join('')
+  ).join('\n');
+  paUltimShareText = `La Paraula Amagada · ${paDataStr()}\n${guanyat ? paEstat.intents.length + '/6' : 'X/6'}\n\n${emojiGrid}`;
+
+  document.getElementById('pa-result').innerHTML = `
+    <div class="pa-result">
+      <div class="pa-result-emoji">${guanyat ? '🎉' : '😔'}</div>
+      <div class="pa-result-title">${guanyat ? 'Ho has encertat!' : 'Millor sort demà!'}</div>
+      <div class="pa-result-mot">La paraula era: <strong>${paEstat.mot}</strong></div>
+      <div class="pa-stats-grid">
+        <div class="pa-stat"><div class="pa-stat-num">${paEstat.partides}</div><div class="pa-stat-label">Jugades</div></div>
+        <div class="pa-stat"><div class="pa-stat-num">${paEstat.victories}</div><div class="pa-stat-label">Victòries</div></div>
+        <div class="pa-stat"><div class="pa-stat-num">${Math.round(paEstat.partides ? paEstat.victories / paEstat.partides * 100 : 0)}%</div><div class="pa-stat-label">Precisió</div></div>
+        <div class="pa-stat"><div class="pa-stat-num">${paEstat.ratxa}🔥</div><div class="pa-stat-label">Ratxa</div></div>
+      </div>
+      <div class="pa-distrib">${distribHTML}</div>
+      <div class="pa-ranking-mini">
+        <div class="pa-ranking-mini-title">📊 Avui al grup</div>
+        ${rankHTML}
+      </div>
+      <div class="pa-result-btns">
+        <button class="btn-result primary" onclick="paCompartir()">📤 Compartir</button>
+        <button class="btn-result secondary" onclick="mostraScreen('menu')">← Menú</button>
+      </div>
+    </div>`;
+}
+
+function paCompartir() {
+  if (navigator.share) {
+    navigator.share({ text: paUltimShareText }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(paUltimShareText)
+      .then(() => paMostraToast('Copiat al portapapers! 📋', 2000))
+      .catch(() => paMostraToast('No s\'ha pogut copiar', 2000));
+  } else {
+    paMostraToast('Compartir no disponible', 2000);
+  }
+}
+
+function paMostraToast(msg, durada) {
+  durada = durada || 1800;
+  const wrap = document.getElementById('pa-toasts');
+  const t = document.createElement('div');
+  t.className = 'pa-toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => t.remove(), durada);
+}
+
+document.addEventListener('keydown', function(e) {
+  const screen = document.getElementById('screen-paraula');
+  if (!screen || screen.style.display === 'none') return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'Backspace') { e.preventDefault(); paTecla('←'); }
+  else if (e.key === 'Enter') { e.preventDefault(); paTecla('INTR'); }
+  else if (/^[a-zA-Z]$/.test(e.key)) paTecla(e.key.toUpperCase());
+});
 
 const cfStyle = document.createElement('style');
 cfStyle.textContent = `@keyframes confetti-fall{0%{opacity:1;top:-10px;transform:rotate(0)}100%{opacity:0;top:100vh;transform:rotate(720deg)}}`;
