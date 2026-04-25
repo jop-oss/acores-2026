@@ -547,9 +547,20 @@ async function qqsGenerar() {
         QQS_FAMILIARS[Math.floor(Math.random() * QQS_FAMILIARS.length)];
       qqsPistes = [];
     } else {
-      const res = await qqsGenerarAmbIA(cat.nom);
-      qqsParaula = res.paraula;
-      qqsPistes = res.pistes || [];
+      const fn = cat.id === "aleatori" ? qqsGetParaulaAleatoria : qqsGetParaula;
+      const entrada =
+        cat.id === "aleatori"
+          ? qqsGetParaulaAleatoria()
+          : qqsGetParaula(cat.id);
+      if (!entrada) {
+        // Fallback a IA si s'esgota el banc
+        const res = await qqsGenerarAmbIA(cat.nom);
+        qqsParaula = res.paraula;
+        qqsPistes = res.pistes || [];
+      } else {
+        qqsParaula = entrada.paraula;
+        qqsPistes = entrada.pistes;
+      }
     }
     document.getElementById("qqs-paraula-text").textContent = qqsParaula;
     qqsActualitzarBotoPista();
