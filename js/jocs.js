@@ -412,7 +412,7 @@ function mostraScreen(nom) {
     "paraula-joc",
     "paraula-resultat",
     "paraula-final",
-    "bingo-start",
+    "bingo-escollir",
     "bingo-joc",
   ];
   totes.forEach((s) => {
@@ -424,7 +424,6 @@ function mostraScreen(nom) {
       "mapa-result-final",
       "paraula-resultat",
       "paraula-final",
-      "bingo-joc",
     ].includes(s);
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });
@@ -1606,170 +1605,202 @@ document.addEventListener("keydown", (e) => {
 //  BINGO AÇORES — amb Firebase Firestore
 // ══════════════════════════════════════════════════════════════
 
-// ── FIREBASE INIT ─────────────────────────────────────────────
-let _bingoDb = null;
 
+// ══════════════════════════════════════════════════════════════
+//  BINGO AÇORES — amb Firebase Firestore
+// ══════════════════════════════════════════════════════════════
+
+// ── FIREBASE ──────────────────────────────────────────────────
+let _bingoDb = null;
 function bingoGetDb() {
   if (_bingoDb) return _bingoDb;
-  // Inicialitza Firebase si no s'ha fet
-  if (!firebase.apps.length) {
-    firebase.initializeApp(CONFIG.FIREBASE);
-  }
+  if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
   _bingoDb = firebase.firestore();
   return _bingoDb;
 }
 
-// Col·lecció Firestore: "bingo_partides" → document "activa"
-const BINGO_COL = "bingo_partides";
-const BINGO_DOC = "activa";
+const BINGO_COL = 'bingo_partides';
+const BINGO_DOC = 'activa';
 
 // ── ESTAT LOCAL ───────────────────────────────────────────────
-let bingoCartro = null; // array de 15 caselles del jugador actiu
-let bingoPartidaRef = null; // referència al document Firestore
-let bingoUnsubscribe = null; // listener temps real
-let bingoLiniesCantades = []; // índexs de files ja cantades (global)
-let bingoBingoFet = false; // si el bingo ja s'ha cantat
+let bingoCartroActual    = null;
+let bingoUnsubscribe     = null;
+let bingoLiniesGlobal    = [];
+let bingoBingoFet        = false;
+let bingoCartroPreview   = null;
 
-// ── INICIAR PANTALLA ──────────────────────────────────────────
+// ── PUNT D'ENTRADA ────────────────────────────────────────────
 function iniciarBingo() {
-  // Neteja estat en memòria
   window._bingoLiniesDetall = [];
-  bingoLiniesCantades = [];
+  bingoLiniesGlobal = [];
   bingoBingoFet = false;
-  document.getElementById("bingo-jugador-avatar").src =
-    IMGS[jugadorActiu] || "";
-  document.getElementById("bingo-jugador-nom").textContent = jugadorActiu;
 
-  // Carrega cartró local
-  bingoCartro = bingoCarregarCartroLocal();
-
-  if (bingoCartro) {
-    document.getElementById("bingo-jugador-sub").textContent =
-      "Partida en curs";
-    document.getElementById("bingo-btn-nou").textContent =
-      "Regenerar cartró 🔀";
-  } else {
-    document.getElementById("bingo-jugador-sub").textContent =
-      "Sense partida activa";
-    document.getElementById("bingo-btn-nou").textContent =
-      "Nou cartró aleatori 🔀";
-  }
-
-  bingoRenderRanking();
   bingoEscoltarPartida();
-  mostraScreen("bingo-start");
-}
 
-// ── NOU CARTRÓ ────────────────────────────────────────────────
-function bingoNouCartro() {
-  if (bingoCartro && !confirm("Vols generar un nou cartró? Perdràs l'actual."))
-    return;
-  bingoCartro = bingoCreaCartro();
-  bingoGuardarCartroLocal(bingoCartro);
-  document.getElementById("bingo-jugador-sub").textContent = "Partida en curs";
-  document.getElementById("bingo-btn-nou").textContent = "Regenerar cartró 🔀";
-}
-
-function bingoIniciar() {
-  if (!bingoCartro) {
-    bingoCartro = bingoCreaCartro();
-    bingoGuardarCartroLocal(bingoCartro);
+  const cartroLocal = bingoCarregarCartroLocal();
+  if (cartroLocal) {
+    bingoCartroActual = cartroLocal;
+    bingoMostrarJoc();
+  } else {
+    bingoCartroPreview = null;
+    bingoMostrarEscollir();
   }
-  document.getElementById("bingo-joc-avatar").src = IMGS[jugadorActiu] || "";
-  document.getElementById("bingo-joc-nom").textContent = jugadorActiu;
-  bingoRenderCartro();
-  bingoActualitzarBotosCant();
-  mostraScreen("bingo-joc");
 }
 
-// ── CARTRÓ ────────────────────────────────────────────────────
-function bingoRenderCartro() {
-  const wrap = document.getElementById("bingo-cartro");
-  wrap.style.gridTemplateColumns = `repeat(${BINGO_COLS}, 1fr)`;
-  wrap.innerHTML = "";
+// ── PANTALLA ESCOLLIR CARTRÓ ──────────────────────────────────
+async function bingoMostrarEscollir() {
+  document.getElementById('bingo-esc-avatar').src = IMGS[jugadorActiu] || '';
+  document.getElementById('bingo-esc-nom').textContent = jugadorActiu;
 
-  bingoCartro.forEach((casella, idx) => {
-    const div = document.createElement("div");
-    div.className = `bingo-casella ${casella.estrella ? "estrella" : ""} ${casella.marcada ? "marcada" : ""}`;
+  const cartrosExistents = await bingoCarregarCartrosExistents();
+  bingoCartroPreview = bingoCreaCartro(cartrosExistents);
+  bingoRenderCartroPreview();
+  mostraScreen('bingo-escollir');
+}
+
+function bingoRenderCartroPreview() {
+  const wrap = document.getElementById('bingo-prev-cartro');
+  wrap.style.gridTemplateColumns = `repeat(${BINGO_COLS}, 1fr)`;
+  wrap.innerHTML = bingoCartroPreview.caselles.map(c => `
+    <div class="bingo-casella ${c.estrella ? 'estrella' : ''}">
+      ${c.estrella
+        ? '<span class="bingo-estrella-icon">⭐</span>'
+        : `<span class="bingo-casella-text">${c.text}</span>`}
+    </div>`).join('');
+}
+
+async function bingoRegenerarCartro() {
+  const cartrosExistents = await bingoCarregarCartrosExistents();
+  bingoCartroPreview = bingoCreaCartro(cartrosExistents);
+  bingoRenderCartroPreview();
+}
+
+async function bingoAcceptarCartro() {
+  if (!bingoCartroPreview) return;
+  try {
+    const db = bingoGetDb();
+    await db.collection(BINGO_COL).doc(BINGO_DOC).set({
+      [`cartro_${jugadorActiu}`]: bingoCartroPreview.ids
+    }, { merge: true });
+  } catch(e) { console.error('Error guardant cartró a Firebase:', e); }
+
+  bingoCartroActual = bingoCartroPreview;
+  bingoGuardarCartroLocal(bingoCartroActual);
+  bingoCartroPreview = null;
+  bingoMostrarJoc();
+}
+
+async function bingoCarregarCartrosExistents() {
+  try {
+    const db = bingoGetDb();
+    const snap = await db.collection(BINGO_COL).doc(BINGO_DOC).get();
+    if (!snap.exists) return [];
+    const data = snap.data();
+    return JUGADORS_VALIDS.map(nom => data[`cartro_${nom}`]).filter(Boolean);
+  } catch(e) { return []; }
+}
+
+// ── PANTALLA JOC ──────────────────────────────────────────────
+function bingoMostrarJoc() {
+  document.getElementById('bingo-joc-avatar').src = IMGS[jugadorActiu] || '';
+  document.getElementById('bingo-joc-nom').textContent = jugadorActiu;
+  bingoRenderCartro();
+  bingoRenderRanking();
+  bingoActualitzarBotosCant();
+  mostraScreen('bingo-joc');
+}
+
+// ── RENDER CARTRÓ ─────────────────────────────────────────────
+function bingoRenderCartro() {
+  if (!bingoCartroActual) return;
+  const wrap = document.getElementById('bingo-cartro');
+  wrap.style.gridTemplateColumns = `repeat(${BINGO_COLS}, 1fr)`;
+  wrap.innerHTML = '';
+
+  bingoCartroActual.caselles.forEach((casella, idx) => {
+    const div = document.createElement('div');
+    div.className = `bingo-casella ${casella.estrella ? 'estrella' : ''} ${casella.marcada ? 'marcada' : ''}`;
     div.innerHTML = casella.estrella
       ? '<span class="bingo-estrella-icon">⭐</span>'
       : `<span class="bingo-casella-text">${casella.text}</span>`;
-
-    if (!casella.estrella && !bingoBingoFet) {
-      div.onclick = () => bingoMarcarCasella(idx);
-    }
+    if (!casella.estrella) div.onclick = () => bingoMarcarCasella(idx);
     wrap.appendChild(div);
   });
 
-  // Ressalta files cantades
-  // (llegeix les línies de Firestore i comprova el jugador)
+  // Ressalta files cantades pel jugador actiu
   if (window._bingoLiniesDetall) {
     window._bingoLiniesDetall
-      .filter((l) => l.jugador === jugadorActiu)
-      .forEach((l) => {
+      .filter(l => l.jugador === jugadorActiu)
+      .forEach(l => {
         for (let c = 0; c < BINGO_COLS; c++) {
           const cel = wrap.children[l.fila * BINGO_COLS + c];
-          if (cel) cel.classList.add("linia-cantada");
+          if (cel) cel.classList.add('linia-cantada');
         }
       });
   }
 
-  // Actualitza score
-  const estatLocal = bingoCarregarEstatLocal();
-  document.getElementById("bingo-score").textContent = estatLocal
-    ? estatLocal.punts
-    : 0;
+  bingoRenderAvisos();
+  const estat = bingoCarregarEstatLocal();
+  document.getElementById('bingo-score').textContent = estat ? estat.punts : 0;
 }
 
 function bingoMarcarCasella(idx) {
-  if (bingoBingoFet) return;
-  const casella = bingoCartro[idx];
+  if (!bingoCartroActual) return;
+  const casella = bingoCartroActual.caselles[idx];
   if (casella.estrella) return;
   casella.marcada = !casella.marcada;
-  bingoGuardarCartroLocal(bingoCartro);
+  bingoGuardarCartroLocal(bingoCartroActual);
   bingoRenderCartro();
   bingoActualitzarBotosCant();
 }
 
-// ── BOTONS CANTAR ─────────────────────────────────────────────
-function bingoActualitzarBotosCant() {
-  const btnLinia = document.getElementById("bingo-btn-linia");
-  const btnBingo = document.getElementById("bingo-btn-bingo");
+// ── AVISOS LÍNIES ─────────────────────────────────────────────
+function bingoRenderAvisos() {
+  const wrap = document.getElementById('bingo-avisos-wrap');
+  const avisBingo = document.getElementById('bingo-acabat-avis');
 
   if (bingoBingoFet) {
-    btnLinia.style.display = "none";
-    btnBingo.style.display = "none";
-    return;
+    const bingoData = window._bingoBingoData;
+    avisBingo.style.display = 'block';
+    avisBingo.textContent = `🏆 ${bingoData?.jugador || 'Algú'} ha fet BINGO! La partida ha acabat.`;
+  } else {
+    avisBingo.style.display = 'none';
   }
 
-  // Comprova si hi ha linia nova no cantada
-  let teLiniaNova = false;
-  for (let f = 0; f < BINGO_FILES; f++) {
-    if (bingoLiniesCantades.includes(f)) continue;
-    const fila = bingoCartro.slice(f * BINGO_COLS, (f + 1) * BINGO_COLS);
-    if (fila.every((c) => c.marcada || c.estrella)) {
-      teLiniaNova = true;
-      break;
-    }
-  }
+  if (!wrap) return;
+  if (bingoLiniesGlobal.length === 0) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = bingoLiniesGlobal.map((l, i) => `
+    <div class="bingo-linia-avis">
+      🎉 <strong>${l.jugador}</strong> ha cantat la ${i + 1}a línia
+      <span class="bingo-linia-pts">+${BINGO_PUNTS_LINIA[i] || 0} pts</span>
+    </div>`).join('');
+}
 
-  btnLinia.style.display =
-    teLiniaNova && !bingoEsComplet(bingoCartro) ? "block" : "none";
-  btnBingo.style.display = bingoEsComplet(bingoCartro) ? "block" : "none";
+// ── BOTONS CANTAR ─────────────────────────────────────────────
+function bingoActualitzarBotosCant() {
+  const btnLinia = document.getElementById('bingo-btn-linia');
+  const btnBingo = document.getElementById('bingo-btn-bingo');
+  if (!btnLinia || !btnBingo || !bingoCartroActual) return;
+
+  const liniesPropi = (window._bingoLiniesDetall || [])
+    .filter(l => l.jugador === jugadorActiu)
+    .map(l => l.fila);
+
+  const liniaNova = bingoTrobarLiniaNova(bingoCartroActual.caselles, liniesPropi);
+  const maxAssolit = bingoLiniesGlobal.length >= BINGO_MAX_LINIES;
+  const complet = bingoEsComplet(bingoCartroActual.caselles);
+
+  btnLinia.style.display = (liniaNova !== -1 && !maxAssolit && !bingoBingoFet && !complet) ? 'block' : 'none';
+  btnBingo.style.display = (complet && !bingoBingoFet) ? 'block' : 'none';
 }
 
 // ── CANTAR LÍNIA ──────────────────────────────────────────────
 async function bingoCantarLinia() {
-  // Troba la primera fila completada no cantada
-  let filaIdx = -1;
-  for (let f = 0; f < BINGO_FILES; f++) {
-    if (bingoLiniesCantades.includes(f)) continue;
-    const fila = bingoCartro.slice(f * BINGO_COLS, (f + 1) * BINGO_COLS);
-    if (fila.every((c) => c.marcada || c.estrella)) {
-      filaIdx = f;
-      break;
-    }
-  }
+  if (!bingoCartroActual) return;
+  const liniesPropi = (window._bingoLiniesDetall || [])
+    .filter(l => l.jugador === jugadorActiu)
+    .map(l => l.fila);
+  const filaIdx = bingoTrobarLiniaNova(bingoCartroActual.caselles, liniesPropi);
   if (filaIdx === -1) return;
 
   try {
@@ -1777,61 +1808,47 @@ async function bingoCantarLinia() {
     const ref = db.collection(BINGO_COL).doc(BINGO_DOC);
     const snap = await ref.get();
     const data = snap.exists ? snap.data() : {};
+    const linies = data.linies || [];
 
-    // Comprova que aquesta línia no l'hagi cantat ja un altre
-    const liniesGlobal = data.linies || [];
-    const jaExisteix = liniesGlobal.some((l) => l.fila === filaIdx);
-    if (jaExisteix) {
-      alert("Aquesta línia ja l'ha cantada un altre jugador!");
+    if (linies.length >= BINGO_MAX_LINIES) {
+      alert('Ja s\'han cantat totes les línies possibles!');
       return;
     }
 
-    // Afegeix la línia
-    const novaLinia = { jugador: jugadorActiu, fila: filaIdx, ts: Date.now() };
-    await ref.set(
-      {
-        ...data,
-        linies: [...liniesGlobal, novaLinia],
-      },
-      { merge: true },
-    );
+    const ordre = linies.length + 1;
+    const novaLinia = { jugador: jugadorActiu, fila: filaIdx, ts: Date.now(), ordre };
+    await ref.set({ linies: [...linies, novaLinia] }, { merge: true });
 
-    // Suma punts localment
-    bingoSumarPunts(BINGO_PUNTS_LINIA);
-  } catch (e) {
-    console.error("Error cantar línia:", e);
-    alert("Error de connexió. Comprova el WiFi.");
+    const pts = BINGO_PUNTS_LINIA[linies.length] || 0;
+    bingoSumarPunts(pts);
+    bingoMostrarModal('🎉', `Línia ${ordre}!`, `Has guanyat ${pts} punts!`);
+  } catch(e) {
+    console.error('Error cantar línia:', e);
+    alert('Error de connexió.');
   }
 }
 
 // ── CANTAR BINGO ──────────────────────────────────────────────
 async function bingoCantarBingo() {
-  if (!bingoEsComplet(bingoCartro)) return;
-
+  if (!bingoEsComplet(bingoCartroActual.caselles)) return;
   try {
     const db = bingoGetDb();
     const ref = db.collection(BINGO_COL).doc(BINGO_DOC);
     const snap = await ref.get();
     const data = snap.exists ? snap.data() : {};
 
-    if (data.bingo) {
-      alert(`El Bingo ja l'ha cantat ${data.bingo.jugador}!`);
-      return;
-    }
+    if (data.bingo) { alert(`El Bingo ja l'ha cantat ${data.bingo.jugador}!`); return; }
 
-    await ref.set(
-      {
-        ...data,
-        bingo: { jugador: jugadorActiu, ts: Date.now() },
-        acabada: true,
-      },
-      { merge: true },
-    );
+    await ref.set({
+      bingo: { jugador: jugadorActiu, ts: Date.now() },
+      acabada: true,
+    }, { merge: true });
 
-    bingoSumarPunts(BINGO_PUNTS_BINGO);
-  } catch (e) {
-    console.error("Error cantar bingo:", e);
-    alert("Error de connexió. Comprova el WiFi.");
+    bingoSumarPunts(BINGO_PUNTS_BINGO_TOTAL);
+    bingoMostrarModal('🏆', 'BINGO!', `Has completat el cartró i guanyes ${BINGO_PUNTS_BINGO_TOTAL} punts!`);
+  } catch(e) {
+    console.error('Error cantar bingo:', e);
+    alert('Error de connexió.');
   }
 }
 
@@ -1840,176 +1857,89 @@ function bingoEscoltarPartida() {
   if (bingoUnsubscribe) bingoUnsubscribe();
   try {
     const db = bingoGetDb();
-    bingoUnsubscribe = db
-      .collection(BINGO_COL)
-      .doc(BINGO_DOC)
-      .onSnapshot(
-        (snap) => {
-          if (!snap.exists) {
-            bingoLiniesCantades = [];
-            window._bingoLiniesDetall = [];
-            bingoBingoFet = false;
-            bingoActualitzarEstatGlobal(null);
-            return;
-          }
-          const data = snap.data();
-          window._bingoLiniesDetall = data.linies || [];
-          bingoLiniesCantades = (data.linies || []).map((l) => l.fila);
-          bingoBingoFet = !!data.acabada;
-          bingoActualitzarEstatGlobal(data);
+    bingoUnsubscribe = db.collection(BINGO_COL).doc(BINGO_DOC)
+      .onSnapshot(snap => {
+        if (!snap.exists) {
+          window._bingoLiniesDetall = [];
+          window._bingoBingoData = null;
+          bingoLiniesGlobal = [];
+          bingoBingoFet = false;
+          return;
+        }
+        const data = snap.data();
+        window._bingoLiniesDetall = data.linies || [];
+        window._bingoBingoData = data.bingo || null;
+        bingoLiniesGlobal = data.linies || [];
+        bingoBingoFet = !!data.acabada;
 
-          // Si estem a la pantalla del joc, re-render
-          const screenJoc = document.getElementById("screen-bingo-joc");
-          if (screenJoc && screenJoc.style.display !== "none") {
-            bingoRenderCartro();
-            bingoActualitzarBotosCant();
-            bingoActualitzarAvisos(data);
-          }
-        },
-        (err) => console.error("Firestore error:", err),
-      );
-  } catch (e) {
-    console.error("Error iniciant listener:", e);
-  }
-}
-
-function bingoActualitzarAvisos(data) {
-  const avisLinia = document.getElementById("bingo-linia-avis");
-  const avisBingo = document.getElementById("bingo-acabat-avis");
-
-  if (data && data.bingo) {
-    avisBingo.style.display = "block";
-    avisBingo.textContent = `🏆 ${data.bingo.jugador} ha fet BINGO! La partida ha acabat.`;
-  } else {
-    avisBingo.style.display = "none";
-  }
-
-  if (data && data.linies && data.linies.length > 0) {
-    const ultima = data.linies[data.linies.length - 1];
-    avisLinia.style.display = "block";
-    avisLinia.textContent = `🎉 ${ultima.jugador} ha cantat línia!`;
-  } else {
-    avisLinia.style.display = "none";
-  }
-}
-
-function bingoActualitzarEstatGlobal(data) {
-  const wrap = document.getElementById("bingo-estat-global");
-  const info = document.getElementById("bingo-estat-info");
-  if (!data) {
-    wrap.style.display = "none";
-    return;
-  }
-
-  wrap.style.display = "block";
-  const linies = data.linies || [];
-  const bingo = data.bingo;
-
-  let html = "";
-  if (linies.length > 0) {
-    html += linies
-      .map(
-        (l) =>
-          `<span class="bingo-estat-chip linia">🎉 ${l.jugador} — Línia</span>`,
-      )
-      .join("");
-  }
-  if (bingo) {
-    html += `<span class="bingo-estat-chip bingo">🏆 ${bingo.jugador} — BINGO!</span>`;
-  }
-  info.innerHTML =
-    html ||
-    '<span style="color:var(--text2);font-size:.82rem">Cap línia cantada encara</span>';
-}
-
-// ── NOVA PARTIDA (reset Firebase) ─────────────────────────────
-async function bingoNovaPartida() {
-  if (
-    !confirm(
-      "Iniciar una nova partida per a tothom? Es repartiran nous cartrons.",
-    )
-  )
-    return;
-  try {
-    const db = bingoGetDb();
-    await db.collection(BINGO_COL).doc(BINGO_DOC).set({
-      linies: [],
-      bingo: null,
-      acabada: false,
-      ts: Date.now(),
-    });
-    // Tots els jugadors hauran de generar un nou cartró
-    JUGADORS_VALIDS.forEach((nom) => {
-      localStorage.removeItem(BINGO_STORAGE_KEY + nom);
-    });
-    bingoCartro = null;
-    bingoLiniesCantades = [];
-    bingoBingoFet = false;
-    iniciarBingo();
-  } catch (e) {
-    console.error("Error nova partida:", e);
-    alert("Error de connexió.");
-  }
+        const screenJoc = document.getElementById('screen-bingo-joc');
+        if (screenJoc && screenJoc.style.display !== 'none') {
+          bingoRenderCartro();
+          bingoActualitzarBotosCant();
+          bingoRenderRanking();
+        }
+      }, err => console.error('Firestore error:', err));
+  } catch(e) { console.error('Error iniciant listener:', e); }
 }
 
 // ── RÀNQUING ──────────────────────────────────────────────────
 function bingoRenderRanking() {
-  const llista = JUGADORS_VALIDS.map((nom) => {
+  const llista = JUGADORS_VALIDS.map(nom => {
     const estat = bingoCarregarEstatLocal(nom);
     return { nom, punts: estat ? estat.punts : 0 };
   }).sort((a, b) => b.punts - a.punts);
 
-  const posEmoji = ["🥇", "🥈", "🥉"];
-  document.getElementById("bingo-ranking-list").innerHTML = llista
-    .map(
-      (r, i) => `
-    <div class="ranking-item ${r.nom === jugadorActiu ? "actiu" : ""}">
-      <div class="ranking-pos ${i < 3 ? "p" + (i + 1) : "other"}">${i < 3 ? posEmoji[i] : i + 1}</div>
-      <img class="rank-avatar" src="${IMGS[r.nom] || ""}" alt="${r.nom}">
+  const posEmoji = ['🥇', '🥈', '🥉'];
+  const el = document.getElementById('bingo-ranking-list');
+  if (!el) return;
+  el.innerHTML = llista.map((r, i) => `
+    <div class="ranking-item ${r.nom === jugadorActiu ? 'actiu' : ''}">
+      <div class="ranking-pos ${i < 3 ? 'p' + (i + 1) : 'other'}">${i < 3 ? posEmoji[i] : i + 1}</div>
+      <img class="rank-avatar" src="${IMGS[r.nom] || ''}" alt="${r.nom}">
       <div class="rank-info">
         <div class="rank-nom">${r.nom}</div>
-        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.min((r.punts / 200) * 100, 100)}%"></div></div>
+        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.min((r.punts / 1000) * 100, 100)}%"></div></div>
       </div>
       <div style="text-align:right">
         <div class="rank-punts">${r.punts}</div>
         <span class="rank-partides">pts bingo</span>
       </div>
-    </div>`,
-    )
-    .join("");
+    </div>`).join('');
 }
 
 // ── PERSISTÈNCIA LOCAL ────────────────────────────────────────
 function bingoGuardarCartroLocal(cartro) {
-  localStorage.setItem(
-    BINGO_STORAGE_KEY + jugadorActiu,
-    JSON.stringify(cartro),
-  );
+  localStorage.setItem(BINGO_STORAGE_KEY + jugadorActiu, JSON.stringify(cartro));
 }
 
 function bingoCarregarCartroLocal() {
   try {
     const raw = localStorage.getItem(BINGO_STORAGE_KEY + jugadorActiu);
     return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  } catch(e) { return null; }
 }
 
 function bingoCarregarEstatLocal(nom) {
   nom = nom || jugadorActiu;
   try {
-    const raw = localStorage.getItem("bingo_punts_" + nom);
+    const raw = localStorage.getItem(BINGO_PUNTS_STORAGE_KEY + nom);
     return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  } catch(e) { return null; }
 }
 
 function bingoSumarPunts(pts) {
   const estat = bingoCarregarEstatLocal() || { punts: 0 };
   estat.punts += pts;
-  localStorage.setItem("bingo_punts_" + jugadorActiu, JSON.stringify(estat));
-  document.getElementById("bingo-score").textContent = estat.punts;
+  localStorage.setItem(BINGO_PUNTS_STORAGE_KEY + jugadorActiu, JSON.stringify(estat));
+  const el = document.getElementById('bingo-score');
+  if (el) el.textContent = estat.punts;
   bingoRenderRanking();
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+function bingoMostrarModal(icon, titol, text) {
+  document.getElementById('modal-bingo-icon').textContent = icon;
+  document.getElementById('modal-bingo-title').textContent = titol;
+  document.getElementById('modal-bingo-text').textContent = text;
+  document.getElementById('modal-bingo-event').classList.add('visible');
 }

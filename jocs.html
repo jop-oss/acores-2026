@@ -564,93 +564,68 @@
   </div>
 
     <!-- ══ BINGO — INICI ══ -->
-  <div id="screen-bingo-start" style="display:none">
-    <div style="margin-bottom:1rem">
-      <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
-    </div>
-    <div class="start-grid">
-      <div class="start-left">
-        <div class="quiz-logo">🎯</div>
-        <div class="quiz-title">Bingo Açores</div>
-        <p style="color:var(--text2);font-size:.85rem;text-align:center;margin:.5rem 0 1rem">
-          Marca les situacions que vas vivint durant el viatge.<br>
-          Primer en fer línia: <strong style="color:var(--gold)">50 pts</strong> · Bingo complet: <strong style="color:var(--gold)">200 pts</strong>
-        </p>
-
-        <div class="jugador-actiu-wrap" style="width:100%">
-          <img class="jugador-actiu-avatar" id="bingo-jugador-avatar" src="" alt="">
-          <div class="jugador-actiu-info">
-            <div class="jugador-actiu-nom" id="bingo-jugador-nom"></div>
-            <div class="jugador-actiu-sub" id="bingo-jugador-sub">Sense partida activa</div>
-          </div>
-          <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
-        </div>
-
-        <div class="start-btns" style="margin-top:1rem">
-          <button class="btn-start-joc" id="bingo-btn-start" onclick="bingoIniciar()">
-            Veure el meu cartró 🎯
-          </button>
-          <button class="btn-start-joc" id="bingo-btn-nou" onclick="bingoNouCartro()"
-                  style="background:rgba(106,171,122,.15);color:var(--verd2);border:1px solid var(--verd)">
-            Nou cartró aleatori 🔀
-          </button>
-        </div>
-
-        <!-- Estat de la partida global -->
-        <div class="bingo-estat-global" id="bingo-estat-global" style="display:none">
-          <div class="bingo-estat-title">Estat de la partida</div>
-          <div class="bingo-estat-info" id="bingo-estat-info"></div>
+  <!-- ══ BINGO — ESCOLLIR CARTRÓ ══ -->
+  <div id="screen-bingo-escollir" style="display:none">
+    <div class="bingo-escollir-wrap">
+      <div class="bingo-escollir-header">
+        <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+        <div class="bingo-escollir-jugador">
+          <img id="bingo-esc-avatar" src="" alt="">
+          <span id="bingo-esc-nom"></span>
         </div>
       </div>
-
-      <div class="ranking-wrap">
-        <div class="ranking-title">🏆 Rànquing</div>
-        <div id="bingo-ranking-list"></div>
+      <div class="bingo-escollir-title">
+        <div class="quiz-logo">🎯</div>
+        <h2 class="qqs-title">Bingo Açores</h2>
+        <p class="qqs-desc">Aquí tens el teu cartró. Si no t'agrada, en pots generar un altre.<br>Un cop l'acceptis, no el podràs canviar!</p>
+      </div>
+      <div class="bingo-prev-wrap">
+        <div class="bingo-cartro" id="bingo-prev-cartro"></div>
+      </div>
+      <div class="bingo-escollir-accions">
+        <button class="qqs-btn-canviar" onclick="bingoRegenerarCartro()">🔀 Vull un altre</button>
+        <button class="pa-btn-start" onclick="bingoAcceptarCartro()">✅ Vull aquest cartró</button>
       </div>
     </div>
   </div>
 
   <!-- ══ BINGO — JOC ══ -->
   <div id="screen-bingo-joc" style="display:none">
-    <div class="bingo-joc-wrap">
-      <div class="bingo-joc-header">
-        <button class="mapa-back-btn" onclick="mostraScreen('bingo-start')">← Tornar</button>
-        <div class="bingo-joc-jugador">
-          <img id="bingo-joc-avatar" src="" alt="">
-          <span id="bingo-joc-nom"></span>
+    <div class="bingo-joc-layout">
+      <!-- Columna esquerra: cartró -->
+      <div class="bingo-joc-esquerra">
+        <div class="bingo-joc-header">
+          <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+          <div class="bingo-joc-jugador">
+            <img id="bingo-joc-avatar" src="" alt="">
+            <span id="bingo-joc-nom"></span>
+          </div>
+          <div class="quiz-score-badge">
+            <div class="quiz-score-num" id="bingo-score">0</div>
+            <div class="quiz-score-label">pts</div>
+          </div>
         </div>
-        <div class="quiz-score-badge">
-          <div class="quiz-score-num" id="bingo-score">0</div>
-          <div class="quiz-score-label">pts</div>
+        <div class="bingo-avisos-wrap" id="bingo-avisos-wrap"></div>
+        <div class="bingo-acabat-avis" id="bingo-acabat-avis" style="display:none"></div>
+        <div class="bingo-cartro-wrap">
+          <div class="bingo-cartro" id="bingo-cartro"></div>
+        </div>
+        <div class="bingo-accions">
+          <button class="bingo-btn-linia" id="bingo-btn-linia" onclick="bingoCantarLinia()" style="display:none">🎉 Cantar línia!</button>
+          <button class="bingo-btn-bingo" id="bingo-btn-bingo" onclick="bingoCantarBingo()" style="display:none">🏆 BINGO!</button>
         </div>
       </div>
-
-      <!-- Avís de partida acabada -->
-      <div class="bingo-acabat-avis" id="bingo-acabat-avis" style="display:none">
-        🏆 La partida ha acabat! Algú ha fet Bingo!
-      </div>
-
-      <!-- Avís de línia cantada -->
-      <div class="bingo-linia-avis" id="bingo-linia-avis" style="display:none"></div>
-
-      <!-- Cartró -->
-      <div class="bingo-cartro-wrap">
-        <div class="bingo-cartro" id="bingo-cartro"></div>
-      </div>
-
-      <!-- Botons -->
-      <div class="bingo-accions">
-        <button class="bingo-btn-linia" id="bingo-btn-linia" onclick="bingoCantarLinia()" style="display:none">
-          🎉 Cantar línia!
-        </button>
-        <button class="bingo-btn-bingo" id="bingo-btn-bingo" onclick="bingoCantarBingo()" style="display:none">
-          🏆 BINGO!
-        </button>
+      <!-- Columna dreta: rànquing -->
+      <div class="bingo-joc-dreta">
+        <div class="ranking-wrap" style="height:100%">
+          <div class="ranking-title">🏆 Rànquing Bingo</div>
+          <div id="bingo-ranking-list"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL BINGO -->
+  <!-- MODAL BINGO EVENT -->
   <div class="modal-overlay" id="modal-bingo-event">
     <div class="modal">
       <div class="modal-icon" id="modal-bingo-icon">🎉</div>

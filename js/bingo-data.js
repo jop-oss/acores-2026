@@ -62,20 +62,58 @@ const BINGO_SITUACIONS = [
   { id: 60, text: 'Veure el Joa demanant calamars fregits' },
 ];
 
-// Cartró: 3 files × 5 columnes = 15 caselles
-// Cada fila té 1 estrella (posició aleatòria) → 12 caselles per marcar
-const BINGO_FILES = 3;
-const BINGO_COLS  = 5;
-const BINGO_TOTAL = BINGO_FILES * BINGO_COLS; // 15
+// ── CONFIGURACIÓ ──────────────────────────────────────────────
+const BINGO_FILES              = 5;
+const BINGO_COLS               = 7;
+const BINGO_TOTAL              = BINGO_FILES * BINGO_COLS;        // 35 caselles
+const BINGO_SIT_PER_CARTRO     = BINGO_FILES * (BINGO_COLS - 1); // 30 situacions
+const BINGO_PUNTS_LINIA        = [200, 100, 100, 50, 50];         // per ordre de línia cantada
+const BINGO_PUNTS_BINGO_TOTAL  = 500;
+const BINGO_MAX_LINIES         = 5;
 
-// Genera un cartró aleatori per a un jugador
-// Retorna array de 15 { id, text, estrella }
-function bingoCreaCartro(llavor) {
-  // Barreja les situacions amb la llavor del jugador
+const BINGO_STORAGE_KEY        = 'bingo_estat_';
+const BINGO_PUNTS_STORAGE_KEY  = 'bingo_punts_';
+
+// ── GENERAR CARTRÓ ────────────────────────────────────────────
+// cartrosExistents: array d'arrays d'IDs ja assignats (per evitar duplicats de conjunt)
+function bingoCreaCartro(cartrosExistents = []) {
+  const existentsSets = cartrosExistents.map(ids => new Set(ids));
+  let intents = 0;
+
+  while (intents < 200) {
+    intents++;
+    const pool = [...BINGO_SITUACIONS].sort(() => Math.random() - 0.5);
+    const seleccionades = pool.slice(0, BINGO_SIT_PER_CARTRO);
+    const idsSet = new Set(seleccionades.map(s => s.id));
+
+    // Comprova que el conjunt d'IDs no coincideixi exactament amb cap existent
+    const esDuplicat = existentsSets.some(existentSet => {
+      if (existentSet.size !== idsSet.size) return false;
+      for (const id of idsSet) { if (!existentSet.has(id)) return false; }
+      return true;
+    });
+    if (esDuplicat) continue;
+
+    // Construeix el cartró: cada fila té 1 estrella en posició aleatòria
+    const caselles = [];
+    let sitIdx = 0;
+    for (let f = 0; f < BINGO_FILES; f++) {
+      const posEstrella = Math.floor(Math.random() * BINGO_COLS);
+      for (let c = 0; c < BINGO_COLS; c++) {
+        if (c === posEstrella) {
+          caselles.push({ id: `estrella_${f}`, text: '⭐', estrella: true, marcada: false });
+        } else {
+          const sit = seleccionades[sitIdx++];
+          caselles.push({ id: sit.id, text: sit.text, estrella: false, marcada: false });
+        }
+      }
+    }
+    return { caselles, ids: [...idsSet] };
+  }
+
+  // Fallback (pràcticament impossible amb 60 situacions i 6 jugadors)
   const pool = [...BINGO_SITUACIONS].sort(() => Math.random() - 0.5);
-  const seleccionades = pool.slice(0, 12); // 12 situacions (les 3 estrelles no conten)
-
-  // Construeix les 3 files, cadascuna amb 1 estrella en posició aleatòria
+  const seleccionades = pool.slice(0, BINGO_SIT_PER_CARTRO);
   const caselles = [];
   let sitIdx = 0;
   for (let f = 0; f < BINGO_FILES; f++) {
@@ -89,23 +127,23 @@ function bingoCreaCartro(llavor) {
       }
     }
   }
-  return caselles;
+  return { caselles, ids: seleccionades.map(s => s.id) };
 }
 
-// Comprova si hi ha alguna línia horitzontal completa (totes marcades o estrelles)
-function bingoTeLiniaHoritzontal(caselles) {
+function bingoFilaCompleta(caselles, fila) {
+  return caselles
+    .slice(fila * BINGO_COLS, (fila + 1) * BINGO_COLS)
+    .every(c => c.marcada || c.estrella);
+}
+
+function bingoTrobarLiniaNova(caselles, liniesJaCantades) {
   for (let f = 0; f < BINGO_FILES; f++) {
-    const fila = caselles.slice(f * BINGO_COLS, (f + 1) * BINGO_COLS);
-    if (fila.every(c => c.marcada || c.estrella)) return f;
+    if (liniesJaCantades.includes(f)) continue;
+    if (bingoFilaCompleta(caselles, f)) return f;
   }
   return -1;
 }
 
-// Comprova si el cartró és complet (bingo!)
 function bingoEsComplet(caselles) {
   return caselles.every(c => c.marcada || c.estrella);
 }
-
-const BINGO_STORAGE_KEY = 'bingo_estat_';
-const BINGO_PUNTS_LINIA = 50;
-const BINGO_PUNTS_BINGO = 200;
