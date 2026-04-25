@@ -73,6 +73,8 @@ function seleccionarModeJoc(mode) {
     mapaIniciarPantalla();
   } else if (mode === "paraula") {
     iniciarParaulaAmagada();
+  } else if (mode === "bingo") {
+    iniciarBingo();
   }
 }
 
@@ -410,6 +412,8 @@ function mostraScreen(nom) {
     "paraula-joc",
     "paraula-resultat",
     "paraula-final",
+    "bingo-start",
+    "bingo-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
@@ -420,6 +424,7 @@ function mostraScreen(nom) {
       "mapa-result-final",
       "paraula-resultat",
       "paraula-final",
+      "bingo-joc",
     ].includes(s);
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });
@@ -1596,3 +1601,404 @@ document.addEventListener("keydown", (e) => {
   const l = normalitzar(e.key);
   if (/^[A-Z]$/.test(l)) paIntroduirLletra(l);
 });
+
+// ══════════════════════════════════════════════════════════════
+//  BINGO AÇORES — amb Firebase Firestore
+// ══════════════════════════════════════════════════════════════
+
+// ── FIREBASE INIT ─────────────────────────────────────────────
+let _bingoDb = null;
+
+function bingoGetDb() {
+  if (_bingoDb) return _bingoDb;
+  // Inicialitza Firebase si no s'ha fet
+  if (!firebase.apps.length) {
+    firebase.initializeApp(CONFIG.FIREBASE);
+  }
+  _bingoDb = firebase.firestore();
+  return _bingoDb;
+}
+
+// Col·lecció Firestore: "bingo_partides" → document "activa"
+const BINGO_COL = "bingo_partides";
+const BINGO_DOC = "activa";
+
+// ── ESTAT LOCAL ───────────────────────────────────────────────
+let bingoCartro = null; // array de 15 caselles del jugador actiu
+let bingoPartidaRef = null; // referència al document Firestore
+let bingoUnsubscribe = null; // listener temps real
+let bingoLiniesCantades = []; // índexs de files ja cantades (global)
+let bingoBingoFet = false; // si el bingo ja s'ha cantat
+
+// ── INICIAR PANTALLA ──────────────────────────────────────────
+function iniciarBingo() {
+  document.getElementById("bingo-jugador-avatar").src =
+    IMGS[jugadorActiu] || "";
+  document.getElementById("bingo-jugador-nom").textContent = jugadorActiu;
+
+  // Carrega cartró local
+  bingoCartro = bingoCarregarCartroLocal();
+
+  if (bingoCartro) {
+    document.getElementById("bingo-jugador-sub").textContent =
+      "Partida en curs";
+    document.getElementById("bingo-btn-nou").textContent =
+      "Regenerar cartró 🔀";
+  } else {
+    document.getElementById("bingo-jugador-sub").textContent =
+      "Sense partida activa";
+    document.getElementById("bingo-btn-nou").textContent =
+      "Nou cartró aleatori 🔀";
+  }
+
+  bingoRenderRanking();
+  bingoEscoltarPartida();
+  mostraScreen("bingo-start");
+}
+
+// ── NOU CARTRÓ ────────────────────────────────────────────────
+function bingoNouCartro() {
+  if (bingoCartro && !confirm("Vols generar un nou cartró? Perdràs l'actual."))
+    return;
+  bingoCartro = bingoCreaCartro();
+  bingoGuardarCartroLocal(bingoCartro);
+  document.getElementById("bingo-jugador-sub").textContent = "Partida en curs";
+  document.getElementById("bingo-btn-nou").textContent = "Regenerar cartró 🔀";
+}
+
+function bingoIniciar() {
+  if (!bingoCartro) {
+    bingoCartro = bingoCreaCartro();
+    bingoGuardarCartroLocal(bingoCartro);
+  }
+  document.getElementById("bingo-joc-avatar").src = IMGS[jugadorActiu] || "";
+  document.getElementById("bingo-joc-nom").textContent = jugadorActiu;
+  bingoRenderCartro();
+  bingoActualitzarBotosCant();
+  mostraScreen("bingo-joc");
+}
+
+// ── CARTRÓ ────────────────────────────────────────────────────
+function bingoRenderCartro() {
+  const wrap = document.getElementById("bingo-cartro");
+  wrap.style.gridTemplateColumns = `repeat(${BINGO_COLS}, 1fr)`;
+  wrap.innerHTML = "";
+
+  bingoCartro.forEach((casella, idx) => {
+    const div = document.createElement("div");
+    div.className = `bingo-casella ${casella.estrella ? "estrella" : ""} ${casella.marcada ? "marcada" : ""}`;
+    div.innerHTML = casella.estrella
+      ? '<span class="bingo-estrella-icon">⭐</span>'
+      : `<span class="bingo-casella-text">${casella.text}</span>`;
+
+    if (!casella.estrella && !bingoBingoFet) {
+      div.onclick = () => bingoMarcarCasella(idx);
+    }
+    wrap.appendChild(div);
+  });
+
+  // Ressalta files cantades
+  bingoLiniesCantades.forEach((fila) => {
+    for (let c = 0; c < BINGO_COLS; c++) {
+      const cel = wrap.children[fila * BINGO_COLS + c];
+      if (cel) cel.classList.add("linia-cantada");
+    }
+  });
+
+  // Actualitza score
+  const estatLocal = bingoCarregarEstatLocal();
+  document.getElementById("bingo-score").textContent = estatLocal
+    ? estatLocal.punts
+    : 0;
+}
+
+function bingoMarcarCasella(idx) {
+  if (bingoBingoFet) return;
+  const casella = bingoCartro[idx];
+  if (casella.estrella) return;
+  casella.marcada = !casella.marcada;
+  bingoGuardarCartroLocal(bingoCartro);
+  bingoRenderCartro();
+  bingoActualitzarBotosCant();
+}
+
+// ── BOTONS CANTAR ─────────────────────────────────────────────
+function bingoActualitzarBotosCant() {
+  const btnLinia = document.getElementById("bingo-btn-linia");
+  const btnBingo = document.getElementById("bingo-btn-bingo");
+
+  if (bingoBingoFet) {
+    btnLinia.style.display = "none";
+    btnBingo.style.display = "none";
+    return;
+  }
+
+  // Comprova si hi ha linia nova no cantada
+  let teLiniaNova = false;
+  for (let f = 0; f < BINGO_FILES; f++) {
+    if (bingoLiniesCantades.includes(f)) continue;
+    const fila = bingoCartro.slice(f * BINGO_COLS, (f + 1) * BINGO_COLS);
+    if (fila.every((c) => c.marcada || c.estrella)) {
+      teLiniaNova = true;
+      break;
+    }
+  }
+
+  btnLinia.style.display =
+    teLiniaNova && !bingoEsComplet(bingoCartro) ? "block" : "none";
+  btnBingo.style.display = bingoEsComplet(bingoCartro) ? "block" : "none";
+}
+
+// ── CANTAR LÍNIA ──────────────────────────────────────────────
+async function bingoCantarLinia() {
+  // Troba la primera fila completada no cantada
+  let filaIdx = -1;
+  for (let f = 0; f < BINGO_FILES; f++) {
+    if (bingoLiniesCantades.includes(f)) continue;
+    const fila = bingoCartro.slice(f * BINGO_COLS, (f + 1) * BINGO_COLS);
+    if (fila.every((c) => c.marcada || c.estrella)) {
+      filaIdx = f;
+      break;
+    }
+  }
+  if (filaIdx === -1) return;
+
+  try {
+    const db = bingoGetDb();
+    const ref = db.collection(BINGO_COL).doc(BINGO_DOC);
+    const snap = await ref.get();
+    const data = snap.exists ? snap.data() : {};
+
+    // Comprova que aquesta línia no l'hagi cantat ja un altre
+    const liniesGlobal = data.linies || [];
+    const jaExisteix = liniesGlobal.some((l) => l.fila === filaIdx);
+    if (jaExisteix) {
+      alert("Aquesta línia ja l'ha cantada un altre jugador!");
+      return;
+    }
+
+    // Afegeix la línia
+    const novaLinia = { jugador: jugadorActiu, fila: filaIdx, ts: Date.now() };
+    await ref.set(
+      {
+        ...data,
+        linies: [...liniesGlobal, novaLinia],
+      },
+      { merge: true },
+    );
+
+    // Suma punts localment
+    bingoSumarPunts(BINGO_PUNTS_LINIA);
+  } catch (e) {
+    console.error("Error cantar línia:", e);
+    alert("Error de connexió. Comprova el WiFi.");
+  }
+}
+
+// ── CANTAR BINGO ──────────────────────────────────────────────
+async function bingoCantarBingo() {
+  if (!bingoEsComplet(bingoCartro)) return;
+
+  try {
+    const db = bingoGetDb();
+    const ref = db.collection(BINGO_COL).doc(BINGO_DOC);
+    const snap = await ref.get();
+    const data = snap.exists ? snap.data() : {};
+
+    if (data.bingo) {
+      alert(`El Bingo ja l'ha cantat ${data.bingo.jugador}!`);
+      return;
+    }
+
+    await ref.set(
+      {
+        ...data,
+        bingo: { jugador: jugadorActiu, ts: Date.now() },
+        acabada: true,
+      },
+      { merge: true },
+    );
+
+    bingoSumarPunts(BINGO_PUNTS_BINGO);
+  } catch (e) {
+    console.error("Error cantar bingo:", e);
+    alert("Error de connexió. Comprova el WiFi.");
+  }
+}
+
+// ── LISTENER TEMPS REAL ───────────────────────────────────────
+function bingoEscoltarPartida() {
+  if (bingoUnsubscribe) bingoUnsubscribe();
+  try {
+    const db = bingoGetDb();
+    bingoUnsubscribe = db
+      .collection(BINGO_COL)
+      .doc(BINGO_DOC)
+      .onSnapshot(
+        (snap) => {
+          if (!snap.exists) {
+            bingoLiniesCantades = [];
+            bingoBingoFet = false;
+            bingoActualitzarEstatGlobal(null);
+            return;
+          }
+          const data = snap.data();
+          bingoLiniesCantades = (data.linies || []).map((l) => l.fila);
+          bingoBingoFet = !!data.acabada;
+          bingoActualitzarEstatGlobal(data);
+
+          // Si estem a la pantalla del joc, re-render
+          const screenJoc = document.getElementById("screen-bingo-joc");
+          if (screenJoc && screenJoc.style.display !== "none") {
+            bingoRenderCartro();
+            bingoActualitzarBotosCant();
+            bingoActualitzarAvisos(data);
+          }
+        },
+        (err) => console.error("Firestore error:", err),
+      );
+  } catch (e) {
+    console.error("Error iniciant listener:", e);
+  }
+}
+
+function bingoActualitzarAvisos(data) {
+  const avisLinia = document.getElementById("bingo-linia-avis");
+  const avisBingo = document.getElementById("bingo-acabat-avis");
+
+  if (data && data.bingo) {
+    avisBingo.style.display = "block";
+    avisBingo.textContent = `🏆 ${data.bingo.jugador} ha fet BINGO! La partida ha acabat.`;
+  } else {
+    avisBingo.style.display = "none";
+  }
+
+  if (data && data.linies && data.linies.length > 0) {
+    const ultima = data.linies[data.linies.length - 1];
+    avisLinia.style.display = "block";
+    avisLinia.textContent = `🎉 ${ultima.jugador} ha cantat línia!`;
+  } else {
+    avisLinia.style.display = "none";
+  }
+}
+
+function bingoActualitzarEstatGlobal(data) {
+  const wrap = document.getElementById("bingo-estat-global");
+  const info = document.getElementById("bingo-estat-info");
+  if (!data) {
+    wrap.style.display = "none";
+    return;
+  }
+
+  wrap.style.display = "block";
+  const linies = data.linies || [];
+  const bingo = data.bingo;
+
+  let html = "";
+  if (linies.length > 0) {
+    html += linies
+      .map(
+        (l) =>
+          `<span class="bingo-estat-chip linia">🎉 ${l.jugador} — Línia</span>`,
+      )
+      .join("");
+  }
+  if (bingo) {
+    html += `<span class="bingo-estat-chip bingo">🏆 ${bingo.jugador} — BINGO!</span>`;
+  }
+  info.innerHTML =
+    html ||
+    '<span style="color:var(--text2);font-size:.82rem">Cap línia cantada encara</span>';
+}
+
+// ── NOVA PARTIDA (reset Firebase) ─────────────────────────────
+async function bingoNovaPartida() {
+  if (
+    !confirm(
+      "Iniciar una nova partida per a tothom? Es repartiran nous cartrons.",
+    )
+  )
+    return;
+  try {
+    const db = bingoGetDb();
+    await db.collection(BINGO_COL).doc(BINGO_DOC).set({
+      linies: [],
+      bingo: null,
+      acabada: false,
+      ts: Date.now(),
+    });
+    // Tots els jugadors hauran de generar un nou cartró
+    JUGADORS_VALIDS.forEach((nom) => {
+      localStorage.removeItem(BINGO_STORAGE_KEY + nom);
+    });
+    bingoCartro = null;
+    bingoLiniesCantades = [];
+    bingoBingoFet = false;
+    iniciarBingo();
+  } catch (e) {
+    console.error("Error nova partida:", e);
+    alert("Error de connexió.");
+  }
+}
+
+// ── RÀNQUING ──────────────────────────────────────────────────
+function bingoRenderRanking() {
+  const llista = JUGADORS_VALIDS.map((nom) => {
+    const estat = bingoCarregarEstatLocal(nom);
+    return { nom, punts: estat ? estat.punts : 0 };
+  }).sort((a, b) => b.punts - a.punts);
+
+  const posEmoji = ["🥇", "🥈", "🥉"];
+  document.getElementById("bingo-ranking-list").innerHTML = llista
+    .map(
+      (r, i) => `
+    <div class="ranking-item ${r.nom === jugadorActiu ? "actiu" : ""}">
+      <div class="ranking-pos ${i < 3 ? "p" + (i + 1) : "other"}">${i < 3 ? posEmoji[i] : i + 1}</div>
+      <img class="rank-avatar" src="${IMGS[r.nom] || ""}" alt="${r.nom}">
+      <div class="rank-info">
+        <div class="rank-nom">${r.nom}</div>
+        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.min((r.punts / 200) * 100, 100)}%"></div></div>
+      </div>
+      <div style="text-align:right">
+        <div class="rank-punts">${r.punts}</div>
+        <span class="rank-partides">pts bingo</span>
+      </div>
+    </div>`,
+    )
+    .join("");
+}
+
+// ── PERSISTÈNCIA LOCAL ────────────────────────────────────────
+function bingoGuardarCartroLocal(cartro) {
+  localStorage.setItem(
+    BINGO_STORAGE_KEY + jugadorActiu,
+    JSON.stringify(cartro),
+  );
+}
+
+function bingoCarregarCartroLocal() {
+  try {
+    const raw = localStorage.getItem(BINGO_STORAGE_KEY + jugadorActiu);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function bingoCarregarEstatLocal(nom) {
+  nom = nom || jugadorActiu;
+  try {
+    const raw = localStorage.getItem("bingo_punts_" + nom);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function bingoSumarPunts(pts) {
+  const estat = bingoCarregarEstatLocal() || { punts: 0 };
+  estat.punts += pts;
+  localStorage.setItem("bingo_punts_" + jugadorActiu, JSON.stringify(estat));
+  document.getElementById("bingo-score").textContent = estat.punts;
+  bingoRenderRanking();
+}

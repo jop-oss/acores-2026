@@ -699,3 +699,198 @@
     height: 280px;
   }
 }
+
+
+    /* ══════════════════════════════════════════════
+       BINGO AÇORES
+       ══════════════════════════════════════════════ */
+
+    #screen-bingo-start {
+      display: none;
+      padding: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Estat global */
+    .bingo-estat-global {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: .75rem 1rem;
+      margin-top: .75rem;
+    }
+    .bingo-estat-title {
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--verd2);
+      margin-bottom: .5rem;
+    }
+    .bingo-estat-info { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .bingo-estat-chip {
+      font-size: .75rem;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .bingo-estat-chip.linia { background: rgba(106,171,122,.12); color: var(--verd2); border: 1px solid var(--verd); }
+    .bingo-estat-chip.bingo { background: rgba(240,180,41,.12); color: var(--gold); border: 1px solid rgba(240,180,41,.4); }
+
+    /* Pantalla joc */
+    #screen-bingo-joc {
+      display: none;
+      min-height: calc(100vh - 52px);
+      padding: 0;
+    }
+    .bingo-joc-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1rem 1rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }
+    .bingo-joc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: .75rem;
+    }
+    .bingo-joc-jugador {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-weight: 600;
+      font-size: .9rem;
+    }
+    .bingo-joc-jugador img {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--verd2);
+    }
+
+    /* Avisos */
+    .bingo-acabat-avis {
+      width: 100%;
+      background: rgba(240,180,41,.12);
+      border: 1px solid rgba(240,180,41,.4);
+      border-radius: 12px;
+      padding: .75rem 1rem;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+    }
+    .bingo-linia-avis {
+      width: 100%;
+      background: rgba(106,171,122,.1);
+      border: 1px solid var(--verd);
+      border-radius: 12px;
+      padding: .6rem 1rem;
+      font-size: .85rem;
+      color: var(--verd2);
+      text-align: center;
+      animation: fadeIn .3s ease;
+    }
+
+    /* Cartró */
+    .bingo-cartro-wrap {
+      width: 100%;
+    }
+    .bingo-cartro {
+      display: grid;
+      gap: 6px;
+      width: 100%;
+    }
+    .bingo-casella {
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: .6rem .4rem;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+    .bingo-casella:hover:not(.estrella):not(.marcada) {
+      border-color: var(--verd2);
+      background: rgba(106,171,122,.08);
+      transform: scale(1.02);
+    }
+    .bingo-casella.estrella {
+      background: rgba(240,180,41,.08);
+      border-color: rgba(240,180,41,.3);
+      cursor: default;
+    }
+    .bingo-casella.marcada {
+      background: var(--verd);
+      border-color: var(--verd2);
+      box-shadow: 0 0 12px rgba(45,90,61,.4);
+    }
+    .bingo-casella.linia-cantada {
+      box-shadow: 0 0 0 3px var(--gold);
+    }
+    .bingo-casella-text {
+      font-size: clamp(.62rem, 1.8vw, .75rem);
+      line-height: 1.3;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .bingo-casella.marcada .bingo-casella-text { color: #fff; font-weight: 600; }
+    .bingo-estrella-icon { font-size: 1.5rem; }
+
+    /* Botons cantar */
+    .bingo-accions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .bingo-btn-linia {
+      width: 100%;
+      background: linear-gradient(135deg, var(--verd), var(--verd2));
+      border: none;
+      border-radius: 12px;
+      padding: 1rem;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      animation: fadeIn .3s ease;
+    }
+    .bingo-btn-linia:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,.5); }
+
+    .bingo-btn-bingo {
+      width: 100%;
+      background: linear-gradient(135deg, #b8860b, var(--gold));
+      border: none;
+      border-radius: 12px;
+      padding: 1.1rem;
+      color: #000;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all .2s;
+      animation: fadeIn .3s ease, pulse 1s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(240,180,41,.4); }
+      50%       { box-shadow: 0 0 40px rgba(240,180,41,.8); }
+    }
+    .bingo-btn-bingo:hover { transform: scale(1.03); }
+
+    @media(max-width: 480px) {
+      .bingo-casella { min-height: 65px; }
+    }
