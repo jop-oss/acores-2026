@@ -387,17 +387,6 @@ function renderHistorial() {
 
 const PIN_ESBORRA = "2468";
 
-function clearHistorial() {
-  const pin = prompt("Introdueix el PIN per esborrar l'historial:");
-  if (pin === null) return;
-  if (pin !== PIN_ESBORRA) {
-    alert("PIN incorrecte.");
-    return;
-  }
-  localStorage.removeItem(HISTORIAL_KEY);
-  renderHistorial();
-}
-
 // ── Confetti ──────────────────────────────────
 function llencaConfetti(colorBase) {
   const container = document.getElementById("confetti-container");

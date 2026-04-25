@@ -28,19 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderJugadorsGrid() {
   const grid = document.getElementById("jugadors-grid");
   grid.innerHTML = JUGADORS_VALIDS.map((nom) => {
-    const estat = carregarEstatJugador(nom);
-    const pts = estat ? estat.punts : 0;
-    const prog =
-      estat && !estat.completat
-        ? `${estat.idx}/${PREGUNTES.length} preg.`
-        : estat && estat.completat
-          ? "Completat ✓"
-          : "Nou joc";
+    const estatQuiz = carregarEstatJugador(nom);
+    const estatMapa = mapaCarregarEstat(nom);
+    const estatParaula = paCarregarEstat(nom);
+    const ptsQuiz = estatQuiz ? estatQuiz.punts : 0;
+    const ptsMapa = estatMapa ? estatMapa.punts : 0;
+    const ptsParaula = estatParaula
+      ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0)
+      : 0;
+    const pts = ptsQuiz + ptsMapa + ptsParaula;
+    const prog = `${pts} pts totals`;
     return `
       <button class="jugador-btn" data-nom="${nom}" onclick="seleccionarJugador('${nom}')">
         <img class="jugador-avatar" src="${IMGS[nom]}" alt="${nom}">
         <span class="jugador-nom-btn">${nom}</span>
-        <span class="jugador-pts">${pts} pts · ${prog}</span>
+        <span class="jugador-pts">${prog}</span>
       </button>`;
   }).join("");
 }
@@ -86,7 +88,6 @@ function renderStartScreen() {
   document.getElementById("jugador-actiu-nom").textContent = nom;
 
   const progWrap = document.getElementById("progres-wrap");
-  const btnReinici = document.getElementById("btn-reiniciar");
   const btnStart = document.getElementById("btn-start-joc");
 
   if (estat && !estat.completat && estat.idx > 0) {
@@ -100,19 +101,16 @@ function renderStartScreen() {
     document.getElementById("progres-badge").textContent =
       `Repren on ho vas deixar →`;
     btnStart.textContent = "Continuar el Quiz ▶";
-    btnReinici.style.display = "block";
     document.getElementById("jugador-actiu-sub").textContent =
       `${estat.punts} punts · en curs`;
   } else if (estat && estat.completat) {
     progWrap.style.display = "none";
     btnStart.textContent = "Veure resultat 🏆";
-    btnReinici.style.display = "block";
     document.getElementById("jugador-actiu-sub").textContent =
       `${estat.punts} punts · completat`;
   } else {
     progWrap.style.display = "none";
     btnStart.textContent = "Comença el Quiz 🚀";
-    btnReinici.style.display = "none";
     document.getElementById("jugador-actiu-sub").textContent =
       "Nou joc · 0 punts";
   }
@@ -363,39 +361,6 @@ function confirmarSortir() {
   mostraScreen("joc-selector");
 }
 
-function demanarReinici() {
-  const sensePenal = SENSE_PENALITZACIO.includes(jugadorActiu);
-  const text = sensePenal
-    ? "Perdràs tot el progrés actual i es reiniciarà el joc des de zero."
-    : "Perdràs tot el progrés actual i se t'aplicarà una <strong>penalització de 100 punts</strong> al rànquing.";
-  document.getElementById("modal-reinici-text").innerHTML = text;
-  document.getElementById("modal-reinici").classList.add("visible");
-}
-
-function tancarModal() {
-  document.getElementById("modal-reinici").classList.remove("visible");
-}
-
-function confirmarReinici() {
-  tancarModal();
-  const sensePenal = SENSE_PENALITZACIO.includes(jugadorActiu);
-  const estatActual = carregarEstatJugador(jugadorActiu);
-  localStorage.removeItem(`quiz_estat_${jugadorActiu}`);
-  if (!sensePenal && estatActual && estatActual.punts > 0) {
-    guardarEstatJugador(jugadorActiu, {
-      jugador: jugadorActiu,
-      ordre: [],
-      idx: 0,
-      punts: -100,
-      encerts: 0,
-      completat: false,
-      penalitzat: true,
-    });
-  }
-  renderStartScreen();
-  renderJugadorsGrid();
-}
-
 function guardarEstatJugador(nom, estat) {
   localStorage.setItem(`quiz_estat_${nom}`, JSON.stringify(estat));
 }
@@ -476,10 +441,12 @@ const QQS_CATEGORIES = [
   { id: "familiars", emoji: "👨‍👩‍👧‍👦", nom: "Familiars i amics", ia: false },
   { id: "famosos", emoji: "🌟", nom: "Persones famoses", ia: true },
   { id: "geografia", emoji: "🌍", nom: "Geografia", ia: true },
-  { id: "cançons", emoji: "🎵", nom: "Cançons", ia: true },
+  { id: "musica", emoji: "🎵", nom: "Música", ia: true },
   { id: "animals", emoji: "🐾", nom: "Animals", ia: true },
   { id: "menjar", emoji: "🍽️", nom: "Menjar i begudes", ia: true },
   { id: "objectes", emoji: "📦", nom: "Objectes", ia: true },
+  { id: "esports", emoji: "⚽", nom: "Esports", ia: true },
+  { id: "aleatori", emoji: "🎲", nom: "Aleatori", ia: true },
 ];
 
 const QQS_FAMILIARS = [
@@ -589,6 +556,10 @@ async function qqsGenerar() {
 }
 
 async function qqsGenerarAmbIA(categoriaNom) {
+  const esAleatori = qqsCategoria === "aleatori";
+  const categoriaPrompt = esAleatori
+    ? "qualsevol categoria (persones famoses, geografia, música, animals, menjar i begudes, objectes o esports)"
+    : categoriaNom;
   const prompt = `Genera una paraula o concepte per al joc "Qui sóc?".
 Categoria: ${categoriaNom}
 La paraula ha de ser prou coneguda per a una família catalana que viatja a les Açores el juliol de 2026.
@@ -723,7 +694,6 @@ function mapaRenderStartScreen() {
   document.getElementById("mapa-jugador-nom").textContent = nom;
 
   const progWrap = document.getElementById("mapa-progres-wrap");
-  const btnReinici = document.getElementById("mapa-btn-reiniciar");
   const btnStart = document.getElementById("mapa-btn-start");
 
   if (estat && !estat.completat && estat.idx > 0) {
@@ -737,19 +707,16 @@ function mapaRenderStartScreen() {
     document.getElementById("mapa-progres-badge").textContent =
       "Repren on ho vas deixar →";
     btnStart.textContent = "Continuar el joc ▶";
-    btnReinici.style.display = "block";
     document.getElementById("mapa-jugador-sub").textContent =
       `${estat.punts} punts · en curs`;
   } else if (estat && estat.completat) {
     progWrap.style.display = "none";
     btnStart.textContent = "Veure resultat 🏆";
-    btnReinici.style.display = "block";
     document.getElementById("mapa-jugador-sub").textContent =
       `${estat.punts} punts · completat`;
   } else {
     progWrap.style.display = "none";
     btnStart.textContent = "Comença el joc 🗺️";
-    btnReinici.style.display = "none";
     document.getElementById("mapa-jugador-sub").textContent =
       "Nou joc · 0 punts";
   }
@@ -1052,15 +1019,6 @@ function mapaConfirmarSortir() {
   mostraScreen("mapa-start");
 }
 
-function mapaDemanarReinici() {
-  document.getElementById("modal-reinici-mapa").classList.add("visible");
-}
-function mapaConfirmarReinici() {
-  document.getElementById("modal-reinici-mapa").classList.remove("visible");
-  localStorage.removeItem(MAPA_STORAGE_KEY + jugadorActiu);
-  mapaRenderStartScreen();
-}
-
 function mapaGuardarEstat(nom, estat) {
   localStorage.setItem(MAPA_STORAGE_KEY + nom, JSON.stringify(estat));
 }
@@ -1071,18 +1029,6 @@ function mapaCarregarEstat(nom) {
   } catch (e) {
     return null;
   }
-}
-
-function mapaReiniciarComptadors() {
-  const pin = prompt("PIN per reiniciar:");
-  if (pin !== "2468") {
-    alert("PIN incorrecte.");
-    return;
-  }
-  JUGADORS_VALIDS.forEach((nom) =>
-    localStorage.removeItem(MAPA_STORAGE_KEY + nom),
-  );
-  mapaRenderStartScreen();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1551,20 +1497,6 @@ function paNovaPartida() {
 
 function paTornarInici() {
   mostraScreen("paraula-start");
-  paRenderNivells();
-  paRenderRanking();
-  paActualitzarBotoStart();
-}
-
-function paReiniciarComptadors() {
-  const pin = prompt("PIN per reiniciar:");
-  if (pin !== "2468") {
-    alert("PIN incorrecte.");
-    return;
-  }
-  JUGADORS_VALIDS.forEach((nom) =>
-    localStorage.removeItem(PA_STORAGE_KEY + nom),
-  );
   paRenderNivells();
   paRenderRanking();
   paActualitzarBotoStart();

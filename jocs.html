@@ -50,19 +50,6 @@
   </div>
 </div>
 
-<!-- MODAL REINICI QUIZ -->
-<div class="modal-overlay" id="modal-reinici">
-  <div class="modal">
-    <div class="modal-icon">⚠️</div>
-    <div class="modal-title">Reiniciar el joc?</div>
-    <div class="modal-text" id="modal-reinici-text">Perdràs el progrés actual i se t'aplicarà una penalització de <strong>100 punts</strong> al rànquing.</div>
-    <div class="modal-btns">
-      <button class="btn-modal-cancel" onclick="tancarModal()">Cancel·lar</button>
-      <button class="btn-modal-confirm" onclick="confirmarReinici()">Reiniciar</button>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL SORTIR MAPA -->
 <div class="modal-overlay" id="modal-sortir-mapa">
   <div class="modal">
@@ -72,19 +59,6 @@
     <div class="modal-btns">
       <button class="btn-modal-cancel" onclick="document.getElementById('modal-sortir-mapa').classList.remove('visible')">Continuar jugant</button>
       <button class="btn-modal-confirm" style="background:linear-gradient(135deg,#2d5a3d,#6aab7a)" onclick="mapaConfirmarSortir()">Sortir</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL REINICI MAPA -->
-<div class="modal-overlay" id="modal-reinici-mapa">
-  <div class="modal">
-    <div class="modal-icon">⚠️</div>
-    <div class="modal-title">Reiniciar el joc?</div>
-    <div class="modal-text">Perdràs tot el progrés actual.</div>
-    <div class="modal-btns">
-      <button class="btn-modal-cancel" onclick="document.getElementById('modal-reinici-mapa').classList.remove('visible')">Cancel·lar</button>
-      <button class="btn-modal-confirm" onclick="mapaConfirmarReinici()">Reiniciar</button>
     </div>
   </div>
 </div>
@@ -170,7 +144,6 @@
       </div>
       <div class="start-btns">
         <button class="btn-start-joc" id="btn-start-joc" onclick="iniciarJoc()">Comença el Quiz 🚀</button>
-        <button class="btn-reiniciar" id="btn-reiniciar" onclick="demanarReinici()" style="display:none">↺ Reiniciar joc</button>
       </div>
     </div>
     <div class="ranking-wrap">
@@ -318,16 +291,12 @@
       </div>
       <div class="start-btns">
         <button class="btn-start-joc" id="mapa-btn-start" onclick="mapaIniciarJoc()">Comença el joc 🗺️</button>
-        <button class="btn-reiniciar" id="mapa-btn-reiniciar" onclick="mapaDemanarReinici()" style="display:none">↺ Reiniciar joc</button>
       </div>
     </div>
     <div class="ranking-wrap">
       <div class="ranking-title">🏆 Rànquing</div>
       <div class="ranking-list-home" id="mapa-ranking-list"></div>
     </div>
-    <button class="pa-btn-reset" onclick="mapaReiniciarComptadors()" style="margin-top:.75rem">
-      🗑️ Reiniciar comptadors
-    </button>
   </div>
 </div>
 
@@ -401,56 +370,64 @@
 
   <!-- ══ LA PARAULA AMAGADA — INICI ══ -->
   <div id="screen-paraula-start" style="display:none">
-    <div style="margin-bottom:1rem">
-      <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
-    </div>
     <div class="pa-start-wrap">
-      <!-- Capçalera -->
-      <div class="pa-hero">
-        <div class="pa-hero-title">
-          <span class="pa-lletra pa-lletra-v">L</span>
-          <span class="pa-lletra pa-lletra-e">A</span>
-          <span class="pa-lletra pa-lletra-r">·</span>
-          <span class="pa-lletra pa-lletra-d">P</span>
-          <span class="pa-lletra pa-lletra-e2">A</span>
-          <span class="pa-lletra pa-lletra-r2">R</span>
-          <span class="pa-lletra pa-lletra-d2">A</span>
-          <span class="pa-lletra pa-lletra-e3">U</span>
-          <span class="pa-lletra pa-lletra-v2">L</span>
-          <span class="pa-lletra pa-lletra-a">A</span>
+      <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+      <div class="start-grid" style="width:100%">
+
+        <!-- Columna esquerra -->
+        <div class="start-left">
+          <div class="pa-hero">
+            <div class="pa-hero-title">
+              <span class="pa-lletra pa-lletra-v">L</span>
+              <span class="pa-lletra pa-lletra-e">A</span>
+            </div>
+            <div class="pa-hero-title">
+              <span class="pa-lletra pa-lletra-d">P</span>
+              <span class="pa-lletra pa-lletra-e2">A</span>
+              <span class="pa-lletra pa-lletra-r2">R</span>
+              <span class="pa-lletra pa-lletra-d2">A</span>
+              <span class="pa-lletra pa-lletra-e3">U</span>
+              <span class="pa-lletra pa-lletra-v2">L</span>
+              <span class="pa-lletra pa-lletra-a">A</span>
+            </div>
+            <div class="pa-hero-title">
+              <span class="pa-lletra pa-lletra-v">A</span>
+              <span class="pa-lletra pa-lletra-e">M</span>
+              <span class="pa-lletra pa-lletra-d">A</span>
+              <span class="pa-lletra pa-lletra-e2">G</span>
+              <span class="pa-lletra pa-lletra-r2">A</span>
+              <span class="pa-lletra pa-lletra-d2">D</span>
+              <span class="pa-lletra pa-lletra-e3">A</span>
+            </div>
+            <div class="pa-hero-sub">Endevina les paraules de les Açores</div>
+          </div>
+
+          <div class="jugador-actiu-wrap" style="width:100%">
+            <img class="jugador-actiu-avatar" id="pa-jugador-avatar" src="" alt="">
+            <div class="jugador-actiu-info">
+              <div class="jugador-actiu-nom" id="pa-jugador-nom"></div>
+              <div class="jugador-actiu-sub">Jugador actiu</div>
+            </div>
+            <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
+          </div>
+
+          <div class="pa-nivells-wrap">
+            <div class="pa-nivells-title">Tria el nivell</div>
+            <div class="pa-nivells-grid" id="pa-nivells-grid"></div>
+          </div>
+
+          <button class="pa-btn-start" id="pa-btn-start" onclick="paIniciarPartida()" disabled>
+            Comença la partida 🔤
+          </button>
         </div>
-        <div class="pa-hero-sub">Endevina les paraules de les Açores</div>
-      </div>
 
-      <!-- Jugador actiu -->
-      <div class="jugador-actiu-wrap" style="max-width:480px;width:100%">
-        <img class="jugador-actiu-avatar" id="pa-jugador-avatar" src="" alt="">
-        <div class="jugador-actiu-info">
-          <div class="jugador-actiu-nom" id="pa-jugador-nom"></div>
-          <div class="jugador-actiu-sub">Jugador actiu</div>
+        <!-- Columna dreta: rànquing -->
+        <div class="pa-ranking-wrap">
+          <div class="ranking-title">🏆 Rànquing</div>
+          <div id="pa-ranking-list"></div>
         </div>
-        <button class="btn-canviar" onclick="mostraScreen('select')">Canviar</button>
-      </div>
 
-      <!-- Selecció de nivell -->
-      <div class="pa-nivells-wrap">
-        <div class="pa-nivells-title">Tria el nivell</div>
-        <div class="pa-nivells-grid" id="pa-nivells-grid"></div>
       </div>
-
-      <!-- Botó començar -->
-      <button class="pa-btn-start" id="pa-btn-start" onclick="paIniciarPartida()" disabled>
-        Comença la partida 🔤
-      </button>
-
-      <!-- Rànquing -->
-      <div class="pa-ranking-wrap">
-        <div class="ranking-title">🏆 Rànquing</div>
-        <div id="pa-ranking-list"></div>
-      </div>
-      <button class="pa-btn-reset" onclick="paReiniciarComptadors()">
-        🗑️ Reiniciar comptadors
-      </button>
     </div>
   </div>
 

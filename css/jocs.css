@@ -200,7 +200,7 @@
     @keyframes qqsSpin{to{transform:rotate(360deg)}}
     .qqs-loading-text{color:var(--text2);font-size:.9rem}
     .qqs-categoria-badge{background:rgba(106,171,122,.1);border:1px solid var(--verd);border-radius:20px;padding:.3rem .9rem;font-size:.78rem;font-weight:600;color:var(--verd2);align-self:center}
-    .qqs-paraula-wrap{width:100%;text-align:center}
+    .qqs-paraula-wrap{width:100%;text-align:center;margin-top: .75rem;}
     .qqs-paraula-card{background:var(--bg2);border:2px solid var(--verd);border-radius:20px;padding:2rem 1.5rem;box-shadow:0 0 40px rgba(45,90,61,.25);animation:slideIn .3s ease}
     .qqs-paraula-text{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;background:linear-gradient(135deg,var(--verd2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
     .qqs-pistes-wrap{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem;animation:fadeIn .3s ease}
@@ -289,12 +289,16 @@
       padding: 1.5rem 1rem 3rem;
     }
     .pa-start-wrap {
-      max-width: 560px;
+      max-width: 900px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.25rem;
+    }
+
+    #screen-paraula-start .mapa-back-btn {
+      align-self: flex-start;
     }
 
     /* Hero títol */
@@ -331,7 +335,7 @@
     .pa-hero-sub { color: var(--text2); font-size: .9rem; margin-top: .25rem; }
 
     /* Nivells */
-    .pa-nivells-wrap { width: 100%; }
+    .pa-nivells-wrap { width: 100%; margin-top: 1rem;}
     .pa-nivells-title {
       font-size: .75rem; font-weight: 600;
       text-transform: uppercase; letter-spacing: .06em;
@@ -374,6 +378,7 @@
       border: none; border-radius: 12px; padding: .9rem;
       color: #fff; font-family: 'DM Sans', sans-serif;
       font-size: 1rem; font-weight: 600; cursor: pointer; transition: all .2s;
+      margin-top: 1rem;
     }
     .pa-btn-start:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,.5); }
     .pa-btn-start:disabled { opacity: .35; cursor: not-allowed; }
