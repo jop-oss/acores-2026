@@ -842,3 +842,177 @@
       50%       { box-shadow: 0 0 50px rgba(240,180,41,.9); }
     }
     .bingo-btn-bingo:hover { transform: scale(1.03); }
+
+
+    /* ══════════════════════════════════════════════
+       REPTES DEL VIATGE
+       ══════════════════════════════════════════════ */
+
+    #screen-reptes {
+      display: none;
+      min-height: calc(100vh - 52px);
+      padding: 0;
+    }
+    .reptes-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    /* Header */
+    .reptes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    .reptes-header-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      flex: 1;
+    }
+    .reptes-logo { font-size: 1.5rem; }
+    .reptes-btn-afegir {
+      background: rgba(106,171,122,.1);
+      border: 1px solid var(--verd);
+      border-radius: 10px;
+      padding: .45rem 1rem;
+      color: var(--verd2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .reptes-btn-afegir:hover { background: rgba(106,171,122,.2); }
+
+    /* Loading */
+    .reptes-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 3rem 0;
+    }
+
+    /* Taula */
+    .reptes-taula-wrap { width: 100%; }
+    .reptes-taula-scroll {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+    .reptes-taula {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    /* Capçalera */
+    .reptes-th {
+      background: var(--bg2);
+      padding: .75rem .6rem;
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .reptes-th-repte {
+      text-align: left;
+      width: 40%;
+      min-width: 200px;
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text2);
+    }
+    .reptes-th-jugador {
+      min-width: 90px;
+      border-left: 1px solid var(--border);
+    }
+    .reptes-th-jugador.actiu {
+      background: rgba(106,171,122,.08);
+      border-left: 2px solid var(--verd2);
+    }
+    .reptes-th-nom {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .2rem;
+    }
+    .reptes-th-total {
+      font-size: .72rem;
+      color: var(--verd2);
+      font-weight: 600;
+    }
+
+    /* Files */
+    .reptes-fila:nth-child(even) .reptes-td { background: rgba(255,255,255,.02); }
+    .reptes-fila:hover .reptes-td { background: rgba(106,171,122,.04); }
+
+    .reptes-td {
+      padding: .6rem .75rem;
+      border-bottom: 1px solid rgba(106,171,122,.08);
+      vertical-align: middle;
+    }
+    .reptes-fila:last-child .reptes-td { border-bottom: none; }
+
+    .reptes-td-text {
+      font-size: .85rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .reptes-td-check {
+      text-align: center;
+      border-left: 1px solid var(--border);
+    }
+    .reptes-td-check.actiu {
+      background: rgba(106,171,122,.05);
+      border-left: 2px solid var(--verd2);
+    }
+    .reptes-td-check.fet {
+      background: rgba(106,171,122,.1);
+    }
+
+    /* Checkbox */
+    .reptes-check {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.3rem;
+      padding: .2rem;
+      border-radius: 6px;
+      transition: transform .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .reptes-check:hover:not(.disabled) { transform: scale(1.2); }
+    .reptes-check.disabled { cursor: default; opacity: .6; }
+    .reptes-check.marcat { animation: repteMarcat .3s ease; }
+
+    @keyframes repteMarcat {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    @media(max-width: 480px) {
+      .reptes-th-jugador { min-width: 70px; }
+      .reptes-td-text { font-size: .78rem; }
+    }

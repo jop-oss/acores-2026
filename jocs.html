@@ -105,6 +105,11 @@
         <span class="joc-selector-label">Bingo Açores</span>
         <span class="joc-selector-sub">Marca el que vas vivint</span>
       </button>
+      <button class="joc-selector-btn" onclick="seleccionarModeJoc('reptes')">
+        <span class="joc-selector-icon">🏆</span>
+        <span class="joc-selector-label">Reptes</span>
+        <span class="joc-selector-sub">Completeu els reptes del viatge</span>
+      </button>
     </div>
     <button class="btn-canviar joc-selector-back" onclick="mostraScreen('select')">← Canviar jugador</button>
   </div>
@@ -640,11 +645,49 @@
     </div>
   </div>
 
+  <!-- ══ REPTES ══ -->
+  <div id="screen-reptes" style="display:none">
+    <div class="reptes-wrap">
+
+      <!-- Header -->
+      <div class="reptes-header">
+        <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+        <div class="reptes-header-title">
+          <span class="reptes-logo">🏆</span>
+          <span>Reptes del viatge</span>
+        </div>
+        <button class="reptes-btn-afegir" id="reptes-btn-afegir" onclick="reptesAfegirRepte()">
+          + Nou repte
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div class="reptes-loading" id="reptes-loading">
+        <div class="qqs-spinner"></div>
+        <div class="qqs-loading-text">Carregant reptes…</div>
+      </div>
+
+      <!-- Taula -->
+      <div class="reptes-taula-wrap" id="reptes-taula-wrap" style="display:none">
+        <div class="reptes-taula-scroll">
+          <table class="reptes-taula" id="reptes-taula">
+            <thead id="reptes-thead"></thead>
+            <tbody id="reptes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
 <!-- Firebase (abans dels altres scripts) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="js/bingo-data.js"></script>  
-
+<script src="js/reptes-data.js"></script>
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script src="js/jocs-data.js"></script>

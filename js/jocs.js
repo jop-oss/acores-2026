@@ -75,6 +75,8 @@ function seleccionarModeJoc(mode) {
     iniciarParaulaAmagada();
   } else if (mode === "bingo") {
     iniciarBingo();
+  } else if (mode === "reptes") {
+    iniciarReptes();
   }
 }
 
@@ -414,6 +416,7 @@ function mostraScreen(nom) {
     "paraula-final",
     "bingo-escollir",
     "bingo-joc",
+    "reptes",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
@@ -2023,4 +2026,192 @@ function bingoMostrarModal(icon, titol, text) {
   document.getElementById("modal-bingo-title").textContent = titol;
   document.getElementById("modal-bingo-text").textContent = text;
   document.getElementById("modal-bingo-event").classList.add("visible");
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REPTES DEL VIATGE — amb Firebase Firestore
+// ══════════════════════════════════════════════════════════════
+
+// ── FIREBASE ──────────────────────────────────────────────────
+let _reptesDb = null;
+function reptesGetDb() {
+  if (_reptesDb) return _reptesDb;
+  if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+  _reptesDb = firebase.firestore();
+  return _reptesDb;
+}
+
+// ── ESTAT ─────────────────────────────────────────────────────
+let reptesUnsubscribe = null;
+let reptesData = null; // { reptes: [{id, text}], marcatges: { NOM: [id1, id2, ...] } }
+
+// ── PUNT D'ENTRADA ────────────────────────────────────────────
+function iniciarReptes() {
+  mostraScreen("reptes");
+  document.getElementById("reptes-loading").style.display = "flex";
+  document.getElementById("reptes-taula-wrap").style.display = "none";
+  reptesEscoltarPartida();
+}
+
+// ── LISTENER TEMPS REAL ───────────────────────────────────────
+function reptesEscoltarPartida() {
+  if (reptesUnsubscribe) reptesUnsubscribe();
+  try {
+    const db = reptesGetDb();
+    reptesUnsubscribe = db
+      .collection(REPTES_COL)
+      .doc(REPTES_DOC)
+      .onSnapshot(
+        async (snap) => {
+          if (!snap.exists) {
+            // Primera vegada: inicialitza amb els reptes inicials
+            await reptesInicialitzar();
+            return;
+          }
+          reptesData = snap.data();
+          reptesRenderTaula();
+        },
+        (err) => console.error("Firestore reptes error:", err),
+      );
+  } catch (e) {
+    console.error("Error iniciant listener reptes:", e);
+  }
+}
+
+// ── INICIALITZAR (primera vegada) ─────────────────────────────
+async function reptesInicialitzar() {
+  try {
+    const db = reptesGetDb();
+    const reptes = REPTES_INICIALS.map((text, i) => ({ id: i + 1, text }));
+    const marcatges = {};
+    JUGADORS_VALIDS.forEach((nom) => {
+      marcatges[nom] = [];
+    });
+
+    await db.collection(REPTES_COL).doc(REPTES_DOC).set({ reptes, marcatges });
+  } catch (e) {
+    console.error("Error inicialitzant reptes:", e);
+  }
+}
+
+// ── RENDER TAULA ──────────────────────────────────────────────
+function reptesRenderTaula() {
+  if (!reptesData) return;
+
+  document.getElementById("reptes-loading").style.display = "none";
+  document.getElementById("reptes-taula-wrap").style.display = "block";
+
+  const { reptes, marcatges } = reptesData;
+  const jugadors = JUGADORS_VALIDS;
+
+  // Calcula quants reptes ha fet cada jugador
+  const totals = {};
+  jugadors.forEach((nom) => {
+    totals[nom] = (marcatges[nom] || []).length;
+  });
+
+  // Ordena jugadors per nombre de reptes (per les medalles)
+  const ranking = [...jugadors].sort((a, b) => totals[b] - totals[a]);
+  const medalles = {
+    [ranking[0]]: "🥇",
+    [ranking[1]]: "🥈",
+    [ranking[2]]: "🥉",
+  };
+
+  // ── Capçalera ──
+  const thead = document.getElementById("reptes-thead");
+  thead.innerHTML = `
+    <tr>
+      <th class="reptes-th reptes-th-repte">Repte</th>
+      ${jugadors
+        .map((nom) => {
+          const total = totals[nom];
+          const medalla = total > 0 && medalles[nom] ? medalles[nom] : "";
+          const esActiu = nom === jugadorActiu;
+          return `<th class="reptes-th reptes-th-jugador ${esActiu ? "actiu" : ""}">
+          <div class="reptes-th-nom">${medalla} ${nom}</div>
+          <div class="reptes-th-total">${total}/${reptes.length}</div>
+        </th>`;
+        })
+        .join("")}
+    </tr>`;
+
+  // ── Files ──
+  const tbody = document.getElementById("reptes-tbody");
+  tbody.innerHTML = reptes
+    .map(
+      (repte) => `
+    <tr class="reptes-fila">
+      <td class="reptes-td reptes-td-text">${repte.text}</td>
+      ${jugadors
+        .map((nom) => {
+          const fet = (marcatges[nom] || []).includes(repte.id);
+          const esActiu = nom === jugadorActiu;
+          return `<td class="reptes-td reptes-td-check ${esActiu ? "actiu" : ""} ${fet ? "fet" : ""}">
+          <button class="reptes-check ${fet ? "marcat" : ""} ${esActiu ? "" : "disabled"}"
+                  onclick="${esActiu ? `reptesToggle(${repte.id})` : ""}"
+                  ${esActiu ? "" : "disabled"}>
+            ${fet ? "✅" : "⬜"}
+          </button>
+        </td>`;
+        })
+        .join("")}
+    </tr>`,
+    )
+    .join("");
+}
+
+// ── TOGGLE REPTE ──────────────────────────────────────────────
+async function reptesToggle(idRepte) {
+  if (!reptesData) return;
+  try {
+    const db = reptesGetDb();
+    const marcatgesActuals = reptesData.marcatges[jugadorActiu] || [];
+    let nousMarcatges;
+
+    if (marcatgesActuals.includes(idRepte)) {
+      nousMarcatges = marcatgesActuals.filter((id) => id !== idRepte);
+    } else {
+      nousMarcatges = [...marcatgesActuals, idRepte];
+    }
+
+    await db
+      .collection(REPTES_COL)
+      .doc(REPTES_DOC)
+      .update({
+        [`marcatges.${jugadorActiu}`]: nousMarcatges,
+      });
+  } catch (e) {
+    console.error("Error togglejant repte:", e);
+    alert("Error de connexió.");
+  }
+}
+
+// ── AFEGIR REPTE NOU (amb PIN) ────────────────────────────────
+async function reptesAfegirRepte() {
+  const pin = prompt("PIN d'administrador:");
+  if (pin !== REPTES_PIN) {
+    if (pin !== null) alert("PIN incorrecte.");
+    return;
+  }
+
+  const text = prompt("Escriu el nou repte:");
+  if (!text || !text.trim()) return;
+
+  try {
+    const db = reptesGetDb();
+    const reptes = reptesData.reptes || [];
+    const nouId = Math.max(...reptes.map((r) => r.id), 0) + 1;
+    const nouRepte = { id: nouId, text: text.trim() };
+
+    await db
+      .collection(REPTES_COL)
+      .doc(REPTES_DOC)
+      .update({
+        reptes: [...reptes, nouRepte],
+      });
+  } catch (e) {
+    console.error("Error afegint repte:", e);
+    alert("Error de connexió.");
+  }
 }
