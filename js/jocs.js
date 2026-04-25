@@ -1638,13 +1638,20 @@ function iniciarBingo() {
 
   let cartroLocal = bingoCarregarCartroLocal();
 
-  // Migració format antic (array directe) → format nou ({ caselles, ids })
+  // Format antic (array directe) → invàlid, forçar nou cartró
   if (cartroLocal && Array.isArray(cartroLocal)) {
-    cartroLocal = {
-      caselles: cartroLocal,
-      ids: cartroLocal.filter((c) => !c.estrella).map((c) => c.id),
-    };
-    bingoGuardarCartroLocal(cartroLocal);
+    cartroLocal = null;
+    localStorage.removeItem(BINGO_STORAGE_KEY + jugadorActiu);
+  }
+
+  // Cartró amb mida incorrecta → invàlid, forçar nou cartró
+  if (
+    cartroLocal &&
+    cartroLocal.caselles &&
+    cartroLocal.caselles.length !== BINGO_TOTAL
+  ) {
+    cartroLocal = null;
+    localStorage.removeItem(BINGO_STORAGE_KEY + jugadorActiu);
   }
 
   if (cartroLocal) {
