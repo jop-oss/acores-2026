@@ -276,6 +276,21 @@
     </table>
   </div>
 
+  <!-- TRIVIAL -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎲 Trivial Açores</div>
+    </div>
+    <div class="admin-ruleta-info" style="margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+      <span>Individual: <strong id="trivial-estat-ind">—</strong></span>
+      <button class="btn-reset-tot" onclick="resetTrivial('individual')">Reiniciar Individual</button>
+    </div>
+    <div class="admin-ruleta-info" style="flex-wrap:wrap;gap:.5rem">
+      <span>Equips: <strong id="trivial-estat-eq">—</strong></span>
+      <button class="btn-reset-tot" onclick="resetTrivial('equips')">Reiniciar Equips</button>
+    </div>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -320,6 +335,7 @@
     renderMapa();
     renderParaula();
     renderBingo();
+    renderTrivial();
     renderRuleta();
   }
 
@@ -458,6 +474,41 @@
       });
       renderBingo();
       mostrarToast('Bingo reiniciat completament');
+    } catch(e) {
+      alert('Error Firebase: ' + e.message);
+    }
+  }
+
+  // ── TRIVIAL ────────────────────────────────────────────────
+  function renderTrivial() {
+    const renderEstat = (snap, elId) => {
+      const el = document.getElementById(elId);
+      if (!snap.exists) { el.textContent = 'Sense partida'; return; }
+      const p = snap.data();
+      if (!p.activa) { el.textContent = 'Sense partida'; return; }
+      const torn = p.ordre?.[p.tornIdx % (p.ordre?.length || 1)] || '—';
+      const ronda = p.ronda || 1;
+      const guanyador = p.guanyador ? `🏆 Guanyador: ${p.guanyador}` : '';
+      el.textContent = `Ronda ${ronda} · Torn de ${torn} ${guanyador}`;
+    };
+
+    Promise.all([
+      getDb().collection('trivial_partides').doc('individual').get(),
+      getDb().collection('trivial_partides').doc('equips').get(),
+    ]).then(([snapInd, snapEq]) => {
+      renderEstat(snapInd, 'trivial-estat-ind');
+      renderEstat(snapEq,  'trivial-estat-eq');
+    }).catch(e => console.error(e));
+  }
+
+  async function resetTrivial(modalitat) {
+    const doc = modalitat === 'individual' ? 'individual' : 'equips';
+    const label = modalitat === 'individual' ? 'Individual' : 'Equips';
+    if (!confirm(`Reiniciar partida Trivial ${label}? S'esborraran tots els punts i el progrés.`)) return;
+    try {
+      await getDb().collection('trivial_partides').doc(doc).delete();
+      renderTrivial();
+      mostrarToast(`Trivial ${label} reiniciat`);
     } catch(e) {
       alert('Error Firebase: ' + e.message);
     }
