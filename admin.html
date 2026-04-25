@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <style>
     :root {
       --bg: #0a1628; --bg2: #0f1f38; --verd: #2d5a3d; --verd2: #6aab7a;
@@ -252,6 +254,29 @@
     </table>
   </div>
 
+  <!-- BINGO -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎯 Bingo Açores</div>
+      <button class="btn-reset-tot" onclick="resetBingo()">Reiniciar tot</button>
+    </div>
+    <div class="admin-ruleta-info" style="margin-bottom:.75rem">
+      <span>Estat partida Firebase: <strong id="bingo-estat-firebase">—</strong></span>
+      <button class="btn-reset-tot" onclick="resetBingoFirebase()">Reiniciar partida Firebase</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Punts bingo</th>
+          <th>Cartró</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-bingo"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -295,6 +320,7 @@
     renderQuiz();
     renderMapa();
     renderParaula();
+    renderBingo();
     renderRuleta();
   }
 
@@ -355,6 +381,87 @@
         <td><button class="btn-reset-jugador" onclick="resetJugador('paraula','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
+  }
+
+  // ── BINGO ──────────────────────────────────────────────────
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBp7lMa2opgXrljNMLykfjxAJl2Y8f5oa8",
+    authDomain: "acores-2026.firebaseapp.com",
+    projectId: "acores-2026",
+    storageBucket: "acores-2026.firebasestorage.app",
+    messagingSenderId: "749343671546",
+    appId: "1:749343671546:web:aa2e3d6043de9b8c89f543"
+  };
+
+  let _db = null;
+  function getDb() {
+    if (_db) return _db;
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    _db = firebase.firestore();
+    return _db;
+  }
+
+  function renderBingo() {
+    const tbody = document.getElementById('taula-bingo');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const rawPunts  = localStorage.getItem(`bingo_punts_${nom}`);
+      const rawCartro = localStorage.getItem(`bingo_estat_${nom}`);
+      const estatPunts = rawPunts ? JSON.parse(rawPunts) : null;
+      const cartro     = rawCartro ? JSON.parse(rawCartro) : null;
+      const pts = estatPunts ? estatPunts.punts : 0;
+      const marcades = cartro ? cartro.filter(c => c.marcada).length : 0;
+      const total    = cartro ? cartro.filter(c => !c.estrella).length : 0;
+      const prog = cartro ? `${marcades}/${total} marcades` : 'Sense cartró';
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td>${prog}</td>
+        <td><button class="btn-reset-jugador" onclick="resetBingoJugador('${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+
+    // Llegir estat Firebase
+    try {
+      getDb().collection('bingo_partides').doc('activa').get().then(snap => {
+        const el = document.getElementById('bingo-estat-firebase');
+        if (!snap.exists) { el.textContent = 'Sense partida'; return; }
+        const data = snap.data();
+        const linies = (data.linies || []).length;
+        const bingo  = data.bingo ? `🏆 Bingo de ${data.bingo.jugador}` : 'Cap bingo';
+        el.textContent = `${linies} línies cantades · ${bingo}`;
+      });
+    } catch(e) { console.error(e); }
+  }
+
+  function resetBingoJugador(nom) {
+    if (!confirm(`Reiniciar Bingo de ${nom}?`)) return;
+    localStorage.removeItem(`bingo_punts_${nom}`);
+    localStorage.removeItem(`bingo_estat_${nom}`);
+    renderBingo();
+    mostrarToast(`${nom} · Bingo reiniciat`);
+  }
+
+  function resetBingo() {
+    if (!confirm('Reiniciar Bingo de TOTS els jugadors (localStorage)?')) return;
+    JUGADORS.forEach(nom => {
+      localStorage.removeItem(`bingo_punts_${nom}`);
+      localStorage.removeItem(`bingo_estat_${nom}`);
+    });
+    renderBingo();
+    mostrarToast('Bingo reiniciat per a tots');
+  }
+
+  async function resetBingoFirebase() {
+    if (!confirm('Reiniciar la partida de Bingo a Firebase? Això esborra línies i bingo cantats.')) return;
+    try {
+      await getDb().collection('bingo_partides').doc('activa').set({
+        linies: [], bingo: null, acabada: false, ts: Date.now()
+      });
+      renderBingo();
+      mostrarToast('Partida Firebase reiniciada');
+    } catch(e) {
+      alert('Error Firebase: ' + e.message);
+    }
   }
 
   // ── RULETA ─────────────────────────────────────────────────
