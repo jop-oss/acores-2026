@@ -1,0 +1,882 @@
+// ══════════════════════════════════════════════════════════════
+//  TRIVIAL AÇORES — amb Firebase Firestore
+// ══════════════════════════════════════════════════════════════
+
+// ── FIREBASE ──────────────────────────────────────────────────
+let _trivialDb = null;
+function trivialGetDb() {
+  if (_trivialDb) return _trivialDb;
+  if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+  _trivialDb = firebase.firestore();
+  return _trivialDb;
+}
+
+const TRIVIAL_COL     = 'trivial_partides';
+const TRIVIAL_IND_DOC = 'individual';
+const TRIVIAL_EQ_DOC  = 'equips';
+
+// ── CONSTANTS ─────────────────────────────────────────────────
+const TRIVIAL_ORDRE_JUGADORS = ['Anna', 'Jordi', 'Mons', 'Xu', 'Laia', 'Joa'];
+const TRIVIAL_CATS            = ['esports', 'geografia', 'ciencies', 'historia', 'cultura', 'acores'];
+const TRIVIAL_PUNTS_CATEGORIA = 50;   // 3 encerts d'una categoria
+const TRIVIAL_PUNTS_FINAL_OK  = 100;  // supera la prova final
+const TRIVIAL_PUNTS_FINAL_PT  = 5;    // per encert a la prova final si no la supera
+const TRIVIAL_ENCERTS_BLOQUEIG = 3;   // encerts per bloquejar categoria
+const TRIVIAL_FINAL_PREGUNTES  = 12;  // 7 mitjanes + 5 altes
+const TRIVIAL_FINAL_MIN_ENCERTS = 8;  // mínim per superar la prova final
+const TRIVIAL_MAX_ENCERTS_TORN  = 3;  // màxim encerts seguits en un torn
+const TRIVIAL_CRONOME_SEGS     = 120; // 2 minuts per torn
+
+// ── ESTAT LOCAL ───────────────────────────────────────────────
+let trivialPartida       = null;  // estat complet de la partida
+let trivialModalitat     = null;  // 'individual' | 'equips'
+let trivialUnsubscribe   = null;
+let trivialCronometreInterval = null;
+let trivialPreguntaActual = null;
+let trivialRespost        = false;
+
+// ── PUNT D'ENTRADA ────────────────────────────────────────────
+function iniciarTrivial() {
+  trivialModalitat = null;
+  trivialPartida   = null;
+  mostraScreen('trivial-inici');
+  trivialCarregarInici();
+}
+
+async function trivialCarregarInici() {
+  // Carrega l'estat de les dues partides possibles
+  try {
+    const db = trivialGetDb();
+    const [snapInd, snapEq] = await Promise.all([
+      db.collection(TRIVIAL_COL).doc(TRIVIAL_IND_DOC).get(),
+      db.collection(TRIVIAL_COL).doc(TRIVIAL_EQ_DOC).get(),
+    ]);
+
+    trivialRenderInici(
+      snapInd.exists ? snapInd.data() : null,
+      snapEq.exists  ? snapEq.data()  : null
+    );
+  } catch(e) {
+    console.error('Error carregant trivial:', e);
+  }
+}
+
+// ── PANTALLA INICI ────────────────────────────────────────────
+function trivialRenderInici(partidaInd, partidaEq) {
+  const cont = document.getElementById('trivial-inici-cont');
+  if (!cont) return;
+
+  const renderPartida = (p, modalitat) => {
+    if (!p || !p.activa) {
+      return `
+        <div class="trivial-partida-card inactiva">
+          <div class="trivial-partida-icon">${modalitat === 'individual' ? '👤' : '👥'}</div>
+          <div class="trivial-partida-nom">${modalitat === 'individual' ? 'Individual' : 'Per equips'}</div>
+          <div class="trivial-partida-estat">Cap partida activa</div>
+          <button class="trivial-btn-nova" onclick="trivialNovaPartida('${modalitat}')">
+            Nova partida
+          </button>
+        </div>`;
+    }
+
+    const jugadorActualNom = trivialGetJugadorActualNom(p);
+    const esTocaJugadorActiu = trivialEsTocaJugadorActiu(p);
+
+    return `
+      <div class="trivial-partida-card activa ${esTocaJugadorActiu ? 'es-torn' : ''}">
+        <div class="trivial-partida-icon">${modalitat === 'individual' ? '👤' : '👥'}</div>
+        <div class="trivial-partida-nom">${modalitat === 'individual' ? 'Individual' : 'Per equips'}</div>
+        ${esTocaJugadorActiu ? `<div class="trivial-torn-badge">🎯 És el teu torn!</div>` : ''}
+        <div class="trivial-partida-torn">Torn de: <strong>${jugadorActualNom}</strong></div>
+        <div class="trivial-partida-ronda">Ronda ${p.ronda || 1}</div>
+        <div class="trivial-ranking-mini" id="trivial-rank-${modalitat}"></div>
+        <div class="trivial-partida-btns">
+          ${esTocaJugadorActiu ? `
+            <button class="trivial-btn-jugar" onclick="trivialEntrarPartida('${modalitat}')">
+              Jugar el meu torn →
+            </button>` : `
+            <button class="trivial-btn-veure" onclick="trivialVeurePartida('${modalitat}')">
+              Veure partida
+            </button>`}
+          <button class="trivial-btn-admin" onclick="trivialAdminPartida('${modalitat}')">⚙️</button>
+        </div>
+      </div>`;
+  };
+
+  cont.innerHTML = `
+    <div class="trivial-partides-grid">
+      ${renderPartida(partidaInd, 'individual')}
+      ${renderPartida(partidaEq, 'equips')}
+    </div>`;
+
+  // Render rankings mini
+  if (partidaInd && partidaInd.activa) trivialRenderRankingMini(partidaInd, 'individual');
+  if (partidaEq  && partidaEq.activa)  trivialRenderRankingMini(partidaEq,  'equips');
+}
+
+function trivialRenderRankingMini(p, modalitat) {
+  const el = document.getElementById(`trivial-rank-${modalitat}`);
+  if (!el) return;
+  const jugadors = p.jugadors || [];
+  const sorted = [...jugadors].sort((a,b) => b.punts - a.punts);
+  el.innerHTML = sorted.slice(0,3).map((j,i) => `
+    <div class="trivial-rank-mini-item">
+      <span>${['🥇','🥈','🥉'][i]}</span>
+      <span>${j.nom}</span>
+      <span>${j.punts} pts</span>
+    </div>`).join('');
+}
+
+// ── NOVA PARTIDA ──────────────────────────────────────────────
+function trivialNovaPartida(modalitat) {
+  trivialModalitat = modalitat;
+  if (modalitat === 'individual') {
+    trivialNovaPartidaIndividual();
+  } else {
+    mostraScreen('trivial-config-equips');
+    trivialRenderConfigEquips();
+  }
+}
+
+async function trivialNovaPartidaIndividual() {
+  const pin = prompt('PIN d\'administrador per iniciar partida:');
+  if (pin !== '2468') { if (pin !== null) alert('PIN incorrecte.'); return; }
+
+  // Escull inici aleatori
+  const idxInici = Math.floor(Math.random() * TRIVIAL_ORDRE_JUGADORS.length);
+  const jugadors = TRIVIAL_ORDRE_JUGADORS.map((nom, i) => ({
+    nom,
+    punts: 0,
+    categories: { esports:0, geografia:0, ciencies:0, historia:0, cultura:0, acores:0 },
+    categoriesBloquejades: [],
+    preguntesVistes: [],
+    tornActual: null,
+  }));
+
+  // Reordena des de l'índex d'inici
+  const ordre = [
+    ...TRIVIAL_ORDRE_JUGADORS.slice(idxInici),
+    ...TRIVIAL_ORDRE_JUGADORS.slice(0, idxInici),
+  ];
+
+  const partida = {
+    activa: true,
+    modalitat: 'individual',
+    ordre,
+    tornIdx: 0,
+    ronda: 1,
+    jugadors,
+    acabada: false,
+    ts: Date.now(),
+  };
+
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(TRIVIAL_IND_DOC).set(partida);
+    trivialCarregarInici();
+  } catch(e) {
+    console.error('Error creant partida:', e);
+    alert('Error de connexió.');
+  }
+}
+
+// ── CONFIG EQUIPS ─────────────────────────────────────────────
+function trivialRenderConfigEquips() {
+  const cont = document.getElementById('trivial-config-equips-cont');
+  if (!cont) return;
+
+  const jugadors = TRIVIAL_ORDRE_JUGADORS;
+  cont.innerHTML = `
+    <div class="trivial-equips-config">
+      <div class="trivial-equip-grup" id="equip-1-grup">
+        <div class="trivial-equip-titol">Equip 1</div>
+        <div class="trivial-equip-selec" id="equip-1-selec"></div>
+      </div>
+      <div class="trivial-equip-grup" id="equip-2-grup">
+        <div class="trivial-equip-titol">Equip 2</div>
+        <div class="trivial-equip-selec" id="equip-2-selec"></div>
+      </div>
+      <div class="trivial-equip-grup" id="equip-3-grup">
+        <div class="trivial-equip-titol">Equip 3</div>
+        <div class="trivial-equip-selec" id="equip-3-selec"></div>
+      </div>
+    </div>
+    <div class="trivial-equips-jugadors">
+      ${jugadors.map(nom => `
+        <div class="trivial-equip-jugador" id="ejug-${nom}" draggable="true"
+             ondragstart="trivialDragStart(event,'${nom}')"
+             ondragover="event.preventDefault()"
+             ondrop="trivialDrop(event,'${nom}')">
+          <img src="${IMGS[nom] || ''}" alt="${nom}">
+          <span>${nom}</span>
+        </div>`).join('')}
+    </div>
+    <button class="trivial-btn-iniciar" onclick="trivialCrearPartidaEquips()">
+      Iniciar partida per equips
+    </button>`;
+}
+
+let trivialDragNom = null;
+function trivialDragStart(e, nom) { trivialDragNom = nom; }
+function trivialDrop(e, targetNom) {
+  // Intercanvia posicions (simplificat)
+}
+
+async function trivialCrearPartidaEquips() {
+  const pin = prompt('PIN d\'administrador:');
+  if (pin !== '2468') { if (pin !== null) alert('PIN incorrecte.'); return; }
+
+  // Llegeix els equips configurats (simplificat: equips fixos per ara)
+  // Es pot ampliar amb drag & drop
+  const equips = [
+    { nom: 'Equip 1', membres: ['Anna', 'Jordi'] },
+    { nom: 'Equip 2', membres: ['Mons', 'Xu'] },
+    { nom: 'Equip 3', membres: ['Laia', 'Joa'] },
+  ];
+
+  const idxInici = Math.floor(Math.random() * equips.length);
+  const ordre = [...equips.slice(idxInici), ...equips.slice(0, idxInici)].map(e => e.nom);
+
+  const jugadors = equips.map(eq => ({
+    nom: eq.nom,
+    membres: eq.membres,
+    punts: 0,
+    categories: { esports:0, geografia:0, ciencies:0, historia:0, cultura:0, acores:0 },
+    categoriesBloquejades: [],
+    preguntesVistes: [],
+    tornActual: null,
+  }));
+
+  const partida = {
+    activa: true,
+    modalitat: 'equips',
+    equips,
+    ordre,
+    tornIdx: 0,
+    ronda: 1,
+    jugadors,
+    acabada: false,
+    ts: Date.now(),
+  };
+
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(TRIVIAL_EQ_DOC).set(partida);
+    mostraScreen('trivial-inici');
+    trivialCarregarInici();
+  } catch(e) {
+    console.error('Error creant partida equips:', e);
+    alert('Error de connexió.');
+  }
+}
+
+// ── ENTRAR A LA PARTIDA (torn del jugador actiu) ───────────────
+async function trivialEntrarPartida(modalitat) {
+  trivialModalitat = modalitat;
+  const docId = modalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+
+  try {
+    const snap = await trivialGetDb().collection(TRIVIAL_COL).doc(docId).get();
+    if (!snap.exists) return;
+    trivialPartida = snap.data();
+
+    // Inicia listener temps real
+    trivialEscoltarPartida(modalitat);
+
+    mostraScreen('trivial-torn');
+    trivialRenderTorn();
+  } catch(e) {
+    console.error('Error entrant partida:', e);
+  }
+}
+
+async function trivialVeurePartida(modalitat) {
+  trivialModalitat = modalitat;
+  const docId = modalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  try {
+    const snap = await trivialGetDb().collection(TRIVIAL_COL).doc(docId).get();
+    if (!snap.exists) return;
+    trivialPartida = snap.data();
+    trivialEscoltarPartida(modalitat);
+    mostraScreen('trivial-veure');
+    trivialRenderVeure();
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+// ── LISTENER ──────────────────────────────────────────────────
+function trivialEscoltarPartida(modalitat) {
+  if (trivialUnsubscribe) trivialUnsubscribe();
+  const docId = modalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  trivialUnsubscribe = trivialGetDb().collection(TRIVIAL_COL).doc(docId)
+    .onSnapshot(snap => {
+      if (!snap.exists) return;
+      trivialPartida = snap.data();
+      const screen = document.querySelector('[id^="screen-trivial-"]:not([style*="none"])');
+      if (!screen) return;
+      const screenId = screen.id.replace('screen-', '');
+      if (screenId === 'trivial-torn')  trivialRenderTorn();
+      if (screenId === 'trivial-veure') trivialRenderVeure();
+    });
+}
+
+// ── PANTALLA TORN ─────────────────────────────────────────────
+function trivialRenderTorn() {
+  if (!trivialPartida) return;
+
+  const jugadorActualNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorData = trivialGetJugadorData(trivialPartida, jugadorActualNom);
+  const tornActual = jugadorData?.tornActual;
+
+  // Header
+  const header = document.getElementById('trivial-torn-header');
+  if (header) {
+    header.innerHTML = `
+      <button class="mapa-back-btn" onclick="trivialSortir()">← Sortir</button>
+      <div class="trivial-torn-jugador">
+        <img src="${IMGS[jugadorActualNom] || ''}" alt="${jugadorActualNom}">
+        <span>${jugadorActualNom}</span>
+      </div>
+      <div class="trivial-cronome" id="trivial-cronome">2:00</div>`;
+  }
+
+  // Si no hi ha torn actiu, mostrar selecció de categoria
+  if (!tornActual || tornActual.estat === 'esperant') {
+    trivialRenderSeleccioCategoria(jugadorData);
+    return;
+  }
+
+  // Si hi ha pregunta activa
+  if (tornActual.estat === 'pregunta') {
+    trivialRenderPregunta(tornActual, jugadorData);
+    return;
+  }
+
+  // Si el torn ha acabat
+  if (tornActual.estat === 'acabat') {
+    trivialRenderFinalTorn(tornActual, jugadorData);
+    return;
+  }
+}
+
+function trivialRenderSeleccioCategoria(jugadorData) {
+  const cont = document.getElementById('trivial-torn-cont');
+  if (!cont) return;
+
+  const encertsTorn = jugadorData?.tornActual?.encerts || 0;
+  const categoriesUsadesTorn = jugadorData?.tornActual?.categoriesUsades || [];
+  const categoriesBloquejades = jugadorData?.categoriesBloquejades || [];
+
+  cont.innerHTML = `
+    <div class="trivial-selcat-wrap">
+      <div class="trivial-selcat-info">
+        ${encertsTorn > 0
+          ? `<div class="trivial-encerts-torn">✅ ${encertsTorn} encert${encertsTorn > 1 ? 's' : ''} en aquest torn</div>`
+          : '<div class="trivial-selcat-hint">Escull una categoria per la teva pregunta</div>'}
+      </div>
+      <div class="trivial-cats-grid">
+        ${TRIVIAL_CATS.map(cat => {
+          const info = TRIVIAL_CATEGORIES[cat];
+          const encerts = jugadorData?.categories[cat] || 0;
+          const bloquejada = categoriesBloquejades.includes(cat);
+          const usadaTorn = categoriesUsadesTorn.includes(cat);
+          const disabled = bloquejada || usadaTorn;
+          return `
+            <button class="trivial-cat-btn ${disabled ? 'disabled' : ''} ${bloquejada ? 'bloquejada' : ''}"
+                    style="--cat-color: ${info.color}"
+                    onclick="${disabled ? '' : `trivialEscollirCategoria('${cat}')`}"
+                    ${disabled ? 'disabled' : ''}>
+              <span class="trivial-cat-emoji">${info.emoji}</span>
+              <span class="trivial-cat-nom">${info.label}</span>
+              <div class="trivial-cat-encerts">
+                ${[0,1,2].map(i => `<span class="trivial-enc-dot ${i < encerts ? 'ple' : ''}" style="background:${i < encerts ? info.color : 'transparent'}"></span>`).join('')}
+              </div>
+              ${bloquejada ? '<span class="trivial-cat-bloq">✓ Completada</span>' : ''}
+              ${usadaTorn ? '<span class="trivial-cat-usada">Ja usada</span>' : ''}
+            </button>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  trivialIniciarCronometre();
+}
+
+function trivialRenderPregunta(tornActual, jugadorData) {
+  const cont = document.getElementById('trivial-torn-cont');
+  if (!cont || !trivialPreguntaActual) return;
+
+  const p = trivialPreguntaActual;
+  const info = TRIVIAL_CATEGORIES[tornActual.categoriaActual];
+
+  cont.innerHTML = `
+    <div class="trivial-pregunta-wrap">
+      <div class="trivial-pregunta-cat" style="background:${info.color}20;border-color:${info.color}">
+        ${info.emoji} ${info.label}
+      </div>
+      <div class="trivial-pregunta-text">${p.p}</div>
+      <div class="trivial-opcions" id="trivial-opcions">
+        ${p.o.map((opcio, i) => `
+          <button class="trivial-opcio" id="trivial-opcio-${i}" onclick="trivialRespondr(${i})">
+            <span class="trivial-opcio-lletra">${['A','B','C','D'][i]}</span>
+            <span>${opcio}</span>
+          </button>`).join('')}
+      </div>
+    </div>`;
+
+  trivialRespost = false;
+}
+
+function trivialRenderFinalTorn(tornActual, jugadorData) {
+  const cont = document.getElementById('trivial-torn-cont');
+  if (!cont) return;
+
+  const encerts = tornActual.encerts || 0;
+  cont.innerHTML = `
+    <div class="trivial-final-torn">
+      <div class="trivial-final-torn-icon">${encerts === 3 ? '🏆' : encerts > 0 ? '👍' : '😅'}</div>
+      <div class="trivial-final-torn-text">
+        ${encerts === 3 ? 'Excel·lent! 3 encerts seguits!' : encerts > 0 ? `${encerts} encert${encerts>1?'s':''} en aquest torn` : 'Cap encert en aquest torn'}
+      </div>
+      <button class="trivial-btn-jugar" onclick="trivialPassarTorn()">Passar torn →</button>
+    </div>`;
+}
+
+// ── ESCOLLIR CATEGORIA ────────────────────────────────────────
+async function trivialEscollirCategoria(cat) {
+  if (!trivialPartida) return;
+
+  const docId = trivialModalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  const jugadorNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorData = trivialGetJugadorData(trivialPartida, jugadorNom);
+
+  // Selecciona pregunta aleatòria de la categoria
+  const excloses = jugadorData.preguntesVistes || [];
+  const preguntes = trivialGetPreguntes(cat, 'mitjana', excloses);
+  if (!preguntes.length) return;
+
+  trivialPreguntaActual = preguntes[0];
+  trivialAturarCronometre();
+
+  // Actualitza estat
+  const nouTorn = {
+    estat: 'pregunta',
+    categoriaActual: cat,
+    categoriesUsades: [...(jugadorData.tornActual?.categoriesUsades || []), cat],
+    encerts: jugadorData.tornActual?.encerts || 0,
+    preguntaId: trivialPreguntaActual.id,
+    ts: Date.now(),
+  };
+
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update({
+      [`jugadors`]: trivialPartida.jugadors.map(j =>
+        j.nom === jugadorNom ? { ...j, tornActual: nouTorn } : j
+      )
+    });
+    trivialRenderPregunta(nouTorn, jugadorData);
+  } catch(e) {
+    console.error('Error escollint categoria:', e);
+  }
+}
+
+// ── RESPONDRE ─────────────────────────────────────────────────
+async function trivialRespondr(idx) {
+  if (trivialRespost || !trivialPreguntaActual || !trivialPartida) return;
+  trivialRespost = true;
+
+  const correcta = trivialPreguntaActual.c;
+  const encertat = idx === correcta;
+
+  // Anima les opcions
+  document.querySelectorAll('.trivial-opcio').forEach(b => b.classList.add('disabled'));
+  document.getElementById(`trivial-opcio-${idx}`)?.classList.add(encertat ? 'correcta' : 'incorrecta');
+  if (!encertat) document.getElementById(`trivial-opcio-${correcta}`)?.classList.add('correcta');
+
+  await new Promise(r => setTimeout(r, 1200));
+
+  const docId = trivialModalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  const jugadorNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorIdx = trivialPartida.jugadors.findIndex(j => j.nom === jugadorNom);
+  const jugadorData = { ...trivialPartida.jugadors[jugadorIdx] };
+
+  // Afegeix pregunta a vistes
+  jugadorData.preguntesVistes = [...(jugadorData.preguntesVistes || []), trivialPreguntaActual.id];
+
+  const tornActual = { ...jugadorData.tornActual };
+
+  if (encertat) {
+    tornActual.encerts = (tornActual.encerts || 0) + 1;
+    jugadorData.categories = { ...jugadorData.categories };
+    jugadorData.categories[tornActual.categoriaActual] = (jugadorData.categories[tornActual.categoriaActual] || 0) + 1;
+
+    // Categoria bloquejada?
+    if (jugadorData.categories[tornActual.categoriaActual] >= TRIVIAL_ENCERTS_BLOQUEIG) {
+      jugadorData.categoriesBloquejades = [...(jugadorData.categoriesBloquejades || []), tornActual.categoriaActual];
+      jugadorData.punts = (jugadorData.punts || 0) + TRIVIAL_PUNTS_CATEGORIA;
+
+      // Totes les categories bloquejades?
+      if (jugadorData.categoriesBloquejades.length >= TRIVIAL_CATS.length) {
+        // Inicia prova final
+        tornActual.estat = 'prova-final';
+        jugadorData.tornActual = tornActual;
+        const nousjugadors = trivialPartida.jugadors.map((j,i) => i === jugadorIdx ? jugadorData : j);
+        await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update({ jugadors: nousjugadors });
+        trivialIniciarProvaFinal();
+        return;
+      }
+    }
+
+    // Màxim 3 encerts per torn
+    if (tornActual.encerts >= TRIVIAL_MAX_ENCERTS_TORN) {
+      tornActual.estat = 'acabat';
+      jugadorData.tornActual = tornActual;
+      const nousjugadors = trivialPartida.jugadors.map((j,i) => i === jugadorIdx ? jugadorData : j);
+      await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update({ jugadors: nousjugadors });
+      trivialRenderFinalTorn(tornActual, jugadorData);
+      return;
+    }
+
+    // Continua escollint categoria
+    tornActual.estat = 'esperant';
+    jugadorData.tornActual = tornActual;
+
+  } else {
+    // Falla → torn acaba
+    tornActual.estat = 'acabat';
+    jugadorData.tornActual = tornActual;
+  }
+
+  const nousjugadors = trivialPartida.jugadors.map((j,i) => i === jugadorIdx ? jugadorData : j);
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update({ jugadors: nousjugadors });
+    if (tornActual.estat === 'esperant') {
+      trivialRenderSeleccioCategoria(jugadorData);
+    } else {
+      trivialRenderFinalTorn(tornActual, jugadorData);
+    }
+  } catch(e) {
+    console.error('Error responent:', e);
+  }
+}
+
+// ── PASSAR TORN ───────────────────────────────────────────────
+async function trivialPassarTorn() {
+  if (!trivialPartida) return;
+
+  const docId = trivialModalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  const jugadorNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorIdx = trivialPartida.jugadors.findIndex(j => j.nom === jugadorNom);
+
+  // Reset torn del jugador actual
+  const jugadorData = { ...trivialPartida.jugadors[jugadorIdx], tornActual: null };
+
+  // Avança torn
+  const nouTornIdx = (trivialPartida.tornIdx + 1) % trivialPartida.ordre.length;
+  const novaRonda = nouTornIdx === 0 ? (trivialPartida.ronda || 1) + 1 : trivialPartida.ronda;
+
+  const nousjugadors = trivialPartida.jugadors.map((j,i) => i === jugadorIdx ? jugadorData : j);
+
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update({
+      jugadors: nousjugadors,
+      tornIdx: nouTornIdx,
+      ronda: novaRonda,
+    });
+    trivialAturarCronometre();
+    mostraScreen('trivial-inici');
+    trivialCarregarInici();
+  } catch(e) {
+    console.error('Error passant torn:', e);
+  }
+}
+
+// ── PROVA FINAL ───────────────────────────────────────────────
+function trivialIniciarProvaFinal() {
+  const jugadorNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorData = trivialGetJugadorData(trivialPartida, jugadorNom);
+  const excloses = jugadorData.preguntesVistes || [];
+
+  // Genera 7 mitjanes + 5 altes
+  const preguntes = trivialGetPreguntaFinal(excloses);
+
+  mostraScreen('trivial-prova-final');
+  trivialRenderProvaFinal(preguntes, jugadorNom);
+}
+
+function trivialRenderProvaFinal(preguntes, jugadorNom) {
+  const cont = document.getElementById('trivial-prova-final-cont');
+  if (!cont) return;
+
+  let preguntaIdx = 0;
+  let encertsFinal = 0;
+  const respostes = [];
+
+  const renderPreguntaFinal = () => {
+    if (preguntaIdx >= preguntes.length) {
+      trivialFinalitzarProvaFinal(encertsFinal, respostes);
+      return;
+    }
+
+    const p = preguntes[preguntaIdx];
+    const info = TRIVIAL_CATEGORIES[p.cat];
+    const esDificil = p.dif === 'alta';
+
+    cont.innerHTML = `
+      <div class="trivial-final-header">
+        <div class="trivial-final-prog">${preguntaIdx + 1} / ${preguntes.length}</div>
+        <div class="trivial-final-encerts">✅ ${encertsFinal} encerts</div>
+        ${esDificil ? '<div class="trivial-final-difbadge">🔥 Difícil</div>' : ''}
+      </div>
+      <div class="trivial-pregunta-cat" style="background:${info.color}20;border-color:${info.color}">
+        ${info.emoji} ${info.label}
+      </div>
+      <div class="trivial-pregunta-text">${p.p}</div>
+      <div class="trivial-opcions" id="trivial-opcions-final">
+        ${p.o.map((opcio, i) => `
+          <button class="trivial-opcio" id="trivial-opcio-f-${i}" onclick="trivialRespondreProvaFinal(${i}, ${p.c}, ${preguntaIdx})">
+            <span class="trivial-opcio-lletra">${['A','B','C','D'][i]}</span>
+            <span>${opcio}</span>
+          </button>`).join('')}
+      </div>`;
+
+    // Posa les funcions al scope
+    window.trivialRespondreProvaFinal = async (idx, correcta, pIdx) => {
+      const encertat = idx === correcta;
+      document.querySelectorAll('.trivial-opcio').forEach(b => b.classList.add('disabled'));
+      document.getElementById(`trivial-opcio-f-${idx}`)?.classList.add(encertat ? 'correcta' : 'incorrecta');
+      if (!encertat) document.getElementById(`trivial-opcio-f-${correcta}`)?.classList.add('correcta');
+      if (encertat) encertsFinal++;
+      respostes.push({ id: p.id, encertat });
+      await new Promise(r => setTimeout(r, 800));
+      preguntaIdx++;
+      renderPreguntaFinal();
+    };
+  };
+
+  renderPreguntaFinal();
+}
+
+async function trivialFinalitzarProvaFinal(encerts, respostes) {
+  const docId = trivialModalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+  const jugadorNom = trivialGetJugadorActualNom(trivialPartida);
+  const jugadorIdx = trivialPartida.jugadors.findIndex(j => j.nom === jugadorNom);
+  const jugadorData = { ...trivialPartida.jugadors[jugadorIdx] };
+
+  const superat = encerts >= TRIVIAL_FINAL_MIN_ENCERTS;
+  let ptsGuanyats = 0;
+
+  if (superat) {
+    ptsGuanyats = TRIVIAL_PUNTS_FINAL_OK;
+    jugadorData.punts = (jugadorData.punts || 0) + ptsGuanyats;
+  } else {
+    ptsGuanyats = encerts * TRIVIAL_PUNTS_FINAL_PT;
+    jugadorData.punts = (jugadorData.punts || 0) + ptsGuanyats;
+  }
+
+  jugadorData.preguntesVistes = [...(jugadorData.preguntesVistes || []), ...respostes.map(r => r.id)];
+  jugadorData.tornActual = null;
+
+  const nousjugadors = trivialPartida.jugadors.map((j,i) => i === jugadorIdx ? jugadorData : j);
+
+  const update = {
+    jugadors: nousjugadors,
+    tornIdx: (trivialPartida.tornIdx + 1) % trivialPartida.ordre.length,
+  };
+
+  if (superat) {
+    update.acabada = true;
+    update.guanyador = jugadorNom;
+  }
+
+  try {
+    await trivialGetDb().collection(TRIVIAL_COL).doc(docId).update(update);
+
+    // Mostra resultat prova final
+    trivialRenderResultatFinal(encerts, ptsGuanyats, superat, jugadorNom);
+  } catch(e) {
+    console.error('Error finalitzant prova final:', e);
+  }
+}
+
+function trivialRenderResultatFinal(encerts, pts, superat, jugadorNom) {
+  const cont = document.getElementById('trivial-prova-final-cont');
+  if (!cont) return;
+
+  cont.innerHTML = `
+    <div class="trivial-resultat-final">
+      <div class="trivial-resultat-icon">${superat ? '🏆' : '😅'}</div>
+      <div class="trivial-resultat-titol">
+        ${superat ? '¡TRIVIAL GUANYAT!' : 'Bona prova!'}
+      </div>
+      <div class="trivial-resultat-encerts">${encerts}/${TRIVIAL_FINAL_PREGUNTES} encerts</div>
+      <div class="trivial-resultat-pts">+${pts} punts</div>
+      ${superat
+        ? `<div class="trivial-resultat-msg">${jugadorNom} ha guanyat la partida!</div>`
+        : `<div class="trivial-resultat-msg">Necessitaves ${TRIVIAL_FINAL_MIN_ENCERTS} encerts. La partida continua!</div>`}
+      <button class="trivial-btn-jugar" onclick="trivialTornarInici()">Tornar a l'inici</button>
+    </div>`;
+}
+
+// ── VEURE PARTIDA (observador) ─────────────────────────────────
+function trivialRenderVeure() {
+  if (!trivialPartida) return;
+  const cont = document.getElementById('trivial-veure-cont');
+  if (!cont) return;
+
+  const jugadors = trivialPartida.jugadors || [];
+  const jugadorActualNom = trivialGetJugadorActualNom(trivialPartida);
+
+  cont.innerHTML = `
+    <div class="trivial-veure-torn">
+      Torn de: <strong>${jugadorActualNom}</strong>
+      <div class="trivial-cronome-veure" id="trivial-cronome-veure"></div>
+    </div>
+    <div class="trivial-ranking-complet">
+      ${[...jugadors].sort((a,b) => b.punts - a.punts).map((j, i) => `
+        <div class="trivial-rank-item ${j.nom === jugadorActualNom ? 'actiu' : ''}">
+          <span class="trivial-rank-pos">${['🥇','🥈','🥉'][i] || (i+1)}</span>
+          <img src="${IMGS[j.nom] || ''}" alt="${j.nom}">
+          <div class="trivial-rank-info">
+            <div class="trivial-rank-nom">${j.nom}</div>
+            <div class="trivial-rank-cats">
+              ${TRIVIAL_CATS.map(cat => {
+                const info = TRIVIAL_CATEGORIES[cat];
+                const encerts = j.categories?.[cat] || 0;
+                const bloq = (j.categoriesBloquejades || []).includes(cat);
+                return `<span class="trivial-cat-mini ${bloq ? 'bloq' : ''}" style="background:${bloq ? info.color : info.color+'30'}" title="${info.label}">${info.emoji}</span>`;
+              }).join('')}
+            </div>
+          </div>
+          <div class="trivial-rank-punts">${j.punts} pts</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ── ADMINISTRACIÓ ─────────────────────────────────────────────
+async function trivialAdminPartida(modalitat) {
+  const pin = prompt('PIN d\'administrador:');
+  if (pin !== '2468') { if (pin !== null) alert('PIN incorrecte.'); return; }
+
+  const opcio = prompt('Opcions:\n1 - Fer perdre el torn al jugador actual\n2 - Reiniciar partida\nEscriu 1 o 2:');
+  if (opcio === '1') {
+    trivialModalitat = modalitat;
+    const docId = modalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+    const snap = await trivialGetDb().collection(TRIVIAL_COL).doc(docId).get();
+    if (!snap.exists) return;
+    trivialPartida = snap.data();
+    await trivialPassarTorn();
+    alert('Torn passat.');
+  } else if (opcio === '2') {
+    if (confirm('Segur que vols reiniciar la partida?')) {
+      const docId = modalitat === 'individual' ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
+      await trivialGetDb().collection(TRIVIAL_COL).doc(docId).delete();
+      trivialCarregarInici();
+    }
+  }
+}
+
+// ── CRONÒMETRE ────────────────────────────────────────────────
+let trivialCronometreSegs = TRIVIAL_CRONOME_SEGS;
+
+function trivialIniciarCronometre() {
+  trivialAturarCronometre();
+  trivialCronometreSegs = TRIVIAL_CRONOME_SEGS;
+  trivialCronometreInterval = setInterval(() => {
+    trivialCronometreSegs--;
+    const min = Math.floor(trivialCronometreSegs / 60);
+    const seg = trivialCronometreSegs % 60;
+    const txt = `${min}:${seg.toString().padStart(2, '0')}`;
+    const el = document.getElementById('trivial-cronome');
+    if (el) {
+      el.textContent = txt;
+      el.className = `trivial-cronome ${trivialCronometreSegs < 30 ? 'urgent' : ''}`;
+    }
+    if (trivialCronometreSegs <= 0) trivialAturarCronometre();
+  }, 1000);
+}
+
+function trivialAturarCronometre() {
+  if (trivialCronometreInterval) {
+    clearInterval(trivialCronometreInterval);
+    trivialCronometreInterval = null;
+  }
+}
+
+// ── BANNER TORN A INDEX.HTML ──────────────────────────────────
+async function trivialComprovarTornIndex() {
+  if (!jugadorActiu) return;
+  try {
+    const db = trivialGetDb();
+    const [snapInd, snapEq] = await Promise.all([
+      db.collection(TRIVIAL_COL).doc(TRIVIAL_IND_DOC).get(),
+      db.collection(TRIVIAL_COL).doc(TRIVIAL_EQ_DOC).get(),
+    ]);
+
+    let missatge = null;
+    let modalitat = null;
+
+    if (snapInd.exists) {
+      const p = snapInd.data();
+      if (p.activa && !p.acabada && trivialEsTocaJugadorActiu(p)) {
+        missatge = 'És el teu torn al Trivial Individual!';
+        modalitat = 'individual';
+      }
+    }
+    if (!missatge && snapEq.exists) {
+      const p = snapEq.data();
+      if (p.activa && !p.acabada && trivialEsTocaJugadorActiuEquips(p)) {
+        missatge = 'És el teu torn al Trivial per Equips!';
+        modalitat = 'equips';
+      }
+    }
+
+    const banner = document.getElementById('trivial-torn-banner');
+    if (banner) {
+      if (missatge) {
+        banner.style.display = 'flex';
+        banner.querySelector('.trivial-banner-text').textContent = missatge;
+        banner.querySelector('.trivial-banner-btn').onclick = () => {
+          window.location.href = `jocs.html?trivial=${modalitat}`;
+        };
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+  } catch(e) {
+    console.error('Error comprovant torn:', e);
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function trivialGetJugadorActualNom(p) {
+  if (!p || !p.ordre) return '';
+  return p.ordre[p.tornIdx % p.ordre.length];
+}
+
+function trivialGetJugadorData(p, nom) {
+  return p?.jugadors?.find(j => j.nom === nom) || null;
+}
+
+function trivialEsTocaJugadorActiu(p) {
+  if (!p || !jugadorActiu) return false;
+  return trivialGetJugadorActualNom(p) === jugadorActiu;
+}
+
+function trivialEsTocaJugadorActiuEquips(p) {
+  if (!p || !jugadorActiu) return false;
+  const nomEquip = trivialGetJugadorActualNom(p);
+  const equip = p.equips?.find(e => e.nom === nomEquip);
+  return equip?.membres?.includes(jugadorActiu) || false;
+}
+
+function trivialSortir() {
+  trivialAturarCronometre();
+  if (trivialUnsubscribe) { trivialUnsubscribe(); trivialUnsubscribe = null; }
+  mostraScreen('trivial-inici');
+  trivialCarregarInici();
+}
+
+function trivialTornarInici() {
+  trivialAturarCronometre();
+  if (trivialUnsubscribe) { trivialUnsubscribe(); trivialUnsubscribe = null; }
+  mostraScreen('joc-selector');
+}

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/jocs.css">
+  <link rel="stylesheet" href="css/trivial.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -683,6 +684,54 @@
 
 
 
+
+  <!-- ══ TRIVIAL AÇORES — INICI ══ -->
+  <div id="screen-trivial-inici" style="display:none">
+    <div class="trivial-inici-wrap">
+      <div class="trivial-inici-header">
+        <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+        <div class="trivial-inici-titol">🎲 Trivial Açores</div>
+      </div>
+      <div id="trivial-inici-cont"></div>
+    </div>
+  </div>
+
+  <!-- ══ TRIVIAL — TORN ══ -->
+  <div id="screen-trivial-torn" style="display:none">
+    <div class="trivial-torn-wrap">
+      <div class="trivial-torn-header-bar" id="trivial-torn-header"></div>
+      <div class="trivial-torn-body" id="trivial-torn-cont"></div>
+    </div>
+  </div>
+
+  <!-- ══ TRIVIAL — VEURE PARTIDA ══ -->
+  <div id="screen-trivial-veure" style="display:none">
+    <div class="trivial-veure-wrap">
+      <div class="trivial-veure-header">
+        <button onclick="mostraScreen('trivial-inici')" class="mapa-back-btn">← Tornar</button>
+      </div>
+      <div id="trivial-veure-cont"></div>
+    </div>
+  </div>
+
+  <!-- ══ TRIVIAL — CONFIG EQUIPS ══ -->
+  <div id="screen-trivial-config-equips" style="display:none">
+    <div class="trivial-config-wrap">
+      <div style="margin-bottom:.75rem">
+        <button onclick="mostraScreen('trivial-inici')" class="mapa-back-btn">← Tornar</button>
+      </div>
+      <h2 class="trivial-inici-titol">Configurar equips</h2>
+      <div id="trivial-config-equips-cont"></div>
+    </div>
+  </div>
+
+  <!-- ══ TRIVIAL — PROVA FINAL ══ -->
+  <div id="screen-trivial-prova-final" style="display:none">
+    <div class="trivial-prova-final-wrap">
+      <div id="trivial-prova-final-cont"></div>
+    </div>
+  </div>
+
 <!-- Firebase (abans dels altres scripts) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -694,6 +743,8 @@
 <script src="js/qqs-data.js"></script>
 <script src="js/joc_mapa-data.js"></script>
 <script src="js/paraula-data.js"></script>
+<script src="js/trivial-data.js"></script>
+<script src="js/trivial.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

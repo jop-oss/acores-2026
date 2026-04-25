@@ -77,6 +77,8 @@ function seleccionarModeJoc(mode) {
     iniciarBingo();
   } else if (mode === "reptes") {
     iniciarReptes();
+  } else if (mode === "trivial") {
+    iniciarTrivial();
   }
 }
 
@@ -417,6 +419,11 @@ function mostraScreen(nom) {
     "bingo-escollir",
     "bingo-joc",
     "reptes",
+    "trivial-inici",
+    "trivial-torn",
+    "trivial-veure",
+    "trivial-config-equips",
+    "trivial-prova-final",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
@@ -427,6 +434,8 @@ function mostraScreen(nom) {
       "mapa-result-final",
       "paraula-resultat",
       "paraula-final",
+      "trivial-torn",
+      "trivial-prova-final",
     ].includes(s);
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });

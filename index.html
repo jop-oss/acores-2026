@@ -6,6 +6,17 @@
   <title>Açores 2026</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
+<style>
+  @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+  .trivial-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .trivial-banner-text { flex: 1; font-size: .88rem; font-weight: 600; color: #f0b429; }
+  .trivial-banner-btn {
+    background: #f0b429; border: none; border-radius: 8px;
+    padding: .4rem 1rem; color: #000;
+    font-family: sans-serif; font-size: .82rem; font-weight: 700;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  }
+</style>
 </head>
 <body>
 
@@ -28,6 +39,13 @@
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
 </nav>
+
+<!-- Banner torn Trivial -->
+<div id="trivial-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(240,180,41,.15),rgba(240,180,41,.05));border:1px solid rgba(240,180,41,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 0;animation:slideIn .3s ease">
+  <span class="trivial-banner-icon">🎲</span>
+  <span class="trivial-banner-text">És el teu torn al Trivial!</span>
+  <button class="trivial-banner-btn" onclick="">Jugar ara →</button>
+</div>
 
 <header class="hero">
   <img src="img/cartell.png" alt="Grup Açores 2026" class="hero-img">
@@ -303,5 +321,21 @@
 </footer>
 
 <script src="js/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script src="js/trivial-data.js"></script>
+<script src="js/trivial.js"></script>
+<script>
+  // Comprova torn en carregar la pàgina
+  document.addEventListener('DOMContentLoaded', () => {
+    // jugadorActiu ve del localStorage si existeix
+    const nomGuardat = localStorage.getItem('trivial_jugador_actiu');
+    if (nomGuardat) {
+      window.jugadorActiu = nomGuardat;
+      trivialComprovarTornIndex();
+    }
+  });
+</script>
 </body>
 </html>
