@@ -1698,12 +1698,17 @@ function bingoRenderCartro() {
   });
 
   // Ressalta files cantades
-  bingoLiniesCantades.forEach((fila) => {
-    for (let c = 0; c < BINGO_COLS; c++) {
-      const cel = wrap.children[fila * BINGO_COLS + c];
-      if (cel) cel.classList.add("linia-cantada");
-    }
-  });
+  // (llegeix les línies de Firestore i comprova el jugador)
+  if (window._bingoLiniesDetall) {
+    window._bingoLiniesDetall
+      .filter((l) => l.jugador === jugadorActiu)
+      .forEach((l) => {
+        for (let c = 0; c < BINGO_COLS; c++) {
+          const cel = wrap.children[l.fila * BINGO_COLS + c];
+          if (cel) cel.classList.add("linia-cantada");
+        }
+      });
+  }
 
   // Actualitza score
   const estatLocal = bingoCarregarEstatLocal();
@@ -1838,11 +1843,13 @@ function bingoEscoltarPartida() {
         (snap) => {
           if (!snap.exists) {
             bingoLiniesCantades = [];
+            window._bingoLiniesDetall = [];
             bingoBingoFet = false;
             bingoActualitzarEstatGlobal(null);
             return;
           }
           const data = snap.data();
+          window._bingoLiniesDetall = data.linies || [];
           bingoLiniesCantades = (data.linies || []).map((l) => l.fila);
           bingoBingoFet = !!data.acabada;
           bingoActualitzarEstatGlobal(data);
