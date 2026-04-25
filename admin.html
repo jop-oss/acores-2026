@@ -406,11 +406,17 @@
       const rawPunts  = localStorage.getItem(`bingo_punts_${nom}`);
       const rawCartro = localStorage.getItem(`bingo_estat_${nom}`);
       const estatPunts = rawPunts ? JSON.parse(rawPunts) : null;
-      const cartro     = rawCartro ? JSON.parse(rawCartro) : null;
+      const cartroData = rawCartro ? JSON.parse(rawCartro) : null;
       const pts = estatPunts ? estatPunts.punts : 0;
-      const marcades = cartro ? cartro.filter(c => c.marcada).length : 0;
-      const total    = cartro ? cartro.filter(c => !c.estrella).length : 0;
-      const prog = cartro ? `${marcades}/${total} marcades` : 'Sense cartró';
+
+      // Suporta format nou { caselles, ids } i format antic (array directe)
+      const caselles = cartroData
+        ? (Array.isArray(cartroData) ? cartroData : cartroData.caselles || [])
+        : [];
+      const marcades = caselles.filter(c => c.marcada).length;
+      const total    = caselles.filter(c => !c.estrella).length;
+      const prog = caselles.length > 0 ? `${marcades}/${total} marcades` : 'Sense cartró';
+
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
