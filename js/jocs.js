@@ -1632,6 +1632,10 @@ let bingoBingoFet = false; // si el bingo ja s'ha cantat
 
 // ── INICIAR PANTALLA ──────────────────────────────────────────
 function iniciarBingo() {
+  // Neteja estat en memòria
+  window._bingoLiniesDetall = [];
+  bingoLiniesCantades = [];
+  bingoBingoFet = false;
   document.getElementById("bingo-jugador-avatar").src =
     IMGS[jugadorActiu] || "";
   document.getElementById("bingo-jugador-nom").textContent = jugadorActiu;

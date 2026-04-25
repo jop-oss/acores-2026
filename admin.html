@@ -258,11 +258,10 @@
   <div class="admin-seccio">
     <div class="admin-seccio-header">
       <div class="admin-seccio-title">🎯 Bingo Açores</div>
-      <button class="btn-reset-tot" onclick="resetBingo()">Reiniciar tot</button>
+      <button class="btn-reset-tot" onclick="resetBingoComplet()">Reiniciar tot</button>
     </div>
     <div class="admin-ruleta-info" style="margin-bottom:.75rem">
       <span>Estat partida Firebase: <strong id="bingo-estat-firebase">—</strong></span>
-      <button class="btn-reset-tot" onclick="resetBingoFirebase()">Reiniciar partida Firebase</button>
     </div>
     <table class="admin-taula">
       <thead>
@@ -441,24 +440,18 @@
     mostrarToast(`${nom} · Bingo reiniciat`);
   }
 
-  function resetBingo() {
-    if (!confirm('Reiniciar Bingo de TOTS els jugadors (localStorage)?')) return;
-    JUGADORS.forEach(nom => {
-      localStorage.removeItem(`bingo_punts_${nom}`);
-      localStorage.removeItem(`bingo_estat_${nom}`);
-    });
-    renderBingo();
-    mostrarToast('Bingo reiniciat per a tots');
-  }
-
-  async function resetBingoFirebase() {
-    if (!confirm('Reiniciar la partida de Bingo a Firebase? Això esborra línies i bingo cantats.')) return;
+  async function resetBingoComplet() {
+    if (!confirm('Reiniciar el Bingo complet? S\'esborraran cartrons, punts i la partida Firebase.')) return;
     try {
       await getDb().collection('bingo_partides').doc('activa').set({
         linies: [], bingo: null, acabada: false, ts: Date.now()
       });
+      JUGADORS.forEach(nom => {
+        localStorage.removeItem(`bingo_punts_${nom}`);
+        localStorage.removeItem(`bingo_estat_${nom}`);
+      });
       renderBingo();
-      mostrarToast('Partida Firebase reiniciada');
+      mostrarToast('Bingo reiniciat completament');
     } catch(e) {
       alert('Error Firebase: ' + e.message);
     }
