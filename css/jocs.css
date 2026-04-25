@@ -642,3 +642,60 @@
   align-self: center;
 }
 .pa-btn-reset:hover { border-color: var(--error); color: #ff8a8a; }
+
+.mapa-joc-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1rem;
+  height: calc(100vh - 105px);
+  padding: .75rem 1rem;
+}
+.mapa-joc-esquerra {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.mapa-joc-dreta {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+.mapa-joc-dreta #mapa-container {
+  margin: 0;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  flex: 1;
+}
+.mapa-joc-dreta #mapa-leaflet {
+  height: 100%;
+  border-radius: 14px;
+}
+.mapa-joc-esquerra .btn-confirmar {
+  width: 100%;
+  margin: .5rem 0 0 0;
+  border-radius: 12px;
+}
+.mapa-foto {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  display: block;
+  min-height: 0;
+  max-height: 300px;
+}
+.mapa-foto-wrap {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  max-height: 300px;
+}
+@media(max-width: 640px) {
+  .mapa-joc-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .mapa-joc-dreta #mapa-leaflet {
+    height: 280px;
+  }
+}

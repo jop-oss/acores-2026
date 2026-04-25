@@ -88,7 +88,7 @@
       <button class="joc-selector-btn" onclick="seleccionarModeJoc('qui-que')">
         <span class="joc-selector-icon">🤔</span>
         <span class="joc-selector-label">Qui / Què sóc?</span>
-        <span class="joc-selector-sub">Adivina qui o què ets</span>
+        <span class="joc-selector-sub">Endevina qui o què ets</span>
       </button>
       <button class="joc-selector-btn" onclick="seleccionarModeJoc('mapa')">
         <span class="joc-selector-icon">📍</span>
@@ -318,21 +318,36 @@
       <div class="quiz-score-label">punts</div>
     </div>
   </div>
-  <div class="pregunta-card" id="mapa-pregunta-card">
-    <div class="pregunta-meta">
-      <span class="q-cat" id="mapa-q-cat"></span>
-      <span class="q-illa" id="mapa-q-illa" style="display:none"></span>
+
+  <div class="mapa-joc-layout">
+
+    <!-- Columna esquerra: info + foto -->
+    <div class="mapa-joc-esquerra">
+      <div class="pregunta-card" id="mapa-pregunta-card">
+        <div class="pregunta-meta">
+          <span class="q-cat" id="mapa-q-cat"></span>
+          <span class="q-illa" id="mapa-q-illa" style="display:none"></span>
+        </div>
+        <div class="pregunta-nom" id="mapa-pregunta-nom"></div>
+        <div class="pregunta-instruccio">Clica al mapa on creus que és</div>
+      </div>
+      <div class="mapa-foto-wrap" id="mapa-foto-wrap" style="display:none">
+        <img id="mapa-foto" src="" alt="" class="mapa-foto">
+      </div>
+      <button class="btn-confirmar" id="mapa-btn-confirmar" onclick="mapaConfirmarResposta()" style="display:none">
+        Confirmar ubicació ✓
+      </button>
     </div>
-    <div class="pregunta-nom" id="mapa-pregunta-nom"></div>
-    <div class="pregunta-instruccio">Clica al mapa on creus que és</div>
+
+    <!-- Columna dreta: mapa + botó confirmar -->
+    <div class="mapa-joc-dreta">
+      <div id="mapa-container">
+        <div id="mapa-leaflet"></div>
+        <div class="mapa-overlay-hint" id="mapa-hint">👆 Clica al mapa per situar el lloc</div>
+      </div>
+    </div>
+
   </div>
-  <div id="mapa-container">
-    <div id="mapa-leaflet"></div>
-    <div class="mapa-overlay-hint" id="mapa-hint">👆 Clica al mapa per situar el lloc</div>
-  </div>
-  <button class="btn-confirmar" id="mapa-btn-confirmar" onclick="mapaConfirmarResposta()" style="display:none">
-    Confirmar ubicació ✓
-  </button>
 </div>
 
 <!-- ══ ON ÉS AIXÒ? — RESULTAT LLOC ══ -->

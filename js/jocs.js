@@ -857,6 +857,14 @@ function mapaMostrarLloc() {
   requestAnimationFrame(() => {
     card.style.animation = "slideIn .3s ease";
   });
+  const fotoWrap = document.getElementById("mapa-foto-wrap");
+  const fotoImg = document.getElementById("mapa-foto");
+  if (lloc.foto) {
+    fotoImg.src = lloc.foto;
+    fotoWrap.style.display = "block";
+  } else {
+    fotoWrap.style.display = "none";
+  }
   mapaLeaflet.setView(AZORES_CENTER, AZORES_ZOOM);
 }
 
