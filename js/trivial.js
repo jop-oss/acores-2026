@@ -605,7 +605,7 @@ function trivialRenderTorn() {
   }
 }
 
-function trivialRenderSeleccioCategoria(jugadorData) {
+function trivialRenderSeleccioCategoria(jugadorData, missatgeBonus) {
   const cont = document.getElementById("trivial-torn-cont");
   if (!cont) return;
 
@@ -615,6 +615,7 @@ function trivialRenderSeleccioCategoria(jugadorData) {
 
   cont.innerHTML = `
     <div class="trivial-selcat-wrap">
+      ${missatgeBonus ? `<div class="trivial-final-torn-bonus" style="margin-bottom:.75rem;text-align:center">${missatgeBonus}</div>` : ""}
       <div class="trivial-selcat-info">
         ${
           encertsTorn > 0
@@ -683,13 +684,15 @@ function trivialRenderFinalTorn(tornActual, jugadorData) {
   if (!cont) return;
 
   const encerts = tornActual.encerts || 0;
+  const bonus50 = tornActual.bonus50 || false;
   cont.innerHTML = `
     <div class="trivial-final-torn">
-      <div class="trivial-final-torn-icon">${encerts === 3 ? "🏆" : encerts > 0 ? "👍" : "😅"}</div>
+      <div class="trivial-final-torn-icon">${bonus50 ? "🏅" : encerts === 3 ? "🏆" : encerts > 0 ? "👍" : "😅"}</div>
       <div class="trivial-final-torn-text">
-        ${encerts === 3 ? "Excel·lent! 3 encerts seguits!" : encerts > 0 ? `${encerts} encert${encerts > 1 ? "s" : ""} en aquest torn` : "Cap encert en aquest torn"}
+        ${bonus50 ? "Categoria completada!" : encerts === 3 ? "Excel·lent! 3 encerts seguits!" : encerts > 0 ? `${encerts} encert${encerts > 1 ? "s" : ""} en aquest torn` : "Cap encert en aquest torn"}
       </div>
-      ${encerts === 3 ? '<div class="trivial-final-torn-bonus">+10 pts bonus per 3 encerts seguits! 🎯</div>' : ""}
+      ${bonus50 ? '<div class="trivial-final-torn-bonus">+50 pts per completar la categoria! 🏅</div>' : ""}
+      ${encerts === 3 && !bonus50 ? '<div class="trivial-final-torn-bonus">+10 pts bonus per 3 encerts seguits! 🎯</div>' : ""}
       <button class="trivial-btn-jugar" onclick="trivialPassarTorn()">Passar torn →</button>
     </div>`;
 }
@@ -799,7 +802,8 @@ async function trivialRespondr(idx) {
         TRIVIAL_PUNTS_CATEGORIA,
       );
       jugadorData.punts = nousjugadors50[jugadorIdx].punts;
-      jugadorData.ptsMembres = nousjugadors50[jugadorIdx].ptsMembres;
+      if (nousjugadors50[jugadorIdx].ptsMembres !== undefined)
+        jugadorData.ptsMembres = nousjugadors50[jugadorIdx].ptsMembres;
 
       // Subcas 1a: totes les categories bloquejades → prova final
       // (independentment de si era la pregunta 1, 2 o 3 del torn)
@@ -821,6 +825,7 @@ async function trivialRespondr(idx) {
       // acaba si ja era la pregunta 3
       if (tornActual.encerts >= TRIVIAL_MAX_ENCERTS_TORN) {
         tornActual.estat = "acabat";
+        tornActual.bonus50 = true;
       } else {
         tornActual.estat = "esperant";
       }
@@ -834,7 +839,7 @@ async function trivialRespondr(idx) {
           .doc(docId)
           .update({ jugadors: nousjugadorsBloc });
         if (tornActual.estat === "esperant") {
-          trivialRenderSeleccioCategoria(jugadorData);
+          trivialRenderSeleccioCategoria(jugadorData, "🏅 Categoria completada! +50 pts");
         } else {
           trivialRenderFinalTorn(tornActual, jugadorData);
         }
@@ -852,7 +857,8 @@ async function trivialRespondr(idx) {
         10,
       );
       jugadorData.punts = nousjugadors10[jugadorIdx].punts;
-      jugadorData.ptsMembres = nousjugadors10[jugadorIdx].ptsMembres;
+      if (nousjugadors10[jugadorIdx].ptsMembres !== undefined)
+        jugadorData.ptsMembres = nousjugadors10[jugadorIdx].ptsMembres;
       tornActual.estat = "acabat";
       jugadorData.tornActual = tornActual;
       const nousjugadors = trivialPartida.jugadors.map((j, i) =>
@@ -1061,7 +1067,8 @@ async function trivialFinalitzarProvaFinal(encerts, respostes) {
     ptsGuanyats,
   );
   jugadorData.punts = nousjugadorsFinal[jugadorIdx].punts;
-  jugadorData.ptsMembres = nousjugadorsFinal[jugadorIdx].ptsMembres;
+  if (nousjugadorsFinal[jugadorIdx].ptsMembres !== undefined)
+    jugadorData.ptsMembres = nousjugadorsFinal[jugadorIdx].ptsMembres;
 
   jugadorData.preguntesVistes = [
     ...(jugadorData.preguntesVistes || []),
