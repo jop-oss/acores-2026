@@ -48,10 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
   mostraScreen('joc-selector');
 
   if (jugadorActiu) {
-    // Ja identificat: mostra l'avatar i habilita cards
     entrarJoc();
+    // Si ve del banner del trivial, entrar directament al trivial
+    const params = new URLSearchParams(window.location.search);
+    const trivialParam = params.get('trivial');
+    if (trivialParam === 'individual' || trivialParam === 'equips') {
+      setTimeout(() => iniciarTrivial(), 100);
+    }
   } else {
-    // No identificat: amaga contenidor jugador, mostra modal i deshabilita cards
     document.querySelector('.joc-selector-jugador').style.display = 'none';
     jocsRenderModalIdentificacio();
     document.getElementById('modal-identificacio')?.classList.add('visible');
