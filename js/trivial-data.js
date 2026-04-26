@@ -698,7 +698,7 @@ const TRIVIAL_PREGUNTES = [
     cat: "esports",
     dif: "mitjana",
     p: "Quin ciclista va guanyar el Tour de França el 2024?",
-    o: ["Jonas Vingegaard", "Remco Evenepoel", "Jai Hindley", "Juan Ayuso"],
+    o: ["Jonas Vingegaard", "Tadej Pogacar", "Jai Hindley", "Juan Ayuso"],
     c: 1,
   },
   {
