@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jocs · Açores 2026</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +14,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-<body>
+<body data-requereix-id>
 
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
@@ -33,28 +34,8 @@
     <a href="blog.html" class="nav-item">Blog</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
-  <div class="nav-id-wrap">
-    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't">
-      <span class="nav-id-text">Identifica't</span>
-    </button>
-    <style>
-      #nav-id-btn:has(.nav-id-text) {
-        border-radius: 20px !important;
-        width: auto !important;
-        padding: 0 12px !important;
-        background: rgba(220,60,60,.18) !important;
-        border-color: rgba(220,60,60,.5) !important;
-      }
-      #nav-id-btn:has(.nav-id-text) .nav-id-text { color: #ff8a8a !important; }
-      #nav-id-btn:has(.nav-id-avatar) {
-        border-radius: 50% !important;
-        width: 36px !important;
-        padding: 0 !important;
-        background: none !important;
-        border-color: #2d5a3d !important;
-        overflow: hidden !important;
-      }
-    </style>
+  <div class="nav-id-wrap" id="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
     <div class="nav-id-menu" id="nav-id-menu"></div>
   </div>
 </nav>

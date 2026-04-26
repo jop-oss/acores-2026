@@ -4,19 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Açores 2026</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
 <style>
   @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-  .nav-id-no-id {
-    border-radius: 20px !important;
-    width: auto !important;
-    padding: 0 12px !important;
-    background: rgba(220,60,60,.18) !important;
-    border-color: rgba(220,60,60,.5) !important;
-    overflow: visible !important;
-  }
-  .nav-id-no-id .nav-id-text { color: #ff8a8a !important; font-size: .72rem !important; }
+
   .trivial-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
   .trivial-banner-text { flex: 1; font-size: .88rem; font-weight: 600; color: #f0b429; }
   .trivial-banner-btn {
@@ -27,7 +20,7 @@
   }
 </style>
 </head>
-<body>
+<body data-requereix-id>
 
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
@@ -47,10 +40,8 @@
       <a href="blog.html" class="nav-item">Blog</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
-  <div class="nav-id-wrap">
-    <button class="nav-id-btn nav-id-no-id" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't">
-      <span class="nav-id-text">Identifica't</span>
-    </button>
+  <div class="nav-id-wrap" id="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
     <div class="nav-id-menu" id="nav-id-menu"></div>
   </div>
 </nav>

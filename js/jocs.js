@@ -294,14 +294,20 @@ function jocsActualitzarJugadorActiu() {
 function jocsRenderModalIdentificacio() {
   const llista = document.getElementById('modal-id-jugadors');
   if (!llista) return;
-  llista.innerHTML = JUGADORS_VALIDS.map(nom => `
-    <button onclick="jocsIdentificar('${nom}')"
-      style="display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid var(--border);
+  const estilBtn = `display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid var(--border);
              border-radius:10px;padding:.5rem .75rem;cursor:pointer;width:100%;transition:all .15s;
-             font-family:'DM Sans',sans-serif;color:var(--text);text-align:left">
+             font-family:'DM Sans',sans-serif;color:var(--text);text-align:left`;
+  llista.innerHTML = JUGADORS_VALIDS.map(nom => `
+    <button onclick="jocsIdentificar('${nom}')" style="${estilBtn}">
       <img src="${IMGS[nom]}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
       <span style="font-weight:600">${nom}</span>
-    </button>`).join('');
+    </button>`).join('') + `
+  <div style="height:1px;background:rgba(106,171,122,.2);margin:.35rem .25rem"></div>
+  <button onclick="jocsDesidentificar()" style="${estilBtn};opacity:.8">
+    <img src="img/avatars/convidat.png" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">
+    <span style="font-weight:600">Convidat</span>
+    <span style="margin-left:auto;font-size:.75rem;color:var(--text2)">sense punts</span>
+  </button>`;
 }
 
 function jocsIdentificar(nom) {
@@ -312,6 +318,16 @@ function jocsIdentificar(nom) {
   document.getElementById('modal-identificacio')?.classList.remove('visible');
   document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
   entrarJoc();
+}
+
+function jocsDesidentificar() {
+  jugadorActiu = null;
+  localStorage.removeItem('app_jugador');
+  localStorage.removeItem('trivial_jugador_actiu');
+  if (typeof appDesidentificar === 'function') appDesidentificar();
+  document.getElementById('modal-identificacio')?.classList.remove('visible');
+  document.querySelector('.joc-selector-jugador').style.display = 'none';
+  document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
 }
 
 function jocsModalIdentificacioTancar() {

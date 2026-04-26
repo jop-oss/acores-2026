@@ -470,6 +470,9 @@ body.light .footer-sub {
 .nav-id-wrap {
   position: relative;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }
 .nav-id-menu {
   position: absolute;
@@ -519,6 +522,22 @@ body.light .footer-sub {
 .nav-id-convidat-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
 .nav-id-convidat { opacity: .8; }
 .nav-id-convidat:hover { opacity: 1; }
+/* Avís "Identifica't" al costat esquerre de l'avatar convidat */
+.nav-id-avis {
+  font-size: .72rem;
+  font-weight: 700;
+  color: #ff8c69;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border: 1px solid rgba(255,140,105,.4);
+  border-radius: 10px;
+  pointer-events: none;
+  animation: nav-avis-pulse 2s ease-in-out infinite;
+}
+@keyframes nav-avis-pulse {
+  0%, 100% { opacity: .7; }
+  50% { opacity: 1; }
+}
 
 body.light .nav-id-btn { border-color: #6aab7a; }
 body.light .nav-id-menu { background: #fff; border-color: #6aab7a; }

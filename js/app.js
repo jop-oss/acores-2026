@@ -42,6 +42,7 @@ const AVATARS_APP  = {
   Anna: 'img/avatars/Anna.jpeg', Jordi: 'img/avatars/Jordi.jpeg',
   Laia: 'img/avatars/Laia.jpeg', Mons:  'img/avatars/Mons.jpeg',
   Xu:   'img/avatars/Xu.jpeg',   Joa:   'img/avatars/Joa.jpeg',
+  Convidat: 'img/avatars/convidat.png',
 };
 
 let appJugadorActiu = localStorage.getItem('app_jugador') || null;
@@ -62,16 +63,25 @@ function appInicialitzarNav() {
 }
 
 function appActualitzarBotoNav() {
+  const wrap = document.getElementById('nav-id-wrap');
   const btn = document.getElementById('nav-id-btn');
   if (!btn) return;
+  // Pàgines amb identificació obligatòria mostren l'avís
+  const ambAvis = document.body.hasAttribute('data-requereix-id');
   if (appJugadorActiu) {
     btn.innerHTML = `<img src="${AVATARS_APP[appJugadorActiu]}" alt="${appJugadorActiu}" class="nav-id-avatar">`;
     btn.title = appJugadorActiu;
-    btn.classList.remove('nav-id-no-id');
+    document.getElementById('nav-id-avis')?.remove();
   } else {
-    btn.innerHTML = `<span class="nav-id-text">Identifica't</span>`;
-    btn.title = "Identifica't";
-    btn.classList.add('nav-id-no-id');
+    btn.innerHTML = `<img src="${AVATARS_APP['Convidat']}" alt="Convidat" class="nav-id-avatar">`;
+    btn.title = 'Convidat';
+    if (ambAvis && wrap && !document.getElementById('nav-id-avis')) {
+      const avis = document.createElement('span');
+      avis.id = 'nav-id-avis';
+      avis.className = 'nav-id-avis';
+      avis.textContent = "Identifica't";
+      wrap.insertBefore(avis, btn);
+    }
   }
 }
 
@@ -95,7 +105,7 @@ function appRenderMenu() {
   <div class="nav-id-menu-sep"></div>
   <button class="nav-id-menu-item nav-id-convidat ${!appJugadorActiu ? 'actiu' : ''}"
           onclick="appDesidentificar()">
-    <span class="nav-id-convidat-icon">👤</span>
+    <img src="${AVATARS_APP['Convidat']}" alt="Convidat">
     <span>Convidat</span>
     ${!appJugadorActiu ? '<span class="nav-id-check">&#10003;</span>' : ''}
   </button>`;
