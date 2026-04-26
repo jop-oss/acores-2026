@@ -551,7 +551,7 @@ const TRIVIAL_PREGUNTES = [
     dif: "mitjana",
     p: "Quin jugador de futbol va guanyar el Balón d'Or el 2023?",
     o: ["Erling Haaland", "Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé"],
-    c: 0,
+    c: 1,
   },
   {
     id: 63,
@@ -655,7 +655,7 @@ const TRIVIAL_PREGUNTES = [
     p: "Quin jugador va guanyar el Balón d'Or el 2024?",
     o: [
       "Jude Bellingham",
-      "Vinicius Júnior",
+      "Rodri Hernández",
       "Erling Haaland",
       "Kylian Mbappé",
     ],
@@ -820,7 +820,7 @@ const TRIVIAL_PREGUNTES = [
       "Kylian Mbappé",
       "Rodri Hernández",
     ],
-    c: 3,
+    c: 1,
   },
   {
     id: 91,
@@ -910,7 +910,7 @@ const TRIVIAL_PREGUNTES = [
     dif: "mitjana",
     p: "Quin jugador va guanyar el Baló d'Or el 2024?",
     o: [
-      "Vinicius Júnior",
+      "Rodri Hernández",
       "Erling Haaland",
       "Jude Bellingham",
       "Kylian Mbappé",
@@ -1016,7 +1016,7 @@ const TRIVIAL_PREGUNTES = [
     dif: "alta",
     p: "Quin jugador va guanyar el Baló d'Or 2023?",
     o: ["Erling Haaland", "Lionel Messi", "Rodri", "Kylian Mbappé"],
-    c: 2,
+    c: 1,
   },
   {
     id: 113,
@@ -1032,7 +1032,7 @@ const TRIVIAL_PREGUNTES = [
     dif: "alta",
     p: "Quin jugador va guanyar el Baló d'Or 2024?",
     o: ["Vinicius Jr", "Rodri", "Kyliam Mbappé", "Jude Bellingham"],
-    c: 0,
+    c: 1,
   },
   {
     id: 115,
