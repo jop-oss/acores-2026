@@ -718,6 +718,10 @@ function mostraScreen(nom) {
   });
   window.scrollTo(0, 0);
 
+  // Recarrega el rànquing global cada cop que es torna al selector de jocs
+  if (nom === "joc-selector" && typeof rankingCarregar === "function") {
+    rankingCarregar();
+  }
 }
 
 const cfStyle = document.createElement("style");
