@@ -1133,6 +1133,7 @@
     .trivial-final-torn { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2rem 0; text-align:center; }
     .trivial-final-torn-icon { font-size:3rem; }
     .trivial-final-torn-text { font-size:1.1rem; color:var(--text); font-weight:600; }
+    .trivial-final-torn-bonus { font-size:.9rem; color:var(--verd2); font-weight:700; background:rgba(106,171,122,.12); border:1px solid var(--verd2); border-radius:8px; padding:.35rem .85rem; }
 
     #screen-trivial-prova-final { display:none; min-height:calc(100vh - 52px); padding:1.5rem 1rem 3rem; }
     .trivial-prova-final-wrap { max-width:600px; margin:0 auto; }

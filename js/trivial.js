@@ -581,8 +581,13 @@ function trivialRenderTorn() {
       </div>`;
   }
 
-  // Si no hi ha torn actiu, mostrar selecció de categoria
+  // Si no hi ha torn actiu (o esperant), però totes les categories estan bloquejades → prova final pendent
   if (!tornActual || tornActual.estat === "esperant") {
+    const categoriesBloquejades = jugadorData?.categoriesBloquejades || [];
+    if (categoriesBloquejades.length >= TRIVIAL_CATS.length) {
+      trivialIniciarProvaFinal();
+      return;
+    }
     trivialRenderSeleccioCategoria(jugadorData);
     return;
   }
@@ -684,6 +689,7 @@ function trivialRenderFinalTorn(tornActual, jugadorData) {
       <div class="trivial-final-torn-text">
         ${encerts === 3 ? "Excel·lent! 3 encerts seguits!" : encerts > 0 ? `${encerts} encert${encerts > 1 ? "s" : ""} en aquest torn` : "Cap encert en aquest torn"}
       </div>
+      ${encerts === 3 ? '<div class="trivial-final-torn-bonus">+10 pts bonus per 3 encerts seguits! 🎯</div>' : ""}
       <button class="trivial-btn-jugar" onclick="trivialPassarTorn()">Passar torn →</button>
     </div>`;
 }
@@ -777,26 +783,27 @@ async function trivialRespondr(idx) {
     jugadorData.categories[tornActual.categoriaActual] =
       (jugadorData.categories[tornActual.categoriaActual] || 0) + 1;
 
-    // Categoria bloquejada?
+    // ── CAS 1: Bloqueig de categoria (3 encerts acumulats en aquesta categoria) ──
     if (
       jugadorData.categories[tornActual.categoriaActual] >=
       TRIVIAL_ENCERTS_BLOQUEIG
     ) {
+      // Afegeix la categoria a la llista de bloquejades i suma 50 pts
       jugadorData.categoriesBloquejades = [
         ...(jugadorData.categoriesBloquejades || []),
         tornActual.categoriaActual,
       ];
-      const nousjugadors1 = trivialSumarPuntsEquip(
+      const nousjugadors50 = trivialSumarPuntsEquip(
         [...trivialPartida.jugadors],
         jugadorIdx,
         TRIVIAL_PUNTS_CATEGORIA,
       );
-      jugadorData.punts = nousjugadors1[jugadorIdx].punts;
-      jugadorData.ptsMembres = nousjugadors1[jugadorIdx].ptsMembres;
+      jugadorData.punts = nousjugadors50[jugadorIdx].punts;
+      jugadorData.ptsMembres = nousjugadors50[jugadorIdx].ptsMembres;
 
-      // Totes les categories bloquejades?
+      // Subcas 1a: totes les categories bloquejades → prova final
+      // (independentment de si era la pregunta 1, 2 o 3 del torn)
       if (jugadorData.categoriesBloquejades.length >= TRIVIAL_CATS.length) {
-        // Inicia prova final
         tornActual.estat = "prova-final";
         jugadorData.tornActual = tornActual;
         const nousjugadors = trivialPartida.jugadors.map((j, i) =>
@@ -809,10 +816,43 @@ async function trivialRespondr(idx) {
         trivialIniciarProvaFinal();
         return;
       }
+
+      // Subcas 1b: no és prova final → continua si encara queden preguntes al torn,
+      // acaba si ja era la pregunta 3
+      if (tornActual.encerts >= TRIVIAL_MAX_ENCERTS_TORN) {
+        tornActual.estat = "acabat";
+      } else {
+        tornActual.estat = "esperant";
+      }
+      jugadorData.tornActual = tornActual;
+      const nousjugadorsBloc = trivialPartida.jugadors.map((j, i) =>
+        i === jugadorIdx ? jugadorData : j,
+      );
+      try {
+        await trivialGetDb()
+          .collection(TRIVIAL_COL)
+          .doc(docId)
+          .update({ jugadors: nousjugadorsBloc });
+        if (tornActual.estat === "esperant") {
+          trivialRenderSeleccioCategoria(jugadorData);
+        } else {
+          trivialRenderFinalTorn(tornActual, jugadorData);
+        }
+      } catch (e) {
+        console.error("Error bloquejant categoria:", e);
+      }
+      return;
     }
 
-    // Màxim 3 encerts per torn
+    // ── CAS 2: 3 encerts seguits al torn (sense bloqueig de categoria) → +10 pts bonus ──
     if (tornActual.encerts >= TRIVIAL_MAX_ENCERTS_TORN) {
+      const nousjugadors10 = trivialSumarPuntsEquip(
+        [...trivialPartida.jugadors],
+        jugadorIdx,
+        10,
+      );
+      jugadorData.punts = nousjugadors10[jugadorIdx].punts;
+      jugadorData.ptsMembres = nousjugadors10[jugadorIdx].ptsMembres;
       tornActual.estat = "acabat";
       jugadorData.tornActual = tornActual;
       const nousjugadors = trivialPartida.jugadors.map((j, i) =>
@@ -826,7 +866,7 @@ async function trivialRespondr(idx) {
       return;
     }
 
-    // Continua escollint categoria
+    // ── CAS 3: Encert normal, continua el torn ──
     tornActual.estat = "esperant";
     jugadorData.tornActual = tornActual;
   } else {
