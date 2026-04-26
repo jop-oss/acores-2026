@@ -20,8 +20,26 @@ let respost = false;
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  renderJugadorsGrid();
-  mostraScreen("select");
+  // Sincronitza jugadorActiu amb la identificació global
+  const nomGuardat = localStorage.getItem('app_jugador');
+  if (nomGuardat && JUGADORS_VALIDS.includes(nomGuardat)) {
+    jugadorActiu = nomGuardat;
+  }
+
+  // Escolta canvis d'identificació des de la nav
+  document.addEventListener('app:jugador-canviat', (e) => {
+    jugadorActiu = e.detail.nom;
+    const screenSelector = document.getElementById('screen-joc-selector');
+    if (screenSelector && screenSelector.style.display !== 'none') {
+      jocsActualitzarJugadorActiu();
+    }
+  });
+
+  // Inicialitza el botó de la nav
+  if (typeof appInicialitzarNav === 'function') appInicialitzarNav();
+
+  mostraScreen('joc-selector');
+  jocsComprovarIdentificacio();
 });
 
 // ── GRID DE JUGADORS ──────────────────────────────────────────
@@ -463,7 +481,7 @@ function llençaConfetti() {
 // ── UTILS ─────────────────────────────────────────────────────
 function mostraScreen(nom) {
   const totes = [
-    "select",
+    
     "joc-selector",
     "start",
     "quiz",
@@ -502,7 +520,7 @@ function mostraScreen(nom) {
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });
   window.scrollTo(0, 0);
-  if (nom === "select") renderJugadorsGrid();
+
 }
 
 const cfStyle = document.createElement("style");
