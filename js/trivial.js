@@ -97,7 +97,10 @@ function trivialRenderInici(partidaInd, partidaEq) {
     }
 
     const jugadorActualNom = trivialGetJugadorActualNom(p);
-    const esTocaJugadorActiu = trivialEsTocaJugadorActiu(p);
+    const esTocaJugadorActiu =
+      modalitat === "individual"
+        ? trivialEsTocaJugadorActiu(p)
+        : trivialEsTocaJugadorActiuEquips(p);
 
     return `
       <div class="trivial-partida-card activa ${esTocaJugadorActiu ? "es-torn" : ""}">
