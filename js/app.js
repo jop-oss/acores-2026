@@ -3,44 +3,40 @@ document.querySelectorAll(".person").forEach((person) => {
   person.addEventListener("click", (e) => {
     e.stopPropagation();
     const isActive = person.classList.contains("active");
-    // Tanca tots
-    document
-      .querySelectorAll(".person")
-      .forEach((p) => p.classList.remove("active"));
-    // Obre aquest si no estava obert
+    document.querySelectorAll(".person").forEach((p) => p.classList.remove("active"));
     if (!isActive) person.classList.add("active");
   });
 });
 
 // Tanca en clicar fora
 document.addEventListener("click", () => {
-  document
-    .querySelectorAll(".person")
-    .forEach((p) => p.classList.remove("active"));
+  document.querySelectorAll(".person").forEach((p) => p.classList.remove("active"));
 });
 
-// Flip cards — tap en mòbil
+// Flip cards — tap en mobil
 document.querySelectorAll(".photo-card").forEach((card) => {
   card.addEventListener("click", () => {
     card.classList.toggle("flipped");
   });
 });
 
-// Mode clar/fosc
-const toggle = document.getElementById("themeToggle");
-const savedTheme = localStorage.getItem("tema");
-if (savedTheme === "light") {
-  document.body.classList.add("light");
-  toggle.textContent = "☀️";
+// ── MODE CLAR/FOSC ────────────────────────────────────────────
+function appInicialitzarTema() {
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+  const savedTheme = localStorage.getItem("tema");
+  if (savedTheme === "light") {
+    document.body.classList.add("light");
+    toggle.textContent = "☀️";
+  }
+  toggle.addEventListener("click", () => {
+    const isLight = document.body.classList.toggle("light");
+    toggle.textContent = isLight ? "☀️" : "🌙";
+    localStorage.setItem("tema", isLight ? "light" : "dark");
+  });
 }
 
-toggle.addEventListener("click", () => {
-  const isLight = document.body.classList.toggle("light");
-  toggle.textContent = isLight ? "☀️" : "🌙";
-  localStorage.setItem("tema", isLight ? "light" : "dark");
-});
-
-// ── IDENTIFICACIÓ GLOBAL ──────────────────────────────────────
+// ── IDENTIFICACIO GLOBAL ──────────────────────────────────────
 const JUGADORS_APP = ['Anna','Jordi','Laia','Mons','Xu','Joa'];
 const AVATARS_APP  = {
   Anna: 'img/avatars/Anna.jpeg', Jordi: 'img/avatars/Jordi.jpeg',
@@ -51,11 +47,12 @@ const AVATARS_APP  = {
 let appJugadorActiu = localStorage.getItem('app_jugador') || null;
 
 function appInicialitzarNav() {
+  appInicialitzarTema();
   const btn = document.getElementById('nav-id-btn');
   if (!btn) return;
   appActualitzarBotoNav();
 
-  // Tanca el menú en clicar fora
+  // Tanca el menu en clicar fora
   document.addEventListener('click', (e) => {
     const menu = document.getElementById('nav-id-menu');
     if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
@@ -70,9 +67,11 @@ function appActualitzarBotoNav() {
   if (appJugadorActiu) {
     btn.innerHTML = `<img src="${AVATARS_APP[appJugadorActiu]}" alt="${appJugadorActiu}" class="nav-id-avatar">`;
     btn.title = appJugadorActiu;
+    btn.classList.remove('nav-id-no-id');
   } else {
     btn.innerHTML = `<span class="nav-id-text">Identifica't</span>`;
-    btn.title = 'Identifica't';
+    btn.title = "Identifica't";
+    btn.classList.add('nav-id-no-id');
   }
 }
 
@@ -91,7 +90,7 @@ function appRenderMenu() {
             onclick="appSeleccionarJugador('${nom}')">
       <img src="${AVATARS_APP[nom]}" alt="${nom}">
       <span>${nom}</span>
-      ${nom === appJugadorActiu ? '<span class="nav-id-check">✓</span>' : ''}
+      ${nom === appJugadorActiu ? '<span class="nav-id-check">&#10003;</span>' : ''}
     </button>`).join('');
 }
 
@@ -101,10 +100,12 @@ function appSeleccionarJugador(nom) {
   localStorage.setItem('trivial_jugador_actiu', nom);
   appActualitzarBotoNav();
   document.getElementById('nav-id-menu')?.classList.remove('visible');
-
-  // Notifica altres mòduls si cal
   document.dispatchEvent(new CustomEvent('app:jugador-canviat', { detail: { nom } }));
 }
 
-// Inicia en carregar
-document.addEventListener('DOMContentLoaded', appInicialitzarNav);
+// Inicia quan el DOM estigui llest
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', appInicialitzarNav);
+} else {
+  appInicialitzarNav();
+}
