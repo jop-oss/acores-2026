@@ -132,6 +132,130 @@ async function trivialGetPuntsGlobals() {
   return pts;
 }
 
+
+// ── RÀNQUING GLOBAL ───────────────────────────────────────────
+let _rankingDades = null;      // cache de totes les dades
+let _rankingFiltreJoc = 'tots';
+
+async function rankingCarregar() {
+  // Dades locals
+  const dades = {};
+  JUGADORS_VALIDS.forEach(nom => {
+    const estatQuiz    = carregarEstatJugador(nom);
+    const estatMapa    = mapaCarregarEstat(nom);
+    const estatParaula = paCarregarEstat(nom);
+    const rawBingo     = localStorage.getItem(`bingo_punts_${nom}`);
+    const estatBingo   = rawBingo ? JSON.parse(rawBingo) : null;
+    dades[nom] = {
+      quiz:    estatQuiz    ? estatQuiz.punts    : 0,
+      mapa:    estatMapa    ? estatMapa.punts    : 0,
+      paraula: estatParaula ? Object.values(estatParaula.punts || {}).reduce((a,b)=>a+b,0) : 0,
+      bingo:   estatBingo   ? estatBingo.punts   : 0,
+      trivial: 0,
+    };
+  });
+
+  // Trivial Firebase
+  try {
+    const ptsTrivial = await trivialGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].trivial = ptsTrivial[nom] || 0; });
+  } catch(e) {}
+
+  _rankingDades = dades;
+  rankingRenderLlista();
+}
+
+function rankingTotal(nom, filtre) {
+  const d = _rankingDades[nom];
+  if (!d) return 0;
+  if (filtre === 'tots') return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial;
+  return d[filtre] || 0;
+}
+
+function rankingFiltrarJoc(filtre, btn) {
+  _rankingFiltreJoc = filtre;
+  document.querySelectorAll('.rfj-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (_rankingDades) rankingRenderLlista();
+}
+
+function rankingRenderLlista() {
+  const el = document.getElementById('ranking-llista');
+  const detall = document.getElementById('ranking-detall');
+  if (!el) return;
+  detall.style.display = 'none';
+  el.style.display = 'block';
+
+  if (!_rankingDades) {
+    el.innerHTML = '<div class="ranking-loading">Carregant…</div>';
+    return;
+  }
+
+  const ordenats = [...JUGADORS_VALIDS].sort((a,b) =>
+    rankingTotal(b, _rankingFiltreJoc) - rankingTotal(a, _rankingFiltreJoc)
+  );
+  const maxPts = rankingTotal(ordenats[0], _rankingFiltreJoc) || 1;
+
+  const medalles = ['🥇','🥈','🥉'];
+  const posClasses = ['gold','silver','bronze'];
+
+  el.innerHTML = ordenats.map((nom, i) => {
+    const pts = rankingTotal(nom, _rankingFiltreJoc);
+    const pct = Math.round((pts / maxPts) * 100);
+    const pos = i < 3 ? `<span class="ranking-pos ${posClasses[i]}">${medalles[i]}</span>`
+                       : `<span class="ranking-pos">${i+1}</span>`;
+    return `<div class="ranking-fila" onclick="rankingMostrarDetall('${nom}')">
+      ${pos}
+      <img class="ranking-avatar" src="${IMGS[nom]}" alt="${nom}">
+      <div class="ranking-info">
+        <span class="ranking-nom">${nom}</span>
+        <span class="ranking-pts-total">${pts} pts</span>
+        <div class="ranking-barra-wrap">
+          <div class="ranking-barra" style="width:${pct}%"></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function rankingMostrarDetall(nom) {
+  const el = document.getElementById('ranking-llista');
+  const detall = document.getElementById('ranking-detall');
+  const cos = document.getElementById('ranking-detall-cos');
+  if (!detall || !_rankingDades) return;
+  el.style.display = 'none';
+  detall.style.display = 'block';
+
+  const d = _rankingDades[nom];
+  const total = d.quiz + d.mapa + d.paraula + d.bingo + d.trivial;
+  const jocs = [
+    { icon:'🌋', nom:'Quiz Açores', key:'quiz' },
+    { icon:'📍', nom:'On és això?', key:'mapa' },
+    { icon:'🔤', nom:'La Paraula',  key:'paraula' },
+    { icon:'🎯', nom:'Bingo',       key:'bingo' },
+    { icon:'🎲', nom:'Trivial',     key:'trivial' },
+  ];
+
+  cos.innerHTML = `
+    <div class="ranking-detall-jugador">
+      <img class="ranking-detall-avatar" src="${IMGS[nom]}" alt="${nom}">
+      <div>
+        <div class="ranking-detall-nom">${nom}</div>
+        <div class="ranking-detall-total">${total} pts totals</div>
+      </div>
+    </div>
+    ${jocs.map(j => `
+      <div class="ranking-joc-fila">
+        <span class="ranking-joc-nom">${j.icon} ${j.nom}</span>
+        <span class="ranking-joc-pts">${d[j.key] || 0} pts</span>
+      </div>`).join('')}`;
+}
+
+function rankingTancarDetall() {
+  document.getElementById('ranking-detall').style.display = 'none';
+  document.getElementById('ranking-llista').style.display = 'block';
+}
+
 function seleccionarJugador(nom) {
   jugadorActiu = nom;
   document.querySelectorAll(".jugador-btn").forEach((b) => {
@@ -145,6 +269,9 @@ function entrarJoc() {
   document.getElementById("joc-selector-avatar").src = IMGS[jugadorActiu] || "";
   document.getElementById("joc-selector-nom").textContent = jugadorActiu;
   mostraScreen("joc-selector");
+  // Inicialitza rànquing
+  _rankingDades = null;
+  rankingCarregar();
 }
 
 // ── SELECCIÓ MODE JOC ─────────────────────────────────────────

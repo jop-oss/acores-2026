@@ -154,22 +154,63 @@
     }
 
     /* ── SELECCIÓ MODE JOC ── */
-    #screen-joc-selector{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem;text-align:center}
-    .joc-selector-wrap{width:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
-    .joc-selector-jugador{display:flex;align-items:center;gap:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.75rem 1.25rem;width:100%;max-width:320px}
-    .joc-selector-jugador img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--verd2)}
+    /* ── SELECTOR LAYOUT 2 COLUMNES ─────────── */
+    #screen-joc-selector{min-height:calc(100vh - 60px);padding:2rem 1.5rem;display:flex;align-items:flex-start;justify-content:center}
+    .joc-selector-layout{width:100%;max-width:1060px;display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start;margin:0 auto}
+    @media(max-width:700px){.joc-selector-layout{grid-template-columns:1fr}.joc-selector-right{order:-1}}
+
+    /* Columna esquerra */
+    .joc-selector-left{display:flex;flex-direction:column;gap:1.25rem}
+    .joc-selector-jugador{display:flex;align-items:center;gap:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.75rem 1.25rem;width:fit-content}
+    .joc-selector-jugador img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2)}
     #joc-selector-nom{font-size:1rem;font-weight:600;color:var(--text)}
-    .joc-selector-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,1.8rem);font-weight:700;color:var(--text);text-align:center}
-    .joc-selector-opcions{display:grid;grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));gap:1rem;width:100%}
-    .joc-selector-btn{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;background:var(--bg2);border:2px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;cursor:pointer;transition:all .2s;color:var(--text);text-align:left;width:100%}
+    .joc-selector-title{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.7rem);font-weight:700;color:var(--text);margin:0}
+    .joc-selector-opcions{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
+    .joc-selector-btn{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;background:var(--bg2);border:2px solid var(--border);border-radius:16px;padding:1.1rem 1rem;cursor:pointer;transition:all .2s;color:var(--text);text-align:left;width:100%}
     .joc-selector-btn:hover{border-color:var(--verd2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,90,61,.3)}
-    .joc-selector-btn.disabled{opacity:.5;cursor:not-allowed}
-    .joc-selector-btn.disabled:hover{transform:none;box-shadow:none;border-color:var(--border)}
-    .joc-selector-icon{font-size:2rem;margin-bottom:.25rem}
-    .joc-selector-label{font-size:1.1rem;font-weight:700;color:var(--text)}
-    .joc-selector-sub{font-size:.8rem;color:var(--text2)}
-    .joc-selector-back{margin-top:.5rem;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:.85rem;padding:.5rem 1rem;border-radius:8px;cursor:pointer;transition:all .2s}
-    .joc-selector-back:hover{border-color:var(--verd2);color:var(--text)}
+    .joc-selector-btn.disabled-id{opacity:.45;cursor:not-allowed;pointer-events:none}
+    .joc-selector-icon{font-size:1.9rem;margin-bottom:.2rem}
+    .joc-selector-label{font-size:.95rem;font-weight:700;color:var(--text)}
+    .joc-selector-sub{font-size:.75rem;color:var(--text2)}
+
+    /* Columna dreta: rànquing */
+    .joc-selector-right{position:sticky;top:80px}
+    .ranking-panel{background:var(--bg2);border:1px solid var(--border);border-radius:18px;overflow:hidden;max-height:calc(100vh - 100px);display:flex;flex-direction:column}
+    .ranking-header{padding:1rem 1.25rem .75rem;border-bottom:1px solid var(--border);flex-shrink:0}
+    .ranking-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text)}
+    .ranking-filtres-joc{display:flex;flex-wrap:wrap;gap:.35rem;padding:.75rem 1rem;border-bottom:1px solid var(--border);flex-shrink:0}
+    .rfj-btn{background:transparent;border:1px solid var(--border);border-radius:20px;padding:.25rem .65rem;font-size:.75rem;color:var(--text2);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .rfj-btn:hover{border-color:var(--verd2);color:var(--text)}
+    .rfj-btn.active{background:var(--verd1);border-color:var(--verd2);color:var(--verd3);font-weight:600}
+    .ranking-llista{padding:.75rem;overflow-y:auto;flex:1}
+    .ranking-loading{text-align:center;padding:1.5rem;color:var(--text2);font-size:.85rem}
+
+    /* Fila de jugador al rànquing */
+    .ranking-fila{display:flex;align-items:center;gap:.65rem;padding:.55rem .5rem;border-radius:10px;cursor:pointer;transition:background .15s}
+    .ranking-fila:hover{background:rgba(106,171,122,.08)}
+    .ranking-pos{width:22px;font-size:.85rem;font-weight:700;color:var(--text2);text-align:center;flex-shrink:0}
+    .ranking-pos.gold{color:#f0b429}
+    .ranking-pos.silver{color:#aab4c4}
+    .ranking-pos.bronze{color:#cd7f32}
+    .ranking-avatar{width:36px;height:36px;min-width:36px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;border:2px solid var(--border)}
+    .ranking-info{flex:1;min-width:0}
+    .ranking-nom{font-weight:600;font-size:.9rem;color:var(--text);display:block}
+    .ranking-pts-total{font-size:.78rem;color:var(--verd3);font-weight:600}
+    .ranking-barra-wrap{width:100%;height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:3px}
+    .ranking-barra{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--verd1),var(--verd2));transition:width .4s}
+
+    /* Detall jugador */
+    .ranking-detall{padding:.75rem;overflow-y:auto;flex:1}
+    .ranking-detall-back{background:transparent;border:none;color:var(--verd3);font-size:.82rem;cursor:pointer;padding:.25rem 0;margin-bottom:.75rem;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:.3rem}
+    .ranking-detall-back:hover{color:var(--text)}
+    .ranking-detall-jugador{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+    .ranking-detall-avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2)}
+    .ranking-detall-nom{font-weight:700;font-size:1.05rem;color:var(--text)}
+    .ranking-detall-total{font-size:.85rem;color:var(--verd3)}
+    .ranking-joc-fila{display:flex;align-items:center;justify-content:space-between;padding:.5rem .25rem;border-bottom:1px solid rgba(255,255,255,.04);font-size:.85rem}
+    .ranking-joc-fila:last-child{border-bottom:none}
+    .ranking-joc-nom{color:var(--text2);display:flex;align-items:center;gap:.4rem}
+    .ranking-joc-pts{font-weight:700;color:var(--text)}
 
     /* ══════════════════════════════════════════════
        QUI / QUÈ SÓC?
@@ -1016,504 +1057,3 @@
       .reptes-th-jugador { min-width: 70px; }
       .reptes-td-text { font-size: .78rem; }
     }
-
-    /* ══════════════════════════════════════════════
-       TRIVIAL AÇORES
-       ══════════════════════════════════════════════ */
-
-    /* ── Pantalla inici ── */
-    #screen-trivial-inici {
-      display: none;
-      min-height: calc(100vh - 52px);
-      padding: 1.5rem 1rem 3rem;
-    }
-    .trivial-inici-wrap {
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .trivial-inici-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: .75rem;
-    }
-    .trivial-inici-titol {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--verd2), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Cards de partida */
-    .trivial-partides-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media(max-width: 560px) { .trivial-partides-grid { grid-template-columns: 1fr; } }
-
-    .trivial-partida-card {
-      background: var(--bg2);
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-      transition: all .2s;
-    }
-    .trivial-partida-card.activa { border-color: var(--verd); }
-    .trivial-partida-card.es-torn {
-      border-color: var(--gold);
-      box-shadow: 0 0 20px rgba(240,180,41,.2);
-      animation: tornPulse 2s ease-in-out infinite;
-    }
-    @keyframes tornPulse {
-      0%,100% { box-shadow: 0 0 20px rgba(240,180,41,.2); }
-      50%      { box-shadow: 0 0 40px rgba(240,180,41,.5); }
-    }
-
-    .trivial-partida-icon { font-size: 2rem; }
-    .trivial-partida-nom { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
-    .trivial-partida-estat { font-size: .8rem; color: var(--text2); }
-    .trivial-partida-torn { font-size: .85rem; color: var(--text); }
-    .trivial-partida-ronda { font-size: .75rem; color: var(--text2); }
-
-    .trivial-torn-badge {
-      background: rgba(240,180,41,.15);
-      border: 1px solid var(--gold);
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: .78rem;
-      font-weight: 700;
-      color: var(--gold);
-      align-self: flex-start;
-    }
-
-    .trivial-rank-mini-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: .78rem;
-      padding: 2px 0;
-      color: var(--text2);
-    }
-
-    .trivial-partida-btns {
-      display: flex;
-      gap: .5rem;
-      margin-top: .25rem;
-    }
-    .trivial-btn-nova, .trivial-btn-jugar, .trivial-btn-veure {
-      flex: 1;
-      background: linear-gradient(135deg, var(--verd), var(--verd2));
-      border: none;
-      border-radius: 10px;
-      padding: .65rem;
-      color: #fff;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .trivial-btn-nova { background: rgba(106,171,122,.15); color: var(--verd2); border: 1px solid var(--verd); }
-    .trivial-btn-veure { background: rgba(255,255,255,.06); color: var(--text2); border: 1px solid var(--border); }
-    .trivial-btn-nova:hover, .trivial-btn-jugar:hover { transform: translateY(-1px); }
-    .trivial-btn-admin {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: .4rem .6rem;
-      color: var(--text2);
-      cursor: pointer;
-      font-size: .85rem;
-      transition: all .2s;
-    }
-    .trivial-btn-admin:hover { border-color: var(--verd2); }
-
-    /* ── Pantalla torn ── */
-    #screen-trivial-torn {
-      display: none;
-      min-height: calc(100vh - 52px);
-      flex-direction: column;
-    }
-    .trivial-torn-wrap { display: flex; flex-direction: column; height: 100%; }
-    .trivial-torn-header-bar {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      padding: .75rem 1rem;
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 52px;
-      z-index: 100;
-    }
-    .trivial-torn-jugador {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-      font-weight: 600;
-    }
-    .trivial-torn-jugador img {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--verd2);
-    }
-    .trivial-cronome {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--verd2);
-      min-width: 50px;
-      text-align: right;
-    }
-    .trivial-cronome.urgent { color: var(--error); animation: cronoBlink .5s ease infinite; }
-    @keyframes cronoBlink { 0%,100% { opacity:1; } 50% { opacity:.3; } }
-
-    .trivial-torn-body {
-      flex: 1;
-      padding: 1rem;
-      max-width: 600px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    /* Selecció categoria */
-    .trivial-selcat-wrap { display: flex; flex-direction: column; gap: 1rem; }
-    .trivial-selcat-hint { font-size: .85rem; color: var(--text2); text-align: center; }
-    .trivial-encerts-torn {
-      background: rgba(106,171,122,.1);
-      border: 1px solid var(--verd);
-      border-radius: 10px;
-      padding: .5rem 1rem;
-      font-size: .85rem;
-      color: var(--verd2);
-      text-align: center;
-    }
-
-    .trivial-cats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .75rem;
-    }
-    @media(min-width: 480px) { .trivial-cats-grid { grid-template-columns: repeat(3, 1fr); } }
-
-    .trivial-cat-btn {
-      background: var(--bg2);
-      border: 2px solid var(--cat-color, var(--border));
-      border-radius: 14px;
-      padding: .85rem .5rem;
-      cursor: pointer;
-      transition: all .2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .4rem;
-      color: var(--text);
-      position: relative;
-    }
-    .trivial-cat-btn:hover:not(.disabled) {
-      background: color-mix(in srgb, var(--cat-color) 15%, transparent);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0,0,0,.3);
-    }
-    .trivial-cat-btn.disabled { opacity: .4; cursor: not-allowed; }
-    .trivial-cat-btn.bloquejada { opacity: .6; background: rgba(106,171,122,.08); }
-    .trivial-cat-emoji { font-size: 1.8rem; line-height: 1; }
-    .trivial-cat-nom { font-size: .72rem; font-weight: 600; color: var(--text2); text-align: center; }
-    .trivial-cat-encerts { display: flex; gap: 4px; justify-content: center; }
-    .trivial-enc-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      border: 2px solid var(--cat-color, var(--border));
-    }
-    .trivial-cat-bloq, .trivial-cat-usada {
-      font-size: .62rem;
-      font-weight: 600;
-      border-radius: 20px;
-      padding: 1px 6px;
-    }
-    .trivial-cat-bloq { background: rgba(106,171,122,.2); color: var(--verd2); }
-    .trivial-cat-usada { background: rgba(255,255,255,.08); color: var(--text2); }
-
-    /* Pregunta */
-    .trivial-pregunta-wrap { display: flex; flex-direction: column; gap: .85rem; }
-    .trivial-pregunta-cat {
-      display: inline-flex;
-      align-items: center;
-      gap: .4rem;
-      border-radius: 20px;
-      padding: .3rem .9rem;
-      font-size: .78rem;
-      font-weight: 600;
-      border: 1px solid;
-      align-self: flex-start;
-    }
-    .trivial-pregunta-text {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      line-height: 1.5;
-      color: var(--text);
-    }
-    .trivial-opcions { display: grid; gap: .5rem; }
-    .trivial-opcio {
-      background: rgba(255,255,255,.03);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: .75rem 1rem;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .88rem;
-      color: var(--text);
-      text-align: left;
-      transition: all .15s;
-      display: flex;
-      align-items: center;
-      gap: .65rem;
-    }
-    .trivial-opcio-lletra {
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      background: rgba(106,171,122,.1);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .72rem;
-      font-weight: 700;
-      color: var(--verd2);
-      flex-shrink: 0;
-    }
-    .trivial-opcio:hover:not(.disabled) {
-      border-color: var(--verd2);
-      background: rgba(106,171,122,.08);
-      transform: translateX(3px);
-    }
-    .trivial-opcio.correcta { border-color: var(--verd2); background: rgba(106,171,122,.15); }
-    .trivial-opcio.correcta .trivial-opcio-lletra { background: var(--verd2); color: #fff; }
-    .trivial-opcio.incorrecta { border-color: var(--error); background: rgba(224,85,85,.1); }
-    .trivial-opcio.incorrecta .trivial-opcio-lletra { background: var(--error); color: #fff; }
-    .trivial-opcio.disabled { cursor: default; }
-
-    /* Final torn */
-    .trivial-final-torn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      padding: 2rem 0;
-      text-align: center;
-    }
-    .trivial-final-torn-icon { font-size: 3rem; }
-    .trivial-final-torn-text { font-size: 1.1rem; color: var(--text); font-weight: 600; }
-
-    /* Prova final */
-    #screen-trivial-prova-final {
-      display: none;
-      min-height: calc(100vh - 52px);
-      padding: 1.5rem 1rem 3rem;
-    }
-    .trivial-prova-final-wrap {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .trivial-final-header {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    .trivial-final-prog { font-size: .85rem; color: var(--text2); }
-    .trivial-final-encerts { font-size: .85rem; color: var(--verd2); font-weight: 600; }
-    .trivial-final-difbadge {
-      background: rgba(224,85,85,.1);
-      border: 1px solid rgba(224,85,85,.4);
-      border-radius: 20px;
-      padding: 2px 8px;
-      font-size: .72rem;
-      color: #ff8a8a;
-      font-weight: 600;
-    }
-
-    /* Resultat final */
-    .trivial-resultat-final {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      padding: 2rem 0;
-      text-align: center;
-    }
-    .trivial-resultat-icon { font-size: 4rem; animation: float 2s ease-in-out infinite; }
-    .trivial-resultat-titol {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .trivial-resultat-encerts { font-size: 1.2rem; color: var(--text2); }
-    .trivial-resultat-pts {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--gold);
-    }
-    .trivial-resultat-msg { font-size: .9rem; color: var(--text2); max-width: 300px; }
-
-    /* Veure partida */
-    #screen-trivial-veure {
-      display: none;
-      min-height: calc(100vh - 52px);
-      padding: 1.5rem 1rem 3rem;
-    }
-    .trivial-veure-wrap { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-    .trivial-veure-torn {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: .85rem 1rem;
-      font-size: .9rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .trivial-ranking-complet { display: flex; flex-direction: column; gap: .5rem; }
-    .trivial-rank-item {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: .65rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      transition: all .2s;
-    }
-    .trivial-rank-item.actiu { border-color: var(--gold); }
-    .trivial-rank-item img {
-      background: #e8f4ec;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--border);
-    }
-    .trivial-rank-info { flex: 1; }
-    .trivial-rank-nom { font-size: .88rem; font-weight: 600; }
-    .trivial-rank-cats { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
-    .trivial-cat-mini {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .7rem;
-      transition: all .2s;
-    }
-    .trivial-cat-mini.bloq { opacity: 1; }
-    .trivial-rank-pos { font-size: 1.1rem; width: 28px; text-align: center; }
-    .trivial-rank-punts {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--verd2);
-    }
-
-    /* Config equips */
-    #screen-trivial-config-equips {
-      display: none;
-      min-height: calc(100vh - 52px);
-      padding: 1.5rem 1rem 3rem;
-    }
-    .trivial-config-wrap { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-    .trivial-equips-config {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .75rem;
-    }
-    .trivial-equip-grup {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: .75rem;
-      min-height: 100px;
-    }
-    .trivial-equip-titol { font-size: .82rem; font-weight: 600; color: var(--verd2); margin-bottom: .5rem; }
-    .trivial-equips-jugadors {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem;
-      padding: .75rem;
-      background: var(--bg);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-    .trivial-equip-jugador {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: .3rem .75rem;
-      cursor: grab;
-      font-size: .82rem;
-    }
-    .trivial-equip-jugador img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
-    .trivial-btn-iniciar {
-      width: 100%;
-      background: linear-gradient(135deg, var(--verd), var(--verd2));
-      border: none;
-      border-radius: 12px;
-      padding: .9rem;
-      color: #fff;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .trivial-btn-iniciar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,90,61,.5); }
-
-    /* Banner torn a index.html */
-    #trivial-torn-banner {
-      display: none;
-      align-items: center;
-      gap: 1rem;
-      background: linear-gradient(135deg, rgba(240,180,41,.15), rgba(240,180,41,.05));
-      border: 1px solid rgba(240,180,41,.4);
-      border-radius: 14px;
-      padding: .85rem 1.25rem;
-      margin: .75rem 1rem 0;
-      animation: slideIn .3s ease;
-    }
-    .trivial-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
-    .trivial-banner-text { flex: 1; font-size: .88rem; font-weight: 600; color: var(--gold); }
-    .trivial-banner-btn {
-      background: var(--gold);
-      border: none;
-      border-radius: 8px;
-      padding: .4rem 1rem;
-      color: #000;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .82rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: all .2s;
-    }
-    .trivial-banner-btn:hover { transform: scale(1.05); }
