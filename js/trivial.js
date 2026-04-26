@@ -109,6 +109,7 @@ function trivialRenderInici(partidaInd, partidaEq) {
         ${esTocaJugadorActiu ? `<div class="trivial-torn-badge">🎯 És el teu torn!</div>` : ""}
         <div class="trivial-partida-torn">Torn de: <strong>${jugadorActualNom}</strong></div>
         <div class="trivial-partida-ronda">Ronda ${p.ronda || 1}</div>
+        <div class="trivial-torn-temps" id="trivial-torn-temps-${modalitat}"></div>
         <div class="trivial-ranking-mini" id="trivial-rank-${modalitat}"></div>
         <div class="trivial-partida-btns">
           ${
@@ -138,6 +139,33 @@ function trivialRenderInici(partidaInd, partidaEq) {
     trivialRenderRankingMini(partidaInd, "individual");
   if (partidaEq && partidaEq.activa)
     trivialRenderRankingMini(partidaEq, "equips");
+
+  trivialIniciarComptadorsTorn(partidaInd, 'individual');
+  trivialIniciarComptadorsTorn(partidaEq, 'equips');
+}
+
+let _trivialComptadorIntervals = {};
+
+function trivialIniciarComptadorsTorn(p, modalitat) {
+  if (_trivialComptadorIntervals[modalitat]) {
+    clearInterval(_trivialComptadorIntervals[modalitat]);
+    delete _trivialComptadorIntervals[modalitat];
+  }
+  if (!p || !p.activa || !p.tornTs) return;
+  const actualitzar = () => {
+    const el = document.getElementById('trivial-torn-temps-' + modalitat);
+    if (!el) { clearInterval(_trivialComptadorIntervals[modalitat]); return; }
+    const segs = Math.floor((Date.now() - p.tornTs) / 1000);
+    const min = Math.floor(segs / 60);
+    const seg = segs % 60;
+    const txt = min > 0 ? min + 'min ' + seg + 's' : seg + 's';
+    const urgent = segs > 180;
+    el.textContent = '\u23f1 Fa ' + txt;
+    el.style.color = urgent ? 'var(--error)' : 'var(--text2)';
+    el.style.fontSize = '.75rem';
+  };
+  actualitzar();
+  _trivialComptadorIntervals[modalitat] = setInterval(actualitzar, 1000);
 }
 
 function trivialRenderRankingMini(p, modalitat) {
@@ -533,13 +561,19 @@ function trivialRenderTorn() {
   // Header
   const header = document.getElementById("trivial-torn-header");
   if (header) {
+    const isEquips = trivialModalitat === 'equips';
+    const imgSrc = isEquips
+      ? (jugadorData?.animal ? `img/animals/${jugadorData.animal}.svg` : '')
+      : (IMGS[jugadorActualNom] || '');
+    const imgStyle = isEquips
+      ? 'width:36px;height:36px;border-radius:50%;object-fit:contain;background:#e8f4ec;padding:2px;border:2px solid var(--verd2)'
+      : 'width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2)';
     header.innerHTML = `
-      <button class="mapa-back-btn" onclick="trivialSortir()">← Sortir</button>
+      <button class="mapa-back-btn" onclick="trivialSortir()">\u2190 Sortir</button>
       <div class="trivial-torn-jugador">
-        <img src="${IMGS[jugadorActualNom] || ""}" alt="${jugadorActualNom}">
+        <img src="${imgSrc}" alt="${jugadorActualNom}" style="${imgStyle}">
         <span>${jugadorActualNom}</span>
-      </div>
-      <div class="trivial-cronome" id="trivial-cronome">2:00</div>`;
+      </div>`;
   }
 
   // Si no hi ha torn actiu, mostrar selecció de categoria
@@ -845,6 +879,7 @@ async function trivialPassarTorn() {
       jugadors: nousjugadors,
       tornIdx: nouTornIdx,
       ronda: novaRonda,
+      tornTs: Date.now(),
     });
     trivialAturarCronometre();
     mostraScreen("trivial-inici");
