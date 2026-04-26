@@ -34,7 +34,9 @@
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap">
-    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't">
+      <span class="nav-id-text">Identifica't</span>
+    </button>
     <div class="nav-id-menu" id="nav-id-menu"></div>
   </div>
 </nav>
@@ -758,8 +760,9 @@
       <div class="modal-icon">👤</div>
       <div class="modal-title">Qui ets?</div>
       <div class="modal-text">Identifica't per poder jugar.</div>
-      <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
-        ${JUGADORS_MODAL}
+      <div id="modal-id-jugadors" style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem"></div>
+      <div class="modal-btns" style="margin-top:.75rem">
+        <button class="btn-modal-cancel" onclick="jocsModalIdentificacioTancar()">Tancar</button>
       </div>
     </div>
   </div>
