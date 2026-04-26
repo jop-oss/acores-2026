@@ -33,6 +33,16 @@ const TRIVIAL_FINAL_PREGUNTES = 12; // 7 mitjanes + 5 altes
 const TRIVIAL_FINAL_MIN_ENCERTS = 8; // mínim per superar la prova final
 const TRIVIAL_MAX_ENCERTS_TORN = 3; // màxim encerts seguits en un torn
 const TRIVIAL_CRONOME_SEGS = 120; // 2 minuts per torn
+const TRIVIAL_ANIMALS = [
+  "guineu",
+  "girafa",
+  "elefant",
+  "lleo",
+  "dofin",
+  "pingui",
+  "pop",
+  "panda",
+];
 
 // ── ESTAT LOCAL ───────────────────────────────────────────────
 let trivialPartida = null; // estat complet de la partida
@@ -136,11 +146,11 @@ function trivialRenderRankingMini(p, modalitat) {
     .slice(0, 3)
     .map(
       (j, i) => `
-    <div class="trivial-rank-mini-item">
-      <span>${["🥇", "🥈", "🥉"][i]}</span>
-      <span>${j.nom}</span>
-      <span>${j.punts} pts</span>
-    </div>`,
+  <div class="trivial-rank-mini-item">
+    <span>${["🥇", "🥈", "🥉"][i]}</span>
+    <span>${j.nom}${j.membres ? ` (${j.membres.join(", ")})` : ""}</span>
+    <span>${j.punts} pts</span>
+  </div>`,
     )
     .join("");
 }
@@ -397,11 +407,13 @@ async function trivialCrearPartidaEquips() {
   }
 
   // Construeix els equips a partir de les assignacions
+  const animalsBarrejats = [...TRIVIAL_ANIMALS].sort(() => Math.random() - 0.5);
   const equips = Array.from({ length: trivialNumEquips }, (_, i) => ({
     nom: `Equip ${i + 1}`,
     membres: TRIVIAL_ORDRE_JUGADORS.filter(
       (nom) => trivialAssignacions[nom] === i + 1,
     ),
+    animal: animalsBarrejats[i],
   })).filter((e) => e.membres.length > 0);
 
   const idxInici = Math.floor(Math.random() * equips.length);
@@ -731,7 +743,13 @@ async function trivialRespondr(idx) {
         ...(jugadorData.categoriesBloquejades || []),
         tornActual.categoriaActual,
       ];
-      jugadorData.punts = (jugadorData.punts || 0) + TRIVIAL_PUNTS_CATEGORIA;
+      const nousjugadors1 = trivialSumarPuntsEquip(
+        [...trivialPartida.jugadors],
+        jugadorIdx,
+        TRIVIAL_PUNTS_CATEGORIA
+      );
+      jugadorData.punts = nousjugadors1[jugadorIdx].punts;
+      jugadorData.ptsMembres = nousjugadors1[jugadorIdx].ptsMembres;
 
       // Totes les categories bloquejades?
       if (jugadorData.categoriesBloquejades.length >= TRIVIAL_CATS.length) {
@@ -909,6 +927,28 @@ function trivialRenderProvaFinal(preguntes, jugadorNom) {
   renderPreguntaFinal();
 }
 
+
+// ── SUMAR PUNTS (reparteix entre membres si equips) ───────────
+function trivialSumarPuntsEquip(jugadors, jugadorIdx, pts) {
+  const jugadorData = jugadors[jugadorIdx];
+  const membres = jugadorData.membres;
+  if (!membres || membres.length === 0) {
+    // Individual: punts directes
+    jugadors[jugadorIdx] = { ...jugadorData, punts: (jugadorData.punts || 0) + pts };
+  } else {
+    // Equips: reparteix entre membres (arrodonit a l'enter)
+    const ptsMembre = Math.round(pts / membres.length);
+    jugadors[jugadorIdx] = { ...jugadorData, punts: (jugadorData.punts || 0) + pts };
+    // Guarda també els punts individuals per al rànquing global
+    const ptsMembres = jugadorData.ptsMembres || {};
+    membres.forEach(nom => {
+      ptsMembres[nom] = (ptsMembres[nom] || 0) + ptsMembre;
+    });
+    jugadors[jugadorIdx] = { ...jugadors[jugadorIdx], ptsMembres };
+  }
+  return jugadors;
+}
+
 async function trivialFinalitzarProvaFinal(encerts, respostes) {
   const docId =
     trivialModalitat === "individual" ? TRIVIAL_IND_DOC : TRIVIAL_EQ_DOC;
@@ -923,11 +963,16 @@ async function trivialFinalitzarProvaFinal(encerts, respostes) {
 
   if (superat) {
     ptsGuanyats = TRIVIAL_PUNTS_FINAL_OK;
-    jugadorData.punts = (jugadorData.punts || 0) + ptsGuanyats;
   } else {
     ptsGuanyats = encerts * TRIVIAL_PUNTS_FINAL_PT;
-    jugadorData.punts = (jugadorData.punts || 0) + ptsGuanyats;
   }
+  const nousjugadorsFinal = trivialSumarPuntsEquip(
+    [...trivialPartida.jugadors],
+    jugadorIdx,
+    ptsGuanyats
+  );
+  jugadorData.punts = nousjugadorsFinal[jugadorIdx].punts;
+  jugadorData.ptsMembres = nousjugadorsFinal[jugadorIdx].ptsMembres;
 
   jugadorData.preguntesVistes = [
     ...(jugadorData.preguntesVistes || []),
@@ -1001,9 +1046,9 @@ function trivialRenderVeure() {
           (j, i) => `
         <div class="trivial-rank-item ${j.nom === jugadorActualNom ? "actiu" : ""}">
           <span class="trivial-rank-pos">${["🥇", "🥈", "🥉"][i] || i + 1}</span>
-          <img src="${IMGS[j.nom] || ""}" alt="${j.nom}">
+          <img src="${j.animal ? `img/animals/${j.animal}.svg` : IMGS[j.nom] || ""}" alt="${j.nom}">
           <div class="trivial-rank-info">
-            <div class="trivial-rank-nom">${j.nom}</div>
+            <div class="trivial-rank-nom">${j.nom}${j.membres ? `<span style="font-size:.72rem;color:var(--text2);font-weight:400"> · ${j.membres.join(", ")}</span>` : ""}</div>
             <div class="trivial-rank-cats">
               ${TRIVIAL_CATS.map((cat) => {
                 const info = TRIVIAL_CATEGORIES[cat];
