@@ -515,6 +515,10 @@ body.light .footer-sub {
   flex-shrink: 0;
 }
 .nav-id-check { margin-left: auto; color: #6aab7a; font-size: .85rem; }
+.nav-id-menu-sep { height: 1px; background: rgba(106,171,122,.2); margin: .35rem .75rem; }
+.nav-id-convidat-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.nav-id-convidat { opacity: .8; }
+.nav-id-convidat:hover { opacity: 1; }
 
 body.light .nav-id-btn { border-color: #6aab7a; }
 body.light .nav-id-menu { background: #fff; border-color: #6aab7a; }

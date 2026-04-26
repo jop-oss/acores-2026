@@ -91,7 +91,23 @@ function appRenderMenu() {
       <img src="${AVATARS_APP[nom]}" alt="${nom}">
       <span>${nom}</span>
       ${nom === appJugadorActiu ? '<span class="nav-id-check">&#10003;</span>' : ''}
-    </button>`).join('');
+    </button>`).join('') + `
+  <div class="nav-id-menu-sep"></div>
+  <button class="nav-id-menu-item nav-id-convidat ${!appJugadorActiu ? 'actiu' : ''}"
+          onclick="appDesidentificar()">
+    <span class="nav-id-convidat-icon">👤</span>
+    <span>Convidat</span>
+    ${!appJugadorActiu ? '<span class="nav-id-check">&#10003;</span>' : ''}
+  </button>`;
+}
+
+function appDesidentificar() {
+  appJugadorActiu = null;
+  localStorage.removeItem('app_jugador');
+  localStorage.removeItem('trivial_jugador_actiu');
+  appActualitzarBotoNav();
+  document.getElementById('nav-id-menu')?.classList.remove('visible');
+  document.dispatchEvent(new CustomEvent('app:jugador-canviat', { detail: { nom: null } }));
 }
 
 function appSeleccionarJugador(nom) {

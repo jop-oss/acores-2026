@@ -29,10 +29,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Escolta canvis d'identificació des de la nav
   document.addEventListener('app:jugador-canviat', (e) => {
     jugadorActiu = e.detail.nom;
-    localStorage.setItem('app_jugador', e.detail.nom);
-    document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
-    document.getElementById('modal-identificacio')?.classList.remove('visible');
-    entrarJoc();
+    if (jugadorActiu) {
+      localStorage.setItem('app_jugador', jugadorActiu);
+      document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
+      document.getElementById('modal-identificacio')?.classList.remove('visible');
+      entrarJoc();
+    } else {
+      localStorage.removeItem('app_jugador');
+      document.getElementById('joc-selector-avatar').src = '';
+      document.getElementById('joc-selector-nom').textContent = '';
+      document.querySelector('.joc-selector-jugador').style.display = 'none';
+      document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
+      jocsRenderModalIdentificacio();
+      document.getElementById('modal-identificacio')?.classList.add('visible');
+    }
   });
 
   mostraScreen('joc-selector');
@@ -41,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ja identificat: mostra l'avatar i habilita cards
     entrarJoc();
   } else {
-    // No identificat: mostra modal i deshabilita cards
+    // No identificat: amaga contenidor jugador, mostra modal i deshabilita cards
+    document.querySelector('.joc-selector-jugador').style.display = 'none';
     jocsRenderModalIdentificacio();
     document.getElementById('modal-identificacio')?.classList.add('visible');
     document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
@@ -268,6 +279,7 @@ function entrarJoc() {
   if (!jugadorActiu) return;
   document.getElementById("joc-selector-avatar").src = IMGS[jugadorActiu] || "";
   document.getElementById("joc-selector-nom").textContent = jugadorActiu;
+  document.querySelector(".joc-selector-jugador").style.display = "flex";
   mostraScreen("joc-selector");
   // Inicialitza rànquing
   _rankingDades = null;
