@@ -424,6 +424,7 @@ async function trivialCrearPartidaEquips() {
   const jugadors = equips.map((eq) => ({
     nom: eq.nom,
     membres: eq.membres,
+    animal: eq.animal,
     punts: 0,
     categories: {
       esports: 0,
@@ -746,7 +747,7 @@ async function trivialRespondr(idx) {
       const nousjugadors1 = trivialSumarPuntsEquip(
         [...trivialPartida.jugadors],
         jugadorIdx,
-        TRIVIAL_PUNTS_CATEGORIA
+        TRIVIAL_PUNTS_CATEGORIA,
       );
       jugadorData.punts = nousjugadors1[jugadorIdx].punts;
       jugadorData.ptsMembres = nousjugadors1[jugadorIdx].ptsMembres;
@@ -927,21 +928,26 @@ function trivialRenderProvaFinal(preguntes, jugadorNom) {
   renderPreguntaFinal();
 }
 
-
 // ── SUMAR PUNTS (reparteix entre membres si equips) ───────────
 function trivialSumarPuntsEquip(jugadors, jugadorIdx, pts) {
   const jugadorData = jugadors[jugadorIdx];
   const membres = jugadorData.membres;
   if (!membres || membres.length === 0) {
     // Individual: punts directes
-    jugadors[jugadorIdx] = { ...jugadorData, punts: (jugadorData.punts || 0) + pts };
+    jugadors[jugadorIdx] = {
+      ...jugadorData,
+      punts: (jugadorData.punts || 0) + pts,
+    };
   } else {
     // Equips: reparteix entre membres (arrodonit a l'enter)
     const ptsMembre = Math.round(pts / membres.length);
-    jugadors[jugadorIdx] = { ...jugadorData, punts: (jugadorData.punts || 0) + pts };
+    jugadors[jugadorIdx] = {
+      ...jugadorData,
+      punts: (jugadorData.punts || 0) + pts,
+    };
     // Guarda també els punts individuals per al rànquing global
     const ptsMembres = jugadorData.ptsMembres || {};
-    membres.forEach(nom => {
+    membres.forEach((nom) => {
       ptsMembres[nom] = (ptsMembres[nom] || 0) + ptsMembre;
     });
     jugadors[jugadorIdx] = { ...jugadors[jugadorIdx], ptsMembres };
@@ -969,7 +975,7 @@ async function trivialFinalitzarProvaFinal(encerts, respostes) {
   const nousjugadorsFinal = trivialSumarPuntsEquip(
     [...trivialPartida.jugadors],
     jugadorIdx,
-    ptsGuanyats
+    ptsGuanyats,
   );
   jugadorData.punts = nousjugadorsFinal[jugadorIdx].punts;
   jugadorData.ptsMembres = nousjugadorsFinal[jugadorIdx].ptsMembres;

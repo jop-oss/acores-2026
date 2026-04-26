@@ -1405,6 +1405,7 @@
     }
     .trivial-rank-item.actiu { border-color: var(--gold); }
     .trivial-rank-item img {
+      background: #e8f4ec;
       width: 36px; height: 36px;
       border-radius: 50%;
       object-fit: cover;
