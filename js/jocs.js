@@ -422,6 +422,7 @@ function mostraScreen(nom) {
     "trivial-inici",
     "trivial-torn",
     "trivial-veure",
+    "trivial-config-individual",
     "trivial-config-equips",
     "trivial-prova-final",
   ];

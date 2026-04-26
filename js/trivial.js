@@ -128,23 +128,73 @@ function trivialRenderRankingMini(p, modalitat) {
 }
 
 // ── NOVA PARTIDA ──────────────────────────────────────────────
+let trivialJugadorsSeleccionats = new Set(TRIVIAL_ORDRE_JUGADORS); // per defecte tots
+
 function trivialNovaPartida(modalitat) {
   trivialModalitat = modalitat;
+  trivialJugadorsSeleccionats = new Set(TRIVIAL_ORDRE_JUGADORS);
   if (modalitat === 'individual') {
-    trivialNovaPartidaIndividual();
+    mostraScreen('trivial-config-individual');
+    trivialRenderConfigIndividual();
   } else {
     mostraScreen('trivial-config-equips');
     trivialRenderConfigEquips();
   }
 }
 
-async function trivialNovaPartidaIndividual() {
+function trivialRenderConfigIndividual() {
+  const cont = document.getElementById('trivial-config-individual-cont');
+  if (!cont) return;
+
+  cont.innerHTML = `
+    <p style="font-size:.85rem;color:var(--text2);margin-bottom:1rem">
+      Selecciona els jugadors que participen en aquesta partida:
+    </p>
+    <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem">
+      ${TRIVIAL_ORDRE_JUGADORS.map(nom => {
+        const sel = trivialJugadorsSeleccionats.has(nom);
+        return `
+          <div onclick="trivialToggleJugador('${nom}')"
+               style="display:flex;align-items:center;gap:.75rem;background:${sel?'rgba(106,171,122,.1)':'var(--bg2)'};
+                      border:2px solid ${sel?'var(--verd2)':'var(--border)'};border-radius:10px;
+                      padding:.55rem .75rem;cursor:pointer;transition:all .15s">
+            <img src="${IMGS[nom]||''}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid ${sel?'var(--verd2)':'var(--border)'}">
+            <span style="flex:1;font-weight:600">${nom}</span>
+            <span style="font-size:1.2rem">${sel?'✅':'⬜'}</span>
+          </div>`;
+      }).join('')}
+    </div>
+    <div style="font-size:.78rem;color:var(--text2);margin-bottom:1rem">
+      ${trivialJugadorsSeleccionats.size} jugador${trivialJugadorsSeleccionats.size!==1?'s':''} seleccionat${trivialJugadorsSeleccionats.size!==1?'s':''}
+    </div>
+    <button class="trivial-btn-iniciar" onclick="trivialIniciarPartidaIndividual()">
+      Iniciar partida individual
+    </button>`;
+}
+
+function trivialToggleJugador(nom) {
+  if (trivialJugadorsSeleccionats.has(nom)) {
+    if (trivialJugadorsSeleccionats.size <= 2) { alert('Mínim 2 jugadors.'); return; }
+    trivialJugadorsSeleccionats.delete(nom);
+  } else {
+    trivialJugadorsSeleccionats.add(nom);
+  }
+  trivialRenderConfigIndividual();
+}
+
+async function trivialIniciarPartidaIndividual() {
   const pin = prompt('PIN d\'administrador per iniciar partida:');
   if (pin !== '2468') { if (pin !== null) alert('PIN incorrecte.'); return; }
 
-  // Escull inici aleatori
-  const idxInici = Math.floor(Math.random() * TRIVIAL_ORDRE_JUGADORS.length);
-  const jugadors = TRIVIAL_ORDRE_JUGADORS.map((nom, i) => ({
+  // Manté l'ordre original filtrant només els seleccionats
+  const jugadorsOrdenats = TRIVIAL_ORDRE_JUGADORS.filter(nom => trivialJugadorsSeleccionats.has(nom));
+  const idxInici = Math.floor(Math.random() * jugadorsOrdenats.length);
+  const ordre = [
+    ...jugadorsOrdenats.slice(idxInici),
+    ...jugadorsOrdenats.slice(0, idxInici),
+  ];
+
+  const jugadors = jugadorsOrdenats.map(nom => ({
     nom,
     punts: 0,
     categories: { esports:0, geografia:0, ciencies:0, historia:0, cultura:0, acores:0 },
@@ -152,12 +202,6 @@ async function trivialNovaPartidaIndividual() {
     preguntesVistes: [],
     tornActual: null,
   }));
-
-  // Reordena des de l'índex d'inici
-  const ordre = [
-    ...TRIVIAL_ORDRE_JUGADORS.slice(idxInici),
-    ...TRIVIAL_ORDRE_JUGADORS.slice(0, idxInici),
-  ];
 
   const partida = {
     activa: true,
@@ -172,6 +216,7 @@ async function trivialNovaPartidaIndividual() {
 
   try {
     await trivialGetDb().collection(TRIVIAL_COL).doc(TRIVIAL_IND_DOC).set(partida);
+    mostraScreen('trivial-inici');
     trivialCarregarInici();
   } catch(e) {
     console.error('Error creant partida:', e);
@@ -180,58 +225,119 @@ async function trivialNovaPartidaIndividual() {
 }
 
 // ── CONFIG EQUIPS ─────────────────────────────────────────────
+// Estat local de la configuració d'equips
+const trivialAssignacions = {}; // { Anna: 1, Jordi: 2, ... } — 0 = sense assignar
+let trivialNumEquips = 3;
+
 function trivialRenderConfigEquips() {
   const cont = document.getElementById('trivial-config-equips-cont');
   if (!cont) return;
 
-  const jugadors = TRIVIAL_ORDRE_JUGADORS;
+  TRIVIAL_ORDRE_JUGADORS.forEach(nom => {
+    if (!trivialAssignacions[nom]) trivialAssignacions[nom] = 0;
+  });
+
+  trivialRenderConfigEquipsHTML();
+}
+
+function trivialRenderConfigEquipsHTML() {
+  const cont = document.getElementById('trivial-config-equips-cont');
+  if (!cont) return;
+
+  const colors = ['#4169E1', '#228B22', '#FF8C00'];
+
   cont.innerHTML = `
-    <div class="trivial-equips-config">
-      <div class="trivial-equip-grup" id="equip-1-grup">
-        <div class="trivial-equip-titol">Equip 1</div>
-        <div class="trivial-equip-selec" id="equip-1-selec"></div>
-      </div>
-      <div class="trivial-equip-grup" id="equip-2-grup">
-        <div class="trivial-equip-titol">Equip 2</div>
-        <div class="trivial-equip-selec" id="equip-2-selec"></div>
-      </div>
-      <div class="trivial-equip-grup" id="equip-3-grup">
-        <div class="trivial-equip-titol">Equip 3</div>
-        <div class="trivial-equip-selec" id="equip-3-selec"></div>
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap">
+      <span style="font-size:.85rem;color:var(--text2)">Nombre d'equips:</span>
+      <div style="display:flex;gap:.4rem">
+        ${[2,3].map(n => `
+          <button onclick="trivialCanviarNumEquips(${n})"
+            style="padding:.35rem .9rem;border-radius:8px;border:2px solid ${trivialNumEquips===n ? 'var(--verd2)' : 'var(--border)'};
+                   background:${trivialNumEquips===n ? 'rgba(106,171,122,.15)' : 'var(--bg2)'};
+                   color:${trivialNumEquips===n ? 'var(--verd2)' : 'var(--text2)'};
+                   font-family:\'DM Sans\',sans-serif;font-weight:600;cursor:pointer">
+            ${n} equips
+          </button>`).join('')}
       </div>
     </div>
-    <div class="trivial-equips-jugadors">
-      ${jugadors.map(nom => `
-        <div class="trivial-equip-jugador" id="ejug-${nom}" draggable="true"
-             ondragstart="trivialDragStart(event,'${nom}')"
-             ondragover="event.preventDefault()"
-             ondrop="trivialDrop(event,'${nom}')">
-          <img src="${IMGS[nom] || ''}" alt="${nom}">
-          <span>${nom}</span>
-        </div>`).join('')}
+
+    <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem">
+      ${TRIVIAL_ORDRE_JUGADORS.map(nom => {
+        const assignat = trivialAssignacions[nom] || 0;
+        return `
+          <div style="display:flex;align-items:center;gap:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.5rem .75rem">
+            <img src="${IMGS[nom] || ''}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border)">
+            <span style="flex:1;font-weight:600;font-size:.9rem">${nom}</span>
+            <div style="display:flex;gap:.35rem">
+              <button onclick="trivialAssignarEquip('${nom}',0)"
+                style="padding:.3rem .65rem;border-radius:6px;border:1px solid ${assignat===0?'var(--error)':'var(--border)'};
+                       background:${assignat===0?'rgba(224,85,85,.12)':'var(--bg)'};
+                       color:${assignat===0?'#ff8a8a':'var(--text2)'};font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">
+                No juga
+              </button>
+              ${Array.from({length:trivialNumEquips},(_,i)=>i+1).map(n => `
+                <button onclick="trivialAssignarEquip('${nom}',${n})"
+                  style="padding:.3rem .65rem;border-radius:6px;
+                         border:2px solid ${assignat===n ? colors[n-1] : 'var(--border)'};
+                         background:${assignat===n ? colors[n-1]+'25' : 'var(--bg)'};
+                         color:${assignat===n ? colors[n-1] : 'var(--text2)'};
+                         font-size:.75rem;font-weight:700;cursor:pointer;font-family:\'DM Sans\',sans-serif">
+                  E${n}
+                </button>`).join('')}
+            </div>
+          </div>`;
+      }).join('')}
     </div>
+
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.75rem;margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem">Resum</div>
+      ${Array.from({length:trivialNumEquips},(_,i)=>i+1).map(n => {
+        const membres = TRIVIAL_ORDRE_JUGADORS.filter(nom => trivialAssignacions[nom]===n);
+        return `<div style="font-size:.82rem;color:var(--text);padding:2px 0">
+          <span style="color:${colors[n-1]};font-weight:700">Equip ${n}:</span>
+          ${membres.length ? membres.join(', ') : '<span style="color:var(--text2)">sense membres</span>'}
+        </div>`;
+      }).join('')}
+      ${TRIVIAL_ORDRE_JUGADORS.filter(nom => !trivialAssignacions[nom]).length
+        ? `<div style="font-size:.82rem;color:#ff8a8a;padding:2px 0">Sense assignar: ${TRIVIAL_ORDRE_JUGADORS.filter(nom=>!trivialAssignacions[nom]).join(', ')}</div>`
+        : ''}
+    </div>
+
     <button class="trivial-btn-iniciar" onclick="trivialCrearPartidaEquips()">
       Iniciar partida per equips
     </button>`;
 }
 
-let trivialDragNom = null;
-function trivialDragStart(e, nom) { trivialDragNom = nom; }
-function trivialDrop(e, targetNom) {
-  // Intercanvia posicions (simplificat)
+function trivialCanviarNumEquips(n) {
+  trivialNumEquips = n;
+  // Reseteja assignacions que superin el nou nombre d'equips
+  TRIVIAL_ORDRE_JUGADORS.forEach(nom => {
+    if (trivialAssignacions[nom] > n) trivialAssignacions[nom] = 0;
+  });
+  trivialRenderConfigEquipsHTML();
+}
+
+function trivialAssignarEquip(nom, equip) {
+  trivialAssignacions[nom] = equip;
+  trivialRenderConfigEquipsHTML();
 }
 
 async function trivialCrearPartidaEquips() {
   const pin = prompt('PIN d\'administrador:');
   if (pin !== '2468') { if (pin !== null) alert('PIN incorrecte.'); return; }
 
-  // Llegeix els equips configurats (simplificat: equips fixos per ara)
-  // Es pot ampliar amb drag & drop
-  const equips = [
-    { nom: 'Equip 1', membres: ['Anna', 'Jordi'] },
-    { nom: 'Equip 2', membres: ['Mons', 'Xu'] },
-    { nom: 'Equip 3', membres: ['Laia', 'Joa'] },
-  ];
+  // Valida que tots els jugadors estiguin assignats
+  const senseAssignar = TRIVIAL_ORDRE_JUGADORS.filter(nom => !trivialAssignacions[nom]);
+  if (senseAssignar.length > 0) {
+    alert(`Falta assignar equip a: ${senseAssignar.join(', ')}`);
+    return;
+  }
+
+  // Construeix els equips a partir de les assignacions
+  const equips = Array.from({length: trivialNumEquips}, (_, i) => ({
+    nom: `Equip ${i+1}`,
+    membres: TRIVIAL_ORDRE_JUGADORS.filter(nom => trivialAssignacions[nom] === i+1),
+  })).filter(e => e.membres.length > 0);
 
   const idxInici = Math.floor(Math.random() * equips.length);
   const ordre = [...equips.slice(idxInici), ...equips.slice(0, idxInici)].map(e => e.nom);
