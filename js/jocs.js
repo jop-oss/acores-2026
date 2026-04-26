@@ -27,24 +27,85 @@ document.addEventListener("DOMContentLoaded", () => {
 // ── GRID DE JUGADORS ──────────────────────────────────────────
 function renderJugadorsGrid() {
   const grid = document.getElementById("jugadors-grid");
-  grid.innerHTML = JUGADORS_VALIDS.map((nom) => {
-    const estatQuiz = carregarEstatJugador(nom);
-    const estatMapa = mapaCarregarEstat(nom);
+
+  // Render immediat amb dades locals (Quiz, Mapa, Paraula, Bingo)
+  const ptsParcials = {};
+  JUGADORS_VALIDS.forEach((nom) => {
+    const estatQuiz    = carregarEstatJugador(nom);
+    const estatMapa    = mapaCarregarEstat(nom);
     const estatParaula = paCarregarEstat(nom);
-    const ptsQuiz = estatQuiz ? estatQuiz.punts : 0;
-    const ptsMapa = estatMapa ? estatMapa.punts : 0;
-    const ptsParaula = estatParaula
-      ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0)
-      : 0;
-    const pts = ptsQuiz + ptsMapa + ptsParaula;
-    const prog = `${pts} pts totals`;
-    return `
-      <button class="jugador-btn" data-nom="${nom}" onclick="seleccionarJugador('${nom}')">
-        <img class="jugador-avatar" src="${IMGS[nom]}" alt="${nom}">
-        <span class="jugador-nom-btn">${nom}</span>
-        <span class="jugador-pts">${prog}</span>
-      </button>`;
-  }).join("");
+    const rawBingo     = localStorage.getItem(`bingo_punts_${nom}`);
+    const estatBingo   = rawBingo ? JSON.parse(rawBingo) : null;
+
+    const ptsQuiz    = estatQuiz    ? estatQuiz.punts : 0;
+    const ptsMapa    = estatMapa    ? estatMapa.punts : 0;
+    const ptsParaula = estatParaula ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0) : 0;
+    const ptsBingo   = estatBingo   ? estatBingo.punts : 0;
+
+    ptsParcials[nom] = ptsQuiz + ptsMapa + ptsParaula + ptsBingo;
+  });
+
+  const renderGrid = (ptsTotals) => {
+    grid.innerHTML = JUGADORS_VALIDS.map((nom) => {
+      const pts = ptsTotals[nom] || 0;
+      return `
+        <button class="jugador-btn" data-nom="${nom}" onclick="seleccionarJugador('${nom}')">
+          <img class="jugador-avatar" src="${IMGS[nom]}" alt="${nom}">
+          <span class="jugador-nom-btn">${nom}</span>
+          <span class="jugador-pts">${pts} pts totals</span>
+        </button>`;
+    }).join("");
+  };
+
+  // Render inicial amb dades locals
+  renderGrid(ptsParcials);
+
+  // Actualitza amb punts del Trivial (Firebase)
+  trivialGetPuntsGlobals().then(ptsTrivial => {
+    const ptsFinals = { ...ptsParcials };
+    JUGADORS_VALIDS.forEach(nom => {
+      ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsTrivial[nom] || 0);
+    });
+    renderGrid(ptsFinals);
+  }).catch(() => {}); // Si Firebase falla, queda amb dades locals
+}
+
+// Llegeix els punts del Trivial (individual + equips) de Firebase
+async function trivialGetPuntsGlobals() {
+  const pts = {};
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = 0; });
+
+  try {
+    const db = trivialGetDb();
+    const [snapInd, snapEq] = await Promise.all([
+      db.collection('trivial_partides').doc('individual').get(),
+      db.collection('trivial_partides').doc('equips').get(),
+    ]);
+
+    // Individual: punts directes per jugador
+    if (snapInd.exists) {
+      const p = snapInd.data();
+      (p.jugadors || []).forEach(j => {
+        if (pts[j.nom] !== undefined) pts[j.nom] += j.punts || 0;
+      });
+    }
+
+    // Equips: punts repartits per membre (ptsMembres)
+    if (snapEq.exists) {
+      const p = snapEq.data();
+      (p.jugadors || []).forEach(j => {
+        if (j.ptsMembres) {
+          Object.entries(j.ptsMembres).forEach(([nom, p]) => {
+            if (pts[nom] !== undefined) pts[nom] += p;
+          });
+        }
+      });
+    }
+  } catch(e) {
+    console.error('Error llegint punts trivial:', e);
+  }
+
+  return pts;
 }
 
 function seleccionarJugador(nom) {
