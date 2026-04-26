@@ -33,6 +33,10 @@
     <a href="blog.html" class="nav-item">Blog</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+  <div class="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
+    <div class="nav-id-menu" id="nav-id-menu"></div>
+  </div>
 </nav>
 
 <div class="confetti-wrap" id="confetti"></div>
@@ -744,6 +748,19 @@
   <div id="screen-trivial-prova-final" style="display:none">
     <div class="trivial-prova-final-wrap">
       <div id="trivial-prova-final-cont"></div>
+    </div>
+  </div>
+
+
+  <!-- MODAL IDENTIFICACIÓ OBLIGATÒRIA -->
+  <div class="modal-overlay" id="modal-identificacio">
+    <div class="modal">
+      <div class="modal-icon">👤</div>
+      <div class="modal-title">Qui ets?</div>
+      <div class="modal-text">Identifica't per poder jugar.</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+        ${JUGADORS_MODAL}
+      </div>
     </div>
   </div>
 

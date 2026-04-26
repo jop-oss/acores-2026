@@ -433,3 +433,97 @@ body.light .footer-sub {
   font-size: 0.8rem;
   line-height: 1.5;
 }
+/* ── IDENTIFICACIÓ NAV ─────────────────────────────────────── */
+.nav-id-btn {
+  position: relative;
+  background: none;
+  border: 2px solid #2d5a3d;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  padding: 0;
+  overflow: visible;
+}
+.nav-id-btn:hover { border-color: #6aab7a; transform: scale(1.05); }
+.nav-id-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.nav-id-text {
+  font-size: .62rem;
+  font-weight: 700;
+  color: #6aab7a;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+/* Menú desplegable */
+.nav-id-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.nav-id-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #0f1f38;
+  border: 1px solid #2d5a3d;
+  border-radius: 14px;
+  padding: .4rem;
+  min-width: 160px;
+  z-index: 2000;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  display: none;
+}
+.nav-id-menu.visible { display: block; animation: fadeInDown .15s ease; }
+@keyframes fadeInDown {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.nav-id-menu-item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: .45rem .65rem;
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: .85rem;
+  color: #a8d8b0;
+  transition: background .15s;
+  text-align: left;
+}
+.nav-id-menu-item:hover { background: rgba(45,90,61,.4); }
+.nav-id-menu-item.actiu { background: rgba(106,171,122,.15); font-weight: 700; }
+.nav-id-menu-item img {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  flex-shrink: 0;
+}
+.nav-id-check { margin-left: auto; color: #6aab7a; font-size: .85rem; }
+
+body.light .nav-id-btn { border-color: #6aab7a; }
+body.light .nav-id-menu { background: #fff; border-color: #6aab7a; }
+body.light .nav-id-menu-item { color: #1a3a2a; }
+body.light .nav-id-text { color: #2d5a3d; }
+
+/* Cards jocs deshabilitades (sense identificació) */
+.joc-selector-btn.disabled-id {
+  opacity: .35;
+  pointer-events: none;
+  filter: grayscale(.5);
+}

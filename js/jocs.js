@@ -20,8 +20,24 @@ let respost = false;
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  renderJugadorsGrid();
-  mostraScreen("select");
+  // Sincronitza jugadorActiu amb la identificació global
+  const nomGuardat = localStorage.getItem('app_jugador');
+  if (nomGuardat && JUGADORS_VALIDS.includes(nomGuardat)) {
+    jugadorActiu = nomGuardat;
+  }
+
+  // Escolta canvis d'identificació des de la nav
+  document.addEventListener('app:jugador-canviat', (e) => {
+    jugadorActiu = e.detail.nom;
+    // Si estem a la pantalla del selector, actualitza
+    const screenSelector = document.getElementById('screen-joc-selector');
+    if (screenSelector && screenSelector.style.display !== 'none') {
+      jocsActualitzarJugadorActiu();
+    }
+  });
+
+  mostraScreen("joc-selector");
+  jocsComprovarIdentificacio();
 });
 
 // ── GRID DE JUGADORS ──────────────────────────────────────────
@@ -124,6 +140,55 @@ function entrarJoc() {
 }
 
 // ── SELECCIÓ MODE JOC ─────────────────────────────────────────
+
+// ── IDENTIFICACIÓ ALS JOCS ────────────────────────────────────
+function jocsComprovarIdentificacio() {
+  if (!jugadorActiu) {
+    jocsRenderModalIdentificacio();
+    document.getElementById('modal-identificacio').classList.add('visible');
+    // Deshabilita les cards
+    document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
+  } else {
+    jocsActualitzarJugadorActiu();
+  }
+}
+
+function jocsRenderModalIdentificacio() {
+  const modal = document.getElementById('modal-identificacio');
+  if (!modal) return;
+  const llista = modal.querySelector('[style*="flex-direction:column"]') || modal.querySelector('div:last-child');
+  if (!llista) return;
+  llista.innerHTML = JUGADORS_VALIDS.map(nom => `
+    <button onclick="jocsIdentificar('${nom}')"
+      style="display:flex;align-items:center;gap:.75rem;background:var(--bg);border:1px solid var(--border);
+             border-radius:10px;padding:.5rem .75rem;cursor:pointer;width:100%;transition:all .15s;
+             font-family:'DM Sans',sans-serif;color:var(--text)">
+      <img src="${IMGS[nom]}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top">
+      <span style="font-weight:600">${nom}</span>
+    </button>`).join('');
+}
+
+function jocsIdentificar(nom) {
+  jugadorActiu = nom;
+  localStorage.setItem('app_jugador', nom);
+  localStorage.setItem('trivial_jugador_actiu', nom);
+  // Actualitza el botó de la nav
+  if (typeof appSeleccionarJugador === 'function') appSeleccionarJugador(nom);
+  // Tanca modal i habilita cards
+  document.getElementById('modal-identificacio')?.classList.remove('visible');
+  document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
+  jocsActualitzarJugadorActiu();
+}
+
+function jocsActualitzarJugadorActiu() {
+  const el = document.getElementById('jocs-jugador-actiu');
+  if (!el || !jugadorActiu) return;
+  el.innerHTML = `
+    <img src="${IMGS[jugadorActiu]}" alt="${jugadorActiu}"
+         style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--verd2)">
+    <span style="font-weight:600;font-size:.9rem">${jugadorActiu}</span>`;
+}
+
 function seleccionarModeJoc(mode) {
   if (mode === "quiz") {
     mostraScreen("start");
