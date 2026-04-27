@@ -130,9 +130,12 @@ function trivialRenderInici(partidaInd, partidaEq) {
 
   cont.innerHTML = `
     <div class="trivial-inici-layout">
-      <div class="trivial-partides-grid">
-        ${renderPartida(partidaInd, "individual")}
-        ${renderPartida(partidaEq, "equips")}
+      <div class="trivial-inici-cards-wrap">
+        <div class="trivial-inici-titol-inline">🎲 Trivial Açores</div>
+        <div class="trivial-partides-grid">
+          ${renderPartida(partidaInd, "individual")}
+          ${renderPartida(partidaEq, "equips")}
+        </div>
       </div>
       <div class="ranking-wrap">
         <div class="ranking-title">🏆 Rànquing Trivial</div>
