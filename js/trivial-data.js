@@ -13484,3 +13484,69 @@ const TRIVIAL_PREGUNTES = [
     c: 2,
   }
 ];
+
+
+const TRIVIAL_CATEGORIES = {
+  esports: {
+    label: "Esports",
+    emoji: "⚽",
+    color: "#FF8C00",
+    colorDark: "#cc7000",
+  },
+  geografia: {
+    label: "Geografia",
+    emoji: "🌍",
+    color: "#4169E1",
+    colorDark: "#3050b0",
+  },
+  ciencies: {
+    label: "Ciències i Naturalesa",
+    emoji: "🔬",
+    color: "#228B22",
+    colorDark: "#186018",
+  },
+  historia: {
+    label: "Història",
+    emoji: "📜",
+    color: "#DAA520",
+    colorDark: "#b08010",
+  },
+  cultura: {
+    label: "Cultura General",
+    emoji: "🎭",
+    color: "#FF69B4",
+    colorDark: "#cc4490",
+  },
+  acores: {
+    label: "Açores",
+    emoji: "🌋",
+    color: "#9370DB",
+    colorDark: "#7050b0",
+  },
+};
+
+// ── UTILITATS ────────────────────────────────────────────────
+function trivialGetPreguntes(categoria, dificultat, excloses = [], n = 1) {
+  const pool = TRIVIAL_PREGUNTES.filter(
+    (q) =>
+      q.cat === categoria && q.dif === dificultat && !excloses.includes(q.id),
+  ).sort(() => Math.random() - 0.5);
+  return pool.slice(0, n);
+}
+
+function trivialGetPreguntaFinal(excloses = []) {
+  // Retorna 8 mitjanes + 5 altes aleatòries de categories diverses
+  const cats = Object.keys(TRIVIAL_CATEGORIES);
+  const mitjanes = [];
+  const altes = [];
+  cats.forEach((cat) => {
+    const m = trivialGetPreguntes(cat, "mitjana", excloses, 2);
+    const a = trivialGetPreguntes(cat, "alta", excloses, 1);
+    mitjanes.push(...m);
+    altes.push(...a);
+  });
+  // Barreja i agafa 8 mitjanes i 5 altes (màxim disponible)
+  const selMitj = mitjanes.sort(() => Math.random() - 0.5).slice(0, 7);
+  const selAlta = altes.sort(() => Math.random() - 0.5).slice(0, 5);
+  return [...selMitj, ...selAlta].sort(() => Math.random() - 0.5);
+}
