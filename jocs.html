@@ -438,35 +438,17 @@
   <!-- ══ LA PARAULA AMAGADA — INICI ══ -->
   <div id="screen-paraula-start" style="display:none">
     <div class="pa-start-wrap">
-      <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+      <div class="joc-header-fila" style="align-self:flex-start;width:100%">
+        <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+      </div>
       <div class="start-grid" style="width:100%">
 
         <!-- Columna esquerra -->
         <div class="start-left">
           <div class="pa-hero">
-            <div class="pa-hero-title">
-              <span class="pa-lletra pa-lletra-v">L</span>
-              <span class="pa-lletra pa-lletra-e">A</span>
-            </div>
-            <div class="pa-hero-title">
-              <span class="pa-lletra pa-lletra-d">P</span>
-              <span class="pa-lletra pa-lletra-e2">A</span>
-              <span class="pa-lletra pa-lletra-r2">R</span>
-              <span class="pa-lletra pa-lletra-d2">A</span>
-              <span class="pa-lletra pa-lletra-e3">U</span>
-              <span class="pa-lletra pa-lletra-v2">L</span>
-              <span class="pa-lletra pa-lletra-a">A</span>
-            </div>
-            <div class="pa-hero-title">
-              <span class="pa-lletra pa-lletra-v">A</span>
-              <span class="pa-lletra pa-lletra-e">M</span>
-              <span class="pa-lletra pa-lletra-d">A</span>
-              <span class="pa-lletra pa-lletra-e2">G</span>
-              <span class="pa-lletra pa-lletra-r2">A</span>
-              <span class="pa-lletra pa-lletra-d2">D</span>
-              <span class="pa-lletra pa-lletra-e3">A</span>
-            </div>
-            <div class="pa-hero-sub">Endevina les paraules de les Açores</div>
+            <span class="joc-titol-emoji">🔤</span>
+            <div class="joc-titol-text">La Paraula Amagada</div>
+            <div class="pa-hero-sub">Wordle de les Açores</div>
           </div>
 
           <div class="jugador-actiu-wrap" style="width:100%">
@@ -641,8 +623,14 @@
     <div class="bingo-joc-layout">
       <!-- Columna esquerra: cartró -->
       <div class="bingo-joc-esquerra">
-        <div class="bingo-joc-header">
+        <div class="joc-header-fila">
           <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
+        </div>
+        <div class="joc-titol-fila">
+          <span class="joc-titol-emoji">🎯</span>
+          <span class="joc-titol-text">Bingo Açores</span>
+        </div>
+        <div class="bingo-joc-header">
           <div class="bingo-joc-jugador">
             <img id="bingo-joc-avatar" src="" alt="">
             <span id="bingo-joc-nom"></span>
@@ -693,14 +681,18 @@
 
       <!-- Header -->
       <div class="reptes-header">
-        <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
-        <div class="reptes-header-title">
-          <span class="reptes-logo">🏆</span>
-          <span>Reptes del viatge</span>
+        <div class="joc-header-fila">
+          <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
         </div>
-        <button class="reptes-btn-afegir" id="reptes-btn-afegir" onclick="reptesAfegirRepte()">
-          + Nou repte
-        </button>
+        <div class="reptes-header-titols">
+          <div class="reptes-header-title">
+            <span class="joc-titol-emoji">🏆</span>
+            <span class="joc-titol-text">Reptes del viatge</span>
+          </div>
+          <button class="reptes-btn-afegir" id="reptes-btn-afegir" onclick="reptesAfegirRepte()">
+            + Nou repte
+          </button>
+        </div>
       </div>
 
       <!-- Loading -->
@@ -729,9 +721,8 @@
   <!-- ══ TRIVIAL AÇORES — INICI ══ -->
   <div id="screen-trivial-inici" style="display:none">
     <div class="trivial-inici-wrap">
-      <div class="trivial-inici-header">
+      <div class="joc-header-fila">
         <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
-        <div class="trivial-inici-titol">🎲 Trivial Açores</div>
       </div>
       <div id="trivial-inici-cont"></div>
     </div>
@@ -800,7 +791,7 @@
 
   <!-- PANTALLES SUDOKU -->
   <div id="screen-sudoku-selector" style="display:none">
-    <div style="padding:1.5rem 2rem 0; max-width:900px; margin:0 auto">
+    <div style="padding:1.5rem 2rem 0">
       <button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button>
     </div>
     <div id="sudoku-selector-cont"></div>

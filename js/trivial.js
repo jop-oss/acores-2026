@@ -176,10 +176,14 @@ function trivialIniciarComptadorsTorn(p, modalitat) {
       return;
     }
     const segs = Math.floor((Date.now() - p.tornTs) / 1000);
-    const min = Math.floor(segs / 60);
+    const h   = Math.floor(segs / 3600);
+    const min = Math.floor((segs % 3600) / 60);
     const seg = segs % 60;
-    const txt = min > 0 ? min + "min " + seg + "s" : seg + "s";
-    const urgent = segs > 3600;
+    let txt;
+    if (h > 0)      txt = h + "h " + min + "min";
+    else if (min > 0) txt = min + "min " + seg + "s";
+    else              txt = seg + "s";
+    const urgent = segs > 3 * 60;
     el.textContent = "\u23f1 Fa " + txt;
     el.style.color = urgent ? "var(--error)" : "var(--text2)";
     el.style.fontSize = ".75rem";

@@ -162,8 +162,13 @@ function sudokuRenderSelector() {
           <span class="sudoku-selector-titol-emoji">🔢</span>
           <span class="sudoku-selector-titol-inline">Sudoku</span>
         </div>
-        <div class="sudoku-total-pts">Total acumulat: <strong>${total} pts</strong></div>
-        ${grups}
+        <div class="sudoku-selector-grup-area">
+          <div class="sudoku-total-pts">
+            <img src="${IMGS[jugadorActiu] || ''}" alt="${jugadorActiu}">
+            <span>${jugadorActiu} · Total acumulat: <strong>${total} pts</strong></span>
+          </div>
+          ${grups}
+        </div>
       </div>
       <div class="ranking-wrap">
         <div class="ranking-title">🏆 Rànquing Sudoku</div>

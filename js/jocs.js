@@ -1881,10 +1881,7 @@ function paRenderRanking() {
         <div class="rank-nom">${r.nom}</div>
         <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.min((r.total / 500) * 100, 100)}%"></div></div>
       </div>
-      <div style="text-align:right">
-        <div class="rank-punts">${r.total}</div>
-        <span class="rank-partides">pts totals</span>
-      </div>
+      <div class="rank-punts">${r.total}</div>
     </div>`,
     )
     .join("");
@@ -2293,10 +2290,7 @@ function bingoRenderRanking() {
         <div class="rank-nom">${r.nom}</div>
         <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.min((r.punts / 1000) * 100, 100)}%"></div></div>
       </div>
-      <div style="text-align:right">
-        <div class="rank-punts">${r.punts}</div>
-        <span class="rank-partides">pts bingo</span>
-      </div>
+      <div class="rank-punts">${r.punts}</div>
     </div>`,
     )
     .join("");
