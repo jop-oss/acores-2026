@@ -105,8 +105,14 @@ function renderJugadorsGrid() {
     JUGADORS_VALIDS.forEach(nom => {
       ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsTrivial[nom] || 0);
     });
-    renderGrid(ptsFinals);
-  }).catch(() => {}); // Si Firebase falla, queda amb dades locals
+    // Actualitza també amb punts del Sudoku (Firebase)
+    sudokuGetPuntsGlobals().then(ptsSudoku => {
+      JUGADORS_VALIDS.forEach(nom => {
+        ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsSudoku[nom] || 0);
+      });
+      renderGrid(ptsFinals);
+    }).catch(() => renderGrid(ptsFinals));
+  }).catch(() => {});
 }
 
 // Llegeix els punts del Trivial (individual + equips) de Firebase
@@ -167,6 +173,7 @@ async function rankingCarregar() {
       paraula: estatParaula ? Object.values(estatParaula.punts || {}).reduce((a,b)=>a+b,0) : 0,
       bingo:   estatBingo   ? estatBingo.punts   : 0,
       trivial: 0,
+      sudoku:  0,
     };
   });
 
@@ -176,6 +183,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].trivial = ptsTrivial[nom] || 0; });
   } catch(e) {}
 
+  // Sudoku Firebase
+  try {
+    const ptsSudoku = await sudokuGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].sudoku = ptsSudoku[nom] || 0; });
+  } catch(e) {}
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -183,7 +196,7 @@ async function rankingCarregar() {
 function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
-  if (filtre === 'tots') return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial;
+  if (filtre === 'tots') return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0);
   return d[filtre] || 0;
 }
 
@@ -242,13 +255,14 @@ function rankingMostrarDetall(nom) {
   detall.style.display = 'block';
 
   const d = _rankingDades[nom];
-  const total = d.quiz + d.mapa + d.paraula + d.bingo + d.trivial;
+  const total = d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0);
   const jocs = [
     { icon:'🌋', nom:'Quiz Açores', key:'quiz' },
     { icon:'📍', nom:'On és això?', key:'mapa' },
     { icon:'🔤', nom:'La Paraula',  key:'paraula' },
     { icon:'🎯', nom:'Bingo',       key:'bingo' },
     { icon:'🎲', nom:'Trivial',     key:'trivial' },
+    { icon:'🔢', nom:'Sudoku',      key:'sudoku' },
   ];
 
   cos.innerHTML = `
@@ -355,6 +369,8 @@ function seleccionarModeJoc(mode) {
     iniciarReptes();
   } else if (mode === "trivial") {
     iniciarTrivial();
+  } else if (mode === "sudoku") {
+    iniciarSudoku();
   }
 }
 
@@ -701,6 +717,9 @@ function mostraScreen(nom) {
     "trivial-config-individual",
     "trivial-config-equips",
     "trivial-prova-final",
+    "sudoku-selector",
+    "sudoku-joc",
+    "sudoku-resultat",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
@@ -713,6 +732,7 @@ function mostraScreen(nom) {
       "paraula-final",
       "trivial-torn",
       "trivial-prova-final",
+      "sudoku-resultat",
     ].includes(s);
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });

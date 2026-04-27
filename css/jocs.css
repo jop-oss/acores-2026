@@ -1133,7 +1133,6 @@
     .trivial-final-torn { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2rem 0; text-align:center; }
     .trivial-final-torn-icon { font-size:3rem; }
     .trivial-final-torn-text { font-size:1.1rem; color:var(--text); font-weight:600; }
-    .trivial-final-torn-bonus { font-size:.9rem; color:var(--verd2); font-weight:700; background:rgba(106,171,122,.12); border:1px solid var(--verd2); border-radius:8px; padding:.35rem .85rem; }
 
     #screen-trivial-prova-final { display:none; min-height:calc(100vh - 52px); padding:1.5rem 1rem 3rem; }
     .trivial-prova-final-wrap { max-width:600px; margin:0 auto; }
@@ -1174,3 +1173,462 @@
     .trivial-equip-jugador img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
     .trivial-btn-iniciar { width:100%; background:linear-gradient(135deg,var(--verd),var(--verd2)); border:none; border-radius:12px; padding:.9rem; color:#fff; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:600; cursor:pointer; transition:all .2s; }
     .trivial-btn-iniciar:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,90,61,.5); }
+/* ══════════════════════════════════════════════════════════════
+   SUDOKU AÇORES — Estils (afegir a jocs.css)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── PANTALLA SELECTOR ──────────────────────────────────────── */
+#screen-sudoku-selector {
+  padding: 1rem;
+}
+
+.sudoku-selector-header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.sudoku-total-pts {
+  font-size: 1rem;
+  color: var(--text2);
+}
+
+.sudoku-total-pts strong {
+  color: var(--verd2);
+  font-size: 1.2rem;
+}
+
+.sudoku-grup {
+  margin-bottom: 1.25rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sudoku-grup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .6rem 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.sudoku-grup-prog {
+  font-size: .8rem;
+  color: var(--verd2);
+}
+
+.sudoku-cards-fila {
+  display: flex;
+  gap: .6rem;
+  padding: .75rem;
+  flex-wrap: wrap;
+}
+
+.sudoku-card {
+  flex: 1;
+  min-width: 64px;
+  max-width: 90px;
+  aspect-ratio: 1;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s;
+  position: relative;
+  gap: 2px;
+}
+
+.sudoku-card:hover:not(.completat):not(.fallit) {
+  border-color: var(--verd2);
+  background: rgba(106,171,122,.08);
+  transform: translateY(-2px);
+}
+
+.sudoku-card.completat {
+  border-color: var(--verd2);
+  background: rgba(106,171,122,.1);
+  cursor: default;
+}
+
+.sudoku-card.fallit {
+  border-color: var(--error);
+  background: rgba(224,85,85,.08);
+  cursor: default;
+  opacity: .7;
+}
+
+.sudoku-card-num {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sudoku-card-dif {
+  font-size: .65rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.sudoku-card-pts {
+  font-size: .75rem;
+  color: var(--verd2);
+  font-weight: 600;
+}
+
+.sudoku-card-en-curs {
+  font-size: .6rem;
+  color: #f0a500;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ── PANTALLA JOC ────────────────────────────────────────────── */
+#screen-sudoku-joc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem 1rem 1.5rem;
+  gap: .75rem;
+  min-height: 100vh;
+}
+
+.sudoku-joc-header {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sudoku-joc-titol-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+#sudoku-joc-titol {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+#sudoku-reintents {
+  font-size: .75rem;
+  color: var(--text2);
+}
+
+#sudoku-joc-pts {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--verd2);
+}
+
+/* Tauler */
+#sudoku-tauler {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: min(100%, 400px);
+  aspect-ratio: 1;
+  border: 3px solid var(--text);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.sudoku-cel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(.9rem, 2.5vw, 1.2rem);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: default;
+  transition: background .1s;
+  user-select: none;
+  aspect-ratio: 1;
+}
+
+.sudoku-cel.editable {
+  cursor: pointer;
+  color: var(--verd2);
+}
+
+.sudoku-cel.original {
+  color: var(--text);
+  font-weight: 800;
+  background: rgba(255,255,255,.03);
+}
+
+.sudoku-cel.seleccionada {
+  background: rgba(106,171,122,.3) !important;
+}
+
+.sudoku-cel.relacionada {
+  background: rgba(106,171,122,.08);
+}
+
+.sudoku-cel.mateix-num {
+  background: rgba(106,171,122,.18);
+}
+
+/* Vores gruixudes als blocs 3x3 */
+.sudoku-cel.border-r {
+  border-right: 2px solid var(--text2);
+}
+
+.sudoku-cel.border-b {
+  border-bottom: 2px solid var(--text2);
+}
+
+/* Teclat numèric */
+#sudoku-teclat {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .4rem;
+  width: min(100%, 400px);
+}
+
+.sudoku-tecla {
+  aspect-ratio: 1;
+  background: var(--bg2);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.sudoku-tecla:hover {
+  border-color: var(--verd2);
+  background: rgba(106,171,122,.12);
+}
+
+.sudoku-tecla.esborrar {
+  color: var(--error);
+  border-color: var(--error);
+  grid-column: span 1;
+}
+
+/* Botons d'acció */
+.sudoku-accions {
+  display: flex;
+  gap: .6rem;
+  width: min(100%, 400px);
+  flex-wrap: wrap;
+}
+
+.sudoku-btn-validar {
+  flex: 2;
+  padding: .75rem;
+  background: var(--verd2);
+  color: var(--bg);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.sudoku-btn-validar:hover { opacity: .88; }
+
+#sudoku-btn-pista {
+  flex: 1;
+  padding: .75rem .5rem;
+  background: var(--bg2);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+#sudoku-btn-pista:hover:not(:disabled) {
+  border-color: #f0a500;
+  color: #f0a500;
+}
+
+#sudoku-btn-pista:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.sudoku-btn-sortir {
+  padding: .6rem 1rem;
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: .85rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.sudoku-btn-sortir:hover {
+  border-color: var(--text2);
+  color: var(--text);
+}
+
+/* ── MODAL (reintent) ────────────────────────────────────────── */
+#sudoku-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.sudoku-modal-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.sudoku-modal-icon { font-size: 2.5rem; }
+
+.sudoku-modal-titol {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.sudoku-modal-text {
+  font-size: .9rem;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.sudoku-modal-btns {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: .25rem;
+}
+
+.sudoku-btn-reintent {
+  padding: .7rem;
+  background: var(--verd2);
+  color: var(--bg);
+  border: none;
+  border-radius: 9px;
+  font-size: .95rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.sudoku-btn-reintent:hover { opacity: .85; }
+
+.sudoku-btn-tornar {
+  padding: .65rem;
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: .88rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.sudoku-btn-tornar:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+/* ── PANTALLA RESULTAT ───────────────────────────────────────── */
+#screen-sudoku-resultat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem 1rem;
+}
+
+#sudoku-resultat-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  max-width: 320px;
+}
+
+.sudoku-resultat-icon { font-size: 4rem; }
+
+.sudoku-resultat-titol {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.sudoku-resultat-pts {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--verd2);
+}
+
+.sudoku-resultat-pts.zero {
+  color: var(--error);
+}
+
+.sudoku-resultat-penal {
+  font-size: .82rem;
+  color: var(--text2);
+  margin-top: -.5rem;
+}
+
+.sudoku-resultat-text {
+  font-size: .95rem;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── TOAST ───────────────────────────────────────────────────── */
+#sudoku-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: .6rem 1.2rem;
+  border-radius: 20px;
+  font-size: .88rem;
+  opacity: 0;
+  transition: all .25s;
+  pointer-events: none;
+  z-index: 300;
+  white-space: nowrap;
+}
+
+#sudoku-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
