@@ -129,12 +129,20 @@ function trivialRenderInici(partidaInd, partidaEq) {
   };
 
   cont.innerHTML = `
-    <div class="trivial-partides-grid">
-      ${renderPartida(partidaInd, "individual")}
-      ${renderPartida(partidaEq, "equips")}
+    <div class="trivial-inici-layout">
+      <div class="trivial-partides-grid">
+        ${renderPartida(partidaInd, "individual")}
+        ${renderPartida(partidaEq, "equips")}
+      </div>
+      <div class="ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing Trivial</div>
+        <div class="ranking-list-home" id="trivial-ranking-global-list">
+          <div class="ranking-loading">Carregant…</div>
+        </div>
+      </div>
     </div>`;
 
-  // Render rankings mini
+  // Render rankings mini (a les cards de partida)
   if (partidaInd && partidaInd.activa)
     trivialRenderRankingMini(partidaInd, "individual");
   if (partidaEq && partidaEq.activa)
@@ -142,6 +150,9 @@ function trivialRenderInici(partidaInd, partidaEq) {
 
   trivialIniciarComptadorsTorn(partidaInd, "individual");
   trivialIniciarComptadorsTorn(partidaEq, "equips");
+
+  // Rànquing global (Firebase async)
+  trivialRenderRankingGlobal();
 }
 
 let _trivialComptadorIntervals = {};
@@ -187,6 +198,36 @@ function trivialRenderRankingMini(p, modalitat) {
   </div>`,
     )
     .join("");
+}
+
+// ── RÀNQUING GLOBAL TRIVIAL (individual + equips) ─────────────
+async function trivialRenderRankingGlobal() {
+  const el = document.getElementById("trivial-ranking-global-list");
+  if (!el) return;
+
+  try {
+    const pts = await trivialGetPuntsGlobals();
+    const llista = TRIVIAL_ORDRE_JUGADORS
+      .map(nom => ({ nom, punts: pts[nom] || 0 }))
+      .sort((a, b) => b.punts - a.punts);
+
+    const maxPts = llista[0]?.punts || 1;
+    const posEmoji = ["🥇", "🥈", "🥉"];
+
+    el.innerHTML = llista.map((r, i) => `
+      <div class="ranking-item ${r.nom === jugadorActiu ? "actiu" : ""}">
+        <div class="ranking-pos ${i < 3 ? "p" + (i + 1) : "other"}">${i < 3 ? posEmoji[i] : i + 1}</div>
+        <img class="rank-avatar" src="${IMGS[r.nom] || ""}" alt="${r.nom}">
+        <div class="rank-info">
+          <div class="rank-nom">${r.nom}</div>
+          <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts / maxPts) * 100)}%"></div></div>
+        </div>
+        <div class="rank-punts">${r.punts}</div>
+      </div>`).join('');
+  } catch(e) {
+    const el2 = document.getElementById("trivial-ranking-global-list");
+    if (el2) el2.innerHTML = '<div class="ranking-loading">Error carregant…</div>';
+  }
 }
 
 // ── NOVA PARTIDA ──────────────────────────────────────────────
@@ -1138,25 +1179,33 @@ function trivialRenderVeure() {
     <div class="trivial-ranking-complet">
       ${[...jugadors]
         .sort((a, b) => b.punts - a.punts)
-        .map(
-          (j, i) => `
+        .map((j, i) => {
+          const catsHtml = TRIVIAL_CATS.map(cat => {
+            const info = TRIVIAL_CATEGORIES[cat];
+            const encerts = j.categories?.[cat] || 0;
+            const bloq = (j.categoriesBloquejades || []).includes(cat);
+            const dots = [0, 1, 2].map(n => {
+              const ple = n < encerts;
+              return `<span class="trivial-enc-dot ${ple ? 'ple' : ''}" style="${ple ? `background:${info.color}` : `border:1.5px solid ${info.color}40`}"></span>`;
+            }).join('');
+            return `
+              <div class="trivial-cat-bloc">
+                <span class="trivial-cat-icona ${bloq ? 'bloq' : ''}" style="background:${bloq ? info.color : info.color + '25'}" title="${info.label}">${info.emoji}</span>
+                <div class="trivial-enc-dots">${dots}</div>
+              </div>`;
+          }).join('');
+
+          return `
         <div class="trivial-rank-item ${j.nom === jugadorActualNom ? "actiu" : ""}">
           <span class="trivial-rank-pos">${["🥇", "🥈", "🥉"][i] || i + 1}</span>
           <img src="${j.animal ? `img/animals/${j.animal}.svg` : IMGS[j.nom] || ""}" alt="${j.nom}">
           <div class="trivial-rank-info">
             <div class="trivial-rank-nom">${j.nom}${j.membres ? `<span style="font-size:.72rem;color:var(--text2);font-weight:400"> · ${j.membres.join(", ")}</span>` : ""}</div>
-            <div class="trivial-rank-cats">
-              ${TRIVIAL_CATS.map((cat) => {
-                const info = TRIVIAL_CATEGORIES[cat];
-                const encerts = j.categories?.[cat] || 0;
-                const bloq = (j.categoriesBloquejades || []).includes(cat);
-                return `<span class="trivial-cat-mini ${bloq ? "bloq" : ""}" style="background:${bloq ? info.color : info.color + "30"}" title="${info.label}">${info.emoji}</span>`;
-              }).join("")}
-            </div>
+            <div class="trivial-rank-cats-blocs">${catsHtml}</div>
           </div>
           <div class="trivial-rank-punts">${j.punts} pts</div>
-        </div>`,
-        )
+        </div>`;
+        })
         .join("")}
     </div>`;
 }

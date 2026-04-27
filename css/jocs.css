@@ -1063,8 +1063,9 @@
        ══════════════════════════════════════════════ */
 
     #screen-trivial-inici { display:none; min-height:calc(100vh - 52px); padding:1.5rem 1rem 3rem; }
-    .trivial-inici-wrap { max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:1.25rem; }
-    .trivial-inici-header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
+    .trivial-inici-wrap { max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:1.25rem; }
+    .trivial-inici-header { display:flex; align-items:center; gap:.75rem; }
+    .trivial-inici-header-inner { flex:1; display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
     .trivial-inici-titol { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:900; background:linear-gradient(135deg,var(--verd2),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
     .trivial-partides-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
@@ -1162,6 +1163,28 @@
     .trivial-cat-mini.bloq { opacity:1; }
     .trivial-rank-pos { font-size:1.1rem; width:28px; text-align:center; }
     .trivial-rank-punts { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--verd2); }
+
+    /* Categories amb encerts (veure partida) */
+    .trivial-rank-cats-blocs { display:flex; gap:6px; margin-top:5px; flex-wrap:wrap; }
+    .trivial-cat-bloc { display:flex; flex-direction:column; align-items:center; gap:3px; }
+    .trivial-cat-icona { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.9rem; transition:all .2s; }
+    .trivial-cat-icona.bloq { box-shadow:0 0 0 2px rgba(255,255,255,.3); }
+    .trivial-enc-dots { display:flex; gap:2px; }
+    .trivial-enc-dot { width:7px; height:7px; border-radius:50%; transition:all .2s; }
+
+    /* Layout inici trivial amb rànquing lateral */
+    .trivial-inici-layout { display:flex; gap:1.5rem; align-items:flex-start; }
+    .trivial-inici-layout .trivial-partides-grid { flex:1; min-width:0; }
+    .trivial-inici-layout .ranking-wrap { width:220px; flex-shrink:0; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1rem; }
+    /* El header també segueix el mateix split: títol+botó sobre les cards, espai buit sobre el rànquing */
+    .trivial-inici-header { display:flex; gap:1.5rem; align-items:center; }
+    .trivial-inici-header .trivial-inici-header-inner { flex:1; display:flex; align-items:center; justify-content:space-between; }
+    .trivial-inici-header::after { content:''; width:220px; flex-shrink:0; display:block; }
+    @media (max-width:768px) {
+      .trivial-inici-layout { flex-direction:column; }
+      .trivial-inici-layout .ranking-wrap { width:100%; }
+      .trivial-inici-header::after { display:none; }
+    }
 
     #screen-trivial-config-equips, #screen-trivial-config-individual { display:none; min-height:calc(100vh - 52px); padding:1.5rem 1rem 3rem; }
     .trivial-config-wrap { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:1rem; }
