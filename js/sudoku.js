@@ -67,10 +67,55 @@ async function sudokuCarregarOCrearPartida() {
   await ref.set(sudokuPartida);
 }
 
+// ── MINI TAULER SVG ───────────────────────────────────────────
+function sudokuMiniTauler(puzzle) {
+  const size = 108;
+  const cell = size / 9;
+  let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // Fons
+  svg += `<rect width="${size}" height="${size}" fill="var(--bg)" rx="4"/>`;
+
+  // Números
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const val = puzzle[r][c];
+      if (val) {
+        const x = c * cell + cell / 2;
+        const y = r * cell + cell / 2 + 3.5;
+        svg += `<text x="${x}" y="${y}" text-anchor="middle" font-size="8" font-family="monospace" font-weight="700" fill="var(--text)" opacity="0.85">${val}</text>`;
+      }
+    }
+  }
+
+  // Línies fines (separadors de cel·la)
+  for (let i = 1; i < 9; i++) {
+    const pos = i * cell;
+    const thick = i % 3 === 0;
+    const stroke = thick ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
+    const sw = thick ? 1.2 : 0.5;
+    svg += `<line x1="${pos}" y1="0" x2="${pos}" y2="${size}" stroke="${stroke}" stroke-width="${sw}"/>`;
+    svg += `<line x1="0" y1="${pos}" x2="${size}" y2="${pos}" stroke="${stroke}" stroke-width="${sw}"/>`;
+  }
+
+  // Vora exterior
+  svg += `<rect width="${size}" height="${size}" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" rx="4"/>`;
+
+  svg += '</svg>';
+  return svg;
+}
+
 // ── PANTALLA SELECTOR ─────────────────────────────────────────
 function sudokuRenderSelector() {
   const cont = document.getElementById('sudoku-selector-cont');
   if (!cont || !sudokuPartida) return;
+
+  const ESTAT_LABEL = {
+    pendent:   { text: 'No iniciat', cls: 'estat-pendent' },
+    en_curs:   { text: 'En curs',    cls: 'estat-en-curs' },
+    completat: { text: 'Completat',  cls: 'estat-completat' },
+    fallit:    { text: 'Fallit',     cls: 'estat-fallit' },
+  };
 
   const grups = ['facil', 'mitja', 'dificil'].map(dif => {
     const qs = sudokuPartida.sudokus.filter(s => s.dif === dif);
@@ -78,16 +123,23 @@ function sudokuRenderSelector() {
     const ptsTotal   = qs.reduce((a, s) => a + (s.punts || 0), 0);
 
     const cards = qs.map((s, i) => {
+      // Determina estat real (pendent amb grid = en_curs)
+      const estatReal = s.estat !== 'pendent' ? s.estat
+                      : s.gridActual ? 'en_curs' : 'pendent';
       const blocat = s.estat === 'completat' || s.estat === 'fallit';
-      const icona  = s.estat === 'completat' ? '✅' : s.estat === 'fallit' ? '❌' : `#${i + 1}`;
-      const cls    = `sudoku-card ${s.estat}`;
+      const puzzle = SUDOKU_PUZZLES.find(p => p.id === s.puzzleId)?.puzzle;
       const click  = blocat ? '' : `onclick="sudokuJugar(${s.puzzleId})"`;
+      const { text: estatText, cls: estatCls } = ESTAT_LABEL[estatReal];
+
+      const contingut = puzzle
+        ? sudokuMiniTauler(puzzle)
+        : `<div class="sudoku-card-num">#${i + 1}</div>`;
+
       return `
-        <div class="${cls}" ${click}>
-          <div class="sudoku-card-num">${icona}</div>
-          <div class="sudoku-card-dif">${SUDOKU_DIF_LABEL[dif]}</div>
+        <div class="sudoku-card ${s.estat} ${blocat ? 'blocat' : ''}" ${click}>
+          <div class="sudoku-card-preview">${contingut}</div>
+          <div class="sudoku-card-estat ${estatCls}">${estatText}</div>
           ${s.estat === 'completat' ? `<div class="sudoku-card-pts">+${s.punts} pts</div>` : ''}
-          ${s.estat !== 'pendent' ? '' : s.gridActual ? '<div class="sudoku-card-en-curs">En curs</div>' : ''}
         </div>`;
     }).join('');
 
@@ -104,10 +156,54 @@ function sudokuRenderSelector() {
   const total = sudokuPartida.sudokus.reduce((a, s) => a + (s.punts || 0), 0);
 
   cont.innerHTML = `
-    <div class="sudoku-selector-header">
-      <div class="sudoku-total-pts">Total: <strong>${total} pts</strong></div>
-    </div>
-    ${grups}`;
+    <div class="sudoku-selector-layout">
+      <div class="sudoku-selector-main">
+        <div class="sudoku-selector-titol-wrap">
+          <span class="sudoku-selector-titol-emoji">🔢</span>
+          <span class="sudoku-selector-titol-inline">Sudoku</span>
+        </div>
+        <div class="sudoku-total-pts">Total acumulat: <strong>${total} pts</strong></div>
+        ${grups}
+      </div>
+      <div class="ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing Sudoku</div>
+        <div class="ranking-list-home" id="sudoku-ranking-list">
+          <div class="ranking-loading">Carregant…</div>
+        </div>
+      </div>
+    </div>`;
+
+  // Carrega rànquing async
+  sudokuRenderRankingGlobal();
+}
+
+// ── RÀNQUING GLOBAL SUDOKU ────────────────────────────────────
+async function sudokuRenderRankingGlobal() {
+  const el = document.getElementById('sudoku-ranking-list');
+  if (!el) return;
+  try {
+    const pts = await sudokuGetPuntsGlobals();
+    const llista = JUGADORS_VALIDS
+      .map(nom => ({ nom, punts: pts[nom] || 0 }))
+      .sort((a, b) => b.punts - a.punts);
+
+    const maxPts = llista[0]?.punts || 1;
+    const posEmoji = ['🥇', '🥈', '🥉'];
+
+    el.innerHTML = llista.map((r, i) => `
+      <div class="ranking-item ${r.nom === jugadorActiu ? 'actiu' : ''}">
+        <div class="ranking-pos ${i < 3 ? 'p' + (i + 1) : 'other'}">${i < 3 ? posEmoji[i] : i + 1}</div>
+        <img class="rank-avatar" src="${IMGS[r.nom] || ''}" alt="${r.nom}">
+        <div class="rank-info">
+          <div class="rank-nom">${r.nom}</div>
+          <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts / maxPts) * 100)}%"></div></div>
+        </div>
+        <div class="rank-punts">${r.punts}</div>
+      </div>`).join('');
+  } catch(e) {
+    const el2 = document.getElementById('sudoku-ranking-list');
+    if (el2) el2.innerHTML = '<div class="ranking-loading">Error carregant…</div>';
+  }
 }
 
 // ── JUGAR UN SUDOKU ───────────────────────────────────────────

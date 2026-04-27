@@ -65,11 +65,11 @@
     .ranking-pos.p1{color:var(--gold)} .ranking-pos.p2{color:#ccc} .ranking-pos.p3{color:#cd7f32} .ranking-pos.other{color:var(--text2);font-size:.85rem}
     .rank-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--border);flex-shrink:0}
     .ranking-item.actiu .rank-avatar{border-color:var(--verd2)}
-    .rank-info{flex:1}
-    .rank-nom{font-size:.85rem;font-weight:600}
+    .rank-info{flex:1;min-width:0}
+    .rank-nom{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .rank-barra-wrap{height:3px;background:rgba(255,255,255,.05);border-radius:999px;margin-top:3px}
     .rank-barra{height:100%;background:linear-gradient(90deg,var(--verd),var(--verd2));border-radius:999px;transition:width .8s ease}
-    .rank-punts{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--verd2)}
+    .rank-punts{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--verd2);flex-shrink:0;align-self:center}
     .rank-partides{font-size:.68rem;color:var(--text2);display:block;text-align:right}
 
     /* ── QUIZ: PANTALLA JOC ── */
@@ -1066,7 +1066,9 @@
     .trivial-inici-wrap { max-width:1100px; margin:0 auto; display:flex; flex-direction:column; gap:1.25rem; }
     .trivial-inici-header { display:flex; align-items:center; gap:.75rem; }
     .trivial-inici-titol { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:900; background:linear-gradient(135deg,var(--verd2),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .trivial-inici-titol-inline { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; background:linear-gradient(135deg,var(--verd2),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.25rem; }
+    .trivial-inici-titol-wrap { display:flex; flex-direction:column; align-items:flex-start; gap:.1rem; }
+    .trivial-inici-titol-emoji { font-size:2.2rem; line-height:1; }
+    .trivial-inici-titol-inline { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:900; background:linear-gradient(135deg,var(--verd2),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; }
 
     .trivial-partides-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
     @media(max-width:560px) { .trivial-partides-grid { grid-template-columns:1fr; } }
@@ -1198,26 +1200,63 @@
 
 /* ── PANTALLA SELECTOR ──────────────────────────────────────── */
 #screen-sudoku-selector {
-  padding: 1rem;
+  padding: 1.5rem 2rem;
+  max-width: 1050px;
+  margin: 0 auto;
 }
 
-.sudoku-selector-header {
-  text-align: center;
-  margin-bottom: 1.25rem;
+.sudoku-selector-layout {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.sudoku-selector-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.sudoku-selector-layout .ranking-wrap {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sudoku-selector-titol-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .1rem;
+}
+
+.sudoku-selector-titol-emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.sudoku-selector-titol-inline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--verd2), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
 }
 
 .sudoku-total-pts {
-  font-size: 1rem;
+  font-size: .88rem;
   color: var(--text2);
 }
 
 .sudoku-total-pts strong {
   color: var(--verd2);
-  font-size: 1.2rem;
 }
 
 .sudoku-grup {
-  margin-bottom: 1.25rem;
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -1228,85 +1267,100 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .6rem 1rem;
+  padding: .5rem .85rem;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   font-weight: 600;
-  font-size: .9rem;
+  font-size: .85rem;
 }
 
 .sudoku-grup-prog {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--verd2);
 }
 
 .sudoku-cards-fila {
   display: flex;
-  gap: .6rem;
-  padding: .75rem;
+  gap: .5rem;
+  padding: .6rem .75rem;
   flex-wrap: wrap;
 }
 
 .sudoku-card {
-  flex: 1;
-  min-width: 64px;
-  max-width: 90px;
-  aspect-ratio: 1;
+  width: 130px;
+  flex-shrink: 0;
   background: var(--bg);
   border: 2px solid var(--border);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: .4rem .4rem .35rem;
   cursor: pointer;
   transition: all .15s;
-  position: relative;
-  gap: 2px;
+  gap: 4px;
 }
 
-.sudoku-card:hover:not(.completat):not(.fallit) {
+.sudoku-card:hover:not(.blocat) {
   border-color: var(--verd2);
-  background: rgba(106,171,122,.08);
+  background: rgba(106,171,122,.07);
   transform: translateY(-2px);
+}
+
+.sudoku-card.blocat {
+  cursor: default;
+  opacity: .75;
 }
 
 .sudoku-card.completat {
   border-color: var(--verd2);
-  background: rgba(106,171,122,.1);
-  cursor: default;
+  background: rgba(106,171,122,.08);
 }
 
 .sudoku-card.fallit {
   border-color: var(--error);
-  background: rgba(224,85,85,.08);
-  cursor: default;
-  opacity: .7;
+  background: rgba(224,85,85,.06);
 }
 
-.sudoku-card-num {
-  font-size: 1.4rem;
+.sudoku-card-preview {
+  width: 108px;
+  height: 108px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sudoku-card-preview svg {
+  display: block;
+}
+
+.sudoku-card-estat {
+  font-size: .62rem;
   font-weight: 700;
-}
-
-.sudoku-card-dif {
-  font-size: .65rem;
-  color: var(--text2);
   text-transform: uppercase;
   letter-spacing: .04em;
+  padding: .15rem .5rem;
+  border-radius: 20px;
 }
 
+.estat-pendent   { background: rgba(150,150,150,.15); color: #888; }
+.estat-en-curs   { background: rgba(240,165,0,.15);   color: #f0a500; }
+.estat-completat { background: rgba(106,171,122,.2);  color: var(--verd2); }
+.estat-fallit    { background: rgba(224,85,85,.15);   color: var(--error); }
+
 .sudoku-card-pts {
-  font-size: .75rem;
+  font-size: .7rem;
   color: var(--verd2);
   font-weight: 600;
 }
 
-.sudoku-card-en-curs {
-  font-size: .6rem;
-  color: #f0a500;
-  font-weight: 600;
-  text-transform: uppercase;
+@media (max-width: 720px) {
+  #screen-sudoku-selector { padding: 1rem; }
+  .sudoku-selector-layout { flex-direction: column; }
+  .sudoku-selector-layout .ranking-wrap { width: 100%; }
+  .sudoku-card { width: 110px; }
+  .sudoku-card-preview { width: 92px; height: 92px; }
+  .sudoku-card-preview svg { width: 92px; height: 92px; }
 }
 
 /* ── PANTALLA JOC ────────────────────────────────────────────── */
