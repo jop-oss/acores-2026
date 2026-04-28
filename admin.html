@@ -295,6 +295,30 @@
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🔢 Sudoku</div>
+    </div>
+    <div class="admin-ruleta-info" style="margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+      <span>Estat: <strong id="sudoku-estat">—</strong></span>
+      <button class="btn-reset-tot" onclick="resetSudokuComplet()">Reiniciar tot (tots els jugadors)</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Fàcil (5)</th>
+          <th>Mitjà (4)</th>
+          <th>Difícil (3)</th>
+          <th>Total pts</th>
+          <th>Acció</th>
+        </tr>
+      </thead>
+      <tbody id="taula-sudoku"></tbody>
+    </table>
+  </div>
+
+  <!-- RULETA -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
       <div class="admin-seccio-title">🎡 Ruleta · Historial</div>
     </div>
     <div class="admin-ruleta-info">
@@ -337,6 +361,7 @@
     renderParaula();
     renderBingo();
     renderTrivial();
+    renderSudoku();
     renderRuleta();
   }
 
@@ -554,6 +579,73 @@
     JUGADORS.forEach(nom => localStorage.removeItem(CLAUS[joc](nom)));
     RENDERS[joc]();
     mostrarToast(`${NOMS_JOCS[joc]} reiniciat per a tots`);
+  }
+
+  // ── SUDOKU ─────────────────────────────────────────────────
+  async function renderSudoku() {
+    const tbody = document.getElementById('taula-sudoku');
+    const estat = document.getElementById('sudoku-estat');
+    tbody.innerHTML = JUGADORS.map(nom => `
+      <tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td id="sudoku-facil-${nom}">—</td>
+        <td id="sudoku-mitja-${nom}">—</td>
+        <td id="sudoku-dificil-${nom}">—</td>
+        <td id="sudoku-pts-${nom}">—</td>
+        <td><button class="btn-reset-jugador" onclick="resetSudokuJugador('${nom}')">Reiniciar</button></td>
+      </tr>`).join('');
+
+    let totalJugadors = 0;
+    try {
+      await Promise.all(JUGADORS.map(async nom => {
+        const snap = await getDb().collection('sudoku_partides').doc(nom).get();
+        if (!snap.exists) return;
+        totalJugadors++;
+        const data = snap.data();
+        const sudokus = data.sudokus || [];
+        const resum = { facil: [0,0], mitja: [0,0], dificil: [0,0] };
+        let pts = 0;
+        sudokus.forEach(s => {
+          const dif = s.dif === 'facil' ? 'facil' : s.dif === 'mitja' ? 'mitja' : 'dificil';
+          resum[dif][1]++;
+          if (s.estat === 'completat') { resum[dif][0]++; pts += s.punts || 0; }
+        });
+        const fmt = ([ok, tot]) => `${ok}/${tot}`;
+        document.getElementById(`sudoku-facil-${nom}`).textContent   = fmt(resum.facil);
+        document.getElementById(`sudoku-mitja-${nom}`).textContent   = fmt(resum.mitja);
+        document.getElementById(`sudoku-dificil-${nom}`).textContent = fmt(resum.dificil);
+        document.getElementById(`sudoku-pts-${nom}`).textContent     = pts + ' pts';
+      }));
+      estat.textContent = totalJugadors > 0
+        ? `${totalJugadors} jugador${totalJugadors > 1 ? 's' : ''} amb partida iniciada`
+        : 'Cap partida iniciada';
+    } catch(e) {
+      estat.textContent = 'Error Firebase: ' + e.message;
+    }
+  }
+
+  async function resetSudokuJugador(nom) {
+    if (!confirm(`Reiniciar Sudoku de ${nom}? S'esborraran tots els sudokus assignats i el progrés.`)) return;
+    try {
+      await getDb().collection('sudoku_partides').doc(nom).delete();
+      renderSudoku();
+      mostrarToast(`${nom} · Sudoku reiniciat`);
+    } catch(e) {
+      alert('Error Firebase: ' + e.message);
+    }
+  }
+
+  async function resetSudokuComplet() {
+    if (!confirm('Reiniciar Sudoku de TOTS els jugadors? S\'esborraran les assignacions i tot el progrés.')) return;
+    try {
+      await Promise.all(JUGADORS.map(nom =>
+        getDb().collection('sudoku_partides').doc(nom).delete()
+      ));
+      renderSudoku();
+      mostrarToast('Sudoku reiniciat per a tots els jugadors');
+    } catch(e) {
+      alert('Error Firebase: ' + e.message);
+    }
   }
 
   // ── TOAST ──────────────────────────────────────────────────

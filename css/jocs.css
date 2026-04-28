@@ -1549,15 +1549,24 @@
 }
 
 .sudoku-cel.seleccionada {
-  background: rgba(106,171,122,.38) !important;
+  background: rgba(106,171,122,.45) !important;
 }
 
 .sudoku-cel.relacionada {
   background: rgba(106,171,122,.1);
 }
 
+/* Mateix número que el seleccionat: ressaltat fort */
 .sudoku-cel.mateix-num {
-  background: rgba(106,171,122,.22);
+  background: rgba(106,171,122,.32) !important;
+  outline: 1.5px solid rgba(106,171,122,.6);
+  outline-offset: -1.5px;
+}
+
+/* Conflicte: número repetit a fila/col/caixa */
+.sudoku-cel.conflicte {
+  background: rgba(224,85,85,.22) !important;
+  color: #ff6b6b !important;
 }
 
 .sudoku-cel.border-r {
@@ -1596,24 +1605,58 @@
   border: 1.5px solid var(--border);
   border-radius: 12px;
   color: var(--text);
-  font-size: 1.4rem;
-  font-weight: 700;
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;
   transition: all .12s;
   box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 0;
 }
 
-.sdj-tecla:hover {
+.sdj-tecla-num {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sdj-tecla-comp {
+  font-size: .58rem;
+  color: var(--text2);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sdj-tecla:hover:not(:disabled) {
   border-color: var(--verd2);
   background: rgba(106,171,122,.14);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,.3);
 }
 
-.sdj-tecla:active {
+.sdj-tecla:active:not(:disabled) {
   transform: translateY(0);
   box-shadow: none;
+}
+
+/* Tecla activa (número seleccionat al tauler) */
+.sdj-tecla.actiu {
+  border-color: var(--verd2);
+  background: rgba(106,171,122,.18);
+  box-shadow: 0 0 0 2px rgba(106,171,122,.35);
+}
+
+.sdj-tecla.actiu .sdj-tecla-comp { color: var(--verd2); }
+
+/* Tecla completa (9/9) */
+.sdj-tecla.complet {
+  opacity: .3;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* Botó pista */

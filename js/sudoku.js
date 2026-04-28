@@ -327,26 +327,57 @@ function sudokuRenderTauler() {
   const tauler = document.getElementById('sudoku-tauler');
   if (!tauler) return;
 
+  // Número seleccionat (de la cella activa)
+  const numSelec = sudokuCellaSelec
+    ? sudokuGrid[sudokuCellaSelec.row][sudokuCellaSelec.col]
+    : null;
+
   tauler.innerHTML = '';
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const val      = sudokuGrid[r][c];
       const original = sudokuActual.puzzle[r][c] !== 0;
       const selec    = sudokuCellaSelec && sudokuCellaSelec.row === r && sudokuCellaSelec.col === c;
+
       const mateixaFila  = sudokuCellaSelec && sudokuCellaSelec.row === r;
       const mateixaCol   = sudokuCellaSelec && sudokuCellaSelec.col === c;
       const mateixaCaixa = sudokuCellaSelec &&
         Math.floor(sudokuCellaSelec.row / 3) === Math.floor(r / 3) &&
         Math.floor(sudokuCellaSelec.col / 3) === Math.floor(c / 3);
-      const mateixNum = sudokuCellaSelec && val !== 0 &&
-        sudokuGrid[sudokuCellaSelec.row][sudokuCellaSelec.col] === val;
+      const relacionada  = (mateixaFila || mateixaCol || mateixaCaixa) && !selec;
+
+      // Mateix número que el seleccionat (ressaltat fort)
+      const mateixNum = numSelec && numSelec !== 0 && val === numSelec && !selec;
+
+      // Conflicte: número editat que ja existeix a la mateixa fila/col/caixa
+      let conflicte = false;
+      if (val !== 0 && !original) {
+        // Comprova fila
+        for (let cc = 0; cc < 9; cc++) {
+          if (cc !== c && sudokuGrid[r][cc] === val) { conflicte = true; break; }
+        }
+        if (!conflicte) {
+          // Comprova columna
+          for (let rr = 0; rr < 9; rr++) {
+            if (rr !== r && sudokuGrid[rr][c] === val) { conflicte = true; break; }
+          }
+        }
+        if (!conflicte) {
+          // Comprova caixa 3x3
+          const br = Math.floor(r / 3) * 3, bc = Math.floor(c / 3) * 3;
+          outer: for (let rr = br; rr < br + 3; rr++)
+            for (let cc = bc; cc < bc + 3; cc++)
+              if ((rr !== r || cc !== c) && sudokuGrid[rr][cc] === val) { conflicte = true; break outer; }
+        }
+      }
 
       const cls = [
         'sudoku-cel',
-        original  ? 'original' : 'editable',
-        selec     ? 'seleccionada' : '',
-        (mateixaFila || mateixaCol || mateixaCaixa) && !selec ? 'relacionada' : '',
-        mateixNum && !selec ? 'mateix-num' : '',
+        original   ? 'original' : 'editable',
+        selec      ? 'seleccionada' : '',
+        relacionada && !mateixNum ? 'relacionada' : '',
+        mateixNum  ? 'mateix-num' : '',
+        conflicte  ? 'conflicte' : '',
         c === 2 || c === 5 ? 'border-r' : '',
         r === 2 || r === 5 ? 'border-b' : '',
       ].filter(Boolean).join(' ');
@@ -354,20 +385,40 @@ function sudokuRenderTauler() {
       const cel = document.createElement('div');
       cel.className = cls;
       cel.textContent = val || '';
-      if (!original) cel.addEventListener('click', () => sudokuSeleccionarCella(r, c));
+      // Tant originals com editables es poden seleccionar (per veure ressaltat)
+      cel.addEventListener('click', () => sudokuSeleccionarCella(r, c));
       tauler.appendChild(cel);
     }
   }
+  sudokuRenderTeclat();
   sudokuActualitzarBotonsJoc();
 }
 
 function sudokuRenderTeclat() {
   const teclat = document.getElementById('sudoku-teclat');
   if (!teclat) return;
-  // Ordre: 7,8,9 / 4,5,6 / 1,2,3 (com calculadora)
-  teclat.innerHTML = [7,8,9,4,5,6,1,2,3].map(n =>
-    `<button class="sdj-tecla" onclick="sudokuIntroduirNum(${n})">${n}</button>`
-  ).join('');
+
+  // Compta quants de cada número hi ha al grid
+  const comptes = Array(10).fill(0);
+  for (let r = 0; r < 9; r++)
+    for (let c = 0; c < 9; c++)
+      if (sudokuGrid[r][c] > 0) comptes[sudokuGrid[r][c]]++;
+
+  const numSelec = sudokuCellaSelec
+    ? sudokuGrid[sudokuCellaSelec.row][sudokuCellaSelec.col]
+    : null;
+
+  teclat.innerHTML = [7,8,9,4,5,6,1,2,3].map(n => {
+    const complet = comptes[n] >= 9;
+    const actiu   = numSelec === n;
+    return `
+      <button class="sdj-tecla ${complet ? 'complet' : ''} ${actiu ? 'actiu' : ''}"
+        onclick="sudokuIntroduirNum(${n})"
+        ${complet ? 'disabled' : ''}>
+        <span class="sdj-tecla-num">${n}</span>
+        <span class="sdj-tecla-comp">${comptes[n]}/9</span>
+      </button>`;
+  }).join('');
 }
 
 function sudokuActualitzarBotonsJoc() {
@@ -416,7 +467,6 @@ function sudokuConfirmarReinici() {
 }
 
 function sudokuSeleccionarCella(row, col) {
-  if (sudokuActual.puzzle[row][col] !== 0) return; // original, no editable
   sudokuCellaSelec = { row, col };
   sudokuRenderTauler();
 }
