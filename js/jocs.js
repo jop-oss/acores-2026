@@ -21,45 +21,53 @@ let respost = false;
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   // Sincronitza jugadorActiu amb la identificació global
-  const nomGuardat = localStorage.getItem('app_jugador');
+  const nomGuardat = localStorage.getItem("app_jugador");
   if (nomGuardat && JUGADORS_VALIDS.includes(nomGuardat)) {
     jugadorActiu = nomGuardat;
   }
 
   // Escolta canvis d'identificació des de la nav
-  document.addEventListener('app:jugador-canviat', (e) => {
+  document.addEventListener("app:jugador-canviat", (e) => {
     jugadorActiu = e.detail.nom;
     if (jugadorActiu) {
-      localStorage.setItem('app_jugador', jugadorActiu);
-      document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
-      document.getElementById('modal-identificacio')?.classList.remove('visible');
+      localStorage.setItem("app_jugador", jugadorActiu);
+      document
+        .querySelectorAll(".joc-selector-btn")
+        .forEach((b) => b.classList.remove("disabled-id"));
+      document
+        .getElementById("modal-identificacio")
+        ?.classList.remove("visible");
       entrarJoc();
     } else {
-      localStorage.removeItem('app_jugador');
-      document.getElementById('joc-selector-avatar').src = '';
-      document.getElementById('joc-selector-nom').textContent = '';
-      document.querySelector('.joc-selector-jugador').style.display = 'none';
-      document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
+      localStorage.removeItem("app_jugador");
+      document.getElementById("joc-selector-avatar").src = "";
+      document.getElementById("joc-selector-nom").textContent = "";
+      document.querySelector(".joc-selector-jugador").style.display = "none";
+      document
+        .querySelectorAll(".joc-selector-btn")
+        .forEach((b) => b.classList.add("disabled-id"));
       jocsRenderModalIdentificacio();
-      document.getElementById('modal-identificacio')?.classList.add('visible');
+      document.getElementById("modal-identificacio")?.classList.add("visible");
     }
   });
 
-  mostraScreen('joc-selector');
+  mostraScreen("joc-selector");
 
   if (jugadorActiu) {
     entrarJoc();
     // Si ve del banner del trivial, entrar directament al trivial
     const params = new URLSearchParams(window.location.search);
-    const trivialParam = params.get('trivial');
-    if (trivialParam === 'individual' || trivialParam === 'equips') {
+    const trivialParam = params.get("trivial");
+    if (trivialParam === "individual" || trivialParam === "equips") {
       setTimeout(() => iniciarTrivial(), 100);
     }
   } else {
-    document.querySelector('.joc-selector-jugador').style.display = 'none';
+    document.querySelector(".joc-selector-jugador").style.display = "none";
     jocsRenderModalIdentificacio();
-    document.getElementById('modal-identificacio')?.classList.add('visible');
-    document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
+    document.getElementById("modal-identificacio")?.classList.add("visible");
+    document
+      .querySelectorAll(".joc-selector-btn")
+      .forEach((b) => b.classList.add("disabled-id"));
   }
 });
 
@@ -70,16 +78,18 @@ function renderJugadorsGrid() {
   // Render immediat amb dades locals (Quiz, Mapa, Paraula, Bingo)
   const ptsParcials = {};
   JUGADORS_VALIDS.forEach((nom) => {
-    const estatQuiz    = carregarEstatJugador(nom);
-    const estatMapa    = mapaCarregarEstat(nom);
+    const estatQuiz = carregarEstatJugador(nom);
+    const estatMapa = mapaCarregarEstat(nom);
     const estatParaula = paCarregarEstat(nom);
-    const rawBingo     = localStorage.getItem(`bingo_punts_${nom}`);
-    const estatBingo   = rawBingo ? JSON.parse(rawBingo) : null;
+    const rawBingo = localStorage.getItem(`bingo_punts_${nom}`);
+    const estatBingo = rawBingo ? JSON.parse(rawBingo) : null;
 
-    const ptsQuiz    = estatQuiz    ? estatQuiz.punts : 0;
-    const ptsMapa    = estatMapa    ? estatMapa.punts : 0;
-    const ptsParaula = estatParaula ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0) : 0;
-    const ptsBingo   = estatBingo   ? estatBingo.punts : 0;
+    const ptsQuiz = estatQuiz ? estatQuiz.punts : 0;
+    const ptsMapa = estatMapa ? estatMapa.punts : 0;
+    const ptsParaula = estatParaula
+      ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0)
+      : 0;
+    const ptsBingo = estatBingo ? estatBingo.punts : 0;
 
     ptsParcials[nom] = ptsQuiz + ptsMapa + ptsParaula + ptsBingo;
   });
@@ -100,37 +110,48 @@ function renderJugadorsGrid() {
   renderGrid(ptsParcials);
 
   // Actualitza amb punts del Trivial (Firebase)
-  trivialGetPuntsGlobals().then(ptsTrivial => {
-    const ptsFinals = { ...ptsParcials };
-    JUGADORS_VALIDS.forEach(nom => {
-      ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsTrivial[nom] || 0);
-    });
-    // Actualitza també amb punts del Sudoku (Firebase)
-    sudokuGetPuntsGlobals().then(ptsSudoku => {
-      JUGADORS_VALIDS.forEach(nom => {
-        ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsSudoku[nom] || 0);
+  trivialGetPuntsGlobals()
+    .then((ptsTrivial) => {
+      const ptsFinals = { ...ptsParcials };
+      JUGADORS_VALIDS.forEach((nom) => {
+        ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsTrivial[nom] || 0);
       });
-      renderGrid(ptsFinals);
-    }).catch(() => renderGrid(ptsFinals));
-  }).catch(() => {});
+      // Actualitza també amb punts del Sudoku (Firebase)
+      sudokuGetPuntsGlobals()
+        .then((ptsSudoku) => {
+          JUGADORS_VALIDS.forEach((nom) => {
+            ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsSudoku[nom] || 0);
+          });
+          // Cifras y Letras (localStorage)
+          const ptsCifras = typeof clGetPuntsGlobals === 'function' ? clGetPuntsGlobals() : {};
+          JUGADORS_VALIDS.forEach((nom) => {
+            ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsCifras[nom] || 0);
+          });
+          renderGrid(ptsFinals);
+        })
+        .catch(() => renderGrid(ptsFinals));
+    })
+    .catch(() => {});
 }
 
 // Llegeix els punts del Trivial (individual + equips) de Firebase
 async function trivialGetPuntsGlobals() {
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = 0; });
+  JUGADORS_VALIDS.forEach((nom) => {
+    pts[nom] = 0;
+  });
 
   try {
     const db = trivialGetDb();
     const [snapInd, snapEq] = await Promise.all([
-      db.collection('trivial_partides').doc('individual').get(),
-      db.collection('trivial_partides').doc('equips').get(),
+      db.collection("trivial_partides").doc("individual").get(),
+      db.collection("trivial_partides").doc("equips").get(),
     ]);
 
     // Individual: punts directes per jugador
     if (snapInd.exists) {
       const p = snapInd.data();
-      (p.jugadors || []).forEach(j => {
+      (p.jugadors || []).forEach((j) => {
         if (pts[j.nom] !== undefined) pts[j.nom] += j.punts || 0;
       });
     }
@@ -138,7 +159,7 @@ async function trivialGetPuntsGlobals() {
     // Equips: punts repartits per membre (ptsMembres)
     if (snapEq.exists) {
       const p = snapEq.data();
-      (p.jugadors || []).forEach(j => {
+      (p.jugadors || []).forEach((j) => {
         if (j.ptsMembres) {
           Object.entries(j.ptsMembres).forEach(([nom, p]) => {
             if (pts[nom] !== undefined) pts[nom] += p;
@@ -146,48 +167,62 @@ async function trivialGetPuntsGlobals() {
         }
       });
     }
-  } catch(e) {
-    console.error('Error llegint punts trivial:', e);
+  } catch (e) {
+    console.error("Error llegint punts trivial:", e);
   }
 
   return pts;
 }
 
-
 // ── RÀNQUING GLOBAL ───────────────────────────────────────────
-let _rankingDades = null;      // cache de totes les dades
-let _rankingFiltreJoc = 'tots';
+let _rankingDades = null; // cache de totes les dades
+let _rankingFiltreJoc = "tots";
 
 async function rankingCarregar() {
   // Dades locals
   const dades = {};
-  JUGADORS_VALIDS.forEach(nom => {
-    const estatQuiz    = carregarEstatJugador(nom);
-    const estatMapa    = mapaCarregarEstat(nom);
+  JUGADORS_VALIDS.forEach((nom) => {
+    const estatQuiz = carregarEstatJugador(nom);
+    const estatMapa = mapaCarregarEstat(nom);
     const estatParaula = paCarregarEstat(nom);
-    const rawBingo     = localStorage.getItem(`bingo_punts_${nom}`);
-    const estatBingo   = rawBingo ? JSON.parse(rawBingo) : null;
+    const rawBingo = localStorage.getItem(`bingo_punts_${nom}`);
+    const estatBingo = rawBingo ? JSON.parse(rawBingo) : null;
     dades[nom] = {
-      quiz:    estatQuiz    ? estatQuiz.punts    : 0,
-      mapa:    estatMapa    ? estatMapa.punts    : 0,
-      paraula: estatParaula ? Object.values(estatParaula.punts || {}).reduce((a,b)=>a+b,0) : 0,
-      bingo:   estatBingo   ? estatBingo.punts   : 0,
+      quiz: estatQuiz ? estatQuiz.punts : 0,
+      mapa: estatMapa ? estatMapa.punts : 0,
+      paraula: estatParaula
+        ? Object.values(estatParaula.punts || {}).reduce((a, b) => a + b, 0)
+        : 0,
+      bingo: estatBingo ? estatBingo.punts : 0,
       trivial: 0,
-      sudoku:  0,
+      sudoku: 0,
+      cifras: 0,
     };
   });
 
   // Trivial Firebase
   try {
     const ptsTrivial = await trivialGetPuntsGlobals();
-    JUGADORS_VALIDS.forEach(nom => { dades[nom].trivial = ptsTrivial[nom] || 0; });
-  } catch(e) {}
+    JUGADORS_VALIDS.forEach((nom) => {
+      dades[nom].trivial = ptsTrivial[nom] || 0;
+    });
+  } catch (e) {}
 
   // Sudoku Firebase
   try {
     const ptsSudoku = await sudokuGetPuntsGlobals();
-    JUGADORS_VALIDS.forEach(nom => { dades[nom].sudoku = ptsSudoku[nom] || 0; });
-  } catch(e) {}
+    JUGADORS_VALIDS.forEach((nom) => {
+      dades[nom].sudoku = ptsSudoku[nom] || 0;
+    });
+  } catch (e) {}
+
+  // Cifras y Letras (localStorage)
+  if (typeof clGetPuntsGlobals === 'function') {
+    const ptsCifras = clGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach((nom) => {
+      dades[nom].cifras = ptsCifras[nom] || 0;
+    });
+  }
 
   _rankingDades = dades;
   rankingRenderLlista();
@@ -196,43 +231,50 @@ async function rankingCarregar() {
 function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
-  if (filtre === 'tots') return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0);
+  if (filtre === "tots")
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku || 0) + (d.cifras || 0);
   return d[filtre] || 0;
 }
 
 function rankingFiltrarJoc(filtre, btn) {
   _rankingFiltreJoc = filtre;
-  document.querySelectorAll('.rfj-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  document
+    .querySelectorAll(".rfj-btn")
+    .forEach((b) => b.classList.remove("active"));
+  btn.classList.add("active");
   if (_rankingDades) rankingRenderLlista();
 }
 
 function rankingRenderLlista() {
-  const el = document.getElementById('ranking-llista');
-  const detall = document.getElementById('ranking-detall');
+  const el = document.getElementById("ranking-llista");
+  const detall = document.getElementById("ranking-detall");
   if (!el) return;
-  detall.style.display = 'none';
-  el.style.display = 'block';
+  detall.style.display = "none";
+  el.style.display = "block";
 
   if (!_rankingDades) {
     el.innerHTML = '<div class="ranking-loading">Carregant…</div>';
     return;
   }
 
-  const ordenats = [...JUGADORS_VALIDS].sort((a,b) =>
-    rankingTotal(b, _rankingFiltreJoc) - rankingTotal(a, _rankingFiltreJoc)
+  const ordenats = [...JUGADORS_VALIDS].sort(
+    (a, b) =>
+      rankingTotal(b, _rankingFiltreJoc) - rankingTotal(a, _rankingFiltreJoc),
   );
   const maxPts = rankingTotal(ordenats[0], _rankingFiltreJoc) || 1;
 
-  const medalles = ['🥇','🥈','🥉'];
-  const posClasses = ['gold','silver','bronze'];
+  const medalles = ["🥇", "🥈", "🥉"];
+  const posClasses = ["gold", "silver", "bronze"];
 
-  el.innerHTML = ordenats.map((nom, i) => {
-    const pts = rankingTotal(nom, _rankingFiltreJoc);
-    const pct = Math.round((pts / maxPts) * 100);
-    const pos = i < 3 ? `<span class="ranking-pos ${posClasses[i]}">${medalles[i]}</span>`
-                       : `<span class="ranking-pos">${i+1}</span>`;
-    return `<div class="ranking-fila" onclick="rankingMostrarDetall('${nom}')">
+  el.innerHTML = ordenats
+    .map((nom, i) => {
+      const pts = rankingTotal(nom, _rankingFiltreJoc);
+      const pct = Math.round((pts / maxPts) * 100);
+      const pos =
+        i < 3
+          ? `<span class="ranking-pos ${posClasses[i]}">${medalles[i]}</span>`
+          : `<span class="ranking-pos">${i + 1}</span>`;
+      return `<div class="ranking-fila" onclick="rankingMostrarDetall('${nom}')">
       ${pos}
       <img class="ranking-avatar" src="${IMGS[nom]}" alt="${nom}">
       <div class="ranking-info">
@@ -243,26 +285,29 @@ function rankingRenderLlista() {
         </div>
       </div>
     </div>`;
-  }).join('');
+    })
+    .join("");
 }
 
 function rankingMostrarDetall(nom) {
-  const el = document.getElementById('ranking-llista');
-  const detall = document.getElementById('ranking-detall');
-  const cos = document.getElementById('ranking-detall-cos');
+  const el = document.getElementById("ranking-llista");
+  const detall = document.getElementById("ranking-detall");
+  const cos = document.getElementById("ranking-detall-cos");
   if (!detall || !_rankingDades) return;
-  el.style.display = 'none';
-  detall.style.display = 'block';
+  el.style.display = "none";
+  detall.style.display = "block";
 
   const d = _rankingDades[nom];
-  const total = d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0);
+  const total =
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku || 0) + (d.cifras || 0);
   const jocs = [
-    { icon:'🌋', nom:'Quiz Açores', key:'quiz' },
-    { icon:'📍', nom:'On és això?', key:'mapa' },
-    { icon:'🔤', nom:'La Paraula',  key:'paraula' },
-    { icon:'🎯', nom:'Bingo',       key:'bingo' },
-    { icon:'🎲', nom:'Trivial',     key:'trivial' },
-    { icon:'🔢', nom:'Sudoku',      key:'sudoku' },
+    { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
+    { icon: "📍", nom: "On és això?", key: "mapa" },
+    { icon: "🔤", nom: "La Paraula", key: "paraula" },
+    { icon: "🎯", nom: "Bingo", key: "bingo" },
+    { icon: "🎲", nom: "Trivial", key: "trivial" },
+    { icon: "🔢", nom: "Sudoku", key: "sudoku" },
+    { icon: "📝", nom: "Cifras y Letras", key: "cifras" },
   ];
 
   cos.innerHTML = `
@@ -273,16 +318,20 @@ function rankingMostrarDetall(nom) {
         <div class="ranking-detall-total">${total} pts totals</div>
       </div>
     </div>
-    ${jocs.map(j => `
+    ${jocs
+      .map(
+        (j) => `
       <div class="ranking-joc-fila">
         <span class="ranking-joc-nom">${j.icon} ${j.nom}</span>
         <span class="ranking-joc-pts">${d[j.key] || 0} pts</span>
-      </div>`).join('')}`;
+      </div>`,
+      )
+      .join("")}`;
 }
 
 function rankingTancarDetall() {
-  document.getElementById('ranking-detall').style.display = 'none';
-  document.getElementById('ranking-llista').style.display = 'block';
+  document.getElementById("ranking-detall").style.display = "none";
+  document.getElementById("ranking-llista").style.display = "block";
 }
 
 function seleccionarJugador(nom) {
@@ -310,16 +359,20 @@ function jocsActualitzarJugadorActiu() {
 }
 
 function jocsRenderModalIdentificacio() {
-  const llista = document.getElementById('modal-id-jugadors');
+  const llista = document.getElementById("modal-id-jugadors");
   if (!llista) return;
   const estilBtn = `display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid var(--border);
              border-radius:10px;padding:.5rem .75rem;cursor:pointer;width:100%;transition:all .15s;
              font-family:'DM Sans',sans-serif;color:var(--text);text-align:left`;
-  llista.innerHTML = JUGADORS_VALIDS.map(nom => `
+  llista.innerHTML =
+    JUGADORS_VALIDS.map(
+      (nom) => `
     <button onclick="jocsIdentificar('${nom}')" style="${estilBtn}">
       <img src="${IMGS[nom]}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
       <span style="font-weight:600">${nom}</span>
-    </button>`).join('') + `
+    </button>`,
+    ).join("") +
+    `
   <div style="height:1px;background:rgba(106,171,122,.2);margin:.35rem .25rem"></div>
   <button onclick="jocsDesidentificar()" style="${estilBtn};opacity:.8">
     <img src="img/avatars/convidat.png" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">
@@ -330,28 +383,31 @@ function jocsRenderModalIdentificacio() {
 
 function jocsIdentificar(nom) {
   jugadorActiu = nom;
-  localStorage.setItem('app_jugador', nom);
-  localStorage.setItem('trivial_jugador_actiu', nom);
-  if (typeof appSeleccionarJugador === 'function') appSeleccionarJugador(nom);
-  document.getElementById('modal-identificacio')?.classList.remove('visible');
-  document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.remove('disabled-id'));
+  localStorage.setItem("app_jugador", nom);
+  localStorage.setItem("trivial_jugador_actiu", nom);
+  if (typeof appSeleccionarJugador === "function") appSeleccionarJugador(nom);
+  document.getElementById("modal-identificacio")?.classList.remove("visible");
+  document
+    .querySelectorAll(".joc-selector-btn")
+    .forEach((b) => b.classList.remove("disabled-id"));
   entrarJoc();
 }
 
 function jocsDesidentificar() {
   jugadorActiu = null;
-  localStorage.removeItem('app_jugador');
-  localStorage.removeItem('trivial_jugador_actiu');
-  if (typeof appDesidentificar === 'function') appDesidentificar();
-  document.getElementById('modal-identificacio')?.classList.remove('visible');
-  document.querySelector('.joc-selector-jugador').style.display = 'none';
-  document.querySelectorAll('.joc-selector-btn').forEach(b => b.classList.add('disabled-id'));
+  localStorage.removeItem("app_jugador");
+  localStorage.removeItem("trivial_jugador_actiu");
+  if (typeof appDesidentificar === "function") appDesidentificar();
+  document.getElementById("modal-identificacio")?.classList.remove("visible");
+  document.querySelector(".joc-selector-jugador").style.display = "none";
+  document
+    .querySelectorAll(".joc-selector-btn")
+    .forEach((b) => b.classList.add("disabled-id"));
 }
 
 function jocsModalIdentificacioTancar() {
-  document.getElementById('modal-identificacio')?.classList.remove('visible');
+  document.getElementById("modal-identificacio")?.classList.remove("visible");
 }
-
 
 function seleccionarModeJoc(mode) {
   if (mode === "quiz") {
@@ -371,6 +427,10 @@ function seleccionarModeJoc(mode) {
     iniciarTrivial();
   } else if (mode === "sudoku") {
     iniciarSudoku();
+  } else if (mode === "cifras") {
+    iniciarCifrasLetras();
+  }
+    iniciarCifrasLetras();
   }
 }
 
@@ -694,7 +754,6 @@ function llençaConfetti() {
 // ── UTILS ─────────────────────────────────────────────────────
 function mostraScreen(nom) {
   const totes = [
-    
     "joc-selector",
     "start",
     "quiz",
@@ -720,6 +779,14 @@ function mostraScreen(nom) {
     "sudoku-selector",
     "sudoku-joc",
     "sudoku-resultat",
+    "cl-inici",
+    "cl-lletres",
+    "cl-xifres",
+    "cl-resultat",
+    "cl-inici",
+    "cl-lletres",
+    "cl-xifres",
+    "cl-resultat",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

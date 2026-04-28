@@ -1947,3 +1947,484 @@
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   CIFRAS Y LETRAS — Estils (afegir a jocs.css)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── COMÚ ────────────────────────────────────────────────────── */
+.cl-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cl-header-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cl-num-prova {
+  font-size: .82rem;
+  color: var(--text2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.cl-timer {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--verd2);
+  min-width: 42px;
+  text-align: right;
+}
+
+.cl-timer.urgent {
+  color: var(--error);
+  animation: cl-pulse .5s ease-in-out infinite alternate;
+}
+
+@keyframes cl-pulse { from { opacity: 1; } to { opacity: .5; } }
+
+.cl-maxpts {
+  font-size: .78rem;
+  color: var(--text2);
+}
+
+.cl-btn-primari {
+  background: var(--verd2);
+  color: var(--bg);
+  border: none;
+  border-radius: 12px;
+  padding: .85rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .15s;
+  align-self: center;
+}
+
+.cl-btn-primari:hover { opacity: .88; transform: translateY(-2px); }
+
+/* ── PANTALLA INICI ──────────────────────────────────────────── */
+#screen-cl-inici {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cl-inici-info {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cl-inici-bloc {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem 1.75rem;
+  text-align: center;
+  min-width: 180px;
+}
+
+.cl-inici-bloc-icon { font-size: 2.5rem; margin-bottom: .35rem; }
+.cl-inici-bloc-nom  { font-size: 1.1rem; font-weight: 700; margin-bottom: .25rem; }
+.cl-inici-bloc-desc { font-size: .82rem; color: var(--text2); }
+
+.cl-inici-acabat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+}
+
+.cl-inici-emoji  { font-size: 4rem; }
+.cl-inici-titol  { font-size: 1.5rem; font-weight: 700; }
+.cl-inici-pts    { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--verd2); }
+.cl-inici-sub    { font-size: .9rem; color: var(--text2); }
+
+.cl-progres {
+  width: 100%;
+  max-width: 400px;
+  height: 6px;
+  background: rgba(255,255,255,.07);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: .25rem 0 0;
+}
+
+.cl-progres-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--verd), var(--verd2));
+  border-radius: 999px;
+  transition: width .4s ease;
+}
+
+.cl-progres-txt {
+  font-size: .8rem;
+  color: var(--text2);
+  text-align: center;
+}
+
+/* ── PANTALLA LLETRES ────────────────────────────────────────── */
+.cl-lletres-area {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cl-lletres-grup {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.cl-lletres-label {
+  font-size: .72rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+}
+
+.cl-lletres-disp, .cl-resposta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  min-height: 54px;
+}
+
+.cl-lletra {
+  width: 52px;
+  height: 52px;
+  background: var(--bg);
+  border: 2px solid var(--verd2);
+  border-radius: 10px;
+  color: var(--verd2);
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  transition: all .12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.cl-lletra:hover:not(:disabled) {
+  background: rgba(106,171,122,.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+
+.cl-lletra.usada {
+  opacity: .25;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cl-lletra-resp {
+  width: 52px;
+  height: 52px;
+  background: rgba(106,171,122,.15);
+  border: 2px solid var(--verd2);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  transition: all .12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.cl-lletra-resp:hover {
+  background: rgba(224,85,85,.15);
+  border-color: var(--error);
+  color: var(--error);
+  transform: translateY(-2px);
+}
+
+.cl-lletres-accions {
+  display: flex;
+  gap: .75rem;
+  justify-content: flex-end;
+}
+
+.cl-btn-secundari {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .6rem 1.2rem;
+  color: var(--text2);
+  font-size: .88rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.cl-btn-secundari:hover { border-color: var(--text); color: var(--text); }
+
+.cl-btn-enviar {
+  background: var(--verd2);
+  border: none;
+  border-radius: 10px;
+  padding: .6rem 1.5rem;
+  color: var(--bg);
+  font-size: .95rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.cl-btn-enviar:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.cl-btn-enviar:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ── PANTALLA XIFRES ─────────────────────────────────────────── */
+.cl-xifres-objectiu-wrap {
+  text-align: center;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: .75rem 1.5rem;
+}
+
+.cl-xifres-objectiu-label {
+  font-size: .72rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.cl-xifres-objectiu-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.cl-nums-disp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+}
+
+.cl-num-btn {
+  min-width: 60px;
+  height: 52px;
+  padding: 0 .75rem;
+  background: var(--bg2);
+  border: 2px solid var(--verd2);
+  border-radius: 10px;
+  color: var(--verd2);
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.cl-num-btn:hover:not(:disabled) {
+  background: rgba(106,171,122,.15);
+  transform: translateY(-2px);
+}
+
+.cl-num-btn.usada {
+  opacity: .25;
+  cursor: not-allowed;
+}
+
+/* Operadors */
+.cl-ops-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: center;
+}
+
+.cl-op-btn {
+  width: 52px;
+  height: 52px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+}
+
+.cl-op-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(240,180,41,.1);
+}
+
+.cl-op-btn.par {
+  font-size: 1.2rem;
+  color: var(--text2);
+  border-color: rgba(155,191,170,.3);
+}
+
+.cl-op-btn.esborrar {
+  border-color: rgba(224,85,85,.4);
+  color: var(--error);
+}
+
+.cl-op-btn.netejar {
+  font-size: .8rem;
+  border-color: rgba(224,85,85,.4);
+  color: var(--error);
+}
+
+/* Pissarra */
+.cl-pissarra-wrap {
+  background: rgba(255,255,255,.03);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.cl-pissarra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  align-items: center;
+  min-height: 40px;
+}
+
+.cl-pissarra-buit {
+  color: var(--text2);
+  font-size: .85rem;
+  font-style: italic;
+}
+
+.cl-token {
+  padding: .25rem .55rem;
+  border-radius: 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.cl-token-num { background: rgba(106,171,122,.2); color: var(--verd2); }
+.cl-token-op  { background: rgba(240,180,41,.15); color: var(--gold); font-size: 1.3rem; }
+.cl-token-par { background: rgba(155,191,170,.1); color: var(--text2); }
+
+.cl-resultat-actual {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--verd2);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.cl-resultat-actual.visible { opacity: 1; }
+
+/* Feedback */
+.cl-feedback-ok   { color: var(--verd2); font-weight: 600; padding: .5rem 0; }
+.cl-feedback-warn { color: var(--gold);  font-weight: 600; padding: .5rem 0; }
+.cl-feedback-error{ color: var(--error); font-weight: 600; padding: .5rem 0; }
+.cl-feedback-hint { color: var(--text2); font-size: .85rem; margin-top: .25rem; }
+.cl-bonus { background: var(--gold); color: #000; border-radius: 4px; padding: .1rem .4rem; font-size: .78rem; margin-left: .35rem; }
+
+/* Xifres accions */
+.cl-xifres-accions {
+  display: flex;
+  gap: .75rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ── PANTALLA RESULTAT ───────────────────────────────────────── */
+#screen-cl-resultat {
+  min-height: 60vh;
+}
+
+.cl-resultat-total {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.cl-resultat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--verd2);
+  line-height: 1;
+}
+
+.cl-resultat-sub {
+  font-size: .9rem;
+  color: var(--text2);
+  margin-top: .25rem;
+}
+
+.cl-taula-detall {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+  margin-bottom: 1.5rem;
+}
+
+.cl-taula-detall th {
+  text-align: left;
+  padding: .5rem .75rem;
+  color: var(--text2);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--border);
+}
+
+.cl-taula-detall td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.cl-pts-ok   { color: var(--verd2); font-weight: 700; }
+.cl-pts-zero { color: var(--text2); }
+
+@media (max-width: 600px) {
+  .cl-wrap { padding: 1rem; }
+  .cl-lletra, .cl-lletra-resp { width: 44px; height: 44px; font-size: 1.2rem; }
+  .cl-num-btn { min-width: 52px; height: 46px; }
+  .cl-op-btn  { width: 46px; height: 46px; }
+}
