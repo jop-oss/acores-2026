@@ -229,31 +229,98 @@ async function sudokuJugar(puzzleId) {
   sudokuRenderJoc();
 }
 
-// ── RENDER TAULER ─────────────────────────────────────────────
+// ── RENDER PANTALLA JOC ───────────────────────────────────────
 function sudokuRenderJoc() {
   if (!sudokuActual) return;
-  const dif  = sudokuActual.dif;
+  const dif   = sudokuActual.dif;
   const estat = sudokuEstatActual;
 
-  const pistesMax    = SUDOKU_MAX_PISTES[dif];
-  const pistesLeft   = pistesMax - estat.pistesUsades;
-  const reintMax     = SUDOKU_MAX_REINTENTS[dif];
-  const reintLeft    = reintMax - estat.reintentsUsats;
-  const penalTot     = estat.pistesUsades * SUDOKU_COST_PISTA[dif]
-                     + estat.reintentsUsats * SUDOKU_COST_REINTENT[dif];
+  const pistesMax  = SUDOKU_MAX_PISTES[dif];
+  const pistesLeft = pistesMax - estat.pistesUsades;
+  const reintMax   = SUDOKU_MAX_REINTENTS[dif];
+  const reintLeft  = reintMax - estat.reintentsUsats;
+  const penalTot   = estat.pistesUsades * SUDOKU_COST_PISTA[dif]
+                   + estat.reintentsUsats * SUDOKU_COST_REINTENT[dif];
   const ptsPrevistos = Math.max(0, SUDOKU_PUNTS[dif] - penalTot);
+  const buidsTotal   = sudokuComptaBuits();
+  const hiHaEditats  = sudokuHiHaEditats();
 
-  document.getElementById('sudoku-joc-titol').textContent =
-    `${SUDOKU_DIF_EMOJI[dif]} Sudoku ${SUDOKU_DIF_LABEL[dif]}`;
-  document.getElementById('sudoku-joc-pts').textContent =
-    `${ptsPrevistos} pts`;
-  document.getElementById('sudoku-btn-pista').textContent =
-    `💡 Pista (${pistesLeft} restants, -${SUDOKU_COST_PISTA[dif]}pts)`;
-  document.getElementById('sudoku-btn-pista').disabled = pistesLeft <= 0;
-  document.getElementById('sudoku-reintents').textContent =
-    `Reintents: ${reintLeft}/${reintMax}`;
+  const joc = document.getElementById('sudoku-joc-cont');
+  if (!joc) return;
+
+  joc.innerHTML = `
+    <div class="sdj-layout">
+
+      <!-- ── Columna esquerra: tauler ── -->
+      <div class="sdj-esquerra">
+        <div class="sdj-info-bar">
+          <div class="sdj-dif">${SUDOKU_DIF_EMOJI[dif]} Sudoku ${SUDOKU_DIF_LABEL[dif]}</div>
+          <div class="sdj-pts-wrap">
+            <span class="sdj-pts-num">${ptsPrevistos}</span>
+            <span class="sdj-pts-label">pts</span>
+          </div>
+          <div class="sdj-reintents">
+            <span class="sdj-reintents-label">Reintents:</span>
+            ${'●'.repeat(reintLeft)}${'○'.repeat(reintMax - reintLeft)}
+          </div>
+        </div>
+        <div class="sdj-tauler" id="sudoku-tauler"></div>
+      </div>
+
+      <!-- ── Columna dreta: controls ── -->
+      <div class="sdj-dreta">
+
+        <!-- Pista + Validar -->
+        <div class="sdj-ctrl-grid">
+          <button class="sdj-btn-pista ${pistesLeft <= 0 ? 'disabled' : ''}"
+            id="sudoku-btn-pista"
+            onclick="sudokuDemanasPista()"
+            ${pistesLeft <= 0 ? 'disabled' : ''}>
+            <span class="sdj-pista-icon">💡</span>
+            <span class="sdj-pista-badge">${pistesLeft}</span>
+          </button>
+          <button class="sdj-btn-validar ${buidsTotal > 0 ? 'disabled' : ''}"
+            id="sudoku-btn-validar"
+            onclick="sudokuValidar()"
+            ${buidsTotal > 0 ? 'disabled' : ''}>
+            ✓ Validar
+          </button>
+        </div>
+
+        <!-- Teclat 3×3 -->
+        <div class="sdj-teclat" id="sudoku-teclat"></div>
+
+        <!-- Esborrar + Reiniciar -->
+        <div class="sdj-ctrl-grid">
+          <button class="sdj-btn-esborrar" onclick="sudokuIntroduirNum(0)">⌫</button>
+          <button class="sdj-btn-reiniciar ${!hiHaEditats ? 'disabled' : ''}"
+            id="sudoku-btn-reiniciar"
+            onclick="sudokuDemanarReinici()"
+            ${!hiHaEditats ? 'disabled' : ''}>↺</button>
+        </div>
+
+      </div>
+    </div>`;
 
   sudokuRenderTauler();
+  sudokuRenderTeclat();
+}
+
+function sudokuComptaBuits() {
+  if (!sudokuGrid) return 0;
+  let n = 0;
+  for (let r = 0; r < 9; r++)
+    for (let c = 0; c < 9; c++)
+      if (sudokuGrid[r][c] === 0) n++;
+  return n;
+}
+
+function sudokuHiHaEditats() {
+  if (!sudokuGrid || !sudokuActual) return false;
+  for (let r = 0; r < 9; r++)
+    for (let c = 0; c < 9; c++)
+      if (sudokuActual.puzzle[r][c] === 0 && sudokuGrid[r][c] !== 0) return true;
+  return false;
 }
 
 function sudokuRenderTauler() {
@@ -263,11 +330,11 @@ function sudokuRenderTauler() {
   tauler.innerHTML = '';
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
-      const val     = sudokuGrid[r][c];
+      const val      = sudokuGrid[r][c];
       const original = sudokuActual.puzzle[r][c] !== 0;
-      const selec   = sudokuCellaSelec && sudokuCellaSelec.row === r && sudokuCellaSelec.col === c;
-      const mateixaFila = sudokuCellaSelec && sudokuCellaSelec.row === r;
-      const mateixaCol  = sudokuCellaSelec && sudokuCellaSelec.col === c;
+      const selec    = sudokuCellaSelec && sudokuCellaSelec.row === r && sudokuCellaSelec.col === c;
+      const mateixaFila  = sudokuCellaSelec && sudokuCellaSelec.row === r;
+      const mateixaCol   = sudokuCellaSelec && sudokuCellaSelec.col === c;
       const mateixaCaixa = sudokuCellaSelec &&
         Math.floor(sudokuCellaSelec.row / 3) === Math.floor(r / 3) &&
         Math.floor(sudokuCellaSelec.col / 3) === Math.floor(c / 3);
@@ -276,35 +343,76 @@ function sudokuRenderTauler() {
 
       const cls = [
         'sudoku-cel',
-        original   ? 'original' : 'editable',
-        selec      ? 'seleccionada' : '',
+        original  ? 'original' : 'editable',
+        selec     ? 'seleccionada' : '',
         (mateixaFila || mateixaCol || mateixaCaixa) && !selec ? 'relacionada' : '',
         mateixNum && !selec ? 'mateix-num' : '',
-        c % 3 === 2 && c !== 8 ? 'border-r' : '',
-        r % 3 === 2 && r !== 8 ? 'border-b' : '',
+        c === 2 || c === 5 ? 'border-r' : '',
+        r === 2 || r === 5 ? 'border-b' : '',
       ].filter(Boolean).join(' ');
 
       const cel = document.createElement('div');
       cel.className = cls;
       cel.textContent = val || '';
-      if (!original) {
-        cel.addEventListener('click', () => sudokuSeleccionarCella(r, c));
-      }
+      if (!original) cel.addEventListener('click', () => sudokuSeleccionarCella(r, c));
       tauler.appendChild(cel);
     }
   }
-
-  // Teclat numèric
-  sudokuRenderTeclat();
+  sudokuActualitzarBotonsJoc();
 }
 
 function sudokuRenderTeclat() {
   const teclat = document.getElementById('sudoku-teclat');
   if (!teclat) return;
-  teclat.innerHTML = [1,2,3,4,5,6,7,8,9].map(n =>
-    `<button class="sudoku-tecla" onclick="sudokuIntroduirNum(${n})">${n}</button>`
-  ).join('') +
-  `<button class="sudoku-tecla esborrar" onclick="sudokuIntroduirNum(0)">✕</button>`;
+  // Ordre: 7,8,9 / 4,5,6 / 1,2,3 (com calculadora)
+  teclat.innerHTML = [7,8,9,4,5,6,1,2,3].map(n =>
+    `<button class="sdj-tecla" onclick="sudokuIntroduirNum(${n})">${n}</button>`
+  ).join('');
+}
+
+function sudokuActualitzarBotonsJoc() {
+  const buits      = sudokuComptaBuits();
+  const hiHaEditats = sudokuHiHaEditats();
+  const btnValidar  = document.getElementById('sudoku-btn-validar');
+  const btnReiniciar = document.getElementById('sudoku-btn-reiniciar');
+  if (btnValidar) {
+    btnValidar.disabled = buits > 0;
+    btnValidar.classList.toggle('disabled', buits > 0);
+  }
+  if (btnReiniciar) {
+    btnReiniciar.disabled = !hiHaEditats;
+    btnReiniciar.classList.toggle('disabled', !hiHaEditats);
+  }
+}
+
+function sudokuDemanarReinici() {
+  if (!sudokuHiHaEditats()) return;
+  const modal = document.getElementById('sudoku-modal');
+  modal.innerHTML = `
+    <div class="sudoku-modal-box">
+      <div class="sudoku-modal-icon">↺</div>
+      <div class="sudoku-modal-titol">Reiniciar sudoku?</div>
+      <div class="sudoku-modal-text">
+        S'esborraran tots els números que has introduït.<br>
+        Les pistes usades i els reintents <strong>no es recuperen</strong>.
+      </div>
+      <div class="sudoku-modal-btns">
+        <button class="sudoku-btn-reintent" onclick="sudokuConfirmarReinici()">Sí, reiniciar</button>
+        <button class="sudoku-btn-tornar" onclick="document.getElementById('sudoku-modal').style.display='none'">Cancel·lar</button>
+      </div>
+    </div>`;
+  modal.style.display = 'flex';
+}
+
+function sudokuConfirmarReinici() {
+  document.getElementById('sudoku-modal').style.display = 'none';
+  // Esborra només les caselles editables
+  for (let r = 0; r < 9; r++)
+    for (let c = 0; c < 9; c++)
+      if (sudokuActual.puzzle[r][c] === 0) sudokuGrid[r][c] = 0;
+  sudokuCellaSelec = null;
+  sudokuGuardarProgres();
+  sudokuRenderTauler();
 }
 
 function sudokuSeleccionarCella(row, col) {
@@ -507,8 +615,16 @@ function sudokuMostraResultat(correcte, pts, fallit = false) {
   }
 }
 
+function sudokuSortir() {
+  // Sempre guarda l'estat actual abans de sortir
+  sudokuGuardarProgres().finally(() => {
+    sudokuTornarSelector();
+  });
+}
+
 function sudokuTornarSelector() {
-  document.getElementById('sudoku-modal').style.display = 'none';
+  const modal = document.getElementById('sudoku-modal');
+  if (modal) modal.style.display = 'none';
   sudokuActual      = null;
   sudokuEstatActual = null;
   sudokuGrid        = null;

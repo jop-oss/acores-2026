@@ -798,20 +798,12 @@
   </div>
 
   <div id="screen-sudoku-joc" style="display:none">
-    <div class="sudoku-joc-header">
-      <div class="sudoku-joc-titol-wrap">
-        <span id="sudoku-joc-titol"></span>
-        <span id="sudoku-reintents"></span>
+    <div class="sdj-wrap">
+      <div class="sdj-topbar">
+        <button class="sdj-btn-sortir" onclick="sudokuSortir()">✕</button>
       </div>
-      <span id="sudoku-joc-pts"></span>
+      <div id="sudoku-joc-cont"></div>
     </div>
-    <div id="sudoku-tauler"></div>
-    <div id="sudoku-teclat"></div>
-    <div class="sudoku-accions">
-      <button id="sudoku-btn-pista" onclick="sudokuDemanasPista()">💡 Pista</button>
-      <button class="sudoku-btn-validar" onclick="sudokuValidar()">✓ Validar</button>
-    </div>
-    <button class="sudoku-btn-sortir" onclick="sudokuTornarSelector()">← Sortir sense guardar</button>
   </div>
 
   <div id="screen-sudoku-resultat" style="display:none">
