@@ -820,6 +820,13 @@
 
   <!-- PANTALLES CIFRAS Y LETRAS -->
 
+  <!-- Intro entre proves -->
+  <div id="screen-cl-intro" style="display:none">
+    <div class="cl-wrap">
+      <div id="cl-intro-cont"></div>
+    </div>
+  </div>
+
   <!-- Inici -->
   <div id="screen-cl-inici" style="display:none">
     <div class="cl-wrap">
@@ -851,7 +858,7 @@
         </div>
         <div id="cl-lletres-feedback"></div>
         <div class="cl-lletres-accions">
-          <button class="cl-btn-secundari" onclick="clRenderLletres(clLletresDisp.map(l=>({...l,usada:false})))">Esborrar tot</button>
+          <button class="cl-btn-secundari" onclick="clLletresOrdre=[];clRenderLletres(clLletresDisp.map(l=>({...l,usada:false})))">Esborrar tot</button>
           <button class="cl-btn-enviar" id="cl-btn-enviar-lletres" onclick="clEnviarLletres()">Enviar →</button>
         </div>
       </div>
@@ -879,7 +886,7 @@
         <button class="cl-op-btn" onclick="clUsarOp('÷')">÷</button>
         <button class="cl-op-btn par" onclick="clUsarPar('(')">(</button>
         <button class="cl-op-btn par" onclick="clUsarPar(')')">)</button>
-        <button class="cl-op-btn" onclick="clUsarOp('=')">=</button>
+        <button class="cl-op-btn" onclick="clUsarIgual()">=</button>
         <button class="cl-op-btn esborrar" onclick="clEsborrarUltim()">⌫</button>
         <button class="cl-op-btn netejar" onclick="clNetejaPissarra()">✕</button>
       </div>

@@ -777,6 +777,7 @@ function mostraScreen(nom) {
     "sudoku-selector",
     "sudoku-joc",
     "sudoku-resultat",
+    "cl-intro",
     "cl-inici",
     "cl-lletres",
     "cl-xifres",

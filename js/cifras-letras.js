@@ -7,7 +7,7 @@ const CL_NUMS_GRANS  = [25, 50, 75, 100];
 const CL_NUMS_PETITS = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10];
 const CL_N_GRANS     = 2;
 const CL_N_PETITS    = 4;
-const CL_TEMPS_SEG   = 60;
+const CL_TEMPS_SEG   = 120;
 const CL_N_LLETRES   = 5;   // proves de lletres
 const CL_N_XIFRES    = 10;  // proves de xifres
 
@@ -41,6 +41,11 @@ function iniciarCifrasLetras() {
   const raw  = localStorage.getItem(clau);
   if (raw) {
     clPartida = JSON.parse(raw);
+    // Si la partida guardada és antiga (sense ordre), regenera
+    if (!clPartida.ordre) {
+      clPartida = clGenerarPartida();
+      clGuardarPartida();
+    }
   } else {
     clPartida = clGenerarPartida();
     clGuardarPartida();
@@ -51,12 +56,22 @@ function iniciarCifrasLetras() {
 
 // ── GENERAR PARTIDA ───────────────────────────────────────────
 function clGenerarPartida() {
-  // Assigna 5 combinacions de lletres aleatòries (sense repetir)
+  // Assigna 5 combinacions de lletres aleatòries (sense repetir, de les 30)
   const idxLletres = clBarrejar([...Array(CL_LLETRES.length).keys()])
     .slice(0, CL_N_LLETRES);
 
   // Genera 10 proves de xifres
   const provesXifres = Array.from({ length: CL_N_XIFRES }, () => clGenerarProvaXifres());
+
+  // Ordre intercalat: L X X L X X L X X L X X L X X
+  // 5 lletres + 10 xifres = 15 proves
+  // Seqüència: 1L 2X 1L 2X 1L 2X 1L 2X 1L 2X
+  const ordre = [];
+  for (let i = 0; i < CL_N_LLETRES; i++) {
+    ordre.push({ tipus: 'lletres', idx: i });
+    ordre.push({ tipus: 'xifres', idx: i * 2 });
+    ordre.push({ tipus: 'xifres', idx: i * 2 + 1 });
+  }
 
   return {
     provesLletres: idxLletres.map(i => ({
@@ -66,9 +81,10 @@ function clGenerarPartida() {
       paraules: CL_LLETRES[i].paraules,
     })),
     provesXifres,
-    respostes: [],   // { tipus, prova, resposta, pts }
+    ordre,       // seqüència de les 15 proves
+    respostes: [],
     punts: 0,
-    provaActual: 0,  // 0-14 (0-4 lletres, 5-14 xifres)
+    provaActual: 0,  // 0-14
     acabada: false,
   };
 }
@@ -197,11 +213,42 @@ function clSeguent() {
     return;
   }
 
-  if (idx < CL_N_LLETRES) {
-    clIniciarProvaLletres(idx);
+  const prova = clPartida.ordre[idx];
+  clMostraIntro(prova, idx);
+}
+
+function clMostraIntro(prova, idx) {
+  const total = CL_N_LLETRES + CL_N_XIFRES;
+  const tipusLabel = prova.tipus === 'lletres' ? '🔤 Lletres' : '🔢 Xifres';
+  const tipusDesc  = prova.tipus === 'lletres'
+    ? '8 lletres · forma la paraula més llarga'
+    : '6 números · arriba al número objectiu';
+
+  mostraScreen('cl-intro');
+  const cont = document.getElementById('cl-intro-cont');
+  if (!cont) return;
+
+  cont.innerHTML = `
+    <button class="cl-btn-tancar" onclick="clTancar()">✕</button>
+    <div class="cl-intro-num">Prova ${idx + 1} de ${total}</div>
+    <div class="cl-intro-tipus">${tipusLabel}</div>
+    <div class="cl-intro-desc">${tipusDesc}</div>
+    <button class="cl-btn-primari" onclick="clIniciarProva()">Començar</button>`;
+}
+
+function clIniciarProva() {
+  const idx   = clPartida.provaActual;
+  const prova = clPartida.ordre[idx];
+  if (prova.tipus === 'lletres') {
+    clIniciarProvaLletres(prova.idx);
   } else {
-    clIniciarProvaXifres(idx - CL_N_LLETRES);
+    clIniciarProvaXifres(prova.idx);
   }
+}
+
+function clTancar() {
+  clGuardarPartida();
+  mostraScreen('joc-selector');
 }
 
 // ── PROVA DE LLETRES ──────────────────────────────────────────
@@ -209,13 +256,17 @@ function clIniciarProvaLletres(idx) {
   const prova = clPartida.provesLletres[idx];
   mostraScreen('cl-lletres');
 
+  const total = CL_N_LLETRES + CL_N_XIFRES;
+  const provaActual = clPartida.provaActual;
   document.getElementById('cl-lletres-num').textContent =
-    `Prova ${idx + 1} de ${CL_N_LLETRES}`;
+    `Prova ${provaActual + 1} de ${total} · Lletres`;
   document.getElementById('cl-lletres-maxpts').textContent =
     `Màx: ${prova.maxLen * CL_PTS_LLETRA + CL_PTS_BONUS} pts`;
 
-  // Renderitza lletres disponibles
-  clRenderLletres(prova.lletres.map((l, i) => ({ lletra: l, id: i, usada: false })));
+  // Barreja les lletres per no revelar paraules visibles
+  const lletresBarrejades = clBarrejar([...prova.lletres]);
+  clLletresOrdre = [];
+  clRenderLletres(lletresBarrejades.map((l, i) => ({ lletra: l, id: i, usada: false })));
   document.getElementById('cl-resposta').innerHTML = '';
   document.getElementById('cl-lletres-feedback').innerHTML = '';
   document.getElementById('cl-btn-enviar-lletres').disabled = true;
@@ -223,7 +274,8 @@ function clIniciarProvaLletres(idx) {
   clIniciarTimer('cl-lletres-timer', () => clEnviarLletres(true));
 }
 
-let clLletresDisp = [];
+let clLletresDisp  = [];
+let clLletresOrdre = [];  // IDs en ordre d'inserció
 
 function clRenderLletres(lletres) {
   clLletresDisp = lletres;
@@ -235,20 +287,22 @@ function clRenderLletres(lletres) {
       ${l.lletra}
     </button>`).join('');
 
+  // Resposta en ordre d'inserció
   const resposta = document.getElementById('cl-resposta');
-  const usades = lletres.filter(l => l.usada).map(l => l.lletra);
-  resposta.innerHTML = usades.map((l, i) => `
-    <button class="cl-lletra-resp" onclick="clRetornarLletra(${lletres.filter(l=>l.usada)[i].id})">
-      ${l}
-    </button>`).join('');
+  resposta.innerHTML = clLletresOrdre
+    .map(id => {
+      const l = lletres.find(l => l.id === id);
+      return l ? `<button class="cl-lletra-resp" onclick="clRetornarLletra(${l.id})">${l.lletra}</button>` : '';
+    }).join('');
 
-  document.getElementById('cl-btn-enviar-lletres').disabled = usades.length === 0;
+  document.getElementById('cl-btn-enviar-lletres').disabled = clLletresOrdre.length === 0;
 }
 
 function clUsarLletra(id) {
   const l = clLletresDisp.find(l => l.id === id);
   if (!l || l.usada) return;
   l.usada = true;
+  clLletresOrdre.push(id);
   clRenderLletres(clLletresDisp);
 }
 
@@ -256,14 +310,16 @@ function clRetornarLletra(id) {
   const l = clLletresDisp.find(l => l.id === id);
   if (!l) return;
   l.usada = false;
+  clLletresOrdre = clLletresOrdre.filter(i => i !== id);
   clRenderLletres(clLletresDisp);
 }
 
 function clEnviarLletres(timeout = false) {
   clAturarTimer();
-  const idx = clPartida.provaActual;
-  const prova = clPartida.provesLletres[idx];
-  const paraula = clLletresDisp.filter(l => l.usada).map(l => l.lletra).join('');
+  const provaActualIdx = clPartida.provaActual;
+  const provaOrdre = clPartida.ordre[provaActualIdx];
+  const prova = clPartida.provesLletres[provaOrdre.idx];
+  const paraula = clLletresOrdre.map(id => clLletresDisp.find(l => l.id === id)?.lletra || '').join('');
 
   let pts = 0;
   let feedback = '';
@@ -295,7 +351,7 @@ function clEnviarLletres(timeout = false) {
   document.getElementById('cl-lletres-feedback').innerHTML = feedback;
   document.getElementById('cl-btn-enviar-lletres').disabled = true;
 
-  clPartida.respostes.push({ tipus: 'lletres', prova: idx, resposta: paraula, pts });
+  clPartida.respostes.push({ tipus: 'lletres', provaIdx: provaOrdre.idx, resposta: paraula, pts });
   clPartida.punts += pts;
   clPartida.provaActual++;
   clGuardarPartida();
@@ -306,18 +362,19 @@ function clEnviarLletres(timeout = false) {
 // ── PROVA DE XIFRES ───────────────────────────────────────────
 function clIniciarProvaXifres(idx) {
   const prova = clPartida.provesXifres[idx];
-  const provaGlobal = idx + CL_N_LLETRES;
+  const total = CL_N_LLETRES + CL_N_XIFRES;
+  const provaActual = clPartida.provaActual;
 
   mostraScreen('cl-xifres');
 
   document.getElementById('cl-xifres-num').textContent =
-    `Prova ${idx + 1} de ${CL_N_XIFRES}`;
+    `Prova ${provaActual + 1} de ${total} · Xifres`;
   document.getElementById('cl-xifres-objectiu').textContent = prova.objectiu;
 
   clPissarra = [];
   clResultat = null;
   clRenderPissarra();
-  clRenderNumsDisp(prova.nums.map((n, i) => ({ val: n, id: i, usada: false })));
+  clRenderNumsDisp(prova.nums.map((n, i) => ({ val: n, id: i, usada: false, usadaDef: false })));
 
   document.getElementById('cl-xifres-feedback').innerHTML = '';
 
@@ -330,9 +387,9 @@ function clRenderNumsDisp(nums) {
   clNumsDisp = nums;
   const cont = document.getElementById('cl-nums-disp');
   cont.innerHTML = nums.map(n => `
-    <button class="cl-num-btn ${n.usada ? 'usada' : ''}"
+    <button class="cl-num-btn ${(n.usada || n.usadaDef) ? 'usada' : ''}"
       onclick="clUsarNum(${n.id})"
-      ${n.usada ? 'disabled' : ''}>
+      ${(n.usada || n.usadaDef) ? 'disabled' : ''}>
       ${n.val}
     </button>`).join('');
 }
@@ -343,6 +400,27 @@ function clUsarNum(id) {
   n.usada = true;
   clPissarra.push({ tipus: 'num', val: n.val, id: `n${id}` });
   clRenderNumsDisp(clNumsDisp);
+  clRenderPissarra();
+}
+
+function clUsarIgual() {
+  const res = clCalcularExpr(clPissarra);
+  if (res === null) return;
+
+  // Marca com a permanentment usats els números de la pissarra actual
+  clPissarra.forEach(t => {
+    if (t.tipus === 'num' && t.id.startsWith('n')) {
+      const id = parseInt(t.id.replace('n', ''));
+      const n = clNumsDisp.find(n => n.id === id);
+      if (n) n.usadaDef = true;  // bloquejat definitivament
+    }
+  });
+
+  // Allibera NOMÉS els que no estan bloquejats definitivament
+  clNumsDisp.forEach(n => { if (!n.usadaDef) n.usada = false; });
+  clRenderNumsDisp(clNumsDisp);
+
+  clPissarra = [{ tipus: 'num', val: res, id: `calc${Date.now()}` }];
   clRenderPissarra();
 }
 
@@ -373,7 +451,7 @@ function clEsborrarUltim() {
 function clNetejaPissarra() {
   clPissarra = [];
   clResultat = null;
-  clNumsDisp.forEach(n => n.usada = false);
+  clNumsDisp.forEach(n => { n.usada = false; n.usadaDef = false; });
   clRenderNumsDisp(clNumsDisp);
   clRenderPissarra();
 }
@@ -401,37 +479,36 @@ function clRenderPissarra() {
   }
 }
 
-function clCalcular() {
-  if (!clPissarra.length) return null;
+function clCalcularExpr(tokens) {
+  if (!tokens.length) return null;
   try {
-    const expr = clPissarra.map(t => {
+    const expr = tokens.map(t => {
       if (t.tipus === 'op') {
-        if (t.val === '×') return '*';
+        if (t.val === '×' || t.val === 'x') return '*';
         if (t.val === '÷') return '/';
-        if (t.val === '=') return ';'; // separador intermedi
+        if (t.val === '−' || t.val === '–') return '-';  // guió llarg → guió normal
         return t.val;
       }
       return t.val;
     }).join(' ');
-
-    // Agafa l'últim segment (després de l'últim =)
-    const segments = expr.split(';');
-    const ultim = segments[segments.length - 1].trim();
-
-    if (!ultim) return null;
-    // Avalua de forma segura
-    const resultat = Function('"use strict"; return (' + ultim + ')')();
+    const resultat = Function('"use strict"; return (' + expr + ')')();
     if (!Number.isFinite(resultat) || !Number.isInteger(resultat)) return null;
+    if (resultat < 0) return null;  // no permetem resultats negatius
     return resultat;
   } catch {
     return null;
   }
 }
 
+function clCalcular() {
+  return clCalcularExpr(clPissarra);
+}
+
 function clEnviarXifres(timeout = false) {
   clAturarTimer();
-  const idx = clPartida.provaActual - CL_N_LLETRES;
-  const prova = clPartida.provesXifres[idx];
+  const provaActualIdx = clPartida.provaActual;
+  const provaOrdre = clPartida.ordre[provaActualIdx];
+  const prova = clPartida.provesXifres[provaOrdre.idx];
 
   let pts = 0;
   let feedback = '';
@@ -455,7 +532,7 @@ function clEnviarXifres(timeout = false) {
   document.getElementById('cl-xifres-feedback').innerHTML = feedback;
 
   clPartida.respostes.push({
-    tipus: 'xifres', prova: idx,
+    tipus: 'xifres', provaIdx: provaOrdre.idx,
     resposta: clResultat, pts
   });
   clPartida.punts += pts;
@@ -475,29 +552,26 @@ function clFinalitzar() {
   const maxPts = CL_N_LLETRES * (8 * CL_PTS_LLETRA + CL_PTS_BONUS)
                + CL_N_XIFRES  * 100;
 
-  const detallLletres = clPartida.respostes
-    .filter(r => r.tipus === 'lletres')
-    .map((r, i) => {
-      const p = clPartida.provesLletres[i];
+  const detall = clPartida.ordre.map((o, i) => {
+    const r = clPartida.respostes[i] || { pts: 0, resposta: null };
+    if (o.tipus === 'lletres') {
+      const p = clPartida.provesLletres[o.idx];
       return `<tr>
-        <td>Lletres ${i+1}</td>
+        <td>Prova ${i+1} · Lletres</td>
         <td>${p.lletres.join('')}</td>
         <td>${r.resposta || '—'}</td>
         <td class="${r.pts > 0 ? 'cl-pts-ok' : 'cl-pts-zero'}">${r.pts} pts</td>
       </tr>`;
-    }).join('');
-
-  const detallXifres = clPartida.respostes
-    .filter(r => r.tipus === 'xifres')
-    .map((r, i) => {
-      const p = clPartida.provesXifres[i];
+    } else {
+      const p = clPartida.provesXifres[o.idx];
       return `<tr>
-        <td>Xifres ${i+1}</td>
+        <td>Prova ${i+1} · Xifres</td>
         <td>${p.objectiu}</td>
         <td>${r.resposta ?? '—'}</td>
         <td class="${r.pts > 0 ? 'cl-pts-ok' : 'cl-pts-zero'}">${r.pts} pts</td>
       </tr>`;
-    }).join('');
+    }
+  }).join('');
 
   cont.innerHTML = `
     <div class="cl-resultat-total">
@@ -506,7 +580,7 @@ function clFinalitzar() {
     </div>
     <table class="cl-taula-detall">
       <thead><tr><th>Prova</th><th>Dades</th><th>Resposta</th><th>Punts</th></tr></thead>
-      <tbody>${detallLletres}${detallXifres}</tbody>
+      <tbody>${detall}</tbody>
     </table>
     <button class="cl-btn-primari" onclick="mostraScreen('joc-selector')">Tornar als jocs</button>`;
 }
