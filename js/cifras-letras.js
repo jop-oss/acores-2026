@@ -45,7 +45,7 @@ function iniciarCifrasLetras() {
     clPartida = clGenerarPartida();
     clGuardarPartida();
   }
-  mostraScreen('screen-cl-inici');
+  mostraScreen('cl-inici');
   clRenderInici();
 }
 
@@ -89,43 +89,98 @@ function clRenderInici() {
 
   const totalProves = CL_N_LLETRES + CL_N_XIFRES;
   const fetes = clPartida.respostes.length;
-  const pendent = totalProves - fetes;
 
   if (clPartida.acabada) {
     cont.innerHTML = `
-      <div class="cl-inici-acabat">
-        <div class="cl-inici-emoji">🏆</div>
-        <div class="cl-inici-titol">Partida completada!</div>
-        <div class="cl-inici-pts">${clPartida.punts} pts</div>
-        <div class="cl-inici-sub">${fetes} proves completades</div>
+      <div class="cl-inici-layout">
+        <div class="cl-inici-main">
+          <div class="joc-titol-fila" style="align-items:center">
+            <span class="joc-titol-emoji">📝</span>
+            <span class="joc-titol-text">Xifres i Lletres</span>
+          </div>
+          <div class="cl-inici-acabat">
+            <div class="cl-inici-emoji">🏆</div>
+            <div class="cl-inici-titol">Partida completada!</div>
+            <div class="cl-inici-pts">${clPartida.punts} pts</div>
+            <div class="cl-inici-sub">${fetes} proves completades</div>
+          </div>
+        </div>
+        <div class="ranking-wrap">
+          <div class="ranking-title">🏆 Rànquing</div>
+          <div class="ranking-list-home" id="cl-ranking-list"><div class="ranking-loading">Carregant…</div></div>
+        </div>
       </div>`;
+    clRenderRanquingGlobal();
     return;
   }
 
+  const jugadorAvatar = IMGS[jugadorActiu] || '';
   const progres = fetes > 0 ? `
     <div class="cl-progres">
       <div class="cl-progres-bar" style="width:${Math.round(fetes/totalProves*100)}%"></div>
     </div>
-    <div class="cl-progres-txt">${fetes}/${totalProves} proves · ${clPartida.punts} pts</div>
+    <div class="cl-progres-txt">${fetes}/${totalProves} proves</div>
   ` : '';
 
   cont.innerHTML = `
-    <div class="cl-inici-info">
-      <div class="cl-inici-bloc">
-        <div class="cl-inici-bloc-icon">🔤</div>
-        <div class="cl-inici-bloc-nom">Lletres</div>
-        <div class="cl-inici-bloc-desc">${CL_N_LLETRES} proves · 8 lletres · 1 minut</div>
+    <div class="cl-inici-layout">
+      <div class="cl-inici-main">
+        <div class="joc-titol-fila" style="align-items:center">
+          <span class="joc-titol-emoji">📝</span>
+          <span class="joc-titol-text">Xifres i Lletres</span>
+        </div>
+        <div class="cl-inici-jugador">
+          <img src="${jugadorAvatar}" alt="${jugadorActiu}">
+          <div class="cl-inici-jugador-info">
+            <span class="cl-inici-jugador-nom">${jugadorActiu}</span>
+            <span class="cl-inici-jugador-pts">${clPartida.punts} pts</span>
+          </div>
+        </div>
+        <div class="cl-inici-info">
+          <div class="cl-inici-bloc">
+            <div class="cl-inici-bloc-icon">🔤</div>
+            <div class="cl-inici-bloc-nom">Lletres</div>
+            <div class="cl-inici-bloc-desc">${CL_N_LLETRES} proves · 8 lletres · 1 minut</div>
+          </div>
+          <div class="cl-inici-bloc">
+            <div class="cl-inici-bloc-icon">🔢</div>
+            <div class="cl-inici-bloc-nom">Xifres</div>
+            <div class="cl-inici-bloc-desc">${CL_N_XIFRES} proves · 6 números · 1 minut</div>
+          </div>
+        </div>
+        ${progres}
+        <button class="cl-btn-primari" onclick="clComençar()">
+          ${fetes > 0 ? 'Continuar' : 'Començar'}
+        </button>
       </div>
-      <div class="cl-inici-bloc">
-        <div class="cl-inici-bloc-icon">🔢</div>
-        <div class="cl-inici-bloc-nom">Xifres</div>
-        <div class="cl-inici-bloc-desc">${CL_N_XIFRES} proves · 6 números · 1 minut</div>
+      <div class="ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing</div>
+        <div class="ranking-list-home" id="cl-ranking-list"><div class="ranking-loading">Carregant…</div></div>
       </div>
-    </div>
-    ${progres}
-    <button class="cl-btn-primari" onclick="clComençar()">
-      ${fetes > 0 ? `Continuar (${pendent} proves restants)` : 'Començar'}
-    </button>`;
+    </div>`;
+
+  clRenderRanquingGlobal();
+}
+
+function clRenderRanquingGlobal() {
+  const el = document.getElementById('cl-ranking-list');
+  if (!el) return;
+  const pts = clGetPuntsGlobals();
+  const llista = JUGADORS_VALIDS
+    .map(nom => ({ nom, punts: pts[nom] || 0 }))
+    .sort((a, b) => b.punts - a.punts);
+  const maxPts = llista[0]?.punts || 1;
+  const posEmoji = ['🥇', '🥈', '🥉'];
+  el.innerHTML = llista.map((r, i) => `
+    <div class="ranking-item ${r.nom === jugadorActiu ? 'actiu' : ''}">
+      <div class="ranking-pos ${i < 3 ? 'p'+(i+1) : 'other'}">${i < 3 ? posEmoji[i] : i+1}</div>
+      <img class="rank-avatar" src="${IMGS[r.nom] || ''}" alt="${r.nom}">
+      <div class="rank-info">
+        <div class="rank-nom">${r.nom}</div>
+        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts/maxPts)*100)}%"></div></div>
+      </div>
+      <div class="rank-punts">${r.punts}</div>
+    </div>`).join('');
 }
 
 function clComençar() {
@@ -152,7 +207,7 @@ function clSeguent() {
 // ── PROVA DE LLETRES ──────────────────────────────────────────
 function clIniciarProvaLletres(idx) {
   const prova = clPartida.provesLletres[idx];
-  mostraScreen('screen-cl-lletres');
+  mostraScreen('cl-lletres');
 
   document.getElementById('cl-lletres-num').textContent =
     `Prova ${idx + 1} de ${CL_N_LLETRES}`;
@@ -253,7 +308,7 @@ function clIniciarProvaXifres(idx) {
   const prova = clPartida.provesXifres[idx];
   const provaGlobal = idx + CL_N_LLETRES;
 
-  mostraScreen('screen-cl-xifres');
+  mostraScreen('cl-xifres');
 
   document.getElementById('cl-xifres-num').textContent =
     `Prova ${idx + 1} de ${CL_N_XIFRES}`;
@@ -414,7 +469,7 @@ function clEnviarXifres(timeout = false) {
 function clFinalitzar() {
   clPartida.acabada = true;
   clGuardarPartida();
-  mostraScreen('screen-cl-resultat');
+  mostraScreen('cl-resultat');
 
   const cont = document.getElementById('cl-resultat-cont');
   const maxPts = CL_N_LLETRES * (8 * CL_PTS_LLETRA + CL_PTS_BONUS)

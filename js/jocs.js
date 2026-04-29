@@ -122,7 +122,7 @@ function renderJugadorsGrid() {
           JUGADORS_VALIDS.forEach((nom) => {
             ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsSudoku[nom] || 0);
           });
-          // Cifras y Letras (localStorage)
+          // Xifres i Lletres (localStorage)
           const ptsCifras = typeof clGetPuntsGlobals === 'function' ? clGetPuntsGlobals() : {};
           JUGADORS_VALIDS.forEach((nom) => {
             ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsCifras[nom] || 0);
@@ -216,7 +216,7 @@ async function rankingCarregar() {
     });
   } catch (e) {}
 
-  // Cifras y Letras (localStorage)
+  // Xifres i Lletres (localStorage)
   if (typeof clGetPuntsGlobals === 'function') {
     const ptsCifras = clGetPuntsGlobals();
     JUGADORS_VALIDS.forEach((nom) => {
@@ -307,7 +307,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🎯", nom: "Bingo", key: "bingo" },
     { icon: "🎲", nom: "Trivial", key: "trivial" },
     { icon: "🔢", nom: "Sudoku", key: "sudoku" },
-    { icon: "📝", nom: "Cifras y Letras", key: "cifras" },
+    { icon: "📝", nom: "Xifres i Lletres", key: "cifras" },
   ];
 
   cos.innerHTML = `
@@ -428,8 +428,6 @@ function seleccionarModeJoc(mode) {
   } else if (mode === "sudoku") {
     iniciarSudoku();
   } else if (mode === "cifras") {
-    iniciarCifrasLetras();
-  }
     iniciarCifrasLetras();
   }
 }
@@ -779,10 +777,6 @@ function mostraScreen(nom) {
     "sudoku-selector",
     "sudoku-joc",
     "sudoku-resultat",
-    "cl-inici",
-    "cl-lletres",
-    "cl-xifres",
-    "cl-resultat",
     "cl-inici",
     "cl-lletres",
     "cl-xifres",
