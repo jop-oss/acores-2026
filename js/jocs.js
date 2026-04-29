@@ -122,11 +122,6 @@ function renderJugadorsGrid() {
           JUGADORS_VALIDS.forEach((nom) => {
             ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsSudoku[nom] || 0);
           });
-          // Xifres i Lletres (localStorage)
-          const ptsCifras = typeof clGetPuntsGlobals === 'function' ? clGetPuntsGlobals() : {};
-          JUGADORS_VALIDS.forEach((nom) => {
-            ptsFinals[nom] = (ptsFinals[nom] || 0) + (ptsCifras[nom] || 0);
-          });
           renderGrid(ptsFinals);
         })
         .catch(() => renderGrid(ptsFinals));
@@ -197,6 +192,7 @@ async function rankingCarregar() {
       trivial: 0,
       sudoku: 0,
       cifras: 0,
+      penjat: 0,
     };
   });
 
@@ -216,12 +212,16 @@ async function rankingCarregar() {
     });
   } catch (e) {}
 
-  // Xifres i Lletres (localStorage)
+  // Cifras y Lletres (localStorage)
   if (typeof clGetPuntsGlobals === 'function') {
     const ptsCifras = clGetPuntsGlobals();
-    JUGADORS_VALIDS.forEach((nom) => {
-      dades[nom].cifras = ptsCifras[nom] || 0;
-    });
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].cifras = ptsCifras[nom] || 0; });
+  }
+
+  // El Penjat (localStorage)
+  if (typeof pjGetPuntsGlobals === 'function') {
+    const ptsPenjat = pjGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].penjat = ptsPenjat[nom] || 0; });
   }
 
   _rankingDades = dades;
@@ -232,7 +232,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku || 0) + (d.cifras || 0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0);
   return d[filtre] || 0;
 }
 
@@ -299,7 +299,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku || 0) + (d.cifras || 0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -308,6 +308,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🎲", nom: "Trivial", key: "trivial" },
     { icon: "🔢", nom: "Sudoku", key: "sudoku" },
     { icon: "📝", nom: "Xifres i Lletres", key: "cifras" },
+    { icon: "🪢", nom: "El Penjat", key: "penjat" },
   ];
 
   cos.innerHTML = `
@@ -429,6 +430,8 @@ function seleccionarModeJoc(mode) {
     iniciarSudoku();
   } else if (mode === "cifras") {
     iniciarCifrasLetras();
+  } else if (mode === "penjat") {
+    iniciarPenjat();
   }
 }
 
@@ -782,6 +785,11 @@ function mostraScreen(nom) {
     "cl-lletres",
     "cl-xifres",
     "cl-resultat",
+    "penjat-inici",
+    "penjat-intro",
+    "penjat-joc",
+    "penjat-resultat-prova",
+    "penjat-resultat-final",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
