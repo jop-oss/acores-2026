@@ -803,6 +803,7 @@ function mostraScreen(nom) {
       "trivial-torn",
       "trivial-prova-final",
       "sudoku-resultat",
+      "penjat-resultat-prova",
     ].includes(s);
     el.style.display = nom === s ? (isFlex ? "flex" : "block") : "none";
   });

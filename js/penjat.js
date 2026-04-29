@@ -143,17 +143,18 @@ function pjRenderRanquing() {
 }
 
 function pjComençar() {
-  pjSeguent();
+  pjIniciarProva(pjPartida.provaActual);
 }
 
 // ── NAVEGACIÓ ENTRE PROVES ────────────────────────────────────
 function pjSeguent() {
   const idx = pjPartida.provaActual;
   if (idx >= PJ_N_PROVES) { pjFinalitzar(); return; }
-  pjMostraIntro(idx);
+  pjMostraResultatIntermi(idx);
 }
 
-function pjMostraIntro(idx) {
+function pjMostraResultatIntermi(idx) {
+  // Pantalla intermèdia entre proves (amb botó sortir)
   mostraScreen('penjat-intro');
   const cont = document.getElementById('penjat-intro-cont');
   if (!cont) return;
@@ -338,14 +339,14 @@ function pjMostraResultatProva(guanyat, timeout, paraula, pts, categoria) {
   const restaProves = total - idx;
 
   cont.innerHTML = `
-    <button class="cl-btn-tancar" onclick="pjTancar()">✕</button>
+    <button class="cl-btn-tancar cl-btn-tancar-abs" onclick="pjTancar()">✕</button>
     <div class="pj-resultat-icon">${icona}</div>
     <div class="pj-resultat-titol ${cls}">${titol}</div>
     <div class="pj-resultat-paraula">${paraula}</div>
     <div class="pj-resultat-pts">${pts > 0 ? '+' + pts + ' pts' : '0 pts'}</div>
-    ${!guanyat ? `<div class="cl-feedback-hint">La resposta era: <strong>${paraula}</strong></div>` : ''}
+    ${!guanyat ? `<div class="cl-feedback-hint">Categoria: <strong>${categoria}</strong></div>` : ''}
     ${restaProves > 0
-      ? `<button class="cl-btn-primari" onclick="pjSeguent()">Prova ${idx + 1} →</button>`
+      ? `<button class="cl-btn-primari" onclick="pjIniciarProva(${idx})">Prova ${idx + 1} →</button>`
       : `<button class="cl-btn-primari" onclick="pjFinalitzar()">Veure resultats finals</button>`
     }`;
 }

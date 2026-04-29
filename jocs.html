@@ -824,6 +824,81 @@
 
   <div id="sudoku-modal"></div>
 
+  <!-- PANTALLES XIFRES I LLETRES -->
+  <div id="screen-cl-intro" style="display:none">
+    <div class="cl-wrap"><div id="cl-intro-cont"></div></div>
+  </div>
+  <div id="screen-cl-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="cl-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-cl-lletres" style="display:none">
+    <div class="cl-wrap">
+      <div class="cl-header">
+        <div class="cl-header-info">
+          <span class="cl-num-prova" id="cl-lletres-num"></span>
+          <span class="cl-maxpts" id="cl-lletres-maxpts"></span>
+        </div>
+        <div class="cl-timer" id="cl-lletres-timer">60s</div>
+      </div>
+      <div class="cl-lletres-area">
+        <div class="cl-lletres-grup">
+          <div class="cl-lletres-label">Lletres disponibles</div>
+          <div class="cl-lletres-disp" id="cl-lletres-disp"></div>
+        </div>
+        <div class="cl-lletres-grup">
+          <div class="cl-lletres-label">La teva paraula</div>
+          <div class="cl-resposta" id="cl-resposta"></div>
+        </div>
+        <div id="cl-lletres-feedback"></div>
+        <div class="cl-lletres-accions">
+          <button class="cl-btn-secundari" onclick="clLletresOrdre=[];clRenderLletres(clLletresDisp.map(l=>({...l,usada:false})))">Esborrar tot</button>
+          <button class="cl-btn-enviar" id="cl-btn-enviar-lletres" onclick="clEnviarLletres()">Enviar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="screen-cl-xifres" style="display:none">
+    <div class="cl-wrap">
+      <div class="cl-header">
+        <div class="cl-header-info"><span class="cl-num-prova" id="cl-xifres-num"></span></div>
+        <div class="cl-timer" id="cl-xifres-timer">60s</div>
+      </div>
+      <div class="cl-xifres-objectiu-wrap">
+        <div class="cl-xifres-objectiu-label">Arriba a</div>
+        <div class="cl-xifres-objectiu-num" id="cl-xifres-objectiu">—</div>
+      </div>
+      <div class="cl-nums-disp" id="cl-nums-disp"></div>
+      <div class="cl-ops-grid">
+        <button class="cl-op-btn" onclick="clUsarOp('+')">+</button>
+        <button class="cl-op-btn" onclick="clUsarOp('−')">−</button>
+        <button class="cl-op-btn" onclick="clUsarOp('×')">×</button>
+        <button class="cl-op-btn" onclick="clUsarOp('÷')">÷</button>
+        <button class="cl-op-btn par" onclick="clUsarPar('(')">(</button>
+        <button class="cl-op-btn par" onclick="clUsarPar(')')">)</button>
+        <button class="cl-op-btn" onclick="clUsarIgual()">=</button>
+        <button class="cl-op-btn esborrar" onclick="clEsborrarUltim()">⌫</button>
+        <button class="cl-op-btn netejar" onclick="clNetejaPissarra()">✕</button>
+      </div>
+      <div class="cl-pissarra-wrap">
+        <div class="cl-pissarra" id="cl-pissarra"></div>
+        <div class="cl-resultat-actual" id="cl-resultat-actual"></div>
+      </div>
+      <div id="cl-xifres-feedback"></div>
+      <div class="cl-xifres-accions">
+        <button class="cl-btn-enviar" onclick="clEnviarXifres()">Enviar →</button>
+      </div>
+    </div>
+  </div>
+  <div id="screen-cl-resultat" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="cl-resultat-cont"></div>
+    </div>
+  </div>
+
   <!-- PANTALLES EL PENJAT -->
   <div id="screen-penjat-inici" style="display:none">
     <div class="cl-wrap">
@@ -852,13 +927,13 @@
       <div id="pj-teclat"></div>
     </div>
   </div>
-  <div id="screen-penjat-resultat-prova" style="display:none">
+  <div id="screen-penjat-resultat-prova" style="display:none; min-height:80vh; align-items:center; justify-content:center">
     <div id="penjat-resultat-prova-cont"></div>
   </div>
   <div id="screen-penjat-resultat-final" style="display:none">
     <div class="cl-wrap">
       <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
-      <div id="penjat-resultat-final-cont"></div>
+      <div id="penjat-resultat-final-cont" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem"></div>
     </div>
   </div>
 
