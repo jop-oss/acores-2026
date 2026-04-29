@@ -316,6 +316,26 @@
     </table>
   </div>
 
+  <!-- XIFRES I LLETRES -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📝 Xifres i Lletres</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('cifras')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Proves fetes</th>
+          <th>Punts</th>
+          <th>Estat</th>
+          <th>Acció</th>
+        </tr>
+      </thead>
+      <tbody id="taula-cifras"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -362,6 +382,7 @@
     renderBingo();
     renderTrivial();
     renderSudoku();
+    renderCifras();
     renderRuleta();
   }
 
@@ -559,12 +580,14 @@
     quiz:    nom => `quiz_estat_${nom}`,
     mapa:    nom => `joc_mapa_estat_${nom}`,
     paraula: nom => `joc_paraula_estat_${nom}`,
+    cifras:  nom => `cl_estat_${nom}`,
   };
   const RENDERS = {
-    quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula
+    quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula, cifras: renderCifras
   };
   const NOMS_JOCS = {
-    quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada'
+    quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
+    cifras: 'Xifres i Lletres'
   };
 
   function resetJugador(joc, nom) {
@@ -646,6 +669,32 @@
     } catch(e) {
       alert('Error Firebase: ' + e.message);
     }
+  }
+
+  // ── XIFRES I LLETRES ───────────────────────────────────────
+  function renderCifras() {
+    const tbody = document.getElementById('taula-cifras');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`cl_estat_${nom}`);
+      if (!raw) return `
+        <tr>
+          <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+          <td>—</td><td>—</td><td>Cap partida</td>
+          <td><button class="btn-reset-jugador" disabled>Reiniciar</button></td>
+        </tr>`;
+      const d = JSON.parse(raw);
+      const fetes = (d.respostes || []).length;
+      const total = 15;
+      const estat = d.acabada ? '✅ Completada' : fetes > 0 ? `En curs (${fetes}/${total})` : 'Iniciada';
+      return `
+        <tr>
+          <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+          <td>${fetes}/${total}</td>
+          <td>${d.punts || 0} pts</td>
+          <td>${estat}</td>
+          <td><button class="btn-reset-jugador" onclick="resetJugador('cifras','${nom}')">Reiniciar</button></td>
+        </tr>`;
+    }).join('');
   }
 
   // ── TOAST ──────────────────────────────────────────────────
