@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/jocs.css">
+  <link rel="stylesheet" href="css/snake.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -135,6 +136,11 @@
           <span class="joc-selector-label">Snake</span>
           <span class="joc-selector-sub">Arcade clàssic · controls tàctils</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('breakout')">
+          <span class="joc-selector-icon">🧱</span>
+          <span class="joc-selector-label">Breakout</span>
+          <span class="joc-selector-sub">5 nivells · 3 vides · power-ups</span>
+        </button>
       </div>
     </div>
 
@@ -157,6 +163,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">📝 Xifres</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -943,6 +950,17 @@
     </div>
   </div>
 
+  <!-- PANTALLES BREAKOUT -->
+  <div id="screen-breakout-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="breakout-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-breakout-joc" style="display:none">
+    <div id="breakout-joc-cont"></div>
+  </div>
+
   <!-- PANTALLES SNAKE -->
   <div id="screen-snake-inici" style="display:none">
     <div class="cl-wrap">
@@ -974,6 +992,7 @@
 <script src="js/penjat-data.js"></script>
 <script src="js/penjat.js"></script>
 <script src="js/snake.js"></script>
+<script src="js/breakout.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

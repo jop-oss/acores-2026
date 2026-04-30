@@ -354,6 +354,24 @@
     </table>
   </div>
 
+  <!-- BREAKOUT -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🧱 Breakout</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('breakout')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Millor puntuació</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-breakout"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -402,6 +420,7 @@
     renderSudoku();
     renderCifras();
     renderSnake();
+    renderBreakout();
     renderRuleta();
   }
 
@@ -601,14 +620,15 @@
     paraula: nom => `joc_paraula_estat_${nom}`,
     cifras:  nom => `cl_estat_${nom}`,
     snake:   nom => `snake_estat_${nom}`,
+    breakout: nom => `breakout_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
-    cifras: renderCifras, snake: renderSnake
+    cifras: renderCifras, snake: renderSnake, breakout: renderBreakout
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
-    cifras: 'Xifres i Lletres', snake: 'Snake'
+    cifras: 'Xifres i Lletres', snake: 'Snake', breakout: 'Breakout'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -729,6 +749,20 @@
           <td>${estat}</td>
           <td><button class="btn-reset-jugador" onclick="resetJugador('cifras','${nom}')">Reiniciar</button></td>
         </tr>`;
+    }).join('');
+  }
+
+  // ── BREAKOUT ───────────────────────────────────────────────
+  function renderBreakout() {
+    const tbody = document.getElementById('taula-breakout');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`breakout_estat_${nom}`);
+      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('breakout','${nom}')">Reiniciar</button></td>
+      </tr>`;
     }).join('');
   }
 

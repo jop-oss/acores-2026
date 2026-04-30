@@ -3480,3 +3480,33 @@
   .snake-inici-wrap .ranking-wrap { width: 100%; }
   .snake-game-wrap { padding: .5rem; gap: .5rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   BREAKOUT — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+/* Power-up llegenda (pantalla inici) i barra actius (joc) */
+.bk-pu-llegenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .6rem;
+}
+.bk-pu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: .75rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+}
+.bk-pu-actius-bar {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 28px;
+}

@@ -194,6 +194,7 @@ async function rankingCarregar() {
       cifras: 0,
       penjat: 0,
       snake: 0,
+      breakout: 0,
     };
   });
 
@@ -231,6 +232,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].snake = ptsSnake[nom] || 0; });
   }
 
+  // Breakout (localStorage)
+  if (typeof breakoutGetPuntsGlobals === 'function') {
+    const ptsBreakout = breakoutGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].breakout = ptsBreakout[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -239,7 +246,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0);
   return d[filtre] || 0;
 }
 
@@ -306,7 +313,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -317,6 +324,7 @@ function rankingMostrarDetall(nom) {
     { icon: "📝", nom: "Xifres i Lletres", key: "cifras" },
     { icon: "🪢", nom: "El Penjat", key: "penjat" },
     { icon: "🐍", nom: "Snake", key: "snake" },
+    { icon: "🧱", nom: "Breakout", key: "breakout" },
   ];
 
   cos.innerHTML = `
@@ -442,6 +450,8 @@ function seleccionarModeJoc(mode) {
     iniciarPenjat();
   } else if (mode === "snake") {
     iniciarSnake();
+  } else if (mode === "breakout") {
+    iniciarBreakout();
   }
 }
 
@@ -802,6 +812,8 @@ function mostraScreen(nom) {
     "penjat-resultat-final",
     "snake-inici",
     "snake-joc",
+    "breakout-inici",
+    "breakout-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
