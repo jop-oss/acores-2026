@@ -336,6 +336,24 @@
     </table>
   </div>
 
+  <!-- SNAKE -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🐍 Snake</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('snake')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Millor puntuació</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-snake"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -383,6 +401,7 @@
     renderTrivial();
     renderSudoku();
     renderCifras();
+    renderSnake();
     renderRuleta();
   }
 
@@ -581,14 +600,30 @@
     mapa:    nom => `joc_mapa_estat_${nom}`,
     paraula: nom => `joc_paraula_estat_${nom}`,
     cifras:  nom => `cl_estat_${nom}`,
+    snake:   nom => `snake_estat_${nom}`,
   };
   const RENDERS = {
-    quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula, cifras: renderCifras
+    quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
+    cifras: renderCifras, snake: renderSnake
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
-    cifras: 'Xifres i Lletres'
+    cifras: 'Xifres i Lletres', snake: 'Snake'
   };
+
+  // ── SNAKE ──────────────────────────────────────────────────
+  function renderSnake() {
+    const tbody = document.getElementById('taula-snake');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`snake_estat_${nom}`);
+      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('snake','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
 
   function resetJugador(joc, nom) {
     if (!confirm(`Reiniciar ${NOMS_JOCS[joc]} de ${nom}?`)) return;
