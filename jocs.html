@@ -141,6 +141,11 @@
           <span class="joc-selector-label">Breakout</span>
           <span class="joc-selector-sub">5 nivells · 3 vides · power-ups</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('corre')">
+          <span class="joc-selector-icon">🏃</span>
+          <span class="joc-selector-label">Corre per les Açores</span>
+          <span class="joc-selector-sub">Salta i llisca · 3 vides · distància</span>
+        </button>
       </div>
     </div>
 
@@ -164,6 +169,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -950,6 +956,17 @@
     </div>
   </div>
 
+  <!-- PANTALLES CORRE PER LES AÇORES -->
+  <div id="screen-corre-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="corre-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-corre-joc" style="display:none">
+    <div id="corre-joc-cont"></div>
+  </div>
+
   <!-- PANTALLES BREAKOUT -->
   <div id="screen-breakout-inici" style="display:none">
     <div class="cl-wrap">
@@ -993,6 +1010,7 @@
 <script src="js/penjat.js"></script>
 <script src="js/snake.js"></script>
 <script src="js/breakout.js"></script>
+<script src="js/corre.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

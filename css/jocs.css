@@ -3510,3 +3510,71 @@
   justify-content: center;
   min-height: 28px;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   CORRE PER LES AÇORES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.cr-obs-llegenda {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  margin-top: .6rem;
+}
+.cr-obs-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .85rem;
+  color: var(--text2);
+}
+.cr-obs-chip {
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-size: .72rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 90px;
+  text-align: center;
+}
+.cr-obs-terra { background: rgba(139,94,60,.2);  border-color: #8B5E3C; color: #c4914a; }
+.cr-obs-aire  { background: rgba(99,179,237,.15); border-color: #63b3ed; color: #90cdf4; }
+.cr-obs-forat { background: rgba(10,14,26,.6);    border-color: #3a4a5a; color: #7a9aaa; }
+
+/* Botons d'acció salt/lliscar */
+.cr-botons-accio {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: .25rem;
+}
+.cr-btn-accio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  width: 80px;
+  height: 64px;
+  border: 1px solid rgba(106,171,122,.3);
+  border-radius: 14px;
+  background: rgba(45,90,61,.2);
+  color: var(--verd2);
+  font-size: 1.4rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background .1s, transform .1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.cr-btn-accio span {
+  font-size: .65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text2);
+}
+.cr-btn-accio:active { background: rgba(106,171,122,.3); transform: scale(.92); }
+.cr-btn-salt  { border-color: rgba(106,171,122,.4); }
+.cr-btn-lliscar { border-color: rgba(240,180,41,.3); color: var(--gold); }

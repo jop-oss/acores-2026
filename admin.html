@@ -372,6 +372,24 @@
     </table>
   </div>
 
+  <!-- CORRE PER LES AÇORES -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🏃 Corre per les Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('corre')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Millor distància</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-corre"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -421,6 +439,7 @@
     renderCifras();
     renderSnake();
     renderBreakout();
+    renderCorre();
     renderRuleta();
   }
 
@@ -621,14 +640,16 @@
     cifras:  nom => `cl_estat_${nom}`,
     snake:   nom => `snake_estat_${nom}`,
     breakout: nom => `breakout_estat_${nom}`,
+    corre:    nom => `corre_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
-    cifras: renderCifras, snake: renderSnake, breakout: renderBreakout
+    cifras: renderCifras, snake: renderSnake, breakout: renderBreakout, corre: renderCorre
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
-    cifras: 'Xifres i Lletres', snake: 'Snake', breakout: 'Breakout'
+    cifras: 'Xifres i Lletres', snake: 'Snake', breakout: 'Breakout',
+    corre: 'Corre per les Açores'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -762,6 +783,20 @@
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
         <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('breakout','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── CORRE PER LES AÇORES ───────────────────────────────────
+  function renderCorre() {
+    const tbody = document.getElementById('taula-corre');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`corre_estat_${nom}`);
+      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} m</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('corre','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

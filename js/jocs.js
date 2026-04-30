@@ -195,6 +195,7 @@ async function rankingCarregar() {
       penjat: 0,
       snake: 0,
       breakout: 0,
+      corre: 0,
     };
   });
 
@@ -238,6 +239,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].breakout = ptsBreakout[nom] || 0; });
   }
 
+  // Corre per les Açores (localStorage)
+  if (typeof correGetPuntsGlobals === 'function') {
+    const ptsCorre = correGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].corre = ptsCorre[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -246,7 +253,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0);
   return d[filtre] || 0;
 }
 
@@ -313,7 +320,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -325,6 +332,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🪢", nom: "El Penjat", key: "penjat" },
     { icon: "🐍", nom: "Snake", key: "snake" },
     { icon: "🧱", nom: "Breakout", key: "breakout" },
+    { icon: "🏃", nom: "Corre per les Açores", key: "corre" },
   ];
 
   cos.innerHTML = `
@@ -452,6 +460,8 @@ function seleccionarModeJoc(mode) {
     iniciarSnake();
   } else if (mode === "breakout") {
     iniciarBreakout();
+  } else if (mode === "corre") {
+    iniciarCorre();
   }
 }
 
@@ -814,6 +824,8 @@ function mostraScreen(nom) {
     "snake-joc",
     "breakout-inici",
     "breakout-joc",
+    "corre-inici",
+    "corre-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
