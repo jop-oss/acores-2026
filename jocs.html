@@ -150,6 +150,16 @@
           <span class="joc-selector-label">Asteroid Shooter</span>
           <span class="joc-selector-sub">Dispara sol · power-ups · nivells</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('correu')">
+          <span class="joc-selector-icon">📬</span>
+          <span class="joc-selector-label">Correu de les Açores</span>
+          <span class="joc-selector-sub">5 carrils · recull cartes · lliura-les</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('llanca')">
+          <span class="joc-selector-icon">🌿</span>
+          <span class="joc-selector-label">Llança't!</span>
+          <span class="joc-selector-sub">Liana · timing · 3 intents · espai</span>
+        </button>
       </div>
     </div>
 
@@ -175,6 +185,8 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('asteroid', this)">🚀 Asteroid</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('correu', this)">📬 Correu</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('llanca', this)">🌿 Llança't</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -961,6 +973,28 @@
     </div>
   </div>
 
+  <!-- PANTALLES LLANÇA'T -->
+  <div id="screen-llanca-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="llanca-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-llanca-joc" style="display:none">
+    <div id="llanca-joc-cont"></div>
+  </div>
+
+  <!-- PANTALLES CORREU DE LES AÇORES -->
+  <div id="screen-correu-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="correu-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-correu-joc" style="display:none">
+    <div id="correu-joc-cont"></div>
+  </div>
+
   <!-- PANTALLES ASTEROID -->
   <div id="screen-asteroid-inici" style="display:none">
     <div class="cl-wrap">
@@ -1028,6 +1062,8 @@
 <script src="js/breakout.js"></script>
 <script src="js/corre.js"></script>
 <script src="js/asteroid.js"></script>
+<script src="js/correu.js"></script>
+<script src="js/llanca.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

@@ -197,6 +197,8 @@ async function rankingCarregar() {
       breakout: 0,
       corre: 0,
       asteroid: 0,
+      correu: 0,
+      llanca: 0,
     };
   });
 
@@ -252,6 +254,18 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].asteroid = ptsAst[nom] || 0; });
   }
 
+  // Correu de les Açores (localStorage)
+  if (typeof correuGetPuntsGlobals === 'function') {
+    const ptsCorreu = correuGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].correu = ptsCorreu[nom] || 0; });
+  }
+
+  // Llança't! (localStorage)
+  if (typeof llancaGetPuntsGlobals === 'function') {
+    const ptsLlanca = llancaGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].llanca = ptsLlanca[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -260,7 +274,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.llanca||0);
   return d[filtre] || 0;
 }
 
@@ -327,7 +341,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.llanca||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -341,6 +355,8 @@ function rankingMostrarDetall(nom) {
     { icon: "🧱", nom: "Breakout", key: "breakout" },
     { icon: "🏃", nom: "Corre per les Açores", key: "corre" },
     { icon: "🚀", nom: "Asteroid Shooter", key: "asteroid" },
+    { icon: "📬", nom: "Correu de les Açores", key: "correu" },
+    { icon: "🌿", nom: "Llança't!", key: "llanca" },
   ];
 
   cos.innerHTML = `
@@ -472,6 +488,10 @@ function seleccionarModeJoc(mode) {
     iniciarCorre();
   } else if (mode === "asteroid") {
     iniciarAsteroid();
+  } else if (mode === "correu") {
+    iniciarCorreu();
+  } else if (mode === "llanca") {
+    iniciarLlanca();
   }
 }
 
@@ -838,6 +858,10 @@ function mostraScreen(nom) {
     "corre-joc",
     "asteroid-inici",
     "asteroid-joc",
+    "correu-inici",
+    "correu-joc",
+    "llanca-inici",
+    "llanca-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

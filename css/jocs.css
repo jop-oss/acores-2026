@@ -3656,3 +3656,124 @@
   color: var(--text2);
   text-align: center;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   CORREU DE LES AÇORES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.co-llegenda {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  margin-top: .5rem;
+}
+.co-ll-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .82rem;
+  color: var(--text2);
+}
+.co-chip {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: .75rem;
+  font-family: 'DM Sans', sans-serif;
+  background: rgba(255,255,255,.05);
+}
+.co-carta   { border-color: #ecc94b88; color: #ecc94b; }
+.co-bustia  { border-color: #6aab7a88; color: #6aab7a; }
+.co-obstacle{ border-color: #e53e3e88; color: #e53e3e; }
+
+/* Barra de cartes al cotxe */
+.co-cartes-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 28px;
+  padding: .2rem 0;
+}
+.co-cartes-buit {
+  font-size: .72rem;
+  color: var(--text2);
+  opacity: .5;
+}
+.co-carta-chip {
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 2px 7px;
+  font-size: .85rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LLANÇA'T! — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.ll-zones-prev {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-top: .6rem;
+  font-size: .72rem;
+  color: var(--text2);
+}
+.ll-zona-chip {
+  background: rgba(106,171,122,.12);
+  border: 1px solid rgba(106,171,122,.25);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: .68rem;
+  color: #9bbfaa;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Botó de llançament gran */
+.ll-btn-llanca {
+  background: linear-gradient(135deg, #2d5a3d, #6aab7a);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: .9rem 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+  letter-spacing: .03em;
+  margin-top: .25rem;
+}
+.ll-btn-llanca:active { transform: scale(.93); }
+
+/* Indicador de timing */
+.ll-indicador {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .3rem 0;
+}
+.ll-ind-barra-wrap {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ll-ind-barra {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .05s, background .1s;
+}
+.ll-ind-text {
+  font-size: .78rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 80px;
+  text-align: right;
+}
