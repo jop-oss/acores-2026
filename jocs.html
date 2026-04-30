@@ -130,6 +130,11 @@
           <span class="joc-selector-label">El Penjat</span>
           <span class="joc-selector-sub">15 paraules/frases · 6 errors màxim</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('snake')">
+          <span class="joc-selector-icon">🐍</span>
+          <span class="joc-selector-label">Snake</span>
+          <span class="joc-selector-sub">Arcade clàssic · controls tàctils</span>
+        </button>
       </div>
     </div>
 
@@ -151,6 +156,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sudoku', this)">🔢 Sudoku</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">📝 Xifres</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -937,6 +943,17 @@
     </div>
   </div>
 
+  <!-- PANTALLES SNAKE -->
+  <div id="screen-snake-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="snake-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-snake-joc" style="display:none">
+    <div id="snake-joc-cont"></div>
+  </div>
+
 <!-- Firebase (abans dels altres scripts) -->
 <script src="js/app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -956,6 +973,7 @@
 <script src="js/cifras-letras.js"></script>
 <script src="js/penjat-data.js"></script>
 <script src="js/penjat.js"></script>
+<script src="js/snake.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

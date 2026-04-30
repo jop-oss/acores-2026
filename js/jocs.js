@@ -193,6 +193,7 @@ async function rankingCarregar() {
       sudoku: 0,
       cifras: 0,
       penjat: 0,
+      snake: 0,
     };
   });
 
@@ -224,6 +225,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].penjat = ptsPenjat[nom] || 0; });
   }
 
+  // Snake (localStorage)
+  if (typeof snakeGetPuntsGlobals === 'function') {
+    const ptsSnake = snakeGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].snake = ptsSnake[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -232,7 +239,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0);
   return d[filtre] || 0;
 }
 
@@ -299,7 +306,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -309,6 +316,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🔢", nom: "Sudoku", key: "sudoku" },
     { icon: "📝", nom: "Xifres i Lletres", key: "cifras" },
     { icon: "🪢", nom: "El Penjat", key: "penjat" },
+    { icon: "🐍", nom: "Snake", key: "snake" },
   ];
 
   cos.innerHTML = `
@@ -432,6 +440,8 @@ function seleccionarModeJoc(mode) {
     iniciarCifrasLetras();
   } else if (mode === "penjat") {
     iniciarPenjat();
+  } else if (mode === "snake") {
+    iniciarSnake();
   }
 }
 
@@ -790,6 +800,8 @@ function mostraScreen(nom) {
     "penjat-joc",
     "penjat-resultat-prova",
     "penjat-resultat-final",
+    "snake-inici",
+    "snake-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

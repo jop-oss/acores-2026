@@ -3259,3 +3259,223 @@
   .pj-tecla { width: 36px; height: 36px; font-size: .9rem; }
   .pj-lletra-char { font-size: 1.3rem; }
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   SNAKE — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+/* Pantalla d'inici */
+.snake-inici-wrap {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 1.5rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.snake-inici-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.snake-jugador-info {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.snake-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid var(--verd2);
+}
+.snake-jugador-nom {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.snake-jugador-sub {
+  font-size: .8rem;
+  color: var(--text2);
+}
+.snake-instruccions {
+  background: rgba(45,90,61,.1);
+  border: 1px solid rgba(106,171,122,.15);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: var(--text2);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.snake-instruccions p { margin: 0 0 .4rem; }
+.snake-controls-llista {
+  margin: .5rem 0 0;
+  padding-left: 1.2rem;
+}
+.snake-controls-llista li { margin-bottom: .25rem; }
+.snake-btn-start {
+  background: linear-gradient(135deg, #2d5a3d, #6aab7a);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: .85rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  align-self: flex-start;
+}
+.snake-btn-start:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(106,171,122,.3); }
+
+/* Joc */
+.snake-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  padding: 1rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.snake-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 480px;
+  gap: .5rem;
+}
+.snake-btn-back {
+  background: none;
+  border: 1px solid rgba(106,171,122,.2);
+  border-radius: 10px;
+  padding: .4rem .9rem;
+  color: #9bbfaa;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.snake-scores {
+  display: flex;
+  gap: .75rem;
+}
+.snake-score-bloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(45,90,61,.15);
+  border: 1px solid rgba(106,171,122,.2);
+  border-radius: 10px;
+  padding: .3rem .7rem;
+  min-width: 56px;
+}
+.snake-score-label {
+  font-size: .65rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.snake-score-val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--verd2);
+}
+
+/* Canvas */
+.snake-canvas-wrap {
+  position: relative;
+  border: 2px solid var(--verd2);
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+}
+#snake-canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* Overlay */
+.snake-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,22,40,.82);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  z-index: 10;
+}
+.snake-overlay-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--verd2);
+  text-align: center;
+}
+.snake-overlay-sub {
+  font-size: .85rem;
+  color: var(--text2);
+  text-align: center;
+  padding: 0 1rem;
+}
+.snake-btn-play {
+  background: linear-gradient(135deg, #2d5a3d, #6aab7a);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.snake-btn-play:hover { transform: scale(1.1); }
+
+/* D-pad tàctil */
+.snake-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.snake-dpad-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.snake-dpad-btn {
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(106,171,122,.3);
+  border-radius: 10px;
+  background: rgba(45,90,61,.2);
+  color: var(--verd2);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background .1s, transform .1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.snake-dpad-btn:active { background: rgba(106,171,122,.3); transform: scale(.92); }
+.snake-dpad-btn.centre {
+  background: rgba(106,171,122,.15);
+  color: var(--text2);
+  font-size: .85rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .snake-inici-wrap { flex-direction: column; padding: 1rem; }
+  .snake-inici-wrap .ranking-wrap { width: 100%; }
+  .snake-game-wrap { padding: .5rem; gap: .5rem; }
+}
