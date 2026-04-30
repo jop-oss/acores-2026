@@ -196,6 +196,7 @@ async function rankingCarregar() {
       snake: 0,
       breakout: 0,
       corre: 0,
+      asteroid: 0,
     };
   });
 
@@ -245,6 +246,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].corre = ptsCorre[nom] || 0; });
   }
 
+  // Asteroid Shooter (localStorage)
+  if (typeof asteroidGetPuntsGlobals === 'function') {
+    const ptsAst = asteroidGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].asteroid = ptsAst[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -253,7 +260,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0);
   return d[filtre] || 0;
 }
 
@@ -320,7 +327,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -333,6 +340,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🐍", nom: "Snake", key: "snake" },
     { icon: "🧱", nom: "Breakout", key: "breakout" },
     { icon: "🏃", nom: "Corre per les Açores", key: "corre" },
+    { icon: "🚀", nom: "Asteroid Shooter", key: "asteroid" },
   ];
 
   cos.innerHTML = `
@@ -462,6 +470,8 @@ function seleccionarModeJoc(mode) {
     iniciarBreakout();
   } else if (mode === "corre") {
     iniciarCorre();
+  } else if (mode === "asteroid") {
+    iniciarAsteroid();
   }
 }
 
@@ -826,6 +836,8 @@ function mostraScreen(nom) {
     "breakout-joc",
     "corre-inici",
     "corre-joc",
+    "asteroid-inici",
+    "asteroid-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

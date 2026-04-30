@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/jocs.css">
-  <link rel="stylesheet" href="css/snake.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -146,6 +145,11 @@
           <span class="joc-selector-label">Corre per les Açores</span>
           <span class="joc-selector-sub">Salta i llisca · 3 vides · distància</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('asteroid')">
+          <span class="joc-selector-icon">🚀</span>
+          <span class="joc-selector-label">Asteroid Shooter</span>
+          <span class="joc-selector-sub">Dispara sol · power-ups · nivells</span>
+        </button>
       </div>
     </div>
 
@@ -170,6 +174,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('asteroid', this)">🚀 Asteroid</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -956,6 +961,17 @@
     </div>
   </div>
 
+  <!-- PANTALLES ASTEROID -->
+  <div id="screen-asteroid-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="asteroid-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-asteroid-joc" style="display:none">
+    <div id="asteroid-joc-cont"></div>
+  </div>
+
   <!-- PANTALLES CORRE PER LES AÇORES -->
   <div id="screen-corre-inici" style="display:none">
     <div class="cl-wrap">
@@ -1011,6 +1027,7 @@
 <script src="js/snake.js"></script>
 <script src="js/breakout.js"></script>
 <script src="js/corre.js"></script>
+<script src="js/asteroid.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

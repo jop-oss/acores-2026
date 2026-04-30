@@ -390,6 +390,24 @@
     </table>
   </div>
 
+  <!-- ASTEROID SHOOTER -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🚀 Asteroid Shooter</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('asteroid')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Millor puntuació</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-asteroid"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -440,6 +458,7 @@
     renderSnake();
     renderBreakout();
     renderCorre();
+    renderAsteroid();
     renderRuleta();
   }
 
@@ -641,15 +660,17 @@
     snake:   nom => `snake_estat_${nom}`,
     breakout: nom => `breakout_estat_${nom}`,
     corre:    nom => `corre_estat_${nom}`,
+    asteroid: nom => `asteroid_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
-    cifras: renderCifras, snake: renderSnake, breakout: renderBreakout, corre: renderCorre
+    cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
+    corre: renderCorre, asteroid: renderAsteroid
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
     cifras: 'Xifres i Lletres', snake: 'Snake', breakout: 'Breakout',
-    corre: 'Corre per les Açores'
+    corre: 'Corre per les Açores', asteroid: 'Asteroid Shooter'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -797,6 +818,20 @@
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${millor===0?'zero':''}">${millor} m</span></td>
         <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('corre','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── ASTEROID SHOOTER ───────────────────────────────────────
+  function renderAsteroid() {
+    const tbody = document.getElementById('taula-asteroid');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`asteroid_estat_${nom}`);
+      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('asteroid','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

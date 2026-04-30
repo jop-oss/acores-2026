@@ -3578,3 +3578,81 @@
 .cr-btn-accio:active { background: rgba(106,171,122,.3); transform: scale(.92); }
 .cr-btn-salt  { border-color: rgba(106,171,122,.4); }
 .cr-btn-lliscar { border-color: rgba(240,180,41,.3); color: var(--gold); }
+
+/* ══════════════════════════════════════════════════════════════
+   ASTEROID SHOOTER — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.ast-llegenda {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  margin-top: .5rem;
+}
+.ast-ll-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .82rem;
+  color: var(--text2);
+}
+.ast-chip {
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 1px 9px;
+  font-size: .7rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  min-width: 50px;
+  text-align: center;
+}
+.ast-chip.gran  { background: rgba(138,122,106,.2); border-color: #8a7a6a; color: #baa898; }
+.ast-chip.mitja { background: rgba(154,138,122,.2); border-color: #9a8a7a; color: #c8b8a8; }
+.ast-chip.petit { background: rgba(186,168,152,.2); border-color: #baa898; color: #d8c8b8; }
+.ast-pu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: .72rem;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Joystick tàctil */
+.ast-joy-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem 0;
+}
+.ast-joy-base {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(45,90,61,.2);
+  border: 2px solid rgba(106,171,122,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+.ast-joy-stick {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(106,171,122,.5);
+  border: 2px solid #6aab7a;
+  position: absolute;
+  transition: transform 0.05s;
+}
+.ast-joy-hint {
+  font-size: .65rem;
+  color: var(--text2);
+  text-align: center;
+}
