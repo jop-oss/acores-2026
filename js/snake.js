@@ -139,7 +139,7 @@ function snakeComençar() {
 function snakeAjustarCanvas() {
   if (!snakeCanvas) return;
   const wrap = snakeCanvas.parentElement;
-  const maxW = Math.min(wrap.clientWidth - 4, 480);
+  const maxW = Math.min(wrap.clientWidth - 4, 600);
   snakeCellSize = Math.floor(maxW / SNAKE_COLS);
   snakeCanvas.width  = snakeCellSize * SNAKE_COLS;
   snakeCanvas.height = snakeCellSize * SNAKE_ROWS;
@@ -168,7 +168,7 @@ function snakeReset() {
   snakeDibuixar();
 
   // Mostra overlay inicial
-  snakeMostrarOverlay('Preparat?', 'Prem ▶ per començar', '▶');
+  snakeMostrarOverlay('Preparat?', '', '▶');
 }
 
 function snakeNovaPoma() {
