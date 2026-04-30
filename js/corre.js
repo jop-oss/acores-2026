@@ -31,9 +31,9 @@ const CR_OBS_DEFS = [
   { id:'roca',   tipus:'terra', w:40, h:30, color:'#8a7a6a', color2:'#5a4a3a' },
   { id:'forat',  tipus:'terra', w:55, h:14, color:'#040d1a', color2:'#0a1628' },
   { id:'cactus', tipus:'terra', w:20, h:52, color:'#2d5a3d', color2:'#1a3a25' },
-  { id:'branca', tipus:'aire',  w:80, h:18, yRel:0.42, color:'#7a5a3a', color2:'#4a3a20' },
-  { id:'lava',   tipus:'aire',  w:60, h:20, yRel:0.38, color:'#c0392b', color2:'#7b241c' },
-  { id:'fum',    tipus:'aire',  w:70, h:22, yRel:0.35, color:'#4a5a6a', color2:'#2a3a4a' },
+  { id:'branca', tipus:'aire',  w:80, h:16, yRel:0.76, color:'#7a5a3a', color2:'#4a3a20' },
+  { id:'lava',   tipus:'aire',  w:60, h:18, yRel:0.73, color:'#c0392b', color2:'#7b241c' },
+  { id:'fum',    tipus:'aire',  w:70, h:20, yRel:0.78, color:'#4a5a6a', color2:'#2a3a4a' },
 ];
 
 const CR_MUNTANYES = [
@@ -41,118 +41,168 @@ const CR_MUNTANYES = [
   {x:400,w:80,h:55},{x:520,w:130,h:85},{x:660,w:100,h:65},
 ];
 
-// ── CORREDOR ANIMAT ───────────────────────────────────────────
+// ── CORREDOR ANIMAT — SILUETA BLOB ───────────────────────────
 function crDibuixarCorredor(ctx, s, pjX, pjY, lliscant, parpadeja, frameT) {
   const visible = !parpadeja || Math.floor(frameT * 9) % 2 === 0;
   if (!visible) return;
 
-  const x  = pjX * s;
-  const yT = pjY * s;
-
   ctx.save();
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
+
+  const x  = pjX * s;
+  const yT = pjY * s;           // y terra (peu)
+  const col  = '#3d8b5a';       // verd mig — silueta
+  const col2 = '#a8d8b0';       // verd clar — detall
 
   if (lliscant) {
-    const cw = 4.5 * s;
-    ctx.lineWidth = cw;
-    const torsoX1 = x - 10 * s, torsoY1 = yT - 14 * s;
-    const torsoX2 = x + 8 * s,  torsoY2 = yT - 6 * s;
-    // Cos
-    ctx.strokeStyle = '#6aab7a';
-    ctx.beginPath(); ctx.moveTo(torsoX1, torsoY1); ctx.lineTo(torsoX2, torsoY2); ctx.stroke();
-    // Cap
-    ctx.fillStyle = '#c8ecd0';
-    ctx.beginPath(); ctx.arc(torsoX2 + 5 * s, torsoY2 - 7 * s, 7 * s, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#2d5a3d';
-    ctx.beginPath(); ctx.arc(torsoX2 + 5 * s, torsoY2 - 8 * s, 7 * s, Math.PI, 0); ctx.fill();
-    // Cames estirades
-    ctx.lineWidth = cw * 0.85;
-    ctx.strokeStyle = '#a8d8b0';
-    ctx.beginPath();
-    ctx.moveTo(torsoX1, torsoY1 + 4 * s);
-    ctx.lineTo(torsoX1 - 18 * s, yT - 3 * s);
-    ctx.lineTo(torsoX1 - 28 * s, yT);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(torsoX1, torsoY1 + 4 * s);
-    ctx.lineTo(torsoX1 + 10 * s, yT - 5 * s);
-    ctx.lineTo(torsoX1 + 18 * s, yT);
-    ctx.stroke();
-    // Braç estès
-    ctx.lineWidth = cw * 0.7;
-    ctx.strokeStyle = '#6aab7a';
-    ctx.beginPath();
-    ctx.moveTo(torsoX2 - 2 * s, torsoY2 + 2 * s);
-    ctx.lineTo(torsoX2 + 14 * s, torsoY2 - 4 * s);
-    ctx.stroke();
-  } else {
-    const cycle = (Math.sin(frameT * 12) + 1) / 2;
-    const cw = 4 * s;
-    ctx.lineWidth = cw;
-    const hipX = x, hipY = yT - 20 * s;
-    const capX = x + 4 * s, capY = yT - 44 * s;
+    // ── BLOB LLISCANT: el·lipse horitzontal amb cap endavant ──
+    const bW = 38 * s, bH = 16 * s;
+    const bX = x - 4 * s, bY = yT - bH - 2 * s;
 
-    // Ombra
+    // Cos principal
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.ellipse(bX, bY + bH / 2, bW / 2, bH / 2, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cap (davant = dreta)
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.ellipse(bX + bW / 2 - 2 * s, bY - 2 * s, 9 * s, 9 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ull
+    ctx.fillStyle = col2;
+    ctx.beginPath();
+    ctx.ellipse(bX + bW / 2 + 2 * s, bY - 3 * s, 2.5 * s, 2 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cames darrere (petites protuberàncies)
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.ellipse(bX - bW / 2 + 8 * s, bY + bH / 2 + 4 * s, 6 * s, 5 * s, -0.3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(bX - bW / 2 + 18 * s, bY + bH / 2 + 4 * s, 6 * s, 5 * s, 0.1, 0, Math.PI * 2);
+    ctx.fill();
+
+  } else {
+    // ── BLOB CORRENT: cos vertical que oscil·la ──
+    const t = frameT * 10;
+    const legSwing = Math.sin(t);        // -1..1
+    const bodyBob  = Math.abs(Math.sin(t)) * 2 * s; // cos puja/baixa lleugerament
+
+    // Ombra terra
     ctx.save();
-    ctx.globalAlpha = 0.2;
+    ctx.globalAlpha = 0.18;
     ctx.fillStyle = '#000';
     ctx.beginPath();
-    ctx.ellipse(x, yT + 2 * s, 14 * s, 4 * s, 0, 0, Math.PI * 2);
+    ctx.ellipse(x, yT + 2 * s, 13 * s, 3.5 * s, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
-    // Cama posterior
-    const kneeBX = hipX - 4 * s - 10 * s + cycle * 16 * s;
-    const kneeBY = hipY + 14 * s - Math.abs(cycle - 0.5) * 6 * s;
-    ctx.lineWidth = cw * 0.85;
-    ctx.strokeStyle = '#6aab7a';
-    ctx.beginPath();
-    ctx.moveTo(hipX - 4 * s, hipY);
-    ctx.lineTo(kneeBX, kneeBY);
-    ctx.lineTo(kneeBX + (cycle - 0.5) * 12 * s, yT);
-    ctx.stroke();
+    // ── Cama posterior (dibuixada primer, sota el cos) ──
+    const legH = 16 * s;
+    const kneeOffset = legSwing * 8 * s;   // genoll endavant/enrere
+    const footOffset = legSwing * 10 * s;
 
-    // Braç posterior
-    ctx.lineWidth = cw * 0.7;
-    ctx.strokeStyle = '#6aab7a';
-    ctx.beginPath();
-    ctx.moveTo(x - 3 * s, hipY + 6 * s);
-    ctx.lineTo(x - 3 * s - 8 * s + cycle * 14 * s, hipY + 18 * s);
-    ctx.stroke();
+    ctx.fillStyle = col;
+    // cama posterior = contrària a la davantera
+    crBlobCama(ctx, s,
+      x - 3 * s, yT - bodyBob - legH,     // inici (maluc posterior)
+      x - 3 * s - kneeOffset, yT - bodyBob - legH / 2,  // genoll
+      x - 3 * s - footOffset, yT,         // peu
+      col, 5 * s
+    );
 
-    // Tors
-    ctx.lineWidth = cw;
-    ctx.strokeStyle = '#a8d8b0';
-    ctx.beginPath(); ctx.moveTo(hipX, hipY); ctx.lineTo(x + 3 * s, capY + 8 * s); ctx.stroke();
-
-    // Cama davantera
-    const kneeFX = hipX + 2 * s + 10 * s - cycle * 16 * s;
-    const kneeFY = hipY + 14 * s - Math.abs(cycle - 0.5) * 6 * s;
-    ctx.lineWidth = cw * 0.85;
-    ctx.strokeStyle = '#a8d8b0';
+    // ── Cos (tors + cap com a bloc únic) ──
+    const torsoW = 18 * s, torsoH = 22 * s;
+    const torsoY = yT - bodyBob - legH - torsoH + 4 * s;
+    ctx.fillStyle = col;
     ctx.beginPath();
-    ctx.moveTo(hipX + 2 * s, hipY);
-    ctx.lineTo(kneeFX, kneeFY);
-    ctx.lineTo(kneeFX - (cycle - 0.5) * 12 * s, yT);
-    ctx.stroke();
-
-    // Braç davanter
-    ctx.lineWidth = cw * 0.7;
-    ctx.strokeStyle = '#a8d8b0';
-    ctx.beginPath();
-    ctx.moveTo(x + 3 * s, hipY + 6 * s);
-    ctx.lineTo(x + 3 * s + 8 * s - cycle * 14 * s, hipY + 18 * s);
-    ctx.stroke();
+    // Tors lleugerament inclinat cap endavant
+    crBlobTors(ctx, s, x, torsoY, torsoW, torsoH, legSwing * 0.08);
+    ctx.fill();
 
     // Cap
-    ctx.fillStyle = '#c8ecd0';
-    ctx.beginPath(); ctx.arc(capX, capY, 8 * s, 0, Math.PI * 2); ctx.fill();
+    const capR = 9 * s;
+    const capX = x + legSwing * 1.5 * s;
+    const capY = torsoY - capR + 2 * s;
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.ellipse(capX, capY, capR, capR * 0.95, legSwing * 0.05, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ull
+    ctx.fillStyle = col2;
+    ctx.beginPath();
+    ctx.ellipse(capX + 3.5 * s, capY - 1.5 * s, 2.5 * s, 2 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Casc/visera
     ctx.fillStyle = '#2d5a3d';
-    ctx.beginPath(); ctx.arc(capX, capY - s, 8 * s, Math.PI, 0); ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(capX, capY - 1 * s, capR, capR * 0.6, legSwing * 0.05, Math.PI, 0);
+    ctx.fill();
+
+    // ── Braç posterior ──
+    const armLen = 12 * s;
+    ctx.fillStyle = col;
+    crBlobBrac(ctx, s,
+      x - 5 * s, torsoY + torsoH * 0.2,
+      x - 5 * s + kneeOffset * 0.8, torsoY + torsoH * 0.2 + armLen,
+      col, 4 * s
+    );
+
+    // ── Cama davantera (sobre el cos) ──
+    crBlobCama(ctx, s,
+      x + 3 * s, yT - bodyBob - legH,
+      x + 3 * s + kneeOffset, yT - bodyBob - legH / 2,
+      x + 3 * s + footOffset, yT,
+      col, 5 * s
+    );
+
+    // ── Braç davanter ──
+    crBlobBrac(ctx, s,
+      x + 5 * s, torsoY + torsoH * 0.2,
+      x + 5 * s - kneeOffset * 0.8, torsoY + torsoH * 0.2 + armLen,
+      col, 4 * s
+    );
   }
 
   ctx.restore();
+}
+
+function crBlobCama(ctx, s, x1, y1, xK, yK, x2, y2, col, r) {
+  ctx.fillStyle = col;
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.quadraticCurveTo(xK, yK, x2, y2);
+  ctx.quadraticCurveTo(x2 + r, y2, x2 + r, y2 - r / 2);
+  ctx.quadraticCurveTo(xK + r, yK, x1 + r, y1);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function crBlobBrac(ctx, s, x1, y1, x2, y2, col, r) {
+  ctx.fillStyle = col;
+  ctx.beginPath();
+  ctx.moveTo(x1 - r / 2, y1);
+  ctx.lineTo(x2 - r / 2, y2);
+  ctx.lineTo(x2 + r / 2, y2);
+  ctx.lineTo(x1 + r / 2, y1);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function crBlobTors(ctx, s, cx, ty, tw, th, incl) {
+  // Quadrilàter lleugerament inclinat
+  const sl = incl * th; // offset horitzontal per inclinació
+  ctx.moveTo(cx - tw / 2 + sl, ty);
+  ctx.lineTo(cx + tw / 2 + sl, ty);
+  ctx.quadraticCurveTo(cx + tw / 2 + tw * 0.1, ty + th / 2, cx + tw / 2, ty + th);
+  ctx.lineTo(cx - tw / 2, ty + th);
+  ctx.quadraticCurveTo(cx - tw / 2 - tw * 0.1, ty + th / 2, cx - tw / 2 + sl, ty);
+  ctx.closePath();
 }
 
 // ── ESTAT ─────────────────────────────────────────────────────
