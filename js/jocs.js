@@ -198,7 +198,11 @@ async function rankingCarregar() {
       corre: 0,
       asteroid: 0,
       correu: 0,
-      llanca: 0,
+      flappy: 0,
+      pescamines: 0,
+      mahjong: 0,
+      bomberman: 0,
+      llancabombes: 0,
     };
   });
 
@@ -260,10 +264,34 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].correu = ptsCorreu[nom] || 0; });
   }
 
-  // Llança't! (localStorage)
-  if (typeof llancaGetPuntsGlobals === 'function') {
-    const ptsLlanca = llancaGetPuntsGlobals();
-    JUGADORS_VALIDS.forEach(nom => { dades[nom].llanca = ptsLlanca[nom] || 0; });
+  // Flappy Açores (localStorage)
+  if (typeof flappyGetPuntsGlobals === 'function') {
+    const ptsFlappy = flappyGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].flappy = ptsFlappy[nom] || 0; });
+  }
+
+  // Pescamines (localStorage)
+  if (typeof pescaminesGetPuntsGlobals === 'function') {
+    const ptsPm = pescaminesGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].pescamines = ptsPm[nom] || 0; });
+  }
+
+  // Mahjong (localStorage)
+  if (typeof mahjongGetPuntsGlobals === 'function') {
+    const ptsMj = mahjongGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].mahjong = ptsMj[nom] || 0; });
+  }
+
+  // Bomberman (localStorage)
+  if (typeof bombermanGetPuntsGlobals === 'function') {
+    const ptsBm = bombermanGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].bomberman = ptsBm[nom] || 0; });
+  }
+
+  // Llança Bombes (localStorage)
+  if (typeof llancabombesGetPuntsGlobals === 'function') {
+    const ptsLb = llancabombesGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].llancabombes = ptsLb[nom] || 0; });
   }
 
   _rankingDades = dades;
@@ -274,7 +302,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.llanca||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0);
   return d[filtre] || 0;
 }
 
@@ -341,7 +369,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.llanca||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -356,7 +384,11 @@ function rankingMostrarDetall(nom) {
     { icon: "🏃", nom: "Corre per les Açores", key: "corre" },
     { icon: "🚀", nom: "Asteroid Shooter", key: "asteroid" },
     { icon: "📬", nom: "Correu de les Açores", key: "correu" },
-    { icon: "🌿", nom: "Llança't!", key: "llanca" },
+    { icon: "🐦", nom: "Flappy Açores", key: "flappy" },
+    { icon: "💣", nom: "Pescamines", key: "pescamines" },
+    { icon: "🀄", nom: "Mahjong", key: "mahjong" },
+    { icon: "💥", nom: "Bomberman", key: "bomberman" },
+    { icon: "🎯", nom: "Llança Bombes", key: "llancabombes" },
   ];
 
   cos.innerHTML = `
@@ -490,8 +522,16 @@ function seleccionarModeJoc(mode) {
     iniciarAsteroid();
   } else if (mode === "correu") {
     iniciarCorreu();
-  } else if (mode === "llanca") {
-    iniciarLlanca();
+  } else if (mode === "flappy") {
+    iniciarFlappy();
+  } else if (mode === "pescamines") {
+    iniciarPescamines();
+  } else if (mode === "mahjong") {
+    iniciarMahjong();
+  } else if (mode === "bomberman") {
+    iniciarBomberman();
+  } else if (mode === "llancabombes") {
+    iniciarLlancaBombes();
   }
 }
 
@@ -860,8 +900,16 @@ function mostraScreen(nom) {
     "asteroid-joc",
     "correu-inici",
     "correu-joc",
-    "llanca-inici",
-    "llanca-joc",
+    "flappy-inici",
+    "flappy-joc",
+    "pescamines-inici",
+    "pescamines-joc",
+    "mahjong-inici",
+    "mahjong-joc",
+    "bomberman-inici",
+    "bomberman-joc",
+    "llancabombes-inici",
+    "llancabombes-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

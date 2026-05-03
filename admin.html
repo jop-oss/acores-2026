@@ -425,14 +425,70 @@
   <!-- LLANÇA'T -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
-      <div class="admin-seccio-title">🌿 Llança't!</div>
-      <button class="btn-reset-tot" onclick="resetTotJoc('llanca')">Reiniciar tots</button>
+      <div class="admin-seccio-title">🐦 Flappy Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('flappy')">Reiniciar tots</button>
     </div>
     <table class="admin-taula">
       <thead>
         <tr><th>Jugador</th><th>Millor distància</th><th></th></tr>
       </thead>
-      <tbody id="taula-llanca"></tbody>
+      <tbody id="taula-flappy"></tbody>
+    </table>
+  </div>
+
+  <!-- PESCAMINES -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">💣 Pescamines</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('pescamines')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Millor puntuació</th><th></th></tr>
+      </thead>
+      <tbody id="taula-pescamines"></tbody>
+    </table>
+  </div>
+
+  <!-- MAHJONG -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🀄 Mahjong Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('mahjong')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Millor puntuació</th><th></th></tr>
+      </thead>
+      <tbody id="taula-mahjong"></tbody>
+    </table>
+  </div>
+
+  <!-- BOMBERMAN -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">💥 Bomberman Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('bomberman')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Millor puntuació</th><th>Nivell màx</th><th></th></tr>
+      </thead>
+      <tbody id="taula-bomberman"></tbody>
+    </table>
+  </div>
+
+  <!-- LLANÇA BOMBES -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎯 Llança Bombes</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('llancabombes')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Millor puntuació</th><th>Nivell màx</th><th></th></tr>
+      </thead>
+      <tbody id="taula-llancabombes"></tbody>
     </table>
   </div>
 
@@ -488,7 +544,11 @@
     renderCorre();
     renderAsteroid();
     renderCorreu();
-    renderLlanca();
+    renderFlappy();
+    renderPescamines();
+    renderMahjong();
+    renderBomberman();
+    renderLlancaBombes();
     renderRuleta();
   }
 
@@ -692,19 +752,27 @@
     corre:    nom => `corre_estat_${nom}`,
     asteroid: nom => `asteroid_estat_${nom}`,
     correu:   nom => `correu_estat_${nom}`,
-    llanca:   nom => `llanca_estat_${nom}`,
+    flappy:   nom => `flappy_estat_${nom}`,
+    pescamines: nom => `pescamines_estat_${nom}`,
+    mahjong:    nom => `mahjong_estat_${nom}`,
+    bomberman:  nom => `bomberman_estat_${nom}`,
+    llancabombes: nom => `llancabombes_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
     cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
-    llanca: renderLlanca
+    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, llancabombes: renderLlancaBombes
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
     cifras: 'Xifres i Lletres', snake: 'Snake', breakout: 'Breakout',
     corre: 'Corre per les Açores', asteroid: 'Asteroid Shooter',
-    correu: 'Correu de les Açores', llanca: "Llança't!"
+    correu: 'Correu de les Açores', flappy: 'Flappy Açores',
+    pescamines: 'Pescamines',
+    mahjong: 'Mahjong Açores',
+    bomberman: 'Bomberman Açores',
+    llancabombes: 'Llança Bombes'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -885,15 +953,81 @@
   }
 
   // ── LLANÇA'T! ──────────────────────────────────────────────
-  function renderLlanca() {
-    const tbody = document.getElementById('taula-llanca');
+  function renderFlappy() {
+    const tbody = document.getElementById('taula-flappy');
     tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`llanca_estat_${nom}`);
+      const raw = localStorage.getItem(`flappy_estat_${nom}`);
       const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${millor===0?'zero':''}">${millor} m</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('llanca','${nom}')">Reiniciar</button></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('flappy','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderPescamines() {
+    const tbody = document.getElementById('taula-pescamines');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`pescamines_estat_${nom}`);
+      let millor = 0;
+      if (raw) {
+        const dades = JSON.parse(raw);
+        millor = Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0);
+      }
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('pescamines','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderMahjong() {
+    const tbody = document.getElementById('taula-mahjong');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`mahjong_estat_${nom}`);
+      let millor = 0;
+      if (raw) {
+        const dades = JSON.parse(raw);
+        millor = Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0);
+      }
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('mahjong','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderBomberman() {
+    const tbody = document.getElementById('taula-bomberman');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`bomberman_estat_${nom}`);
+      const dades = raw ? JSON.parse(raw) : { punts: 0, nivell: 1 };
+      const millor = dades.punts || 0;
+      const nivell = dades.nivell || 1;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><span class="pts-badge ${nivell<=1?'zero':''}">Niv. ${nivell}</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('bomberman','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderLlancaBombes() {
+    const tbody = document.getElementById('taula-llancabombes');
+    tbody.innerHTML = JUGADORS.map(nom => {
+      const raw = localStorage.getItem(`llancabombes_estat_${nom}`);
+      const dades = raw ? JSON.parse(raw) : { punts: 0, nivell: 1 };
+      const millor = dades.punts || 0;
+      const nivell = dades.nivell || 1;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><span class="pts-badge ${nivell<=1?'zero':''}">Niv. ${nivell}</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('llancabombes','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

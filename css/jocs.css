@@ -3777,3 +3777,485 @@
   min-width: 80px;
   text-align: right;
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   PESCAMINES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Selector de dificultat ── */
+.pm-dif-selector {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: .75rem 0;
+}
+.pm-dif-btn {
+  flex: 1;
+  min-width: 110px;
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+  background: rgba(255,255,255,.04);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: .7rem .5rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+.pm-dif-btn:hover { border-color: var(--verd2); background: rgba(106,171,122,.07); }
+.pm-dif-btn.actiu { border-color: var(--verd2); background: rgba(106,171,122,.12); }
+.pm-dif-emoji { font-size: 1.6rem; }
+.pm-dif-label { font-size: .85rem; font-weight: 700; }
+.pm-dif-info  { font-size: .7rem;  color: var(--text2); }
+.pm-dif-millor{ font-size: .68rem; color: var(--verd2); font-weight: 600; margin-top: .1rem; }
+
+/* ── Topbar del joc ── */
+.pm-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem .5rem 1.5rem;
+  gap: .6rem;
+}
+.pm-topbar {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.pm-stats {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+.pm-stat-bloc {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  background: rgba(255,255,255,.05);
+  border-radius: 10px;
+  padding: .3rem .7rem;
+}
+.pm-stat-label { font-size: .85rem; }
+.pm-stat-val   { font-size: 1rem; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--text); min-width: 2ch; text-align: center; }
+.pm-stat-centre .pm-stat-val { color: var(--verd2); min-width: 4ch; }
+
+/* ── Tauler ── */
+.pm-tauler-cont {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: .5rem;
+}
+.pm-tauler {
+  display: grid;
+  grid-template-columns: repeat(var(--pm-cols), 1fr);
+  gap: 2px;
+  width: fit-content;
+  max-width: 100%;
+  touch-action: none;
+  user-select: none;
+}
+
+/* ── Cel·les ── */
+.pm-cel {
+  width:  clamp(22px, calc((min(100vw, 700px) - 1.5rem) / var(--pm-cols)), 36px);
+  height: clamp(22px, calc((min(100vw, 700px) - 1.5rem) / var(--pm-cols)), 36px);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(.6rem, 1.8vw, .85rem);
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  cursor: pointer;
+  transition: background .08s, transform .05s;
+  border: 1px solid transparent;
+}
+.pm-cel.tapada {
+  background: rgba(45, 90, 61, 0.35);
+  border-color: rgba(106,171,122,.2);
+}
+.pm-cel.tapada:hover {
+  background: rgba(106,171,122,.25);
+  transform: scale(.92);
+}
+.pm-cel.marcada {
+  background: rgba(45, 90, 61, 0.35);
+  border-color: rgba(106,171,122,.2);
+}
+.pm-cel.marcada::after { content: '🚩'; font-size: .85em; }
+.pm-cel.marcada-error {
+  background: rgba(229,62,62,.15);
+  border-color: rgba(229,62,62,.3);
+}
+.pm-cel.revelada {
+  background: rgba(10, 22, 40, 0.8);
+  border-color: rgba(255,255,255,.05);
+  cursor: default;
+}
+.pm-cel.revelada.buida {
+  background: rgba(10, 22, 40, 0.6);
+}
+.pm-cel.mina {
+  background: rgba(229,62,62,.18);
+  border-color: rgba(229,62,62,.35);
+}
+.pm-cel.mina.explotada {
+  background: #e53e3e;
+  border-color: #fc8181;
+  transform: scale(1.1);
+}
+
+/* Colors dels números */
+.pm-cel.n1 { color: #63b3ed; }
+.pm-cel.n2 { color: #68d391; }
+.pm-cel.n3 { color: #fc8181; }
+.pm-cel.n4 { color: #9f7aea; }
+.pm-cel.n5 { color: #f6ad55; }
+.pm-cel.n6 { color: #76e4f7; }
+.pm-cel.n7 { color: #f687b3; }
+.pm-cel.n8 { color: var(--text2); }
+
+/* ── Modal de resultat ── */
+.pm-overlay-final {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+  animation: pm-fade-in .3s ease;
+}
+@keyframes pm-fade-in { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+
+.pm-modal {
+  background: var(--bg2, #0f1e35);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  max-width: 340px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+}
+.pm-modal-icon  { font-size: 3rem; line-height: 1; }
+.pm-modal-titol { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text); }
+.pm-modal-info  { font-size: .9rem; color: var(--text2); }
+.pm-modal-info strong { color: var(--verd2); }
+.pm-modal-record{ font-size: .85rem; color: #ecc94b; font-weight: 700; }
+.pm-modal-btns  { display: flex; flex-direction: column; gap: .6rem; width: 100%; margin-top: .5rem; }
+.pm-btn-sortir {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: .6rem 1.2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.pm-btn-sortir:hover { border-color: var(--verd2); color: var(--text); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .pm-dif-btn { min-width: 90px; padding: .5rem .35rem; }
+  .pm-dif-emoji { font-size: 1.3rem; }
+  .pm-modal { padding: 1.5rem 1.2rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAHJONG SOLITARI — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.mj-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem .5rem 2rem;
+  gap: .6rem;
+}
+
+/* ── Botons d'acció ── */
+.mj-accions {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mj-btn-accio {
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .4rem .9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .82rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+.mj-btn-accio:hover:not(:disabled) { border-color: var(--verd2); background: rgba(106,171,122,.08); }
+.mj-btn-accio:disabled { opacity: .35; cursor: not-allowed; }
+.mj-cost {
+  font-size: .72rem;
+  color: #fc8181;
+  font-weight: 700;
+}
+
+/* ── Scroll del tauler ── */
+.mj-tauler-scroll {
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding: .5rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Tauler ── */
+.mj-tauler {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ── Fitxa ── */
+.mj-fitxa {
+  position: absolute;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s, filter .15s;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Fitxa lliure */
+.mj-fitxa.lliure {
+  background: linear-gradient(145deg, #1a3a28, #0f2a1e);
+  border: 1.5px solid rgba(106,171,122,.45);
+  box-shadow: 2px 3px 0 rgba(0,0,0,.5), 0 0 0 1px rgba(106,171,122,.1);
+}
+.mj-fitxa.lliure:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--verd2);
+  box-shadow: 2px 5px 12px rgba(106,171,122,.3), 2px 3px 0 rgba(0,0,0,.5);
+}
+
+/* Fitxa bloquejada */
+.mj-fitxa.bloquejada {
+  background: linear-gradient(145deg, #0d1e14, #0a1810);
+  border: 1.5px solid rgba(255,255,255,.07);
+  box-shadow: 1px 2px 0 rgba(0,0,0,.4);
+  cursor: default;
+  filter: brightness(.65);
+}
+
+/* Fitxa seleccionada */
+.mj-fitxa.sel {
+  background: linear-gradient(145deg, #1e5c30, #175224);
+  border-color: var(--verd2);
+  box-shadow: 0 0 0 2px var(--verd2), 2px 3px 0 rgba(0,0,0,.5);
+  transform: translateY(-2px) scale(1.06);
+}
+
+/* Fitxa amb error */
+.mj-fitxa.error {
+  animation: mj-tremola .4s ease;
+  border-color: #fc8181 !important;
+}
+@keyframes mj-tremola {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-4px); }
+  40%      { transform: translateX(4px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(3px); }
+}
+
+/* Fitxa pista */
+.mj-fitxa.pista {
+  animation: mj-pista 0.6s ease infinite alternate;
+}
+@keyframes mj-pista {
+  from { box-shadow: 0 0 0 2px #ecc94b, 2px 3px 0 rgba(0,0,0,.5); border-color: #ecc94b; }
+  to   { box-shadow: 0 0 14px 4px #ecc94b88, 2px 3px 0 rgba(0,0,0,.5); border-color: #f6e05e; }
+}
+
+/* Símbol */
+.mj-fitxa-simbol {
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ── Animació eliminació ── */
+.mj-fitxa.eliminant {
+  animation: mj-elimina .25s ease forwards;
+}
+@keyframes mj-elimina {
+  to { opacity: 0; transform: scale(.7); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .mj-btn-accio { font-size: .78rem; padding: .35rem .7rem; }
+  .mj-tauler-scroll { padding: .25rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BOMBERMAN AÇORES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.bm-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem .5rem 1.5rem;
+  gap: .5rem;
+}
+
+/* ── Canvas ── */
+.bm-canvas-wrap {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+}
+#bm-canvas {
+  border-radius: 8px;
+  border: 2px solid rgba(106,171,122,.25);
+  box-shadow: 0 0 24px rgba(0,0,0,.5);
+  display: block;
+}
+
+/* ── Barra de power-ups ── */
+.bm-power-bar {
+  display: flex;
+  gap: .8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .4rem 1rem;
+  font-family: 'DM Mono', monospace;
+}
+.bm-power-bar span {
+  transition: opacity .2s;
+}
+
+/* ── Llegenda power-ups (inici) ── */
+.bm-power-llegenda {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .5rem;
+  font-size: .8rem;
+  color: var(--text2);
+  background: rgba(255,255,255,.03);
+  border-radius: 8px;
+  padding: .4rem .8rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .bm-power-bar { font-size: .85rem; gap: .5rem; padding: .3rem .6rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LLANÇA BOMBES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.lb-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem .5rem 1.5rem;
+  gap: .5rem;
+}
+
+/* ── Canvas ── */
+.lb-canvas-wrap {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  cursor: crosshair;
+}
+#lb-canvas {
+  border-radius: 12px;
+  border: 2px solid rgba(106,171,122,.2);
+  box-shadow: 0 0 32px rgba(0,0,0,.6), 0 0 0 1px rgba(106,171,122,.05);
+  display: block;
+  width: 100%;
+}
+
+/* ── Info bar ── */
+.lb-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  padding: .3rem .6rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .88rem;
+}
+.lb-bombes-wrap {
+  display: flex;
+  gap: .3rem;
+  font-size: 1.1rem;
+}
+.lb-objectiu-wrap {
+  font-size: .9rem;
+  color: var(--text);
+}
+.lb-objectiu-wrap span:first-child { font-weight: 700; color: var(--verd2); }
+
+/* ── Llegenda tipus (inici) ── */
+.lb-tipus-llegenda {
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .5rem;
+  font-size: .82rem;
+  color: var(--text2);
+  background: rgba(255,255,255,.03);
+  border-radius: 8px;
+  padding: .4rem .8rem;
+}
+.lb-tipus-llegenda strong { color: var(--verd2); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .lb-canvas-wrap { max-width: 100%; }
+  .lb-info-bar { font-size: .8rem; }
+}

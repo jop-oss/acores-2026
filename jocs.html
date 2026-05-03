@@ -155,10 +155,30 @@
           <span class="joc-selector-label">Correu de les Açores</span>
           <span class="joc-selector-sub">5 carrils · recull cartes · lliura-les</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('llanca')">
-          <span class="joc-selector-icon">🌿</span>
-          <span class="joc-selector-label">Llança't!</span>
-          <span class="joc-selector-sub">Liana · timing · 3 intents · espai</span>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('flappy')">
+          <span class="joc-selector-icon">🐦</span>
+          <span class="joc-selector-label">Flappy Açores</span>
+          <span class="joc-selector-sub">Vola · esquiva roques · rècord</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('pescamines')">
+          <span class="joc-selector-icon">💣</span>
+          <span class="joc-selector-label">Pescamines</span>
+          <span class="joc-selector-sub">Fàcil / Mitjà / Difícil · sense mines</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('mahjong')">
+          <span class="joc-selector-icon">🀄</span>
+          <span class="joc-selector-label">Mahjong Açores</span>
+          <span class="joc-selector-sub">Creu · Piràmide · Tortuga</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('bomberman')">
+          <span class="joc-selector-icon">💥</span>
+          <span class="joc-selector-label">Bomberman Açores</span>
+          <span class="joc-selector-sub">10 nivells · enemics · power-ups</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('llancabombes')">
+          <span class="joc-selector-icon">🎯</span>
+          <span class="joc-selector-label">Llança Bombes</span>
+          <span class="joc-selector-sub">Apunta · llança · elimina</span>
         </button>
       </div>
     </div>
@@ -186,7 +206,11 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('asteroid', this)">🚀 Asteroid</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('correu', this)">📬 Correu</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('llanca', this)">🌿 Llança't</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('flappy', this)">🐦 Flappy</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('bomberman', this)">💥 Bomber</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('llancabombes', this)">🎯 Llança</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -973,15 +997,15 @@
     </div>
   </div>
 
-  <!-- PANTALLES LLANÇA'T -->
-  <div id="screen-llanca-inici" style="display:none">
+  <!-- PANTALLES FLAPPY AÇORES -->
+  <div id="screen-flappy-inici" style="display:none">
     <div class="cl-wrap">
       <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
-      <div id="llanca-inici-cont"></div>
+      <div id="flappy-inici-cont"></div>
     </div>
   </div>
-  <div id="screen-llanca-joc" style="display:none">
-    <div id="llanca-joc-cont"></div>
+  <div id="screen-flappy-joc" style="display:none">
+    <div id="flappy-joc-cont"></div>
   </div>
 
   <!-- PANTALLES CORREU DE LES AÇORES -->
@@ -1063,7 +1087,54 @@
 <script src="js/corre.js"></script>
 <script src="js/asteroid.js"></script>
 <script src="js/correu.js"></script>
-<script src="js/llanca.js"></script>
+  <!-- PANTALLES PESCAMINES -->
+  <div id="screen-pescamines-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="pescamines-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-pescamines-joc" style="display:none">
+    <div id="pescamines-joc-cont"></div>
+  </div>
+
+  <!-- PANTALLES MAHJONG -->
+  <div id="screen-mahjong-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="mahjong-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-mahjong-joc" style="display:none">
+    <div id="mahjong-joc-cont"></div>
+  </div>
+
+  <!-- PANTALLES BOMBERMAN -->
+  <div id="screen-bomberman-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="bomberman-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-bomberman-joc" style="display:none">
+    <div id="bomberman-joc-cont"></div>
+  </div>
+
+  <!-- PANTALLES LLANÇA BOMBES -->
+  <div id="screen-llancabombes-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="llancabombes-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-llancabombes-joc" style="display:none">
+    <div id="llancabombes-joc-cont"></div>
+  </div>
+
+<script src="js/pescamines.js"></script>
+<script src="js/mahjong.js"></script>
+<script src="js/bomberman.js"></script>
+<script src="js/llancabombes.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
