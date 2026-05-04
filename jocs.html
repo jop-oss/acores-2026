@@ -190,6 +190,11 @@
           <span class="joc-selector-label">Busca les Diferències</span>
           <span class="joc-selector-sub">8 escenes · observació</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('ginrummy')">
+          <span class="joc-selector-icon">🃏</span>
+          <span class="joc-selector-label">Gin Rummy</span>
+          <span class="joc-selector-sub">vs IA · 3 dificultats · baralla espanyola</span>
+        </button>
       </div>
     </div>
 
@@ -223,6 +228,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1100,8 +1106,7 @@
 <script src="js/asteroid.js"></script>
 <script src="js/correu.js"></script>
 <script src="js/flappy.js"></script>
-  <!-- PANTALLES PESCAMINES -->
-  <div id="screen-pescamines-inici" style="display:none">
+<script src="js/pescamines.js"></script>
     <div class="cl-wrap">
       <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
       <div id="pescamines-inici-cont"></div>
@@ -1206,6 +1211,18 @@
 <script src="js/diferencies.js"></script>
 <script src="js/scrabble-data.js"></script>
 <script src="js/scrabble.js"></script>
+  <!-- PANTALLES GIN RUMMY -->
+  <div id="screen-ginrummy-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="ginrummy-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-ginrummy-joc" style="display:none">
+    <div id="ginrummy-joc-cont"></div>
+  </div>
+
+<script src="js/gin-rummy.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
