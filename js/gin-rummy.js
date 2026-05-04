@@ -77,7 +77,10 @@ function grRenderInici() {
   document.getElementById('ginrummy-inici-cont').innerHTML = `
     <div class="snake-inici-wrap">
       <div class="snake-inici-main">
-        <div class="joc-titol-fila">
+        <div class="joc-header-fila">
+          <button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button>
+        </div>
+        <div class="joc-titol-fila" style="align-items:center;width:100%;text-align:center;">
           <span class="joc-titol-emoji">🃏</span>
           <span class="joc-titol-text">Gin Rummy</span>
         </div>
@@ -196,8 +199,14 @@ function grRenderJoc() {
   const enMeld  = new Set(dw.meldsIdx.flat());
   const descTop = grPilaDesc.length > 0 ? grPilaDesc[grPilaDesc.length - 1] : null;
 
-  const potGin   = grFase === 'descartar' && grTorn === 'jugador' && dw.total === 0;
-  const potKnock = grFase === 'descartar' && grTorn === 'jugador' && dw.total > 0 && dw.total <= 10;
+  // GIN/KNOCK es calcula sobre les 10 cartes que quedaran després de descartar la seleccionada
+  let potGin = false, potKnock = false;
+  if (grFase === 'descartar' && grTorn === 'jugador' && grCartaSelec !== null) {
+    const maPostDesc = grMaJugador.filter((_, i) => i !== grCartaSelec);
+    const dwPost = grCalcularDeadwood(maPostDesc);
+    potGin   = dwPost.total === 0;
+    potKnock = dwPost.total > 0 && dwPost.total <= 10;
+  }
 
   document.getElementById('ginrummy-joc-cont').innerHTML = `
     <div class="gr-wrap">
@@ -309,10 +318,17 @@ function grSeleccionarCarta(idx) {
     el.classList.toggle('gr-seleccionada', i === grCartaSelec);
   });
 
-  const dw = grCalcularDeadwood(grMaJugador);
-  const potGin   = dw.total === 0;
-  const potKnock = dw.total > 0 && dw.total <= 10;
-  const accions  = document.getElementById('gr-accions');
+  // Calcula deadwood sobre les 10 cartes que quedaran després de descartar la seleccionada
+  let potGin = false, potKnock = false, dwPostTotal = 0;
+  if (grCartaSelec !== null) {
+    const maPostDesc = grMaJugador.filter((_, i) => i !== grCartaSelec);
+    const dwPost = grCalcularDeadwood(maPostDesc);
+    dwPostTotal = dwPost.total;
+    potGin   = dwPost.total === 0;
+    potKnock = dwPost.total > 0 && dwPost.total <= 10;
+  }
+
+  const accions = document.getElementById('gr-accions');
   if (!accions) return;
 
   accions.innerHTML = `
@@ -325,7 +341,7 @@ function grSeleccionarCarta(idx) {
       ${potGin
         ? '<button class="gr-btn gr-btn-gin" onclick="grTancarGin()">🥃 GIN! (0 deadwood)</button>'
         : potKnock
-          ? `<button class="gr-btn gr-btn-knock" onclick="grTancarKnock()">✊ KNOCK (${dw.total} pts)</button>`
+          ? `<button class="gr-btn gr-btn-knock" onclick="grTancarKnock()">✊ KNOCK (${dwPostTotal} pts)</button>`
           : ''}
     </div>`;
 }
@@ -343,15 +359,25 @@ function grDescartar() {
 }
 
 function grTancarGin() {
-  if (!grActiu) return;
-  if (grCalcularDeadwood(grMaJugador).total !== 0) return;
+  if (!grActiu || grCartaSelec === null) return;
+  const maPostDesc = grMaJugador.filter((_, i) => i !== grCartaSelec);
+  if (grCalcularDeadwood(maPostDesc).total !== 0) return;
+  // Descarta la carta seleccionada i tanca
+  const carta = grMaJugador.splice(grCartaSelec, 1)[0];
+  grPilaDesc.push(carta);
+  grCartaSelec = null;
   grActiu = false;
   grResoldre('gin');
 }
 
 function grTancarKnock() {
-  if (!grActiu) return;
-  if (grCalcularDeadwood(grMaJugador).total > 10) return;
+  if (!grActiu || grCartaSelec === null) return;
+  const maPostDesc = grMaJugador.filter((_, i) => i !== grCartaSelec);
+  if (grCalcularDeadwood(maPostDesc).total > 10) return;
+  // Descarta la carta seleccionada i tanca
+  const carta = grMaJugador.splice(grCartaSelec, 1)[0];
+  grPilaDesc.push(carta);
+  grCartaSelec = null;
   grActiu = false;
   grResoldre('knock');
 }
