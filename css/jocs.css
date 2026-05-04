@@ -4259,3 +4259,126 @@
   .lb-canvas-wrap { max-width: 100%; }
   .lb-info-bar { font-size: .8rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   SOKOBAN AÇORES — Açores 2026
+   ══════════════════════════════════════════════════════════════ */
+
+.sk-game-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: .75rem .5rem 1.5rem;
+  gap: .5rem;
+}
+
+/* ── Nom del nivell ── */
+.sk-nom-nivell {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--verd2);
+  text-align: center;
+  letter-spacing: .04em;
+}
+
+/* ── Canvas ── */
+.sk-canvas-wrap {
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+}
+#sk-canvas {
+  border-radius: 8px;
+  border: 2px solid rgba(106,171,122,.2);
+  box-shadow: 0 0 24px rgba(0,0,0,.5);
+  image-rendering: pixelated;
+}
+
+/* ── Botons d'acció ── */
+.sk-botons-accio {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sk-botons-accio kbd {
+  font-size: .65rem;
+  background: rgba(255,255,255,.1);
+  border-radius: 3px;
+  padding: 0 3px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── Selector de nivells ── */
+.sk-selector-nivells {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+.sk-nivells-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  justify-content: center;
+  max-width: 340px;
+}
+.sk-niv-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .15s, background .15s;
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+}
+.sk-niv-btn.completat {
+  background: rgba(45,90,61,.35);
+  border-color: var(--verd2);
+  color: var(--verd2);
+}
+.sk-niv-btn.disponible {
+  border-color: rgba(106,171,122,.4);
+}
+.sk-niv-btn.disponible:hover { border-color: var(--verd2); background: rgba(106,171,122,.1); }
+.sk-niv-btn.bloquejat {
+  opacity: .3;
+  cursor: not-allowed;
+}
+.sk-niv-num { font-size: .72rem; }
+.sk-niv-check {
+  position: absolute;
+  top: -4px; right: -4px;
+  font-size: .6rem;
+  background: var(--verd2);
+  color: #0a1628;
+  border-radius: 50%;
+  width: 12px; height: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sk-niv-mov {
+  position: absolute;
+  bottom: -6px;
+  font-size: .5rem;
+  color: var(--text2);
+  background: rgba(10,22,40,.8);
+  padding: 0 2px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .sk-niv-btn { width: 32px; height: 32px; font-size: .68rem; }
+  .sk-botons-accio .mj-btn-accio { font-size: .75rem; padding: .3rem .6rem; }
+}

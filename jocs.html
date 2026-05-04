@@ -175,10 +175,10 @@
           <span class="joc-selector-label">Bomberman Açores</span>
           <span class="joc-selector-sub">10 nivells · enemics · power-ups</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('llancabombes')">
-          <span class="joc-selector-icon">🎯</span>
-          <span class="joc-selector-label">Llança Bombes</span>
-          <span class="joc-selector-sub">Apunta · llança · elimina</span>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('sokoban')">
+          <span class="joc-selector-icon">📦</span>
+          <span class="joc-selector-label">Sokoban Açores</span>
+          <span class="joc-selector-sub">30 puzzles · roques · lògica</span>
         </button>
       </div>
     </div>
@@ -210,7 +210,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('bomberman', this)">💥 Bomber</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('llancabombes', this)">🎯 Llança</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1120,21 +1120,22 @@
     <div id="bomberman-joc-cont"></div>
   </div>
 
-  <!-- PANTALLES LLANÇA BOMBES -->
-  <div id="screen-llancabombes-inici" style="display:none">
+  <!-- PANTALLES SOKOBAN -->
+  <div id="screen-sokoban-inici" style="display:none">
     <div class="cl-wrap">
       <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
-      <div id="llancabombes-inici-cont"></div>
+      <div id="sokoban-inici-cont"></div>
     </div>
   </div>
-  <div id="screen-llancabombes-joc" style="display:none">
-    <div id="llancabombes-joc-cont"></div>
+  <div id="screen-sokoban-joc" style="display:none">
+    <div id="sokoban-joc-cont"></div>
   </div>
 
 <script src="js/pescamines.js"></script>
 <script src="js/mahjong.js"></script>
 <script src="js/bomberman.js"></script>
-<script src="js/llancabombes.js"></script>
+<script src="js/sokoban-data.js"></script>
+<script src="js/sokoban.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

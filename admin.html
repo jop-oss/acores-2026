@@ -478,17 +478,15 @@
     </table>
   </div>
 
-  <!-- LLANÇA BOMBES -->
+  <!-- SOKOBAN -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
-      <div class="admin-seccio-title">🎯 Llança Bombes</div>
-      <button class="btn-reset-tot" onclick="resetTotJoc('llancabombes')">Reiniciar tots</button>
+      <div class="admin-seccio-title">📦 Sokoban Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('sokoban')">Reiniciar tots</button>
     </div>
     <table class="admin-taula">
-      <thead>
-        <tr><th>Jugador</th><th>Millor puntuació</th><th>Nivell màx</th><th></th></tr>
-      </thead>
-      <tbody id="taula-llancabombes"></tbody>
+      <thead><tr><th>Jugador</th><th>Nivells completats</th><th></th></tr></thead>
+      <tbody id="taula-sokoban"></tbody>
     </table>
   </div>
 
@@ -548,7 +546,7 @@
     renderPescamines();
     renderMahjong();
     renderBomberman();
-    renderLlancaBombes();
+    renderSokoban();
     renderRuleta();
   }
 
@@ -756,13 +754,13 @@
     pescamines: nom => `pescamines_estat_${nom}`,
     mahjong:    nom => `mahjong_estat_${nom}`,
     bomberman:  nom => `bomberman_estat_${nom}`,
-    llancabombes: nom => `llancabombes_estat_${nom}`,
+    sokoban:      nom => `sokoban_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
     cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
-    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, llancabombes: renderLlancaBombes
+    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -772,7 +770,7 @@
     pescamines: 'Pescamines',
     mahjong: 'Mahjong Açores',
     bomberman: 'Bomberman Açores',
-    llancabombes: 'Llança Bombes'
+    sokoban: 'Sokoban Açores'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1016,18 +1014,16 @@
     }).join('');
   }
 
-  function renderLlancaBombes() {
-    const tbody = document.getElementById('taula-llancabombes');
+  function renderSokoban() {
+    const tbody = document.getElementById('taula-sokoban');
     tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`llancabombes_estat_${nom}`);
-      const dades = raw ? JSON.parse(raw) : { punts: 0, nivell: 1 };
-      const millor = dades.punts || 0;
-      const nivell = dades.nivell || 1;
+      const raw = localStorage.getItem(`sokoban_estat_${nom}`);
+      const dades = raw ? JSON.parse(raw) : { completats: 0 };
+      const completats = dades.completats || 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><span class="pts-badge ${nivell<=1?'zero':''}">Niv. ${nivell}</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('llancabombes','${nom}')">Reiniciar</button></td>
+        <td><span class="pts-badge ${completats===0?'zero':''}">${completats}/60</span></td>
+        <td><button class="btn-reset-jugador" ${completats===0?'disabled':''} onclick="resetJugador('sokoban','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }
