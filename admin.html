@@ -514,6 +514,18 @@
     </table>
   </div>
 
+  <!-- GIN RUMMY -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🃏 Gin Rummy</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('ginrummy')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Partides</th><th>Mitjana</th><th>Millor</th><th></th></tr></thead>
+      <tbody id="taula-ginrummy"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -573,6 +585,7 @@
     renderSokoban();
     renderScrabble();
     renderDiferencies();
+    renderGinRummy();
     renderRuleta();
   }
 
@@ -782,12 +795,14 @@
     bomberman:  nom => `bomberman_estat_${nom}`,
     sokoban:      nom => `sokoban_estat_${nom}`,
     diferencies:  nom => `difer_estat_${nom}`,
+    ginrummy:     nom => `ginrummy_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
     cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
-    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies
+    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies,
+    ginrummy: renderGinRummy
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -799,7 +814,8 @@
     bomberman: 'Bomberman Açores',
     sokoban: 'Sokoban Açores',
     scrabble: 'Scrabble Açores',
-    diferencies: 'Busca les Diferències'
+    diferencies: 'Busca les Diferències',
+    ginrummy: 'Gin Rummy'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1098,6 +1114,29 @@
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${completats===0?'zero':''}">${completats}/60</span></td>
         <td><button class="btn-reset-jugador" ${completats===0?'disabled':''} onclick="resetJugador('sokoban','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderGinRummy() {
+    const tbody = document.getElementById('taula-ginrummy');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
+      try { estat = JSON.parse(localStorage.getItem(`ginrummy_estat_${nom}`) || 'null') || estat; } catch(e) {}
+      const partides = estat.partides || 0;
+      const mitjana  = partides > 0 ? Math.round(estat.puntsTotals / partides) : 0;
+      const millor   = Math.max(
+        estat.difs?.facil?.millor   || 0,
+        estat.difs?.mitja?.millor   || 0,
+        estat.difs?.dificil?.millor || 0
+      );
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
+        <td><span class="pts-badge ${mitjana===0?'zero':''}">${mitjana} pts</span></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
+        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('ginrummy','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }
