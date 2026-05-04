@@ -164,10 +164,10 @@ function lbAjustarCanvas() {
   const wrap = document.getElementById('lb-canvas-wrap');
   if (!wrap) return;
   lbW = Math.min(wrap.clientWidth, 500);
-  lbH = Math.round(lbW * 1.2);
+  lbH = Math.round(lbW * 0.85);  // menys alt → més espai per trajectòries
   lbCanvas.width  = lbW;
   lbCanvas.height = lbH;
-  lbPosLlancament = { x: lbW / 2, y: lbH - 60 };
+  lbPosLlancament = { x: lbW / 2, y: lbH - 40 };
 }
 
 // ── INICIALITZAR ESTAT DEL NIVELL ─────────────────────────────
@@ -302,7 +302,7 @@ function lbActualitzarLogica(dt) {
     if (obj.x < marge)        { obj.x = marge;       obj.vx *= -1; }
     if (obj.x > lbW - marge)  { obj.x = lbW - marge; obj.vx *= -1; }
     if (obj.y < marge)        { obj.y = marge;       obj.vy *= -1; }
-    if (obj.y > lbH * 0.75)   { obj.y = lbH * 0.75; obj.vy *= -1; }
+    if (obj.y > lbH * 0.82)   { obj.y = lbH * 0.82; obj.vy *= -1; }
   });
 
   // Elimina objectius morts
@@ -424,26 +424,29 @@ function lbDibuixar() {
     ctx.scale(pulse, pulse);
 
     // Flash de cop
-    if (obj.hit) {
-      ctx.globalAlpha = 0.6 + Math.random() * 0.4;
-    }
+    ctx.globalAlpha = obj.hit ? 0.5 : 1;
 
-    // Ombra suau
-    ctx.shadowColor = 'rgba(0,0,0,0.4)';
-    ctx.shadowBlur  = 8;
+    // Fons semitransparent perquè l'emoji destaqui
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.beginPath();
+    ctx.arc(0, 0, obj.tipus.mida / 2, 0, Math.PI * 2);
+    ctx.fill();
 
+    // Emoji — SENSE shadowColor (els capgira/enfosqueix en canvas)
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur  = 0;
     const s = obj.tipus.mida;
     ctx.font = `${s}px serif`;
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(obj.tipus.emoji, 0, 0);
+    ctx.fillStyle = 'white'; // no afecta emojis però evita artefactes
+    ctx.fillText(obj.tipus.emoji, 0, 2);
 
     // Barra de vida si té més d'1 HP
     if (obj.maxVida > 1) {
       const bw = s * 0.8, bh = 5;
-      const bx = -bw / 2, by = s / 2 + 4;
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      const bx = -bw / 2, by = s / 2 + 6;
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
       ctx.fillRect(bx, by, bw, bh);
       ctx.fillStyle = obj.vida === obj.maxVida ? '#68d391' : '#f6ad55';
       ctx.fillRect(bx, by, bw * (obj.vida / obj.maxVida), bh);
@@ -527,7 +530,7 @@ function lbDibuixar() {
 function lbDibuixarOndes(ctx) {
   const t = Date.now() / 1200;
   for (let capa = 0; capa < 3; capa++) {
-    const yBase = lbH * (0.65 + capa * 0.1);
+    const yBase = lbH * (0.78 + capa * 0.07);
     const amp   = 8 - capa * 2;
     const freq  = 0.015 + capa * 0.005;
     const alpha = 0.06 - capa * 0.015;
@@ -546,36 +549,49 @@ function lbDibuixarOndes(ctx) {
 
 function lbDibuixarBase(ctx) {
   const { x, y } = lbPosLlancament;
+  const nBombes  = lbBombesRestants;
+  const mida     = 22;    // px per bomba
+  const espai    = 26;    // separació entre bombes
+  const totalW   = Math.max(70, nBombes * espai + 16);
 
-  // Plataforma
-  ctx.fillStyle = 'rgba(45,90,61,0.7)';
+  // Plataforma ampliada per encabir totes les bombes
+  ctx.fillStyle = 'rgba(45,90,61,0.75)';
   ctx.beginPath();
-  ctx.roundRect(x - 35, y - 10, 70, 28, 8);
+  ctx.roundRect(x - totalW / 2, y - 14, totalW, 28, 8);
   ctx.fill();
-  ctx.strokeStyle = 'rgba(106,171,122,0.5)';
+  ctx.strokeStyle = 'rgba(106,171,122,0.55)';
   ctx.lineWidth = 1.5;
   ctx.stroke();
 
-  // Bombes restants
-  const espai = 22;
-  const startX = x - ((lbBombesRestants - 1) * espai) / 2;
-  for (let i = 0; i < lbBombesRestants; i++) {
-    ctx.font = '16px serif';
+  // Bombes centrades
+  if (nBombes > 0) {
+    const startX = x - ((nBombes - 1) * espai) / 2;
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur  = 0;
+    ctx.font = `${mida}px serif`;
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('💣', startX + i * espai, y + 5);
+    for (let i = 0; i < nBombes; i++) {
+      ctx.fillText('💣', startX + i * espai, y + 1);
+    }
+  } else {
+    // Sense bombes: mostra recàrrega
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '12px DM Sans, sans-serif';
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('recàrrega...', x, y + 1);
   }
 }
 
 function lbDibuixarTrajectoria(ctx) {
-  // Calcula vector de llançament (mirall del drag)
   const dx = lbArrossegaInici.x - lbArrossegaActual.x;
   const dy = lbArrossegaInici.y - lbArrossegaActual.y;
   const distDrag = Math.sqrt(dx * dx + dy * dy);
   if (distDrag < 5) return;
 
-  const potencia = Math.min(distDrag, 120) / 120;
-  const velMax = 18;
+  const potencia = Math.min(distDrag, 150) / 150;
+  const velMax   = 18;
   let vx = (dx / distDrag) * potencia * velMax;
   let vy = (dy / distDrag) * potencia * velMax;
 
@@ -585,36 +601,47 @@ function lbDibuixarTrajectoria(ctx) {
 
   ctx.save();
   ctx.setLineDash([5, 6]);
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.45)';
   ctx.lineWidth   = 2;
   ctx.beginPath();
   ctx.moveTo(px, py);
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 50; i++) {
     vx *= 0.995;
     vy += LB_GRAVETAT;
     px += vx;
     py += vy;
-    if (px < 0 || px > lbW || py > lbH) break;
+    if (px < 0 || px > lbW || py > lbH + 20) break;
     ctx.lineTo(px, py);
   }
   ctx.stroke();
 
-  // Punt de força
+  // Indicador de potència a la base (no al punt d'arrossegament que pot ser fora)
   const pctColor = potencia < 0.4 ? '#68d391' : potencia < 0.7 ? '#f6ad55' : '#fc8181';
   ctx.setLineDash([]);
   ctx.strokeStyle = pctColor;
   ctx.lineWidth   = 3;
+  // Fletxa indicadora de direcció des de la base
+  const baseX = lbPosLlancament.x;
+  const baseY = lbPosLlancament.y;
+  const arrowLen = Math.min(distDrag * 0.4, 55);
+  const arrowX = baseX + (dx / distDrag) * arrowLen;
+  const arrowY = baseY + (dy / distDrag) * arrowLen;
   ctx.beginPath();
-  ctx.moveTo(lbArrossegaInici.x, lbArrossegaInici.y);
-  ctx.lineTo(lbArrossegaActual.x, lbArrossegaActual.y);
+  ctx.moveTo(baseX, baseY);
+  ctx.lineTo(arrowX, arrowY);
   ctx.stroke();
 
-  // Fletxa a la base
+  // Punt de potència
   ctx.fillStyle = pctColor;
   ctx.beginPath();
-  ctx.arc(lbArrossegaInici.x, lbArrossegaInici.y, 8, 0, Math.PI * 2);
+  ctx.arc(baseX, baseY - 18, 6, 0, Math.PI * 2);
   ctx.fill();
+  // Barra de potència
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.fillRect(baseX - 30, baseY - 26, 60, 8);
+  ctx.fillStyle = pctColor;
+  ctx.fillRect(baseX - 30, baseY - 26, 60 * potencia, 8);
 
   ctx.restore();
 }
@@ -698,20 +725,32 @@ function lbActualitzarUI() {
 
 // ── CONTROLS ─────────────────────────────────────────────────
 function lbAfegirControls() {
+  // L'inici de l'arrossegament es detecta al canvas
   const wrap = document.getElementById('lb-canvas-wrap');
   if (wrap) {
     wrap.addEventListener('mousedown',  lbOnMouseDown);
-    wrap.addEventListener('mousemove',  lbOnMouseMove);
-    wrap.addEventListener('mouseup',    lbOnMouseUp);
     wrap.addEventListener('touchstart', lbOnTouchStart, { passive: false });
-    wrap.addEventListener('touchmove',  lbOnTouchMove,  { passive: false });
-    wrap.addEventListener('touchend',   lbOnTouchEnd,   { passive: false });
   }
+  // Moviment i alliberament es detecten a tot el document
+  // (permet arrossegar fora del canvas cap avall)
+  document.addEventListener('mousemove',  lbOnMouseMove);
+  document.addEventListener('mouseup',    lbOnMouseUp);
+  document.addEventListener('touchmove',  lbOnTouchMove,  { passive: false });
+  document.addEventListener('touchend',   lbOnTouchEnd,   { passive: false });
   document.addEventListener('keydown', lbOnKey);
   window.addEventListener('resize', lbAjustarCanvas);
 }
 
 function lbEliminarControls() {
+  const wrap = document.getElementById('lb-canvas-wrap');
+  if (wrap) {
+    wrap.removeEventListener('mousedown',  lbOnMouseDown);
+    wrap.removeEventListener('touchstart', lbOnTouchStart);
+  }
+  document.removeEventListener('mousemove',  lbOnMouseMove);
+  document.removeEventListener('mouseup',    lbOnMouseUp);
+  document.removeEventListener('touchmove',  lbOnTouchMove);
+  document.removeEventListener('touchend',   lbOnTouchEnd);
   document.removeEventListener('keydown', lbOnKey);
   window.removeEventListener('resize', lbAjustarCanvas);
 }
@@ -725,22 +764,20 @@ function lbTogglePausa() {
   lbPausa = !lbPausa;
 }
 
-// Coordenades relatives al canvas
+// Coordenades relatives al canvas (permet valors fora dels límits per calcular vectors)
 function lbCoordCanvas(clientX, clientY) {
   const rect = lbCanvas.getBoundingClientRect();
   const scaleX = lbW / rect.width;
   const scaleY = lbH / rect.height;
   return {
-    x: (clientX - rect.left) * scaleX,
-    y: (clientY - rect.top)  * scaleY,
+    x: (clientX - rect.left)  * scaleX,
+    y: (clientY - rect.top)   * scaleY,
   };
 }
 
 function lbIniciarArrossegament(cx, cy) {
   if (!lbActiu || lbPausa || lbBomba || lbBombesRestants <= 0) return;
-  // Només si toca prop de la base (meitat inferior)
-  if (cy < lbH * 0.5) return;
-  lbArrossegant    = true;
+  lbArrossegant     = true;
   lbArrossegaInici  = { x: lbPosLlancament.x, y: lbPosLlancament.y };
   lbArrossegaActual = { x: cx, y: cy };
 }
@@ -759,7 +796,7 @@ function lbAlliberarArrossegament(cx, cy) {
   const dist = Math.sqrt(dx * dx + dy * dy);
   if (dist < 8) { lbArrossegaInici = null; lbArrossegaActual = null; return; }
 
-  const potencia = Math.min(dist, 120) / 120;
+  const potencia = Math.min(dist, 150) / 150;
   const velMax   = 18;
   const vx = (dx / dist) * potencia * velMax;
   const vy = (dy / dist) * potencia * velMax;
