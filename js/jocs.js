@@ -211,6 +211,7 @@ async function rankingCarregar() {
       llancabombes: 0,
       sokoban: 0,
       scrabble: 0,
+      diferencies: 0,
     };
   });
 
@@ -314,6 +315,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].scrabble = ptsScrabble[nom] || 0; });
   } catch(e) {}
 
+  // Busca les Diferències (localStorage)
+  if (typeof diferGetPuntsGlobals === 'function') {
+    const ptsDifer = diferGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].diferencies = ptsDifer[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -322,7 +329,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0);
   return d[filtre] || 0;
 }
 
@@ -389,7 +396,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -411,6 +418,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🎯", nom: "Llança Bombes", key: "llancabombes" },
     { icon: "🪨", nom: "Sokoban", key: "sokoban" },
     { icon: "📝", nom: "Scrabble", key: "scrabble" },
+    { icon: "🔍", nom: "Diferències", key: "diferencies" },
   ];
 
   cos.innerHTML = `
@@ -558,6 +566,8 @@ function seleccionarModeJoc(mode) {
     iniciarSokoban();
   } else if (mode === "scrabble") {
     iniciarScrabble();
+  } else if (mode === "diferencies") {
+    iniciarDiferencies();
   }
 }
 
@@ -944,6 +954,8 @@ function mostraScreen(nom) {
     "scrabble-torn",
     "scrabble-validar",
     "scrabble-veure",
+    "difer-inici",
+    "difer-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
