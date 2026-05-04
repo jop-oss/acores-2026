@@ -292,6 +292,18 @@
     </div>
   </div>
 
+  <!-- SCRABBLE -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📝 Scrabble Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJocScrabble()">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Punts acumulats</th><th></th></tr></thead>
+      <tbody id="taula-scrabble"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -490,6 +502,18 @@
     </table>
   </div>
 
+  <!-- SCRABBLE -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📝 Scrabble Açores</div>
+      <button class="btn-reset-tot" onclick="resetTotJocScrabble()">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Punts acumulats</th><th></th></tr></thead>
+      <tbody id="taula-scrabble"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -547,6 +571,7 @@
     renderMahjong();
     renderBomberman();
     renderSokoban();
+    renderScrabble();
     renderRuleta();
   }
 
@@ -770,7 +795,8 @@
     pescamines: 'Pescamines',
     mahjong: 'Mahjong Açores',
     bomberman: 'Bomberman Açores',
-    sokoban: 'Sokoban Açores'
+    sokoban: 'Sokoban Açores',
+    scrabble: 'Scrabble Açores'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1012,6 +1038,34 @@
         <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('bomberman','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
+  }
+
+  async function renderScrabble() {
+    const tbody = document.getElementById('taula-scrabble');
+    if (!tbody) return;
+    // Scrabble uses Firebase - show note
+    tbody.innerHTML = JUGADORS.map(nom => `<tr>
+      <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+      <td><span class="pts-badge">Firebase</span></td>
+      <td><button class="btn-reset-jugador" onclick="resetScrabbleJugador('${nom}')">Reiniciar</button></td>
+    </tr>`).join('');
+  }
+
+  async function resetTotJocScrabble() {
+    if (!confirm('Segur que vols esborrar totes les partides de Scrabble?')) return;
+    try {
+      if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+      const db = firebase.firestore();
+      await Promise.all([
+        db.collection('scrabble_partides').doc('individual').delete(),
+        db.collection('scrabble_partides').doc('equips').delete(),
+      ]);
+      showToast('Partides Scrabble esborrades');
+    } catch(e) { showToast('Error: ' + e.message); }
+  }
+
+  async function resetScrabbleJugador(nom) {
+    showToast('Per reiniciar un jugador individual cal reiniciar la partida des del propi joc (⚙️).');
   }
 
   function renderSokoban() {

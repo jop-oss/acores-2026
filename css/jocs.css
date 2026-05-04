@@ -4382,3 +4382,95 @@
   .sk-niv-btn { width: 32px; height: 32px; font-size: .68rem; }
   .sk-botons-accio .mj-btn-accio { font-size: .75rem; padding: .3rem .6rem; }
 }
+
+    /* ══════════════════════════════════════════════════════════════
+       SCRABBLE AÇORES
+    ══════════════════════════════════════════════════════════════ */
+
+    /* Pantalla torn */
+    .sc-torn-wrap { display:flex; flex-direction:column; min-height:calc(100vh - 52px); }
+    .sc-torn-header { display:flex; align-items:center; gap:.6rem; padding:.6rem 1rem; background:var(--bg2); border-bottom:1px solid var(--border); position:sticky; top:52px; z-index:100; flex-wrap:wrap; }
+    .sc-torn-avatar { width:36px; height:36px; border-radius:50%; object-fit:cover; object-position:top; border:2px solid var(--verd2); flex-shrink:0; }
+    .sc-torn-info { display:flex; align-items:center; gap:.5rem; flex:1; min-width:0; }
+    .sc-torn-nom { font-weight:700; font-size:.9rem; }
+    .sc-torn-ronda { font-size:.72rem; color:var(--text2); }
+    .sc-torn-accions { display:flex; gap:.4rem; flex-wrap:wrap; }
+
+    /* Tauler */
+    .sc-tauler-wrap { overflow:auto; padding:.5rem; display:flex; justify-content:center; }
+    .sc-tauler { display:grid; grid-template-columns:repeat(15, 1fr); gap:1px; background:rgba(106,171,122,.1); border:2px solid rgba(106,171,122,.2); border-radius:6px; width:min(480px, calc(100vw - 1rem)); aspect-ratio:1/1; }
+    .sc-cel { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; background:var(--bg2); transition:background .12s; min-width:0; overflow:hidden; }
+    .sc-cel:hover { background:rgba(106,171,122,.12); }
+    .sc-cel-label { font-size:clamp(5px, 1.4vw, 8px); font-weight:700; line-height:1; color:inherit; text-align:center; }
+
+    /* Caselles especials */
+    .sc-cel-tp { background:#3a0a0a; } .sc-cel-tp .sc-cel-label { color:#ffaaaa; }
+    .sc-cel-dp { background:#2a0a1a; } .sc-cel-dp .sc-cel-label { color:#ffaacc; }
+    .sc-cel-tl { background:#0a1a2a; } .sc-cel-tl .sc-cel-label { color:#aaccff; }
+    .sc-cel-dl { background:#0a2a1a; } .sc-cel-dl .sc-cel-label { color:#aaffcc; }
+    .sc-cel-centre { background:#2a1a00; } .sc-cel-centre .sc-cel-label { color:var(--gold); font-size:clamp(7px,1.8vw,11px); }
+
+    /* Fitxes al tauler */
+    .sc-cel-fitxa { cursor:default; flex-direction:column; gap:0; }
+    .sc-cel-fixe { background:#1e3020; }
+    .sc-cel-nova { background:#3a5a2a; animation:scFitxaNova .25s ease; }
+    .sc-cel-pendent { background:#4a3a1a; }
+    @keyframes scFitxaNova { from { transform:scale(.7); opacity:.5; } to { transform:scale(1); opacity:1; } }
+    .sc-fitxa-lletra { font-size:clamp(7px, 2vw, 13px); font-weight:800; line-height:1; color:var(--text); }
+    .sc-fitxa-pts { font-size:clamp(4px, 1.1vw, 7px); color:var(--text2); line-height:1; }
+
+    /* Mà del jugador */
+    .sc-ma-wrap { padding:.75rem 1rem .5rem; background:var(--bg2); border-top:1px solid var(--border); }
+    .sc-ma-label { font-size:.72rem; color:var(--text2); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; }
+    .sc-ma { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; }
+    .sc-fitxa-ma { width:44px; height:52px; background:var(--bg); border:2px solid var(--border); border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; gap:1px; user-select:none; }
+    .sc-fitxa-ma:hover { border-color:var(--verd2); transform:translateY(-3px); }
+    .sc-fitxa-ma.seleccionada { border-color:var(--gold); background:rgba(240,180,41,.12); transform:translateY(-5px); box-shadow:0 4px 12px rgba(240,180,41,.3); }
+    .sc-fitxa-ma.en-canvi { border-color:var(--error); background:rgba(224,85,85,.1); }
+    .sc-fitxa-ma .sc-fitxa-lletra { font-size:1.1rem; }
+    .sc-fitxa-ma .sc-fitxa-pts { font-size:.6rem; }
+
+    /* Punts torn */
+    .sc-punts-torn { text-align:center; padding:.4rem; font-size:.85rem; color:var(--text2); background:var(--bg2); border-top:1px solid var(--border); }
+    .sc-punts-torn #sc-punts-val { color:var(--gold); font-weight:700; font-size:1rem; }
+
+    /* Rànquing lateral */
+    .sc-ranking-lateral { padding:.5rem 1rem 1rem; }
+    .sc-rank-lateral { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:.75rem; }
+    .sc-rank-lateral-titol { font-size:.72rem; color:var(--text2); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; }
+    .sc-rank-lateral-item { display:flex; align-items:center; gap:.5rem; padding:3px 0; font-size:.82rem; }
+    .sc-rank-lateral-nom { flex:1; font-weight:600; }
+    .sc-rank-lateral-pts { color:var(--gold); font-weight:700; }
+
+    /* Canvi de fitxes */
+    .sc-canvi-wrap { padding:.5rem 1rem; background:rgba(45,90,61,.1); border-top:1px solid var(--border); font-size:.82rem; }
+
+    /* Validar */
+    .sc-validar-wrap { max-width:600px; margin:0 auto; padding:1rem; }
+    .sc-validar-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+    .sc-validar-titol { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; }
+    .sc-validar-info { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1rem; margin-bottom:1rem; }
+    .sc-validar-paraules { display:flex; gap:.4rem; flex-wrap:wrap; margin:.5rem 0; }
+    .sc-validar-paraula { padding:.3rem .7rem; border-radius:20px; font-weight:700; font-size:.85rem; }
+    .sc-validar-paraula.valida { background:rgba(106,171,122,.15); color:var(--verd2); border:1px solid var(--verd); }
+    .sc-validar-paraula.dubte { background:rgba(240,180,41,.12); color:var(--gold); border:1px solid rgba(240,180,41,.4); }
+    .sc-validar-tauler-wrap { overflow:auto; display:flex; justify-content:center; margin-bottom:1rem; }
+    .sc-validar-btns { display:flex; gap:.75rem; flex-wrap:wrap; }
+
+    /* Fi de partida */
+    .sc-fi-partida { max-width:480px; margin:2rem auto; text-align:center; padding:1.5rem; background:var(--bg2); border:1px solid var(--border); border-radius:20px; }
+    .sc-fi-icon { font-size:3rem; margin-bottom:.5rem; }
+    .sc-fi-titol { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:900; background:linear-gradient(135deg,var(--verd2),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.5rem; }
+    .sc-fi-guanyador { font-size:1rem; color:var(--text2); margin-bottom:1rem; }
+    .sc-fi-resultats { display:flex; flex-direction:column; gap:.4rem; }
+    .sc-fi-jugador { display:flex; align-items:center; gap:.75rem; background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:.5rem .75rem; }
+
+    /* Pantalla inici Scrabble (reutilitza Trivial) */
+    #screen-scrabble-inici { display:none; min-height:calc(100vh - 52px); padding:1.5rem 1rem 3rem; }
+    #screen-scrabble-torn { display:none; }
+    #screen-scrabble-config-individual, #screen-scrabble-config-equips { display:none; }
+    #screen-scrabble-validar, #screen-scrabble-veure { display:none; }
+
+    .trivial-btn-iniciar { width:100%; background:linear-gradient(135deg,var(--verd),var(--verd2)); border:none; border-radius:10px; padding:.8rem; color:#fff; font-family:'DM Sans',sans-serif; font-size:.95rem; font-weight:600; cursor:pointer; transition:all .2s; }
+    .trivial-btn-iniciar:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,90,61,.5); }
+

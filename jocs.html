@@ -178,7 +178,12 @@
         <button class="joc-selector-btn" onclick="seleccionarModeJoc('sokoban')">
           <span class="joc-selector-icon">📦</span>
           <span class="joc-selector-label">Sokoban Açores</span>
-          <span class="joc-selector-sub">30 puzzles · roques · lògica</span>
+          <span class="joc-selector-sub">60 puzzles · roques · lògica</span>
+        </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('scrabble')">
+          <span class="joc-selector-icon">📝</span>
+          <span class="joc-selector-label">Scrabble Açores</span>
+          <span class="joc-selector-sub">Paraules · torns · individual o equips</span>
         </button>
       </div>
     </div>
@@ -211,6 +216,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('bomberman', this)">💥 Bomber</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1120,6 +1126,44 @@
     <div id="bomberman-joc-cont"></div>
   </div>
 
+  <!-- PANTALLES SCRABBLE -->
+  <div id="screen-scrabble-inici" style="display:none">
+    <div class="cl-wrap">
+      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
+      <div id="scrabble-inici-cont"></div>
+    </div>
+  </div>
+  <div id="screen-scrabble-config-individual" style="display:none">
+    <div class="trivial-config-wrap">
+      <div><button onclick="mostraScreen('scrabble-inici')" class="mapa-back-btn">← Tornar</button></div>
+      <h2 class="trivial-inici-titol">Nova partida individual</h2>
+      <div id="scrabble-config-individual-cont"></div>
+    </div>
+  </div>
+  <div id="screen-scrabble-config-equips" style="display:none">
+    <div class="trivial-config-wrap">
+      <div><button onclick="mostraScreen('scrabble-inici')" class="mapa-back-btn">← Tornar</button></div>
+      <h2 class="trivial-inici-titol">Configurar equips</h2>
+      <div id="scrabble-config-equips-cont"></div>
+    </div>
+  </div>
+  <div id="screen-scrabble-torn" style="display:none">
+    <div id="scrabble-torn-cont"></div>
+  </div>
+  <div id="screen-scrabble-validar" style="display:none">
+    <div class="cl-wrap">
+      <div id="scrabble-validar-cont"></div>
+    </div>
+  </div>
+  <div id="screen-scrabble-veure" style="display:none">
+    <div class="trivial-veure-wrap">
+      <div class="trivial-veure-header">
+        <button onclick="scSortir()" class="mapa-back-btn">← Tornar</button>
+      </div>
+      <div id="scrabble-veure-cont"></div>
+    </div>
+  </div>
+
   <!-- PANTALLES SOKOBAN -->
   <div id="screen-sokoban-inici" style="display:none">
     <div class="cl-wrap">
@@ -1134,6 +1178,8 @@
 <script src="js/pescamines.js"></script>
 <script src="js/mahjong.js"></script>
 <script src="js/bomberman.js"></script>
+<script src="js/scrabble-data.js"></script>
+<script src="js/scrabble.js"></script>
 <script src="js/sokoban-data.js"></script>
 <script src="js/sokoban.js"></script>
 <script src="js/jocs.js"></script>
