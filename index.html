@@ -53,6 +53,13 @@
   <button class="trivial-banner-btn" onclick="">Jugar ara →</button>
 </div>
 
+<!-- Banner torn Scrabble -->
+<div id="scrabble-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(106,171,122,.15),rgba(106,171,122,.05));border:1px solid rgba(106,171,122,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
+  <span class="trivial-banner-icon">📝</span>
+  <span class="trivial-banner-text" style="color:var(--verd2,#6aab7a)">És el teu torn al Scrabble!</span>
+  <button class="trivial-banner-btn" style="background:#6aab7a" onclick="">Jugar ara →</button>
+</div>
+
 <header class="hero">
   <img src="img/cartell.png" alt="Grup Açores 2026" class="hero-img">
   
@@ -332,12 +339,15 @@
 <script src="js/config.js"></script>
 <script src="js/trivial-data.js"></script>
 <script src="js/trivial.js"></script>
+<script src="js/scrabble-data.js"></script>
+<script src="js/scrabble.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const nomGuardat = localStorage.getItem('app_jugador');
     if (nomGuardat) {
       window.jugadorActiu = nomGuardat;
       trivialComprovarTornIndex();
+      scrabbleComprovarTornIndex();
     }
   });
 </script>

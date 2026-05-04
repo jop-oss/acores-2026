@@ -62,7 +62,7 @@ let scModalitat      = null;  // 'individual' | 'equips'
 let scUnsubscribe    = null;
 
 // Estat del torn actiu (UI)
-let scFitxesCol·locades = []; // [{r,c,lletra,punts,comodin}] — jugades actuals
+let scFitxesJugades = []; // [{r,c,lletra,punts,comodin}] — jugades actuals
 let scFitxaSeleccionada = null; // {lletra,punts,comodin,idx} — fitxa seleccionada de la mà
 let scMaActual          = [];   // array de {lletra,punts,comodin} — mà del jugador actiu
 let scFitxesCanvi       = [];   // fitxes marcades per canviar
@@ -78,7 +78,15 @@ function iniciarScrabble() {
   scCarregarInici();
 }
 
+// Normalitza les dades llegides de Firestore (converteix tauler pla → array 2D)
+function scNormalitzarPartida(data) {
+  if (!data) return null;
+  return { ...data, tauler: scTaulerFromFirestore(data.tauler) };
+}
+
 async function scCarregarInici() {
+  const cont = document.getElementById('scrabble-inici-cont');
+  if (cont) cont.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text2)">Carregant…</div>';
   try {
     const db = scrabbleGetDb();
     const [snapInd, snapEq] = await Promise.all([
@@ -86,11 +94,12 @@ async function scCarregarInici() {
       db.collection(SC_COL).doc(SC_EQ_DOC).get(),
     ]);
     scRenderInici(
-      snapInd.exists ? snapInd.data() : null,
-      snapEq.exists  ? snapEq.data()  : null,
+      snapInd.exists ? scNormalitzarPartida(snapInd.data()) : null,
+      snapEq.exists  ? scNormalitzarPartida(snapEq.data())  : null,
     );
   } catch (e) {
     console.error('Error carregant Scrabble:', e);
+    if (cont) cont.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--error)">Error de connexió: ${e.message}</div>`;
   }
 }
 
@@ -304,7 +313,7 @@ async function scIniciarPartidaIndividual() {
   const partida = {
     activa: true, modalitat: 'individual',
     ordre, tornIdx: 0, ronda: 1,
-    tauler: scTaulerBuit(),
+    tauler: scTaulerToFirestore(scTaulerBuit()),
     sac, jugadors,
     acabada: false, ts: Date.now(),
     validacioPendent: null,
@@ -427,7 +436,7 @@ async function scIniciarPartidaEquips() {
   const partida = {
     activa: true, modalitat: 'equips',
     equips, ordre, tornIdx: 0, ronda: 1,
-    tauler: scTaulerBuit(),
+    tauler: scTaulerToFirestore(scTaulerBuit()),
     sac, jugadors,
     acabada: false, ts: Date.now(),
     validacioPendent: null,
@@ -449,7 +458,7 @@ async function scEntrarPartida(modalitat) {
   try {
     const snap = await scrabbleGetDb().collection(SC_COL).doc(docId).get();
     if (!snap.exists) return;
-    scPartida = snap.data();
+    scPartida = scNormalitzarPartida(snap.data());
     scEscoltarPartida(modalitat);
     scMostrarTorn();
   } catch(e) { console.error(e); }
@@ -461,7 +470,7 @@ async function scVeurePartida(modalitat) {
   try {
     const snap = await scrabbleGetDb().collection(SC_COL).doc(docId).get();
     if (!snap.exists) return;
-    scPartida = snap.data();
+    scPartida = scNormalitzarPartida(snap.data());
     scEscoltarPartida(modalitat);
     mostraScreen('scrabble-veure');
     scRenderVeure();
@@ -473,7 +482,7 @@ function scEscoltarPartida(modalitat) {
   const docId = modalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
   scUnsubscribe = scrabbleGetDb().collection(SC_COL).doc(docId).onSnapshot(snap => {
     if (!snap.exists) return;
-    scPartida = snap.data();
+    scPartida = scNormalitzarPartida(snap.data());
     const screenActiva = document.querySelector('[id^="screen-scrabble-"]:not([style*="none"])');
     if (!screenActiva) return;
     const sid = screenActiva.id.replace('screen-', '');
@@ -498,7 +507,7 @@ function scMostrarTorn() {
 function scRenderTorn() {
   if (!scPartida) return;
 
-  scFitxesCol·locades = [];
+  scFitxesJugades = [];
   scFitxaSeleccionada = null;
   scFitxesCanvi = [];
 
@@ -536,7 +545,7 @@ function scRenderTorn() {
       </div>
 
       <div class="sc-ma-wrap">
-        <div class="sc-ma-label">La teva mà</div>
+        <div class="sc-ma-label">La teva mà &nbsp;<span id="sc-ma-hint" style="font-size:.72rem;font-style:italic">Clica una fitxa per seleccionar-la</span></div>
         <div class="sc-ma" id="sc-ma"></div>
       </div>
 
@@ -582,33 +591,43 @@ function scRenderTauler() {
       const key = `${r},${c}`;
       const tipusCasella = SC_CASELLES[key];
       const fitxaTauler = tauler[r]?.[c];
-      const fitxaJugada = scFitxesCol·locades.find(f => f.r === r && f.c === c);
+      const fitxaJugada = scFitxesJugades.find(f => f.r === r && f.c === c);
 
       if (fitxaTauler) {
-        // Fitxa permanent al tauler
         cel.classList.add('sc-cel-fitxa', 'sc-cel-fixe');
+        cel.dataset.accio = 'fixe';
         cel.innerHTML = `<span class="sc-fitxa-lletra">${fitxaTauler.lletra}</span><span class="sc-fitxa-pts">${fitxaTauler.comodin ? '' : fitxaTauler.punts}</span>`;
       } else if (fitxaJugada) {
-        // Fitxa col·locada en aquest torn
         cel.classList.add('sc-cel-fitxa', 'sc-cel-nova');
+        cel.dataset.accio = 'retirar';
         cel.innerHTML = `<span class="sc-fitxa-lletra">${fitxaJugada.lletra}</span><span class="sc-fitxa-pts">${fitxaJugada.comodin ? '' : fitxaJugada.punts}</span>`;
-        cel.onclick = () => scRetirarFitxa(r, c);
       } else {
-        // Casella buida
+        cel.dataset.accio = 'collocar';
         if (tipusCasella) {
-          const info = SC_COLORS[tipusCasella];
           cel.classList.add(`sc-cel-${tipusCasella.toLowerCase()}`);
-          cel.innerHTML = `<span class="sc-cel-label">${info.label}</span>`;
+          cel.innerHTML = `<span class="sc-cel-label">${SC_COLORS[tipusCasella].label}</span>`;
         } else if (r === 7 && c === 7) {
           cel.classList.add('sc-cel-centre');
           cel.innerHTML = '<span class="sc-cel-label">★</span>';
         }
-        cel.onclick = () => scCollocarFitxa(r, c);
       }
 
       el.appendChild(cel);
     }
   }
+
+  // Event delegation: un sol listener al contenidor
+  el._scListener && el.removeEventListener('click', el._scListener);
+  el._scListener = (e) => {
+    const cel = e.target.closest('.sc-cel');
+    if (!cel) return;
+    const r = parseInt(cel.dataset.r);
+    const c = parseInt(cel.dataset.c);
+    const accio = cel.dataset.accio;
+    if (accio === 'collocar') scCollocarFitxa(r, c);
+    else if (accio === 'retirar') scRetirarFitxa(r, c);
+  };
+  el.addEventListener('click', el._scListener);
 }
 
 function scRenderMa() {
@@ -626,6 +645,15 @@ function scRenderMa() {
         <span class="sc-fitxa-pts">${fitxa.punts || ''}</span>
       </div>`;
   }).join('');
+
+  // Instrucció contextual
+  const hint = document.getElementById('sc-ma-hint');
+  if (hint) {
+    hint.textContent = scFitxaSeleccionada
+      ? `Clica una casella del tauler per col·locar la "${scFitxaSeleccionada.lletra}"`
+      : 'Clica una fitxa per seleccionar-la';
+    hint.style.color = scFitxaSeleccionada ? 'var(--gold)' : 'var(--text2)';
+  }
 }
 
 // ── COL·LOCAR / RETIRAR FITXES ────────────────────────────────
@@ -637,11 +665,13 @@ function scSeleccionarFitxa(idx) {
   if (scFitxaSeleccionada?.idx === idx) {
     scFitxaSeleccionada = null;
     scRenderMa();
+    scActualitzarResssaltatTauler();
     return;
   }
 
   // Mode canvi: marca/desmarca per canviar
-  if (document.getElementById('sc-canvi-wrap')?.style.display !== 'none') {
+  const canviWrap = document.getElementById('sc-canvi-wrap');
+  if (canviWrap && canviWrap.style.display !== 'none') {
     const pos = scFitxesCanvi.indexOf(idx);
     if (pos >= 0) scFitxesCanvi.splice(pos, 1);
     else scFitxesCanvi.push(idx);
@@ -651,12 +681,26 @@ function scSeleccionarFitxa(idx) {
 
   scFitxaSeleccionada = { ...fitxa, idx };
   scRenderMa();
+  scActualitzarResssaltatTauler();
+}
+
+function scActualitzarResssaltatTauler() {
+  document.querySelectorAll('#sc-tauler .sc-cel').forEach(cel => {
+    const r = parseInt(cel.dataset.r);
+    const c = parseInt(cel.dataset.c);
+    const ocupada = scPartida?.tauler[r]?.[c] || scFitxesJugades.find(f => f.r === r && f.c === c);
+    if (scFitxaSeleccionada && !ocupada) {
+      cel.classList.add('sc-cel-disponible');
+    } else {
+      cel.classList.remove('sc-cel-disponible');
+    }
+  });
 }
 
 function scCollocarFitxa(r, c) {
   if (!scFitxaSeleccionada) return;
   if (scPartida.tauler[r]?.[c]) return; // casella ocupada
-  if (scFitxesCol·locades.find(f => f.r === r && f.c === c)) return;
+  if (scFitxesJugades.find(f => f.r === r && f.c === c)) return;
 
   let lletra = scFitxaSeleccionada.lletra;
   let comodin = scFitxaSeleccionada.comodin || lletra === '#';
@@ -672,7 +716,7 @@ function scCollocarFitxa(r, c) {
     comodin = true;
   }
 
-  scFitxesCol·locades.push({ r, c, lletra, punts: scFitxaSeleccionada.punts, comodin });
+  scFitxesJugades.push({ r, c, lletra, punts: scFitxaSeleccionada.punts, comodin });
 
   // Elimina de la mà (marca com null)
   scMaActual[scFitxaSeleccionada.idx] = null;
@@ -684,10 +728,10 @@ function scCollocarFitxa(r, c) {
 }
 
 function scRetirarFitxa(r, c) {
-  const idx = scFitxesCol·locades.findIndex(f => f.r === r && f.c === c);
+  const idx = scFitxesJugades.findIndex(f => f.r === r && f.c === c);
   if (idx < 0) return;
-  const fitxa = scFitxesCol·locades[idx];
-  scFitxesCol·locades.splice(idx, 1);
+  const fitxa = scFitxesJugades[idx];
+  scFitxesJugades.splice(idx, 1);
 
   // Retorna a la mà (busca el primer null)
   const buit = scMaActual.findIndex(f => f === null);
@@ -709,13 +753,13 @@ function scActualitzarPuntsTorn() {
   const puntsEl = document.getElementById('sc-punts-torn');
   const puntsVal = document.getElementById('sc-punts-val');
 
-  if (!scFitxesCol·locades.length) {
+  if (!scFitxesJugades.length) {
     if (btnConfirmar) btnConfirmar.disabled = true;
     if (puntsEl) puntsEl.style.display = 'none';
     return;
   }
 
-  const resultat = scCalcularPunts(scPartida.tauler, scFitxesCol·locades);
+  const resultat = scCalcularPunts(scPartida.tauler, scFitxesJugades);
   if (puntsEl) puntsEl.style.display = 'block';
   if (puntsVal) puntsVal.textContent = resultat.total;
   if (btnConfirmar) btnConfirmar.disabled = !resultat.valid;
@@ -862,8 +906,8 @@ function scExtreurePararaulaV(tauler, rInici, c, fitxesNoves, soloCreuada = fals
 
 // ── CONFIRMAR JUGADA ──────────────────────────────────────────
 async function scConfirmarJugada() {
-  if (!scFitxesCol·locades.length) return;
-  const resultat = scCalcularPunts(scPartida.tauler, scFitxesCol·locades);
+  if (!scFitxesJugades.length) return;
+  const resultat = scCalcularPunts(scPartida.tauler, scFitxesJugades);
   if (!resultat.valid) { alert(resultat.missatge || 'Jugada no vàlida.'); return; }
 
   // Comprova paraules al diccionari
@@ -874,20 +918,27 @@ async function scConfirmarJugada() {
     // Totes vàlides → aplica directament
     await scAplicarJugada(resultat, false);
   } else {
-    // Hi ha paraules no trobades → posa en validació pendent
-    await scDemanarValidacio(resultat, noTrobades);
+    // Hi ha paraules no trobades → preguntar si vol modificar o enviar a validar
+    const opcio = await scDialegValidacio(noTrobades);
+    if (opcio === 'modificar') {
+      // Torna al joc sense fer res (les fitxes ja estan al tauler visualment)
+      return;
+    } else if (opcio === 'validar') {
+      await scDemanarValidacio(resultat, noTrobades);
+    }
+    // Si opcio === null (cancel·lat) no fem res
   }
 }
 
-async function scAplicarJugada(resultat, eraValidacio) {
+async function scAplicarJugada(resultat, eraValidacio, jugadorNomOverride = null) {
   if (!scPartida) return;
   const docId = scModalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
-  const jugadorNom = scGetJugadorActualNom(scPartida);
+  const jugadorNom = jugadorNomOverride || scGetJugadorActualNom(scPartida);
   const jugadorIdx = scPartida.jugadors.findIndex(j => j.nom === jugadorNom);
 
   // Actualitza tauler
   const nouTauler = scPartida.tauler.map(fila => [...fila]);
-  scFitxesCol·locades.forEach(f => {
+  scFitxesJugades.forEach(f => {
     nouTauler[f.r][f.c] = { lletra: f.lletra, punts: f.punts, comodin: f.comodin || false };
   });
 
@@ -912,12 +963,15 @@ async function scAplicarJugada(resultat, eraValidacio) {
   // Comprova fi de partida (sac buit i mà buida)
   const acabada = sacNou.length === 0 && maNova.length === 0;
 
-  // Passa torn
-  const nouTornIdx = (scPartida.tornIdx + 1) % scPartida.ordre.length;
+  // Si era validació, el torn ja apunta al validador → el mantenim (ell juga ara)
+  // Si era jugada normal, avancem al jugador següent
+  const nouTornIdx = eraValidacio
+    ? scPartida.tornIdx
+    : (scPartida.tornIdx + 1) % scPartida.ordre.length;
   const novaRonda = nouTornIdx === 0 ? (scPartida.ronda || 1) + 1 : scPartida.ronda;
 
   const update = {
-    tauler: nouTauler, sac: sacNou, jugadors,
+    tauler: scTaulerToFirestore(nouTauler), sac: sacNou, jugadors,
     tornIdx: nouTornIdx, ronda: novaRonda,
     tornTs: Date.now(), validacioPendent: null,
     historialJugades, acabada,
@@ -944,22 +998,60 @@ async function scAplicarJugada(resultat, eraValidacio) {
   } catch(e) { console.error(e); alert('Error guardant la jugada.'); }
 }
 
+function scDialegValidacio(noTrobades) {
+  return new Promise(resolve => {
+    // Crea un modal inline en lloc d'un alert
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem';
+    overlay.innerHTML = `
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;max-width:400px;width:100%">
+        <div style="font-size:1.1rem;font-weight:700;margin-bottom:.75rem">⚠️ Paraules no trobades</div>
+        <p style="font-size:.88rem;color:var(--text2);margin-bottom:.75rem">
+          Les paraules <strong style="color:var(--gold)">${noTrobades.join(', ')}</strong> no estan al diccionari.
+        </p>
+        <p style="font-size:.85rem;color:var(--text);margin-bottom:1.25rem">Què vols fer?</p>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <button id="sc-dial-modificar" style="background:rgba(106,171,122,.15);border:1px solid var(--verd);border-radius:10px;padding:.7rem;color:var(--verd2);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer">
+            ✏️ Modificar la jugada
+          </button>
+          <button id="sc-dial-validar" style="background:linear-gradient(135deg,var(--verd),var(--verd2));border:none;border-radius:10px;padding:.7rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer">
+            📨 Enviar al jugador següent per validar
+          </button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#sc-dial-modificar').onclick = () => { document.body.removeChild(overlay); resolve('modificar'); };
+    overlay.querySelector('#sc-dial-validar').onclick  = () => { document.body.removeChild(overlay); resolve('validar'); };
+  });
+}
+
 async function scDemanarValidacio(resultat, noTrobades) {
   if (!scPartida) return;
   const docId = scModalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
   const jugadorNom = scGetJugadorActualNom(scPartida);
 
+  // Guardem el tornIdx del jugador que ha jugat per poder tornar-li si es rebutja
+  const tornIdxJugador = scPartida.tornIdx;
+
+  // Avancem el torn al jugador SEGÜENT (que serà qui validi)
+  const nouTornIdx = (scPartida.tornIdx + 1) % scPartida.ordre.length;
+  const novaRonda = nouTornIdx === 0 ? (scPartida.ronda || 1) + 1 : scPartida.ronda;
+
   const validacioPendent = {
     jugadorNom,
+    tornIdxJugador,   // per tornar el torn si es rebutja
     paraules: resultat.paraules.map(p => p.paraula),
     noTrobades,
     punts: resultat.total,
-    fitxesCol·locades: scFitxesCol·locades,
+    fitxesCol·locades: scFitxesJugades,
     ts: Date.now(),
   };
 
   try {
-    await scrabbleGetDb().collection(SC_COL).doc(docId).update({ validacioPendent });
+    await scrabbleGetDb().collection(SC_COL).doc(docId).update({
+      validacioPendent,
+      tornIdx: nouTornIdx, ronda: novaRonda, tornTs: Date.now(),
+    });
     alert(`Les paraules ${noTrobades.join(', ')} no estan al diccionari.\nEl jugador següent haurà de validar la jugada.`);
     mostraScreen('scrabble-inici');
     scCarregarInici();
@@ -1050,20 +1142,20 @@ async function scAcceptarJugada() {
   if (!scPartida?.validacioPendent) return;
   const v = scPartida.validacioPendent;
 
-  // Simula les fitxes col·locades per calcular/aplicar
-  scFitxesCol·locades = v.fitxesCol·locades;
   // Recupera la mà original del jugador que va jugar
   const jugadorData = scGetJugadorData(scPartida, v.jugadorNom);
   scMaActual = scDesencriptarMa(v.jugadorNom, jugadorData?.maEncriptada || '');
+  scFitxesJugades = v.fitxesCol·locades;
 
-  // Elimina les fitxes col·locades de la mà
+  // Elimina les fitxes col·locades de la mà (una per una, les primeres no-null)
   v.fitxesCol·locades.forEach(() => {
     const idx = scMaActual.findIndex(f => f !== null);
     if (idx >= 0) scMaActual[idx] = null;
   });
 
   const resultat = { total: v.punts, paraules: v.paraules.map(p => ({ paraula: p })), valid: true };
-  await scAplicarJugada(resultat, true);
+  // Passem el nom del jugador original per no confondre'l amb el validador
+  await scAplicarJugada(resultat, true, v.jugadorNom);
 }
 
 async function scRebutjarJugada() {
@@ -1071,18 +1163,16 @@ async function scRebutjarJugada() {
   const docId = scModalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
   const v = scPartida.validacioPendent;
 
-  // Passa el torn sense aplicar la jugada (les fitxes tornen a la mà del jugador)
-  const jugadorIdx = scPartida.jugadors.findIndex(j => j.nom === v.jugadorNom);
-
-  const nouTornIdx = (scPartida.tornIdx + 1) % scPartida.ordre.length;
-  const novaRonda = nouTornIdx === 0 ? (scPartida.ronda || 1) + 1 : scPartida.ronda;
+  // Torna el torn al jugador que va fer la jugada invàlida
+  const tornIdxOriginal = v.tornIdxJugador ?? scPartida.tornIdx;
 
   try {
     await scrabbleGetDb().collection(SC_COL).doc(docId).update({
       validacioPendent: null,
-      tornIdx: nouTornIdx, ronda: novaRonda, tornTs: Date.now(),
+      tornIdx: tornIdxOriginal,
+      tornTs: Date.now(),
     });
-    alert(`Jugada de ${v.jugadorNom} rebutjada. Les fitxes li tornen a la mà.`);
+    alert(`Jugada de ${v.jugadorNom} rebutjada. Li torna el torn per repetir.`);
     mostraScreen('scrabble-inici');
     scCarregarInici();
   } catch(e) { console.error(e); }
@@ -1116,7 +1206,7 @@ function scMostraCanvi() {
 async function scConfirmarCanvi() {
   if (!scFitxesCanvi.length) { alert('Selecciona almenys una fitxa.'); return; }
   if (scPartida.sac.length < scFitxesCanvi.length) { alert('No hi ha prou fitxes al sac.'); return; }
-  if (scFitxesCol·locades.length) { alert('Retira primer les fitxes que has col·locat.'); return; }
+  if (scFitxesJugades.length) { alert('Retira primer les fitxes que has col·locat.'); return; }
 
   const docId = scModalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
   const jugadorNom = scGetJugadorActualNom(scPartida);
@@ -1166,15 +1256,15 @@ function scCancellarCanvi() {
 
 // ── PASSAR TORN ───────────────────────────────────────────────
 async function scPassarTorn() {
-  if (scFitxesCol·locades.length) {
+  if (scFitxesJugades.length) {
     if (!confirm('Tens fitxes col·locades. Vols retirar-les i passar torn?')) return;
     // Retorna fitxes a la mà
-    scFitxesCol·locades.forEach(f => {
+    scFitxesJugades.forEach(f => {
       const buit = scMaActual.findIndex(x => x === null);
       if (buit >= 0) scMaActual[buit] = { lletra: f.comodin ? '#' : f.lletra, punts: f.punts };
       else scMaActual.push({ lletra: f.comodin ? '#' : f.lletra, punts: f.punts });
     });
-    scFitxesCol·locades = [];
+    scFitxesJugades = [];
   }
 
   const docId = scModalitat === 'individual' ? SC_IND_DOC : SC_EQ_DOC;
@@ -1310,10 +1400,73 @@ async function scAdminPartida(modalitat) {
   }
 }
 
+// ── BANNER LANDING PAGE ───────────────────────────────────────
+async function scrabbleComprovarTornIndex() {
+  if (!jugadorActiu) return;
+  try {
+    const db = scrabbleGetDb();
+    const [snapInd, snapEq] = await Promise.all([
+      db.collection(SC_COL).doc(SC_IND_DOC).get(),
+      db.collection(SC_COL).doc(SC_EQ_DOC).get(),
+    ]);
+
+    let missatge = null;
+    let modalitat = null;
+
+    // Comprova individual
+    if (snapInd.exists) {
+      const p = snapInd.data();
+      if (p.activa && !p.acabada) {
+        const tornActual = scGetJugadorActualNom(p);
+        const esValidacio = !!p.validacioPendent;
+        if (tornActual === jugadorActiu) {
+          missatge = esValidacio
+            ? 'Has de validar una jugada al Scrabble Individual!'
+            : 'És el teu torn al Scrabble Individual!';
+          modalitat = 'individual';
+        } else if (esValidacio) {
+          // Comprova si és membre d'un equip amb torn (modalitat equips)
+        }
+      }
+    }
+    // Comprova equips
+    if (!missatge && snapEq.exists) {
+      const p = snapEq.data();
+      if (p.activa && !p.acabada) {
+        const tornActual = scGetJugadorActualNom(p);
+        const equip = p.equips?.find(e => e.nom === tornActual);
+        const esMembre = equip?.membres?.includes(jugadorActiu);
+        const esValidacio = !!p.validacioPendent;
+        if (esMembre) {
+          missatge = esValidacio
+            ? 'Has de validar una jugada al Scrabble per Equips!'
+            : 'És el teu torn al Scrabble per Equips!';
+          modalitat = 'equips';
+        }
+      }
+    }
+
+    const banner = document.getElementById('scrabble-torn-banner');
+    if (banner) {
+      if (missatge) {
+        banner.style.display = 'flex';
+        banner.querySelector('.trivial-banner-text').textContent = missatge;
+        banner.querySelector('.trivial-banner-btn').onclick = () => {
+          window.location.href = `jocs.html?scrabble=${modalitat}`;
+        };
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+  } catch(e) {
+    console.error('Error comprovant torn Scrabble:', e);
+  }
+}
+
 // ── SORTIR ────────────────────────────────────────────────────
 function scSortir() {
   if (scUnsubscribe) { scUnsubscribe(); scUnsubscribe = null; }
-  scFitxesCol·locades = [];
+  scFitxesJugades = [];
   scFitxaSeleccionada = null;
   mostraScreen('scrabble-inici');
   scCarregarInici();
@@ -1346,6 +1499,28 @@ function scEsValidador(p, modalitat) {
 
 function scTaulerBuit() {
   return Array.from({ length: SC_MIDA }, () => Array(SC_MIDA).fill(null));
+}
+
+// Firestore no suporta arrays niats → serialitzem el tauler com a objecte pla
+// Format: { "r_c": { lletra, punts, comodin } } — caselles buides no s'emmagatzemen
+function scTaulerToFirestore(tauler) {
+  const obj = {};
+  for (let r = 0; r < SC_MIDA; r++) {
+    for (let c = 0; c < SC_MIDA; c++) {
+      if (tauler[r]?.[c]) obj[`${r}_${c}`] = tauler[r][c];
+    }
+  }
+  return obj;
+}
+
+function scTaulerFromFirestore(obj) {
+  const tauler = scTaulerBuit();
+  if (!obj) return tauler;
+  Object.entries(obj).forEach(([key, val]) => {
+    const [r, c] = key.split('_').map(Number);
+    if (r >= 0 && r < SC_MIDA && c >= 0 && c < SC_MIDA) tauler[r][c] = val;
+  });
+  return tauler;
 }
 
 function scGenerarSac() {
