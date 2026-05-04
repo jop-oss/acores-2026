@@ -1,20 +1,19 @@
 // ══════════════════════════════════════════════════════════════
-//  BUSCA LES DIFERÈNCIES — Motor del joc
+//  BUSCA LES DIFERÈNCIES — Motor del joc (imatges JPG)
 // ══════════════════════════════════════════════════════════════
 
-const DIFER_PUNTS_DIF   = { fàcil: 50, mitjà: 80, difícil: 120 };
-const DIFER_PUNTS_RAPID = 20;   // bonus per completar en < 60s
-const DIFER_RADI_CLIC   = 38;   // px: radi d'acceptació del clic
-const DIFER_MAX_ERRORS  = 3;    // errors màxims per escena
-const DIFER_STORAGE     = 'difer_estat_';
+const DIFER_PUNTS_ESCENA  = 100;
+const DIFER_BONUS_RAPID   = 30;
+const DIFER_MAX_ERRORS    = 5;
+const DIFER_STORAGE       = 'difer_estat_';
+const DIFER_IMG_W         = 960;
+const DIFER_IMG_H         = 751;
 
-let _diferEscena      = null;   // escena actual
-let _diferTrobades    = [];     // índexs de diferències trobades
-let _diferErrors      = 0;
-let _diferInici       = 0;      // timestamp inici
-let _diferMarcadors   = [];     // {el, timeout} — cercles animats al SVG
-let _diferSVGWidth    = 310;    // amplada real del SVG renderat
-let _diferSVGHeight   = 250;
+let _diferEscena    = null;
+let _diferTrobades  = [];
+let _diferErrors    = 0;
+let _diferInici     = 0;
+let _diferTimerInterval = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
 function iniciarDiferencies() {
@@ -22,41 +21,36 @@ function iniciarDiferencies() {
   diferRenderInici();
 }
 
-// ── PANTALLA INICI ────────────────────────────────────────────
+// ── PANTALLA INICI ─────────────────────────────────────────────
 function diferRenderInici() {
   const cont = document.getElementById('difer-inici-cont');
   if (!cont) return;
-
   const estat = diferCarregarEstat();
-
   const cards = DIFER_ESCENES.map((esc, i) => {
-    const completada = estat.completades?.includes(esc.id);
-    const punts = estat.punts?.[esc.id] || 0;
-    const difColor = { fàcil: 'var(--verd2)', mitjà: 'var(--gold)', difícil: '#ff8a8a' }[esc.dificultat];
+    const completada = (estat.completades || []).includes(esc.id);
+    const punts = estat.punts && estat.punts[esc.id] ? estat.punts[esc.id] : 0;
     return `
       <div class="difer-card ${completada ? 'completada' : ''}" onclick="diferIniciarEscena(${i})">
-        <div class="difer-card-emoji">${esc.emoji}</div>
+        <div class="difer-card-num">${esc.id}</div>
         <div class="difer-card-titol">${esc.titol}</div>
-        <div class="difer-card-dif" style="color:${difColor}">${esc.dificultat}</div>
-        ${completada
-          ? `<div class="difer-card-punts">✓ ${punts} pts</div>`
-          : `<div class="difer-card-sub">5 diferències</div>`}
+        <div class="difer-card-sub">${esc.diferencies.length} diferències</div>
+        ${completada ? '<div class="difer-card-punts">&#10003; ' + punts + ' pts</div>' : ''}
       </div>`;
   }).join('');
-
   const total = estat.totalPunts || 0;
-
+  const completades = (estat.completades || []).length;
   cont.innerHTML = `
     <div class="difer-inici-wrap">
       <div class="difer-inici-header">
         <div class="joc-titol-fila">
-          <span class="joc-titol-emoji">🔍</span>
+          <span class="joc-titol-emoji">&#128269;</span>
           <span class="joc-titol-text">Busca les Diferències</span>
         </div>
         <div class="difer-punts-total">
-          <img src="${IMGS[jugadorActiu] || ''}" class="difer-avatar">
+          <img src="${IMGS[jugadorActiu] || ''}" class="difer-avatar" alt="${jugadorActiu}">
           <span>${jugadorActiu}</span>
           <span class="difer-total-badge">${total} pts</span>
+          <span class="difer-prog-badge">${completades}/${DIFER_ESCENES.length}</span>
         </div>
       </div>
       <div class="difer-grid">${cards}</div>
@@ -69,7 +63,7 @@ function diferIniciarEscena(idx) {
   _diferTrobades = [];
   _diferErrors   = 0;
   _diferInici    = Date.now();
-  _diferMarcadors = [];
+  clearInterval(_diferTimerInterval);
   mostraScreen('difer-joc');
   diferRenderJoc();
 }
@@ -77,221 +71,161 @@ function diferIniciarEscena(idx) {
 function diferRenderJoc() {
   const cont = document.getElementById('difer-joc-cont');
   if (!cont || !_diferEscena) return;
-
+  const base = 'img/diferencies/' + _diferEscena.prefix;
+  const ndif = _diferEscena.diferencies.length;
   cont.innerHTML = `
     <div class="difer-joc-wrap">
       <div class="difer-joc-header">
-        <button class="mapa-back-btn" onclick="mostraScreen('difer-inici');diferRenderInici()">← Tornar</button>
-        <div class="difer-joc-titol">${_diferEscena.emoji} ${_diferEscena.titol}</div>
+        <button class="mapa-back-btn" onclick="clearInterval(_diferTimerInterval);mostraScreen('difer-inici');diferRenderInici()">← Tornar</button>
+        <div class="difer-joc-titol">${_diferEscena.titol}</div>
         <div class="difer-joc-info">
-          <span id="difer-trobades">0/5</span>
-          <span id="difer-errors" class="difer-errors-badge">❌ ${_diferErrors}/${DIFER_MAX_ERRORS}</span>
+          <span id="difer-trobades">0/${ndif}</span>
+          <span id="difer-errors" class="difer-errors-badge">&#10060; 0/${DIFER_MAX_ERRORS}</span>
+          <span id="difer-timer" class="difer-timer">0s</span>
         </div>
       </div>
-
-      <div class="difer-instruccio">Toca les diferències a la imatge de la <strong>dreta</strong></div>
-
+      <div class="difer-instruccio">Clica a la imatge de la <strong>dreta</strong> on vegis una diferència</div>
       <div class="difer-imatges-wrap">
         <div class="difer-img-col">
           <div class="difer-img-label">Original</div>
-          <div class="difer-svg-wrap" id="difer-svg-esq">
-            <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
-              ${_diferEscena.svgOriginal}
-            </svg>
+          <div class="difer-img-box" id="difer-box-esq">
+            <img src="${base}-original.jpg" alt="original" style="width:100%;height:auto;display:block">
+            <svg id="difer-overlay-esq" viewBox="0 0 960 751" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></svg>
           </div>
         </div>
         <div class="difer-img-col">
           <div class="difer-img-label">Troba les diferències</div>
-          <div class="difer-svg-wrap" id="difer-svg-dre" onclick="diferHandleClic(event)">
-            <svg id="difer-svg-dreta" viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;cursor:crosshair">
-              ${_diferEscena.svgModificat}
-              <g id="difer-marcadors"></g>
-            </svg>
+          <div class="difer-img-box difer-img-activa" id="difer-box-dre" onclick="diferHandleClic(event)" style="cursor:crosshair">
+            <img src="${base}-differences.jpg" alt="diferencies" style="width:100%;height:auto;display:block;pointer-events:none">
+            <svg id="difer-overlay-dre" viewBox="0 0 960 751" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></svg>
           </div>
         </div>
       </div>
-
       <div class="difer-progres">
-        ${_diferEscena.diferencies.map((_, i) => `
-          <div class="difer-punt ${_diferTrobades.includes(i) ? 'trobat' : ''}" id="difer-p-${i}">●</div>
-        `).join('')}
+        ${_diferEscena.diferencies.map(function(_, i) { return '<div class="difer-punt" id="difer-p-' + i + '">&#9679;</div>'; }).join('')}
       </div>
     </div>`;
+  _diferTimerInterval = setInterval(function() {
+    const el = document.getElementById('difer-timer');
+    if (!el) { clearInterval(_diferTimerInterval); return; }
+    el.textContent = Math.floor((Date.now() - _diferInici) / 1000) + 's';
+  }, 1000);
 }
 
 // ── GESTIÓ DE CLICS ────────────────────────────────────────────
 function diferHandleClic(e) {
   if (!_diferEscena) return;
-
-  const wrap = document.getElementById('difer-svg-dre');
-  const svg  = document.getElementById('difer-svg-dreta');
-  if (!wrap || !svg) return;
-
-  const rect   = svg.getBoundingClientRect();
-  const scaleX = 310 / rect.width;
-  const scaleY = 250 / rect.height;
-
-  const cxSVG = (e.clientX - rect.left)  * scaleX;
-  const cySVG = (e.clientY - rect.top)   * scaleY;
-
-  // Comprova si el clic encerta alguna diferència no trobada
+  const box = document.getElementById('difer-box-dre');
+  const img = box ? box.querySelector('img') : null;
+  if (!img) return;
+  const rect = img.getBoundingClientRect();
+  const cx = (e.clientX - rect.left) * (DIFER_IMG_W / rect.width);
+  const cy = (e.clientY - rect.top)  * (DIFER_IMG_H / rect.height);
   let encert = -1;
   for (let i = 0; i < _diferEscena.diferencies.length; i++) {
     if (_diferTrobades.includes(i)) continue;
-    const d  = _diferEscena.diferencies[i];
-    const dx = cxSVG - d.x;
-    const dy = cySVG - d.y;
-    if (Math.sqrt(dx * dx + dy * dy) <= DIFER_RADI_CLIC) {
-      encert = i;
-      break;
-    }
+    const d = _diferEscena.diferencies[i];
+    const dx = cx - d.x, dy = cy - d.y;
+    if (Math.sqrt(dx*dx + dy*dy) <= (d.r || 45)) { encert = i; break; }
   }
-
-  if (encert >= 0) {
-    diferMarcarEncert(encert, cxSVG, cySVG);
-  } else {
-    diferMarcarError(cxSVG, cySVG);
-  }
+  if (encert >= 0) diferMarcarEncert(encert);
+  else             diferMarcarError(cx, cy);
 }
 
-function diferMarcarEncert(idx, cx, cy) {
+function diferMarcarEncert(idx) {
   _diferTrobades.push(idx);
-
-  const d   = _diferEscena.diferencies[idx];
-  const mg  = document.getElementById('difer-marcadors');
-  if (mg) {
-    const cercle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    cercle.setAttribute('cx', d.x);
-    cercle.setAttribute('cy', d.y);
-    cercle.setAttribute('r',  d.r || 28);
-    cercle.setAttribute('fill', 'none');
-    cercle.setAttribute('stroke', '#6aab7a');
-    cercle.setAttribute('stroke-width', '3');
-    cercle.setAttribute('opacity', '0.9');
-    cercle.style.animation = 'diferPop .35s ease';
-    mg.appendChild(cercle);
-
-    // També marca la mateixa diferència a l'esquerra amb un cercle groc
-    const svgEsq = document.querySelector('#difer-svg-esq svg');
-    if (svgEsq) {
-      const esqG = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      esqG.setAttribute('cx', d.x);
-      esqG.setAttribute('cy', d.y);
-      esqG.setAttribute('r',  d.r || 28);
-      esqG.setAttribute('fill', 'none');
-      esqG.setAttribute('stroke', '#f0b429');
-      esqG.setAttribute('stroke-width', '3');
-      esqG.setAttribute('opacity', '0.7');
-      svgEsq.appendChild(esqG);
-    }
-  }
-
-  // Actualitza punts visuals
-  const punt = document.getElementById(`difer-p-${idx}`);
+  const d = _diferEscena.diferencies[idx];
+  const r = d.r || 45;
+  diferAfegirCercle('difer-overlay-dre', d.x, d.y, r, '#6aab7a', 'rgba(106,171,122,0.18)');
+  diferAfegirCercle('difer-overlay-esq', d.x, d.y, r, '#f0b429', 'rgba(240,180,41,0.15)');
+  const punt = document.getElementById('difer-p-' + idx);
   if (punt) punt.classList.add('trobat');
   const trobEl = document.getElementById('difer-trobades');
-  if (trobEl) trobEl.textContent = `${_diferTrobades.length}/5`;
-
-  // Comprova fi
+  if (trobEl) trobEl.textContent = _diferTrobades.length + '/' + _diferEscena.diferencies.length;
   if (_diferTrobades.length === _diferEscena.diferencies.length) {
-    setTimeout(diferCompletada, 600);
+    clearInterval(_diferTimerInterval);
+    setTimeout(diferCompletada, 700);
   }
 }
 
 function diferMarcarError(cx, cy) {
   _diferErrors++;
-
-  const mg = document.getElementById('difer-marcadors');
-  if (mg) {
+  const svg = document.getElementById('difer-overlay-dre');
+  if (svg) {
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    const r = 12;
+    const r = 16;
+    const attrs = [['stroke','#e05555'],['stroke-width','3.5'],['stroke-linecap','round']];
     const l1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    l1.setAttribute('x1', cx - r); l1.setAttribute('y1', cy - r);
-    l1.setAttribute('x2', cx + r); l1.setAttribute('y2', cy + r);
-    l1.setAttribute('stroke', '#e05555'); l1.setAttribute('stroke-width', '3');
-    l1.setAttribute('stroke-linecap', 'round');
     const l2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    l2.setAttribute('x1', cx + r); l2.setAttribute('y1', cy - r);
-    l2.setAttribute('x2', cx - r); l2.setAttribute('y2', cy + r);
-    l2.setAttribute('stroke', '#e05555'); l2.setAttribute('stroke-width', '3');
-    l2.setAttribute('stroke-linecap', 'round');
-    g.appendChild(l1); g.appendChild(l2);
-    mg.appendChild(g);
-    setTimeout(() => g.remove(), 900);
+    [[l1,[cx-r,cy-r,cx+r,cy+r]],[l2,[cx+r,cy-r,cx-r,cy+r]]].forEach(function(item) {
+      attrs.forEach(function(a) { item[0].setAttribute(a[0],a[1]); });
+      item[0].setAttribute('x1',item[1][0]); item[0].setAttribute('y1',item[1][1]);
+      item[0].setAttribute('x2',item[1][2]); item[0].setAttribute('y2',item[1][3]);
+      g.appendChild(item[0]);
+    });
+    svg.appendChild(g);
+    setTimeout(function() { g.remove(); }, 900);
   }
-
   const errEl = document.getElementById('difer-errors');
-  if (errEl) errEl.textContent = `❌ ${_diferErrors}/${DIFER_MAX_ERRORS}`;
-
+  if (errEl) errEl.textContent = '\u274C ' + _diferErrors + '/' + DIFER_MAX_ERRORS;
   if (_diferErrors >= DIFER_MAX_ERRORS) {
-    setTimeout(diferGameOver, 600);
+    clearInterval(_diferTimerInterval);
+    setTimeout(diferGameOver, 500);
   }
+}
+
+function diferAfegirCercle(svgId, cx, cy, r, stroke, fill) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+  c.setAttribute('fill', fill); c.setAttribute('stroke', stroke);
+  c.setAttribute('stroke-width', '3.5');
+  svg.appendChild(c);
 }
 
 // ── FI D'ESCENA ────────────────────────────────────────────────
 function diferCompletada() {
-  const temps  = Math.round((Date.now() - _diferInici) / 1000);
-  const pBase  = DIFER_PUNTS_DIF[_diferEscena.dificultat] || 50;
-  const bonus  = temps < 60 ? DIFER_PUNTS_RAPID : 0;
-  const total  = pBase + bonus;
-
-  // Guarda punts
+  const temps = Math.round((Date.now() - _diferInici) / 1000);
+  const bonus = temps < 90 ? DIFER_BONUS_RAPID : 0;
+  const total = DIFER_PUNTS_ESCENA + bonus;
   const estat = diferCarregarEstat();
   if (!estat.completades) estat.completades = [];
   if (!estat.completades.includes(_diferEscena.id)) estat.completades.push(_diferEscena.id);
   if (!estat.punts) estat.punts = {};
-  // Guarda el millor resultat
-  if (!estat.punts[_diferEscena.id] || total > estat.punts[_diferEscena.id]) {
-    estat.punts[_diferEscena.id] = total;
-  }
-  estat.totalPunts = Object.values(estat.punts).reduce((s, v) => s + v, 0);
+  if (!estat.punts[_diferEscena.id] || total > estat.punts[_diferEscena.id]) estat.punts[_diferEscena.id] = total;
+  estat.totalPunts = Object.values(estat.punts).reduce(function(s,v){return s+v;}, 0);
   diferGuardarEstat(estat);
-
-  diferRenderResultat(true, temps, pBase, bonus, total);
+  diferRenderResultat(true, temps, bonus, total);
 }
 
 function diferGameOver() {
-  diferRevelarTotes();
-  setTimeout(() => diferRenderResultat(false, 0, 0, 0, 0), 1200);
-}
-
-function diferRevelarTotes() {
-  const mg = document.getElementById('difer-marcadors');
-  if (!mg || !_diferEscena) return;
-  _diferEscena.diferencies.forEach((d, i) => {
+  _diferEscena.diferencies.forEach(function(d, i) {
     if (_diferTrobades.includes(i)) return;
-    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', d.x); c.setAttribute('cy', d.y);
-    c.setAttribute('r', d.r || 28);
-    c.setAttribute('fill', 'rgba(224,85,85,0.2)');
-    c.setAttribute('stroke', '#e05555');
-    c.setAttribute('stroke-width', '2.5');
-    mg.appendChild(c);
+    diferAfegirCercle('difer-overlay-dre', d.x, d.y, d.r || 45, '#e05555', 'rgba(224,85,85,0.18)');
   });
+  setTimeout(function() { diferRenderResultat(false, 0, 0, 0); }, 1200);
 }
 
-function diferRenderResultat(ok, temps, pBase, bonus, total) {
+function diferRenderResultat(ok, temps, bonus, total) {
   const cont = document.getElementById('difer-joc-cont');
   if (!cont) return;
-
+  const escIdx = DIFER_ESCENES.indexOf(_diferEscena);
   cont.innerHTML = `
     <div class="difer-resultat-wrap">
-      <div class="difer-resultat-icon">${ok ? '🎉' : '😅'}</div>
-      <div class="difer-resultat-titol">${ok ? '¡Completat!' : 'Joc acabat'}</div>
+      <div class="difer-resultat-icon">${ok ? '&#127881;' : '&#128517;'}</div>
+      <div class="difer-resultat-titol">${ok ? 'Completat!' : 'Joc acabat'}</div>
       <div class="difer-resultat-sub">${_diferEscena.titol}</div>
-      ${ok ? `
-        <div class="difer-resultat-punts">
-          <div class="difer-rp-row"><span>Punts base (${_diferEscena.dificultat})</span><span>${pBase}</span></div>
-          ${bonus ? `<div class="difer-rp-row bonus"><span>⚡ Bonus ràpid (&lt;60s)</span><span>+${bonus}</span></div>` : ''}
-          <div class="difer-rp-row total"><span>Total</span><span>${total} pts</span></div>
-          <div class="difer-rp-temps">⏱ ${temps}s</div>
-        </div>` : `
-        <div class="difer-resultat-punts">
-          <div class="difer-rp-row"><span>Diferències trobades</span><span>${_diferTrobades.length}/5</span></div>
-        </div>`}
+      <div class="difer-resultat-punts">
+        <div class="difer-rp-row"><span>Diferències trobades</span><span>${_diferTrobades.length}/${_diferEscena.diferencies.length}</span></div>
+        ${ok ? '<div class="difer-rp-row"><span>Punts base</span><span>' + DIFER_PUNTS_ESCENA + '</span></div>' : ''}
+        ${ok && bonus ? '<div class="difer-rp-row bonus"><span>&#9889; Bonus rapid (&lt;90s)</span><span>+' + bonus + '</span></div>' : ''}
+        ${ok ? '<div class="difer-rp-row total"><span>Total</span><span>' + total + ' pts</span></div>' : ''}
+        ${ok ? '<div class="difer-rp-temps">&#9201; ' + temps + 's</div>' : ''}
+      </div>
       <div class="difer-resultat-btns">
-        <button class="btn-start-joc" onclick="diferIniciarEscena(${DIFER_ESCENES.indexOf(_diferEscena)})">Tornar a intentar</button>
-        <button class="mapa-back-btn" onclick="mostraScreen('difer-inici');diferRenderInici()">← Escenes</button>
+        <button class="btn-start-joc" onclick="diferIniciarEscena(${escIdx})">Tornar a intentar</button>
+        <button class="mapa-back-btn" onclick="mostraScreen('difer-inici');diferRenderInici()">&#8592; Totes les escenes</button>
       </div>
     </div>`;
 }
@@ -307,19 +241,16 @@ function diferCarregarEstat() {
 
 function diferGuardarEstat(estat) {
   if (!jugadorActiu) return;
-  try {
-    localStorage.setItem(DIFER_STORAGE + jugadorActiu, JSON.stringify(estat));
-  } catch(e) {}
+  try { localStorage.setItem(DIFER_STORAGE + jugadorActiu, JSON.stringify(estat)); } catch(e) {}
 }
 
-// Funció per al rànquing global (localStorage)
 function diferGetPuntsGlobals() {
   const pts = {};
-  (typeof JUGADORS_VALIDS !== 'undefined' ? JUGADORS_VALIDS : []).forEach(nom => {
+  (typeof JUGADORS_VALIDS !== 'undefined' ? JUGADORS_VALIDS : []).forEach(function(nom) {
     try {
       const raw = localStorage.getItem(DIFER_STORAGE + nom);
-      const d   = raw ? JSON.parse(raw) : {};
-      pts[nom]  = d.totalPunts || 0;
+      const d = raw ? JSON.parse(raw) : {};
+      pts[nom] = d.totalPunts || 0;
     } catch(e) { pts[nom] = 0; }
   });
   return pts;

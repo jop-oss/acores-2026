@@ -4498,13 +4498,15 @@
     .difer-punts-total { display: flex; align-items: center; gap: .5rem; font-size: .9rem; font-weight: 600; }
     .difer-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid var(--verd2); }
     .difer-total-badge { background: rgba(240,180,41,.15); border: 1px solid rgba(240,180,41,.4); border-radius: 20px; padding: 2px 10px; color: var(--gold); font-weight: 700; }
+    .difer-prog-badge { background: rgba(106,171,122,.1); border: 1px solid var(--verd); border-radius: 20px; padding: 2px 10px; color: var(--verd2); font-size: .78rem; }
+    .difer-timer { font-size: .8rem; color: var(--text2); min-width: 32px; }
 
     /* Grid escenes */
     .difer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .75rem; }
     .difer-card { background: var(--bg2); border: 2px solid var(--border); border-radius: 14px; padding: 1rem .75rem; cursor: pointer; transition: all .2s; display: flex; flex-direction: column; align-items: center; gap: .3rem; text-align: center; }
     .difer-card:hover { border-color: var(--verd2); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(45,90,61,.3); }
     .difer-card.completada { border-color: var(--verd); background: rgba(45,90,61,.1); }
-    .difer-card-emoji { font-size: 2rem; }
+    .difer-card-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(106,171,122,.15); border: 1px solid var(--verd); display: flex; align-items: center; justify-content: center; font-size: .82rem; font-weight: 700; color: var(--verd2); }
     .difer-card-titol { font-size: .85rem; font-weight: 700; color: var(--text); }
     .difer-card-dif { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
     .difer-card-sub { font-size: .72rem; color: var(--text2); }
@@ -4522,8 +4524,9 @@
     .difer-imatges-wrap { display: flex; gap: .5rem; padding: .75rem; flex: 1; }
     .difer-img-col { flex: 1; display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
     .difer-img-label { font-size: .72rem; font-weight: 600; color: var(--text2); text-align: center; text-transform: uppercase; letter-spacing: .05em; }
-    .difer-svg-wrap { border: 2px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg2); }
-    .difer-svg-wrap:last-child { border-color: var(--verd); }
+    .difer-img-box { position: relative; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg2); line-height: 0; }
+    .difer-img-activa { border-color: var(--verd); }
+    .difer-img-activa:hover { border-color: var(--verd2); }
 
     /* Progrés */
     .difer-progres { display: flex; justify-content: center; gap: .6rem; padding: .6rem; }
