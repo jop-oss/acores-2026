@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eina diferencies - Acores 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a1628;color:#eee;font-family:'Segoe UI',sans-serif;min-height:100vh}
+header{background:#0d1e35;border-bottom:1px solid #1e3a5f;padding:.75rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+header h1{font-size:1.1rem;color:#6aab7a;flex:1}
+.nav-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.nav-btn{background:#1e3a5f;border:1px solid #2e5a8f;border-radius:8px;color:#aac;padding:.35rem .75rem;font-size:.8rem;cursor:pointer;transition:all .15s}
+.nav-btn:hover{border-color:#6aab7a;color:#6aab7a}
+.nav-btn.actiu{border-color:#6aab7a;background:rgba(106,171,122,.15);color:#6aab7a;font-weight:700}
+.nav-btn.fet{border-color:#4a8a5a;background:rgba(45,90,61,.2);color:#8acb9a}
+.nav-btn.fet::after{content:' ✓'}
+main{padding:1rem;max-width:1100px;margin:0 auto}
+.escena-info{background:#0d1e35;border:1px solid #1e3a5f;border-radius:12px;padding:.75rem 1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.escena-nom{font-size:.85rem;color:#aaa}
+.escena-nom input{background:#0a1628;border:1px solid #2e5a8f;border-radius:6px;color:#eee;padding:.3rem .6rem;font-size:.82rem;width:220px}
+.escena-dificultat select{background:#0a1628;border:1px solid #2e5a8f;border-radius:6px;color:#eee;padding:.3rem .6rem;font-size:.82rem}
+.escena-emoji input{background:#0a1628;border:1px solid #2e5a8f;border-radius:6px;color:#eee;padding:.3rem .4rem;font-size:.9rem;width:60px;text-align:center}
+label{font-size:.75rem;color:#888;display:block;margin-bottom:2px}
+.imatges-wrap{display:flex;gap:.75rem}
+.img-panel{flex:1;min-width:0}
+.img-panel h3{font-size:.78rem;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;text-align:center}
+.img-box{background:#0d1e35;border:2px solid #1e3a5f;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:180px;position:relative}
+.img-box.actiu{border-color:#6aab7a;cursor:crosshair}
+.img-box img{display:block;width:100%;height:auto}
+.img-box .placeholder{color:#2e5a8f;font-size:.85rem;padding:2rem;text-align:center}
+.marca{position:absolute;border:3px solid #6aab7a;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;width:56px;height:56px}
+.marca span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#6aab7a;color:#000;font-size:10px;font-weight:700;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center}
+.marca.esq{border-color:#f0b429}
+.marca.esq span{background:#f0b429}
+.controls{background:#0d1e35;border:1px solid #1e3a5f;border-radius:12px;padding:.75rem 1rem;margin-top:.75rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.punts-llista{flex:1;font-family:monospace;font-size:.78rem;color:#6aab7a;min-width:200px}
+.punts-llista span{display:inline-block;background:#1e3a5f;border-radius:4px;padding:1px 6px;margin:2px}
+.punts-llista span.actiu{background:rgba(106,171,122,.2);border:1px solid #6aab7a}
+btn,button{border:none;border-radius:7px;padding:.4rem .85rem;cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .15s}
+.btn-red{background:#5a1a1a;color:#ff8a8a;border:1px solid #8a2a2a}
+.btn-red:hover{background:#7a2a2a}
+.btn-green{background:#1a4a2a;color:#6aab7a;border:1px solid #2a6a3a}
+.btn-green:hover{background:#2a6a3a}
+.btn-gold{background:#3a2a00;color:#f0b429;border:1px solid #6a4a00;font-weight:700}
+.btn-gold:hover{background:#5a4000}
+.btn-blue{background:#1a2a4a;color:#7ab4f4;border:1px solid #2a4a7a}
+.btn-blue:hover{background:#2a3a6a}
+.progress{font-size:.78rem;color:#888}
+.export-section{margin-top:1.5rem;background:#0d1e35;border:1px solid #1e3a5f;border-radius:12px;padding:1rem}
+.export-section h3{font-size:.9rem;color:#f0b429;margin-bottom:.75rem}
+.export-section textarea{width:100%;height:320px;background:#0a1628;border:1px solid #2e5a8f;border-radius:8px;color:#6aab7a;font-family:monospace;font-size:.75rem;padding:.75rem;resize:vertical}
+.info-bar{font-size:.75rem;color:#888;margin-bottom:.35rem}
+@media(max-width:600px){.imatges-wrap{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔍 Eina diferencies · Acores 2026</h1>
+  <div class="nav-btns" id="nav-btns"></div>
+</header>
+<main>
+  <div class="escena-info">
+    <div class="escena-nom">
+      <label>Titol de l'escena</label>
+      <input type="text" id="inp-titol" placeholder="Ex: Home i cavall">
+    </div>
+    <div class="escena-emoji">
+      <label>Emoji</label>
+      <input type="text" id="inp-emoji" placeholder="🐴" maxlength="2">
+    </div>
+    <div class="escena-dificultat">
+      <label>Dificultat</label>
+      <select id="inp-dif">
+        <option value="facil">Facil</option>
+        <option value="mitja" selected>Mitja</option>
+        <option value="dificil">Dificil</option>
+      </select>
+    </div>
+    <div class="escena-nom">
+      <label>Prefix fitxer (ex: 001)</label>
+      <input type="text" id="inp-prefix" placeholder="001" style="width:80px">
+    </div>
+    <button class="btn-blue" onclick="autoPrefix()">Auto prefix</button>
+  </div>
+
+  <div class="imatges-wrap">
+    <div class="img-panel">
+      <h3>Original</h3>
+      <div class="img-box" id="box-orig">
+        <div class="placeholder">Posa la imatge original a<br>img/diferencies/XXX-original.jpg</div>
+      </div>
+    </div>
+    <div class="img-panel">
+      <h3>Modificada — clica les diferencies</h3>
+      <div class="img-box actiu" id="box-dif" onclick="handleClic(event)">
+        <div class="placeholder">Posa la imatge modificada a<br>img/diferencies/XXX-differences.jpg</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div>
+      <label style="margin-bottom:4px">Punts registrats (<span id="cnt">0</span>/10):</label>
+      <div class="punts-llista" id="punts-llista">—</div>
+    </div>
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:flex-end">
+      <div>
+        <label>Radi tolerancia (px)</label>
+        <input type="number" id="inp-radi" value="45" min="20" max="100"
+          style="background:#0a1628;border:1px solid #2e5a8f;border-radius:6px;color:#eee;padding:.3rem .5rem;font-size:.82rem;width:70px">
+      </div>
+      <button class="btn-red" onclick="desfer()">Desfer ultim</button>
+      <button class="btn-red" onclick="netejar()">Netejar</button>
+      <button class="btn-green" onclick="guardarEscena()">Guardar escena</button>
+    </div>
+  </div>
+
+  <div class="export-section">
+    <h3>Exportar diferencies-data.js</h3>
+    <div class="info-bar">Escenes guardades: <span id="n-escenes">0</span>/15 &nbsp;|&nbsp;
+      <button class="btn-gold" onclick="exportar()" style="padding:.25rem .6rem;font-size:.75rem">Generar codi</button>
+      <button class="btn-blue" onclick="copiarCodi()" style="padding:.25rem .6rem;font-size:.75rem;margin-left:.3rem">Copiar</button>
+      <button class="btn-red" onclick="esborrarTot()" style="padding:.25rem .6rem;font-size:.75rem;margin-left:.3rem">Esborrar tot</button>
+    </div>
+    <textarea id="output" readonly placeholder="El codi apareixera aqui despres de fer clic a Generar codi..."></textarea>
+  </div>
+</main>
+
+<script>
+var NUM_ESCENES = 15;
+var escenes = {};
+var escenaActual = 1;
+var puntsActuals = [];
+var imgW = 960, imgH = 751;
+
+// Carrega de localStorage
+try {
+  var saved = localStorage.getItem('difer_eina_escenes');
+  if (saved) escenes = JSON.parse(saved);
+} catch(e) {}
+
+function init() {
+  var nav = document.getElementById('nav-btns');
+  nav.innerHTML = '';
+  for (var i=1; i<=NUM_ESCENES; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'nav-btn' + (escenes[i] ? ' fet' : '') + (i===escenaActual ? ' actiu' : '');
+    btn.textContent = i;
+    btn.dataset.idx = i;
+    btn.onclick = function() { canviarEscena(parseInt(this.dataset.idx)); };
+    nav.appendChild(btn);
+  }
+  carregarEscenaActual();
+  document.getElementById('n-escenes').textContent = Object.keys(escenes).length;
+}
+
+function canviarEscena(idx) {
+  escenaActual = idx;
+  puntsActuals = [];
+  init();
+}
+
+function autoPrefix() {
+  var p = String(escenaActual).padStart(3,'0');
+  document.getElementById('inp-prefix').value = p;
+  carregarImatgesPerPrefix(p);
+}
+
+function carregarEscenaActual() {
+  var e = escenes[escenaActual];
+  if (e) {
+    document.getElementById('inp-titol').value = e.titol || '';
+    document.getElementById('inp-emoji').value = e.emoji || '';
+    document.getElementById('inp-dif').value = e.dificultat || 'mitja';
+    document.getElementById('inp-prefix').value = e.prefix || '';
+    puntsActuals = e.diferencies ? e.diferencies.map(function(d){return{px:d.x,py:d.y,r:d.r||45};}) : [];
+    if (e.prefix) carregarImatgesPerPrefix(e.prefix);
+  } else {
+    document.getElementById('inp-titol').value = '';
+    document.getElementById('inp-emoji').value = '';
+    document.getElementById('inp-dif').value = 'mitja';
+    document.getElementById('inp-prefix').value = '';
+    puntsActuals = [];
+    resetImatges();
+  }
+  actualitzarMarcadors();
+}
+
+function carregarImatgesPerPrefix(prefix) {
+  var boxO = document.getElementById('box-orig');
+  var boxD = document.getElementById('box-dif');
+  var imgO = boxO.querySelector('img') || document.createElement('img');
+  var imgD = boxD.querySelector('img') || document.createElement('img');
+  imgO.onload = function() {
+    imgW = imgO.naturalWidth || 960;
+    imgH = imgO.naturalHeight || 751;
+  };
+  imgO.src = '../../img/diferencies/' + prefix + '-original.jpg';
+  imgD.src = '../../img/diferencies/' + prefix + '-differences.jpg';
+  imgO.onerror = function(){ imgO.src = 'img/diferencies/' + prefix + '-original.jpg'; };
+  imgD.onerror = function(){ imgD.src = 'img/diferencies/' + prefix + '-differences.jpg'; };
+  imgO.style.cssText = 'display:block;width:100%;height:auto';
+  imgD.style.cssText = 'display:block;width:100%;height:auto';
+  if (!boxO.querySelector('img')) boxO.innerHTML = '';
+  if (!boxD.querySelector('img')) boxD.innerHTML = '';
+  if (!boxO.contains(imgO)) boxO.appendChild(imgO);
+  if (!boxD.contains(imgD)) boxD.appendChild(imgD);
+  actualitzarMarcadors();
+}
+
+function resetImatges() {
+  document.getElementById('box-orig').innerHTML = '<div class="placeholder">img/diferencies/XXX-original.jpg</div>';
+  document.getElementById('box-dif').innerHTML = '<div class="placeholder">img/diferencies/XXX-differences.jpg</div>';
+}
+
+function handleClic(e) {
+  var box = document.getElementById('box-dif');
+  var img = box.querySelector('img');
+  if (!img) return;
+  var rect = img.getBoundingClientRect();
+  var px = Math.round((e.clientX - rect.left) * (imgW / rect.width));
+  var py = Math.round((e.clientY - rect.top)  * (imgH / rect.height));
+  var r  = parseInt(document.getElementById('inp-radi').value) || 45;
+  if (px<0||py<0||px>imgW||py>imgH) return;
+  puntsActuals.push({px:px, py:py, r:r});
+  actualitzarMarcadors();
+}
+
+function actualitzarMarcadors() {
+  // Neteja marcadors existents
+  ['box-orig','box-dif'].forEach(function(id) {
+    var box = document.getElementById(id);
+    box.querySelectorAll('.marca').forEach(function(m){m.remove();});
+  });
+
+  var boxD = document.getElementById('box-dif');
+  var imgD = boxD.querySelector('img');
+  var boxO = document.getElementById('box-orig');
+  var imgO = boxO.querySelector('img');
+
+  puntsActuals.forEach(function(p, i) {
+    [
+      {box:boxD, img:imgD, cls:''},
+      {box:boxO, img:imgO, cls:' esq'}
+    ].forEach(function(t) {
+      if (!t.img) return;
+      var rect  = t.img.getBoundingClientRect();
+      var wRect = t.box.getBoundingClientRect();
+      var div   = document.createElement('div');
+      div.className = 'marca' + t.cls;
+      div.style.left = ((p.px/imgW)*rect.width  + (rect.left-wRect.left)) + 'px';
+      div.style.top  = ((p.py/imgH)*rect.height + (rect.top -wRect.top))  + 'px';
+      div.innerHTML  = '<span>' + (i+1) + '</span>';
+      t.box.appendChild(div);
+    });
+  });
+
+  // Actualitza llista
+  var cnt = document.getElementById('cnt');
+  cnt.textContent = puntsActuals.length;
+  var ll = document.getElementById('punts-llista');
+  if (!puntsActuals.length) { ll.innerHTML = '—'; return; }
+  ll.innerHTML = puntsActuals.map(function(p,i){
+    return '<span class="actiu">#'+(i+1)+' ('+p.px+','+p.py+')</span>';
+  }).join('');
+}
+
+function desfer() { puntsActuals.pop(); actualitzarMarcadors(); }
+function netejar() { puntsActuals=[]; actualitzarMarcadors(); }
+
+function guardarEscena() {
+  if (!puntsActuals.length) { alert('Cap punt registrat!'); return; }
+  var titol  = document.getElementById('inp-titol').value.trim() || ('Escena '+escenaActual);
+  var emoji  = document.getElementById('inp-emoji').value.trim() || '🔍';
+  var dif    = document.getElementById('inp-dif').value;
+  var prefix = document.getElementById('inp-prefix').value.trim() || String(escenaActual).padStart(3,'0');
+  escenes[escenaActual] = {
+    id: escenaActual, titol:titol, emoji:emoji, dificultat:dif, prefix:prefix,
+    diferencies: puntsActuals.map(function(p){ return {x:p.px, y:p.py, r:p.r}; })
+  };
+  try { localStorage.setItem('difer_eina_escenes', JSON.stringify(escenes)); } catch(e){}
+  init();
+  alert('Escena ' + escenaActual + ' guardada!');
+  // Avanca automaticament a la seguent si no esta plena
+  if (escenaActual < NUM_ESCENES && !escenes[escenaActual+1]) {
+    canviarEscena(escenaActual+1);
+  }
+}
+
+function exportar() {
+  var lines = ['// diferencies-data.js — generat per eina-coordenades',
+               '// Imatges a img/diferencies/XXX-original.jpg i XXX-differences.jpg',
+               '',
+               'const DIFER_ESCENES = ['];
+  var ids = Object.keys(escenes).map(Number).sort(function(a,b){return a-b;});
+  ids.forEach(function(id) {
+    var e = escenes[id];
+    var difs = e.diferencies.map(function(d){
+      return '    { x:'+d.x+', y:'+d.y+', r:'+(d.r||45)+' }';
+    }).join(',\n');
+    lines.push('  {');
+    lines.push('    id: '+e.id+',');
+    lines.push("    titol: '"+e.titol.replace(/'/g,"\'")+"',");
+    lines.push("    emoji: '"+e.emoji+"',");
+    lines.push("    dificultat: '"+e.dificultat+"',");
+    lines.push("    prefix: '"+e.prefix+"',");
+    lines.push('    diferencies: [');
+    lines.push(difs);
+    lines.push('    ]');
+    lines.push('  },');
+  });
+  lines.push('];');
+  document.getElementById('output').value = lines.join('\n');
+  document.getElementById('n-escenes').textContent = ids.length;
+}
+
+function copiarCodi() {
+  var ta = document.getElementById('output');
+  if (!ta.value) { exportar(); }
+  navigator.clipboard.writeText(ta.value).then(function(){
+    alert('Copiat al portapapers!');
+  });
+}
+
+function esborrarTot() {
+  if (!confirm('Segur? Esborrara totes les escenes guardades.')) return;
+  escenes = {};
+  try { localStorage.removeItem('difer_eina_escenes'); } catch(e){}
+  escenaActual = 1;
+  puntsActuals = [];
+  init();
+}
+
+// Prefix auto quan canvia
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('inp-prefix').addEventListener('change', function(){
+    carregarImatgesPerPrefix(this.value.trim());
+  });
+  init();
+});
+
+// Recalcula marcadors en resize
+window.addEventListener('resize', function(){ actualitzarMarcadors(); });
+</script>
+</body>
+</html>
