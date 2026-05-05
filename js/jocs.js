@@ -213,6 +213,7 @@ async function rankingCarregar() {
       scrabble: 0,
       diferencies: 0,
       ginrummy: 0,
+      yahtzee: 0,
     };
   });
 
@@ -328,6 +329,12 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].ginrummy = ptsGr[nom] || 0; });
   }
 
+  // Yahtzee (localStorage, usa mitjana)
+  if (typeof yhGetPuntsGlobals === 'function') {
+    const ptsYh = yhGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].yahtzee = ptsYh[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -336,7 +343,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0);
   return d[filtre] || 0;
 }
 
@@ -403,7 +410,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -427,6 +434,7 @@ function rankingMostrarDetall(nom) {
     { icon: "📝", nom: "Scrabble", key: "scrabble" },
     { icon: "🔍", nom: "Diferències", key: "diferencies" },
     { icon: "🃏", nom: "Gin Rummy", key: "ginrummy" },
+    { icon: "🎲", nom: "Yahtzee", key: "yahtzee" },
   ];
 
   cos.innerHTML = `
@@ -578,6 +586,8 @@ function seleccionarModeJoc(mode) {
     iniciarDiferencies();
   } else if (mode === "ginrummy") {
     iniciarGinRummy();
+  } else if (mode === "yahtzee") {
+    iniciarYahtzee();
   }
 }
 
@@ -968,6 +978,10 @@ function mostraScreen(nom) {
     "difer-joc",
     "ginrummy-inici",
     "ginrummy-joc",
+    "yahtzee-inici",
+    "yahtzee-config",
+    "yahtzee-joc",
+    "yahtzee-veure",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

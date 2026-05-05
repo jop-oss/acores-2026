@@ -4889,3 +4889,326 @@
   background: rgba(150,100,220,.15);
   border-color: rgba(150,100,220,.35);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   YAHTZEE
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── BOTÓ REGLES (inici) ────────────────────────────────────── */
+.yh-btn-regles {
+  display: block; margin: .5rem auto 1rem;
+  background: rgba(106,171,122,.12); border: 1px solid rgba(106,171,122,.3);
+  border-radius: 10px; padding: .45rem 1.2rem;
+  color: var(--verd2); font-family: 'DM Sans', sans-serif;
+  font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.yh-btn-regles:hover { background: rgba(106,171,122,.22); }
+
+/* ── WRAP PRINCIPAL ─────────────────────────────────────────── */
+.yh-wrap {
+  display: flex; flex-direction: column;
+  min-height: 100vh; max-width: 700px;
+  margin: 0 auto; padding: .5rem .75rem 2rem;
+  gap: .75rem; box-sizing: border-box;
+}
+
+/* ── TOPBAR ──────────────────────────────────────────────────── */
+.yh-topbar {
+  display: flex; align-items: center; gap: .5rem; padding: .4rem 0;
+}
+.yh-topbar-title {
+  flex: 1; text-align: center; font-size: .85rem;
+  font-weight: 600; color: var(--text2);
+}
+.yh-btn-info {
+  background: none; border: 1px solid var(--border);
+  border-radius: 8px; padding: .3rem .6rem;
+  font-size: .85rem; cursor: pointer; color: var(--text2);
+}
+
+/* ── ESPERA ──────────────────────────────────────────────────── */
+.yh-espera {
+  text-align: center; padding: 2rem 1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+.yh-espera-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+.yh-espera-text { font-size: 1.1rem; font-weight: 600; margin-bottom: .25rem; }
+.yh-espera-sub  { font-size: .82rem; color: var(--text2); margin-bottom: 1rem; }
+
+/* ── TORN WRAP ───────────────────────────────────────────────── */
+.yh-torn-wrap {
+  display: flex; flex-direction: column; gap: .75rem;
+}
+@media(min-width: 600px) {
+  .yh-torn-wrap { flex-direction: row; align-items: flex-start; }
+  .yh-daus-zona { flex: 0 0 280px; }
+  .yh-marcador-zona { flex: 1; }
+}
+
+/* ── ZONA DAUS ───────────────────────────────────────────────── */
+.yh-daus-zona {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: .75rem;
+}
+.yh-torn-cap {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: .75rem; flex-wrap: wrap; gap: .4rem;
+}
+.yh-torn-jugador {
+  display: flex; align-items: center; gap: .5rem;
+  font-weight: 600; font-size: .85rem;
+}
+.yh-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--verd2);
+}
+.yh-llançaments-badge {
+  font-size: .75rem; color: var(--text2);
+  background: rgba(255,255,255,.06);
+  border-radius: 20px; padding: .25rem .65rem;
+}
+
+/* ── DAUS ────────────────────────────────────────────────────── */
+.yh-daus-grid {
+  display: flex; justify-content: center;
+  gap: .6rem; margin-bottom: .75rem; flex-wrap: wrap;
+}
+.yh-dau {
+  width: 72px; height: 72px;
+  background: #fff;
+  border: 3px solid #ddd;
+  border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer;
+  transition: all .15s; position: relative; user-select: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,.35);
+}
+.yh-dau:hover { border-color: var(--verd2); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,.4); }
+.yh-dau-blocat {
+  border-color: #e8c96a !important;
+  background: #fffbe6 !important;
+  transform: none !important;
+  box-shadow: 0 0 0 2px #e8c96a !important;
+}
+.yh-dau-inactiu { opacity: .45; cursor: default; }
+
+/* Grid de punts 3×3 dins del dau */
+.yh-dau-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  width: 54px; height: 54px;
+  padding: 6px; gap: 3px; box-sizing: border-box;
+}
+.yh-dau-punt {
+  border-radius: 50%;
+  background: transparent;
+  transition: background .1s;
+}
+.yh-dau-punt.actiu { background: #c0392b; }
+.yh-dau-buit {
+  grid-column: 1 / -1; grid-row: 1 / -1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+}
+
+.yh-dau-pin {
+  position: absolute; top: -8px; right: -8px;
+  font-size: .85rem; line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+}
+
+/* ── BOTONS DAUS ─────────────────────────────────────────────── */
+.yh-daus-accions {
+  display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center;
+}
+.yh-btn-llancar {
+  background: linear-gradient(135deg, var(--verd), var(--verd2));
+  border: none; border-radius: 10px; padding: .6rem 1.4rem;
+  color: #fff; font-family: 'DM Sans', sans-serif;
+  font-size: .9rem; font-weight: 700; cursor: pointer;
+  transition: all .15s; display: flex; align-items: center; gap: .4rem;
+}
+.yh-btn-llancar:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.yh-btn-llancar.secundari {
+  background: rgba(106,171,122,.2);
+  border: 1px solid var(--verd2); color: var(--verd2);
+}
+.yh-resta-llanc { font-size: .75rem; opacity: .75; }
+.yh-btn-desblocar {
+  background: none; border: 1px solid var(--border);
+  border-radius: 8px; padding: .5rem .9rem;
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: .78rem; cursor: pointer; transition: all .15s;
+}
+.yh-btn-desblocar:hover { border-color: var(--verd2); color: var(--text); }
+
+/* ── MARCADOR ────────────────────────────────────────────────── */
+.yh-marcador-zona {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: .75rem;
+}
+.yh-marcador-titol {
+  font-size: .78rem; font-weight: 600;
+  color: var(--text2); margin-bottom: .5rem;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.yh-marc-seccio-titol {
+  font-size: .72rem; font-weight: 700;
+  color: var(--verd2); text-transform: uppercase;
+  letter-spacing: .06em; padding: .25rem 0;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border); margin-bottom: .25rem;
+}
+.yh-marc-suma { font-weight: 400; color: var(--text2); }
+.yh-bonus-assolit { color: #6aab7a; font-weight: 700; }
+.yh-bonus-falta   { color: var(--text2); font-weight: 400; }
+
+.yh-marc-fila {
+  display: flex; align-items: center; gap: .4rem;
+  padding: .3rem .4rem; border-radius: 7px;
+  margin-bottom: 2px; transition: background .12s;
+}
+.yh-marc-lliure { cursor: pointer; }
+.yh-marc-lliure:hover { background: rgba(106,171,122,.1); }
+.yh-marc-ocupat { opacity: .6; cursor: default; }
+.yh-marc-selec {
+  background: rgba(106,171,122,.18) !important;
+  border: 1px solid var(--verd2);
+}
+.yh-marc-emoji { font-size: .9rem; width: 20px; text-align: center; }
+.yh-marc-label { flex: 1; font-size: .82rem; }
+.yh-marc-pts { font-size: .82rem; font-weight: 600; min-width: 36px; text-align: right; }
+.yh-marc-previs { font-size: .78rem; }
+.yh-marc-previs.positiu { color: #6aab7a; }
+.yh-marc-previs.zero    { color: var(--text2); }
+.yh-marc-hint {
+  font-size: .78rem; color: var(--text2);
+  text-align: center; padding: .75rem 0;
+}
+.yh-marc-extra {
+  font-size: .78rem; color: #e8c96a;
+  padding: .25rem .4rem; background: rgba(232,201,106,.08);
+  border-radius: 6px; margin: .25rem 0;
+}
+.yh-marc-total {
+  border-top: 1px solid var(--border);
+  padding-top: .4rem; margin-top: .25rem;
+  font-size: .9rem; text-align: right; color: var(--text);
+}
+
+.yh-btn-confirmar {
+  width: 100%; margin-top: .5rem;
+  background: linear-gradient(135deg, var(--verd), var(--verd2));
+  border: none; border-radius: 10px; padding: .6rem 1rem;
+  color: #fff; font-family: 'DM Sans', sans-serif;
+  font-size: .85rem; font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.yh-btn-confirmar:hover { filter: brightness(1.1); }
+
+/* ── RANKING LATERAL ────────────────────────────────────────── */
+.yh-ranking-lateral {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: .6rem .75rem;
+}
+.yh-rl-titol {
+  font-size: .72rem; font-weight: 700;
+  color: var(--text2); text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: .4rem;
+}
+.yh-rl-fila {
+  display: flex; align-items: center; gap: .4rem;
+  padding: .2rem 0; font-size: .82rem;
+}
+.yh-rl-fila.actiu { color: var(--verd2); font-weight: 600; }
+.yh-rl-pos   { width: 20px; text-align: center; font-size: .85rem; }
+.yh-rl-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+.yh-rl-nom  { flex: 1; }
+.yh-rl-pts  { font-weight: 700; color: var(--verd2); }
+
+/* ── MARCADOR MINI ───────────────────────────────────────────── */
+.yh-marcador-mini {
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: .6rem 1rem;
+  text-align: center; margin-top: .75rem;
+}
+.yh-mm-nom  { font-size: .78rem; color: var(--text2); margin-bottom: .2rem; }
+.yh-mm-pts  { font-size: 1.5rem; font-weight: 800; color: var(--verd2); }
+.yh-mm-prog { font-size: .72rem; color: var(--text2); margin-top: .15rem; }
+
+/* ── FINAL ───────────────────────────────────────────────────── */
+.yh-final {
+  text-align: center; padding: 2rem 1rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border); border-radius: 16px;
+}
+.yh-final-icon   { font-size: 3rem; margin-bottom: .5rem; }
+.yh-final-titol  { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
+                   background: linear-gradient(135deg, var(--verd2), #e8c96a);
+                   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                   background-clip: text; margin-bottom: .5rem; }
+.yh-final-guanyador { font-size: 1rem; font-weight: 600; color: #e8c96a; margin-bottom: 1.25rem; }
+.yh-final-ranking { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+.yh-final-fila {
+  display: flex; align-items: center; gap: .6rem;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+  border-radius: 10px; padding: .5rem .75rem; font-size: .9rem;
+}
+.yh-final-fila.actiu { border-color: var(--verd2); background: rgba(106,171,122,.1); }
+
+/* ── MODAL REGLES ────────────────────────────────────────────── */
+.yh-regles-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  z-index: 9999; display: flex; align-items: center;
+  justify-content: center; padding: 1rem;
+}
+.yh-regles-modal {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; max-width: 560px; width: 100%;
+  max-height: 85vh; display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.yh-regles-cap {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.yh-regles-titol {
+  font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
+}
+.yh-regles-tancar {
+  background: none; border: 1px solid var(--border);
+  border-radius: 8px; padding: .3rem .65rem;
+  color: var(--text2); cursor: pointer; font-size: .9rem;
+}
+.yh-regles-tancar:hover { color: var(--text); border-color: var(--verd2); }
+.yh-regles-cos {
+  overflow-y: auto; padding: 1rem 1.25rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.yh-regles-seccio { display: flex; flex-direction: column; gap: .4rem; }
+.yh-regles-sub {
+  font-weight: 700; font-size: .9rem; color: var(--verd2);
+  margin-bottom: .2rem;
+}
+.yh-regles-cos p {
+  font-size: .83rem; color: var(--text2); line-height: 1.55;
+}
+.yh-regles-taula {
+  width: 100%; border-collapse: collapse; font-size: .8rem;
+}
+.yh-regles-taula th {
+  text-align: left; padding: .35rem .5rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2); font-size: .72rem;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.yh-regles-taula td {
+  padding: .3rem .5rem;
+  border-bottom: 1px solid rgba(106,171,122,.07);
+}
+.yh-regles-taula tr.yh-regles-bonus td {
+  background: rgba(232,201,106,.08); color: #e8c96a;
+}

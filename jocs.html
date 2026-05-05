@@ -195,6 +195,11 @@
           <span class="joc-selector-label">Gin Rummy</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · baralla espanyola</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('yahtzee')">
+          <span class="joc-selector-icon">🎲</span>
+          <span class="joc-selector-label">Yahtzee</span>
+          <span class="joc-selector-sub">Daus · 13 rondes · 2 partides · Firebase</span>
+        </button>
       </div>
     </div>
 
@@ -229,6 +234,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1220,7 +1226,26 @@
     <div id="ginrummy-joc-cont"></div>
   </div>
 
-<script src="js/gin-rummy.js"></script>
+  <!-- PANTALLES YAHTZEE -->
+  <div id="screen-yahtzee-inici" style="display:none">
+    <div id="yahtzee-inici-cont"></div>
+  </div>
+  <div id="screen-yahtzee-config" style="display:none">
+    <div id="yahtzee-config-cont"></div>
+  </div>
+  <div id="screen-yahtzee-joc" style="display:none">
+    <div id="yahtzee-joc-cont"></div>
+  </div>
+  <div id="screen-yahtzee-veure" style="display:none">
+    <div class="trivial-veure-wrap">
+      <div class="trivial-veure-header">
+        <button onclick="yhSortir()" class="mapa-back-btn">← Tornar</button>
+      </div>
+      <div id="yahtzee-veure-cont"></div>
+    </div>
+  </div>
+
+<script src="js/yahtzee.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

@@ -526,6 +526,26 @@
     </table>
   </div>
 
+  <!-- YAHTZEE -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎲 Yahtzee</div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn-reset-tot" onclick="resetYahtzeePartida('partida_a')">Reset Partida A</button>
+        <button class="btn-reset-tot" onclick="resetYahtzeePartida('partida_b')">Reset Partida B</button>
+        <button class="btn-reset-tot" onclick="resetTotJoc('yahtzee')">Reset punts locals</button>
+      </div>
+    </div>
+    <div class="admin-ruleta-info" style="margin-bottom:.75rem;flex-wrap:wrap;gap:.75rem">
+      <span>Partida A: <strong id="yahtzee-estat-a">—</strong></span>
+      <span>Partida B: <strong id="yahtzee-estat-b">—</strong></span>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Partides</th><th>Mitjana</th><th></th></tr></thead>
+      <tbody id="taula-yahtzee"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -586,6 +606,7 @@
     renderScrabble();
     renderDiferencies();
     renderGinRummy();
+    renderYahtzee();
     renderRuleta();
   }
 
@@ -796,13 +817,15 @@
     sokoban:      nom => `sokoban_estat_${nom}`,
     diferencies:  nom => `difer_estat_${nom}`,
     ginrummy:     nom => `ginrummy_estat_${nom}`,
+    yahtzee:      nom => `yahtzee_punts_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
     cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
     flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies,
-    ginrummy: renderGinRummy
+    ginrummy: renderGinRummy,
+    yahtzee:  renderYahtzee
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -815,7 +838,8 @@
     sokoban: 'Sokoban Açores',
     scrabble: 'Scrabble Açores',
     diferencies: 'Busca les Diferències',
-    ginrummy: 'Gin Rummy'
+    ginrummy: 'Gin Rummy',
+    yahtzee:  'Yahtzee'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1139,6 +1163,53 @@
         <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('ginrummy','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
+  }
+
+  function renderYahtzee() {
+    const tbody = document.getElementById('taula-yahtzee');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { partides: 0, puntsTotals: 0 };
+      try { estat = JSON.parse(localStorage.getItem(`yahtzee_punts_${nom}`) || 'null') || estat; } catch(e) {}
+      const partides = estat.partides || 0;
+      const mitjana  = partides > 0 ? Math.round(estat.puntsTotals / partides) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
+        <td><span class="pts-badge ${mitjana===0?'zero':''}">${mitjana} pts</span></td>
+        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('yahtzee','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+
+    // Estat partides Firebase
+    if (typeof firebase !== 'undefined' && firebase.apps.length) {
+      const db = firebase.firestore();
+      ['partida_a','partida_b'].forEach(async docId => {
+        const lletra = docId === 'partida_a' ? 'a' : 'b';
+        try {
+          const snap = await db.collection('yahtzee_partides').doc(docId).get();
+          const el = document.getElementById('yahtzee-estat-' + lletra);
+          if (!el) return;
+          if (!snap.exists || !snap.data().activa) {
+            el.textContent = 'Cap partida activa';
+          } else {
+            const p = snap.data();
+            el.textContent = `Ronda ${p.ronda}/13 · Torn de ${p.ordre[p.tornIdx % p.ordre.length]} · ${p.jugadors.length} jugadors`;
+          }
+        } catch(e) {}
+      });
+    }
+  }
+
+  async function resetYahtzeePartida(docId) {
+    const lletra = docId === 'partida_a' ? 'A' : 'B';
+    if (!confirm(`Segur que vols eliminar la Partida ${lletra} del Yahtzee?`)) return;
+    try {
+      if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+      await firebase.firestore().collection('yahtzee_partides').doc(docId).delete();
+      showToast(`Partida ${lletra} del Yahtzee eliminada`);
+      renderYahtzee();
+    } catch(e) { showToast('Error: ' + e.message); }
   }
 
   // ── TOAST ──────────────────────────────────────────────────
