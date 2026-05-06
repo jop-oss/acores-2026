@@ -5212,3 +5212,236 @@
 .yh-regles-taula tr.yh-regles-bonus td {
   background: rgba(232,201,106,.08); color: #e8c96a;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   BATALLA NAVAL
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── COL·LOCACIÓ WRAP ───────────────────────────────────────── */
+.bn-col-wrap {
+  display: flex; flex-direction: column;
+  min-height: 100vh; max-width: 700px;
+  margin: 0 auto; padding: .5rem .75rem 2rem;
+  gap: .6rem; box-sizing: border-box;
+}
+.bn-col-header {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .4rem 0; flex-wrap: wrap;
+}
+.bn-col-titol {
+  flex: 1; text-align: center;
+  font-size: .9rem; font-weight: 600; color: var(--text2);
+}
+.bn-btn-rotar {
+  background: rgba(106,171,122,.12); border: 1px solid rgba(106,171,122,.3);
+  border-radius: 8px; padding: .35rem .8rem;
+  color: var(--verd2); font-family: 'DM Sans', sans-serif;
+  font-size: .78rem; font-weight: 600; cursor: pointer;
+}
+.bn-col-main {
+  display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center;
+}
+
+/* ── TAULER GENÈRIC ─────────────────────────────────────────── */
+.bn-tauler-zona { flex-shrink: 0; }
+.bn-tauler-bloc { display: flex; flex-direction: column; gap: .4rem; }
+.bn-tauler-titol {
+  font-size: .8rem; font-weight: 700;
+  color: var(--verd2); text-align: center;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+.bn-coordenades-wrap { display: flex; gap: 2px; }
+.bn-coordenades-col {
+  display: flex; flex-direction: column;
+  justify-content: space-around; width: 18px; padding-top: 20px;
+}
+.bn-coordenades-fila {
+  display: flex; justify-content: space-around;
+  height: 18px; margin-bottom: 2px;
+}
+.bn-coord {
+  font-size: .62rem; color: var(--text2);
+  text-align: center; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex: 1;
+}
+
+.bn-tauler {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px;
+  width: min(300px, calc(100vw - 120px));
+  aspect-ratio: 1;
+}
+
+/* ── CEL·LES ────────────────────────────────────────────────── */
+.bn-cel {
+  border-radius: 3px;
+  background: rgba(14,40,70,.6);
+  border: 1px solid rgba(100,160,220,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; transition: all .1s;
+  cursor: default; user-select: none;
+  /* Sempre quadrades: aspect-ratio garantit pel grid 1:1 del tauler */
+  aspect-ratio: 1;
+  overflow: hidden;
+  line-height: 1;
+}
+.bn-cel-vaixell {
+  background: linear-gradient(135deg, #1a3a50, #254560);
+  border-color: rgba(106,171,122,.5);
+}
+.bn-cel-clicable {
+  cursor: crosshair;
+}
+.bn-cel-clicable:hover {
+  background: rgba(59,130,246,.3);
+  border-color: rgba(59,130,246,.7);
+}
+.bn-cel-preview-ok {
+  background: rgba(106,171,122,.35) !important;
+  border-color: var(--verd2) !important;
+}
+.bn-cel-preview-err {
+  background: rgba(220,60,60,.3) !important;
+  border-color: rgba(220,60,60,.7) !important;
+}
+.bn-cel-tocat {
+  background: rgba(180,30,30,.35);
+  border-color: rgba(220,60,60,.6);
+}
+.bn-cel-enfonsat {
+  background: rgba(180,30,30,.55);
+  border-color: rgba(220,60,60,.9);
+}
+.bn-cel-aigua {
+  background: rgba(59,130,246,.15);
+  border-color: rgba(59,130,246,.3);
+}
+
+/* ── LLISTA VAIXELLS (col·locació) ──────────────────────────── */
+.bn-vaixells-llista {
+  display: flex; flex-direction: column; gap: .35rem;
+  min-width: 180px; max-width: 220px;
+}
+.bn-vaixells-titol {
+  font-size: .72rem; font-weight: 700;
+  color: var(--text2); text-transform: uppercase;
+  letter-spacing: .06em; margin-bottom: .15rem;
+}
+.bn-vaixell-item {
+  display: flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: .35rem .5rem;
+  cursor: pointer; transition: all .12s;
+}
+.bn-vaixell-item:hover:not(.col·locat) {
+  background: rgba(106,171,122,.1); border-color: var(--verd2);
+}
+.bn-vaixell-item.selec {
+  background: rgba(106,171,122,.15) !important;
+  border-color: var(--verd2) !important;
+  box-shadow: 0 0 0 2px rgba(106,171,122,.3);
+}
+.bn-vaixell-item.col·locat {
+  opacity: .5; cursor: default;
+}
+.bn-vaixell-emoji { font-size: .95rem; }
+.bn-vaixell-nom { flex: 1; font-size: .78rem; font-weight: 600; }
+.bn-mida-cel {
+  display: inline-block; width: 9px; height: 9px;
+  background: var(--verd2); border-radius: 2px; margin: 0 1px;
+}
+.bn-col-ok { font-size: .8rem; color: var(--verd2); font-weight: 700; }
+.bn-col-pendent {
+  font-size: .72rem; color: var(--text2);
+  text-align: center; padding: .4rem 0;
+}
+.bn-btn-aleatori {
+  background: rgba(255,255,255,.06); border: 1px solid var(--border);
+  border-radius: 8px; padding: .4rem .75rem;
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: .78rem; cursor: pointer; transition: all .12s;
+  text-align: center;
+}
+.bn-btn-aleatori:hover { border-color: var(--verd2); color: var(--text); }
+
+/* ── JOC WRAP ───────────────────────────────────────────────── */
+.bn-joc-wrap {
+  display: flex; flex-direction: column;
+  min-height: 100vh; max-width: 800px;
+  margin: 0 auto; padding: .5rem .75rem 2rem;
+  gap: .75rem; box-sizing: border-box;
+}
+.bn-joc-header {
+  display: flex; align-items: center; gap: .5rem; padding: .4rem 0;
+}
+.bn-torn-badge {
+  flex: 1; text-align: center; font-size: .85rem;
+  font-weight: 600; color: var(--verd2);
+  background: rgba(45,90,61,.18); border-radius: 20px;
+  padding: .3rem .8rem;
+}
+.bn-stats { font-size: .82rem; color: var(--text2); }
+
+.bn-joc-main {
+  display: flex; gap: 1rem;
+  flex-wrap: wrap; justify-content: center;
+  align-items: flex-start;
+}
+
+/* ── VAIXELLS STATUS (sota tauler IA i jugador) ─────────────── */
+.bn-vaixells-status {
+  display: flex; gap: .3rem; flex-wrap: wrap;
+  justify-content: center; margin-top: .4rem;
+}
+.bn-vaixells-status-ia .bn-v-status {
+  font-size: 1.15rem; transition: all .2s;
+}
+.bn-v-status { font-size: 1.1rem; transition: opacity .2s; }
+.bn-v-status.enfonsat { opacity: .25; filter: grayscale(1); }
+
+/* ── LLEGENDA EN COLUMNA (dreta del tauler jugador) ─────────── */
+.bn-defensa-wrap {
+  display: flex; gap: .5rem; align-items: flex-start;
+}
+.bn-llegenda-col {
+  display: flex; flex-direction: column; gap: .3rem;
+  padding-top: 20px; /* alinear amb el tauler (fila de coords) */
+  min-width: 80px;
+}
+.bn-llegenda-item {
+  display: flex; align-items: center; gap: .35rem;
+  font-size: .72rem; color: var(--text2); white-space: nowrap;
+}
+.bn-leg-icon {
+  font-size: .9rem; width: 20px; text-align: center;
+}
+.bn-leg-tocat    { }
+.bn-leg-enfonsat { }
+.bn-leg-aigua    { }
+.bn-leg-enfonsat-v { opacity: .3; filter: grayscale(1); }
+.bn-llegenda-sep {
+  height: 1px; background: var(--border);
+  margin: .2rem 0;
+}
+
+/* ── MISSATGE ───────────────────────────────────────────────── */
+.bn-missatge {
+  text-align: center; font-size: .88rem;
+  font-weight: 600; color: var(--text);
+  min-height: 1.5rem;
+  transition: opacity .5s;
+  padding: .3rem;
+}
+
+/* ── RESPONSIU ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .bn-tauler {
+    width: min(220px, calc(50vw - 40px));
+  }
+  .bn-joc-main { gap: .5rem; }
+  .bn-llegenda-col { min-width: 70px; font-size: .65rem; }
+}

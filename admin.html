@@ -546,6 +546,18 @@
     </table>
   </div>
 
+  <!-- BATALLA NAVAL -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">⚓ Batalla Naval</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('batallanaval')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Partides</th><th>Victòries</th><th>% Vic.</th><th></th></tr></thead>
+      <tbody id="taula-batallanaval"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -607,6 +619,7 @@
     renderDiferencies();
     renderGinRummy();
     renderYahtzee();
+    renderBatallaNaval();
     renderRuleta();
   }
 
@@ -818,6 +831,7 @@
     diferencies:  nom => `difer_estat_${nom}`,
     ginrummy:     nom => `ginrummy_estat_${nom}`,
     yahtzee:      nom => `yahtzee_punts_${nom}`,
+    batallanaval: nom => `batallanaval_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -825,7 +839,8 @@
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
     flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies,
     ginrummy: renderGinRummy,
-    yahtzee:  renderYahtzee
+    yahtzee:  renderYahtzee,
+    batallanaval: renderBatallaNaval
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -839,7 +854,8 @@
     scrabble: 'Scrabble Açores',
     diferencies: 'Busca les Diferències',
     ginrummy: 'Gin Rummy',
-    yahtzee:  'Yahtzee'
+    yahtzee:  'Yahtzee',
+    batallanaval: 'Batalla Naval'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1210,6 +1226,25 @@
       showToast(`Partida ${lletra} del Yahtzee eliminada`);
       renderYahtzee();
     } catch(e) { showToast('Error: ' + e.message); }
+  }
+
+  function renderBatallaNaval() {
+    const tbody = document.getElementById('taula-batallanaval');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { partides: 0, victòries: 0 };
+      try { estat = JSON.parse(localStorage.getItem(`batallanaval_estat_${nom}`) || 'null') || estat; } catch(e) {}
+      const partides  = estat.partides || 0;
+      const victories = estat.victòries || 0;
+      const pct = partides > 0 ? Math.round(victories / partides * 100) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
+        <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
+        <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
+        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('batallanaval','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
   }
 
   // ── TOAST ──────────────────────────────────────────────────

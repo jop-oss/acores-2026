@@ -200,6 +200,11 @@
           <span class="joc-selector-label">Yahtzee</span>
           <span class="joc-selector-sub">Daus · 13 rondes · 2 partides · Firebase</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('batallanaval')">
+          <span class="joc-selector-icon">⚓</span>
+          <span class="joc-selector-label">Batalla Naval</span>
+          <span class="joc-selector-sub">vs IA · 3 dificultats · 8 vaixells</span>
+        </button>
       </div>
     </div>
 
@@ -235,6 +240,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('batallanaval', this)">⚓ Batalla Naval</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1246,6 +1252,19 @@
   </div>
 
 <script src="js/yahtzee.js"></script>
+
+  <!-- PANTALLES BATALLA NAVAL -->
+  <div id="screen-batallanaval-inici" style="display:none">
+    <div id="batallanaval-inici-cont"></div>
+  </div>
+  <div id="screen-batallanaval-col" style="display:none">
+    <div id="batallanaval-col-cont"></div>
+  </div>
+  <div id="screen-batallanaval-joc" style="display:none">
+    <div id="batallanaval-joc-cont"></div>
+  </div>
+
+<script src="js/batalla-naval.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
