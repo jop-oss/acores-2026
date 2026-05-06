@@ -477,7 +477,7 @@ function bnRenderJoc() {
             </div>
             <!-- Llegenda en columna a la dreta -->
             <div class="bn-llegenda-col">
-              <div class="bn-llegenda-item"><span class="bn-leg-icon bn-leg-tocat">🚢</span><span>Tocat</span></div>
+              <div class="bn-llegenda-item"><span class="bn-leg-icon bn-leg-tocat">🎯</span><span>Tocat</span></div>
               <div class="bn-llegenda-item"><span class="bn-leg-icon bn-leg-enfonsat">💥</span><span>Enfonsat</span></div>
               <div class="bn-llegenda-item"><span class="bn-leg-icon bn-leg-aigua">💦</span><span>Aigua</span></div>
               <div class="bn-llegenda-sep"></div>
@@ -509,7 +509,7 @@ function bnRenderTaulerAtac() {
     const clicable = !tret && bnTorn === 'jugador' && bnActiu;
     if (clicable) cls += ' bn-cel-clicable';
     // 🚢 = tocat (vaixell parcialment visible), 💥 = enfonsat (explosió)
-    const contingut = tret === 'tocat' ? (vaixellEnfonsat ? '💥' : '🚢') : tret === 'aigua' ? '💦' : '';
+    const contingut = tret === 'tocat' ? (vaixellEnfonsat ? '💥' : '🎯') : tret === 'aigua' ? '💦' : '';
     return `<div class="${cls}" data-idx="${idx}">${contingut}</div>`;
   }).join('');
 }
@@ -523,7 +523,7 @@ function bnRenderTaulerDefensa() {
     if (vaixell && !tret)  cls += ' bn-cel-vaixell';
     if (tret === 'tocat')  cls += enfonsat ? ' bn-cel-enfonsat' : ' bn-cel-tocat';
     if (tret === 'aigua')  cls += ' bn-cel-aigua';
-    const contingut = tret === 'tocat' ? (enfonsat ? '💥' : '🚢') : tret === 'aigua' ? '💦' : '';
+    const contingut = tret === 'tocat' ? (enfonsat ? '💥' : '🎯') : tret === 'aigua' ? '💦' : '';
     return `<div class="${cls}">${contingut}</div>`;
   }).join('');
 }
