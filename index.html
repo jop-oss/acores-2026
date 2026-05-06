@@ -18,6 +18,12 @@
     font-family: sans-serif; font-size: .82rem; font-weight: 700;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
   }
+  .yahtzee-banner-btn {
+    background: #3b82f6; border: none; border-radius: 8px;
+    padding: .4rem 1rem; color: #fff;
+    font-family: sans-serif; font-size: .82rem; font-weight: 700;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  }
 </style>
 </head>
 <body data-requereix-id>
@@ -58,6 +64,13 @@
   <span class="trivial-banner-icon">📝</span>
   <span class="trivial-banner-text" style="color:var(--verd2,#6aab7a)">És el teu torn al Scrabble!</span>
   <button class="trivial-banner-btn" style="background:#6aab7a" onclick="">Jugar ara →</button>
+</div>
+
+<!-- Banner torn Yahtzee -->
+<div id="yahtzee-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05));border:1px solid rgba(59,130,246,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
+  <span class="trivial-banner-icon">🎲</span>
+  <span class="trivial-banner-text" style="color:#60a5fa">És el teu torn al Yahtzee!</span>
+  <button class="yahtzee-banner-btn" onclick="">Jugar ara →</button>
 </div>
 
 <header class="hero">
@@ -341,6 +354,7 @@
 <script src="js/trivial.js"></script>
 <script src="js/scrabble-data.js"></script>
 <script src="js/scrabble.js"></script>
+<script src="js/yahtzee.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const nomGuardat = localStorage.getItem('app_jugador');
@@ -348,6 +362,7 @@
       window.jugadorActiu = nomGuardat;
       trivialComprovarTornIndex();
       scrabbleComprovarTornIndex();
+      yahtzeeComprovarTornIndex();
     }
   });
 </script>

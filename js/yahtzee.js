@@ -882,3 +882,48 @@ function yhGetPuntsGlobals() {
   });
   return pts;
 }
+
+// ── COMPROVACIÓ TORN PER LANDING PAGE ────────────────────────
+async function yahtzeeComprovarTornIndex() {
+  if (!jugadorActiu) return;
+  try {
+    const db = yhGetDb();
+    const [snapA, snapB] = await Promise.all([
+      db.collection(YH_COL).doc(YH_DOC_A).get(),
+      db.collection(YH_COL).doc(YH_DOC_B).get(),
+    ]);
+
+    let missatge = null;
+    let docId = null;
+
+    if (snapA.exists) {
+      const p = snapA.data();
+      if (p.activa && !p.acabada && yhGetTornActualNom(p) === jugadorActiu) {
+        missatge = 'És el teu torn al Yahtzee (Partida A)!';
+        docId = YH_DOC_A;
+      }
+    }
+    if (!missatge && snapB.exists) {
+      const p = snapB.data();
+      if (p.activa && !p.acabada && yhGetTornActualNom(p) === jugadorActiu) {
+        missatge = 'És el teu torn al Yahtzee (Partida B)!';
+        docId = YH_DOC_B;
+      }
+    }
+
+    const banner = document.getElementById('yahtzee-torn-banner');
+    if (banner) {
+      if (missatge) {
+        banner.style.display = 'flex';
+        banner.querySelector('.trivial-banner-text').textContent = missatge;
+        banner.querySelector('.yahtzee-banner-btn').onclick = () => {
+          window.location.href = 'jocs.html?yahtzee=' + docId;
+        };
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+  } catch(e) {
+    console.error('Error comprovant torn Yahtzee:', e);
+  }
+}

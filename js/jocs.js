@@ -67,6 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
       history.replaceState(null, '', window.location.pathname);
       setTimeout(() => iniciarScrabble(), 300);
     }
+    const yahtzeeParam = params.get("yahtzee");
+    if (yahtzeeParam === YH_DOC_A || yahtzeeParam === YH_DOC_B) {
+      history.replaceState(null, '', window.location.pathname);
+      setTimeout(() => iniciarYahtzee(), 300);
+    }
   } else {
     document.querySelector(".joc-selector-jugador").style.display = "none";
     jocsRenderModalIdentificacio();
