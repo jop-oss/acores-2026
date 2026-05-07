@@ -215,6 +215,11 @@
           <span class="joc-selector-label">Joc Musical</span>
           <span class="joc-selector-sub">150 cançons · intro o lletra · rock català</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('nonogram')">
+          <span class="joc-selector-icon">🧩</span>
+          <span class="joc-selector-label">Nonogram</span>
+          <span class="joc-selector-sub">15 puzzles · 3 nivells · lògica</span>
+        </button>
       </div>
     </div>
 
@@ -1296,6 +1301,15 @@
 
 <script src="js/joc-musical-data.js"></script>
 <script src="js/joc-musical.js"></script>
+  <!-- PANTALLES NONOGRAM -->
+  <div id="screen-nonogram-selector" style="display:none">
+    <div id="nonogram-selector-cont"></div>
+  </div>
+  <div id="screen-nonogram-joc" style="display:none">
+    <div id="nonogram-joc-cont"></div>
+  </div>
+<script src="js/nonogram-data.js"></script>
+<script src="js/nonogram.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

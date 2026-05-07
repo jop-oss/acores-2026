@@ -570,6 +570,27 @@
     </table>
   </div>
 
+  <!-- NONOGRAM -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🧩 Nonogram</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('nonogram')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Fàcil (5)</th>
+          <th>Mitjà (5)</th>
+          <th>Difícil (5)</th>
+          <th>Total pts</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="taula-nonogram"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -633,6 +654,7 @@
     renderYahtzee();
     renderBatallaNaval();
     renderTriangles();
+    renderNonogram();
     renderRuleta();
   }
 
@@ -846,6 +868,7 @@
     yahtzee:      nom => `yahtzee_punts_${nom}`,
     batallanaval: nom => `batallanaval_estat_${nom}`,
     triangles:    nom => `triangles_estat_${nom}`,
+    nonogram:     nom => `nonogram_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -855,7 +878,8 @@
     ginrummy: renderGinRummy,
     yahtzee:  renderYahtzee,
     batallanaval: renderBatallaNaval,
-    triangles:    renderTriangles
+    triangles:    renderTriangles,
+    nonogram:     renderNonogram
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -871,7 +895,8 @@
     ginrummy: 'Gin Rummy',
     yahtzee:  'Yahtzee',
     batallanaval: 'Batalla Naval',
-    triangles:    'Triangles'
+    triangles:    'Triangles',
+    nonogram:     'Nonogram'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1278,6 +1303,39 @@
         <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
         <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
         <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('triangles','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── NONOGRAM ───────────────────────────────────────────────
+  function renderNonogram() {
+    const tbody = document.getElementById('taula-nonogram');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { puzzles: {} };
+      try { estat = JSON.parse(localStorage.getItem(`nonogram_estat_${nom}`) || '{}'); } catch(e) {}
+      const puzzles = estat.puzzles || {};
+      const resum = { facil: [0,5], mitja: [0,5], dificil: [0,5] };
+      let pts = 0;
+      Object.values(puzzles).forEach(p => {
+        if (!p.completat) return;
+        const dif = p.nivell || 'facil';
+        if (resum[dif]) resum[dif][0]++;
+        pts += p.punts || 0;
+      });
+      // Reconstruir per id (1-5 facil, 6-10 mitja, 11-15 dificil)
+      const ids = Object.keys(puzzles).map(Number);
+      const facil   = ids.filter(id => id >= 1  && id <= 5).filter(id => puzzles[id]?.completat).length;
+      const mitja   = ids.filter(id => id >= 6  && id <= 10).filter(id => puzzles[id]?.completat).length;
+      const dificil = ids.filter(id => id >= 11 && id <= 15).filter(id => puzzles[id]?.completat).length;
+      pts = ids.reduce((s, id) => s + (puzzles[id]?.completat ? (puzzles[id]?.punts || 0) : 0), 0);
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${facil===0?'zero':''}">${facil}/5</span></td>
+        <td><span class="pts-badge ${mitja===0?'zero':''}">${mitja}/5</span></td>
+        <td><span class="pts-badge ${dificil===0?'zero':''}">${dificil}/5</span></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td><button class="btn-reset-jugador" ${pts===0?'disabled':''} onclick="resetJugador('nonogram','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

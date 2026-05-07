@@ -615,6 +615,8 @@ function seleccionarModeJoc(mode) {
     iniciarTriangles();
   } else if (mode === "jocmusical") {
     iniciarJocMusical();
+  } else if (mode === "nonogram") {
+    iniciarNonogram();
   }
 }
 
@@ -1016,6 +1018,8 @@ function mostraScreen(nom) {
     "triangles-joc",
     "joc-musical-inici",
     "joc-musical-joc",
+    "nonogram-selector",
+    "nonogram-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
