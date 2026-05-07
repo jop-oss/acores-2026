@@ -613,6 +613,8 @@ function seleccionarModeJoc(mode) {
     iniciarBatallaNaval();
   } else if (mode === "triangles") {
     iniciarTriangles();
+  } else if (mode === "jocmusical") {
+    iniciarJocMusical();
   }
 }
 
@@ -1012,6 +1014,8 @@ function mostraScreen(nom) {
     "batallanaval-joc",
     "triangles-inici",
     "triangles-joc",
+    "joc-musical-inici",
+    "joc-musical-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

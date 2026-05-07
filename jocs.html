@@ -210,6 +210,11 @@
           <span class="joc-selector-label">Triangles</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · graella clàssica</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('jocmusical')">
+          <span class="joc-selector-icon">🎸</span>
+          <span class="joc-selector-label">Joc Musical</span>
+          <span class="joc-selector-sub">150 cançons · intro o lletra · rock català</span>
+        </button>
       </div>
     </div>
 
@@ -1281,6 +1286,16 @@
   </div>
 
 <script src="js/triangles.js"></script>
+<!-- PANTALLES JOC MUSICAL -->
+  <div id="screen-joc-musical-inici" style="display:none">
+    <div id="joc-musical-inici-cont"></div>
+  </div>
+  <div id="screen-joc-musical-joc" style="display:none">
+    <div id="joc-musical-joc-cont"></div>
+  </div>
+
+<script src="js/joc-musical-data.js"></script>
+<script src="js/joc-musical.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
