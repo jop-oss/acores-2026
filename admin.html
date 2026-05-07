@@ -558,6 +558,18 @@
     </table>
   </div>
 
+  <!-- TRIANGLES -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🔺 Triangles</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('triangles')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead><tr><th>Jugador</th><th>Partides</th><th>Victòries</th><th>% Vic.</th><th></th></tr></thead>
+      <tbody id="taula-triangles"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -620,6 +632,7 @@
     renderGinRummy();
     renderYahtzee();
     renderBatallaNaval();
+    renderTriangles();
     renderRuleta();
   }
 
@@ -832,6 +845,7 @@
     ginrummy:     nom => `ginrummy_estat_${nom}`,
     yahtzee:      nom => `yahtzee_punts_${nom}`,
     batallanaval: nom => `batallanaval_estat_${nom}`,
+    triangles:    nom => `triangles_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -840,7 +854,8 @@
     flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies,
     ginrummy: renderGinRummy,
     yahtzee:  renderYahtzee,
-    batallanaval: renderBatallaNaval
+    batallanaval: renderBatallaNaval,
+    triangles:    renderTriangles
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -855,7 +870,8 @@
     diferencies: 'Busca les Diferències',
     ginrummy: 'Gin Rummy',
     yahtzee:  'Yahtzee',
-    batallanaval: 'Batalla Naval'
+    batallanaval: 'Batalla Naval',
+    triangles:    'Triangles'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1243,6 +1259,25 @@
         <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
         <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
         <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('batallanaval','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderTriangles() {
+    const tbody = document.getElementById('taula-triangles');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { partides: 0, victòries: 0 };
+      try { estat = JSON.parse(localStorage.getItem(`triangles_estat_${nom}`) || 'null') || estat; } catch(e) {}
+      const partides  = estat.partides || 0;
+      const victories = estat.victòries || 0;
+      const pct = partides > 0 ? Math.round(victories / partides * 100) : 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
+        <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
+        <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
+        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('triangles','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

@@ -205,6 +205,11 @@
           <span class="joc-selector-label">Batalla Naval</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · 8 vaixells</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('triangles')">
+          <span class="joc-selector-icon">🔺</span>
+          <span class="joc-selector-label">Triangles</span>
+          <span class="joc-selector-sub">vs IA · 3 dificultats · graella clàssica</span>
+        </button>
       </div>
     </div>
 
@@ -241,6 +246,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('batallanaval', this)">⚓ Batalla Naval</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('triangles', this)">🔺 Triangles</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1265,6 +1271,16 @@
   </div>
 
 <script src="js/batalla-naval.js"></script>
+
+  <!-- PANTALLES TRIANGLES -->
+  <div id="screen-triangles-inici" style="display:none">
+    <div id="triangles-inici-cont"></div>
+  </div>
+  <div id="screen-triangles-joc" style="display:none">
+    <div id="triangles-joc-cont"></div>
+  </div>
+
+<script src="js/triangles.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
