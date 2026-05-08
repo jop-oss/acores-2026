@@ -136,7 +136,6 @@ function nonoRenderNivellBlock(n) {
     return `
       <button class="nono-card ${clsExtra}" onclick="nonoSeleccionarPuzzle(${p.id})" ${completat ? 'disabled' : ''}>
         <span class="nono-card-num">#${p.id}</span>
-        <span class="nono-card-nom">${p.nom}</span>
         ${estat}
         ${completat ? '<span class="nono-card-blocat">🔒</span>' : ''}
       </button>`;
@@ -207,7 +206,7 @@ function nonoRenderJoc() {
       <div class="joc-header-fila nono-joc-header">
         <button class="mapa-back-btn" onclick="nonoGuardarITornar()">← Tornar</button>
         <div class="nono-joc-info">
-          <span class="nono-joc-nom">${p.nom}</span>
+          <span class="nono-joc-nom">Puzzle #${p.id}</span>
           <span class="nono-mida-badge">${p.mida}×${p.mida}</span>
         </div>
         <div class="nono-errors-wrap" id="nono-errors-wrap"></div>
@@ -272,10 +271,13 @@ function nonoHtmlGraella() {
       const cls = nonoFilaCompleta(r) ? 'nono-pista-fila nono-pista--ok' : 'nono-pista-fila';
       html += `<td class="${cls}" data-fila="${r}">${val === 0 ? '' : val}</td>`;
     }
-    // cel·les de la graella
+    // cel·les de la graella — afegim classe separador cada 3 files/cols
     for (let c = 0; c < N; c++) {
       const val = nonoUserGrid[r][c];
-      html += `<td class="nono-cel ${nonoClsCel(val)}" data-r="${r}" data-c="${c}"></td>`;
+      // Separadors visuals cada 3: marca la cel·la que és múltiple de 3 (excepte el límit)
+      const sepDreta  = (c + 1) % 3 === 0 && c < N - 1 ? ' nono-sep-dreta'  : '';
+      const sepBaix   = (r + 1) % 3 === 0 && r < N - 1 ? ' nono-sep-baix'   : '';
+      html += `<td class="nono-cel ${nonoClsCel(val)}${sepDreta}${sepBaix}" data-r="${r}" data-c="${c}"></td>`;
     }
     html += '</tr>';
   }
@@ -387,7 +389,7 @@ function nonoAcabar(fourthError) {
     res.innerHTML = `
       <div class="nono-res-icon">${icon}</div>
       <div class="nono-res-msg">${msg}</div>
-      <div class="nono-res-sub">${errTxt}${nonoPuzzle.nom} completat</div>
+      <div class="nono-res-sub">${errTxt}Puzzle #${nonoPuzzle.id} completat</div>
       <button class="jm-btn-seguent" onclick="nonoTornarSelector()">← Tornar als puzzles</button>
     `;
   }
@@ -422,7 +424,9 @@ function nonoActualitzarGraella() {
     for (let c = 0; c < N; c++) {
       const cel = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
       if (!cel) continue;
-      cel.className = `nono-cel ${nonoClsCel(nonoUserGrid[r][c])}`;
+      const sepDreta = (c + 1) % 3 === 0 && c < N - 1 ? ' nono-sep-dreta' : '';
+      const sepBaix  = (r + 1) % 3 === 0 && r < N - 1 ? ' nono-sep-baix'  : '';
+      cel.className = `nono-cel ${nonoClsCel(nonoUserGrid[r][c])}${sepDreta}${sepBaix}`;
     }
   }
 
@@ -446,7 +450,7 @@ function nonoActualitzarGraella() {
 function nonoRenderErrors() {
   const wrap = document.getElementById('nono-errors-wrap');
   if (!wrap) return;
-  const icones = Array.from({ length: NONO_MAX_ERR + 1 }, (_, i) =>
+  const icones = Array.from({ length: NONO_MAX_ERR }, (_, i) =>
     `<span class="nono-error-dot ${i < nonoErrors ? 'nono-error-dot--actiu' : ''}">✕</span>`
   ).join('');
   wrap.innerHTML = `<span class="nono-errors-label">Errors:</span>${icones}`;

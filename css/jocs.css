@@ -5921,9 +5921,9 @@
 .nono-cel--error { animation: nonoError .5s ease; }
 @keyframes nonoError { 0%,100% { background: transparent; } 50% { background: rgba(224,85,85,.45); } }
 
-/* Separadors cada 3 cel·les per graelles grans */
-.nono-taula .nono-cel:nth-child(3n+2) { border-right: 2px solid rgba(106,171,122,.3); }
-.nono-taula tr:nth-child(3n+2) .nono-cel { border-bottom: 2px solid rgba(106,171,122,.3); }
+/* Separadors cada 3 cel·les — classes afegides des del JS */
+.nono-sep-dreta { border-right:  2px solid rgba(106,171,122,.35) !important; }
+.nono-sep-baix  { border-bottom: 2px solid rgba(106,171,122,.35) !important; }
 
 /* Resultat */
 .nono-resultat { display: flex; flex-direction: column; align-items: center; gap: .75rem; padding: 1.5rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; margin-top: .5rem; animation: jmSolucioIn .4s ease; }
