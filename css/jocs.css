@@ -5967,11 +5967,14 @@
 /* Contenidor foto */
 .jf-foto-outer {
   width: 100%;
-  aspect-ratio: 4/3;
+  max-height: 65vh;
   border-radius: 16px;
   overflow: hidden;
   background: #000;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .jf-foto-inner {
@@ -5984,7 +5987,9 @@
 .jf-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-height: 65vh;
+  object-fit: contain;
+  object-position: center;
   display: block;
   pointer-events: none;
   user-select: none;
@@ -6231,7 +6236,7 @@
 
 /* Mòbil */
 @media (max-width: 480px) {
-  .jf-foto-outer { aspect-ratio: 1/1; }
+  .jf-foto-outer { max-height: 50vh; }
   .jf-accions { flex-direction: column; align-items: stretch; }
 }
 
@@ -6244,6 +6249,11 @@
   max-width: 920px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+.jf-layout .ranking-wrap {
+  /* Alinear amb la foto: header (aprox 110px) + títol (aprox 50px) */
+  margin-top: 160px;
 }
 
 @media (max-width: 700px) {
