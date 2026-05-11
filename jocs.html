@@ -230,6 +230,11 @@
           <span class="joc-selector-label">Mots Encreuats</span>
           <span class="joc-selector-sub">10 encreuats · 150 pts · PP.CC.</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('colorfill')">
+          <span class="joc-selector-icon">🌊</span>
+          <span class="joc-selector-label">Color Fill</span>
+          <span class="joc-selector-sub">3 nivells · 10 taulers · Flood It</span>
+        </button>
       </div>
     </div>
 
@@ -270,6 +275,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('encreuats', this)">📝 Encreuats</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🌊 Color Fill</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1338,6 +1344,14 @@
   </div>
 <script src="js/encreuats-data.js"></script>
 <script src="js/encreuats.js"></script>
+<!-- PANTALLES COLOR FILL -->
+  <div id="screen-colorfill-selector" style="display:none">
+    <div id="colorfill-selector-cont"></div>
+  </div>
+  <div id="screen-colorfill-joc" style="display:none">
+    <div id="colorfill-joc-cont"></div>
+  </div>
+<script src="js/colorfill.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>

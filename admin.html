@@ -620,6 +620,20 @@
     </table>
   </div>
 
+  <!-- COLOR FILL -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🌊 Color Fill</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('colorfill')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Petit (top 3)</th><th>Mitjà (top 4)</th><th>Gran (top 3)</th><th>Total pts</th><th></th></tr>
+      </thead>
+      <tbody id="taula-colorfill"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -686,6 +700,7 @@
     renderNonogram();
     renderJocFotos();
     renderEncreuats();
+    renderColorFill();
     renderRuleta();
   }
 
@@ -902,6 +917,7 @@
     nonogram:     nom => `nonogram_estat_${nom}`,
     jocfotos:     nom => `jocfotos_estat_${nom}`,
     encreuats:    nom => `encreuats_estat_${nom}`,
+    colorfill:    nom => `colorfill_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -914,7 +930,8 @@
     triangles:    renderTriangles,
     nonogram:     renderNonogram,
     jocfotos:     renderJocFotos,
-    encreuats:    renderEncreuats
+    encreuats:    renderEncreuats,
+    colorfill:    renderColorFill,
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -933,7 +950,8 @@
     triangles:    'Triangles',
     nonogram:     'Nonogram',
     jocfotos:     'Zoom out!',
-    encreuats:    'Mots Encreuats'
+    encreuats:    'Mots Encreuats',
+    colorfill:    'Color Fill',
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1340,6 +1358,36 @@
         <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
         <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
         <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('triangles','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── COLOR FILL ─────────────────────────────────────────────
+  function renderColorFill() {
+    const CF_NIVELLS_ADMIN = {
+      petit: { top: 3 },
+      mitja: { top: 4 },
+      gran:  { top: 3 },
+    };
+    const tbody = document.getElementById('taula-colorfill');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = {};
+      try { estat = JSON.parse(localStorage.getItem(`colorfill_estat_${nom}`) || '{}'); } catch(e) {}
+      let total = 0;
+      const cells = ['petit','mitja','gran'].map(key => {
+        const partides = (estat[key]?.partides || [])
+          .filter(p => p.completat).map(p => p.punts)
+          .sort((a,b) => b-a).slice(0, CF_NIVELLS_ADMIN[key].top);
+        const pts = partides.reduce((s,p) => s+p, 0);
+        total += pts;
+        return `<td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>`;
+      }).join('');
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        ${cells}
+        <td><span class="pts-badge ${total===0?'zero':''}">${total} pts</span></td>
+        <td><button class="btn-reset-jugador" ${total===0?'disabled':''} onclick="resetJugador('colorfill','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

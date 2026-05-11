@@ -224,6 +224,7 @@ async function rankingCarregar() {
       nonogram: 0,
       jocfotos: 0,
       encreuats: 0,
+      colorfill: 0,
     };
   });
 
@@ -383,6 +384,12 @@ async function rankingCarregar() {
     } catch(e) {}
   });
 
+  // Color Fill (localStorage)
+  if (typeof colorfillGetPuntsGlobals === 'function') {
+    const ptsCF = colorfillGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].colorfill = ptsCF[nom] || 0; });
+  }
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -391,7 +398,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
   return d[filtre] || 0;
 }
 
@@ -458,7 +465,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -488,6 +495,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🧩", nom: "Nonogram", key: "nonogram" },
     { icon: "📸", nom: "Zoom out!", key: "jocfotos" },
     { icon: "📝", nom: "Encreuats", key: "encreuats" },
+    { icon: "🌊", nom: "Color Fill", key: "colorfill" },
   ];
 
   cos.innerHTML = `
@@ -653,6 +661,8 @@ function seleccionarModeJoc(mode) {
     iniciarJocFotos();
   } else if (mode === "encreuats") {
     iniciarEncreuats();
+  } else if (mode === "colorfill") {
+    iniciarColorFill();
   }
 }
 
@@ -1059,6 +1069,8 @@ function mostraScreen(nom) {
     "jocfotos-joc",
     "encreuats-selector",
     "encreuats-joc",
+    "colorfill-selector",
+    "colorfill-joc",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);
