@@ -98,59 +98,86 @@ function jfIniciarPartida() {
   jfRenderJoc();
 }
 
+function jfRenderRankingHtml() {
+  const dades = JUGADORS_VALIDS.map(nom => {
+    const raw = localStorage.getItem(`jocfotos_estat_${nom}`);
+    const estat = raw ? JSON.parse(raw) : {};
+    return { nom, pts: estat.ptsTotal || 0, vistes: estat.index || 0 };
+  }).sort((a, b) => b.pts - a.pts);
+
+  return dades.map((d, i) => `
+    <div class="ranking-item ${d.nom === jugadorActiu ? 'ranking-item--actiu' : ''}">
+      <span class="ranking-pos">${i + 1}</span>
+      <img src="${IMGS[d.nom]}" class="ranking-avatar" alt="${d.nom}">
+      <span class="ranking-nom">${d.nom}</span>
+      <span class="ranking-pts">${d.pts} pts</span>
+    </div>
+  `).join('');
+}
+
 function jfRenderJoc() {
   const cont = document.getElementById('jocfotos-joc-cont');
   const num  = jfIndex + 1;
   const total = jfLlista.length;
   const fo   = jfFoto;
 
+  const rankingHtml = jfRenderRankingHtml();
+
   cont.innerHTML = `
-    <div class="jf-wrap">
-      <!-- Header -->
-      <div class="joc-header-fila">
-        <button class="mapa-back-btn" onclick="jfSortir()">← Tornar</button>
-        <span class="jf-comptador">${num} / ${total}</span>
-        <span class="jf-pts-total">${jfPtsTotal} pts</span>
-      </div>
-
-      <div class="joc-titol-fila" style="align-items:center;text-align:center;width:100%">
-        <span class="joc-titol-emoji">📸</span>
-        <span class="joc-titol-text">Joc de Fotos</span>
-      </div>
-
-      <!-- Foto amb zoom -->
-      <div class="jf-foto-outer" id="jf-foto-outer">
-        <div class="jf-foto-inner" id="jf-foto-inner">
-          <img src="${JF_CARPETA}${fo.fitxer}" class="jf-img" id="jf-img" alt="Foto">
+    <div class="jf-layout">
+      <div class="jf-wrap">
+        <!-- Header -->
+        <div class="joc-header-fila">
+          <button class="mapa-back-btn" onclick="jfSortir()">← Tornar</button>
+          <span class="jf-comptador">${num} / ${total}</span>
+          <span class="jf-pts-total">${jfPtsTotal} pts</span>
         </div>
+
+        <div class="joc-titol-fila" style="align-items:center;text-align:center;width:100%">
+          <span class="joc-titol-emoji">📸</span>
+          <span class="joc-titol-text">Zoom out!</span>
+        </div>
+
+        <!-- Foto amb zoom -->
+        <div class="jf-foto-outer" id="jf-foto-outer">
+          <div class="jf-foto-inner" id="jf-foto-inner">
+            <img src="${JF_CARPETA}${fo.fitxer}" class="jf-img" id="jf-img" alt="Foto">
+          </div>
+        </div>
+
+        <!-- Info nivell -->
+        <div class="jf-nivell-bar" id="jf-nivell-bar">
+          ${jfHtmlNivellBar()}
+        </div>
+
+        <!-- Pista (oculta fins que es demani) -->
+        <div class="jf-pista-wrap" id="jf-pista-wrap" style="display:none">
+          <span class="jf-pista-icon">💡</span>
+          <span class="jf-pista-text" id="jf-pista-text"></span>
+        </div>
+
+        <!-- Input resposta -->
+        <div class="jf-resposta-wrap" id="jf-resposta-wrap">
+          <input type="text" class="jf-input" id="jf-input"
+            placeholder="Qui és? On és?"
+            onkeydown="if(event.key==='Enter') jfComprovarResposta()">
+          <button class="jf-btn-ok" onclick="jfComprovarResposta()">✓</button>
+        </div>
+
+        <!-- Botons d'acció -->
+        <div class="jf-accions" id="jf-accions">
+          ${jfHtmlAccions()}
+        </div>
+
+        <!-- Resultat foto (ocult fins que s'encerta/rendeix) -->
+        <div class="jf-resultat" id="jf-resultat" style="display:none"></div>
       </div>
 
-      <!-- Info nivell -->
-      <div class="jf-nivell-bar" id="jf-nivell-bar">
-        ${jfHtmlNivellBar()}
+      <!-- Rànquing lateral -->
+      <div class="ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing</div>
+        <div class="ranking-list-home">${rankingHtml}</div>
       </div>
-
-      <!-- Pista (oculta fins que es demani) -->
-      <div class="jf-pista-wrap" id="jf-pista-wrap" style="display:none">
-        <span class="jf-pista-icon">💡</span>
-        <span class="jf-pista-text" id="jf-pista-text"></span>
-      </div>
-
-      <!-- Input resposta -->
-      <div class="jf-resposta-wrap" id="jf-resposta-wrap">
-        <input type="text" class="jf-input" id="jf-input"
-          placeholder="Qui és? On és?"
-          onkeydown="if(event.key==='Enter') jfComprovarResposta()">
-        <button class="jf-btn-ok" onclick="jfComprovarResposta()">✓</button>
-      </div>
-
-      <!-- Botons d'acció -->
-      <div class="jf-accions" id="jf-accions">
-        ${jfHtmlAccions()}
-      </div>
-
-      <!-- Resultat foto (ocult fins que s'encerta/rendeix) -->
-      <div class="jf-resultat" id="jf-resultat" style="display:none"></div>
     </div>
   `;
 
@@ -174,7 +201,7 @@ function jfHtmlNivellBar() {
 
 function jfHtmlAccions() {
   const btnZoom = jfZoom < JF_ZOOM_NIVELLS - 1
-    ? `<button class="jf-btn-zoom" onclick="jfZoomOut()">🔍 Veure més</button>`
+    ? `<button class="jf-btn-zoom" onclick="jfZoomOut()">🔍 Zoom out!</button>`
     : '';
 
   const btnPista = !jfPistaUsada && jfFoto.pista && jfZoom >= 2
@@ -414,20 +441,27 @@ function jfSeguent() {
 
 function jfMostrarFinal() {
   const cont = document.getElementById('jocfotos-joc-cont');
+  const rankingHtmlF = jfRenderRankingHtml();
   cont.innerHTML = `
-    <div class="jf-wrap">
-      <div class="joc-header-fila">
-        <button class="mapa-back-btn" onclick="jfSortir()">← Tornar</button>
+    <div class="jf-layout">
+      <div class="jf-wrap">
+        <div class="joc-header-fila">
+          <button class="mapa-back-btn" onclick="jfSortir()">← Tornar</button>
+        </div>
+        <div class="joc-titol-fila" style="align-items:center;text-align:center;width:100%">
+          <span class="joc-titol-emoji">📸</span>
+          <span class="joc-titol-text">Zoom out!</span>
+        </div>
+        <div class="jf-final-card">
+          <div class="jf-final-icon">🏆</div>
+          <div class="jf-final-pts">${jfPtsTotal} pts</div>
+          <div class="jf-final-sub">${jfFotoRespostes} de ${jfLlista.length} fotos encertades</div>
+          <button class="jm-btn-seguent" onclick="jfSortir()">← Tornar als jocs</button>
+        </div>
       </div>
-      <div class="joc-titol-fila" style="align-items:center;text-align:center;width:100%">
-        <span class="joc-titol-emoji">📸</span>
-        <span class="joc-titol-text">Joc de Fotos</span>
-      </div>
-      <div class="jf-final-card">
-        <div class="jf-final-icon">🏆</div>
-        <div class="jf-final-pts">${jfPtsTotal} pts</div>
-        <div class="jf-final-sub">${jfFotoRespostes} de ${jfLlista.length} fotos encertades</div>
-        <button class="jm-btn-seguent" onclick="jfSortir()">← Tornar als jocs</button>
+      <div class="ranking-wrap">
+        <div class="ranking-title">🏆 Rànquing</div>
+        <div class="ranking-list-home">${rankingHtmlF}</div>
       </div>
     </div>
   `;

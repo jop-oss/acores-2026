@@ -221,6 +221,8 @@ async function rankingCarregar() {
       yahtzee: 0,
       batallanaval: 0,
       triangles: 0,
+      nonogram: 0,
+      jocfotos: 0,
     };
   });
 
@@ -354,6 +356,20 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].triangles = ptsTR[nom] || 0; });
   }
 
+  // Nonogram (localStorage)
+  if (typeof nonoCarregarPuntsRanking === 'function') {
+    const ptsNono = nonoCarregarPuntsRanking();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].nonogram = ptsNono[nom] || 0; });
+  }
+
+  // Zoom out! (localStorage)
+  JUGADORS_VALIDS.forEach(nom => {
+    try {
+      const raw = localStorage.getItem(`jocfotos_estat_${nom}`);
+      dades[nom].jocfotos = raw ? (JSON.parse(raw).ptsTotal || 0) : 0;
+    } catch(e) {}
+  });
+
   _rankingDades = dades;
   rankingRenderLlista();
 }
@@ -362,7 +378,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0);
   return d[filtre] || 0;
 }
 
@@ -429,7 +445,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -456,6 +472,8 @@ function rankingMostrarDetall(nom) {
     { icon: "🎲", nom: "Yahtzee", key: "yahtzee" },
     { icon: "⚓", nom: "Batalla Naval", key: "batallanaval" },
     { icon: "🔺", nom: "Triangles", key: "triangles" },
+    { icon: "🧩", nom: "Nonogram", key: "nonogram" },
+    { icon: "📸", nom: "Zoom out!", key: "jocfotos" },
   ];
 
   cos.innerHTML = `

@@ -6234,3 +6234,29 @@
   .jf-foto-outer { aspect-ratio: 1/1; }
   .jf-accions { flex-direction: column; align-items: stretch; }
 }
+
+/* JOC DE FOTOS — layout amb rànquing lateral */
+.jf-layout {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 1.5rem;
+  align-items: start;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (max-width: 700px) {
+  .jf-layout {
+    grid-template-columns: 1fr;
+  }
+  .jf-layout .ranking-wrap {
+    display: none;
+  }
+}
+
+/* Quan hi ha layout, el jf-wrap no necessita el max-width propi */
+.jf-layout .jf-wrap {
+  max-width: 100%;
+  padding: 0;
+}
