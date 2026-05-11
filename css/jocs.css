@@ -6243,10 +6243,10 @@
 /* JOC DE FOTOS — layout amb rànquing lateral */
 .jf-layout {
   display: grid;
-  grid-template-columns: 1fr 240px;
+  grid-template-columns: 1fr 280px;
   gap: 1.5rem;
   align-items: start;
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 1rem;
 }
