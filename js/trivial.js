@@ -132,7 +132,7 @@ function trivialRenderInici(partidaInd, partidaEq) {
     <div class="trivial-inici-layout">
       <div class="trivial-inici-cards-wrap">
         <div class="trivial-inici-titol-wrap">
-          <span class="trivial-inici-titol-emoji">🎲</span>
+          <span class="trivial-inici-titol-emoji">🎓</span>
           <span class="trivial-inici-titol-inline">Trivial Açores</span>
         </div>
         <div class="trivial-partides-grid">
@@ -176,13 +176,13 @@ function trivialIniciarComptadorsTorn(p, modalitat) {
       return;
     }
     const segs = Math.floor((Date.now() - p.tornTs) / 1000);
-    const h   = Math.floor(segs / 3600);
+    const h = Math.floor(segs / 3600);
     const min = Math.floor((segs % 3600) / 60);
     const seg = segs % 60;
     let txt;
-    if (h > 0)      txt = h + "h " + min + "min";
+    if (h > 0) txt = h + "h " + min + "min";
     else if (min > 0) txt = min + "min " + seg + "s";
-    else              txt = seg + "s";
+    else txt = seg + "s";
     const urgent = segs > 3 * 60;
     el.textContent = "\u23f1 Fa " + txt;
     el.style.color = urgent ? "var(--error)" : "var(--text2)";
@@ -217,14 +217,17 @@ async function trivialRenderRankingGlobal() {
 
   try {
     const pts = await trivialGetPuntsGlobals();
-    const llista = TRIVIAL_ORDRE_JUGADORS
-      .map(nom => ({ nom, punts: pts[nom] || 0 }))
-      .sort((a, b) => b.punts - a.punts);
+    const llista = TRIVIAL_ORDRE_JUGADORS.map((nom) => ({
+      nom,
+      punts: pts[nom] || 0,
+    })).sort((a, b) => b.punts - a.punts);
 
     const maxPts = llista[0]?.punts || 1;
     const posEmoji = ["🥇", "🥈", "🥉"];
 
-    el.innerHTML = llista.map((r, i) => `
+    el.innerHTML = llista
+      .map(
+        (r, i) => `
       <div class="ranking-item ${r.nom === jugadorActiu ? "actiu" : ""}">
         <div class="ranking-pos ${i < 3 ? "p" + (i + 1) : "other"}">${i < 3 ? posEmoji[i] : i + 1}</div>
         <img class="rank-avatar" src="${IMGS[r.nom] || ""}" alt="${r.nom}">
@@ -233,10 +236,13 @@ async function trivialRenderRankingGlobal() {
           <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts / maxPts) * 100)}%"></div></div>
         </div>
         <div class="rank-punts">${r.punts}</div>
-      </div>`).join('');
-  } catch(e) {
+      </div>`,
+      )
+      .join("");
+  } catch (e) {
     const el2 = document.getElementById("trivial-ranking-global-list");
-    if (el2) el2.innerHTML = '<div class="ranking-loading">Error carregant…</div>';
+    if (el2)
+      el2.innerHTML = '<div class="ranking-loading">Error carregant…</div>';
   }
 }
 
@@ -890,7 +896,10 @@ async function trivialRespondr(idx) {
           .doc(docId)
           .update({ jugadors: nousjugadorsBloc });
         if (tornActual.estat === "esperant") {
-          trivialRenderSeleccioCategoria(jugadorData, "🏅 Categoria completada! +50 pts");
+          trivialRenderSeleccioCategoria(
+            jugadorData,
+            "🏅 Categoria completada! +50 pts",
+          );
         } else {
           trivialRenderFinalTorn(tornActual, jugadorData);
         }
@@ -1190,20 +1199,22 @@ function trivialRenderVeure() {
       ${[...jugadors]
         .sort((a, b) => b.punts - a.punts)
         .map((j, i) => {
-          const catsHtml = TRIVIAL_CATS.map(cat => {
+          const catsHtml = TRIVIAL_CATS.map((cat) => {
             const info = TRIVIAL_CATEGORIES[cat];
             const encerts = j.categories?.[cat] || 0;
             const bloq = (j.categoriesBloquejades || []).includes(cat);
-            const dots = [0, 1, 2].map(n => {
-              const ple = n < encerts;
-              return `<span class="trivial-enc-dot ${ple ? 'ple' : ''}" style="${ple ? `background:${info.color}` : `border:1.5px solid ${info.color}40`}"></span>`;
-            }).join('');
+            const dots = [0, 1, 2]
+              .map((n) => {
+                const ple = n < encerts;
+                return `<span class="trivial-enc-dot ${ple ? "ple" : ""}" style="${ple ? `background:${info.color}` : `border:1.5px solid ${info.color}40`}"></span>`;
+              })
+              .join("");
             return `
               <div class="trivial-cat-bloc">
-                <span class="trivial-cat-icona ${bloq ? 'bloq' : ''}" style="background:${bloq ? info.color : info.color + '25'}" title="${info.label}">${info.emoji}</span>
+                <span class="trivial-cat-icona ${bloq ? "bloq" : ""}" style="background:${bloq ? info.color : info.color + "25"}" title="${info.label}">${info.emoji}</span>
                 <div class="trivial-enc-dots">${dots}</div>
               </div>`;
-          }).join('');
+          }).join("");
 
           return `
         <div class="trivial-rank-item ${j.nom === jugadorActualNom ? "actiu" : ""}">

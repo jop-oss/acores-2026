@@ -3,42 +3,47 @@
 // ══════════════════════════════════════════════════════════════
 
 // ── CONSTANTS ─────────────────────────────────────────────────
-const CL_NUMS_GRANS  = [25, 50, 75, 100];
-const CL_NUMS_PETITS = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10];
-const CL_N_GRANS     = 2;
-const CL_N_PETITS    = 4;
-const CL_TEMPS_SEG   = 120;
-const CL_N_LLETRES   = 5;   // proves de lletres
-const CL_N_XIFRES    = 10;  // proves de xifres
+const CL_NUMS_GRANS = [25, 50, 75, 100];
+const CL_NUMS_PETITS = [
+  1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10,
+];
+const CL_N_GRANS = 2;
+const CL_N_PETITS = 4;
+const CL_TEMPS_SEG = 120;
+const CL_N_LLETRES = 5; // proves de lletres
+const CL_N_XIFRES = 10; // proves de xifres
 
 // Puntuació lletres
-const CL_PTS_LLETRA  = 10;  // per lletra
-const CL_PTS_BONUS   = 30;  // bonus paraula màxima
+const CL_PTS_LLETRA = 10; // per lletra
+const CL_PTS_BONUS = 30; // bonus paraula màxima
 
 // Puntuació xifres
 const CL_PTS_XIFRES = [
-  { max: 0,   pts: 100 }, // exacte
-  { max: 5,   pts: 70  },
-  { max: 10,  pts: 50  },
-  { max: 25,  pts: 30  },
-  { max: 50,  pts: 10  },
+  { max: 0, pts: 100 }, // exacte
+  { max: 5, pts: 70 },
+  { max: 10, pts: 50 },
+  { max: 25, pts: 30 },
+  { max: 50, pts: 10 },
   { max: Infinity, pts: 0 },
 ];
 
 // ── ESTAT LOCAL ────────────────────────────────────────────────
-let clPartida      = null;  // { provesLletres, provesXifres, provaActual, tipus, respostes, punts }
+let clPartida = null; // { provesLletres, provesXifres, provaActual, tipus, respostes, punts }
 let clTimerInterval = null;
-let clTempsRestant  = CL_TEMPS_SEG;
+let clTempsRestant = CL_TEMPS_SEG;
 
 // Pissarra xifres
-let clPissarra = [];        // [{tipus:'num'|'op'|'par', val, id}]
-let clResultat  = null;
+let clPissarra = []; // [{tipus:'num'|'op'|'par', val, id}]
+let clResultat = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
 function iniciarCifrasLetras() {
-  if (!jugadorActiu) { mostraScreen('joc-selector'); return; }
+  if (!jugadorActiu) {
+    mostraScreen("joc-selector");
+    return;
+  }
   const clau = `cl_estat_${jugadorActiu}`;
-  const raw  = localStorage.getItem(clau);
+  const raw = localStorage.getItem(clau);
   if (raw) {
     clPartida = JSON.parse(raw);
     // Si la partida guardada és antiga (sense ordre), regenera
@@ -50,49 +55,53 @@ function iniciarCifrasLetras() {
     clPartida = clGenerarPartida();
     clGuardarPartida();
   }
-  mostraScreen('cl-inici');
+  mostraScreen("cl-inici");
   clRenderInici();
 }
 
 // ── GENERAR PARTIDA ───────────────────────────────────────────
 function clGenerarPartida() {
   // Assigna 5 combinacions de lletres aleatòries (sense repetir, de les 30)
-  const idxLletres = clBarrejar([...Array(CL_LLETRES.length).keys()])
-    .slice(0, CL_N_LLETRES);
+  const idxLletres = clBarrejar([...Array(CL_LLETRES.length).keys()]).slice(
+    0,
+    CL_N_LLETRES,
+  );
 
   // Genera 10 proves de xifres
-  const provesXifres = Array.from({ length: CL_N_XIFRES }, () => clGenerarProvaXifres());
+  const provesXifres = Array.from({ length: CL_N_XIFRES }, () =>
+    clGenerarProvaXifres(),
+  );
 
   // Ordre intercalat: L X X L X X L X X L X X L X X
   // 5 lletres + 10 xifres = 15 proves
   // Seqüència: 1L 2X 1L 2X 1L 2X 1L 2X 1L 2X
   const ordre = [];
   for (let i = 0; i < CL_N_LLETRES; i++) {
-    ordre.push({ tipus: 'lletres', idx: i });
-    ordre.push({ tipus: 'xifres', idx: i * 2 });
-    ordre.push({ tipus: 'xifres', idx: i * 2 + 1 });
+    ordre.push({ tipus: "lletres", idx: i });
+    ordre.push({ tipus: "xifres", idx: i * 2 });
+    ordre.push({ tipus: "xifres", idx: i * 2 + 1 });
   }
 
   return {
-    provesLletres: idxLletres.map(i => ({
-      idx:      i,
-      lletres:  CL_LLETRES[i].lletres,
-      maxLen:   CL_LLETRES[i].maxLen,
+    provesLletres: idxLletres.map((i) => ({
+      idx: i,
+      lletres: CL_LLETRES[i].lletres,
+      maxLen: CL_LLETRES[i].maxLen,
       paraules: CL_LLETRES[i].paraules,
     })),
     provesXifres,
-    ordre,       // seqüència de les 15 proves
+    ordre, // seqüència de les 15 proves
     respostes: [],
     punts: 0,
-    provaActual: 0,  // 0-14
+    provaActual: 0, // 0-14
     acabada: false,
   };
 }
 
 function clGenerarProvaXifres() {
-  const grans  = clBarrejar([...CL_NUMS_GRANS]).slice(0, CL_N_GRANS);
+  const grans = clBarrejar([...CL_NUMS_GRANS]).slice(0, CL_N_GRANS);
   const petits = clBarrejar([...CL_NUMS_PETITS]).slice(0, CL_N_PETITS);
-  const nums   = clBarrejar([...grans, ...petits]);
+  const nums = clBarrejar([...grans, ...petits]);
   const objectiu = Math.floor(Math.random() * 900) + 100; // 100-999
   return { nums, objectiu };
 }
@@ -100,7 +109,7 @@ function clGenerarProvaXifres() {
 // ── PANTALLA INICI ────────────────────────────────────────────
 function clRenderInici() {
   if (!clPartida) return;
-  const cont = document.getElementById('cl-inici-cont');
+  const cont = document.getElementById("cl-inici-cont");
   if (!cont) return;
 
   const totalProves = CL_N_LLETRES + CL_N_XIFRES;
@@ -111,7 +120,7 @@ function clRenderInici() {
       <div class="cl-inici-layout">
         <div class="cl-inici-main">
           <div class="joc-titol-fila" style="align-items:center">
-            <span class="joc-titol-emoji">📝</span>
+            <span class="joc-titol-emoji">🧮</span>
             <span class="joc-titol-text">Xifres i Lletres</span>
           </div>
           <div class="cl-inici-acabat">
@@ -130,19 +139,22 @@ function clRenderInici() {
     return;
   }
 
-  const jugadorAvatar = IMGS[jugadorActiu] || '';
-  const progres = fetes > 0 ? `
+  const jugadorAvatar = IMGS[jugadorActiu] || "";
+  const progres =
+    fetes > 0
+      ? `
     <div class="cl-progres">
-      <div class="cl-progres-bar" style="width:${Math.round(fetes/totalProves*100)}%"></div>
+      <div class="cl-progres-bar" style="width:${Math.round((fetes / totalProves) * 100)}%"></div>
     </div>
     <div class="cl-progres-txt">${fetes}/${totalProves} proves</div>
-  ` : '';
+  `
+      : "";
 
   cont.innerHTML = `
     <div class="cl-inici-layout">
       <div class="cl-inici-main">
         <div class="joc-titol-fila" style="align-items:center">
-          <span class="joc-titol-emoji">📝</span>
+          <span class="joc-titol-emoji">🧮</span>
           <span class="joc-titol-text">Xifres i Lletres</span>
         </div>
         <div class="cl-inici-jugador">
@@ -166,7 +178,7 @@ function clRenderInici() {
         </div>
         ${progres}
         <button class="cl-btn-primari" onclick="clComençar()">
-          ${fetes > 0 ? 'Continuar' : 'Començar'}
+          ${fetes > 0 ? "Continuar" : "Començar"}
         </button>
       </div>
       <div class="ranking-wrap">
@@ -179,24 +191,29 @@ function clRenderInici() {
 }
 
 function clRenderRanquingGlobal() {
-  const el = document.getElementById('cl-ranking-list');
+  const el = document.getElementById("cl-ranking-list");
   if (!el) return;
   const pts = clGetPuntsGlobals();
-  const llista = JUGADORS_VALIDS
-    .map(nom => ({ nom, punts: pts[nom] || 0 }))
-    .sort((a, b) => b.punts - a.punts);
+  const llista = JUGADORS_VALIDS.map((nom) => ({
+    nom,
+    punts: pts[nom] || 0,
+  })).sort((a, b) => b.punts - a.punts);
   const maxPts = llista[0]?.punts || 1;
-  const posEmoji = ['🥇', '🥈', '🥉'];
-  el.innerHTML = llista.map((r, i) => `
-    <div class="ranking-item ${r.nom === jugadorActiu ? 'actiu' : ''}">
-      <div class="ranking-pos ${i < 3 ? 'p'+(i+1) : 'other'}">${i < 3 ? posEmoji[i] : i+1}</div>
-      <img class="rank-avatar" src="${IMGS[r.nom] || ''}" alt="${r.nom}">
+  const posEmoji = ["🥇", "🥈", "🥉"];
+  el.innerHTML = llista
+    .map(
+      (r, i) => `
+    <div class="ranking-item ${r.nom === jugadorActiu ? "actiu" : ""}">
+      <div class="ranking-pos ${i < 3 ? "p" + (i + 1) : "other"}">${i < 3 ? posEmoji[i] : i + 1}</div>
+      <img class="rank-avatar" src="${IMGS[r.nom] || ""}" alt="${r.nom}">
       <div class="rank-info">
         <div class="rank-nom">${r.nom}</div>
-        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts/maxPts)*100)}%"></div></div>
+        <div class="rank-barra-wrap"><div class="rank-barra" style="width:${Math.round((r.punts / maxPts) * 100)}%"></div></div>
       </div>
       <div class="rank-punts">${r.punts}</div>
-    </div>`).join('');
+    </div>`,
+    )
+    .join("");
 }
 
 function clComençar() {
@@ -219,13 +236,14 @@ function clSeguent() {
 
 function clMostraIntro(prova, idx) {
   const total = CL_N_LLETRES + CL_N_XIFRES;
-  const tipusLabel = prova.tipus === 'lletres' ? '🔤 Lletres' : '🔢 Xifres';
-  const tipusDesc  = prova.tipus === 'lletres'
-    ? '8 lletres · forma la paraula més llarga'
-    : '6 números · arriba al número objectiu';
+  const tipusLabel = prova.tipus === "lletres" ? "🔤 Lletres" : "🔢 Xifres";
+  const tipusDesc =
+    prova.tipus === "lletres"
+      ? "8 lletres · forma la paraula més llarga"
+      : "6 números · arriba al número objectiu";
 
-  mostraScreen('cl-intro');
-  const cont = document.getElementById('cl-intro-cont');
+  mostraScreen("cl-intro");
+  const cont = document.getElementById("cl-intro-cont");
   if (!cont) return;
 
   cont.innerHTML = `
@@ -237,9 +255,9 @@ function clMostraIntro(prova, idx) {
 }
 
 function clIniciarProva() {
-  const idx   = clPartida.provaActual;
+  const idx = clPartida.provaActual;
   const prova = clPartida.ordre[idx];
-  if (prova.tipus === 'lletres') {
+  if (prova.tipus === "lletres") {
     clIniciarProvaLletres(prova.idx);
   } else {
     clIniciarProvaXifres(prova.idx);
@@ -248,58 +266,68 @@ function clIniciarProva() {
 
 function clTancar() {
   clGuardarPartida();
-  mostraScreen('joc-selector');
+  mostraScreen("joc-selector");
 }
 
 // ── PROVA DE LLETRES ──────────────────────────────────────────
 function clIniciarProvaLletres(idx) {
   const prova = clPartida.provesLletres[idx];
-  mostraScreen('cl-lletres');
+  mostraScreen("cl-lletres");
 
   const total = CL_N_LLETRES + CL_N_XIFRES;
   const provaActual = clPartida.provaActual;
-  document.getElementById('cl-lletres-num').textContent =
+  document.getElementById("cl-lletres-num").textContent =
     `Prova ${provaActual + 1} de ${total} · Lletres`;
-  document.getElementById('cl-lletres-maxpts').textContent =
+  document.getElementById("cl-lletres-maxpts").textContent =
     `Màx: ${prova.maxLen * CL_PTS_LLETRA + CL_PTS_BONUS} pts`;
 
   // Barreja les lletres per no revelar paraules visibles
   const lletresBarrejades = clBarrejar([...prova.lletres]);
   clLletresOrdre = [];
-  clRenderLletres(lletresBarrejades.map((l, i) => ({ lletra: l, id: i, usada: false })));
-  document.getElementById('cl-resposta').innerHTML = '';
-  document.getElementById('cl-lletres-feedback').innerHTML = '';
-  document.getElementById('cl-btn-enviar-lletres').disabled = true;
+  clRenderLletres(
+    lletresBarrejades.map((l, i) => ({ lletra: l, id: i, usada: false })),
+  );
+  document.getElementById("cl-resposta").innerHTML = "";
+  document.getElementById("cl-lletres-feedback").innerHTML = "";
+  document.getElementById("cl-btn-enviar-lletres").disabled = true;
 
-  clIniciarTimer('cl-lletres-timer', () => clEnviarLletres(true));
+  clIniciarTimer("cl-lletres-timer", () => clEnviarLletres(true));
 }
 
-let clLletresDisp  = [];
-let clLletresOrdre = [];  // IDs en ordre d'inserció
+let clLletresDisp = [];
+let clLletresOrdre = []; // IDs en ordre d'inserció
 
 function clRenderLletres(lletres) {
   clLletresDisp = lletres;
-  const cont = document.getElementById('cl-lletres-disp');
-  cont.innerHTML = lletres.map(l => `
-    <button class="cl-lletra ${l.usada ? 'usada' : ''}"
+  const cont = document.getElementById("cl-lletres-disp");
+  cont.innerHTML = lletres
+    .map(
+      (l) => `
+    <button class="cl-lletra ${l.usada ? "usada" : ""}"
       onclick="clUsarLletra(${l.id})"
-      ${l.usada ? 'disabled' : ''}>
+      ${l.usada ? "disabled" : ""}>
       ${l.lletra}
-    </button>`).join('');
+    </button>`,
+    )
+    .join("");
 
   // Resposta en ordre d'inserció
-  const resposta = document.getElementById('cl-resposta');
+  const resposta = document.getElementById("cl-resposta");
   resposta.innerHTML = clLletresOrdre
-    .map(id => {
-      const l = lletres.find(l => l.id === id);
-      return l ? `<button class="cl-lletra-resp" onclick="clRetornarLletra(${l.id})">${l.lletra}</button>` : '';
-    }).join('');
+    .map((id) => {
+      const l = lletres.find((l) => l.id === id);
+      return l
+        ? `<button class="cl-lletra-resp" onclick="clRetornarLletra(${l.id})">${l.lletra}</button>`
+        : "";
+    })
+    .join("");
 
-  document.getElementById('cl-btn-enviar-lletres').disabled = clLletresOrdre.length === 0;
+  document.getElementById("cl-btn-enviar-lletres").disabled =
+    clLletresOrdre.length === 0;
 }
 
 function clUsarLletra(id) {
-  const l = clLletresDisp.find(l => l.id === id);
+  const l = clLletresDisp.find((l) => l.id === id);
   if (!l || l.usada) return;
   l.usada = true;
   clLletresOrdre.push(id);
@@ -307,10 +335,10 @@ function clUsarLletra(id) {
 }
 
 function clRetornarLletra(id) {
-  const l = clLletresDisp.find(l => l.id === id);
+  const l = clLletresDisp.find((l) => l.id === id);
   if (!l) return;
   l.usada = false;
-  clLletresOrdre = clLletresOrdre.filter(i => i !== id);
+  clLletresOrdre = clLletresOrdre.filter((i) => i !== id);
   clRenderLletres(clLletresDisp);
 }
 
@@ -319,12 +347,14 @@ function clEnviarLletres(timeout = false) {
   const provaActualIdx = clPartida.provaActual;
   const provaOrdre = clPartida.ordre[provaActualIdx];
   const prova = clPartida.provesLletres[provaOrdre.idx];
-  const paraula = clLletresOrdre.map(id => clLletresDisp.find(l => l.id === id)?.lletra || '').join('');
+  const paraula = clLletresOrdre
+    .map((id) => clLletresDisp.find((l) => l.id === id)?.lletra || "")
+    .join("");
 
   let pts = 0;
-  let feedback = '';
+  let feedback = "";
 
-  if (!paraula || timeout && !paraula) {
+  if (!paraula || (timeout && !paraula)) {
     feedback = `<div class="cl-feedback-error">Temps esgotat! 0 pts</div>`;
   } else {
     const valid = prova.paraules.includes(paraula.toUpperCase());
@@ -337,21 +367,26 @@ function clEnviarLletres(timeout = false) {
       feedback = `
         <div class="cl-feedback-ok">
           ✓ "${paraula}" · ${paraula.length} lletres · <strong>+${pts} pts</strong>
-          ${esMaxima ? '<span class="cl-bonus">+30 bonus màxima!</span>' : ''}
+          ${esMaxima ? '<span class="cl-bonus">+30 bonus màxima!</span>' : ""}
         </div>`;
     }
   }
 
   // Mostra la paraula màxima si no l'ha trobat
-  const maxima = prova.paraules.filter(p => p.length === prova.maxLen)[0];
+  const maxima = prova.paraules.filter((p) => p.length === prova.maxLen)[0];
   if (paraula.length < prova.maxLen) {
     feedback += `<div class="cl-feedback-hint">Paraula màxima: <strong>${maxima}</strong> (${prova.maxLen} lletres)</div>`;
   }
 
-  document.getElementById('cl-lletres-feedback').innerHTML = feedback;
-  document.getElementById('cl-btn-enviar-lletres').disabled = true;
+  document.getElementById("cl-lletres-feedback").innerHTML = feedback;
+  document.getElementById("cl-btn-enviar-lletres").disabled = true;
 
-  clPartida.respostes.push({ tipus: 'lletres', provaIdx: provaOrdre.idx, resposta: paraula, pts });
+  clPartida.respostes.push({
+    tipus: "lletres",
+    provaIdx: provaOrdre.idx,
+    resposta: paraula,
+    pts,
+  });
   clPartida.punts += pts;
   clPartida.provaActual++;
   clGuardarPartida();
@@ -365,40 +400,51 @@ function clIniciarProvaXifres(idx) {
   const total = CL_N_LLETRES + CL_N_XIFRES;
   const provaActual = clPartida.provaActual;
 
-  mostraScreen('cl-xifres');
+  mostraScreen("cl-xifres");
 
-  document.getElementById('cl-xifres-num').textContent =
+  document.getElementById("cl-xifres-num").textContent =
     `Prova ${provaActual + 1} de ${total} · Xifres`;
-  document.getElementById('cl-xifres-objectiu').textContent = prova.objectiu;
+  document.getElementById("cl-xifres-objectiu").textContent = prova.objectiu;
 
   clPissarra = [];
   clResultat = null;
   clRenderPissarra();
-  clRenderNumsDisp(prova.nums.map((n, i) => ({ val: n, id: i, usada: false, usadaDef: false })));
+  clRenderNumsDisp(
+    prova.nums.map((n, i) => ({
+      val: n,
+      id: i,
+      usada: false,
+      usadaDef: false,
+    })),
+  );
 
-  document.getElementById('cl-xifres-feedback').innerHTML = '';
+  document.getElementById("cl-xifres-feedback").innerHTML = "";
 
-  clIniciarTimer('cl-xifres-timer', () => clEnviarXifres(true));
+  clIniciarTimer("cl-xifres-timer", () => clEnviarXifres(true));
 }
 
 let clNumsDisp = [];
 
 function clRenderNumsDisp(nums) {
   clNumsDisp = nums;
-  const cont = document.getElementById('cl-nums-disp');
-  cont.innerHTML = nums.map(n => `
-    <button class="cl-num-btn ${(n.usada || n.usadaDef) ? 'usada' : ''}"
+  const cont = document.getElementById("cl-nums-disp");
+  cont.innerHTML = nums
+    .map(
+      (n) => `
+    <button class="cl-num-btn ${n.usada || n.usadaDef ? "usada" : ""}"
       onclick="clUsarNum(${n.id})"
-      ${(n.usada || n.usadaDef) ? 'disabled' : ''}>
+      ${n.usada || n.usadaDef ? "disabled" : ""}>
       ${n.val}
-    </button>`).join('');
+    </button>`,
+    )
+    .join("");
 }
 
 function clUsarNum(id) {
-  const n = clNumsDisp.find(n => n.id === id);
+  const n = clNumsDisp.find((n) => n.id === id);
   if (!n || n.usada) return;
   n.usada = true;
-  clPissarra.push({ tipus: 'num', val: n.val, id: `n${id}` });
+  clPissarra.push({ tipus: "num", val: n.val, id: `n${id}` });
   clRenderNumsDisp(clNumsDisp);
   clRenderPissarra();
 }
@@ -408,29 +454,31 @@ function clUsarIgual() {
   if (res === null) return;
 
   // Marca com a permanentment usats els números de la pissarra actual
-  clPissarra.forEach(t => {
-    if (t.tipus === 'num' && t.id.startsWith('n')) {
-      const id = parseInt(t.id.replace('n', ''));
-      const n = clNumsDisp.find(n => n.id === id);
-      if (n) n.usadaDef = true;  // bloquejat definitivament
+  clPissarra.forEach((t) => {
+    if (t.tipus === "num" && t.id.startsWith("n")) {
+      const id = parseInt(t.id.replace("n", ""));
+      const n = clNumsDisp.find((n) => n.id === id);
+      if (n) n.usadaDef = true; // bloquejat definitivament
     }
   });
 
   // Allibera NOMÉS els que no estan bloquejats definitivament
-  clNumsDisp.forEach(n => { if (!n.usadaDef) n.usada = false; });
+  clNumsDisp.forEach((n) => {
+    if (!n.usadaDef) n.usada = false;
+  });
   clRenderNumsDisp(clNumsDisp);
 
-  clPissarra = [{ tipus: 'num', val: res, id: `calc${Date.now()}` }];
+  clPissarra = [{ tipus: "num", val: res, id: `calc${Date.now()}` }];
   clRenderPissarra();
 }
 
 function clUsarOp(op) {
-  clPissarra.push({ tipus: 'op', val: op, id: `op${Date.now()}` });
+  clPissarra.push({ tipus: "op", val: op, id: `op${Date.now()}` });
   clRenderPissarra();
 }
 
 function clUsarPar(par) {
-  clPissarra.push({ tipus: 'par', val: par, id: `par${Date.now()}` });
+  clPissarra.push({ tipus: "par", val: par, id: `par${Date.now()}` });
   clRenderPissarra();
 }
 
@@ -438,9 +486,9 @@ function clEsborrarUltim() {
   if (!clPissarra.length) return;
   const ultim = clPissarra[clPissarra.length - 1];
   // Si era un número, allibera'l
-  if (ultim.tipus === 'num') {
-    const id = parseInt(ultim.id.replace('n', ''));
-    const n = clNumsDisp.find(n => n.id === id);
+  if (ultim.tipus === "num") {
+    const id = parseInt(ultim.id.replace("n", ""));
+    const n = clNumsDisp.find((n) => n.id === id);
     if (n) n.usada = false;
     clRenderNumsDisp(clNumsDisp);
   }
@@ -451,30 +499,38 @@ function clEsborrarUltim() {
 function clNetejaPissarra() {
   clPissarra = [];
   clResultat = null;
-  clNumsDisp.forEach(n => { n.usada = false; n.usadaDef = false; });
+  clNumsDisp.forEach((n) => {
+    n.usada = false;
+    n.usadaDef = false;
+  });
   clRenderNumsDisp(clNumsDisp);
   clRenderPissarra();
 }
 
 function clRenderPissarra() {
-  const cont = document.getElementById('cl-pissarra');
+  const cont = document.getElementById("cl-pissarra");
   if (!clPissarra.length) {
-    cont.innerHTML = '<span class="cl-pissarra-buit">Arrossega números i operadors aquí</span>';
+    cont.innerHTML =
+      '<span class="cl-pissarra-buit">Arrossega números i operadors aquí</span>';
   } else {
-    cont.innerHTML = clPissarra.map(t => `
-      <span class="cl-token cl-token-${t.tipus}">${t.val}</span>`).join('');
+    cont.innerHTML = clPissarra
+      .map(
+        (t) => `
+      <span class="cl-token cl-token-${t.tipus}">${t.val}</span>`,
+      )
+      .join("");
   }
 
   // Mostra el resultat actual
   const res = clCalcular();
-  const resCont = document.getElementById('cl-resultat-actual');
+  const resCont = document.getElementById("cl-resultat-actual");
   if (res !== null) {
     resCont.textContent = `= ${res}`;
-    resCont.className = 'cl-resultat-actual visible';
+    resCont.className = "cl-resultat-actual visible";
     clResultat = res;
   } else {
-    resCont.textContent = '';
-    resCont.className = 'cl-resultat-actual';
+    resCont.textContent = "";
+    resCont.className = "cl-resultat-actual";
     clResultat = null;
   }
 }
@@ -482,18 +538,20 @@ function clRenderPissarra() {
 function clCalcularExpr(tokens) {
   if (!tokens.length) return null;
   try {
-    const expr = tokens.map(t => {
-      if (t.tipus === 'op') {
-        if (t.val === '×' || t.val === 'x') return '*';
-        if (t.val === '÷') return '/';
-        if (t.val === '−' || t.val === '–') return '-';  // guió llarg → guió normal
+    const expr = tokens
+      .map((t) => {
+        if (t.tipus === "op") {
+          if (t.val === "×" || t.val === "x") return "*";
+          if (t.val === "÷") return "/";
+          if (t.val === "−" || t.val === "–") return "-"; // guió llarg → guió normal
+          return t.val;
+        }
         return t.val;
-      }
-      return t.val;
-    }).join(' ');
-    const resultat = Function('"use strict"; return (' + expr + ')')();
+      })
+      .join(" ");
+    const resultat = Function('"use strict"; return (' + expr + ")")();
     if (!Number.isFinite(resultat) || !Number.isInteger(resultat)) return null;
-    if (resultat < 0) return null;  // no permetem resultats negatius
+    if (resultat < 0) return null; // no permetem resultats negatius
     return resultat;
   } catch {
     return null;
@@ -511,29 +569,34 @@ function clEnviarXifres(timeout = false) {
   const prova = clPartida.provesXifres[provaOrdre.idx];
 
   let pts = 0;
-  let feedback = '';
+  let feedback = "";
 
-  if (clResultat === null || timeout && clResultat === null) {
+  if (clResultat === null || (timeout && clResultat === null)) {
     feedback = `<div class="cl-feedback-error">Cap resultat vàlid. 0 pts</div>`;
   } else {
     const diff = Math.abs(clResultat - prova.objectiu);
     for (const { max, pts: p } of CL_PTS_XIFRES) {
-      if (diff <= max) { pts = p; break; }
+      if (diff <= max) {
+        pts = p;
+        break;
+      }
     }
     const exact = diff === 0;
     feedback = `
-      <div class="${exact ? 'cl-feedback-ok' : diff <= 25 ? 'cl-feedback-warn' : 'cl-feedback-error'}">
-        ${exact ? '🎯 Exacte!' : `Resultat: ${clResultat} · Diferència: ${diff}`}
+      <div class="${exact ? "cl-feedback-ok" : diff <= 25 ? "cl-feedback-warn" : "cl-feedback-error"}">
+        ${exact ? "🎯 Exacte!" : `Resultat: ${clResultat} · Diferència: ${diff}`}
         · <strong>+${pts} pts</strong>
       </div>
       <div class="cl-feedback-hint">Objectiu: ${prova.objectiu}</div>`;
   }
 
-  document.getElementById('cl-xifres-feedback').innerHTML = feedback;
+  document.getElementById("cl-xifres-feedback").innerHTML = feedback;
 
   clPartida.respostes.push({
-    tipus: 'xifres', provaIdx: provaOrdre.idx,
-    resposta: clResultat, pts
+    tipus: "xifres",
+    provaIdx: provaOrdre.idx,
+    resposta: clResultat,
+    pts,
   });
   clPartida.punts += pts;
   clPartida.provaActual++;
@@ -546,32 +609,34 @@ function clEnviarXifres(timeout = false) {
 function clFinalitzar() {
   clPartida.acabada = true;
   clGuardarPartida();
-  mostraScreen('cl-resultat');
+  mostraScreen("cl-resultat");
 
-  const cont = document.getElementById('cl-resultat-cont');
-  const maxPts = CL_N_LLETRES * (8 * CL_PTS_LLETRA + CL_PTS_BONUS)
-               + CL_N_XIFRES  * 100;
+  const cont = document.getElementById("cl-resultat-cont");
+  const maxPts =
+    CL_N_LLETRES * (8 * CL_PTS_LLETRA + CL_PTS_BONUS) + CL_N_XIFRES * 100;
 
-  const detall = clPartida.ordre.map((o, i) => {
-    const r = clPartida.respostes[i] || { pts: 0, resposta: null };
-    if (o.tipus === 'lletres') {
-      const p = clPartida.provesLletres[o.idx];
-      return `<tr>
-        <td>Prova ${i+1} · Lletres</td>
-        <td>${p.lletres.join('')}</td>
-        <td>${r.resposta || '—'}</td>
-        <td class="${r.pts > 0 ? 'cl-pts-ok' : 'cl-pts-zero'}">${r.pts} pts</td>
+  const detall = clPartida.ordre
+    .map((o, i) => {
+      const r = clPartida.respostes[i] || { pts: 0, resposta: null };
+      if (o.tipus === "lletres") {
+        const p = clPartida.provesLletres[o.idx];
+        return `<tr>
+        <td>Prova ${i + 1} · Lletres</td>
+        <td>${p.lletres.join("")}</td>
+        <td>${r.resposta || "—"}</td>
+        <td class="${r.pts > 0 ? "cl-pts-ok" : "cl-pts-zero"}">${r.pts} pts</td>
       </tr>`;
-    } else {
-      const p = clPartida.provesXifres[o.idx];
-      return `<tr>
-        <td>Prova ${i+1} · Xifres</td>
+      } else {
+        const p = clPartida.provesXifres[o.idx];
+        return `<tr>
+        <td>Prova ${i + 1} · Xifres</td>
         <td>${p.objectiu}</td>
-        <td>${r.resposta ?? '—'}</td>
-        <td class="${r.pts > 0 ? 'cl-pts-ok' : 'cl-pts-zero'}">${r.pts} pts</td>
+        <td>${r.resposta ?? "—"}</td>
+        <td class="${r.pts > 0 ? "cl-pts-ok" : "cl-pts-zero"}">${r.pts} pts</td>
       </tr>`;
-    }
-  }).join('');
+      }
+    })
+    .join("");
 
   cont.innerHTML = `
     <div class="cl-resultat-total">
@@ -592,8 +657,8 @@ function clIniciarTimer(elId, onExpira) {
   const el = document.getElementById(elId);
   const actualitzar = () => {
     if (!el) return;
-    el.textContent = clTempsRestant + 's';
-    el.className = 'cl-timer' + (clTempsRestant <= 10 ? ' urgent' : '');
+    el.textContent = clTempsRestant + "s";
+    el.className = "cl-timer" + (clTempsRestant <= 10 ? " urgent" : "");
   };
   actualitzar();
   clTimerInterval = setInterval(() => {
@@ -607,7 +672,10 @@ function clIniciarTimer(elId, onExpira) {
 }
 
 function clAturarTimer() {
-  if (clTimerInterval) { clearInterval(clTimerInterval); clTimerInterval = null; }
+  if (clTimerInterval) {
+    clearInterval(clTimerInterval);
+    clTimerInterval = null;
+  }
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
@@ -618,9 +686,9 @@ function clGuardarPartida() {
 // ── PUNTS GLOBALS (per al rànquing) ───────────────────────────
 function clGetPuntsGlobals() {
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => {
+  JUGADORS_VALIDS.forEach((nom) => {
     const raw = localStorage.getItem(`cl_estat_${nom}`);
-    pts[nom] = raw ? (JSON.parse(raw).punts || 0) : 0;
+    pts[nom] = raw ? JSON.parse(raw).punts || 0 : 0;
   });
   return pts;
 }
