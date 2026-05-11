@@ -392,9 +392,12 @@ function feRenderTorn() {
   if (!cont) return;
 
   // Frases on es el torn del jugador
+  const nomActiu = (feJugador || '').trim();
   const frasesTorns = FE_DOCS
     .map(id => fePartides[id])
-    .filter(p => p && p.propietari !== feJugador && feTornActual(p) === feJugador);
+    .filter(p => p
+      && (p.propietari || '').trim() !== nomActiu
+      && feTornActual(p) === nomActiu);
 
   if (frasesTorns.length === 0) {
     cont.innerHTML = `
@@ -430,29 +433,57 @@ function feRenderTorn() {
 
 function feRenderTornFrase(p) {
   const paraules = p.paraules || [];
-  // Paraules acumulades en aquest torn (sessió local, abans de passar el torn)
   const acumulades = feTornEnCurs[p.id] || [];
   const lletresAcumulades = acumulades.reduce((s, pw) => s + feLletres(pw.text), 0);
-  const tornComplet = lletresAcumulades >= 4;
-
-  // Últimes 5 paraules de Firebase (el jugador NO veu tota la frase)
-  // Si hi ha paraules acumulades localment, les mostrem en lloc de les de Firebase
-  const ultimesFirebase = paraules.slice(-5);
-  const hiHaMes = paraules.length > 5;
   const textInicial = p.text_inicial || '';
   const propColor = FE_COLORS_JUGADORS[p.propietari] || '#888';
-
-  // Temps restant per aquest torn
   const tempsTorn = feTempsRestantTorn(p);
 
-  // Última paraula de Firebase per a la revisió
+  // Última paraula escrita per un altre jugador (per a revisió)
   const darreraParaula = paraules.length > 0 ? paraules[paraules.length - 1] : null;
-  const potDemanarRevisio = darreraParaula && !darreraParaula.revisio_demanada && acumulades.length === 0;
+  const revisioActiva = darreraParaula?.revisio_demanada === true;
+  // Pot demanar revisió: última paraula existent, no és meva, no té revisió, no he escrit res encara
+  const potDemanarRevisio = darreraParaula
+    && darreraParaula.autor !== feJugador
+    && !revisioActiva
+    && acumulades.length === 0;
 
-  // Preview: ultimes Firebase + acumulades locals
-  const totesPreview = [...ultimesFirebase, ...acumulades];
+  // Preview últimes 5: Firebase + acumulades locals
+  const totesPreview = [...paraules.slice(-5), ...acumulades];
   const ultimes5Preview = totesPreview.slice(-5);
   const hiHaMesPreview = (paraules.length + acumulades.length) > 5;
+
+  // Bloc central: input o bloqueig per revisió
+  let blocCentral;
+  if (revisioActiva) {
+    blocCentral = `
+      <div class="fe-revisio-demanada">
+        ⏳ Has demanat revisió de "<strong>${darreraParaula.text}</strong>".<br>
+        Espera que l'administrador ho resolgui per continuar.
+      </div>`;
+  } else {
+    const progres = acumulades.length > 0 ? `
+      <div class="fe-lletres-progres">
+        <div class="fe-lletres-bar-wrap">
+          <div class="fe-lletres-bar" style="width:${Math.min(100, lletresAcumulades / 4 * 100)}%"></div>
+        </div>
+        <span class="fe-lletres-comptador ${lletresAcumulades >= 4 ? 'complet' : ''}">${lletresAcumulades}/4 lletres</span>
+      </div>` : '';
+
+    blocCentral = progres + `
+      <div class="fe-torn-input-area">
+        <input type="text" class="fe-paraula-input" id="fe-input-${p.id}"
+          placeholder="Escriu una paraula..."
+          maxlength="40"
+          onkeydown="if(event.key==='Enter') feEnviarParaula('${p.id}')">
+        <button class="fe-btn-enviar" onclick="feEnviarParaula('${p.id}')">
+          Afegir →
+        </button>
+      </div>
+      <div class="fe-input-hint">
+        Les paraules amb apòstrof o guionet compten com una sola (d'ell, vesteix-te…)
+      </div>`;
+  }
 
   return `
     <div class="fe-torn-frase-card" id="fe-torn-${p.id}">
@@ -462,7 +493,7 @@ function feRenderTornFrase(p) {
           <span style="color:${propColor};font-weight:700">${p.propietari}</span>
           <span class="fe-torn-prop-label">propietari</span>
         </div>
-        <div class="fe-torn-timer ${tempsTorn < 30 ? 'urgent' : ''}" id="fe-timer-${p.id}">
+        <div class="fe-torn-timer ${tempsTorn < 1800 ? 'urgent' : ''}" id="fe-timer-${p.id}">
           ⏱ ${feFormatarTemps(tempsTorn)}
         </div>
       </div>
@@ -472,56 +503,21 @@ function feRenderTornFrase(p) {
         ${ultimes5Preview.length > 0 ? feRenderParaules(ultimes5Preview, false) : ''}
       </div>
 
-      ${acumulades.length > 0 ? `
-        <div class="fe-lletres-progres">
-          <div class="fe-lletres-bar-wrap">
-            <div class="fe-lletres-bar" style="width:${Math.min(100, lletresAcumulades / 4 * 100)}%"></div>
-          </div>
-          <span class="fe-lletres-comptador ${tornComplet ? 'complet' : ''}">${lletresAcumulades}/4 lletres</span>
-        </div>
-      ` : ''}
-
-      ${!tornComplet ? `
-        <div class="fe-torn-input-area">
-          <input type="text" class="fe-paraula-input" id="fe-input-${p.id}"
-            placeholder="Escriu una paraula..."
-            maxlength="40"
-            onkeydown="if(event.key==='Enter') feEnviarParaula('${p.id}')">
-          <button class="fe-btn-enviar" onclick="feEnviarParaula('${p.id}')">
-            Afegir →
-          </button>
-        </div>
-        <div class="fe-input-hint">
-          Les paraules amb apòstrof o guionet compten com una sola (d'ell, vesteix-te…)
-        </div>
-      ` : `
-        <div class="fe-torn-complet-wrap">
-          <div class="fe-torn-complet-text">
-            ✅ ${acumulades.map(pw => pw.text).join(' + ')} · ${lletresAcumulades} lletres
-          </div>
-          <button class="fe-btn-confirmar-torn" onclick="feConfirmarTorn('${p.id}')">
-            Confirmar i passar torn →
-          </button>
-          <button class="fe-btn-afegir-mes" onclick="feAfegirMes('${p.id}')">
-            + Afegir una paraula més
-          </button>
-        </div>
-      `}
+      ${blocCentral}
 
       ${potDemanarRevisio ? `
         <div class="fe-revisio-wrap">
-          <button class="fe-btn-revisio" onclick="feDemanarRevisio('${p.id}', '${darreraParaula.text.replace(/'/g,"\\'")}')">
+          <button class="fe-btn-revisio" onclick="feDemanarRevisio('${p.id}')">
             🔍 Demanar revisió de "${darreraParaula.text}"
           </button>
         </div>
-      ` : darreraParaula?.revisio_demanada && acumulades.length === 0 ? `
-        <div class="fe-revisio-demanada">⏳ Revisió demanada per "${darreraParaula.text}"</div>
       ` : ''}
 
       <div class="fe-torn-error" id="fe-err-${p.id}" style="display:none"></div>
     </div>
   `;
 }
+
 
 // ── TEMPS RESTANT ─────────────────────────────────────────────
 // Compte nomes els segons dins la franja 8h-22h.
@@ -550,7 +546,7 @@ function feLletres(text) {
 }
 
 // ── ENVIAR PARAULA ────────────────────────────────────────────
-// Acumula localment fins a tenir >= 4 lletres. Llavors es pot confirmar el torn.
+// Acumula localment. Quan >= 4 lletres, passa el torn automàticament.
 async function feEnviarParaula(docId) {
   const input = document.getElementById(`fe-input-${docId}`);
   const errDiv = document.getElementById(`fe-err-${docId}`);
@@ -564,8 +560,7 @@ async function feEnviarParaula(docId) {
     return;
   }
 
-  // Validació: una sola paraula (pot tenir apòstrof o guionet)
-  if (!/^[a-zA-ZàáâãäåæçèéêëìíîïðñòóôõöùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝ'''\-·\.!?,;:]+$/.test(paraula)) {
+  if (!/^[a-zA-ZàáâãäåæçèéêëìíîïðñòóôõöùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝ\'\-·\.!?,;:]+$/.test(paraula)) {
     errDiv.textContent = "Només s'accepten lletres, apòstrofs, guions i puntuació bàsica.";
     errDiv.style.display = 'block';
     return;
@@ -578,22 +573,34 @@ async function feEnviarParaula(docId) {
     return;
   }
 
-  // Acumulem localment
+  // Bloqueig si hi ha revisió activa
+  const paraules = p.paraules || [];
+  const darrera = paraules[paraules.length - 1];
+  if (darrera?.revisio_demanada) {
+    errDiv.textContent = "Espera que l'administrador resolgui la revisió pendent.";
+    errDiv.style.display = 'block';
+    return;
+  }
+
   if (!feTornEnCurs[docId]) feTornEnCurs[docId] = [];
   feTornEnCurs[docId].push({ text: paraula, color: FE_COLORS_JUGADORS[feJugador] });
-
   input.value = '';
-  // Re-render la targeta (sense re-renderitzar tota la pantalla per no perdre focus)
-  feRenderTorn();
-  // Focus a l'input si encara cal escriure
+
   const lletres = feTornEnCurs[docId].reduce((s, pw) => s + feLletres(pw.text), 0);
-  if (lletres < 4) {
+
+  if (lletres >= 4) {
+    // Prou lletres: confirmar automàticament
+    const btn = input.closest('.fe-torn-frase-card')?.querySelector('.fe-btn-enviar');
+    if (btn) { btn.disabled = true; btn.textContent = '…'; }
+    await feConfirmarTorn(docId);
+  } else {
+    // Encara cal escriure més
+    feRenderTorn();
     setTimeout(() => document.getElementById(`fe-input-${docId}`)?.focus(), 50);
   }
 }
 
-// ── CONFIRMAR TORN ─────────────────────────────────────────────
-// Envia totes les paraules acumulades a Firebase i passa el torn.
+// ── CONFIRMAR TORN ────────────────────────────────────────────
 async function feConfirmarTorn(docId) {
   const acumulades = feTornEnCurs[docId] || [];
   if (acumulades.length === 0) return;
@@ -601,20 +608,11 @@ async function feConfirmarTorn(docId) {
   const p = fePartides[docId];
   if (!p || feTornActual(p) !== feJugador) return;
 
-  const botoConf = document.querySelector(`#fe-torn-${docId} .fe-btn-confirmar-torn`);
-  if (botoConf) { botoConf.disabled = true; botoConf.textContent = '…'; }
-
   try {
     const db = feGetDb();
     const paraules = [...(p.paraules || [])];
     acumulades.forEach(pw => {
-      paraules.push({
-        text: pw.text,
-        autor: feJugador,
-        color: pw.color,
-        automatica: false,
-        ts: Date.now(),
-      });
+      paraules.push({ text: pw.text, autor: feJugador, color: pw.color, automatica: false, ts: Date.now() });
     });
 
     const ordre = p.ordre || [];
@@ -627,13 +625,14 @@ async function feConfirmarTorn(docId) {
       ultima_paraula_ts: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
-    // Netegem les acumulades d'aquesta frase
     delete feTornEnCurs[docId];
     feRenderTorn();
   } catch(e) {
     const errDiv = document.getElementById(`fe-err-${docId}`);
     if (errDiv) { errDiv.textContent = 'Error en guardar. Torna-ho a intentar.'; errDiv.style.display = 'block'; }
-    if (botoConf) { botoConf.disabled = false; botoConf.textContent = 'Confirmar i passar torn →'; }
+    // Restaurem per poder tornar a intentar
+    const btn = document.querySelector(`#fe-torn-${docId} .fe-btn-enviar`);
+    if (btn) { btn.disabled = false; btn.textContent = 'Afegir →'; }
   }
 }
 
@@ -682,8 +681,8 @@ async function feDemanarRevisio(docId) {
 // ── TORN ACTUAL ───────────────────────────────────────────────
 function feTornActual(p) {
   if (!p || !p.ordre || p.ordre.length === 0) return null;
-  const idx = p.torn_actual_idx || 0;
-  return p.ordre[idx % p.ordre.length];
+  const idx = typeof p.torn_actual_idx === 'number' ? p.torn_actual_idx : 0;
+  return (p.ordre[idx % p.ordre.length] || '').trim();
 }
 
 // ── RENDER PARAULES AMB COLOR ──────────────────────────────────
@@ -701,16 +700,23 @@ function feRenderParaules(paraules, mostrarTotes) {
 
 // ── COMPROVAR TORN PER BANNER INDEX.HTML ───────────────────────
 async function fraseEsbojarradaComprovarTorn() {
-  const nom = localStorage.getItem('app_jugador');
+  // Esperem que Firebase estigui llest (pot trigar uns ms després de DOMContentLoaded)
+  const nom = (localStorage.getItem('app_jugador') || '').trim();
   if (!nom) return;
 
   const banner = document.getElementById('frase-esbojarrada-banner');
   if (!banner) return;
 
-  try {
-    const db = feGetDb();
-    if (!db) return;
+  // Reintenta fins a 3 cops si Firebase no està llest encara
+  let db = null;
+  for (let intent = 0; intent < 3; intent++) {
+    db = feGetDb();
+    if (db) break;
+    await new Promise(r => setTimeout(r, 300));
+  }
+  if (!db) return;
 
+  try {
     const snaps = await Promise.all(FE_DOCS.map(id =>
       db.collection('frase_esbojarrada').doc(id).get()
     ));
@@ -718,20 +724,25 @@ async function fraseEsbojarradaComprovarTorn() {
     const tornsPendents = snaps.filter(snap => {
       if (!snap.exists) return false;
       const p = snap.data();
-      if (p.propietari === nom) return false;
-      const ordre = p.ordre || [];
-      const idx = p.torn_actual_idx || 0;
-      return ordre[idx % ordre.length] === nom;
+      // Comparem en minúscules i sense espais per evitar mismatch
+      const propietari = (p.propietari || '').trim();
+      if (propietari.toLowerCase() === nom.toLowerCase()) return false;
+      const ordre = (p.ordre || []).map(n => (n || '').trim());
+      const idx = typeof p.torn_actual_idx === 'number' ? p.torn_actual_idx : 0;
+      if (ordre.length === 0) return false;
+      return ordre[idx % ordre.length].toLowerCase() === nom.toLowerCase();
     }).length;
 
     if (tornsPendents > 0) {
       banner.style.display = 'flex';
       const txt = banner.querySelector('.fe-banner-text');
-      if (txt) txt.textContent = `És el teu torn a ${tornsPendents} frase${tornsPendents > 1 ? 's' : ''} esbojarrada${tornsPendents > 1 ? 's' : ''}!`;
+      if (txt) txt.textContent = `És el teu torn a ${tornsPendents} frase${tornsPendents > 1 ? 's esbojarrades' : ' esbojarrada'}!`;
     } else {
       banner.style.display = 'none';
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('fraseEsbojarradaComprovarTorn error:', e);
+  }
 }
 
 // ── SORTIR ────────────────────────────────────────────────────
