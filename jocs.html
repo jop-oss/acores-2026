@@ -30,6 +30,7 @@
     <a href="playlist.html" class="nav-item">Playlist</a>
     <a href="material-extra.html" class="nav-item">Material extra</a>
     <a href="jocs.html" class="nav-item active">Jocs</a>
+    <a href="reptes.html" class="nav-item">Reptes</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
     <a href="blog.html" class="nav-item">Blog</a>
   </div>
@@ -105,11 +106,6 @@
           <span class="joc-selector-label">Bingo Açores</span>
           <span class="joc-selector-sub">Marca el que vas vivint</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('reptes')">
-          <span class="joc-selector-icon">🏆</span>
-          <span class="joc-selector-label">Reptes</span>
-          <span class="joc-selector-sub">Completeu els reptes del viatge</span>
-        </button>
         <button class="joc-selector-btn" onclick="seleccionarModeJoc('trivial')">
           <span class="joc-selector-icon">🎲</span>
           <span class="joc-selector-label">Trivial Açores</span>
@@ -169,11 +165,6 @@
           <span class="joc-selector-icon">🀄</span>
           <span class="joc-selector-label">Mahjong Açores</span>
           <span class="joc-selector-sub">Creu · Piràmide · Tortuga</span>
-        </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('bomberman')">
-          <span class="joc-selector-icon">💥</span>
-          <span class="joc-selector-label">Bomberman Açores</span>
-          <span class="joc-selector-sub">10 nivells · enemics · power-ups</span>
         </button>
         <button class="joc-selector-btn" onclick="seleccionarModeJoc('sokoban')">
           <span class="joc-selector-icon">📦</span>
@@ -269,7 +260,6 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('flappy', this)">🐦 Flappy</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('bomberman', this)">💥 Bomber</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
@@ -817,49 +807,6 @@
     </div>
   </div>
 
-  <!-- ══ REPTES ══ -->
-  <div id="screen-reptes" style="display:none">
-    <div class="reptes-wrap">
-
-      <!-- Header -->
-      <div class="reptes-header">
-        <div class="joc-header-fila">
-          <button onclick="mostraScreen('joc-selector')" class="mapa-back-btn">← Tornar</button>
-        </div>
-        <div class="reptes-header-titols">
-          <div class="reptes-header-title">
-            <span class="joc-titol-emoji">🏆</span>
-            <span class="joc-titol-text">Reptes del viatge</span>
-          </div>
-          <button class="reptes-btn-afegir" id="reptes-btn-afegir" onclick="reptesAfegirRepte()">
-            + Nou repte
-          </button>
-        </div>
-      </div>
-
-      <!-- Loading -->
-      <div class="reptes-loading" id="reptes-loading">
-        <div class="qqs-spinner"></div>
-        <div class="qqs-loading-text">Carregant reptes…</div>
-      </div>
-
-      <!-- Taula -->
-      <div class="reptes-taula-wrap" id="reptes-taula-wrap" style="display:none">
-        <div class="reptes-taula-scroll">
-          <table class="reptes-taula" id="reptes-taula">
-            <thead id="reptes-thead"></thead>
-            <tbody id="reptes-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-
-
-
   <!-- ══ TRIVIAL AÇORES — INICI ══ -->
   <div id="screen-trivial-inici" style="display:none">
     <div class="trivial-inici-wrap">
@@ -1138,7 +1085,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="js/bingo-data.js"></script>  
-<script src="js/reptes-data.js"></script>
 <script src="js/config.js"></script>
 <script src="js/jocs-data.js"></script>
 <script src="js/qqs-data.js"></script>
@@ -1178,17 +1124,6 @@
   </div>
   <div id="screen-mahjong-joc" style="display:none">
     <div id="mahjong-joc-cont"></div>
-  </div>
-
-  <!-- PANTALLES BOMBERMAN -->
-  <div id="screen-bomberman-inici" style="display:none">
-    <div class="cl-wrap">
-      <div><button class="mapa-back-btn" onclick="mostraScreen('joc-selector')">← Tornar</button></div>
-      <div id="bomberman-inici-cont"></div>
-    </div>
-  </div>
-  <div id="screen-bomberman-joc" style="display:none">
-    <div id="bomberman-joc-cont"></div>
   </div>
 
   <!-- PANTALLES BUSCA LES DIFERÈNCIES -->
@@ -1257,7 +1192,6 @@
 
 <script src="js/pescamines.js"></script>
 <script src="js/mahjong.js"></script>
-<script src="js/bomberman.js"></script>
 <script src="js/sokoban-data.js"></script>
 <script src="js/sokoban.js"></script>
 <script src="js/diferencies-data.js"></script>

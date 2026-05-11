@@ -7012,3 +7012,18 @@
 }
 /* Marca visual a la paraula amb revisió pendent */
 .fe-paraula-chip.revisio { box-shadow: 0 0 0 2px #fbbf24; }
+
+/* ── Reptes standalone (reptes.html) ── */
+#reptes-page { padding-top: 1rem; }
+.reptes-jugador-wrap {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .5rem 1.5rem .75rem;
+  max-width: 900px; margin: 0 auto;
+}
+.reptes-jugador-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  object-fit: cover; object-position: top;
+}
+.reptes-jugador-nom {
+  font-weight: 700; font-size: .9rem; color: var(--text);
+}

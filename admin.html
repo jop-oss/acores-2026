@@ -465,19 +465,6 @@
     </table>
   </div>
 
-  <!-- BOMBERMAN -->
-  <div class="admin-seccio">
-    <div class="admin-seccio-header">
-      <div class="admin-seccio-title">💥 Bomberman Açores</div>
-      <button class="btn-reset-tot" onclick="resetTotJoc('bomberman')">Reiniciar tots</button>
-    </div>
-    <table class="admin-taula">
-      <thead>
-        <tr><th>Jugador</th><th>Millor puntuació</th><th>Nivell màx</th><th></th></tr>
-      </thead>
-      <tbody id="taula-bomberman"></tbody>
-    </table>
-  </div>
 
   <!-- SOKOBAN -->
   <div class="admin-seccio">
@@ -699,7 +686,6 @@
     renderFlappy();
     renderPescamines();
     renderMahjong();
-    renderBomberman();
     renderSokoban();
     renderScrabble();
     renderDiferencies();
@@ -918,7 +904,6 @@
     flappy:   nom => `flappy_estat_${nom}`,
     pescamines: nom => `pescamines_estat_${nom}`,
     mahjong:    nom => `mahjong_estat_${nom}`,
-    bomberman:  nom => `bomberman_estat_${nom}`,
     sokoban:      nom => `sokoban_estat_${nom}`,
     diferencies:  nom => `difer_estat_${nom}`,
     ginrummy:     nom => `ginrummy_estat_${nom}`,
@@ -934,7 +919,7 @@
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
     cifras: renderCifras, snake: renderSnake, breakout: renderBreakout,
     corre: renderCorre, asteroid: renderAsteroid, correu: renderCorreu,
-    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, bomberman: renderBomberman, sokoban: renderSokoban, diferencies: renderDiferencies,
+    flappy: renderFlappy, pescamines: renderPescamines, mahjong: renderMahjong, sokoban: renderSokoban, diferencies: renderDiferencies,
     ginrummy: renderGinRummy,
     yahtzee:  renderYahtzee,
     batallanaval: renderBatallaNaval,
@@ -951,7 +936,6 @@
     correu: 'Correu de les Açores', flappy: 'Flappy Açores',
     pescamines: 'Pescamines',
     mahjong: 'Mahjong Açores',
-    bomberman: 'Bomberman Açores',
     sokoban: 'Sokoban Açores',
     scrabble: 'Scrabble Açores',
     diferencies: 'Busca les Diferències',
@@ -1190,21 +1174,6 @@
     }).join('');
   }
 
-  function renderBomberman() {
-    const tbody = document.getElementById('taula-bomberman');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`bomberman_estat_${nom}`);
-      const dades = raw ? JSON.parse(raw) : { punts: 0, nivell: 1 };
-      const millor = dades.punts || 0;
-      const nivell = dades.nivell || 1;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><span class="pts-badge ${nivell<=1?'zero':''}">Niv. ${nivell}</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('bomberman','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
 
   function renderDiferencies() {
     const tbody = document.getElementById('taula-diferencies');

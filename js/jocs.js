@@ -212,7 +212,6 @@ async function rankingCarregar() {
       flappy: 0,
       pescamines: 0,
       mahjong: 0,
-      bomberman: 0,
       llancabombes: 0,
       sokoban: 0,
       scrabble: 0,
@@ -304,12 +303,6 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].mahjong = ptsMj[nom] || 0; });
   }
 
-  // Bomberman (localStorage)
-  if (typeof bombermanGetPuntsGlobals === 'function') {
-    const ptsBm = bombermanGetPuntsGlobals();
-    JUGADORS_VALIDS.forEach(nom => { dades[nom].bomberman = ptsBm[nom] || 0; });
-  }
-
   // Llança Bombes (localStorage)
   if (typeof llancabombesGetPuntsGlobals === 'function') {
     const ptsLb = llancabombesGetPuntsGlobals();
@@ -398,7 +391,7 @@ function rankingTotal(nom, filtre) {
   const d = _rankingDades[nom];
   if (!d) return 0;
   if (filtre === "tots")
-    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
+    return d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
   return d[filtre] || 0;
 }
 
@@ -465,7 +458,7 @@ function rankingMostrarDetall(nom) {
 
   const d = _rankingDades[nom];
   const total =
-    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.bomberman||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
+    d.quiz + d.mapa + d.paraula + d.bingo + d.trivial + (d.sudoku||0) + (d.cifras||0) + (d.penjat||0) + (d.snake||0) + (d.breakout||0) + (d.corre||0) + (d.asteroid||0) + (d.correu||0) + (d.flappy||0) + (d.pescamines||0) + (d.mahjong||0) + (d.llancabombes||0) + (d.sokoban||0) + (d.scrabble||0) + (d.diferencies||0) + (d.ginrummy||0) + (d.yahtzee||0) + (d.batallanaval||0) + (d.triangles||0) + (d.nonogram||0) + (d.jocfotos||0) + (d.encreuats||0) + (d.colorfill||0);
   const jocs = [
     { icon: "🌋", nom: "Quiz Açores", key: "quiz" },
     { icon: "📍", nom: "On és això?", key: "mapa" },
@@ -483,7 +476,6 @@ function rankingMostrarDetall(nom) {
     { icon: "🐦", nom: "Flappy Açores", key: "flappy" },
     { icon: "💣", nom: "Pescamines", key: "pescamines" },
     { icon: "🀄", nom: "Mahjong", key: "mahjong" },
-    { icon: "💥", nom: "Bomberman", key: "bomberman" },
     { icon: "🎯", nom: "Llança Bombes", key: "llancabombes" },
     { icon: "🪨", nom: "Sokoban", key: "sokoban" },
     { icon: "📝", nom: "Scrabble", key: "scrabble" },
@@ -609,8 +601,6 @@ function seleccionarModeJoc(mode) {
     iniciarParaulaAmagada();
   } else if (mode === "bingo") {
     iniciarBingo();
-  } else if (mode === "reptes") {
-    iniciarReptes();
   } else if (mode === "trivial") {
     iniciarTrivial();
   } else if (mode === "sudoku") {
@@ -635,8 +625,6 @@ function seleccionarModeJoc(mode) {
     iniciarPescamines();
   } else if (mode === "mahjong") {
     iniciarMahjong();
-  } else if (mode === "bomberman") {
-    iniciarBomberman();
   } else if (mode === "llancabombes") {
     iniciarLlancaBombes();
   } else if (mode === "sokoban") {
@@ -1003,7 +991,6 @@ function mostraScreen(nom) {
     "paraula-final",
     "bingo-escollir",
     "bingo-joc",
-    "reptes",
     "trivial-inici",
     "trivial-torn",
     "trivial-veure",
@@ -1039,8 +1026,6 @@ function mostraScreen(nom) {
     "pescamines-joc",
     "mahjong-inici",
     "mahjong-joc",
-    "bomberman-inici",
-    "bomberman-joc",
     "llancabombes-inici",
     "llancabombes-joc",
     "sokoban-inici",

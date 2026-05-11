@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reptes · Açores 2026</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jocs.css">
+</head>
+<body data-requereix-id>
+
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
+    <a href="mapes.html" class="nav-item">Mapes</a>
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="logistica.html" class="nav-item">Logística</a>
+    <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="restaurants.html" class="nav-item">Restaurants</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="playlist.html" class="nav-item">Playlist</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="jocs.html" class="nav-item">Jocs</a>
+    <a href="reptes.html" class="nav-item active">Reptes</a>
+    <a href="ruleta.html" class="nav-item">Ruleta</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+  <div class="nav-id-wrap" id="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
+    <div class="nav-id-menu" id="nav-id-menu"></div>
+  </div>
+</nav>
+
+<!-- MODAL IDENTIFICACIÓ OBLIGATÒRIA -->
+<div class="modal-overlay" id="modal-identificacio">
+  <div class="modal">
+    <div class="modal-icon">👤</div>
+    <div class="modal-title">Qui ets?</div>
+    <div class="modal-text">Identifica't per poder veure els reptes.</div>
+    <div id="modal-id-jugadors" style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem"></div>
+    <div class="modal-btns" style="margin-top:.75rem">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-identificacio').classList.remove('visible')">Tancar</button>
+    </div>
+  </div>
+</div>
+
+<!-- REPTES -->
+<div id="reptes-page">
+  <div class="reptes-wrap">
+
+    <!-- Header -->
+    <div class="reptes-header">
+      <div class="reptes-header-titols">
+        <div class="reptes-header-title">
+          <span class="joc-titol-emoji">🏆</span>
+          <span class="joc-titol-text">Reptes del viatge</span>
+        </div>
+        <button class="reptes-btn-afegir" id="reptes-btn-afegir" onclick="reptesAfegirRepte()">
+          + Nou repte
+        </button>
+      </div>
+    </div>
+
+    <!-- Jugador actiu -->
+    <div class="reptes-jugador-wrap" id="reptes-jugador-wrap" style="display:none">
+      <img id="reptes-jugador-avatar" src="" alt="" class="reptes-jugador-avatar">
+      <span id="reptes-jugador-nom" class="reptes-jugador-nom"></span>
+    </div>
+
+    <!-- Loading -->
+    <div class="reptes-loading" id="reptes-loading">
+      <div class="qqs-spinner"></div>
+      <div class="qqs-loading-text">Carregant reptes…</div>
+    </div>
+
+    <!-- Taula -->
+    <div class="reptes-taula-wrap" id="reptes-taula-wrap" style="display:none">
+      <div class="reptes-taula-scroll">
+        <table class="reptes-taula" id="reptes-taula">
+          <thead id="reptes-thead"></thead>
+          <tbody id="reptes-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/reptes-data.js"></script>
+<script src="js/config.js"></script>
+<script>
+// ── CONSTANTS ────────────────────────────────────────────────
+const JUGADORS_VALIDS = ['Jordi','Anna','Laia','Mons','Xu','Joa'];
+const IMGS = {
+  Jordi: 'img/avatars/Jordi.jpeg', Anna: 'img/avatars/Anna.jpeg',
+  Laia:  'img/avatars/Laia.jpeg',  Mons: 'img/avatars/Mons.jpeg',
+  Xu:    'img/avatars/Xu.jpeg',    Joa:  'img/avatars/Joa.jpeg',
+  convidat: 'img/avatars/convidat.png',
+};
+
+let jugadorActiu = null;
+
+// ── INIT ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const nomGuardat = localStorage.getItem('app_jugador');
+  if (nomGuardat && JUGADORS_VALIDS.includes(nomGuardat)) {
+    jugadorActiu = nomGuardat;
+    reptesIniciar();
+  } else {
+    reptesRenderModalIdentificacio();
+    document.getElementById('modal-identificacio').classList.add('visible');
+  }
+
+  document.addEventListener('app:jugador-canviat', (e) => {
+    jugadorActiu = e.detail.nom;
+    if (jugadorActiu) {
+      document.getElementById('modal-identificacio').classList.remove('visible');
+      reptesIniciar();
+    }
+  });
+});
+
+function reptesIniciar() {
+  const wrap = document.getElementById('reptes-jugador-wrap');
+  const avatar = document.getElementById('reptes-jugador-avatar');
+  const nom = document.getElementById('reptes-jugador-nom');
+  if (jugadorActiu) {
+    wrap.style.display = 'flex';
+    avatar.src = IMGS[jugadorActiu] || '';
+    nom.textContent = jugadorActiu;
+  }
+  document.getElementById('reptes-loading').style.display = 'flex';
+  document.getElementById('reptes-taula-wrap').style.display = 'none';
+  reptesEscoltarPartida();
+}
+
+function reptesRenderModalIdentificacio() {
+  const llista = document.getElementById('modal-id-jugadors');
+  if (!llista) return;
+  const estilBtn = `display:flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.04);border:1px solid var(--border);
+    border-radius:10px;padding:.5rem .75rem;cursor:pointer;width:100%;transition:all .15s;
+    font-family:'DM Sans',sans-serif;color:var(--text);text-align:left`;
+  llista.innerHTML = JUGADORS_VALIDS.map(nom => `
+    <button onclick="reptesIdentificar('${nom}')" style="${estilBtn}">
+      <img src="${IMGS[nom]}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0">
+      <span style="font-weight:600">${nom}</span>
+    </button>`).join('');
+}
+
+function reptesIdentificar(nom) {
+  jugadorActiu = nom;
+  localStorage.setItem('app_jugador', nom);
+  document.getElementById('modal-identificacio').classList.remove('visible');
+  reptesIniciar();
+}
+
+// ── FIREBASE ─────────────────────────────────────────────────
+let _reptesDb = null;
+function reptesGetDb() {
+  if (_reptesDb) return _reptesDb;
+  if (!firebase.apps.length) firebase.initializeApp(CONFIG.FIREBASE);
+  _reptesDb = firebase.firestore();
+  return _reptesDb;
+}
+
+let reptesUnsubscribe = null;
+let reptesData = null;
+
+function reptesEscoltarPartida() {
+  if (reptesUnsubscribe) reptesUnsubscribe();
+  try {
+    const db = reptesGetDb();
+    reptesUnsubscribe = db.collection(REPTES_COL).doc(REPTES_DOC)
+      .onSnapshot(async (snap) => {
+        if (!snap.exists) {
+          await reptesInicialitzarDades();
+          return;
+        }
+        reptesData = snap.data();
+        reptesRenderTaula();
+      }, (err) => console.error('Firestore reptes error:', err));
+  } catch(e) {
+    console.error('Error iniciant listener reptes:', e);
+  }
+}
+
+async function reptesInicialitzarDades() {
+  try {
+    const db = reptesGetDb();
+    const reptes = REPTES_INICIALS.map((text, i) => ({ id: i + 1, text }));
+    const marcatges = {};
+    JUGADORS_VALIDS.forEach(nom => { marcatges[nom] = []; });
+    await db.collection(REPTES_COL).doc(REPTES_DOC).set({ reptes, marcatges });
+  } catch(e) {
+    console.error('Error inicialitzant reptes:', e);
+  }
+}
+
+// ── RENDER TAULA ─────────────────────────────────────────────
+function reptesRenderTaula() {
+  if (!reptesData) return;
+  document.getElementById('reptes-loading').style.display = 'none';
+  document.getElementById('reptes-taula-wrap').style.display = 'block';
+
+  const { reptes, marcatges } = reptesData;
+  const jugadors = JUGADORS_VALIDS;
+  const totals = {};
+  jugadors.forEach(nom => { totals[nom] = (marcatges[nom] || []).length; });
+  const ranking = [...jugadors].sort((a, b) => totals[b] - totals[a]);
+  const medalles = { [ranking[0]]: '🥇', [ranking[1]]: '🥈', [ranking[2]]: '🥉' };
+
+  const thead = document.getElementById('reptes-thead');
+  thead.innerHTML = `<tr>
+    <th class="reptes-th reptes-th-repte">Repte</th>
+    ${jugadors.map(nom => {
+      const total = totals[nom];
+      const medalla = total > 0 && medalles[nom] ? medalles[nom] : '';
+      const esActiu = nom === jugadorActiu;
+      return `<th class="reptes-th reptes-th-jugador ${esActiu ? 'actiu' : ''}">
+        <div class="reptes-th-nom">${medalla} ${nom}</div>
+        <div class="reptes-th-total">${total}/${reptes.length}</div>
+      </th>`;
+    }).join('')}
+  </tr>`;
+
+  const tbody = document.getElementById('reptes-tbody');
+  tbody.innerHTML = reptes.map(repte => `
+    <tr class="reptes-fila">
+      <td class="reptes-td reptes-td-text">${repte.text}</td>
+      ${jugadors.map(nom => {
+        const fet = (marcatges[nom] || []).includes(repte.id);
+        const esActiu = nom === jugadorActiu;
+        return `<td class="reptes-td reptes-td-check ${esActiu ? 'actiu' : ''} ${fet ? 'fet' : ''}">
+          <button class="reptes-check ${fet ? 'marcat' : ''} ${esActiu ? '' : 'disabled'}"
+            onclick="${esActiu ? `reptesToggle(${repte.id})` : ''}"
+            ${esActiu ? '' : 'disabled'}>
+            ${fet ? '✅' : '⬜'}
+          </button>
+        </td>`;
+      }).join('')}
+    </tr>`).join('');
+}
+
+// ── TOGGLE ────────────────────────────────────────────────────
+async function reptesToggle(idRepte) {
+  if (!reptesData) return;
+  try {
+    const db = reptesGetDb();
+    const marcatgesActuals = reptesData.marcatges[jugadorActiu] || [];
+    const nousMarcatges = marcatgesActuals.includes(idRepte)
+      ? marcatgesActuals.filter(id => id !== idRepte)
+      : [...marcatgesActuals, idRepte];
+    await db.collection(REPTES_COL).doc(REPTES_DOC)
+      .update({ [`marcatges.${jugadorActiu}`]: nousMarcatges });
+  } catch(e) {
+    console.error('Error togglejant repte:', e);
+    alert('Error de connexió.');
+  }
+}
+
+// ── AFEGIR REPTE ──────────────────────────────────────────────
+async function reptesAfegirRepte() {
+  const pin = prompt("PIN d'administrador:");
+  if (pin !== REPTES_PIN) {
+    if (pin !== null) alert('PIN incorrecte.');
+    return;
+  }
+  const text = prompt('Escriu el nou repte:');
+  if (!text || !text.trim()) return;
+  try {
+    const db = reptesGetDb();
+    const reptes = reptesData.reptes || [];
+    const nouId = Math.max(...reptes.map(r => r.id), 0) + 1;
+    await db.collection(REPTES_COL).doc(REPTES_DOC)
+      .update({ reptes: [...reptes, { id: nouId, text: text.trim() }] });
+  } catch(e) {
+    console.error('Error afegint repte:', e);
+    alert('Error de connexió.');
+  }
+}
+</script>
+</body>
+</html>
