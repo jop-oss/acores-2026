@@ -663,6 +663,8 @@ function seleccionarModeJoc(mode) {
     iniciarEncreuats();
   } else if (mode === "colorfill") {
     iniciarColorFill();
+  } else if (mode === "fraseesbojarrada") {
+    iniciarFraseEsbojarrada();
   }
 }
 
@@ -1071,6 +1073,9 @@ function mostraScreen(nom) {
     "encreuats-joc",
     "colorfill-selector",
     "colorfill-joc",
+    "frase-esbojarrada-inici",
+    "frase-esbojarrada-meva",
+    "frase-esbojarrada-torn",
   ];
   totes.forEach((s) => {
     const el = document.getElementById(`screen-${s}`);

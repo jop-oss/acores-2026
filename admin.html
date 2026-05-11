@@ -634,6 +634,16 @@
     </table>
   </div>
 
+  <!-- FRASE ESBOJARRADA -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">✍️ La Frase Esbojarrada</div>
+      <button class="btn-reset-tot" onclick="feAdminInicialitzarUI()">Inicialitzar / Reiniciar</button>
+    </div>
+    <div id="fe-admin-estat" style="color:var(--text2);font-size:.85rem;margin-bottom:.75rem">Carregant…</div>
+    <div id="fe-admin-frases"></div>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -701,6 +711,7 @@
     renderJocFotos();
     renderEncreuats();
     renderColorFill();
+    renderFraseEsbojarrada();
     renderRuleta();
   }
 
@@ -1474,6 +1485,168 @@
 
   // Focus al camp PIN en carregar
   window.onload = () => document.getElementById('pin-input').focus();
+  // ── FRASE ESBOJARRADA ADMIN ────────────────────────────────
+  const FE_DOCS_ADMIN = ['frase_1','frase_2','frase_3','frase_4','frase_5','frase_6'];
+  const FE_FRASES_INICIALS_ADMIN = [
+    "Hi havia una vegada...", "Aquest matí...", "Un dia vaig anar a...",
+    "Jo sóc...", "Vaig veure...", "He somiat que...",
+  ];
+  const FE_COLORS_J = {
+    Jordi:'#e74c3c', Anna:'#e67e22', Laia:'#27ae60',
+    Mons:'#8e44ad', Xu:'#2980b9', Joa:'#f39c12'
+  };
+  const FE_COLOR_AUTO_ADMIN = '#6b7280';
+
+  function feGetDb() {
+    if (typeof firebase !== 'undefined' && firebase.apps.length) return firebase.firestore();
+    return null;
+  }
+
+  async function renderFraseEsbojarrada() {
+    const db = feGetDb();
+    const estatEl = document.getElementById('fe-admin-estat');
+    const frasesEl = document.getElementById('fe-admin-frases');
+    if (!db || !estatEl || !frasesEl) return;
+
+    try {
+      const snaps = await Promise.all(FE_DOCS_ADMIN.map(id =>
+        db.collection('frase_esbojarrada').doc(id).get()
+      ));
+
+      const alguna = snaps.some(s => s.exists);
+      estatEl.textContent = alguna ? `${snaps.filter(s=>s.exists).length}/6 frases inicialitzades` : 'No inicialitzades';
+
+      // Comprovem si hi ha revisions pendents
+      const revisionsPendents = snaps.filter(snap => {
+        if (!snap.exists) return false;
+        return (snap.data().paraules || []).some(pw => pw.revisio_demanada);
+      }).length;
+      estatEl.textContent = `${snaps.filter(s=>s.exists).length}/6 frases inicialitzades` +
+        (revisionsPendents > 0 ? ` · ⚠️ ${revisionsPendents} revisió${revisionsPendents>1?'ns':''} pendent${revisionsPendents>1?'s':''}` : '');
+
+      frasesEl.innerHTML = snaps.map((snap, i) => {
+        if (!snap.exists) return `<div class="fe-admin-frase buit"><strong>Frase ${i+1}</strong>: No inicialitzada</div>`;
+        const p = snap.data();
+        const paraules = p.paraules || [];
+        const tornActual = p.ordre ? p.ordre[(p.torn_actual_idx||0) % p.ordre.length] : '—';
+        const hiHaRevisio = paraules.some(pw => pw.revisio_demanada);
+        return `
+          <div class="fe-admin-frase${hiHaRevisio?' revisio-pendent':''}">
+            <div class="fe-admin-frase-cap">
+              <strong>Frase ${i+1}</strong>
+              <span class="fe-admin-prop" style="color:${FE_COLORS_J[p.propietari]||'#888'}">
+                Propietari: ${p.propietari}
+              </span>
+              <span class="fe-admin-torn">Torn: ${tornActual}</span>
+              <span class="fe-admin-nparaules">${paraules.length} paraules</span>
+              ${hiHaRevisio ? '<span style="color:#fbbf24;font-size:.8rem;font-weight:700">⚠️ Revisió pendent</span>' : ''}
+            </div>
+            <div class="fe-admin-frase-text" id="fe-ftxt-${snap.id}">
+              <span style="font-style:italic;opacity:.6">${p.text_inicial}</span>
+              ${paraules.map((pw,idx) => {
+                const esRevisio = pw.revisio_demanada;
+                const style = `border-color:${pw.color||FE_COLOR_AUTO_ADMIN}44;color:${pw.color||FE_COLOR_AUTO_ADMIN}${esRevisio?';box-shadow:0 0 0 2px #fbbf24':''}`;
+                const title = esRevisio ? `⚠️ Revisió demanada per ${pw.revisio_qui}` : 'Clic per editar';
+                return `<span class="fe-admin-chip" style="${style}"
+                  onclick="feAdminEditarUI('${snap.id}',${idx},'${pw.text.replace(/'/g,"\'")}',this)"
+                  title="${title}">${pw.text}${pw.automatica?'*':''}${esRevisio?' ⚠️':''}</span>`;
+              }).join(' ')}
+            </div>
+            <div class="fe-admin-frase-accions">
+              <button class="btn-reset-jugador" onclick="feAdminEsborrarUltima('${snap.id}')">Esborrar última paraula</button>
+              <button class="btn-reset-jugador" onclick="feAdminSaltarTorn('${snap.id}','${p.ordre?JSON.stringify(p.ordre).replace(/"/g,"'"):"[]"}',${p.torn_actual_idx||0})">Saltar torn</button>
+              ${hiHaRevisio ? `<button class="btn-reset-jugador" style="border-color:rgba(251,191,36,.4);color:#fbbf24" onclick="feAdminTancarRevisio('${snap.id}')">Tancar revisió</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    } catch(e) {
+      if (estatEl) estatEl.textContent = 'Error carregant: ' + e.message;
+    }
+  }
+
+  async function feAdminInicialitzarUI() {
+    if (!confirm('Inicialitzar (o reiniciar) les 6 frases? Perdràs totes les paraules actuals.')) return;
+    const db = feGetDb();
+    if (!db) { alert('No Firebase'); return; }
+
+    const jugadors = ['Jordi','Anna','Laia','Mons','Xu','Joa'];
+    const propietarisMesclats = [...jugadors].sort(() => Math.random() - 0.5);
+
+    const batch = db.batch();
+    FE_DOCS_ADMIN.forEach((docId, i) => {
+      const propietari = propietarisMesclats[i];
+      const ordre = jugadors.filter(j => j !== propietari).sort(() => Math.random() - 0.5);
+      batch.set(db.collection('frase_esbojarrada').doc(docId), {
+        text_inicial: FE_FRASES_INICIALS_ADMIN[i],
+        propietari, pin_hash: '', ordre,
+        torn_actual_idx: 0, paraules: [],
+        ultima_paraula_ts: null, actiu: true,
+      });
+    });
+
+    await batch.commit();
+    showToast('6 frases inicialitzades! Assignació: ' + propietarisMesclats.map((p,i)=>`F${i+1}→${p}`).join(', '));
+    renderFraseEsbojarrada();
+  }
+
+  function feAdminEditarUI(docId, idx, texteActual, chipEl) {
+    const nouText = prompt(`Edita la paraula "${texteActual}":`, texteActual);
+    if (!nouText || nouText.trim() === texteActual) return;
+    feAdminEditarParaulaAdmin(docId, idx, nouText.trim(), chipEl);
+  }
+
+  async function feAdminEditarParaulaAdmin(docId, idx, nouText, chipEl) {
+    const db = feGetDb();
+    const snap = await db.collection('frase_esbojarrada').doc(docId).get();
+    if (!snap.exists) return;
+    const paraules = snap.data().paraules || [];
+    if (idx < 0 || idx >= paraules.length) return;
+    paraules[idx].text = nouText;
+    paraules[idx].editada_admin = true;
+    await db.collection('frase_esbojarrada').doc(docId).update({ paraules });
+    if (chipEl) chipEl.textContent = nouText + (paraules[idx].automatica ? '*' : '');
+    showToast('Paraula editada!');
+  }
+
+  // Acceptar la paraula en revisió: tanca la revisió, el torn segueix al mateix jugador
+  async function feAdminAcceptarRevisio(docId) {
+    const db = feGetDb();
+    const snap = await db.collection('frase_esbojarrada').doc(docId).get();
+    if (!snap.exists) return;
+    const paraules = snap.data().paraules || [];
+    // Tanquem la revisió sense canviar el torn
+    const actualitzades = paraules.map(pw =>
+      pw.revisio_demanada ? {...pw, revisio_demanada: false, revisio_acceptada: true} : pw
+    );
+    await db.collection('frase_esbojarrada').doc(docId).update({ paraules: actualitzades });
+    showToast('Paraula acceptada. El jugador pot continuar.');
+    renderFraseEsbojarrada();
+  }
+
+  // Modificar la paraula en revisió i tancar-la: l'admin canvia el text, el torn segueix al jugador
+  async function feAdminModificarRevisio(docId) {
+    const db = feGetDb();
+    const snap = await db.collection('frase_esbojarrada').doc(docId).get();
+    if (!snap.exists) return;
+    const paraules = [...(snap.data().paraules || [])];
+    // Trobem la paraula amb revisió pendent
+    const idx = paraules.findLastIndex(pw => pw.revisio_demanada);
+    if (idx === -1) { showToast('No hi ha revisió pendent'); return; }
+    const nouText = prompt(`Modifica la paraula "${paraules[idx].text}":`, paraules[idx].text);
+    if (!nouText || nouText.trim() === paraules[idx].text) return;
+    paraules[idx] = {
+      ...paraules[idx],
+      text: nouText.trim(),
+      revisio_demanada: false,
+      revisio_modificada: true,
+      editada_admin: true,
+    };
+    await db.collection('frase_esbojarrada').doc(docId).update({ paraules });
+    showToast(`Paraula modificada → "${nouText.trim()}". El jugador pot continuar.`);
+    renderFraseEsbojarrada();
+  }
+
 </script>
 </body>
 </html>
