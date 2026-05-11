@@ -145,6 +145,7 @@ function jfRenderJoc() {
           <div class="jf-foto-inner" id="jf-foto-inner">
             <img src="${JF_CARPETA}${fo.fitxer}" class="jf-img" id="jf-img" alt="Foto">
           </div>
+          <span class="jf-foto-icona">${fo.icona}</span>
         </div>
 
         <!-- Info nivell -->
