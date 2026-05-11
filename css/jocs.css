@@ -5937,348 +5937,176 @@
   .nono-pista-fila, .nono-pista-col { font-size: .6rem; min-width: 18px; }
 }
 
+
 /* ══════════════════════════════════════════════════════════════
-   JOC DE FOTOS
+   MOTS ENCREUATS
    ══════════════════════════════════════════════════════════════ */
 
-.jf-wrap {
-  max-width: 640px;
+.enc-sel-layout {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 1.5rem;
+  align-items: start;
+  max-width: 900px;
   margin: 0 auto;
   padding: 1.25rem 1rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+}
+@media(max-width:700px) { .enc-sel-layout { grid-template-columns: 1fr; } }
+
+.enc-sel-left { display: flex; flex-direction: column; gap: 1rem; }
+
+.enc-jugador-wrap { display: flex; align-items: center; gap: .75rem; }
+
+.enc-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .5rem;
+}
+@media(max-width:480px) { .enc-cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.enc-card {
+  display: flex; flex-direction: column; align-items: center; gap: .25rem;
+  padding: .65rem .4rem;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  cursor: pointer; transition: border-color .2s, transform .15s;
+  text-align: center; font-family: 'DM Sans', sans-serif;
+}
+.enc-card:hover:not(:disabled) { border-color: var(--verd2); transform: translateY(-2px); }
+.enc-card:disabled { cursor: default; opacity: .75; }
+.enc-card--completada { background: rgba(45,90,61,.15); border-color: rgba(106,171,122,.4); }
+.enc-card--encurs { border-color: rgba(240,180,41,.4); }
+.enc-card-num { font-size: .7rem; color: var(--text2); font-weight: 700; }
+.enc-card-tipus { font-size: .65rem; color: var(--verd2); }
+.enc-card-pts { font-size: .68rem; color: var(--verd2); font-weight: 700; }
+.enc-card-encurs { font-size: .65rem; color: var(--gold, #f0b429); }
+
+.enc-info-pts {
+  font-size: .78rem; color: var(--text2);
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: .6rem .9rem;
 }
 
-.jf-comptador {
-  margin-left: auto;
-  font-size: .82rem;
-  color: var(--text2);
-  font-weight: 600;
+/* Joc */
+.enc-joc-wrap {
+  max-width: 1100px; margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+  display: flex; flex-direction: column; gap: .75rem;
 }
 
-.jf-pts-total {
-  font-size: .85rem;
-  font-weight: 700;
-  color: var(--verd2);
-  white-space: nowrap;
-}
+.enc-joc-nom { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.05rem; color: var(--text); flex: 1; }
+.enc-joc-pts { font-size: .82rem; color: var(--verd2); font-weight: 700; white-space: nowrap; }
 
-/* Contenidor foto */
-.jf-foto-outer {
-  width: 100%;
-  max-height: 65vh;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #000;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.enc-joc-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
+@media(max-width:700px) { .enc-joc-body { grid-template-columns: 1fr; } }
 
-.jf-foto-inner {
-  width: 100%;
-  height: 100%;
-  transition: transform .6s cubic-bezier(.4,0,.2,1);
-  will-change: transform;
-}
+/* Taula */
+.enc-graella-wrap { overflow-x: auto; }
 
-.jf-img {
-  width: 100%;
-  height: 100%;
-  max-height: 65vh;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-  pointer-events: none;
+.enc-taula { border-collapse: collapse; }
+.enc-taula td { padding: 0; }
+
+.enc-cel {
+  width: 34px; height: 34px;
+  border: 1px solid rgba(106,171,122,.2);
+  position: relative; cursor: pointer;
+  vertical-align: middle; text-align: center;
+  font-family: 'DM Sans', sans-serif;
   user-select: none;
 }
 
-/* Barra de nivell */
-.jf-nivell-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .65rem;
-  flex-wrap: wrap;
+.enc-cel--negra { background: #000; cursor: default; border-color: #000; }
+.enc-cel--maro  { background: #8B5E3C; cursor: default; border: 1px solid #6b4423; }
+.enc-cel--blau  { background: #3B9BE8; cursor: default; border: 1px solid #2a7bc4; }
+.enc-cel--juga  { background: var(--bg2); }
+.enc-cel--juga:hover { background: rgba(106,171,122,.1); }
+
+.enc-cel--activa { background: rgba(106,171,122,.3) !important; border-color: var(--verd2) !important; }
+.enc-cel--mot    { background: rgba(106,171,122,.12) !important; }
+.enc-cel--error  { background: rgba(224,85,85,.25) !important; }
+.enc-cel--ok     { background: rgba(45,90,61,.3) !important; }
+
+.enc-num {
+  position: absolute; top: 1px; left: 2px;
+  font-size: .52rem; color: var(--text2); line-height: 1; font-weight: 700;
+}
+.enc-lletra {
+  font-size: .95rem; font-weight: 700; color: var(--text);
+  line-height: 34px; display: block;
 }
 
-.jf-pts-label {
-  font-size: .8rem;
-  color: var(--text2);
-  font-weight: 600;
+/* PPCC: cel·les més petites per caber en pantalla */
+.enc-taula--ppcc .enc-cel { width: 24px; height: 24px; }
+.enc-taula--ppcc .enc-num { font-size: .42rem; }
+.enc-taula--ppcc .enc-lletra { font-size: .75rem; line-height: 24px; }
+
+/* Definicions */
+.enc-defs-wrap {
+  display: flex; flex-direction: column; gap: .75rem;
+  min-width: 0;
 }
 
-.jf-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(106,171,122,.2);
-  border: 1.5px solid rgba(106,171,122,.3);
-  transition: background .3s, border-color .3s;
+.enc-defs-panel {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: .65rem 1rem;
+  min-height: 2.5rem;
 }
 
-.jf-dot--actiu {
-  background: var(--verd2);
-  border-color: var(--verd2);
-  box-shadow: 0 0 6px rgba(106,171,122,.5);
+.enc-defs-clue {
+  font-size: .88rem; color: var(--verd2); font-style: italic;
 }
 
-.jf-dot--passat {
-  background: rgba(106,171,122,.35);
-  border-color: rgba(106,171,122,.4);
+.enc-error-msg {
+  margin-top: .4rem;
+  font-size: .82rem; color: #e07070; font-weight: 600;
+  animation: jmEstrofaIn .3s ease;
 }
 
-/* Pista */
-.jf-pista-wrap {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  background: rgba(240,180,41,.08);
-  border: 1px solid rgba(240,180,41,.3);
-  border-radius: 12px;
-  padding: .65rem 1rem;
-  animation: jmEstrofaIn .4s ease;
+.enc-defs-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  max-height: 300px; overflow-y: auto;
+}
+@media(max-width:480px) { .enc-defs-cols { grid-template-columns: 1fr; } }
+
+.enc-defs-title {
+  font-size: .78rem; font-weight: 700; color: var(--text2);
+  margin-bottom: .4rem;
 }
 
-.jf-pista-icon { font-size: 1.1rem; }
+.enc-def-item {
+  font-size: .78rem; color: var(--text2); padding: .2rem .3rem;
+  border-radius: 6px; cursor: pointer; line-height: 1.4;
+  transition: background .15s, color .15s;
+}
+.enc-def-item:hover { background: rgba(106,171,122,.1); color: var(--text); }
+.enc-def-item--actiu { background: rgba(106,171,122,.18); color: var(--verd2); font-weight: 600; }
 
-.jf-pista-text {
-  font-size: .88rem;
-  color: var(--gold, #f0b429);
-  font-style: italic;
+.enc-accions {
+  display: flex; gap: .65rem; flex-wrap: wrap;
 }
 
-/* Input resposta */
-.jf-resposta-wrap {
-  display: flex;
-  gap: .5rem;
-}
-
-.jf-input {
-  flex: 1;
-  background: var(--bg2);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: .65rem 1rem;
-  font-size: .95rem;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  transition: border-color .2s;
-  outline: none;
-}
-
-.jf-input:focus { border-color: var(--verd2); }
-
-.jf-input--error {
-  border-color: #e05555 !important;
-  animation: nonoError .5s ease;
-}
-
-.jf-input-any { max-width: 120px; flex: none; }
-
-.jf-btn-ok {
-  background: var(--verd2);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: .65rem 1.1rem;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity .2s;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.jf-btn-ok:hover { opacity: .85; }
-
-/* Botons d'acció */
-.jf-accions {
-  display: flex;
-  gap: .65rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.jf-btn-zoom {
+.enc-btn-validar {
   background: linear-gradient(135deg, var(--verd1), var(--verd2));
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  padding: .6rem 1.5rem;
-  font-size: .88rem;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: opacity .2s, transform .15s;
+  color: #fff; border: none; border-radius: 50px;
+  padding: .6rem 1.5rem; font-size: .9rem; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: opacity .2s;
 }
+.enc-btn-validar:hover { opacity: .88; }
 
-.jf-btn-zoom:hover { opacity: .88; transform: scale(1.03); }
-
-.jf-btn-pista {
-  background: rgba(240,180,41,.1);
-  color: var(--gold, #f0b429);
-  border: 1px solid rgba(240,180,41,.35);
-  border-radius: 50px;
-  padding: .6rem 1.25rem;
-  font-size: .88rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: background .2s;
-}
-
-.jf-btn-pista:hover { background: rgba(240,180,41,.18); }
-
-.jf-btn-rendirse {
-  background: rgba(224,85,85,.08);
-  color: #e07070;
-  border: 1px solid rgba(224,85,85,.25);
-  border-radius: 50px;
-  padding: .6rem 1.25rem;
-  font-size: .88rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: background .2s;
-}
-
-.jf-btn-rendirse:hover { background: rgba(224,85,85,.15); }
-
-/* Resultat foto */
-.jf-resultat {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .75rem;
-  text-align: center;
-  animation: jmSolucioIn .35s ease;
-}
-
-.jf-res-icon { font-size: 2rem; }
-
-.jf-res-msg {
-  font-size: 1.05rem;
-  color: var(--text);
-}
-
-.jf-res-msg strong {
-  background: linear-gradient(135deg, var(--verd2), var(--gold, #f0b429));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Input any */
-.jf-any-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
-  width: 100%;
-}
-
-.jf-any-pregunta {
-  font-size: .88rem;
-  color: var(--text2);
-  margin: 0;
-}
-
-.jf-any-input-wrap {
-  display: flex;
-  gap: .5rem;
-  justify-content: center;
-}
-
-.jf-any-res {
-  font-size: .9rem;
-  font-weight: 600;
-  color: var(--verd2);
-  padding: .4rem .9rem;
-  background: rgba(106,171,122,.1);
-  border-radius: 20px;
-}
-
-/* Final */
-.jf-final-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 2rem 1.5rem;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 20px;
+/* Resultat */
+.enc-resultat {
+  display: flex; flex-direction: column; align-items: center; gap: .75rem;
+  padding: 1.5rem; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 20px; margin-top: .5rem; animation: jmSolucioIn .4s ease;
   text-align: center;
 }
 
-.jf-final-icon { font-size: 3rem; }
-
-.jf-final-pts {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--verd2), var(--gold, #f0b429));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.jf-final-sub {
-  font-size: .9rem;
-  color: var(--text2);
-}
-
-/* Mòbil */
-@media (max-width: 480px) {
-  .jf-foto-outer { max-height: 50vh; }
-  .jf-accions { flex-direction: column; align-items: stretch; }
-}
-
-/* JOC DE FOTOS — layout amb rànquing lateral */
-.jf-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 1.5rem;
-  align-items: start;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.jf-layout .ranking-wrap {
-  /* Alinear amb la foto: header (aprox 110px) + títol (aprox 50px) */
-  margin-top: 160px;
-}
-
-@media (max-width: 700px) {
-  .jf-layout {
-    grid-template-columns: 1fr;
-  }
-  .jf-layout .ranking-wrap {
-    display: none;
-  }
-}
-
-/* Quan hi ha layout, el jf-wrap no necessita el max-width propi */
-.jf-layout .jf-wrap {
-  max-width: 100%;
-  padding: 0;
-}
-
-/* Zoom out! — icona superposada a la foto */
-.jf-foto-icona {
-  position: absolute;
-  top: .6rem;
-  right: .6rem;
-  font-size: 1.8rem;
-  line-height: 1;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,.7));
-  pointer-events: none;
-  z-index: 10;
+@media(max-width:480px) {
+  .enc-taula--ppcc .enc-cel { width: 18px; height: 18px; }
+  .enc-taula--ppcc .enc-lletra { font-size: .6rem; line-height: 18px; }
 }

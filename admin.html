@@ -292,6 +292,20 @@
     </div>
   </div>
 
+  <!-- JOC FOTOS -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📸 Joc de Fotos</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('jocfotos')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Fotos vistes</th><th>Encertades</th><th>Punts</th><th></th></tr>
+      </thead>
+      <tbody id="taula-jocfotos"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -570,6 +584,20 @@
     </table>
   </div>
 
+  <!-- ENCREUATS -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📝 Mots Encreuats</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('encreuats')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Completats</th><th>Punts</th><th></th></tr>
+      </thead>
+      <tbody id="taula-encreuats"></tbody>
+    </table>
+  </div>
+
   <!-- NONOGRAM -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -668,6 +696,7 @@
     renderYahtzee();
     renderBatallaNaval();
     renderTriangles();
+    renderEncreuats();
     renderNonogram();
     renderJocFotos();
     renderRuleta();
@@ -883,6 +912,7 @@
     yahtzee:      nom => `yahtzee_punts_${nom}`,
     batallanaval: nom => `batallanaval_estat_${nom}`,
     triangles:    nom => `triangles_estat_${nom}`,
+    encreuats:    nom => `encreuats_estat_${nom}`,
     nonogram:     nom => `nonogram_estat_${nom}`,
     jocfotos:     nom => `jocfotos_estat_${nom}`,
   };
@@ -895,6 +925,7 @@
     yahtzee:  renderYahtzee,
     batallanaval: renderBatallaNaval,
     triangles:    renderTriangles,
+    encreuats:    renderEncreuats,
     nonogram:     renderNonogram,
     jocfotos:     renderJocFotos
   };
@@ -913,6 +944,7 @@
     yahtzee:  'Yahtzee',
     batallanaval: 'Batalla Naval',
     triangles:    'Triangles',
+    encreuats:    'Mots Encreuats',
     nonogram:     'Nonogram',
     jocfotos:     'Joc de Fotos'
   };
@@ -1321,6 +1353,25 @@
         <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
         <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
         <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('triangles','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── ENCREUATS ──────────────────────────────────────────────
+  function renderEncreuats() {
+    const tbody = document.getElementById('taula-encreuats');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = { puzzles: {} };
+      try { estat = JSON.parse(localStorage.getItem(`encreuats_estat_${nom}`) || '{}'); } catch(e) {}
+      const puzzles = Object.values(estat.puzzles || {});
+      const completats = puzzles.filter(p => p.completada).length;
+      const pts = puzzles.filter(p => p.completada).reduce((s, p) => s + (p.pts || 0), 0);
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${completats===0?'zero':''}">${completats}/10</span></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td><button class="btn-reset-jugador" ${pts===0&&completats===0?'disabled':''} onclick="resetJugador('encreuats','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }

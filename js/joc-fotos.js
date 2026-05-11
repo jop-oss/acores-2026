@@ -142,8 +142,9 @@ function jfRenderJoc() {
 
         <!-- Foto amb zoom -->
         <div class="jf-foto-outer" id="jf-foto-outer">
-          <div class="jf-foto-inner" id="jf-foto-inner">
-            <img src="${JF_CARPETA}${fo.fitxer}" class="jf-img" id="jf-img" alt="Foto">
+          <div class="jf-foto-inner" id="jf-foto-inner" style="width:100%;height:100%;overflow:hidden;position:relative;">
+            <img src="${JF_CARPETA}${fo.fitxer}" class="jf-img" id="jf-img" alt="Foto"
+              style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;transition:transform .6s cubic-bezier(.4,0,.2,1);will-change:transform;">
           </div>
           <span class="jf-foto-icona">${fo.icona}</span>
         </div>
@@ -232,13 +233,11 @@ function jfPtsActuals() {
 // ══════════════════════════════════════════════════════════════
 
 function jfAplicarZoom() {
-  const inner = document.getElementById('jf-foto-inner');
-  if (!inner) return;
+  const img = document.getElementById('jf-img');
+  if (!img) return;
   const escala = JF_ZOOM_ESCALES[jfZoom];
-  // Desplacem la imatge perquè el focus sigui al punt aleatori
-  // transform-origin al punt de focus, escala
-  inner.style.transform       = `scale(${escala})`;
-  inner.style.transformOrigin = `${jfZoomX}% ${jfZoomY}%`;
+  img.style.transform       = `scale(${escala})`;
+  img.style.transformOrigin = `${jfZoomX}% ${jfZoomY}%`;
 }
 
 function jfZoomOut() {
@@ -322,10 +321,10 @@ function jfRendirse() {
 function jfMostrarEncert(rendida = false) {
   // Mostrar foto sencera (escala 1, centrada)
   jfZoom = JF_ZOOM_NIVELLS - 1;
-  const inner = document.getElementById('jf-foto-inner');
-  if (inner) {
-    inner.style.transform       = 'scale(1)';
-    inner.style.transformOrigin = '50% 50%';
+  const img = document.getElementById('jf-img');
+  if (img) {
+    img.style.transform       = 'scale(1)';
+    img.style.transformOrigin = '50% 50%';
   }
 
   // Amagar input i accions

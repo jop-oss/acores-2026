@@ -225,6 +225,11 @@
           <span class="joc-selector-label">Zoom out!</span>
           <span class="joc-selector-sub">100 fotos · endevina qui és · zoom progressiu</span>
         </button>
+        <button class="joc-selector-btn" onclick="seleccionarModeJoc('encreuats')">
+          <span class="joc-selector-icon">📝</span>
+          <span class="joc-selector-label">Mots Encreuats</span>
+          <span class="joc-selector-sub">10 encreuats · 150 pts · PP.CC.</span>
+        </button>
       </div>
     </div>
 
@@ -262,8 +267,6 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('batallanaval', this)">⚓ Batalla Naval</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('triangles', this)">🔺 Triangles</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
         </div>
 
         <!-- Llista de jugadors -->
@@ -1323,6 +1326,15 @@
   </div>
 <script src="js/joc-fotos-data.js"></script>
 <script src="js/joc-fotos.js"></script>
+  <!-- PANTALLES ENCREUATS -->
+  <div id="screen-encreuats-selector" style="display:none">
+    <div id="encreuats-selector-cont"></div>
+  </div>
+  <div id="screen-encreuats-joc" style="display:none">
+    <div id="encreuats-joc-cont"></div>
+  </div>
+<script src="js/encreuats-data.js"></script>
+<script src="js/encreuats.js"></script>
 <script src="js/jocs.js"></script>
 </body>
 </html>
