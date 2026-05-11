@@ -5936,3 +5936,301 @@
   .nono-cel { width: 26px; height: 26px; }
   .nono-pista-fila, .nono-pista-col { font-size: .6rem; min-width: 18px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   JOC DE FOTOS
+   ══════════════════════════════════════════════════════════════ */
+
+.jf-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.jf-comptador {
+  margin-left: auto;
+  font-size: .82rem;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.jf-pts-total {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--verd2);
+  white-space: nowrap;
+}
+
+/* Contenidor foto */
+.jf-foto-outer {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+}
+
+.jf-foto-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform .6s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+.jf-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Barra de nivell */
+.jf-nivell-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  flex-wrap: wrap;
+}
+
+.jf-pts-label {
+  font-size: .8rem;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.jf-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(106,171,122,.2);
+  border: 1.5px solid rgba(106,171,122,.3);
+  transition: background .3s, border-color .3s;
+}
+
+.jf-dot--actiu {
+  background: var(--verd2);
+  border-color: var(--verd2);
+  box-shadow: 0 0 6px rgba(106,171,122,.5);
+}
+
+.jf-dot--passat {
+  background: rgba(106,171,122,.35);
+  border-color: rgba(106,171,122,.4);
+}
+
+/* Pista */
+.jf-pista-wrap {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: rgba(240,180,41,.08);
+  border: 1px solid rgba(240,180,41,.3);
+  border-radius: 12px;
+  padding: .65rem 1rem;
+  animation: jmEstrofaIn .4s ease;
+}
+
+.jf-pista-icon { font-size: 1.1rem; }
+
+.jf-pista-text {
+  font-size: .88rem;
+  color: var(--gold, #f0b429);
+  font-style: italic;
+}
+
+/* Input resposta */
+.jf-resposta-wrap {
+  display: flex;
+  gap: .5rem;
+}
+
+.jf-input {
+  flex: 1;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: .65rem 1rem;
+  font-size: .95rem;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color .2s;
+  outline: none;
+}
+
+.jf-input:focus { border-color: var(--verd2); }
+
+.jf-input--error {
+  border-color: #e05555 !important;
+  animation: nonoError .5s ease;
+}
+
+.jf-input-any { max-width: 120px; flex: none; }
+
+.jf-btn-ok {
+  background: var(--verd2);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: .65rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.jf-btn-ok:hover { opacity: .85; }
+
+/* Botons d'acció */
+.jf-accions {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.jf-btn-zoom {
+  background: linear-gradient(135deg, var(--verd1), var(--verd2));
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: .6rem 1.5rem;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity .2s, transform .15s;
+}
+
+.jf-btn-zoom:hover { opacity: .88; transform: scale(1.03); }
+
+.jf-btn-pista {
+  background: rgba(240,180,41,.1);
+  color: var(--gold, #f0b429);
+  border: 1px solid rgba(240,180,41,.35);
+  border-radius: 50px;
+  padding: .6rem 1.25rem;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .2s;
+}
+
+.jf-btn-pista:hover { background: rgba(240,180,41,.18); }
+
+.jf-btn-rendirse {
+  background: rgba(224,85,85,.08);
+  color: #e07070;
+  border: 1px solid rgba(224,85,85,.25);
+  border-radius: 50px;
+  padding: .6rem 1.25rem;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .2s;
+}
+
+.jf-btn-rendirse:hover { background: rgba(224,85,85,.15); }
+
+/* Resultat foto */
+.jf-resultat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  text-align: center;
+  animation: jmSolucioIn .35s ease;
+}
+
+.jf-res-icon { font-size: 2rem; }
+
+.jf-res-msg {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.jf-res-msg strong {
+  background: linear-gradient(135deg, var(--verd2), var(--gold, #f0b429));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Input any */
+.jf-any-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+}
+
+.jf-any-pregunta {
+  font-size: .88rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+.jf-any-input-wrap {
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+}
+
+.jf-any-res {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--verd2);
+  padding: .4rem .9rem;
+  background: rgba(106,171,122,.1);
+  border-radius: 20px;
+}
+
+/* Final */
+.jf-final-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.jf-final-icon { font-size: 3rem; }
+
+.jf-final-pts {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--verd2), var(--gold, #f0b429));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.jf-final-sub {
+  font-size: .9rem;
+  color: var(--text2);
+}
+
+/* Mòbil */
+@media (max-width: 480px) {
+  .jf-foto-outer { aspect-ratio: 1/1; }
+  .jf-accions { flex-direction: column; align-items: stretch; }
+}

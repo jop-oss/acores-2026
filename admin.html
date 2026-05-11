@@ -292,6 +292,20 @@
     </div>
   </div>
 
+  <!-- JOC FOTOS -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📸 Joc de Fotos</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('jocfotos')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Fotos vistes</th><th>Encertades</th><th>Punts</th><th></th></tr>
+      </thead>
+      <tbody id="taula-jocfotos"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -591,6 +605,20 @@
     </table>
   </div>
 
+  <!-- JOC FOTOS -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">📸 Joc de Fotos</div>
+      <button class="btn-reset-tot" onclick="resetTotJoc('jocfotos')">Reiniciar tots</button>
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Jugador</th><th>Fotos vistes</th><th>Encertades</th><th>Punts</th><th></th></tr>
+      </thead>
+      <tbody id="taula-jocfotos"></tbody>
+    </table>
+  </div>
+
   <!-- RULETA -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -655,6 +683,7 @@
     renderBatallaNaval();
     renderTriangles();
     renderNonogram();
+    renderJocFotos();
     renderRuleta();
   }
 
@@ -869,6 +898,7 @@
     batallanaval: nom => `batallanaval_estat_${nom}`,
     triangles:    nom => `triangles_estat_${nom}`,
     nonogram:     nom => `nonogram_estat_${nom}`,
+    jocfotos:     nom => `jocfotos_estat_${nom}`,
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -879,7 +909,8 @@
     yahtzee:  renderYahtzee,
     batallanaval: renderBatallaNaval,
     triangles:    renderTriangles,
-    nonogram:     renderNonogram
+    nonogram:     renderNonogram,
+    jocfotos:     renderJocFotos
   };
   const NOMS_JOCS = {
     quiz: 'Quiz Açores', mapa: 'On és això?', paraula: 'La Paraula Amagada',
@@ -896,7 +927,8 @@
     yahtzee:  'Yahtzee',
     batallanaval: 'Batalla Naval',
     triangles:    'Triangles',
-    nonogram:     'Nonogram'
+    nonogram:     'Nonogram',
+    jocfotos:     'Joc de Fotos'
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
@@ -1336,6 +1368,26 @@
         <td><span class="pts-badge ${dificil===0?'zero':''}">${dificil}/5</span></td>
         <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
         <td><button class="btn-reset-jugador" ${pts===0?'disabled':''} onclick="resetJugador('nonogram','${nom}')">Reiniciar</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── JOC FOTOS ──────────────────────────────────────────────
+  function renderJocFotos() {
+    const tbody = document.getElementById('taula-jocfotos');
+    if (!tbody) return;
+    tbody.innerHTML = JUGADORS.map(nom => {
+      let estat = {};
+      try { estat = JSON.parse(localStorage.getItem(`jocfotos_estat_${nom}`) || '{}'); } catch(e) {}
+      const index   = estat.index || 0;
+      const pts     = estat.ptsTotal || 0;
+      const encert  = estat.fotoRespostes || 0;
+      return `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge ${index===0?'zero':''}">${index}/100</span></td>
+        <td><span class="pts-badge ${encert===0?'zero':''}">${encert}</span></td>
+        <td><span class="pts-badge ${pts===0?'zero':''}">${pts} pts</span></td>
+        <td><button class="btn-reset-jugador" ${pts===0&&index===0?'disabled':''} onclick="resetJugador('jocfotos','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }
