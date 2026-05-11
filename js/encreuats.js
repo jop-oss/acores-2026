@@ -132,7 +132,7 @@ function encRenderSelector() {
         </div>
         <div class="enc-cards-grid">${cardsHtml}</div>
         <div class="enc-info-pts">
-          💡 <strong>150 pts</strong> sense errors · <strong>100 pts</strong> amb 1 error · <strong>50 pts</strong> amb 2 errors
+          💡 <strong>150 pts</strong> al primer intent · <strong>100 pts</strong> al segon intent · <strong>50 pts</strong> al tercer intent
         </div>
       </div>
       <div class="ranking-wrap">
@@ -485,29 +485,12 @@ function encMostrarClue() {
 }
 
 function encOrdreMotHV(r0, c0, dir) {
-  // Retorna l'ordre (1-based) del mot que comença a (r0,c0) en la direcció dir
-  const p = encPuzzle;
-  const N = p.mida;
-
-  function esJuga(r, c) {
-    return r >= 0 && r < N && c >= 0 && c < N && p.grid[r][c] !== null;
-  }
-  function iniciaMot(r, c, d) {
-    if (!esJuga(r, c)) return false;
-    if (d === 'H') return !esJuga(r, c-1) && esJuga(r, c+1);
-    return !esJuga(r-1, c) && esJuga(r+1, c);
-  }
-
-  let n = 0;
-  for (let r = 0; r < N; r++) {
-    for (let c = 0; c < N; c++) {
-      if (iniciaMot(r, c, dir)) {
-        n++;
-        if (r === r0 && c === c0) return n;
-      }
-    }
-  }
-  return null;
+  // Per graelles 10x10: les definicions es numeren per fila (H) i per columna (V)
+  // H1 = fila 1, H5 = fila 5, V3 = columna 3, etc.
+  // Retornem simplement r0+1 (H) o c0+1 (V), però hem de trobar la fila/columna
+  // on COMENÇA el mot (pot ser que la cel·la activa no sigui l'inici)
+  if (dir === 'H') return r0 + 1;
+  return c0 + 1;
 }
 
 function encNumCelAny(r, c) {
@@ -534,25 +517,28 @@ function encClickDef(dir, idx) {
       }
     }
   } else {
-    // 10x10: trobar la casella que és l'N-èsim mot en la direcció dir
+    // 10x10: num = número de fila (H) o columna (V)
     const N = p.mida;
-    function esJuga(r, c) { return r>=0&&r<N&&c>=0&&c<N&&p.grid[r][c]!==null; }
-    function iniciaMot(r, c, d) {
-      if (!esJuga(r,c)) return false;
-      if (d==='H') return !esJuga(r,c-1) && esJuga(r,c+1);
-      return !esJuga(r-1,c) && esJuga(r+1,c);
-    }
-    let n = 0;
-    for (let r = 0; r < N; r++) {
+    if (dir === 'H') {
+      // Trobar primera casella jugable de la fila num-1
+      const r = num - 1;
       for (let c = 0; c < N; c++) {
-        if (iniciaMot(r, c, dir)) {
-          n++;
-          if (n === num) {
-            encCelActiva = { r, c };
-            encActualitzarActiva();
-            encMostrarClue();
-            return;
-          }
+        if (p.grid[r][c] !== null) {
+          encCelActiva = { r, c };
+          encActualitzarActiva();
+          encMostrarClue();
+          return;
+        }
+      }
+    } else {
+      // Trobar primera casella jugable de la columna num-1
+      const c = num - 1;
+      for (let r = 0; r < N; r++) {
+        if (p.grid[r][c] !== null) {
+          encCelActiva = { r, c };
+          encActualitzarActiva();
+          encMostrarClue();
+          return;
         }
       }
     }

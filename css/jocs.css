@@ -6371,8 +6371,8 @@
 .enc-cel--juga  { background: var(--bg2); }
 .enc-cel--juga:hover { background: rgba(106,171,122,.1); }
 
-.enc-cel--activa { background: rgba(106,171,122,.3) !important; border-color: var(--verd2) !important; }
-.enc-cel--mot    { background: rgba(106,171,122,.12) !important; }
+.enc-cel--activa { background: var(--verd2) !important; border-color: var(--verd2) !important; }
+.enc-cel--mot    { background: rgba(106,171,122,.25) !important; border-color: rgba(106,171,122,.5) !important; }
 .enc-cel--error  { background: rgba(224,85,85,.25) !important; }
 .enc-cel--ok     { background: rgba(45,90,61,.3) !important; }
 
