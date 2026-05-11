@@ -6467,7 +6467,4 @@
   font-size: .72rem; font-weight: 700;
   color: var(--text2);
   padding: 0;
-  min-width: 34px;
 }
-/* Forçar que la capçalera de columnes s'alineï amb les cel·les */
-.enc-taula col, .enc-taula td { box-sizing: border-box; }
