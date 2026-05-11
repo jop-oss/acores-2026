@@ -8,7 +8,7 @@
 
 const JF_ZOOM_NIVELLS = 5;        // 5 passos de zoom (100→75→50→25→10 pts)
 // Escala CSS: zoom 1 = molt a prop, zoom 5 = foto sencera
-const JF_ZOOM_ESCALES = [3.5, 2.8, 2.0, 1.4, 1.0];
+const JF_ZOOM_ESCALES = [12, 7, 4, 2, 1];
 const JF_CARPETA      = 'img/joc_fotos/';
 
 // ══════════════════════════════════════════════════════════════
@@ -19,11 +19,12 @@ let jfLlista     = [];   // fotos barrejades per a aquest jugador/sessió
 let jfIndex      = 0;    // índex de la foto actual
 let jfFoto       = null; // objecte foto actual
 let jfZoom       = 0;    // nivell de zoom actual (0 = màxim zoom)
-let jfPistaUsada = false;
-let jfResolta    = false;
-let jfPtsFoto    = 0;
-let jfPtsTotal   = 0;
+let jfPistaUsada    = false;
+let jfResolta       = false;
+let jfPtsFoto       = 0;
+let jfPtsTotal      = 0;
 let jfFotoRespostes = 0; // fotos respostes correctament
+let jfPenalitzacio  = 0; // pts penalitzats per respostes incorrectes
 // Posició aleatòria del zoom (canvia per cada foto)
 let jfZoomX      = 50;   // % horitzontal del focus
 let jfZoomY      = 50;   // % vertical del focus
@@ -89,7 +90,8 @@ function jfIniciarPartida() {
   jfZoom       = 0;
   jfPistaUsada = false;
   jfResolta    = false;
-  jfPtsFoto    = 0;
+  jfPtsFoto       = 0;
+  jfPenalitzacio  = 0;
   // Posició aleatòria del zoom (diferent per cada foto)
   jfZoomX = 20 + Math.random() * 60;
   jfZoomY = 20 + Math.random() * 60;
@@ -189,8 +191,10 @@ function jfHtmlAccions() {
 function jfPtsActuals() {
   if (jfResolta) return jfPtsFoto;
   // Si ha usat la pista al nivell 2, retorna 40
-  if (jfPistaUsada && jfZoom === 2) return JF_PTS_PISTA;
-  return JF_PTS_FOTO[Math.min(jfZoom, JF_PTS_FOTO.length - 1)];
+  let pts = jfPistaUsada && jfZoom === 2
+    ? JF_PTS_PISTA
+    : JF_PTS_FOTO[Math.min(jfZoom, JF_PTS_FOTO.length - 1)];
+  return Math.max(0, pts - jfPenalitzacio);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -255,14 +259,15 @@ function jfComprovarResposta() {
     jfResolta = true;
     jfMostrarEncert();
   } else {
-    // Feedback error
+    // Penalitzar i feedback error
+    jfPenalitzacio += 10;
     inp.classList.add('jf-input--error');
     inp.value = '';
-    inp.placeholder = 'No és correcte, torna-ho a intentar…';
+    inp.placeholder = `No és correcte (−10 pts), torna-ho a intentar…`;
     setTimeout(() => {
       inp.classList.remove('jf-input--error');
       inp.placeholder = 'Qui és? On és?';
-    }, 1000);
+    }, 1200);
   }
 }
 
@@ -293,9 +298,20 @@ function jfMostrarEncert(rendida = false) {
   res.style.display = 'block';
 
   const respCorrectes = jfFoto.respostes[0]; // primera = la principal
+  // Nom principal: agafem el primer element de respostes de l'Excel (índex 0 del array original)
+  // però el mostrem sempre amb cada paraula en majúscula i "i" minúscula com a separador
+  function jfCapitalitzar(s) {
+    return s.split(' ').map((w, i) => w === 'i' ? 'i' : w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+  // Buscar la resposta "principal" — la que té el nom complet amb 'i' si n'hi ha dos,
+  // o la primera sense paraules genèriques si n'hi ha una sola persona
+  const respostaPrincipal = jfFoto.respostes.find(r => r.includes(' i '))
+    || jfFoto.respostes.find(r => !['avis','iaia','avi'].includes(r))
+    || jfFoto.respostes[0];
+  const nomPrincipal = jfCapitalitzar(respostaPrincipal);
   const icon = rendida ? '😅' : '🎉';
   const msg  = rendida
-    ? `Era: <strong>${jfFoto.respostes[jfFoto.respostes.length > 1 ? jfFoto.respostes.findIndex(r => !r.includes(' i ') && !['avis','iaia','avi'].includes(r)) : 0]}</strong>`
+    ? `Era: <strong>${nomPrincipal}</strong> (${jfFoto.any})`
     : `✓ Correcte! <strong>${jfPtsFoto} pts</strong>`;
 
   // Si ha encertat, preguntar l'any
@@ -304,7 +320,7 @@ function jfMostrarEncert(rendida = false) {
       <p class="jf-any-pregunta">De quin any creus que és?</p>
       <div class="jf-any-input-wrap">
         <input type="number" class="jf-input jf-input-any" id="jf-input-any"
-          placeholder="Any" min="1990" max="2025"
+          placeholder="Any" min="2000" max="2025"
           onkeydown="if(event.key==='Enter') jfComprovarAny()">
         <button class="jf-btn-ok" onclick="jfComprovarAny()">✓</button>
       </div>
@@ -332,6 +348,13 @@ function jfComprovarAny() {
   const inp = document.getElementById('jf-input-any');
   if (!inp || !inp.value) return;
   const anyUsuari = parseInt(inp.value);
+  if (anyUsuari < 2000 || anyUsuari > 2025 || isNaN(anyUsuari)) {
+    inp.classList.add('jf-input--error');
+    inp.value = '';
+    inp.placeholder = 'Any entre 2000 i 2025';
+    setTimeout(() => { inp.classList.remove('jf-input--error'); inp.placeholder = 'Any'; }, 1200);
+    return;
+  }
   const anyReal   = parseInt(jfFoto.any);
   const diff      = Math.abs(anyUsuari - anyReal);
 
