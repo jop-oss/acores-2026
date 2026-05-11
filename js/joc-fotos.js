@@ -290,11 +290,19 @@ function jfComprovarResposta() {
     jfPenalitzacio += 10;
     inp.classList.add('jf-input--error');
     inp.value = '';
-    inp.placeholder = `No és correcte (−10 pts), torna-ho a intentar…`;
     setTimeout(() => {
       inp.classList.remove('jf-input--error');
       inp.placeholder = 'Qui és? On és?';
-    }, 1200);
+    }, 800);
+    // Zoom out automàtic (o revelar si és l'últim)
+    setTimeout(() => {
+      if (jfZoom >= JF_ZOOM_NIVELLS - 1) {
+        jfRendirse();
+      } else {
+        jfZoomOut();
+        inp.placeholder = 'Qui és? On és?';
+      }
+    }, 900);
   }
 }
 
@@ -309,9 +317,13 @@ function jfRendirse() {
 // ══════════════════════════════════════════════════════════════
 
 function jfMostrarEncert(rendida = false) {
-  // Mostrar foto sencera
+  // Mostrar foto sencera (escala 1, centrada)
   jfZoom = JF_ZOOM_NIVELLS - 1;
-  jfAplicarZoom();
+  const inner = document.getElementById('jf-foto-inner');
+  if (inner) {
+    inner.style.transform       = 'scale(1)';
+    inner.style.transformOrigin = '50% 50%';
+  }
 
   // Amagar input i accions
   const respWrap = document.getElementById('jf-resposta-wrap');

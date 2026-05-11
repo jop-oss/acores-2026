@@ -1,6 +1,5 @@
 // js/joc-fotos-data.js
-// Joc de Fotos — 100 fotos · Açores 2026
-// Puntuació: 100/75/50/40/25/10 pts + bonus any: 25/15/5 pts
+// Joc de Fotos (Zoom out!) — 100 fotos · Açores 2026
 
 const JF_FOTOS = [
   {"fitxer": "Anna 2007.JPG", "familia": true, "pista": null, "any": "2007", "respostes": ["anna"]},
@@ -30,10 +29,10 @@ const JF_FOTOS = [
   {"fitxer": "Emi 2013.jpg", "familia": true, "pista": null, "any": "2013", "respostes": ["emi", "iaia"]},
   {"fitxer": "Emi 2014.jpg", "familia": true, "pista": null, "any": "2014", "respostes": ["emi", "iaia"]},
   {"fitxer": "Emi 2020.jpg", "familia": true, "pista": null, "any": "2020", "respostes": ["emi", "iaia"]},
-  {"fitxer": "Emi i Lluis 2008.JPG", "familia": true, "pista": "Són 2", "any": "2008", "respostes": ["avis", "emi i lluis", "emilluis", "lluis i emi", "lluisemi"]},
-  {"fitxer": "Emi i Lluis 2016.jpg", "familia": true, "pista": "Són 2", "any": "2016", "respostes": ["avis", "emi i lluis", "emilluis", "lluis i emi", "lluisemi"]},
-  {"fitxer": "Emi i Lluis 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["avis", "emi i lluis", "emilluis", "lluis i emi", "lluisemi"]},
-  {"fitxer": "Emi i Mons 2011.JPG", "familia": true, "pista": "Són 2", "any": "2011", "respostes": ["emi i mons", "emimons", "iaia i mons", "iaiamons", "mons i emi", "mons i iaia", "monsemi", "monsiaia"]},
+  {"fitxer": "Emi i Lluis 2008.JPG", "familia": true, "pista": "Són 2", "any": "2008", "respostes": ["avis", "emi i lluis", "lluis i emi"]},
+  {"fitxer": "Emi i Lluis 2016.jpg", "familia": true, "pista": "Són 2", "any": "2016", "respostes": ["avis", "emi i lluis", "lluis i emi"]},
+  {"fitxer": "Emi i Lluis 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["avis", "emi i lluis", "lluis i emi"]},
+  {"fitxer": "Emi i Mons 2011.JPG", "familia": true, "pista": "Són 2", "any": "2011", "respostes": ["emi i mons", "iaia i mons", "mons i emi", "mons i iaia"]},
   {"fitxer": "Italia 2019.jpg", "familia": false, "pista": "Sense pares", "any": "2019", "respostes": ["italia"]},
   {"fitxer": "Joa 2005.JPG", "familia": true, "pista": null, "any": "2005", "respostes": ["joa"]},
   {"fitxer": "Joa 2009.JPG", "familia": true, "pista": null, "any": "2009", "respostes": ["joa"]},
@@ -41,7 +40,7 @@ const JF_FOTOS = [
   {"fitxer": "Joa 2012.jpg", "familia": true, "pista": null, "any": "2012", "respostes": ["joa"]},
   {"fitxer": "Joa 2015.jpg", "familia": true, "pista": null, "any": "2015", "respostes": ["joa"]},
   {"fitxer": "Joa 2019.jpg", "familia": true, "pista": null, "any": "2019", "respostes": ["joa"]},
-  {"fitxer": "Joa i Mons 2025.jpg", "familia": true, "pista": "Són 2", "any": "2025", "respostes": ["joa i mons", "joamons", "mons i joa", "monsjoa"]},
+  {"fitxer": "Joa i Mons 2025.jpg", "familia": true, "pista": "Són 2", "any": "2025", "respostes": ["joa i mons", "mons i joa"]},
   {"fitxer": "Jordi 2005.JPG", "familia": true, "pista": null, "any": "2005", "respostes": ["jordi"]},
   {"fitxer": "Jordi 2006.JPG", "familia": true, "pista": null, "any": "2006", "respostes": ["jordi"]},
   {"fitxer": "Jordi 2008.JPG", "familia": true, "pista": null, "any": "2008", "respostes": ["jordi"]},
@@ -63,16 +62,16 @@ const JF_FOTOS = [
   {"fitxer": "Laia 2022.jpg", "familia": true, "pista": null, "any": "2022", "respostes": ["laia"]},
   {"fitxer": "Laia 2023.jpg", "familia": true, "pista": null, "any": "2023", "respostes": ["laia"]},
   {"fitxer": "Laia 2024.jpg", "familia": true, "pista": null, "any": "2024", "respostes": ["laia"]},
-  {"fitxer": "Laia i Anna 2007.JPG", "familia": true, "pista": "Són 2", "any": "2007", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2008.JPG", "familia": true, "pista": "Són 2", "any": "2008", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2010.jpg", "familia": true, "pista": "Són 2", "any": "2010", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2012.jpg", "familia": true, "pista": "Són 2", "any": "2012", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2015.jpg", "familia": true, "pista": "Són 2", "any": "2015", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2016.JPG", "familia": true, "pista": "Són 2", "any": "2016", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2018.jpg", "familia": true, "pista": "Són 2", "any": "2018", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2019.jpg", "familia": true, "pista": "Són 2", "any": "2019", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2022.jpg", "familia": true, "pista": "Són 2", "any": "2022", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
-  {"fitxer": "Laia i Anna 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["anna i laia", "annalaia", "laia i anna", "laiaanna"]},
+  {"fitxer": "Laia i Anna 2007.JPG", "familia": true, "pista": "Són 2", "any": "2007", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2008.JPG", "familia": true, "pista": "Són 2", "any": "2008", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2010.jpg", "familia": true, "pista": "Són 2", "any": "2010", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2012.jpg", "familia": true, "pista": "Són 2", "any": "2012", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2015.jpg", "familia": true, "pista": "Són 2", "any": "2015", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2016.JPG", "familia": true, "pista": "Són 2", "any": "2016", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2018.jpg", "familia": true, "pista": "Són 2", "any": "2018", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2019.jpg", "familia": true, "pista": "Són 2", "any": "2019", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2022.jpg", "familia": true, "pista": "Són 2", "any": "2022", "respostes": ["anna i laia", "laia i anna"]},
+  {"fitxer": "Laia i Anna 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["anna i laia", "laia i anna"]},
   {"fitxer": "Lluis 2005.JPG", "familia": true, "pista": null, "any": "2005", "respostes": ["avi", "lluis"]},
   {"fitxer": "Lluis 2007.JPG", "familia": true, "pista": null, "any": "2007", "respostes": ["avi", "lluis"]},
   {"fitxer": "Lluis 2011.JPG", "familia": true, "pista": null, "any": "2011", "respostes": ["avi", "lluis"]},
@@ -92,7 +91,7 @@ const JF_FOTOS = [
   {"fitxer": "Mons 2017.jpg", "familia": true, "pista": null, "any": "2017", "respostes": ["mons"]},
   {"fitxer": "Mons 2021.jpg", "familia": true, "pista": null, "any": "2021", "respostes": ["mons"]},
   {"fitxer": "Mons 2023.jpg", "familia": true, "pista": null, "any": "2023", "respostes": ["mons"]},
-  {"fitxer": "Mons i Jordi 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["jordi i mons", "jordimons", "mons i jordi", "monsjordi"]},
+  {"fitxer": "Mons i Jordi 2023.jpg", "familia": true, "pista": "Són 2", "any": "2023", "respostes": ["jordi i mons", "mons i jordi"]},
   {"fitxer": "Tenerife 2016.JPG", "familia": false, "pista": "El Xu la va liar més d'un dia", "any": "2016", "respostes": ["tenerife"]},
   {"fitxer": "Xu 2005.JPG", "familia": true, "pista": null, "any": "2005", "respostes": ["xu"]},
   {"fitxer": "Xu 2007.JPG", "familia": true, "pista": null, "any": "2007", "respostes": ["xu"]},
@@ -101,12 +100,10 @@ const JF_FOTOS = [
   {"fitxer": "Xu 2012.JPG", "familia": true, "pista": null, "any": "2012", "respostes": ["xu"]},
   {"fitxer": "Xu 2021.jpg", "familia": true, "pista": null, "any": "2021", "respostes": ["xu"]},
   {"fitxer": "Xu 2025.jpg", "familia": true, "pista": null, "any": "2025", "respostes": ["xu"]},
-  {"fitxer": "Xu i Mons 2019.jpg", "familia": true, "pista": "Són 2", "any": "2019", "respostes": ["mons i xu", "monsxu", "xu i mons", "xumons"]},
-  {"fitxer": "Xu i Mons 2024.jpg", "familia": true, "pista": "Són 2", "any": "2024", "respostes": ["mons i xu", "monsxu", "xu i mons", "xumons"]}
+  {"fitxer": "Xu i Mons 2019.jpg", "familia": true, "pista": "Són 2", "any": "2019", "respostes": ["mons i xu", "xu i mons"]},
+  {"fitxer": "Xu i Mons 2024.jpg", "familia": true, "pista": "Són 2", "any": "2024", "respostes": ["mons i xu", "xu i mons"]}
 ];
 
-// Punts per nivell de zoom (índex 0=primer zoom=100pts ... índex 4=últim=10pts)
-const JF_PTS_FOTO   = [100, 75, 50, 25, 10];
-// Nota: si hi ha pista i l'usa, el nivell 2 (50pts) passa a 40pts
-const JF_PTS_PISTA  = 40;   // punts si encerta AMB pista (en lloc de 50)
-const JF_PTS_ANY    = [25, 15, 5]; // exacte, ±1, ±2
+const JF_PTS_FOTO  = [100, 75, 50, 25, 10];
+const JF_PTS_PISTA = 40;
+const JF_PTS_ANY   = [25, 15, 5];
