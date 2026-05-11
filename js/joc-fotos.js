@@ -25,6 +25,7 @@ let jfPtsFoto       = 0;
 let jfPtsTotal      = 0;
 let jfFotoRespostes = 0; // fotos respostes correctament
 let jfPenalitzacio  = 0; // pts penalitzats per respostes incorrectes
+let jfAnyRespost    = false; // s'ha contestat l'any?
 // Posició aleatòria del zoom (canvia per cada foto)
 let jfZoomX      = 50;   // % horitzontal del focus
 let jfZoomY      = 50;   // % vertical del focus
@@ -92,6 +93,7 @@ function jfIniciarPartida() {
   jfResolta    = false;
   jfPtsFoto       = 0;
   jfPenalitzacio  = 0;
+  jfAnyRespost    = false;
   // Posició aleatòria del zoom (diferent per cada foto)
   jfZoomX = 20 + Math.random() * 60;
   jfZoomY = 20 + Math.random() * 60;
@@ -370,8 +372,7 @@ function jfMostrarEncert(rendida = false) {
     <div class="jf-res-msg">${msg}</div>
     ${htmlAny}
     <div id="jf-any-resultat"></div>
-    <button class="jm-btn-seguent" id="jf-btn-seguent" onclick="jfSeguent()"
-      style="${!rendida ? 'display:none' : ''}">
+    <button class="jm-btn-seguent" id="jf-btn-seguent" onclick="jfSeguent()">
       Foto següent →
     </button>
   `;
@@ -423,6 +424,7 @@ function jfComprovarAny() {
   }
 
   // Actualitzar punts totals
+  jfAnyRespost = true;
   jfPtsTotal += jfPtsFoto + ptsAny;
   jfFotoRespostes++;
   jfGuardarEstat();
@@ -441,6 +443,13 @@ function jfComprovarAny() {
 // ══════════════════════════════════════════════════════════════
 
 function jfSeguent() {
+  // Si s'ha encertat però no s'ha contestat l'any, guardar punts ara
+  if (jfResolta && jfPtsFoto > 0 && !jfAnyRespost) {
+    jfPtsTotal += jfPtsFoto;
+    jfFotoRespostes++;
+    jfGuardarEstat();
+  }
+  jfAnyRespost = false;
   jfIndex++;
   if (jfIndex >= jfLlista.length) {
     // Totes les fotos vistes: mostrar resum final
