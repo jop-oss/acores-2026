@@ -35,6 +35,7 @@ const ALLOTJAMENTS = [
     idiomes: 'PT · EN',
     booking: 'https://www.booking.com/hotel/pt/santo-cristo-house.ca.html',
     fotos: { prefix: 'SantoCristo', total: 12 },
+    amenitats: { wifi: true, ac: true, rentadora: true, destacat: { tipus: 'terrassa', label: 'Terrassa' } },
     equipament: ['Terrassa', 'Aire condicionat', 'Cuina', 'Nevera', 'Rentadora', 'TV', 'Wifi', 'Cafetera', 'Microones', 'Planxa', 'Assecador', 'Mobles exterior', 'Barbacoa', 'Piscina', 'Jocs de taula', 'Estacionament'],
     distancies: [
       { nom: 'Caldeira Velha', emoji: '♨️', km: 4.5, lat: 37.7690, lng: -25.5920 },
@@ -73,6 +74,7 @@ const ALLOTJAMENTS = [
     idiomes: 'PT · EN',
     booking: 'https://www.booking.com/hotel/pt/casa-cherimoya-your-retreat-by-the-sea.ca.html',
     fotos: { prefix: 'Cherimoya', total: 14 },
+    amenitats: { wifi: true, ac: true, rentadora: true, destacat: { tipus: 'casagran', label: 'Casa 300m²' } },
     equipament: ['Balcó', 'Vistes al mar', 'Aire condicionat', 'Cuina', 'Rentadora', 'Assecadora', 'TV', 'Wifi', 'Cafetera', 'Barbacoa', 'Rentaplats', 'Forn', 'Zona d\'estar', 'Entrada privada', 'Piscina privada', 'Sofà llit'],
     distancies: [
       { nom: 'Ribeira Grande (centre)', emoji: '🏘️', km: 8, lat: 37.8306, lng: -25.5147 },
@@ -111,6 +113,7 @@ const ALLOTJAMENTS = [
     idiomes: 'PT · EN · ES',
     booking: 'https://www.booking.com/hotel/pt/prainha-apartments.ca.html',
     fotos: { prefix: 'Prainha', total: 10 },
+    amenitats: { wifi: false, ac: false, rentadora: false, destacat: { tipus: 'platja', label: 'Platja' } },
     equipament: ['Pati', 'Cuina', 'Nevera', 'Rentadora', 'TV', 'Wifi', 'Cafetera', 'Planxa', 'Assecador', 'Fogons', 'Dutxa', 'Entrada privada', 'Planta baixa', 'Zona de menjador', 'Bullidor elèctric', 'Roba de llit'],
     distancies: [
       { nom: 'Muntanya do Pico (cim, 2351m)', emoji: '🏔️', km: 16, lat: 38.4699, lng: -28.4020 },
@@ -149,6 +152,7 @@ const ALLOTJAMENTS = [
     idiomes: 'PT · EN',
     booking: 'https://www.booking.com/hotel/pt/refugio.ca.html',
     fotos: { prefix: 'Refugio', total: 16 },
+    amenitats: { wifi: true, ac: true, rentadora: true, destacat: { tipus: 'piscina', label: 'Piscina' } },
     equipament: ['Piscina privada', 'Pati', 'Barbacoa', 'Cuina', 'Nevera', 'Rentadora', 'TV', 'Wifi', 'Cafetera', 'Microones', 'Forn', 'Zona exterior', 'Mobles exterior', 'Dutxa', 'Assecador', 'Entrada privada'],
     distancies: [
       { nom: 'Horta (centre)', emoji: '🏘️', km: 4, lat: 38.5322, lng: -28.6277 },
@@ -163,8 +167,104 @@ const ALLOTJAMENTS = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   GENERACIÓ DE CARDS
+   SVG AMENITATS
    ────────────────────────────────────────────────────────── */
+function svgIcon(tipus, actiu) {
+  const ic = actiu
+    ? 'fill:none;stroke:#a8d8b0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round'
+    : 'fill:none;stroke:#a8d8b0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:0.35';
+  const icF = actiu ? 'fill:#a8d8b0;stroke:none' : 'fill:#a8d8b0;stroke:none;opacity:0.35';
+  const bgFill = actiu ? 'rgba(45,90,61,0.35)' : 'rgba(90,20,20,0.22)';
+  const bgStroke = actiu ? 'rgba(106,171,122,0.4)' : 'rgba(200,60,60,0.4)';
+
+  let shapes = '';
+
+  if (tipus === 'wifi') {
+    shapes = `
+      <rect x="4" y="12" width="32" height="16" rx="4" style="${ic}"/>
+      <text x="20" y="24" style="font-family:sans-serif;font-size:8px;font-weight:700;fill:${actiu ? '#a8d8b0' : '#a8d8b0'};opacity:${actiu ? 1 : 0.35};text-anchor:middle">WiFi</text>
+      <circle cx="20" cy="33" r="2.5" style="${icF}"/>`;
+  } else if (tipus === 'ac') {
+    shapes = `
+      <line x1="20" y1="8" x2="20" y2="32" style="${ic}"/>
+      <line x1="8" y1="20" x2="32" y2="20" style="${ic}"/>
+      <line x1="11" y1="11" x2="29" y2="29" style="${ic}"/>
+      <line x1="29" y1="11" x2="11" y2="29" style="${ic}"/>
+      <polyline points="17,11 20,8 23,11" style="${ic}"/>
+      <polyline points="17,29 20,32 23,29" style="${ic}"/>
+      <polyline points="11,17 8,20 11,23" style="${ic}"/>
+      <polyline points="29,17 32,20 29,23" style="${ic}"/>
+      <polyline points="13,9 11,11 13,13" style="${ic}"/>
+      <polyline points="27,27 29,29 27,31" style="${ic}"/>
+      <polyline points="27,9 29,11 27,13" style="${ic}"/>
+      <polyline points="13,27 11,29 13,31" style="${ic}"/>
+      <circle cx="20" cy="20" r="4" style="${ic}"/>`;
+  } else if (tipus === 'rentadora') {
+    shapes = `
+      <rect x="6" y="6" width="28" height="28" rx="4" style="${ic}"/>
+      <circle cx="20" cy="20" r="8" style="${ic}"/>
+      <circle cx="20" cy="20" r="3.5" style="${ic}"/>
+      <circle cx="10" cy="10" r="2" style="${icF}"/>`;
+  } else if (tipus === 'terrassa') {
+    shapes = `
+      <circle cx="20" cy="20" r="8" style="${ic}"/>
+      <rect x="16" y="7" width="8" height="7" rx="2" style="${ic}"/>
+      <rect x="16" y="26" width="8" height="7" rx="2" style="${ic}"/>
+      <rect x="7" y="16" width="7" height="8" rx="2" style="${ic}"/>
+      <rect x="26" y="16" width="7" height="8" rx="2" style="${ic}"/>`;
+  } else if (tipus === 'piscina') {
+    shapes = `
+      <circle cx="20" cy="13" r="4" style="${ic}"/>
+      <line x1="20" y1="17" x2="20" y2="23" style="${ic}"/>
+      <path d="M8 27 Q13 22 18 27 Q23 32 28 27 Q31 24 33 25" style="${ic}"/>
+      <path d="M8 33 Q13 28 18 33 Q23 38 28 33 Q31 30 33 31" style="fill:none;stroke:#6aab7a;stroke-width:1.4;stroke-linecap:round;opacity:${actiu ? 1 : 0.35}"/>`;
+  } else if (tipus === 'platja') {
+    shapes = `
+      <circle cx="20" cy="11" r="4" style="${ic}"/>
+      <line x1="20" y1="7" x2="20" y2="5" style="${ic}"/>
+      <line x1="24" y1="9" x2="26" y2="7" style="${ic}"/>
+      <line x1="24" y1="13" x2="26" y2="15" style="${ic}"/>
+      <line x1="16" y1="9" x2="14" y2="7" style="${ic}"/>
+      <line x1="16" y1="13" x2="14" y2="15" style="${ic}"/>
+      <line x1="8" y1="23" x2="32" y2="23" style="fill:none;stroke:#6aab7a;stroke-width:1.2;stroke-dasharray:3,2;opacity:${actiu ? 1 : 0.35}"/>
+      <path d="M8 28 Q12 24 16 28 Q20 32 24 28 Q28 24 32 28" style="${ic}"/>`;
+  } else if (tipus === 'casagran') {
+    shapes = `
+      <polygon points="20,6 34,16 34,34 6,34 6,16" style="${ic}"/>
+      <rect x="15" y="24" width="8" height="10" rx="1" style="${ic}"/>
+      <rect x="8" y="19" width="7" height="6" rx="1" style="${ic}"/>
+      <rect x="25" y="19" width="7" height="6" rx="1" style="${ic}"/>`;
+  }
+
+  const creu = !actiu ? `<line x1="2" y1="2" x2="38" y2="38" style="stroke:#e03a3a;stroke-width:2.2;stroke-linecap:round"/>` : '';
+  const label = actiu ? '#a8d8b0' : '#6b7280';
+
+  return `<svg viewBox="0 0 40 40" width="26" height="26" xmlns="http://www.w3.org/2000/svg" style="display:block">
+    <rect x="0" y="0" width="40" height="40" rx="10" style="fill:${bgFill};stroke:${bgStroke};stroke-width:0.8"/>
+    ${shapes}
+    ${creu}
+  </svg>`;
+}
+
+function buildAmenitats(a) {
+  const items = [
+    { tipus: 'wifi',      actiu: a.amenitats.wifi,      label: 'WiFi' },
+    { tipus: 'ac',        actiu: a.amenitats.ac,         label: 'Aire A/C' },
+    { tipus: 'rentadora', actiu: a.amenitats.rentadora,  label: 'Rentadora' },
+    { tipus: a.amenitats.destacat.tipus, actiu: true, label: a.amenitats.destacat.label },
+  ];
+  const cols = items.map(item => `
+    <div class="amenitat-item">
+      ${svgIcon(item.tipus, item.actiu)}
+      <span class="amenitat-label" style="color:${item.actiu ? 'var(--allot-accent2)' : '#6b7280'}">${item.label}</span>
+    </div>`).join('');
+  return `<div class="allot-info-item allot-info-item--amenitats">
+    <div class="allot-info-label">Serveis</div>
+    <div class="amenitats-row">${cols}</div>
+  </div>`;
+}
+
+
 function generaCards() {
   const container = document.getElementById('allotCards');
   ALLOTJAMENTS.forEach((a, idx) => {
@@ -284,6 +384,7 @@ function buildCardHTML(a) {
           <div class="allot-info-label">Coordenades</div>
           <div class="allot-info-val" style="font-size:0.78rem;font-family:monospace;color:var(--allot-muted)">${a.coordenades[0].toFixed(5)}, ${a.coordenades[1].toFixed(5)}</div>
         </div>
+        ${buildAmenitats(a)}
       </div>
 
       <!-- Strip reserva -->
