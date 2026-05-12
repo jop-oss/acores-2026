@@ -112,6 +112,14 @@ function astComençar() {
             <span class="snake-score-label">Punts</span>
             <span class="snake-score-val" id="ast-pts">0</span>
           </div>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="ast-millor-personal">${astGetMillor(jugadorActiu)}</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="ast-millor">${astGetMillorGlobal()}</span>
+          </div>
           <div class="snake-score-bloc">
             <span class="snake-score-label">Nivell</span>
             <span class="snake-score-val" id="ast-nivell">1</span>
@@ -741,6 +749,10 @@ function astRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function astGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => astGetMillor(n)));
+}
+
 function astGetMillor(nom) {
   try {
     const raw = localStorage.getItem(AST_STORAGE_KEY + nom);

@@ -79,154 +79,219 @@
         <img id="joc-selector-avatar" src="" alt="">
         <span id="joc-selector-nom"></span>
       </div>
-      <h2 class="joc-selector-title">Quin joc vols jugar?</h2>
-      <div class="joc-selector-opcions">
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('quiz')">
+      <h2 class="joc-selector-title">A quin joc vols jugar?</h2>
+      <!-- FILTRES -->
+      <div class="joc-filtres-wrap">
+        <div class="joc-filtres-grup">
+          <span class="joc-filtres-label">Tipus</span>
+          <button class="joc-filtre-btn actiu" data-filtre="tots" data-grup="tipus" onclick="jocsFiltreTipus(this)">Tots</button>
+          <button class="joc-filtre-btn" data-filtre="competitiu" data-grup="tipus" onclick="jocsFiltreTipus(this)">🏆 Competitiu</button>
+          <button class="joc-filtre-btn" data-filtre="divertimento" data-grup="tipus" onclick="jocsFiltreTipus(this)">🥳 Divertimento</button>
+        </div>
+        <div class="joc-filtres-grup">
+          <span class="joc-filtres-label">Modalitat</span>
+          <button class="joc-filtre-btn actiu" data-filtre="tots" data-grup="modal" onclick="jocsFiltreModal(this)">Tots</button>
+          <button class="joc-filtre-btn" data-filtre="individual" data-grup="modal" onclick="jocsFiltreModal(this)">👤 Individual</button>
+          <button class="joc-filtre-btn" data-filtre="grup" data-grup="modal" onclick="jocsFiltreModal(this)">👥 En grup</button>
+        </div>
+        <div class="joc-filtres-grup joc-filtres-tags">
+          <span class="joc-filtres-label">Paraules clau</span>
+          <button class="joc-filtre-btn actiu" data-filtre="tots" data-grup="tag" onclick="jocsFiltreTag(this)">Totes</button>
+          <button class="joc-filtre-btn" data-filtre="arcade" data-grup="tag" onclick="jocsFiltreTag(this)">Arcade</button>
+          <button class="joc-filtre-btn" data-filtre="atzar" data-grup="tag" onclick="jocsFiltreTag(this)">Atzar</button>
+          <button class="joc-filtre-btn" data-filtre="cartes" data-grup="tag" onclick="jocsFiltreTag(this)">Cartes</button>
+          <button class="joc-filtre-btn" data-filtre="daus" data-grup="tag" onclick="jocsFiltreTag(this)">Daus</button>
+          <button class="joc-filtre-btn" data-filtre="estratègia" data-grup="tag" onclick="jocsFiltreTag(this)">Estratègia</button>
+          <button class="joc-filtre-btn" data-filtre="foto" data-grup="tag" onclick="jocsFiltreTag(this)">Foto</button>
+          <button class="joc-filtre-btn" data-filtre="joc de pistes" data-grup="tag" onclick="jocsFiltreTag(this)">Joc de pistes</button>
+          <button class="joc-filtre-btn" data-filtre="lletres" data-grup="tag" onclick="jocsFiltreTag(this)">Lletres</button>
+          <button class="joc-filtre-btn" data-filtre="lògica" data-grup="tag" onclick="jocsFiltreTag(this)">Lògica</button>
+          <button class="joc-filtre-btn" data-filtre="mapa" data-grup="tag" onclick="jocsFiltreTag(this)">Mapa</button>
+          <button class="joc-filtre-btn" data-filtre="música" data-grup="tag" onclick="jocsFiltreTag(this)">Música</button>
+          <button class="joc-filtre-btn" data-filtre="números" data-grup="tag" onclick="jocsFiltreTag(this)">Números</button>
+          <button class="joc-filtre-btn" data-filtre="passatemps" data-grup="tag" onclick="jocsFiltreTag(this)">Passatemps</button>
+          <button class="joc-filtre-btn" data-filtre="preguntes i respostes" data-grup="tag" onclick="jocsFiltreTag(this)">Preguntes i respostes</button>
+          
+        </div>
+      </div>
+
+      <div class="joc-selector-opcions" id="joc-selector-opcions">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="preguntes i respostes" onclick="seleccionarModeJoc('quiz')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🌋</span>
           <span class="joc-selector-label">Quiz Açores</span>
           <span class="joc-selector-sub">100 preguntes · 7 categories</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('qui-que')">
+        <button class="joc-selector-btn" data-tipus="divertimento" data-modal="grup" data-tags="joc de pistes" onclick="seleccionarModeJoc('qui-que')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Divertimento">🥳</span><span class="joc-badge-modal" title="En grup">👥</span></div>
           <span class="joc-selector-icon">🤔</span>
           <span class="joc-selector-label">Qui / Què sóc?</span>
           <span class="joc-selector-sub">Endevina qui o què ets</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('mapa')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="mapa;joc de pistes" onclick="seleccionarModeJoc('mapa')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">📍</span>
           <span class="joc-selector-label">On és això?</span>
           <span class="joc-selector-sub">Situa 50 llocs al mapa</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('paraula')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="passatemps;lletres" onclick="seleccionarModeJoc('paraula')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🔤</span>
           <span class="joc-selector-label">La Paraula Amagada</span>
           <span class="joc-selector-sub">Wordle de les Açores</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('bingo')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="atzar" onclick="seleccionarModeJoc('bingo')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🎯</span>
           <span class="joc-selector-label">Bingo Açores</span>
           <span class="joc-selector-sub">Marca el que vas vivint</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('trivial')">
-          <span class="joc-selector-icon">🎓</span>
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="preguntes i respostes" onclick="seleccionarModeJoc('trivial')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
+          <span class="joc-selector-icon">🎲</span>
           <span class="joc-selector-label">Trivial Açores</span>
           <span class="joc-selector-sub">El joc de preguntes per torns</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('sudoku')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="passatemps;números" onclick="seleccionarModeJoc('sudoku')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🔢</span>
           <span class="joc-selector-label">Sudoku</span>
           <span class="joc-selector-sub">12 sudokus assignats · 3 nivells</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('cifras')">
-          <span class="joc-selector-icon">🧮</span>
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia;números;lletres" onclick="seleccionarModeJoc('cifras')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
+          <span class="joc-selector-icon">📝</span>
           <span class="joc-selector-label">Xifres i Lletres</span>
           <span class="joc-selector-sub">5 lletres + 10 xifres · 1 min cadascuna</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('penjat')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="passatemps;lletres" onclick="seleccionarModeJoc('penjat')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🪢</span>
           <span class="joc-selector-label">El Penjat</span>
           <span class="joc-selector-sub">15 paraules/frases · 6 errors màxim</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('snake')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('snake')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🐍</span>
           <span class="joc-selector-label">Snake</span>
           <span class="joc-selector-sub">Arcade clàssic · controls tàctils</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('breakout')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('breakout')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🧱</span>
           <span class="joc-selector-label">Breakout</span>
           <span class="joc-selector-sub">5 nivells · 3 vides · power-ups</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('corre')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('corre')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🏃</span>
           <span class="joc-selector-label">Corre per les Açores</span>
           <span class="joc-selector-sub">Salta i llisca · 3 vides · distància</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('asteroid')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('asteroid')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🚀</span>
           <span class="joc-selector-label">Asteroid Shooter</span>
           <span class="joc-selector-sub">Dispara sol · power-ups · nivells</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('correu')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('correu')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">📬</span>
           <span class="joc-selector-label">Correu de les Açores</span>
           <span class="joc-selector-sub">5 carrils · recull cartes · lliura-les</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('flappy')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="arcade" onclick="seleccionarModeJoc('flappy')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🐦</span>
           <span class="joc-selector-label">Flappy Açores</span>
           <span class="joc-selector-sub">Vola · esquiva roques · rècord</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('pescamines')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="lògica" onclick="seleccionarModeJoc('pescamines')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">💣</span>
           <span class="joc-selector-label">Pescamines</span>
           <span class="joc-selector-sub">Fàcil / Mitjà / Difícil · sense mines</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('mahjong')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia" onclick="seleccionarModeJoc('mahjong')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🀄</span>
           <span class="joc-selector-label">Mahjong Açores</span>
           <span class="joc-selector-sub">Creu · Piràmide · Tortuga</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('sokoban')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="lògica" onclick="seleccionarModeJoc('sokoban')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">📦</span>
           <span class="joc-selector-label">Sokoban Açores</span>
           <span class="joc-selector-sub">60 puzzles · roques · lògica</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('scrabble')">
-          <span class="joc-selector-icon">⌛</span>
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="grup" data-tags="estratègia;lletres" onclick="seleccionarModeJoc('scrabble')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="En grup">👥</span></div>
+          <span class="joc-selector-icon">📝</span>
           <span class="joc-selector-label">Scrabble Açores</span>
           <span class="joc-selector-sub">Paraules · torns · individual o equips</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('diferencies')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="passatemps" onclick="seleccionarModeJoc('diferencies')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🔍</span>
           <span class="joc-selector-label">Busca les Diferències</span>
           <span class="joc-selector-sub">8 escenes · observació</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('ginrummy')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia;cartes" onclick="seleccionarModeJoc('ginrummy')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🃏</span>
           <span class="joc-selector-label">Gin Rummy</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · baralla espanyola</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('yahtzee')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="grup" data-tags="estratègia;daus" onclick="seleccionarModeJoc('yahtzee')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="En grup">👥</span></div>
           <span class="joc-selector-icon">🎲</span>
           <span class="joc-selector-label">Yahtzee</span>
           <span class="joc-selector-sub">Daus · 13 rondes · 2 partides · Firebase</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('batallanaval')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia" onclick="seleccionarModeJoc('batallanaval')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">⚓</span>
           <span class="joc-selector-label">Batalla Naval</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · 8 vaixells</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('triangles')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia" onclick="seleccionarModeJoc('triangles')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🔺</span>
           <span class="joc-selector-label">Triangles</span>
           <span class="joc-selector-sub">vs IA · 3 dificultats · graella clàssica</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('jocmusical')">
+        <button class="joc-selector-btn" data-tipus="divertimento" data-modal="individual" data-tags="música" onclick="seleccionarModeJoc('jocmusical')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Divertimento">🥳</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🎸</span>
           <span class="joc-selector-label">Joc Musical</span>
           <span class="joc-selector-sub">150 cançons · intro o lletra · rock català</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('nonogram')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="lògica" onclick="seleccionarModeJoc('nonogram')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">🧩</span>
           <span class="joc-selector-label">Nonogram</span>
           <span class="joc-selector-sub">15 puzzles · 3 nivells · lògica</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('jocfotos')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="foto;joc de pistes" onclick="seleccionarModeJoc('jocfotos')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">📸</span>
           <span class="joc-selector-label">Zoom out!</span>
           <span class="joc-selector-sub">100 fotos · endevina qui és · zoom progressiu</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('encreuats')">
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="passatemps;lletres" onclick="seleccionarModeJoc('encreuats')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
           <span class="joc-selector-icon">📝</span>
           <span class="joc-selector-label">Mots Encreuats</span>
           <span class="joc-selector-sub">10 encreuats · 150 pts · PP.CC.</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('colorfill')">
-          <span class="joc-selector-icon">🎨</span>
+        <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="lògica" onclick="seleccionarModeJoc('colorfill')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
+          <span class="joc-selector-icon">🌊</span>
           <span class="joc-selector-label">Color Fill</span>
           <span class="joc-selector-sub">3 nivells · 10 taulers · Flood It</span>
         </button>
-        <button class="joc-selector-btn" onclick="seleccionarModeJoc('fraseesbojarrada')">
+        <button class="joc-selector-btn" data-tipus="divertimento" data-modal="grup" data-tags="lletres" onclick="seleccionarModeJoc('fraseesbojarrada')">
+  <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Divertimento">🥳</span><span class="joc-badge-modal" title="En grup">👥</span></div>
           <span class="joc-selector-icon">✍️</span>
           <span class="joc-selector-label">La Frase Esbojarrada</span>
           <span class="joc-selector-sub">6 frases · per torns · tot el viatge</span>
@@ -248,9 +313,9 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mapa', this)">📍 Mapa</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('paraula', this)">🔤 Paraula</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('bingo', this)">🎯 Bingo</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎓 Trivial</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎲 Trivial</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sudoku', this)">🔢 Sudoku</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">🧮 Xifres</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">📝 Xifres</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
@@ -261,7 +326,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">⌛ Scrabble</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
@@ -270,7 +335,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('encreuats', this)">📝 Encreuats</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🎨 Color Fill</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🌊 Color Fill</button>
         </div>
 
         <!-- Llista de jugadors -->

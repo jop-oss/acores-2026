@@ -274,9 +274,13 @@ function crComençar() {
             <span class="snake-score-label">Distància</span>
             <span class="snake-score-val" id="cr-metres">0 m</span>
           </div>
-          <div class="snake-score-bloc">
-            <span class="snake-score-label">Millor</span>
-            <span class="snake-score-val" id="cr-millor">${crGetMillor(jugadorActiu)} m</span>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="cr-millor-personal">${crGetMillor(jugadorActiu)} m</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="cr-millor">${crGetMillorGlobal()} m</span>
           </div>
           <div class="snake-score-bloc">
             <span class="snake-score-label">Vides</span>
@@ -701,6 +705,10 @@ function crRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function crGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => crGetMillor(n)));
+}
+
 function crGetMillor(nom) {
   try {
     const raw = localStorage.getItem(CORRE_STORAGE_KEY + nom);

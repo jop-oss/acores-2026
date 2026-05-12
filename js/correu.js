@@ -115,6 +115,14 @@ function coComençar() {
             <span class="snake-score-label">Punts</span>
             <span class="snake-score-val" id="co-pts">0</span>
           </div>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="co-millor-personal">${coGetMillor(jugadorActiu)}</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="co-millor">${coGetMillorGlobal()}</span>
+          </div>
           <div class="snake-score-bloc">
             <span class="snake-score-label">Distància</span>
             <span class="snake-score-val" id="co-metres">0 m</span>
@@ -724,6 +732,10 @@ function coRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function coGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => coGetMillor(n)));
+}
+
 function coGetMillor(nom) {
   try {
     const raw = localStorage.getItem(CORREU_STORAGE_KEY + nom);

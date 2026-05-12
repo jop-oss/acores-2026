@@ -85,9 +85,13 @@ function flComençar() {
             <span class="snake-score-label">Punts</span>
             <span class="snake-score-val" id="fl-pts">0</span>
           </div>
-          <div class="snake-score-bloc">
-            <span class="snake-score-label">Millor</span>
-            <span class="snake-score-val" id="fl-millor">${flGetMillor(jugadorActiu)}</span>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="fl-millor-personal">${flGetMillor(jugadorActiu)}</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="fl-millor">${flGetMillorGlobal()}</span>
           </div>
         </div>
       </div>
@@ -564,6 +568,10 @@ function flRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function flGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => flGetMillor(n)));
+}
+
 function flGetMillor(nom) {
   try {
     const raw = localStorage.getItem(FLAPPY_STORAGE_KEY + nom);

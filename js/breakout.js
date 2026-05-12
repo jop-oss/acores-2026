@@ -157,6 +157,14 @@ function bkComençar() {
             <span class="snake-score-label">Punts</span>
             <span class="snake-score-val" id="bk-pts">0</span>
           </div>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="bk-millor-personal">${bkGetMillor(jugadorActiu)}</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="bk-millor">${bkGetMillorGlobal()}</span>
+          </div>
           <div class="snake-score-bloc">
             <span class="snake-score-label">Nivell</span>
             <span class="snake-score-val" id="bk-nivell">1</span>
@@ -755,6 +763,10 @@ function bkRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function bkGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => bkGetMillor(n)));
+}
+
 function bkGetMillor(nom) {
   try {
     const raw = localStorage.getItem(BREAKOUT_STORAGE_KEY + nom);

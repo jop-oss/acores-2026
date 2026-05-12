@@ -85,9 +85,13 @@ function snakeComençar() {
             <span class="snake-score-label">Punts</span>
             <span class="snake-score-val" id="snake-pts">0</span>
           </div>
-          <div class="snake-score-bloc">
-            <span class="snake-score-label">Millor</span>
-            <span class="snake-score-val" id="snake-millor">${snakeGetMillorJugador(jugadorActiu)}</span>
+          <div class="snake-score-bloc snake-score-bloc-personal">
+            <span class="snake-score-label">Teu</span>
+            <span class="snake-score-val" id="snake-millor-personal">${snakeGetMillorJugador(jugadorActiu)}</span>
+          </div>
+          <div class="snake-score-bloc snake-score-bloc-record">
+            <span class="snake-score-label">🏆 Rec.</span>
+            <span class="snake-score-val" id="snake-millor">${snakeGetMillorGlobal()}</span>
           </div>
           <div class="snake-score-bloc">
             <span class="snake-score-label">Pomes</span>
@@ -461,6 +465,10 @@ function snakeRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+function snakeGetMillorGlobal() {
+  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => snakeGetMillorJugador(n)));
+}
+
 function snakeGetMillorJugador(nom) {
   try {
     const raw = localStorage.getItem(SNAKE_STORAGE_KEY + nom);
