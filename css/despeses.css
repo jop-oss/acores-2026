@@ -1,0 +1,400 @@
+/* ============================================================
+   DESPESES.CSS  ·  Açores 2026
+   ============================================================ */
+
+:root {
+  --d-bg:        #0a1628;
+  --d-surface:   rgba(255,255,255,0.04);
+  --d-border:    rgba(106,171,122,0.15);
+  --d-green:     #6aab7a;
+  --d-green2:    #a8d8b0;
+  --d-green3:    #2d5a3d;
+  --d-gold:      #f5c842;
+  --d-red:       #f87171;
+  --d-blue:      #60a5fa;
+  --d-text:      #e8f0ec;
+  --d-muted:     #7a9e8a;
+  --d-radius:    14px;
+
+  /* Colors per persona */
+  --c-jordi: #e74c3c;
+  --c-joa:   #f39c12;
+  --c-mons:  #8e44ad;
+  --c-xu:    #2980b9;
+  --c-anna:  #e67e22;
+  --c-laia:  #27ae60;
+}
+
+/* ── Layout ── */
+.desp-main { min-height: 100vh; background: var(--d-bg); }
+.desp-wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
+
+/* ── Hero ── */
+.desp-hero {
+  position: relative;
+  padding: 52px 24px 40px;
+  text-align: center;
+  overflow: hidden;
+}
+.desp-hero-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% -10%, rgba(45,90,61,0.3) 0%, transparent 65%);
+  pointer-events: none;
+}
+.desp-hero-content { position: relative; z-index: 1; }
+.desp-hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--d-muted);
+  margin-bottom: 8px;
+}
+.desp-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--d-green2); margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+.desp-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem; color: var(--d-muted);
+}
+.desp-hero-plus {
+  color: rgba(106,171,122,0.5);
+  font-size: 0.8rem;
+}
+
+/* ── Seccions ── */
+.desp-section {
+  background: var(--d-surface);
+  border: 1px solid var(--d-border);
+  border-radius: var(--d-radius);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+.desp-section-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+}
+.desp-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--d-muted); margin-bottom: 16px;
+}
+.desp-section-header .desp-section-title { margin-bottom: 0; }
+
+/* ── Grid saldos ── */
+.desp-saldos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+.desp-saldo-card {
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+}
+.desp-saldo-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 10px 10px 0 0;
+}
+.desp-saldo-nom {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--d-text); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.desp-saldo-avatar {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.desp-saldo-pagat {
+  font-size: 0.68rem; color: var(--d-muted);
+  font-family: 'Inter', sans-serif; margin-bottom: 8px;
+}
+.desp-saldo-resultat {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+}
+.desp-saldo-resultat.positiu { color: var(--d-green); }
+.desp-saldo-resultat.negatiu { color: var(--d-red); }
+.desp-saldo-resultat.zero    { color: var(--d-muted); }
+.desp-saldo-sublbl {
+  font-size: 0.6rem; color: var(--d-muted);
+  font-family: 'Inter', sans-serif; margin-top: 2px;
+}
+.desp-saldo-card.no-grup {
+  opacity: 0.55;
+}
+
+/* ── Liquidació ── */
+.desp-liquidacio-wrap {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.desp-liquidacio-item {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(0,0,0,0.15);
+  border: 1px solid var(--d-border);
+  border-radius: 10px; padding: 12px 16px;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem;
+}
+.desp-liq-de   { font-weight: 600; }
+.desp-liq-arrow { color: var(--d-muted); font-size: 1rem; }
+.desp-liq-a    { font-weight: 600; }
+.desp-liq-import {
+  margin-left: auto;
+  font-weight: 700; font-size: 1rem;
+  color: var(--d-gold);
+}
+.desp-liquidacio-ok {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; color: var(--d-green);
+  text-align: center; padding: 12px;
+}
+
+/* ── Filtres ── */
+.desp-filtres {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.desp-filtre {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px;
+  border: 1px solid rgba(106,171,122,0.2);
+  background: none; color: var(--d-muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.desp-filtre:hover  { border-color: var(--d-green); color: var(--d-green2); }
+.desp-filtre.actiu  { background: var(--d-green3); border-color: var(--d-green); color: var(--d-green2); }
+
+/* ── Botó afegir ── */
+.desp-btn-add {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  background: linear-gradient(135deg, var(--d-green3), var(--d-green));
+  color: #fff; border: none;
+  padding: 8px 18px; border-radius: 24px;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 3px 12px rgba(106,171,122,0.3);
+}
+.desp-btn-add:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 18px rgba(106,171,122,0.45);
+}
+
+/* ── Llista despeses ── */
+.desp-llista { display: flex; flex-direction: column; gap: 8px; }
+
+.desp-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0,0,0,0.12);
+  border: 1px solid var(--d-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  transition: border-color 0.2s;
+  animation: fadeIn 0.3s ease both;
+}
+.desp-item:hover { border-color: rgba(106,171,122,0.3); }
+@keyframes fadeIn {
+  from { opacity:0; transform: translateY(6px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.desp-item-cat {
+  font-size: 1.1rem; line-height: 1;
+  width: 28px; text-align: center;
+}
+.desp-item-info { min-width: 0; }
+.desp-item-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem; font-weight: 500;
+  color: var(--d-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.desp-item-meta {
+  font-size: 0.68rem; color: var(--d-muted);
+  font-family: 'Inter', sans-serif;
+  margin-top: 2px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.desp-item-pagador {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.desp-item-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%; flex-shrink: 0;
+}
+.desp-item-import {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--d-text); white-space: nowrap;
+}
+.desp-item-import-per {
+  font-size: 0.65rem; color: var(--d-muted);
+  text-align: right; margin-top: 1px;
+  font-family: 'Inter', sans-serif;
+}
+.desp-item-accions {
+  display: flex; gap: 4px;
+}
+.desp-item-btn {
+  background: none; border: none;
+  color: var(--d-muted); cursor: pointer;
+  font-size: 0.85rem; padding: 4px 6px;
+  border-radius: 6px; transition: all 0.15s;
+}
+.desp-item-btn:hover { background: rgba(255,255,255,0.06); color: var(--d-text); }
+.desp-item-btn.del:hover { color: var(--d-red); }
+
+.desp-total-row {
+  display: flex; justify-content: flex-end;
+  padding: 10px 4px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem; color: var(--d-muted);
+  border-top: 1px solid var(--d-border);
+  margin-top: 4px;
+  gap: 8px;
+}
+.desp-total-row strong { color: var(--d-gold); font-size: 0.95rem; }
+
+/* ── Modal ── */
+.desp-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(5,12,24,0.82);
+  z-index: 1000; backdrop-filter: blur(4px);
+}
+.desp-modal-overlay.open { display: block; }
+.desp-modal {
+  display: none; position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 500px);
+  background: #111e30;
+  border: 1px solid rgba(106,171,122,0.25);
+  border-radius: var(--d-radius);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  z-index: 1001; overflow: hidden;
+}
+.desp-modal.open { display: block; }
+.desp-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(106,171,122,0.12);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--d-green2);
+}
+.desp-modal-close {
+  background: none; border: none;
+  color: var(--d-muted); font-size: 1rem;
+  cursor: pointer; padding: 2px 6px;
+}
+.desp-modal-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+.desp-field { display: flex; flex-direction: column; gap: 5px; }
+.desp-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.desp-field label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--d-muted);
+}
+.desp-label-hint {
+  font-weight: 400; text-transform: none;
+  letter-spacing: 0; font-size: 0.65rem;
+}
+.desp-field input,
+.desp-field select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(106,171,122,0.2);
+  border-radius: 8px; color: var(--d-text);
+  font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  padding: 8px 12px; outline: none;
+  transition: border-color 0.2s;
+}
+.desp-field input:focus,
+.desp-field select:focus { border-color: var(--d-green); }
+.desp-field select option { background: #111e30; }
+
+/* Botons categoria */
+.desp-cat-btns, .desp-part-btns {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.desp-cat-btn, .desp-part-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; font-weight: 500;
+  padding: 5px 12px; border-radius: 20px;
+  border: 1px solid rgba(106,171,122,0.2);
+  background: none; color: var(--d-muted);
+  cursor: pointer; transition: all 0.15s;
+}
+.desp-cat-btn.actiu, .desp-part-btn.actiu {
+  background: var(--d-green3);
+  border-color: var(--d-green);
+  color: var(--d-green2);
+}
+
+.desp-modal-footer {
+  display: flex; gap: 10px; justify-content: flex-end;
+  padding-top: 4px;
+}
+.desp-btn-secondary {
+  font-family: 'Inter', sans-serif; font-size: 0.85rem;
+  padding: 8px 18px; border-radius: 20px;
+  background: none; border: 1px solid rgba(106,171,122,0.2);
+  color: var(--d-muted); cursor: pointer;
+}
+.desp-btn-primary {
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600;
+  padding: 8px 22px; border-radius: 20px;
+  background: linear-gradient(135deg, var(--d-green3), var(--d-green));
+  border: none; color: #fff; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(106,171,122,0.3);
+}
+
+/* ── Colors persona ── */
+.color-Jordi { background-color: var(--c-jordi); }
+.color-Joa   { background-color: var(--c-joa); }
+.color-Mons  { background-color: var(--c-mons); }
+.color-Xu    { background-color: var(--c-xu); }
+.color-Anna  { background-color: var(--c-anna); }
+.color-Laia  { background-color: var(--c-laia); }
+
+.border-Jordi { border-color: rgba(231,76,60,0.35)!important; }
+.border-Joa   { border-color: rgba(243,156,18,0.35)!important; }
+.border-Mons  { border-color: rgba(142,68,173,0.35)!important; }
+.border-Xu    { border-color: rgba(41,128,185,0.35)!important; }
+.border-Anna  { border-color: rgba(230,126,34,0.35)!important; }
+.border-Laia  { border-color: rgba(39,174,96,0.35)!important; }
+
+.top-Jordi::before { background: var(--c-jordi)!important; }
+.top-Joa::before   { background: var(--c-joa)!important; }
+.top-Mons::before  { background: var(--c-mons)!important; }
+.top-Xu::before    { background: var(--c-xu)!important; }
+.top-Anna::before  { background: var(--c-anna)!important; }
+.top-Laia::before  { background: var(--c-laia)!important; }
+
+/* ── Mode clar ── */
+body.light .desp-main { background: #f4f7f4; }
+body.light .desp-section { background: #fff; border-color: rgba(45,90,61,0.15); }
+body.light .desp-item { background: rgba(0,0,0,0.03); }
+body.light .desp-modal { background: #fff; }
+body.light .desp-field input,
+body.light .desp-field select { background: #f4f7f4; color: #1a3a2a; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .desp-saldos-grid { grid-template-columns: repeat(3, 1fr); }
+  .desp-item { grid-template-columns: auto 1fr auto; }
+  .desp-item-accions { display: none; }
+  .desp-field-row { grid-template-columns: 1fr; }
+}

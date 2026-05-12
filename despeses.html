@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despeses · Açores 2026</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/despeses.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
+    <a href="mapes.html" class="nav-item">Mapes</a>
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="logistica.html" class="nav-item">Logística</a>
+    <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="restaurants.html" class="nav-item">Restaurants</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="jocs.html" class="nav-item">Jocs</a>
+    <a href="reptes.html" class="nav-item">Reptes</a>
+    <a href="ruleta.html" class="nav-item">Ruleta</a>
+    <a href="despeses.html" class="nav-item active">Despeses</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+  <div class="nav-id-wrap" id="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
+    <div class="nav-id-menu" id="nav-id-menu"></div>
+  </div>
+</nav>
+
+<main class="desp-main">
+
+  <header class="desp-hero">
+    <div class="desp-hero-glow"></div>
+    <div class="desp-hero-content">
+      <p class="desp-hero-eyebrow">Açores 2026</p>
+      <h1 class="desp-hero-title">Control de despeses</h1>
+      <p class="desp-hero-sub">Jordi · Joa · Mons · Xu <span class="desp-hero-plus">+ Anna · Laia</span></p>
+    </div>
+  </header>
+
+  <div class="desp-wrap">
+
+    <!-- SALDOS PERSONALS -->
+    <section class="desp-section">
+      <div class="desp-section-title">💰 Saldos actuals</div>
+      <div id="despSaldos" class="desp-saldos-grid"></div>
+    </section>
+
+    <!-- LIQUIDACIÓ -->
+    <section class="desp-section" id="secLiquidacio">
+      <div class="desp-section-title">🔄 Liquidació</div>
+      <div id="despLiquidacio" class="desp-liquidacio-wrap"></div>
+    </section>
+
+    <!-- CONTROLS + LLISTA -->
+    <section class="desp-section">
+      <div class="desp-section-header">
+        <div class="desp-section-title">📋 Totes les despeses</div>
+        <button class="desp-btn-add" id="btnAfegir">+ Nova despesa</button>
+      </div>
+      <div class="desp-filtres" id="despFiltres">
+        <button class="desp-filtre actiu" data-cat="totes">Totes</button>
+        <button class="desp-filtre" data-cat="transport">✈️ Transport</button>
+        <button class="desp-filtre" data-cat="allotjament">🏠 Allotjament</button>
+        <button class="desp-filtre" data-cat="menjar">🍽️ Menjar</button>
+        <button class="desp-filtre" data-cat="activitat">🎒 Activitats</button>
+        <button class="desp-filtre" data-cat="altres">📦 Altres</button>
+      </div>
+      <div id="despLlista" class="desp-llista"></div>
+    </section>
+
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="desp-modal-overlay" id="despModalOverlay"></div>
+<div class="desp-modal" id="despModal">
+  <div class="desp-modal-header">
+    <span id="despModalTitol">Nova despesa</span>
+    <button class="desp-modal-close" id="despModalClose">✕</button>
+  </div>
+  <div class="desp-modal-body">
+    <input type="hidden" id="fId" />
+    <div class="desp-field">
+      <label>Descripció</label>
+      <input type="text" id="fDesc" placeholder="Ex: Sopar a Furnas" autocomplete="off" />
+    </div>
+    <div class="desp-field-row">
+      <div class="desp-field">
+        <label>Import (€)</label>
+        <input type="number" id="fImport" step="0.01" min="0" placeholder="0.00" />
+      </div>
+      <div class="desp-field">
+        <label>Pagador</label>
+        <select id="fPagador">
+          <option value="Jordi">Jordi</option>
+          <option value="Joa">Joa</option>
+          <option value="Mons">Mons</option>
+          <option value="Xu">Xu</option>
+          <option value="Anna">Anna</option>
+          <option value="Laia">Laia</option>
+        </select>
+      </div>
+    </div>
+    <div class="desp-field">
+      <label>Categoria</label>
+      <div class="desp-cat-btns" id="fCatBtns">
+        <button class="desp-cat-btn actiu" data-cat="transport">✈️ Transport</button>
+        <button class="desp-cat-btn" data-cat="allotjament">🏠 Allotjament</button>
+        <button class="desp-cat-btn" data-cat="menjar">🍽️ Menjar</button>
+        <button class="desp-cat-btn" data-cat="activitat">🎒 Activitat</button>
+        <button class="desp-cat-btn" data-cat="altres">📦 Altres</button>
+      </div>
+      <input type="hidden" id="fCat" value="transport" />
+    </div>
+    <div class="desp-field-row">
+      <div class="desp-field">
+        <label>Data</label>
+        <input type="date" id="fData" />
+      </div>
+      <div class="desp-field">
+        <label>Illa</label>
+        <select id="fIlla">
+          <option value="">— General —</option>
+          <option value="São Miguel">São Miguel</option>
+          <option value="São Jorge">São Jorge</option>
+          <option value="Pico">Pico</option>
+          <option value="Faial">Faial</option>
+        </select>
+      </div>
+    </div>
+    <div class="desp-field">
+      <label>Participants <span class="desp-label-hint">(qui paga aquesta despesa a parts iguals)</span></label>
+      <div class="desp-part-btns" id="fPartBtns">
+        <button class="desp-part-btn actiu" data-nom="Jordi">Jordi</button>
+        <button class="desp-part-btn actiu" data-nom="Joa">Joa</button>
+        <button class="desp-part-btn actiu" data-nom="Mons">Mons</button>
+        <button class="desp-part-btn actiu" data-nom="Xu">Xu</button>
+        <button class="desp-part-btn" data-nom="Anna">Anna</button>
+        <button class="desp-part-btn" data-nom="Laia">Laia</button>
+      </div>
+    </div>
+    <div class="desp-modal-footer">
+      <button class="desp-btn-secondary" id="despBtnCancel">Cancel·lar</button>
+      <button class="desp-btn-primary" id="despBtnSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="main-footer">
+  <p class="footer-title">Estiu 2026 · Illes Açores</p>
+  <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script>
+<script src="js/despeses.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
