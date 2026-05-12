@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Allotjaments · Açores 2026</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/allotjament.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV (igual que la resta de la app) -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <a href="index.html">
+        <span class="nav-emoji">🌋</span>
+        <span class="nav-title">Açores 2026</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="temps.html">🌤 Temps</a>
+      <a href="webcams.html">📷 Webcams</a>
+      <a href="restaurants.html">🍽 Restaurants</a>
+      <a href="allotjament.html" class="active">🏠 Allotjaments</a>
+      <a href="jocs.html">🎮 Jocs</a>
+      <a href="reptes.html">🏅 Reptes</a>
+      <a href="ruleta.html">🎡 Ruleta</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" title="Canvia tema">🌙</button>
+      <div class="avatar-wrap" id="avatarWrap">
+        <img src="img/avatars/convidat.png" class="avatar-nav" id="avatarNav" alt="avatar" />
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <div class="avatar-option" data-nom="Anna">Anna</div>
+          <div class="avatar-option" data-nom="Jordi">Jordi</div>
+          <div class="avatar-option" data-nom="Laia">Laia</div>
+          <div class="avatar-option" data-nom="Mons">Mons</div>
+          <div class="avatar-option" data-nom="Xu">Xu</div>
+          <div class="avatar-option" data-nom="Joa">Joa</div>
+          <hr />
+          <div class="avatar-option" data-nom="">Convidat</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="allot-main">
+
+    <!-- CAPÇALERA -->
+    <header class="allot-hero">
+      <div class="allot-hero-inner">
+        <div class="allot-hero-icon">🏠</div>
+        <h1 class="allot-hero-title">Els nostres allotjaments</h1>
+        <p class="allot-hero-sub">4 cases · 4 illes · 9 nits de viatge</p>
+        <!-- Timeline visual del viatge -->
+        <div class="allot-timeline">
+          <div class="tl-item tl-active" data-idx="0">
+            <div class="tl-dot"></div>
+            <div class="tl-label">São Miguel</div>
+            <div class="tl-dates">22–24 jul</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item" data-idx="1">
+            <div class="tl-dot"></div>
+            <div class="tl-label">São Miguel</div>
+            <div class="tl-dates">24–28 jul</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item" data-idx="2">
+            <div class="tl-dot"></div>
+            <div class="tl-label">Pico</div>
+            <div class="tl-dates">28–31 jul</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-item" data-idx="3">
+            <div class="tl-dot"></div>
+            <div class="tl-label">Faial</div>
+            <div class="tl-dates">31 jul–2 ago</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CARDS ALLOTJAMENTS -->
+    <div class="allot-cards" id="allotCards"></div>
+
+  </main>
+
+  <!-- MODAL MAPA GRAN -->
+  <div class="map-modal" id="mapModal">
+    <div class="map-modal-inner">
+      <div class="map-modal-header">
+        <span class="map-modal-title" id="mapModalTitle"></span>
+        <button class="map-modal-close" id="mapModalClose">✕</button>
+      </div>
+      <div id="mapModalMap" style="width:100%;height:420px;border-radius:0 0 12px 12px;"></div>
+      <div class="map-route-info" id="mapRouteInfo" style="display:none;">
+        <span id="routeDistance">—</span>
+        <span id="routeDuration">—</span>
+        <a id="routeExternal" href="#" target="_blank" class="btn-ruta-externa">Obre a Google Maps 🗺</a>
+      </div>
+    </div>
+  </div>
+  <div class="map-modal-overlay" id="mapModalOverlay"></div>
+
+  <!-- MODAL GALERIA FOTOS -->
+  <div class="foto-modal" id="fotoModal">
+    <button class="foto-modal-close" id="fotoModalClose">✕</button>
+    <button class="foto-modal-nav foto-prev" id="fotoPrev">‹</button>
+    <img src="" alt="" id="fotoModalImg" />
+    <button class="foto-modal-nav foto-next" id="fotoNext">›</button>
+    <div class="foto-modal-counter" id="fotoCounter"></div>
+  </div>
+  <div class="foto-modal-overlay" id="fotoModalOverlay"></div>
+
+  <script src="js/app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/allotjament.js"></script>
+</body>
+</html>

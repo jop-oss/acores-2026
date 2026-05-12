@@ -1,0 +1,591 @@
+/* ============================================================
+   ALLOTJAMENT.CSS  ·  Açores 2026
+   ============================================================ */
+
+/* ---------- Variables locals ---------- */
+:root {
+  --allot-card-bg:    rgba(255,255,255,0.04);
+  --allot-card-border:rgba(106,171,122,0.18);
+  --allot-accent:     #6aab7a;
+  --allot-accent2:    #a8d8b0;
+  --allot-gold:       #f5c842;
+  --allot-text:       #e8f0ec;
+  --allot-muted:      #8ca89a;
+  --allot-pill-bg:    rgba(45,90,61,0.55);
+  --allot-shadow:     0 8px 40px rgba(0,0,0,0.45);
+  --allot-radius:     16px;
+}
+
+/* ---------- Layout principal ---------- */
+.allot-main {
+  padding-top: 64px;
+  min-height: 100vh;
+  background: var(--bg-primary, #0a1628);
+}
+
+/* ---------- Hero ---------- */
+.allot-hero {
+  position: relative;
+  padding: 56px 24px 40px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(45,90,61,0.22) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(106,171,122,0.12);
+}
+.allot-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(106,171,122,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.allot-hero-icon { font-size: 3rem; line-height:1; margin-bottom: 10px; }
+.allot-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--allot-accent2);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+.allot-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--allot-muted);
+  margin: 0 0 32px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Timeline ---------- */
+.allot-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.tl-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.tl-item:hover { background: rgba(106,171,122,0.10); }
+.tl-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--allot-muted);
+  border: 2px solid var(--allot-muted);
+  margin-bottom: 6px;
+  transition: all 0.2s;
+}
+.tl-item.tl-active .tl-dot {
+  background: var(--allot-accent);
+  border-color: var(--allot-accent);
+  box-shadow: 0 0 10px var(--allot-accent);
+}
+.tl-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--allot-muted);
+  white-space: nowrap;
+}
+.tl-item.tl-active .tl-label { color: var(--allot-accent2); }
+.tl-dates {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: var(--allot-muted);
+  opacity: 0.7;
+}
+.tl-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--allot-accent) 0%, rgba(106,171,122,0.25) 100%);
+  min-width: 20px;
+  max-width: 60px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Cards container ---------- */
+.allot-cards {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ---------- Card individual ---------- */
+.allot-card {
+  background: var(--allot-card-bg);
+  border: 1px solid var(--allot-card-border);
+  border-radius: var(--allot-radius);
+  overflow: hidden;
+  box-shadow: var(--allot-shadow);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeInUp 0.5s ease both;
+}
+.allot-card:nth-child(2) { animation-delay: 0.1s; }
+.allot-card:nth-child(3) { animation-delay: 0.2s; }
+.allot-card:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* --- Top band amb carrusel de fotos --- */
+.allot-fotos {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.allot-fotos-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.allot-fotos-track img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.allot-fotos-prev, .allot-fotos-next {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(10,22,40,0.65);
+  border: none; color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem; line-height: 36px; text-align:center;
+  cursor: pointer; z-index: 2;
+  transition: background 0.2s;
+}
+.allot-fotos-prev:hover, .allot-fotos-next:hover { background: rgba(106,171,122,0.8); }
+.allot-fotos-prev { left: 10px; }
+.allot-fotos-next { right: 10px; }
+.allot-fotos-dots {
+  position: absolute;
+  bottom: 10px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 5px;
+}
+.allot-fotos-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: background 0.2s, transform 0.2s;
+}
+.allot-fotos-dot.actiu {
+  background: var(--allot-accent);
+  transform: scale(1.3);
+}
+.allot-fotos-expand {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(10,22,40,0.65);
+  border: none; color: #fff;
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 0.75rem; cursor: pointer; z-index: 2;
+}
+.allot-fotos-badge {
+  position: absolute; bottom: 10px; right: 12px;
+  background: rgba(10,22,40,0.7);
+  color: #fff; font-size: 0.7rem;
+  padding: 2px 8px; border-radius: 10px;
+  pointer-events: none;
+}
+
+/* --- Puntuació estrella --- */
+.allot-rating-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: rgba(10,22,40,0.8);
+  border: 1px solid rgba(245,200,66,0.4);
+  color: var(--allot-gold);
+  font-size: 0.82rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  z-index: 2;
+}
+
+/* --- Cos de la card --- */
+.allot-body {
+  padding: 24px 28px 28px;
+}
+
+/* Capçalera de la card */
+.allot-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.allot-card-titles { flex: 1; min-width: 0; }
+.allot-card-nom {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--allot-accent2);
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+.allot-card-illa {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--allot-pill-bg);
+  border: 1px solid rgba(106,171,122,0.3);
+  color: var(--allot-accent);
+  font-size: 0.78rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.allot-card-tipus {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem; color: var(--allot-muted);
+  margin-top: 4px;
+}
+.allot-card-booking a {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(0,112,201,0.15);
+  border: 1px solid rgba(0,112,201,0.35);
+  color: #6ab4f5;
+  font-size: 0.78rem; padding: 5px 12px; border-radius: 20px;
+  text-decoration: none; transition: background 0.2s;
+  white-space: nowrap;
+}
+.allot-card-booking a:hover { background: rgba(0,112,201,0.3); }
+
+/* Grid info principal */
+.allot-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.allot-info-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(106,171,122,0.10);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.allot-info-label {
+  font-size: 0.68rem;
+  color: var(--allot-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+  font-family: 'Inter', sans-serif;
+}
+.allot-info-val {
+  font-size: 0.92rem;
+  color: var(--allot-text);
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+.allot-info-val.highlight {
+  color: var(--allot-accent2);
+  font-weight: 600;
+}
+.allot-info-val.cost {
+  color: var(--allot-gold);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Adreca + telèfon */
+.allot-adresa-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 14px;
+}
+.allot-adresa-icon { font-size: 1rem; margin-top:2px; flex-shrink:0; }
+.allot-adresa-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: var(--allot-muted);
+  line-height: 1.45;
+}
+.allot-adresa-text a {
+  color: var(--allot-accent);
+  text-decoration: none;
+}
+.allot-adresa-text a:hover { text-decoration: underline; }
+
+/* Equipament pills */
+.allot-equipament {
+  margin-bottom: 20px;
+}
+.allot-equip-title {
+  font-size: 0.72rem;
+  color: var(--allot-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.allot-equip-pills {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.allot-equip-pill {
+  background: rgba(45,90,61,0.35);
+  border: 1px solid rgba(106,171,122,0.20);
+  color: var(--allot-accent2);
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+}
+.allot-equip-more {
+  color: var(--allot-muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  background: none; border: none;
+  text-decoration: underline;
+  padding: 3px 0; align-self: center;
+}
+
+/* Reserva strip */
+.allot-reserva-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  background: rgba(45,90,61,0.15);
+  border: 1px solid rgba(106,171,122,0.15);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+}
+.allot-reserva-item { color: var(--allot-muted); }
+.allot-reserva-item strong { color: var(--allot-text); margin-left: 4px; }
+.allot-cancel {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.allot-cancel.gratuita {
+  background: rgba(106,171,122,0.2);
+  color: var(--allot-accent);
+  border: 1px solid rgba(106,171,122,0.3);
+}
+.allot-cancel.no-refund {
+  background: rgba(220,80,80,0.15);
+  color: #e07070;
+  border: 1px solid rgba(220,80,80,0.3);
+}
+
+/* Botons d'acció */
+.allot-actions {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.btn-allot {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px;
+  border-radius: 24px;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-allot-primary {
+  background: linear-gradient(135deg, #2d5a3d, #6aab7a);
+  color: #fff;
+  box-shadow: 0 3px 14px rgba(106,171,122,0.35);
+}
+.btn-allot-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(106,171,122,0.5);
+}
+.btn-allot-secondary {
+  background: rgba(255,255,255,0.06);
+  color: var(--allot-accent2);
+  border: 1px solid rgba(106,171,122,0.25);
+}
+.btn-allot-secondary:hover {
+  background: rgba(106,171,122,0.12);
+}
+
+/* ---------- Secció mapa petit dins card ---------- */
+.allot-map-wrap {
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(106,171,122,0.15);
+  position: relative;
+}
+.allot-map-mini {
+  height: 200px;
+  width: 100%;
+}
+.allot-map-overlay-btn {
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(10,22,40,0.82);
+  color: var(--allot-accent2);
+  border: 1px solid rgba(106,171,122,0.3);
+  padding: 5px 12px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; z-index: 450;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------- Secció distàncies ---------- */
+.allot-distancies {
+  margin-bottom: 20px;
+}
+.allot-dist-title {
+  font-size: 0.72rem;
+  color: var(--allot-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+}
+.allot-dist-list {
+  display: flex; flex-direction: column; gap: 5px;
+}
+.allot-dist-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(106,171,122,0.08);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+}
+.allot-dist-nom {
+  display: flex; align-items: center; gap: 7px;
+  color: var(--allot-text); flex: 1;
+}
+.allot-dist-nom span { font-size: 1rem; }
+.allot-dist-km {
+  color: var(--allot-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.allot-dist-link {
+  display: inline-flex; align-items: center;
+  color: var(--allot-accent); font-size: 0.8rem;
+  text-decoration: none; padding: 2px 8px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+.allot-dist-link:hover { background: rgba(106,171,122,0.12); }
+
+/* ---------- Modal mapa gran ---------- */
+.map-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(5,12,24,0.80);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+.map-modal {
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90vw, 700px);
+  z-index: 1001;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(106,171,122,0.25);
+}
+.map-modal-overlay.open,
+.map-modal.open { display: block; }
+.map-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #111e30;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(106,171,122,0.15);
+}
+.map-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--allot-accent2);
+}
+.map-modal-close {
+  background: none; border: none; color: var(--allot-muted);
+  font-size: 1.1rem; cursor: pointer; padding: 2px 6px;
+}
+.map-modal-close:hover { color: #fff; }
+.map-route-info {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: #111e30;
+  padding: 10px 20px;
+  border-top: 1px solid rgba(106,171,122,0.15);
+  font-family: 'Inter', sans-serif; font-size: 0.85rem;
+  color: var(--allot-text);
+}
+.map-route-info span { background: rgba(106,171,122,0.12); padding: 3px 10px; border-radius: 8px; }
+.btn-ruta-externa {
+  margin-left: auto;
+  background: linear-gradient(135deg, #2d5a3d, #6aab7a);
+  color: #fff; padding: 5px 14px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600; text-decoration: none;
+}
+
+/* ---------- Modal fotos ---------- */
+.foto-modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 2000;
+}
+.foto-modal {
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 2001;
+  width: min(92vw, 860px);
+  text-align: center;
+}
+.foto-modal-overlay.open,
+.foto-modal.open { display: flex; align-items: center; }
+.foto-modal { flex-direction: column; }
+.foto-modal img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.foto-modal-close {
+  position: absolute; top: -40px; right: 0;
+  background: none; border: none; color: #fff;
+  font-size: 1.5rem; cursor: pointer;
+}
+.foto-modal-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none; color: #fff;
+  width: 44px; height: 44px; border-radius: 50%;
+  font-size: 1.5rem; cursor: pointer; z-index: 10;
+}
+.foto-prev { left: -54px; }
+.foto-next { right: -54px; }
+.foto-modal-counter {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.8rem; margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .allot-body { padding: 18px 16px 20px; }
+  .allot-info-grid { grid-template-columns: 1fr 1fr; }
+  .allot-fotos { height: 200px; }
+  .allot-card-header { flex-direction: column; gap: 8px; }
+  .allot-reserva-strip { flex-direction: column; align-items: flex-start; }
+  .allot-timeline { gap: 0; }
+  .tl-line { min-width: 12px; }
+  .foto-prev { left: -10px; }
+  .foto-next { right: -10px; }
+}
