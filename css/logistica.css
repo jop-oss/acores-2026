@@ -1,0 +1,560 @@
+/* ============================================================
+   LOGISTICA.CSS  ·  Açores 2026
+   ============================================================ */
+
+:root {
+  --log-bg:        #0a1628;
+  --log-vol:       #3b82f6;
+  --log-vol-soft:  rgba(59,130,246,0.12);
+  --log-vol-border:rgba(59,130,246,0.3);
+  --log-ferri:     #06b6d4;
+  --log-ferri-soft:rgba(6,182,212,0.12);
+  --log-ferri-border:rgba(6,182,212,0.3);
+  --log-cotxe:     #f59e0b;
+  --log-cotxe-soft:rgba(245,158,11,0.12);
+  --log-cotxe-border:rgba(245,158,11,0.3);
+  --log-green:     #6aab7a;
+  --log-green2:    #a8d8b0;
+  --log-text:      #e8f0ec;
+  --log-muted:     #7a9e8a;
+  --log-surface:   rgba(255,255,255,0.04);
+  --log-line:      rgba(106,171,122,0.15);
+  --log-radius:    14px;
+}
+
+/* ── Layout ── */
+.log-main { min-height: 100vh; background: var(--log-bg); }
+
+/* ── Hero ── */
+.log-hero {
+  position: relative;
+  padding: 56px 24px 44px;
+  text-align: center;
+  overflow: hidden;
+}
+.log-hero-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% -5%, rgba(59,130,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 20% 100%, rgba(45,90,61,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+.log-hero-content { position: relative; z-index: 1; }
+.log-hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--log-muted);
+  margin-bottom: 10px;
+}
+.log-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--log-green2);
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+.log-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--log-muted);
+  margin: 0 0 24px;
+}
+.log-hero-pills {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.log-hero-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 24px;
+  border: 1px solid;
+}
+.log-pill-vol   { background: var(--log-vol-soft);   border-color: var(--log-vol-border);   color: #93c5fd; }
+.log-pill-ferri { background: var(--log-ferri-soft); border-color: var(--log-ferri-border); color: #67e8f9; }
+.log-pill-cotxe { background: var(--log-cotxe-soft); border-color: var(--log-cotxe-border); color: #fcd34d; }
+
+/* ── Wrap principal ── */
+.log-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ── Timeline ── */
+.log-timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.log-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(59,130,246,0.5) 0%,
+    rgba(6,182,212,0.4) 40%,
+    rgba(245,158,11,0.4) 70%,
+    rgba(106,171,122,0.2) 100%);
+}
+
+/* ── Dia separator ── */
+.log-dia {
+  position: relative;
+  margin-bottom: 8px;
+  margin-top: 32px;
+}
+.log-dia:first-child { margin-top: 0; }
+.log-dia-badge {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px; height: 24px;
+  background: #1a3a2a;
+  border: 2px solid var(--log-green);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem;
+  color: var(--log-green);
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  z-index: 2;
+}
+.log-dia-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--log-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 6px 0 6px 4px;
+  border-bottom: 1px solid var(--log-line);
+  margin-bottom: 12px;
+}
+
+/* ── Node de transport ── */
+.log-node {
+  position: relative;
+  margin-bottom: 14px;
+  animation: fadeIn 0.4s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.log-node-dot {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  z-index: 2;
+  box-shadow: 0 0 0 3px var(--log-bg);
+}
+.log-node-dot.vol   { background: var(--log-vol);   }
+.log-node-dot.ferri { background: var(--log-ferri); }
+.log-node-dot.cotxe { background: var(--log-cotxe); }
+
+/* ── Cards ── */
+.log-card {
+  border-radius: var(--log-radius);
+  padding: 18px 20px;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+}
+.log-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--log-radius) var(--log-radius) 0 0;
+}
+.log-card.vol   { background: var(--log-vol-soft);   border-color: var(--log-vol-border);   }
+.log-card.vol::before   { background: var(--log-vol);   }
+.log-card.ferri { background: var(--log-ferri-soft); border-color: var(--log-ferri-border); }
+.log-card.ferri::before { background: var(--log-ferri); }
+.log-card.cotxe { background: var(--log-cotxe-soft); border-color: var(--log-cotxe-border); }
+.log-card.cotxe::before { background: var(--log-cotxe); }
+
+/* Card header */
+.log-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.log-card-tipo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.vol   .log-card-tipo { background: rgba(59,130,246,0.2);  color: #93c5fd; }
+.ferri .log-card-tipo { background: rgba(6,182,212,0.2);   color: #67e8f9; }
+.cotxe .log-card-tipo { background: rgba(245,158,11,0.2);  color: #fcd34d; }
+
+.log-card-ruta {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--log-text);
+  font-weight: 700;
+  flex: 1;
+}
+.log-card-companyia {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--log-muted);
+  margin-left: auto;
+}
+
+/* Horaris principals */
+.log-horaris {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 14px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.log-hora-bloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+.log-hora {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.vol   .log-hora { color: #93c5fd; }
+.ferri .log-hora { color: #67e8f9; }
+.cotxe .log-hora { color: #fcd34d; }
+.log-hora-lloc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: var(--log-muted);
+  margin-top: 3px;
+  text-align: center;
+}
+.log-hora-arrow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+.log-hora-durada {
+  font-size: 0.68rem;
+  color: var(--log-muted);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 4px;
+}
+.log-hora-line {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: visible;
+}
+.log-hora-line::after {
+  content: '›';
+  position: absolute;
+  right: -4px;
+  top: -8px;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.9rem;
+}
+.log-hora-canvas {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 40px;
+  pointer-events: none;
+  overflow: visible;
+}
+.log-hora-canvas-ferri {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 36px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Info extra */
+.log-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.log-info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--log-muted);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.log-info-chip strong { color: var(--log-text); }
+
+/* Escala badge */
+.log-escala-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: #fcd34d;
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Cotxes: parella */
+.log-cotxes-parella {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media (max-width: 500px) {
+  .log-cotxes-parella { grid-template-columns: 1fr; }
+}
+.log-cotxe-unitat {
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  min-height: 100px;
+  background: rgba(0,0,0,0.2);
+}
+.log-cotxe-unitat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5,12,24,0.92) 0%,
+    rgba(5,12,24,0.65) 50%,
+    rgba(5,12,24,0.25) 100%
+  );
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.log-cotxe-num {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fcd34d;
+  margin-bottom: 4px;
+  font-family: 'Inter', sans-serif;
+}
+.log-cotxe-model {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--log-text);
+}
+.log-cotxe-detalls {
+  font-size: 0.7rem;
+  color: var(--log-muted);
+  margin-top: 3px;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+/* Durada cotxe (barra) */
+.log-cotxe-periode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+}
+.log-cotxe-periode-inici,
+.log-cotxe-periode-fi {
+  color: var(--log-muted);
+  white-space: nowrap;
+}
+.log-cotxe-periode-barra {
+  flex: 1;
+  height: 4px;
+  background: rgba(245,158,11,0.2);
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+}
+.log-cotxe-periode-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--log-cotxe), rgba(245,158,11,0.5));
+  border-radius: 2px;
+  width: 100%;
+}
+.log-cotxe-dies-badge {
+  background: rgba(245,158,11,0.15);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: #fcd34d;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Resum econòmic ── */
+.log-resum {
+  margin-top: 48px;
+  background: var(--log-surface);
+  border: 1px solid var(--log-line);
+  border-radius: var(--log-radius);
+  padding: 24px 28px;
+}
+.log-resum-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--log-green2);
+  margin-bottom: 20px;
+}
+.log-resum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.log-resum-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--log-line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.log-resum-item-lbl {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--log-muted);
+  margin-bottom: 4px;
+  font-family: 'Inter', sans-serif;
+}
+.log-resum-item-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--log-text);
+}
+.log-resum-item-val.total {
+  color: #fcd34d;
+  font-size: 1.3rem;
+}
+.log-resum-item-sub {
+  font-size: 0.68rem;
+  color: var(--log-muted);
+  margin-top: 2px;
+  font-family: 'Inter', sans-serif;
+}
+.log-resum-item-preu {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--log-green);
+  margin-top: 6px;
+}
+
+/* Costos per cotxe */
+.log-cotxes-costos {
+  margin-top: 16px;
+  border-top: 1px solid var(--log-line);
+  padding-top: 16px;
+}
+.log-cotxes-costos-titol {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--log-muted);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 10px;
+}
+.log-cotxes-costos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.log-cotxe-cost-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+}
+.log-cotxe-cost-nom {
+  flex: 1;
+  color: var(--log-muted);
+}
+.log-cotxe-cost-pagat {
+  color: var(--log-green);
+  font-weight: 600;
+  min-width: 60px;
+  text-align: right;
+}
+.log-cotxe-cost-pendent {
+  color: #f87171;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: right;
+}
+.log-cotxe-cost-diposit {
+  color: var(--log-muted);
+  min-width: 70px;
+  text-align: right;
+}
+
+/* ── Mode clar ── */
+body.light .log-main { background: #f4f7f4; }
+body.light .log-card { border-width: 1px; }
+body.light .log-card.vol   { background: rgba(59,130,246,0.06); }
+body.light .log-card.ferri { background: rgba(6,182,212,0.06); }
+body.light .log-card.cotxe { background: rgba(245,158,11,0.06); }
+body.light .log-card-ruta { color: #1a3a2a; }
+body.light .log-resum { background: #fff; border-color: rgba(45,90,61,0.2); }
+body.light .log-hero-title { color: #1a3a2a; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .log-timeline { padding-left: 32px; }
+  .log-timeline::before { left: 9px; }
+  .log-node-dot, .log-dia-badge { left: -32px; }
+  .log-card { padding: 14px 16px; }
+  .log-hora { font-size: 1.1rem; }
+  .log-resum { padding: 18px 16px; }
+}
