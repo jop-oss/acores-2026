@@ -51,17 +51,31 @@
 
   <div class="desp-wrap">
 
-    <!-- SALDOS PERSONALS -->
-    <section class="desp-section">
-      <div class="desp-section-title">💰 Saldos actuals</div>
-      <div id="despSaldos" class="desp-saldos-grid"></div>
-    </section>
+    <!-- SALDOS PERSONALS (col·lapsable) -->
+    <div class="desp-collapse-card" id="cardSaldos">
+      <div class="desp-collapse-header" onclick="toggleCollapse('cardSaldos')">
+        <span class="desp-collapse-icon">💰</span>
+        <span class="desp-collapse-titol">Saldos del grup</span>
+        <span class="desp-collapse-hint">Clica per veure</span>
+        <span class="desp-collapse-arrow">›</span>
+      </div>
+      <div class="desp-collapse-body">
+        <div id="despSaldos" class="desp-saldos-grid"></div>
+      </div>
+    </div>
 
-    <!-- LIQUIDACIÓ -->
-    <section class="desp-section" id="secLiquidacio">
-      <div class="desp-section-title">🔄 Liquidació</div>
-      <div id="despLiquidacio" class="desp-liquidacio-wrap"></div>
-    </section>
+    <!-- LIQUIDACIÓ (col·lapsable) -->
+    <div class="desp-collapse-card" id="cardLiquidacio">
+      <div class="desp-collapse-header" onclick="toggleCollapse('cardLiquidacio')">
+        <span class="desp-collapse-icon">🔄</span>
+        <span class="desp-collapse-titol">Qui deu a qui</span>
+        <span class="desp-collapse-hint">Clica per veure</span>
+        <span class="desp-collapse-arrow">›</span>
+      </div>
+      <div class="desp-collapse-body">
+        <div id="despLiquidacio" class="desp-liquidacio-wrap"></div>
+      </div>
+    </div>
 
     <!-- CONTROLS + LLISTA -->
     <section class="desp-section">

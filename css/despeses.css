@@ -63,6 +63,53 @@
   font-size: 0.8rem;
 }
 
+/* ── Cards col·lapsables (saldos / liquidació) ── */
+.desp-collapse-card {
+  border: 1px solid var(--d-border);
+  border-radius: var(--d-radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.desp-collapse-card:hover { border-color: rgba(106,171,122,0.3); }
+.desp-collapse-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  cursor: pointer;
+  background: var(--d-surface);
+  user-select: none;
+}
+.desp-collapse-icon { font-size: 1rem; }
+.desp-collapse-titol {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--d-muted);
+}
+.desp-collapse-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem; color: rgba(106,171,122,0.4);
+  margin-left: 4px;
+  transition: opacity 0.2s;
+}
+.desp-collapse-card.obert .desp-collapse-hint { opacity: 0; }
+.desp-collapse-arrow {
+  margin-left: auto;
+  color: var(--d-muted); font-size: 1.1rem;
+  transition: transform 0.25s;
+  display: inline-block;
+}
+.desp-collapse-card.obert .desp-collapse-arrow { transform: rotate(90deg); }
+.desp-collapse-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.2s;
+  padding: 0 20px;
+}
+.desp-collapse-card.obert .desp-collapse-body {
+  max-height: 600px;
+  padding: 16px 20px 20px;
+}
+
 /* ── Seccions ── */
 .desp-section {
   background: var(--d-surface);

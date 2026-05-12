@@ -29,8 +29,8 @@ const CAT_EMOJI = {
    ────────────────────────────────────────────────────────── */
 const DESPESES_INICIALS = [
   // VOLS
-  { id: 'pre_v1', desc: 'Vols Ryanair (BCN–OPO) + SATA part', import: 1600.00, pagador: 'Mons', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
-  { id: 'pre_v2', desc: 'Vols Ryanair (resta) + TAP (LIS–BCN)', import: 874.86, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_v1', desc: 'Vols SATA (OPO–TER–PDL · PDL–SJZ · HOR–LIS) + part Ryanair', import: 1600.00, pagador: 'Mons', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_v2', desc: 'Vols Ryanair (BCN–OPO, resta) + TAP (LIS–BCN)', import: 874.86, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   // FERRIS
   { id: 'pre_f1', desc: 'Ferri Velas → Pico (Atlanticoline)', import: 98.60, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'São Jorge', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   { id: 'pre_f2', desc: 'Ferri Madalena → Horta (Atlanticoline)', import: 46.75, pagador: 'Jordi', cat: 'transport', data: '2026-07-31', illa: 'Pico', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
@@ -46,9 +46,11 @@ const DESPESES_INICIALS = [
   { id: 'pre_c4', desc: 'Cotxes Faial #1+#2 (Autatlantis)', import: 312.10, pagador: 'Jordi', cat: 'transport', data: '2026-07-31', illa: 'Faial', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
 ];
 
-/* ──────────────────────────────────────────────────────────
-   FIREBASE
-   ────────────────────────────────────────────────────────── */
+function toggleCollapse(id) {
+  document.getElementById(id).classList.toggle('obert');
+}
+
+
 let db;
 let despesesDinamiques = []; // Les de Firebase
 let filtreActiu = 'totes';
@@ -226,8 +228,8 @@ function renderLlista() {
         <div class="desp-item-import-per">${fmt(quota)} € / pers.</div>
       </div>
       <div class="desp-item-accions">
-        ${!d.pre ? `<button class="desp-item-btn" onclick="editaDespesa('${d.id}')">✏️</button>
-        <button class="desp-item-btn del" onclick="eliminaDespesa('${d.id}')">🗑</button>` : '<span style="font-size:0.65rem;color:var(--d-muted);padding:0 4px">pre</span>'}
+        <button class="desp-item-btn" onclick="editaDespesa('${d.id}')">✏️</button>
+        <button class="desp-item-btn del" onclick="eliminaDespesa('${d.id}')">🗑</button>
       </div>
     `;
     wrap.appendChild(item);
@@ -297,18 +299,26 @@ function guardaDespesa() {
   }
 
   const dades = { desc, import: import_, pagador, cat, data, illa, participants: parts, ts: Date.now() };
+  const esPre = DESPESES_INICIALS.some(d => d.id === editantId);
 
   if (db) {
-    if (editantId) {
+    if (editantId && !esPre) {
       db.collection('despeses').doc(editantId).update(dades);
+    } else if (editantId && esPre) {
+      // Pre-carregada editada: la guardem a Firebase amb un id que sobreescriu la pre
+      db.collection('despeses').doc(editantId).set(dades);
     } else {
       db.collection('despeses').add(dades);
     }
   } else {
-    // Mode local (sense Firebase)
     if (editantId) {
       const idx = despesesDinamiques.findIndex(d => d.id === editantId);
-      if (idx >= 0) despesesDinamiques[idx] = { id: editantId, ...dades };
+      if (idx >= 0) {
+        despesesDinamiques[idx] = { id: editantId, ...dades };
+      } else {
+        // Era pre-carregada, ara la guardem com a dinàmica
+        despesesDinamiques.push({ id: editantId, ...dades });
+      }
     } else {
       despesesDinamiques.push({ id: 'local_' + Date.now(), ...dades });
     }
@@ -318,7 +328,7 @@ function guardaDespesa() {
 }
 
 function editaDespesa(id) {
-  const d = despesesDinamiques.find(x => x.id === id);
+  const d = despesesDinamiques.find(x => x.id === id) || DESPESES_INICIALS.find(x => x.id === id);
   if (d) obreModal(d);
 }
 
