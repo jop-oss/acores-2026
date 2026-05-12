@@ -1,0 +1,405 @@
+/* ══════════════════════════════════════════════════════════════
+   REPTES DEL VIATGE · css/reptes.css
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+  --bg:     #0a1628;
+  --bg2:    #0f1f38;
+  --verd:   #2d5a3d;
+  --verd2:  #6aab7a;
+  --verd3:  #a8d8b0;
+  --gold:   #f0b429;
+  --text:   #e8f4ec;
+  --text2:  #9bbfaa;
+  --border: rgba(106,171,122,0.2);
+}
+
+body.light {
+  --bg:     #f0f4f0;
+  --bg2:    #ffffff;
+  --text:   #1a3a2a;
+  --text2:  #2d5a3d;
+  --border: rgba(45,90,61,0.2);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── Modal identificació ──────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none; align-items: center; justify-content: center;
+  z-index: 3000;
+  padding: 1rem;
+}
+.modal-overlay.visible { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  max-width: 360px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  gap: .75rem; text-align: center;
+}
+.modal-icon { font-size: 2rem; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; }
+.modal-text  { font-size: .88rem; color: var(--text2); }
+.modal-btns  { display: flex; gap: .5rem; width: 100%; justify-content: center; }
+.btn-modal-cancel {
+  background: none; border: 1px solid var(--border);
+  border-radius: 10px; padding: .5rem 1.2rem;
+  color: var(--text2); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: .85rem;
+  transition: all .15s;
+}
+.btn-modal-cancel:hover { border-color: var(--verd2); color: var(--text); }
+
+/* ── Pàgina ───────────────────────────────────────────────── */
+#reptes-page {
+  min-height: calc(100vh - 52px);
+  padding: 0;
+}
+
+.reptes-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.reptes-header {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+.reptes-header-titols {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.reptes-header-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .1rem;
+  flex: 1;
+}
+
+/* Títol gradient */
+.joc-titol-emoji { font-size: 2.2rem; line-height: 1; }
+.joc-titol-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--verd2), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1.1;
+}
+
+/* Botó afegir repte */
+.reptes-btn-afegir {
+  background: rgba(106,171,122,.1);
+  border: 1px solid var(--verd);
+  border-radius: 10px; padding: .45rem 1rem;
+  color: var(--verd2);
+  font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.reptes-btn-afegir:hover { background: rgba(106,171,122,.2); }
+
+/* ── Jugador actiu ────────────────────────────────────────── */
+.reptes-jugador-wrap {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .25rem 0;
+}
+.reptes-jugador-avatar {
+  width: 36px; height: 36px; min-width: 36px;
+  border-radius: 50%;
+  object-fit: cover; object-position: top;
+  flex-shrink: 0;
+  border: 2px solid var(--verd2);
+}
+.reptes-jugador-nom {
+  font-weight: 700; font-size: .9rem; color: var(--text);
+}
+
+/* ── Loading ──────────────────────────────────────────────── */
+.reptes-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 0;
+}
+.qqs-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--verd2);
+  border-radius: 50%;
+  animation: qqsSpin .8s linear infinite;
+}
+@keyframes qqsSpin { to { transform: rotate(360deg); } }
+.qqs-loading-text { color: var(--text2); font-size: .9rem; }
+
+/* ── Taula ────────────────────────────────────────────────── */
+.reptes-taula-wrap { width: 100%; }
+.reptes-taula-scroll {
+  width: 100%; overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.reptes-taula {
+  width: 100%; border-collapse: collapse;
+  min-width: 600px;
+}
+
+/* Capçalera */
+.reptes-th {
+  background: var(--bg2);
+  padding: .75rem .6rem;
+  text-align: center;
+  border-bottom: 2px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.reptes-th-repte {
+  text-align: left; width: 40%; min-width: 200px;
+  font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .05em;
+  color: var(--text2);
+}
+.reptes-th-jugador {
+  min-width: 90px;
+  border-left: 1px solid var(--border);
+}
+.reptes-th-jugador.actiu {
+  background: rgba(106,171,122,.08);
+  border-left: 2px solid var(--verd2);
+}
+.reptes-th-nom {
+  font-size: .82rem; font-weight: 700; color: var(--text);
+  margin-bottom: .2rem;
+}
+.reptes-th-total {
+  font-size: .72rem; color: var(--verd2); font-weight: 600;
+}
+
+/* Files */
+.reptes-fila:nth-child(even) .reptes-td { background: rgba(255,255,255,.02); }
+.reptes-fila:hover .reptes-td { background: rgba(106,171,122,.04); }
+.reptes-td {
+  padding: .6rem .75rem;
+  border-bottom: 1px solid rgba(106,171,122,.08);
+  vertical-align: middle;
+}
+.reptes-fila:last-child .reptes-td { border-bottom: none; }
+.reptes-td-text { font-size: .85rem; color: var(--text); line-height: 1.4; }
+.reptes-td-check {
+  text-align: center;
+  border-left: 1px solid var(--border);
+}
+.reptes-td-check.actiu {
+  background: rgba(106,171,122,.05);
+  border-left: 2px solid var(--verd2);
+}
+.reptes-td-check.fet { background: rgba(106,171,122,.1); }
+
+/* Botó check */
+.reptes-check {
+  background: none; border: none;
+  cursor: pointer; font-size: 1.3rem;
+  padding: .2rem; border-radius: 6px;
+  transition: transform .15s;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.reptes-check:hover:not(.disabled) { transform: scale(1.2); }
+.reptes-check.disabled { cursor: default; opacity: .6; }
+.reptes-check.marcat { animation: repteMarcat .3s ease; }
+
+@keyframes repteMarcat {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .reptes-th-jugador { min-width: 70px; }
+  .reptes-td-text { font-size: .78rem; }
+  .joc-titol-text { font-size: 1.4rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COLOR DEL DIA + BALL DEL DIA
+   ══════════════════════════════════════════════════════════════ */
+
+/* Cards contenidor */
+.diari-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: .85rem;
+}
+
+.diari-card-header {
+  display: flex; align-items: center; gap: .6rem;
+}
+.diari-card-emoji { font-size: 1.4rem; }
+.diari-card-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+}
+
+/* Botó admin */
+.diari-admin-btn {
+  align-self: flex-start;
+  background: none; border: 1px solid var(--border);
+  border-radius: 10px; padding: .35rem .9rem;
+  color: var(--text2); font-family: 'DM Sans', sans-serif;
+  font-size: .78rem; cursor: pointer; transition: all .15s;
+}
+.diari-admin-btn:hover { border-color: var(--verd2); color: var(--verd2); }
+
+/* ── Color del dia ── */
+.color-dia-display {
+  display: flex; align-items: center; gap: 1rem;
+}
+.color-dia-cercle {
+  width: 64px; height: 64px; min-width: 64px;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  transition: background .4s ease;
+}
+.color-dia-nom {
+  font-size: 1.3rem; font-weight: 700;
+  transition: color .4s ease;
+}
+
+/* Modal color */
+.modal-color-admin { max-width: 320px; }
+.modal-color-picker-wrap {
+  display: flex; flex-direction: column; gap: .6rem; width: 100%;
+}
+.color-picker-input {
+  width: 100%; height: 56px; border: none; border-radius: 12px;
+  cursor: pointer; background: none;
+}
+.color-nom-input {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .9rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: .9rem; outline: none;
+}
+.color-nom-input:focus { border-color: var(--verd2); }
+
+/* ── Ball del dia ── */
+.ball-dia-display {
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.ball-dia-nom {
+  font-size: 1.2rem; font-weight: 700; color: var(--text);
+}
+.ball-dia-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: #010101; color: #fff;
+  border-radius: 10px; padding: .45rem 1rem;
+  text-decoration: none; font-size: .85rem; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity .15s; align-self: flex-start;
+  border: 1px solid rgba(255,255,255,.15);
+}
+.ball-dia-link:hover { opacity: .85; }
+
+.ball-viatge-wrap {
+  border-top: 1px solid var(--border);
+  padding-top: .75rem;
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.ball-viatge-label {
+  font-size: .8rem; font-weight: 600; color: var(--text2);
+  margin-bottom: .35rem;
+}
+.ball-viatge-link {
+  background: rgba(45,90,61,.2) !important;
+  border-color: rgba(106,171,122,.3) !important;
+  color: var(--verd2) !important;
+}
+
+/* Modal ball admin */
+.modal-ball-admin {
+  max-width: 420px; max-height: 85vh;
+  overflow-y: auto; align-items: stretch; text-align: left;
+}
+.ball-admin-seccio {
+  display: flex; flex-direction: column; gap: .35rem; width: 100%;
+}
+.ball-admin-label {
+  font-size: .75rem; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.ball-admin-select, .ball-admin-input {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: .5rem .85rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: .88rem; outline: none;
+}
+.ball-admin-select:focus, .ball-admin-input:focus { border-color: var(--verd2); }
+.ball-admin-afegir-btn {
+  align-self: flex-start;
+  background: rgba(106,171,122,.15); border: 1px solid var(--verd);
+  border-radius: 10px; padding: .4rem .9rem;
+  color: var(--verd2); font-family: 'DM Sans', sans-serif;
+  font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.ball-admin-afegir-btn:hover { background: rgba(106,171,122,.25); }
+
+/* Llista balls admin */
+.ball-llista-item {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .45rem .6rem; border-radius: 8px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border); margin-bottom: .3rem;
+}
+.ball-llista-nom { flex: 1; font-size: .85rem; color: var(--text); }
+.ball-llista-link {
+  font-size: .9rem; text-decoration: none;
+  opacity: .7; transition: opacity .15s;
+}
+.ball-llista-link:hover { opacity: 1; }
+.ball-llista-delete {
+  background: none; border: none;
+  color: var(--text2); font-size: .85rem; cursor: pointer;
+  padding: .1rem .3rem; border-radius: 4px; transition: color .15s;
+}
+.ball-llista-delete:hover { color: #e05555; }
+
+/* Botó confirm modal */
+.btn-modal-confirm {
+  background: linear-gradient(135deg, var(--verd), var(--verd2));
+  border: none; border-radius: 10px; padding: .5rem 1.4rem;
+  color: #fff; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 700;
+  transition: opacity .15s;
+}
+.btn-modal-confirm:hover { opacity: .88; }
+
+@media (max-width: 480px) {
+  .color-dia-nom { font-size: 1.1rem; }
+  .ball-dia-nom  { font-size: 1rem; }
+}

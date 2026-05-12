@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/jocs.css">
+  <link rel="stylesheet" href="css/reptes.css">
 </head>
 <body data-requereix-id>
 
@@ -73,6 +73,36 @@
     <div class="reptes-jugador-wrap" id="reptes-jugador-wrap" style="display:none">
       <img id="reptes-jugador-avatar" src="" alt="" class="reptes-jugador-avatar">
       <span id="reptes-jugador-nom" class="reptes-jugador-nom"></span>
+    </div>
+
+    <!-- Color del dia -->
+    <div class="diari-card" id="color-dia-card">
+      <div class="diari-card-header">
+        <span class="diari-card-emoji">👕</span>
+        <span class="diari-card-titol">Color del dia</span>
+      </div>
+      <div class="color-dia-display">
+        <div class="color-dia-cercle" id="color-dia-cercle"></div>
+        <div class="color-dia-nom" id="color-dia-nom">Sense color assignat</div>
+      </div>
+      <button class="diari-admin-btn" onclick="colorDiaAdmin()">✏️ Canviar color</button>
+    </div>
+
+    <!-- Ball del dia -->
+    <div class="diari-card" id="ball-dia-card">
+      <div class="diari-card-header">
+        <span class="diari-card-emoji">🕺</span>
+        <span class="diari-card-titol">Ball del dia</span>
+      </div>
+      <div class="ball-dia-display">
+        <div class="ball-dia-nom" id="ball-dia-nom">Sense ball assignat</div>
+        <a id="ball-dia-link" href="#" target="_blank" class="ball-dia-link" style="display:none">▶ Veure ball</a>
+      </div>
+      <div id="ball-viatge-wrap" class="ball-viatge-wrap" style="display:none">
+        <div class="ball-viatge-label">🎬 Ball del viatge</div>
+        <a id="ball-viatge-link" href="#" target="_blank" class="ball-dia-link ball-viatge-link">▶ Veure referència</a>
+      </div>
+      <button class="diari-admin-btn" onclick="ballDiaAdmin()">✏️ Gestionar balls</button>
     </div>
 
     <!-- Loading -->
@@ -143,6 +173,7 @@ function reptesIniciar() {
   document.getElementById('reptes-loading').style.display = 'flex';
   document.getElementById('reptes-taula-wrap').style.display = 'none';
   reptesEscoltarPartida();
+  diariIniciar();
 }
 
 function reptesRenderModalIdentificacio() {
@@ -289,6 +320,195 @@ async function reptesAfegirRepte() {
     alert('Error de connexió.');
   }
 }
+
+// ══════════════════════════════════════════════════════════════
+//  COLOR DEL DIA + BALL DEL DIA · Firebase: diari/actiu
+// ══════════════════════════════════════════════════════════════
+const DIARI_COL = 'diari';
+const DIARI_DOC = 'actiu';
+const DIARI_PIN = '2468';
+let diariData = {};
+let diariUnsubscribe = null;
+
+function diariIniciar() {
+  if (diariUnsubscribe) diariUnsubscribe();
+  const db = reptesGetDb();
+  diariUnsubscribe = db.collection(DIARI_COL).doc(DIARI_DOC)
+    .onSnapshot(async snap => {
+      if (!snap.exists) {
+        try {
+          await db.collection(DIARI_COL).doc(DIARI_DOC)
+            .set({ color: null, ballActiu: null, ballViatge: null, balls: [] });
+        } catch(e) { console.error('Error creant diari:', e); }
+        return;
+      }
+      diariData = snap.data() || {};
+      diariRenderColor();
+      diariRenderBall();
+    }, err => console.error('diari error:', err));
+}
+
+function diariRenderColor() {
+  const cercle = document.getElementById('color-dia-cercle');
+  const nomEl  = document.getElementById('color-dia-nom');
+  if (!cercle || !nomEl) return;
+  const color = diariData.color;
+  if (color && color.hex) {
+    cercle.style.background = color.hex;
+    cercle.style.boxShadow  = '0 4px 20px ' + color.hex + '66';
+    nomEl.textContent = color.nom || color.hex;
+    nomEl.style.color = color.hex;
+  } else {
+    cercle.style.background = 'rgba(255,255,255,.08)';
+    cercle.style.boxShadow  = 'none';
+    nomEl.textContent = 'Sense color assignat';
+    nomEl.style.color = '';
+  }
+}
+
+function colorDiaAdmin() {
+  const pin = prompt("PIN d'administrador:");
+  if (pin !== DIARI_PIN) { if (pin !== null) alert('PIN incorrecte.'); return; }
+  document.getElementById('color-picker-input').value = (diariData.color && diariData.color.hex) || '#ff6b6b';
+  document.getElementById('color-nom-input').value    = (diariData.color && diariData.color.nom)  || '';
+  document.getElementById('modal-color-admin').classList.add('visible');
+}
+
+async function colorDiaGuardar() {
+  const hex = document.getElementById('color-picker-input').value;
+  const nom = document.getElementById('color-nom-input').value.trim() || hex;
+  try {
+    await reptesGetDb().collection(DIARI_COL).doc(DIARI_DOC).update({ color: { hex, nom } });
+    document.getElementById('modal-color-admin').classList.remove('visible');
+  } catch(e) { alert('Error guardant: ' + e.message); }
+}
+
+function diariRenderBall() {
+  const nomEl      = document.getElementById('ball-dia-nom');
+  const linkEl     = document.getElementById('ball-dia-link');
+  const viatgeWrap = document.getElementById('ball-viatge-wrap');
+  const viatgeLink = document.getElementById('ball-viatge-link');
+  if (!nomEl) return;
+  const ball = diariData.ballActiu;
+  if (ball && ball.nom) {
+    nomEl.textContent = ball.nom;
+    if (ball.link) { linkEl.href = ball.link; linkEl.style.display = 'inline-flex'; }
+    else { linkEl.style.display = 'none'; }
+  } else {
+    nomEl.textContent = 'Sense ball assignat';
+    linkEl.style.display = 'none';
+  }
+  const viatge = diariData.ballViatge;
+  if (viatge && viatgeWrap && viatgeLink) {
+    viatgeWrap.style.display = 'block';
+    viatgeLink.href = viatge;
+  } else if (viatgeWrap) {
+    viatgeWrap.style.display = 'none';
+  }
+}
+
+function ballDiaAdmin() {
+  const pin = prompt("PIN d'administrador:");
+  if (pin !== DIARI_PIN) { if (pin !== null) alert('PIN incorrecte.'); return; }
+  document.getElementById('ball-viatge-input').value = diariData.ballViatge || '';
+  ballRenderLlistaAdmin();
+  document.getElementById('modal-ball-admin').classList.add('visible');
+}
+
+function ballRenderLlistaAdmin() {
+  const balls    = diariData.balls || [];
+  const actiu    = (diariData.ballActiu && diariData.ballActiu.nom) || '';
+  const select   = document.getElementById('ball-actiu-select');
+  const llistaEl = document.getElementById('ball-llista-admin');
+  select.innerHTML = '<option value="">-- Cap ball actiu --</option>' +
+    balls.map(function(b) { return '<option value="' + b.nom + '"' + (b.nom===actiu?' selected':'') + '>' + b.nom + '</option>'; }).join('');
+  llistaEl.innerHTML = balls.length === 0
+    ? '<div style="color:var(--text2);font-size:.82rem;padding:.5rem 0">Cap ball afegit encara</div>'
+    : balls.map(function(b, i) {
+        return '<div class="ball-llista-item"><span class="ball-llista-nom">' + b.nom + '</span>' +
+          '<a href="' + b.link + '" target="_blank" class="ball-llista-link">🔗</a>' +
+          '<button class="ball-llista-delete" onclick="ballEsborrar(' + i + ')">✕</button></div>';
+      }).join('');
+}
+
+async function ballAfegirLlista() {
+  const nom  = document.getElementById('ball-nou-nom').value.trim();
+  const link = document.getElementById('ball-nou-link').value.trim();
+  if (!nom || !link) { alert('Cal nom i link.'); return; }
+  const balls = (diariData.balls || []).concat([{ nom: nom, link: link }]);
+  try {
+    await reptesGetDb().collection(DIARI_COL).doc(DIARI_DOC).update({ balls: balls });
+    diariData.balls = balls;
+    document.getElementById('ball-nou-nom').value  = '';
+    document.getElementById('ball-nou-link').value = '';
+    ballRenderLlistaAdmin();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+async function ballEsborrar(idx) {
+  const balls = (diariData.balls || []).filter(function(_, i) { return i !== idx; });
+  try {
+    await reptesGetDb().collection(DIARI_COL).doc(DIARI_DOC).update({ balls: balls });
+    diariData.balls = balls;
+    ballRenderLlistaAdmin();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+async function ballDiaGuardar() {
+  const nomActiu   = document.getElementById('ball-actiu-select').value;
+  const ballActiu  = (diariData.balls || []).find(function(b) { return b.nom === nomActiu; }) || null;
+  const ballViatge = document.getElementById('ball-viatge-input').value.trim() || null;
+  try {
+    await reptesGetDb().collection(DIARI_COL).doc(DIARI_DOC).update({ ballActiu: ballActiu, ballViatge: ballViatge });
+    document.getElementById('modal-ball-admin').classList.remove('visible');
+  } catch(e) { alert('Error: ' + e.message); }
+}
 </script>
+
+<!-- MODAL COLOR DEL DIA -->
+<div class="modal-overlay" id="modal-color-admin">
+  <div class="modal" style="max-width:320px">
+    <div class="modal-icon">🎨</div>
+    <div class="modal-title">Color del dia</div>
+    <div style="display:flex;flex-direction:column;gap:.6rem;width:100%">
+      <input type="color" id="color-picker-input" style="width:100%;height:56px;border:none;border-radius:12px;cursor:pointer">
+      <input type="text" id="color-nom-input" class="color-nom-input" placeholder="Nom del color (opcional)">
+    </div>
+    <div class="modal-btns" style="margin-top:.5rem">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-color-admin').classList.remove('visible')">Cancel·lar</button>
+      <button class="btn-modal-confirm" onclick="colorDiaGuardar()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL BALL DEL DIA -->
+<div class="modal-overlay" id="modal-ball-admin">
+  <div class="modal" style="max-width:420px;max-height:85vh;overflow-y:auto;align-items:stretch;text-align:left">
+    <div class="modal-icon" style="text-align:center;width:100%">🕺</div>
+    <div class="modal-title" style="text-align:center;width:100%">Gestionar balls</div>
+    <div class="ball-admin-seccio">
+      <div class="ball-admin-label">Ball actiu avui</div>
+      <select id="ball-actiu-select" class="ball-admin-select"></select>
+    </div>
+    <div class="ball-admin-seccio">
+      <div class="ball-admin-label">Ball del viatge (link fix)</div>
+      <input type="text" id="ball-viatge-input" class="ball-admin-input" placeholder="https://www.tiktok.com/...">
+    </div>
+    <div class="ball-admin-seccio">
+      <div class="ball-admin-label">Afegir nou ball</div>
+      <input type="text" id="ball-nou-nom" class="ball-admin-input" placeholder="Nom del ball">
+      <input type="text" id="ball-nou-link" class="ball-admin-input" placeholder="https://www.tiktok.com/...">
+      <button class="ball-admin-afegir-btn" onclick="ballAfegirLlista()">+ Afegir</button>
+    </div>
+    <div class="ball-admin-seccio">
+      <div class="ball-admin-label">Balls guardats</div>
+      <div id="ball-llista-admin"></div>
+    </div>
+    <div class="modal-btns" style="margin-top:.5rem">
+      <button class="btn-modal-cancel" onclick="document.getElementById('modal-ball-admin').classList.remove('visible')">Tancar</button>
+      <button class="btn-modal-confirm" onclick="ballDiaGuardar()">Guardar</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
