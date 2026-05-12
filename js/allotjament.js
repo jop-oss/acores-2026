@@ -269,7 +269,7 @@ function buildCardHTML(a) {
           <div class="allot-info-val">${a.costNit.toFixed(2)} €/nit</div>
         </div>
         <div class="allot-info-item">
-          <div class="allot-info-label">Habitacions · Llits</div>
+          <div class="allot-info-label">Habitacions · Banys</div>
           <div class="allot-info-val">${a.habitacions} hab · ${a.banys} banys</div>
         </div>
         <div class="allot-info-item">
@@ -279,6 +279,10 @@ function buildCardHTML(a) {
         <div class="allot-info-item">
           <div class="allot-info-label">Idiomes</div>
           <div class="allot-info-val">${a.idiomes}</div>
+        </div>
+        <div class="allot-info-item">
+          <div class="allot-info-label">Coordenades</div>
+          <div class="allot-info-val" style="font-size:0.78rem;font-family:monospace;color:var(--allot-muted)">${a.coordenades[0].toFixed(5)}, ${a.coordenades[1].toFixed(5)}</div>
         </div>
       </div>
 

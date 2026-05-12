@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Allotjaments · Açores 2026</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/allotjament.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -12,40 +14,30 @@
 </head>
 <body>
 
-  <!-- NAV (igual que la resta de la app) -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-brand">
-      <a href="index.html">
-        <span class="nav-emoji">🌋</span>
-        <span class="nav-title">Açores 2026</span>
-      </a>
-    </div>
-    <div class="nav-links">
-      <a href="temps.html">🌤 Temps</a>
-      <a href="webcams.html">📷 Webcams</a>
-      <a href="restaurants.html">🍽 Restaurants</a>
-      <a href="allotjament.html" class="active">🏠 Allotjaments</a>
-      <a href="jocs.html">🎮 Jocs</a>
-      <a href="reptes.html">🏅 Reptes</a>
-      <a href="ruleta.html">🎡 Ruleta</a>
-    </div>
-    <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" title="Canvia tema">🌙</button>
-      <div class="avatar-wrap" id="avatarWrap">
-        <img src="img/avatars/convidat.png" class="avatar-nav" id="avatarNav" alt="avatar" />
-        <div class="avatar-dropdown" id="avatarDropdown">
-          <div class="avatar-option" data-nom="Anna">Anna</div>
-          <div class="avatar-option" data-nom="Jordi">Jordi</div>
-          <div class="avatar-option" data-nom="Laia">Laia</div>
-          <div class="avatar-option" data-nom="Mons">Mons</div>
-          <div class="avatar-option" data-nom="Xu">Xu</div>
-          <div class="avatar-option" data-nom="Joa">Joa</div>
-          <hr />
-          <div class="avatar-option" data-nom="">Convidat</div>
-        </div>
-      </div>
-    </div>
-  </nav>
+<nav class="main-nav">
+  <a href="index.html" class="nav-home" title="Inici">🏠</a>
+  <div class="nav-links">
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
+    <a href="mapes.html" class="nav-item">Mapes</a>
+    <a href="temps.html" class="nav-item">Temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="logistica.html" class="nav-item">Logística</a>
+    <a href="allotjament.html" class="nav-item active">Allotjament</a>
+    <a href="restaurants.html" class="nav-item">Restaurants</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="playlist.html" class="nav-item">Playlist</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="jocs.html" class="nav-item">Jocs</a>
+    <a href="reptes.html" class="nav-item">Reptes</a>
+    <a href="ruleta.html" class="nav-item">Ruleta</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
+  <div class="nav-id-wrap" id="nav-id-wrap">
+    <button class="nav-id-btn" id="nav-id-btn" onclick="appToggleMenu()" title="Identifica't"></button>
+    <div class="nav-id-menu" id="nav-id-menu"></div>
+  </div>
+</nav>
 
   <main class="allot-main">
 
@@ -54,7 +46,7 @@
       <div class="allot-hero-inner">
         <div class="allot-hero-icon">🏠</div>
         <h1 class="allot-hero-title">Els nostres allotjaments</h1>
-        <p class="allot-hero-sub">4 cases · 4 illes · 9 nits de viatge</p>
+        <p class="allot-hero-sub">4 cases · 4 illes · 11 nits de viatge</p>
         <!-- Timeline visual del viatge -->
         <div class="allot-timeline">
           <div class="tl-item tl-active" data-idx="0">
@@ -116,8 +108,8 @@
   </div>
   <div class="foto-modal-overlay" id="fotoModalOverlay"></div>
 
-  <script src="js/app.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/allotjament.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
