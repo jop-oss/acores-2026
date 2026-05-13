@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curiositats · Açores 2026</title>
+  <title>Imprescindibles · Açores 2026</title>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/curiositats.css">
+  <link rel="stylesheet" href="css/imprescindibles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
@@ -17,13 +18,13 @@
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
   <div class="nav-links">
     <a href="itinerari.html" class="nav-item">Itinerari</a>
-    <a href="imprescindibles.html" class="nav-item">Imprescindibles</a>
+    <a href="imprescindibles.html" class="nav-item active">Imprescindibles</a>
     <a href="temps.html" class="nav-item">Temps</a>
     <a href="webcams.html" class="nav-item">Webcams</a>
     <a href="logistica.html" class="nav-item">Logística</a>
     <a href="allotjament.html" class="nav-item">Allotjament</a>
     <a href="restaurants.html" class="nav-item">Restaurants</a>
-    <a href="curiositats.html" class="nav-item active">Curiositats</a>
+    <a href="curiositats.html" class="nav-item">Curiositats</a>
     <a href="portugues.html" class="nav-item">Portuguès</a>
     <a href="material-extra.html" class="nav-item">Material extra</a>
     <a href="jocs.html" class="nav-item">Jocs</a>
@@ -39,32 +40,32 @@
   </div>
 </nav>
 
-<main class="cur-main">
+<main class="imp-main">
 
   <!-- HERO -->
-  <header class="cur-hero">
-    <div class="cur-hero-bg"></div>
-    <div class="cur-hero-content">
-      <div class="cur-hero-eyebrow">Açores 2026</div>
-      <h1 class="cur-hero-title">Curiositats</h1>
-      <p class="cur-hero-sub">Tot el que val la pena saber abans d'arribar a les illes</p>
-      <div class="cur-hero-stats">
-        <div class="cur-stat"><span class="cur-stat-num">5</span><span class="cur-stat-lbl">Temàtiques</span></div>
-        <div class="cur-stat-sep">·</div>
-        <div class="cur-stat"><span class="cur-stat-num">35</span><span class="cur-stat-lbl">Curiositats</span></div>
-        <div class="cur-stat-sep">·</div>
-        <div class="cur-stat"><span class="cur-stat-num">4</span><span class="cur-stat-lbl">Illes</span></div>
+  <header class="imp-hero">
+    <div class="imp-hero-bg"></div>
+    <div class="imp-hero-content">
+      <div class="imp-hero-eyebrow">Açores 2026</div>
+      <h1 class="imp-hero-title">Imprescindibles</h1>
+      <p class="imp-hero-sub">Els llocs que no us podeu perdre a les quatre illes</p>
+      <div class="imp-hero-stats">
+        <div class="imp-stat"><span class="imp-stat-num">4</span><span class="imp-stat-lbl">Illes</span></div>
+        <div class="imp-stat-sep">·</div>
+        <div class="imp-stat"><span class="imp-stat-num">25</span><span class="imp-stat-lbl">Llocs</span></div>
+        <div class="imp-stat-sep">·</div>
+        <div class="imp-stat"><span class="imp-stat-num">4</span><span class="imp-stat-lbl">Mapes</span></div>
       </div>
     </div>
   </header>
 
-  <!-- FILTRES TEMÀTICA -->
-  <div class="cur-filtres-wrap">
-    <div class="cur-filtres" id="curFiltres"></div>
+  <!-- FILTRES -->
+  <div class="imp-filtres-wrap">
+    <div class="imp-filtres" id="impFiltres"></div>
   </div>
 
   <!-- SECCIONS -->
-  <div class="cur-seccions" id="curSeccions"></div>
+  <div class="imp-seccions" id="impSeccions"></div>
 
 </main>
 
@@ -73,7 +74,9 @@
   <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
 </footer>
 
-<script src="js/curiositats.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/imprescindibles-data.js"></script>
+<script src="js/imprescindibles.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

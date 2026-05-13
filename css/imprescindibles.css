@@ -1,0 +1,273 @@
+/* ============================================================
+   IMPRESCINDIBLES.CSS  ·  Açores 2026
+   ============================================================ */
+
+:root {
+  --imp-bg:      #0a1628;
+  --imp-surface: rgba(255,255,255,0.04);
+  --imp-border:  rgba(106,171,122,0.15);
+  --imp-green1:  #2d5a3d;
+  --imp-green2:  #6aab7a;
+  --imp-green3:  #a8d8b0;
+  --imp-gold:    #f5c842;
+  --imp-text:    #e8f0ec;
+  --imp-muted:   #7a9e8a;
+  --imp-radius:  14px;
+}
+
+/* ── Layout ── */
+.imp-main { min-height: 100vh; background: var(--imp-bg); }
+
+/* ── Hero ── */
+.imp-hero {
+  position: relative;
+  padding: 64px 24px 52px;
+  text-align: center;
+  overflow: hidden;
+}
+.imp-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 90% at 50% -10%, rgba(45,90,61,0.35) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 60% at 80% 100%, rgba(106,171,122,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.imp-hero-content { position: relative; z-index: 1; }
+.imp-hero-eyebrow {
+  font-family: 'Lora', serif;
+  font-size: 0.82rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--imp-green2);
+  margin-bottom: 12px;
+}
+.imp-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-weight: 700; color: var(--imp-green3);
+  margin: 0 0 12px; letter-spacing: -0.02em; line-height: 1.1;
+}
+.imp-hero-sub {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 1rem; color: var(--imp-muted); margin: 0 0 32px;
+}
+.imp-hero-stats {
+  display: inline-flex; align-items: center; gap: 16px;
+  background: rgba(45,90,61,0.2);
+  border: 1px solid rgba(106,171,122,0.2);
+  border-radius: 40px; padding: 10px 24px;
+}
+.imp-stat { display: flex; flex-direction: column; align-items: center; }
+.imp-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; color: var(--imp-gold); line-height: 1;
+}
+.imp-stat-lbl {
+  font-size: 0.65rem; color: var(--imp-muted);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;
+}
+.imp-stat-sep { color: rgba(106,171,122,0.3); font-size: 1.2rem; }
+
+/* ── Filtres ── */
+.imp-filtres-wrap {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,22,40,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(106,171,122,0.12);
+  padding: 0 20px;
+}
+.imp-filtres {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 12px 0; scrollbar-width: none;
+  max-width: 960px; margin: 0 auto;
+}
+.imp-filtres::-webkit-scrollbar { display: none; }
+.imp-filtre-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px; border-radius: 24px;
+  border: 1px solid rgba(106,171,122,0.2);
+  background: none; color: var(--imp-muted);
+  font-family: 'Lora', serif; font-size: 0.82rem;
+  cursor: pointer; white-space: nowrap; transition: all 0.2s;
+}
+.imp-filtre-btn:hover { border-color: rgba(106,171,122,0.5); color: var(--imp-green3); }
+.imp-filtre-btn.actiu { background: var(--imp-green1); border-color: var(--imp-green2); color: var(--imp-green3); }
+
+/* ── Seccions ── */
+.imp-seccions {
+  max-width: 980px; margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+.imp-seccio {
+  margin-bottom: 70px;
+  animation: impFadeUp 0.4s ease both;
+}
+@keyframes impFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Capçalera secció illa */
+.imp-seccio-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px; padding-bottom: 14px;
+  border-bottom: 2px solid;
+}
+.imp-seccio-emoji { font-size: 2rem; line-height: 1; }
+.imp-seccio-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--imp-green3); margin: 0;
+}
+.imp-seccio-count {
+  margin-left: auto; font-size: 0.72rem; font-weight: 600;
+  padding: 3px 12px; border-radius: 20px; border: 1px solid;
+  white-space: nowrap; font-family: 'Inter', sans-serif;
+}
+
+/* ── Mapa ── */
+.imp-mapa-wrap {
+  border-radius: var(--imp-radius);
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--imp-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.imp-mapa { height: 300px; width: 100%; background: #0a1628; }
+
+/* Marcadors mapa */
+.imp-marker {
+  width: 36px; height: 36px; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.imp-marker-emoji {
+  transform: rotate(45deg);
+  font-size: 1rem; line-height: 1;
+}
+.imp-popup { font-family: 'Inter', sans-serif; }
+.imp-popup-nom {
+  font-weight: 700; font-size: 0.88rem;
+  color: #1a3a2a; margin-bottom: 4px;
+}
+.imp-popup-desc { font-size: 0.75rem; color: #4a6a5a; margin-bottom: 6px; line-height: 1.4; }
+.imp-popup-link {
+  font-size: 0.75rem; color: #2980b9;
+  text-decoration: none; font-weight: 600;
+}
+.imp-popup-link:hover { text-decoration: underline; }
+
+/* ── Grid de cards ── */
+.imp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+
+/* ── Card ── */
+.imp-card {
+  background: var(--imp-surface);
+  border: 1px solid var(--imp-border);
+  border-radius: var(--imp-radius);
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  animation: impFadeUp 0.35s ease both;
+}
+.imp-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(106,171,122,0.35);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+/* ── Carrusel ── */
+.imp-carr {
+  position: relative;
+  width: 100%; height: 210px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.2);
+}
+.imp-carr-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+.imp-carr-img {
+  min-width: 100%; height: 100%;
+  object-fit: cover; flex-shrink: 0;
+  display: block;
+}
+.imp-carr-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(10,22,40,0.7); border: none;
+  color: #fff; font-size: 1.3rem;
+  width: 32px; height: 32px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; z-index: 2;
+}
+.imp-carr-btn:hover { background: rgba(10,22,40,0.92); }
+.imp-carr-btn.prev { left: 8px; }
+.imp-carr-btn.next { right: 8px; }
+.imp-carr-dots {
+  position: absolute; bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 5px; z-index: 2;
+}
+.imp-carr-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.imp-carr-dot.actiu { background: #fff; transform: scale(1.3); }
+
+/* Carrusel buit (sense fotos) */
+.imp-carr-buit {
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(45,90,61,0.1);
+}
+.imp-carr-buit-icon { font-size: 3.5rem; opacity: 0.3; }
+
+/* ── Cos de la card ── */
+.imp-card-cos { padding: 16px 18px 18px; }
+.imp-card-header {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px;
+}
+.imp-card-emoji { font-size: 1.4rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.imp-card-nom {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--imp-green3); margin: 0; line-height: 1.3;
+}
+.imp-card-desc {
+  font-family: 'Lora', serif; font-size: 0.82rem;
+  color: rgba(232,240,236,0.8); line-height: 1.6;
+  margin: 0 0 14px;
+}
+.imp-card-maps-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid; text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.imp-card-maps-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+/* ── Mode clar ── */
+body.light .imp-main     { background: #f4f7f4; }
+body.light .imp-hero-bg  { background: radial-gradient(ellipse 70% 90% at 50% -10%, rgba(45,90,61,0.1) 0%, transparent 65%); }
+body.light .imp-hero-title  { color: #1a3a2a; }
+body.light .imp-hero-sub    { color: #4a7a5a; }
+body.light .imp-filtres-wrap { background: rgba(244,247,244,0.95); }
+body.light .imp-filtre-btn   { color: #4a7a5a; }
+body.light .imp-seccio-titol { color: #1a3a2a; }
+body.light .imp-card { background: #fff; border-color: rgba(45,90,61,0.15); }
+body.light .imp-card-nom  { color: #1a3a2a; }
+body.light .imp-card-desc { color: #3a6a4a; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .imp-grid { grid-template-columns: 1fr; }
+  .imp-mapa { height: 220px; }
+  .imp-carr  { height: 180px; }
+  .imp-hero-title { font-size: 2rem; }
+}
