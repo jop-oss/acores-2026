@@ -1,0 +1,565 @@
+/* ============================================================
+   BLOG.JS  ·  Açores 2026
+   Diari del viatge en temps real (Firebase Firestore + Storage)
+   Col·lecció Firebase: blog / (docs)
+   Cada document: { autor, text, fotoUrl, ts, tsMs }
+   ============================================================ */
+
+'use strict';
+
+/* ──────────────────────────────────────────────────────────
+   CONSTANTS
+   ────────────────────────────────────────────────────────── */
+const BLOG_COLORS = {
+  Jordi: '#e74c3c',
+  Joa:   '#f39c12',
+  Mons:  '#8e44ad',
+  Xu:    '#2980b9',
+  Anna:  '#e67e22',
+  Laia:  '#27ae60',
+};
+
+const BLOG_PIN_ADMIN = '2468';
+const BLOG_PIN_SALT  = 'blog_salt_acores_';
+
+/* ──────────────────────────────────────────────────────────
+   ESTAT
+   ────────────────────────────────────────────────────────── */
+let blogDb          = null;
+let blogStorage     = null;
+let blogEntrades    = [];          // array ordenat (newest first)
+let blogFiltreAutor = null;        // null = tots
+let blogEditantId   = null;        // id doc en edició
+let blogFotoBase64  = null;        // foto seleccionada (base64 per preview)
+let blogFotoFile    = null;        // File object per pujar
+let blogUnsubscribe = null;
+let blogPinCallback = null;        // funció a cridar un cop PIN correcte
+let blogPinHashCache = null;       // hash calculat del PIN d'admin
+
+/* ──────────────────────────────────────────────────────────
+   FIREBASE
+   ────────────────────────────────────────────────────────── */
+function blogGetDb() {
+  if (blogDb) return blogDb;
+  try {
+    if (typeof firebase !== 'undefined' && firebase.apps.length) {
+      blogDb = firebase.firestore();
+    }
+  } catch(e) { console.warn('Blog: Firebase no disponible', e); }
+  return blogDb;
+}
+
+function blogGetStorage() {
+  if (blogStorage) return blogStorage;
+  try {
+    if (typeof firebase !== 'undefined' && firebase.apps.length) {
+      blogStorage = firebase.storage();
+    }
+  } catch(e) { console.warn('Blog: Firebase Storage no disponible', e); }
+  return blogStorage;
+}
+
+/* ──────────────────────────────────────────────────────────
+   HASH PIN (idèntic al patró de frase-esbojarrada)
+   ────────────────────────────────────────────────────────── */
+async function blogHashPin(pin) {
+  const enc = new TextEncoder().encode(BLOG_PIN_SALT + pin);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+}
+
+async function blogPinEsCorrecte(pin) {
+  if (!blogPinHashCache) {
+    blogPinHashCache = await blogHashPin(BLOG_PIN_ADMIN);
+  }
+  const hash = await blogHashPin(pin);
+  return hash === blogPinHashCache;
+}
+
+/* ──────────────────────────────────────────────────────────
+   JUGADOR ACTIU
+   ────────────────────────────────────────────────────────── */
+function blogJugadorActiu() {
+  return localStorage.getItem('app_jugador') || null;
+}
+
+/* ──────────────────────────────────────────────────────────
+   INICIALITZACIÓ
+   ────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  blogInicialitzar();
+
+  // Escolta canvis d'identificació
+  document.addEventListener('app:jugador-canviat', () => {
+    blogActualitzarBotoAdd();
+  });
+});
+
+function blogInicialitzar() {
+  blogActualitzarBotoAdd();
+  blogRenderFiltres();
+  blogEscoltarEntrades();
+}
+
+function blogActualitzarBotoAdd() {
+  const jugador = blogJugadorActiu();
+  const btnAdd  = document.getElementById('blogBtnAdd');
+  const avisId  = document.getElementById('blogAvisId');
+  if (!btnAdd || !avisId) return;
+
+  if (jugador) {
+    btnAdd.style.display  = 'inline-flex';
+    avisId.style.display  = 'none';
+  } else {
+    btnAdd.style.display  = 'none';
+    avisId.style.display  = 'block';
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   FILTRES PER AUTOR
+   ────────────────────────────────────────────────────────── */
+function blogRenderFiltres() {
+  const wrap = document.getElementById('blogFiltreAutor');
+  if (!wrap) return;
+
+  const jugadors = ['Jordi', 'Joa', 'Mons', 'Xu', 'Anna', 'Laia'];
+  wrap.innerHTML = `
+    <button class="blog-filtre-btn ${blogFiltreAutor === null ? 'actiu' : ''}"
+            onclick="blogSetFiltre(null)">
+      Tots
+    </button>
+    ${jugadors.map(nom => `
+      <button class="blog-filtre-btn ${blogFiltreAutor === nom ? 'actiu' : ''}"
+              onclick="blogSetFiltre('${nom}')">
+        <span class="blog-filtre-dot" style="background:${BLOG_COLORS[nom]}"></span>
+        ${nom}
+      </button>
+    `).join('')}
+  `;
+}
+
+function blogSetFiltre(autor) {
+  blogFiltreAutor = autor;
+  blogRenderFiltres();
+  blogRenderLlista();
+}
+
+/* ──────────────────────────────────────────────────────────
+   FIREBASE: ESCOLTAR ENTRADES (temps real)
+   ────────────────────────────────────────────────────────── */
+function blogEscoltarEntrades() {
+  const db = blogGetDb();
+  if (!db) {
+    document.getElementById('blogLlista').innerHTML =
+      '<div class="blog-loading">⚠️ No s\'ha pogut connectar a Firebase.</div>';
+    return;
+  }
+
+  // Desconnecta listener anterior si n'hi havia
+  if (blogUnsubscribe) blogUnsubscribe();
+
+  blogUnsubscribe = db.collection('blog')
+    .orderBy('tsMs', 'desc')
+    .onSnapshot(snap => {
+      blogEntrades = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      blogRenderLlista();
+    }, err => {
+      console.error('Blog listener error:', err);
+      document.getElementById('blogLlista').innerHTML =
+        '<div class="blog-loading">⚠️ Error en carregar les entrades.</div>';
+    });
+}
+
+/* ──────────────────────────────────────────────────────────
+   RENDER LLISTA
+   ────────────────────────────────────────────────────────── */
+function blogRenderLlista() {
+  const wrap = document.getElementById('blogLlista');
+  if (!wrap) return;
+
+  const filtrades = blogFiltreAutor
+    ? blogEntrades.filter(e => e.autor === blogFiltreAutor)
+    : blogEntrades;
+
+  if (filtrades.length === 0) {
+    wrap.innerHTML = `
+      <div class="blog-buit">
+        <div class="blog-buit-emoji">🌋</div>
+        <div>${blogFiltreAutor
+          ? `En ${blogFiltreAutor} encara no ha escrit res.`
+          : 'Encara no hi ha entrades al diari.<br>Sigues el primer a escriure!'
+        }</div>
+      </div>`;
+    return;
+  }
+
+  const jugador  = blogJugadorActiu();
+  let html       = '';
+  let darreraDia = null;
+
+  filtrades.forEach((entrada, idx) => {
+    // Separador de data
+    const dia = blogFormatDia(entrada.tsMs);
+    if (dia !== darreraDia) {
+      html += `
+        <div class="blog-data-sep" style="animation-delay:${idx * 0.03}s">
+          <div class="blog-data-sep-linia"></div>
+          <div class="blog-data-sep-text">${dia}</div>
+          <div class="blog-data-sep-linia"></div>
+        </div>`;
+      darreraDia = dia;
+    }
+
+    const color     = BLOG_COLORS[entrada.autor] || '#6aab7a';
+    const inicial   = (entrada.autor || '?')[0].toUpperCase();
+    const hora      = blogFormatHora(entrada.tsMs);
+    const esAutor   = jugador && jugador === entrada.autor;
+    const esAdmin   = false; // es comprovarà via PIN quan calgui
+
+    html += `
+      <div class="blog-entrada" id="entrada-${entrada.id}" style="animation-delay:${idx * 0.04}s">
+        <div class="blog-entrada-header">
+          <div class="blog-autor-cercle" style="background:${color}">${inicial}</div>
+          <div class="blog-autor-info">
+            <div class="blog-autor-nom">${entrada.autor || 'Desconegut'}</div>
+            <div class="blog-entrada-meta">
+              <span>🕐 ${hora}</span>
+            </div>
+          </div>
+          <div class="blog-entrada-accions">
+            ${esAutor ? `
+              <button class="blog-accio-btn" title="Editar" onclick="blogEdita('${entrada.id}')">✏️</button>
+              <button class="blog-accio-btn del" title="Eliminar" onclick="blogElimina('${entrada.id}', false)">🗑</button>
+            ` : `
+              <button class="blog-accio-btn del" title="Eliminar (admin)" onclick="blogElimina('${entrada.id}', true)" style="opacity:0.3">🔐</button>
+            `}
+          </div>
+        </div>
+        ${entrada.text ? `<div class="blog-entrada-cos">${blogEscapeHtml(entrada.text)}</div>` : ''}
+        ${entrada.fotoUrl ? `
+          <img class="blog-entrada-foto" src="${entrada.fotoUrl}" alt="Foto de ${entrada.autor}"
+               loading="lazy" onclick="blogVeureFoto('${entrada.fotoUrl}')">
+        ` : ''}
+      </div>`;
+  });
+
+  wrap.innerHTML = html;
+}
+
+/* ──────────────────────────────────────────────────────────
+   MODAL NOVA / EDITAR ENTRADA
+   ────────────────────────────────────────────────────────── */
+function blogObreModal(dades) {
+  const jugador = blogJugadorActiu();
+  if (!jugador) {
+    alert("Identifica't primer per poder escriure al blog.");
+    return;
+  }
+
+  blogEditantId  = dades?.id || null;
+  blogFotoBase64 = null;
+  blogFotoFile   = null;
+
+  // Títol
+  document.getElementById('blogModalTitol').textContent =
+    blogEditantId ? 'Editar entrada' : 'Nova entrada';
+
+  // Camps
+  document.getElementById('bId').value    = blogEditantId || '';
+  document.getElementById('bAutor').value = jugador;
+  document.getElementById('bText').value  = dades?.text || '';
+  document.getElementById('bCharCount').textContent = (dades?.text || '').length;
+
+  // Preview foto
+  const preview = document.getElementById('blogFotoPreview');
+  if (dades?.fotoUrl) {
+    preview.innerHTML = `
+      <img src="${dades.fotoUrl}" class="blog-foto-preview-img" alt="Foto actual">
+      <button class="blog-foto-remove" onclick="blogEliminaFotoPreview()" title="Eliminar foto">✕</button>`;
+  } else {
+    preview.innerHTML = `
+      <span class="blog-foto-icon">📷</span>
+      <span>Toca per afegir foto</span>`;
+    preview.onclick = () => document.getElementById('bFoto').click();
+  }
+
+  // Obre
+  document.getElementById('blogModal').classList.add('open');
+  document.getElementById('blogModalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('bText').focus(), 50);
+}
+
+function blogTancaModal() {
+  document.getElementById('blogModal').classList.remove('open');
+  document.getElementById('blogModalOverlay').classList.remove('open');
+  blogEditantId  = null;
+  blogFotoBase64 = null;
+  blogFotoFile   = null;
+  document.getElementById('bFoto').value = '';
+}
+
+/* Preview foto seleccionada */
+function blogPreviewFoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Comprova mida màxima (5 MB)
+  if (file.size > 5 * 1024 * 1024) {
+    alert('La foto és massa gran. El màxim és 5 MB.');
+    input.value = '';
+    return;
+  }
+
+  blogFotoFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    blogFotoBase64 = e.target.result;
+    const preview = document.getElementById('blogFotoPreview');
+    preview.innerHTML = `
+      <img src="${blogFotoBase64}" class="blog-foto-preview-img" alt="Preview">
+      <button class="blog-foto-remove" onclick="blogEliminaFotoPreview()" title="Eliminar foto">✕</button>`;
+    preview.onclick = null;
+  };
+  reader.readAsDataURL(file);
+}
+
+function blogEliminaFotoPreview() {
+  blogFotoBase64 = null;
+  blogFotoFile   = null;
+  document.getElementById('bFoto').value = '';
+  const preview = document.getElementById('blogFotoPreview');
+  preview.innerHTML = `
+    <span class="blog-foto-icon">📷</span>
+    <span>Toca per afegir foto</span>`;
+  preview.onclick = () => document.getElementById('bFoto').click();
+}
+
+/* Comptador caràcters */
+document.addEventListener('DOMContentLoaded', () => {
+  const textarea = document.getElementById('bText');
+  if (textarea) {
+    textarea.addEventListener('input', () => {
+      document.getElementById('bCharCount').textContent = textarea.value.length;
+    });
+  }
+});
+
+/* ──────────────────────────────────────────────────────────
+   GUARDAR ENTRADA
+   ────────────────────────────────────────────────────────── */
+async function blogGuarda() {
+  const text   = (document.getElementById('bText').value || '').trim();
+  const autor  = document.getElementById('bAutor').value;
+
+  if (!text && !blogFotoFile && !blogEditantId) {
+    alert('Escriu alguna cosa o afegeix una foto.');
+    return;
+  }
+  if (!autor) {
+    alert("Identifica't primer.");
+    return;
+  }
+
+  const btnSave = document.getElementById('blogBtnSave');
+  btnSave.disabled = true;
+  btnSave.textContent = 'Publicant…';
+
+  try {
+    const db = blogGetDb();
+    if (!db) throw new Error('Firebase no disponible');
+
+    let fotoUrl = null;
+
+    // Puja foto si n'hi ha de nova
+    if (blogFotoFile) {
+      fotoUrl = await blogPujarFoto(blogFotoFile, autor);
+    } else if (blogEditantId) {
+      // Manté la foto existent si no s'ha canviat
+      const entradaActual = blogEntrades.find(e => e.id === blogEditantId);
+      fotoUrl = entradaActual?.fotoUrl || null;
+      // Si s'ha eliminat la preview sense pujar nova, fotoUrl = null
+      if (blogFotoBase64 === null && !blogFotoFile && entradaActual?.fotoUrl) {
+        // L'usuari ha premut "eliminar foto" — comprovem si el preview és buit
+        const preview = document.getElementById('blogFotoPreview');
+        if (!preview.querySelector('img[src^="http"]')) {
+          fotoUrl = null; // foto eliminada
+        }
+      }
+    }
+
+    const dades = {
+      autor,
+      text,
+      fotoUrl,
+      tsMs: Date.now(),
+      ts:   firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    if (blogEditantId) {
+      await db.collection('blog').doc(blogEditantId).update(dades);
+    } else {
+      await db.collection('blog').add(dades);
+    }
+
+    blogTancaModal();
+  } catch(err) {
+    console.error('Error guardant entrada blog:', err);
+    alert('Error en guardar. Torna-ho a intentar.');
+  } finally {
+    btnSave.disabled = false;
+    btnSave.textContent = 'Publicar';
+  }
+}
+
+/* Puja foto a Firebase Storage i retorna la URL */
+async function blogPujarFoto(file, autor) {
+  const storage = blogGetStorage();
+  if (!storage) {
+    console.warn('Firebase Storage no disponible. Foto omesa.');
+    return null;
+  }
+
+  // Nom únic: blog/autor_timestamp.ext
+  const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+  const nom = `blog/${autor}_${Date.now()}.${ext}`;
+  const ref = storage.ref().child(nom);
+
+  await ref.put(file);
+  return await ref.getDownloadURL();
+}
+
+/* ──────────────────────────────────────────────────────────
+   EDITAR ENTRADA
+   ────────────────────────────────────────────────────────── */
+function blogEdita(id) {
+  const entrada = blogEntrades.find(e => e.id === id);
+  if (!entrada) return;
+
+  const jugador = blogJugadorActiu();
+  if (!jugador || jugador !== entrada.autor) {
+    alert('Només pots editar les teves pròpies entrades.');
+    return;
+  }
+
+  blogObreModal(entrada);
+}
+
+/* ──────────────────────────────────────────────────────────
+   ELIMINAR ENTRADA
+   ────────────────────────────────────────────────────────── */
+function blogElimina(id, esAdmin) {
+  const entrada = blogEntrades.find(e => e.id === id);
+  if (!entrada) return;
+
+  const jugador = blogJugadorActiu();
+
+  if (esAdmin) {
+    // Entrada d'un altre — requereix PIN admin
+    blogPinCallback = () => blogEliminaConfirmat(id);
+    blogObrePin();
+  } else {
+    // Pròpia entrada — confirmació simple
+    if (!jugador || jugador !== entrada.autor) return;
+    if (!confirm(`Segur que vols eliminar aquesta entrada?`)) return;
+    blogEliminaConfirmat(id);
+  }
+}
+
+async function blogEliminaConfirmat(id) {
+  try {
+    const db = blogGetDb();
+    if (!db) throw new Error('Firebase no disponible');
+    await db.collection('blog').doc(id).delete();
+  } catch(err) {
+    console.error('Error eliminant entrada blog:', err);
+    alert('Error en eliminar. Torna-ho a intentar.');
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   MODAL PIN ADMIN
+   ────────────────────────────────────────────────────────── */
+function blogObrePin() {
+  document.getElementById('blogPinInput').value = '';
+  document.getElementById('blogPinErr').style.display = 'none';
+  document.getElementById('blogPinModal').classList.add('open');
+  document.getElementById('blogPinOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('blogPinInput').focus(), 50);
+}
+
+function blogTancaPin() {
+  document.getElementById('blogPinModal').classList.remove('open');
+  document.getElementById('blogPinOverlay').classList.remove('open');
+  blogPinCallback = null;
+}
+
+async function blogConfirmaPin() {
+  const pin = document.getElementById('blogPinInput').value.trim();
+  const ok  = await blogPinEsCorrecte(pin);
+
+  if (!ok) {
+    const errDiv = document.getElementById('blogPinErr');
+    errDiv.style.display = 'block';
+    errDiv.style.animation = 'none';
+    // Forcem re-render de l'animació shake
+    void errDiv.offsetWidth;
+    errDiv.style.animation = '';
+    document.getElementById('blogPinInput').value = '';
+    document.getElementById('blogPinInput').focus();
+    return;
+  }
+
+  blogTancaPin();
+  if (typeof blogPinCallback === 'function') {
+    blogPinCallback();
+    blogPinCallback = null;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   VISOR FOTO
+   ────────────────────────────────────────────────────────── */
+function blogVeureFoto(url) {
+  const overlay = document.getElementById('blogFotoOverlay');
+  document.getElementById('blogFotoFull').src = url;
+  overlay.classList.add('open');
+  overlay.style.display = 'flex';
+}
+
+// Tanca visor amb Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    blogTancaModal();
+    blogTancaPin();
+    const overlay = document.getElementById('blogFotoOverlay');
+    if (overlay) { overlay.classList.remove('open'); overlay.style.display = 'none'; }
+  }
+});
+
+/* ──────────────────────────────────────────────────────────
+   HELPERS
+   ────────────────────────────────────────────────────────── */
+function blogFormatDia(tsMs) {
+  if (!tsMs) return '—';
+  const d = new Date(tsMs);
+  return d.toLocaleDateString('ca-ES', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+function blogFormatHora(tsMs) {
+  if (!tsMs) return '—';
+  const d = new Date(tsMs);
+  return d.toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' });
+}
+
+function blogEscapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
+}
