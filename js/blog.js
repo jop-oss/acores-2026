@@ -1,8 +1,9 @@
 /* ============================================================
    BLOG.JS  ·  Açores 2026
-   Diari del viatge en temps real (Firebase Firestore + Storage)
+   Diari del viatge en temps real (Firebase Firestore)
    Col·lecció Firebase: blog / (docs)
-   Cada document: { autor, text, fotoUrl, ts, tsMs }
+   Cada document: { autor, text, fotoB64, ts, tsMs }
+   Fotos guardades com a base64 directament a Firestore (< 1 MB recomanat)
    ============================================================ */
 
 'use strict';
@@ -26,7 +27,6 @@ const BLOG_PIN_SALT  = 'blog_salt_acores_';
    ESTAT
    ────────────────────────────────────────────────────────── */
 let blogDb          = null;
-let blogStorage     = null;
 let blogEntrades    = [];          // array ordenat (newest first)
 let blogFiltreAutor = null;        // null = tots
 let blogEditantId   = null;        // id doc en edició
@@ -37,26 +37,24 @@ let blogPinCallback = null;        // funció a cridar un cop PIN correcte
 let blogPinHashCache = null;       // hash calculat del PIN d'admin
 
 /* ──────────────────────────────────────────────────────────
-   FIREBASE
+   FIREBASE — inicialització robusta
+   Igual que despeses.js: usa firebase.firestore() directament.
+   config.js (que carrega abans) ja ha cridat firebase.initializeApp().
    ────────────────────────────────────────────────────────── */
 function blogGetDb() {
   if (blogDb) return blogDb;
   try {
-    if (typeof firebase !== 'undefined' && firebase.apps.length) {
-      blogDb = firebase.firestore();
+    // Intenta obtenir l'app existent (inicialitzada per config.js)
+    if (typeof firebase !== 'undefined') {
+      if (!firebase.apps.length && typeof CONFIG !== 'undefined' && CONFIG.FIREBASE) {
+        firebase.initializeApp(CONFIG.FIREBASE);
+      }
+      if (firebase.apps.length) {
+        blogDb = firebase.firestore();
+      }
     }
   } catch(e) { console.warn('Blog: Firebase no disponible', e); }
   return blogDb;
-}
-
-function blogGetStorage() {
-  if (blogStorage) return blogStorage;
-  try {
-    if (typeof firebase !== 'undefined' && firebase.apps.length) {
-      blogStorage = firebase.storage();
-    }
-  } catch(e) { console.warn('Blog: Firebase Storage no disponible', e); }
-  return blogStorage;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -238,9 +236,9 @@ function blogRenderLlista() {
           </div>
         </div>
         ${entrada.text ? `<div class="blog-entrada-cos">${blogEscapeHtml(entrada.text)}</div>` : ''}
-        ${entrada.fotoUrl ? `
-          <img class="blog-entrada-foto" src="${entrada.fotoUrl}" alt="Foto de ${entrada.autor}"
-               loading="lazy" onclick="blogVeureFoto('${entrada.fotoUrl}')">
+        ${entrada.fotoB64 ? `
+          <img class="blog-entrada-foto" src="${entrada.fotoB64}" alt="Foto de ${entrada.autor}"
+               loading="lazy" onclick="blogVeureFoto('${entrada.fotoB64}')">
         ` : ''}
       </div>`;
   });
@@ -274,9 +272,9 @@ function blogObreModal(dades) {
 
   // Preview foto
   const preview = document.getElementById('blogFotoPreview');
-  if (dades?.fotoUrl) {
+  if (dades?.fotoB64) {
     preview.innerHTML = `
-      <img src="${dades.fotoUrl}" class="blog-foto-preview-img" alt="Foto actual">
+      <img src="${dades.fotoB64}" class="blog-foto-preview-img" alt="Foto actual">
       <button class="blog-foto-remove" onclick="blogEliminaFotoPreview()" title="Eliminar foto">✕</button>`;
   } else {
     preview.innerHTML = `
@@ -353,7 +351,7 @@ async function blogGuarda() {
   const text   = (document.getElementById('bText').value || '').trim();
   const autor  = document.getElementById('bAutor').value;
 
-  if (!text && !blogFotoFile && !blogEditantId) {
+  if (!text && !blogFotoBase64 && !blogEditantId) {
     alert('Escriu alguna cosa o afegeix una foto.');
     return;
   }
@@ -370,29 +368,23 @@ async function blogGuarda() {
     const db = blogGetDb();
     if (!db) throw new Error('Firebase no disponible');
 
-    let fotoUrl = null;
-
-    // Puja foto si n'hi ha de nova
-    if (blogFotoFile) {
-      fotoUrl = await blogPujarFoto(blogFotoFile, autor);
+    // Determina la foto a guardar
+    let fotoB64 = null;
+    if (blogFotoBase64) {
+      // Nova foto seleccionada — comprimim si cal
+      fotoB64 = await blogComprimeixFoto(blogFotoBase64);
     } else if (blogEditantId) {
-      // Manté la foto existent si no s'ha canviat
+      // Edició: manté foto existent tret que s'hagi eliminat el preview
       const entradaActual = blogEntrades.find(e => e.id === blogEditantId);
-      fotoUrl = entradaActual?.fotoUrl || null;
-      // Si s'ha eliminat la preview sense pujar nova, fotoUrl = null
-      if (blogFotoBase64 === null && !blogFotoFile && entradaActual?.fotoUrl) {
-        // L'usuari ha premut "eliminar foto" — comprovem si el preview és buit
-        const preview = document.getElementById('blogFotoPreview');
-        if (!preview.querySelector('img[src^="http"]')) {
-          fotoUrl = null; // foto eliminada
-        }
-      }
+      const preview = document.getElementById('blogFotoPreview');
+      const teFotoPreview = preview && preview.querySelector('img');
+      fotoB64 = teFotoPreview ? (entradaActual?.fotoB64 || null) : null;
     }
 
     const dades = {
       autor,
       text,
-      fotoUrl,
+      fotoB64,
       tsMs: Date.now(),
       ts:   firebase.firestore.FieldValue.serverTimestamp(),
     };
@@ -413,21 +405,25 @@ async function blogGuarda() {
   }
 }
 
-/* Puja foto a Firebase Storage i retorna la URL */
-async function blogPujarFoto(file, autor) {
-  const storage = blogGetStorage();
-  if (!storage) {
-    console.warn('Firebase Storage no disponible. Foto omesa.');
-    return null;
-  }
-
-  // Nom únic: blog/autor_timestamp.ext
-  const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
-  const nom = `blog/${autor}_${Date.now()}.${ext}`;
-  const ref = storage.ref().child(nom);
-
-  await ref.put(file);
-  return await ref.getDownloadURL();
+/* Comprimeix la foto base64 a màx ~800px i qualitat 0.75 */
+function blogComprimeixFoto(base64) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 800;
+      let { width: w, height: h } = img;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else        { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.75));
+    };
+    img.onerror = () => resolve(base64); // si falla, usa l'original
+    img.src = base64;
+  });
 }
 
 /* ──────────────────────────────────────────────────────────
