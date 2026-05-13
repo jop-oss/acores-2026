@@ -105,7 +105,19 @@
   color: #f87171;
 }
 
-/* ── Filtres per autor ── */
+/* ── Filtre per dia ── */
+.blog-filtre-dia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  min-height: 0;
+}
+.blog-filtre-dia-btn {
+  font-size: 0.72rem !important;
+  padding: 4px 10px !important;
+}
+
 .blog-filtre-autor {
   display: flex;
   flex-wrap: wrap;

@@ -29,6 +29,7 @@ const BLOG_PIN_SALT  = 'blog_salt_acores_';
 let blogDb          = null;
 let blogEntrades    = [];          // array ordenat (newest first)
 let blogFiltreAutor = null;        // null = tots
+let blogFiltreDia   = null;        // null = tots els dies (clau 'dd/mm/yyyy')
 let blogEditantId   = null;        // id doc en edició
 let blogFotoBase64  = null;        // foto seleccionada (base64 per preview)
 let blogFotoFile    = null;        // File object per pujar
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function blogInicialitzar() {
   blogActualitzarBotoAdd();
   blogRenderFiltres();
+  blogRenderFiltreDia();
   blogRenderBotoAdmin();
   blogEscoltarEntrades();
 }
@@ -182,6 +184,51 @@ function blogSetFiltre(autor) {
 }
 
 /* ──────────────────────────────────────────────────────────
+   FILTRE PER DIA
+   ────────────────────────────────────────────────────────── */
+function blogRenderFiltreDia() {
+  const wrap = document.getElementById('blogFiltreDia');
+  if (!wrap) return;
+
+  // Recull els dies únics de totes les entrades (no filtrades per autor)
+  const dies = [...new Set(
+    blogEntrades.map(e => blogFormatDiaExport(e.tsMs)).filter(Boolean)
+  )].sort((a, b) => {
+    // Ordena dd/mm/yyyy cronològicament
+    const parse = s => { const [d,m,y] = s.split('/'); return new Date(y,m-1,d); };
+    return parse(a) - parse(b);
+  });
+
+  if (dies.length === 0) { wrap.innerHTML = ''; return; }
+
+  wrap.innerHTML = `
+    <button class="blog-filtre-btn blog-filtre-dia-btn ${blogFiltreDia === null ? 'actiu' : ''}"
+            onclick="blogSetFiltreDia(null)">
+      📅 Tots els dies
+    </button>
+    ${dies.map(dia => `
+      <button class="blog-filtre-btn blog-filtre-dia-btn ${blogFiltreDia === dia ? 'actiu' : ''}"
+              onclick="blogSetFiltreDia('${dia}')">
+        ${blogDiaEtiquet(dia)}
+      </button>
+    `).join('')}
+  `;
+}
+
+function blogSetFiltreDia(dia) {
+  blogFiltreDia = dia;
+  blogRenderFiltreDia();
+  blogRenderLlista();
+}
+
+// Converteix dd/mm/yyyy a etiqueta llegible: "Dj 24 jul"
+function blogDiaEtiquet(ddmmyyyy) {
+  const [d, m, y] = ddmmyyyy.split('/');
+  const data = new Date(+y, +m - 1, +d);
+  return data.toLocaleDateString('ca-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
+/* ──────────────────────────────────────────────────────────
    FIREBASE: ESCOLTAR ENTRADES (temps real)
    ────────────────────────────────────────────────────────── */
 function blogEscoltarEntrades() {
@@ -199,6 +246,7 @@ function blogEscoltarEntrades() {
     .orderBy('tsMs', 'desc')
     .onSnapshot(snap => {
       blogEntrades = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      blogRenderFiltreDia();
       blogRenderLlista();
     }, err => {
       console.error('Blog listener error:', err);
@@ -214,9 +262,9 @@ function blogRenderLlista() {
   const wrap = document.getElementById('blogLlista');
   if (!wrap) return;
 
-  const filtrades = blogFiltreAutor
-    ? blogEntrades.filter(e => e.autor === blogFiltreAutor)
-    : blogEntrades;
+  const filtrades = blogEntrades
+    .filter(e => !blogFiltreAutor || e.autor === blogFiltreAutor)
+    .filter(e => !blogFiltreDia   || blogFormatDiaExport(e.tsMs) === blogFiltreDia);
 
   if (filtrades.length === 0) {
     wrap.innerHTML = `
