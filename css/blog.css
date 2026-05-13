@@ -59,11 +59,50 @@
 /* ── Top bar ── */
 .blog-top-bar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
+}
+.blog-top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Botó exportar ── */
+.blog-btn-export {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 7px 14px; border-radius: 20px;
+  border: 1px solid rgba(106,171,122,0.25);
+  background: none; color: var(--b-muted);
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.blog-btn-export:hover {
+  border-color: var(--b-green);
+  color: var(--b-green2);
+  background: rgba(106,171,122,0.06);
+}
+
+
+.blog-btn-admin {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 7px 14px; border-radius: 20px;
+  border: 1px solid rgba(106,171,122,0.25);
+  background: none; color: var(--b-muted);
+  cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.blog-btn-admin:hover { border-color: var(--b-green); color: var(--b-green2); }
+.blog-btn-admin.actiu {
+  background: rgba(248,113,113,0.12);
+  border-color: rgba(248,113,113,0.4);
+  color: #f87171;
 }
 
 /* ── Filtres per autor ── */

@@ -32,9 +32,10 @@ let blogFiltreAutor = null;        // null = tots
 let blogEditantId   = null;        // id doc en edició
 let blogFotoBase64  = null;        // foto seleccionada (base64 per preview)
 let blogFotoFile    = null;        // File object per pujar
-let blogUnsubscribe = null;
-let blogPinCallback = null;        // funció a cridar un cop PIN correcte
-let blogPinHashCache = null;       // hash calculat del PIN d'admin
+let blogUnsubscribe  = null;
+let blogPinCallback  = null;        // funció a cridar un cop PIN correcte
+let blogPinHashCache = null;        // hash calculat del PIN d'admin
+let blogEsAdmin      = false;       // true un cop PIN correcte introduït
 
 /* ──────────────────────────────────────────────────────────
    FIREBASE — inicialització robusta
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function blogInicialitzar() {
   blogActualitzarBotoAdd();
   blogRenderFiltres();
+  blogRenderBotoAdmin();
   blogEscoltarEntrades();
 }
 
@@ -113,6 +115,41 @@ function blogActualitzarBotoAdd() {
     btnAdd.style.display  = 'none';
     avisId.style.display  = 'block';
   }
+
+  // Re-render llista per actualitzar botons d'editar/eliminar
+  blogRenderLlista();
+  blogRenderBotoAdmin();
+}
+
+function blogRenderBotoAdmin() {
+  const wrap = document.getElementById('blogAdminWrap');
+  if (!wrap) return;
+  if (blogEsAdmin) {
+    wrap.innerHTML = `
+      <button class="blog-btn-admin actiu" onclick="blogDesactivaAdmin()" title="Desactivar mode admin">
+        🔓 Admin actiu
+      </button>`;
+  } else {
+    wrap.innerHTML = `
+      <button class="blog-btn-admin" onclick="blogActivaAdmin()" title="Mode administrador">
+        🔐 Admin
+      </button>`;
+  }
+}
+
+function blogActivaAdmin() {
+  blogPinCallback = () => {
+    blogEsAdmin = true;
+    blogRenderBotoAdmin();
+    blogRenderLlista();
+  };
+  blogObrePin();
+}
+
+function blogDesactivaAdmin() {
+  blogEsAdmin = false;
+  blogRenderBotoAdmin();
+  blogRenderLlista();
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -210,11 +247,19 @@ function blogRenderLlista() {
       darreraDia = dia;
     }
 
-    const color     = BLOG_COLORS[entrada.autor] || '#6aab7a';
-    const inicial   = (entrada.autor || '?')[0].toUpperCase();
-    const hora      = blogFormatHora(entrada.tsMs);
-    const esAutor   = jugador && jugador === entrada.autor;
-    const esAdmin   = false; // es comprovarà via PIN quan calgui
+    const color   = BLOG_COLORS[entrada.autor] || '#6aab7a';
+    const inicial = (entrada.autor || '?')[0].toUpperCase();
+    const hora    = blogFormatHora(entrada.tsMs);
+    const esAutor = jugador && jugador === entrada.autor;
+
+    // Botons d'acció: l'autor veu els seus; l'admin veu tots
+    let accions = '';
+    if (esAutor || blogEsAdmin) {
+      accions = `
+        <button class="blog-accio-btn" title="Editar" onclick="blogEdita('${entrada.id}')">✏️</button>
+        <button class="blog-accio-btn del" title="Eliminar" onclick="blogElimina('${entrada.id}')">🗑</button>
+      `;
+    }
 
     html += `
       <div class="blog-entrada" id="entrada-${entrada.id}" style="animation-delay:${idx * 0.04}s">
@@ -226,14 +271,7 @@ function blogRenderLlista() {
               <span>🕐 ${hora}</span>
             </div>
           </div>
-          <div class="blog-entrada-accions">
-            ${esAutor ? `
-              <button class="blog-accio-btn" title="Editar" onclick="blogEdita('${entrada.id}')">✏️</button>
-              <button class="blog-accio-btn del" title="Eliminar" onclick="blogElimina('${entrada.id}', false)">🗑</button>
-            ` : `
-              <button class="blog-accio-btn del" title="Eliminar (admin)" onclick="blogElimina('${entrada.id}', true)" style="opacity:0.3">🔐</button>
-            `}
-          </div>
+          <div class="blog-entrada-accions">${accions}</div>
         </div>
         ${entrada.text ? `<div class="blog-entrada-cos">${blogEscapeHtml(entrada.text)}</div>` : ''}
         ${entrada.fotoB64 ? `
@@ -434,10 +472,8 @@ function blogEdita(id) {
   if (!entrada) return;
 
   const jugador = blogJugadorActiu();
-  if (!jugador || jugador !== entrada.autor) {
-    alert('Només pots editar les teves pròpies entrades.');
-    return;
-  }
+  const potEditar = blogEsAdmin || (jugador && jugador === entrada.autor);
+  if (!potEditar) return;
 
   blogObreModal(entrada);
 }
@@ -445,22 +481,16 @@ function blogEdita(id) {
 /* ──────────────────────────────────────────────────────────
    ELIMINAR ENTRADA
    ────────────────────────────────────────────────────────── */
-function blogElimina(id, esAdmin) {
+function blogElimina(id) {
   const entrada = blogEntrades.find(e => e.id === id);
   if (!entrada) return;
 
   const jugador = blogJugadorActiu();
+  const potEliminar = blogEsAdmin || (jugador && jugador === entrada.autor);
+  if (!potEliminar) return;
 
-  if (esAdmin) {
-    // Entrada d'un altre — requereix PIN admin
-    blogPinCallback = () => blogEliminaConfirmat(id);
-    blogObrePin();
-  } else {
-    // Pròpia entrada — confirmació simple
-    if (!jugador || jugador !== entrada.autor) return;
-    if (!confirm(`Segur que vols eliminar aquesta entrada?`)) return;
-    blogEliminaConfirmat(id);
-  }
+  if (!confirm('Segur que vols eliminar aquesta entrada?')) return;
+  blogEliminaConfirmat(id);
 }
 
 async function blogEliminaConfirmat(id) {
@@ -499,7 +529,6 @@ async function blogConfirmaPin() {
     const errDiv = document.getElementById('blogPinErr');
     errDiv.style.display = 'block';
     errDiv.style.animation = 'none';
-    // Forcem re-render de l'animació shake
     void errDiv.offsetWidth;
     errDiv.style.animation = '';
     document.getElementById('blogPinInput').value = '';
@@ -507,11 +536,9 @@ async function blogConfirmaPin() {
     return;
   }
 
-  blogTancaPin();
-  if (typeof blogPinCallback === 'function') {
-    blogPinCallback();
-    blogPinCallback = null;
-  }
+  const cb = blogPinCallback;  // guardem abans de tancar
+  blogTancaPin();               // tanca (posa blogPinCallback = null)
+  if (typeof cb === 'function') cb();
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -535,8 +562,49 @@ document.addEventListener('keydown', e => {
 });
 
 /* ──────────────────────────────────────────────────────────
-   HELPERS
+   EXPORTAR A XLSX
    ────────────────────────────────────────────────────────── */
+function blogExportaXlsx() {
+  if (!blogEntrades.length) {
+    alert('No hi ha entrades per exportar.');
+    return;
+  }
+
+  // Prepara les files (ordre cronològic, les més antigues primer)
+  const files = [...blogEntrades]
+    .sort((a, b) => a.tsMs - b.tsMs)
+    .map(e => ({
+      'Dia':   blogFormatDiaExport(e.tsMs),
+      'Hora':  blogFormatHora(e.tsMs),
+      'Autor': e.autor || '',
+      'Text':  e.text  || '',
+    }));
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(files);
+
+  // Amplades de columna
+  ws['!cols'] = [
+    { wch: 22 }, // Dia
+    { wch: 8  }, // Hora
+    { wch: 12 }, // Autor
+    { wch: 80 }, // Text
+  ];
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Diari del viatge');
+
+  const nom = `blog_acores_2026_${new Date().toISOString().slice(0,10)}.xlsx`;
+  XLSX.writeFile(wb, nom);
+}
+
+function blogFormatDiaExport(tsMs) {
+  if (!tsMs) return '';
+  return new Date(tsMs).toLocaleDateString('ca-ES', {
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  });
+}
+
+
 function blogFormatDia(tsMs) {
   if (!tsMs) return '—';
   const d = new Date(tsMs);

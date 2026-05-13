@@ -55,11 +55,17 @@
     <!-- BOTÓ NOVA ENTRADA (només visible si identificat) -->
     <div class="blog-top-bar">
       <div id="blogFiltreAutor" class="blog-filtre-autor"></div>
-      <button class="blog-btn-add" id="blogBtnAdd" style="display:none" onclick="blogObreModal()">
-        ✏️ Nova entrada
-      </button>
-      <div id="blogAvisId" class="blog-avis-id" style="display:none">
-        Identifica't per escriure al blog
+      <div class="blog-top-bar-right">
+        <div id="blogAdminWrap"></div>
+        <button class="blog-btn-export" onclick="blogExportaXlsx()" title="Exportar a Excel">
+          📥 Excel
+        </button>
+        <button class="blog-btn-add" id="blogBtnAdd" style="display:none" onclick="blogObreModal()">
+          ✏️ Nova entrada
+        </button>
+        <div id="blogAvisId" class="blog-avis-id" style="display:none">
+          Identifica't per escriure al blog
+        </div>
       </div>
     </div>
 
@@ -140,6 +146,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/blog.js"></script>
 <script src="js/app.js"></script>
