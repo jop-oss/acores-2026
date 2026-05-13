@@ -23,6 +23,22 @@ const SECCIONS = [
       { ca: 'Perdona / Disculpa',              pt: 'Com licença / Desculpe',         f: 'con li-SEN-sa / des-KUL-pe' },
       { ca: 'No entenc',                       pt: 'Não entendo',                    f: 'nãu en-TEN-du' },
       { ca: 'Parles anglès?',                  pt: 'Fala inglês?',                   f: 'FÀ-la in-GLÈSH?' },
+      { ca: 'Fins aviat!',                     pt: 'Até logo!',                      f: 'a-TÈ LO-gu!' },
+      { ca: 'Adéu',                           pt: 'Adeus',                          f: 'a-DÉUSH' },
+      { ca: 'Fins ara!',                       pt: 'Até já!',                        f: 'a-TÈ JÀ!' },
+      { ca: 'Encantat/da de conèixer-te',      pt: 'Prazer em conhecê-lo/la',        f: 'pra-ZER em ku-ñe-SÈ-lu/la' },
+      { ca: 'Em dic...',                       pt: 'Chamo-me...',                    f: 'XÀ-mu-me...' },
+      { ca: 'Com et dius?',                    pt: 'Como se chama?',                 f: 'KO-mu se XÀ-ma?' },
+      { ca: 'Com estàs?',                      pt: 'Como está?',                     f: 'KO-mu es-TÀ?' },
+      { ca: 'Tot bé',                          pt: 'Tudo bem',                       f: 'TU-du bèm' },
+      { ca: 'Moltes gràcies',                  pt: 'Muito obrigado/a',               f: 'MUI-tu o-bri-GÀ-du/da' },
+      { ca: 'Ho sento',                        pt: 'Desculpe / Lamento',             f: 'des-KUL-pe / la-MEN-tu' },
+      { ca: 'Ok, d\u0027acord',                  pt: 'Ok, tudo bem',                   f: 'ok, TU-du bèm' },
+      { ca: 'Parles espanyol?',                pt: 'Fala espanhol?',                 f: 'FÀ-la es-pa-ÑOLL?' },
+      { ca: 'Quina hora és?',                  pt: 'Que horas são?',                 f: 'ke Ó-ras sãu?' },
+      { ca: 'On és el bany/lavabo?',           pt: 'Onde é a casa de banho?',        f: 'ON-de è a KÀ-za de BÀ-ñu?' },
+      { ca: 'Ens pots tirar una foto?',        pt: 'Pode tirar-nos uma foto?',       f: 'PO-de ti-RAR-nus ú-ma FO-tu?' },
+      { ca: 'Què és això?',                    pt: 'O que é isso?',                  f: 'u ke è Í-su?' },
     ]
   },
   {
@@ -39,7 +55,8 @@ const SECCIONS = [
       { ca: 'Està molt bo!',                   pt: 'Está muito bom!',                f: 'es-TÀ MUI-tu bom!' },
       { ca: 'Aigua amb/sense gas',             pt: 'Água com/sem gás',               f: 'À-gua com/sèm GÀSH' },
       { ca: 'Un got de vi negre/blanc',        pt: 'Um copo de vinho tinto/branco',  f: 'um KO-pu de VI-ñu TIN-tu/BRAN-ku' },
-      { ca: 'Porta per endur',                 pt: 'Para levar',                     f: 'PA-ra le-VAR' },
+      { ca: 'Per emportar',                    pt: 'Para levar',                     f: 'PA-ra le-VAR' },
+      { ca: 'Que aprofiti!',                   pt: 'Bom proveito!',                  f: 'bom pro-VEI-tu!' },
     ]
   },
   {
@@ -56,6 +73,9 @@ const SECCIONS = [
       { ca: 'Necessito gasolina',              pt: 'Preciso de gasolina',            f: 'pre-SÍ-zu de ga-zu-LÍ-na' },
       { ca: 'El GPS no funciona',              pt: 'O GPS não funciona',             f: 'u jè-pè-ÈS nãu fun-SIO-na' },
       { ca: 'Hem perdut el camí',              pt: 'Perdemos o caminho',             f: 'per-DÈ-mus u ka-MÍ-ñu' },
+      { ca: 'A on podem agafar un taxi?',      pt: 'Onde podemos apanhar um táxi?',  f: 'ON-de pu-DÈ-mus a-pa-ÑÀAR um TÀK-si?' },
+      { ca: 'Esquerra / Dreta',                pt: 'Esquerda / Direita',             f: 'es-KÈR-da / di-REI-ta' },
+      { ca: 'Perdoni, com puc arribar al carrer...?', pt: 'Com licença, como posso chegar à rua...?', f: 'com li-SEN-sa, KO-mu PO-su xe-GAR à RÚ-a...?' },
     ]
   },
   {
@@ -117,8 +137,45 @@ const SECCIONS = [
       { ca: 'Fonts termals',                   pt: 'Termas / Caldeiras',             f: 'TÈR-mas / kal-DEI-ras' },
       { ca: 'Avistament de balenes',           pt: 'Observação de baleias',          f: 'ob-ser-va-SÃU de ba-LEI-as' },
       { ca: 'Bon vent i bona mar!',            pt: 'Bons ventos e boa viagem!',      f: 'bons VEN-tus e BO-a vi-À-jem!' },
-      { ca: 'Que aprofiti!',                   pt: 'Bom proveito!',                  f: 'bom pro-VEI-tu!' },
-      { ca: 'Fins aviat!',                     pt: 'Até logo!',                      f: 'a-TÈ LO-gu!' },
+    ]
+  },
+  {
+    id: 'aliments',
+    emoji: '🥗',
+    titol: 'Aliments',
+    frases: [
+      { ca: 'Pa',                              pt: 'Pão',                            f: 'pãu' },
+      { ca: 'Llet',                            pt: 'Leite',                          f: 'LEI-te' },
+      { ca: 'Cafè',                            pt: 'Café',                           f: 'ka-FÈ' },
+      { ca: 'Carn',                            pt: 'Carne',                          f: 'KAR-ne' },
+      { ca: 'Pollastre',                       pt: 'Frango',                         f: 'FRAN-gu' },
+      { ca: 'Vedella',                         pt: 'Vaca / Vitela',                  f: 'VÀ-ka / vi-TÈ-la' },
+      { ca: 'Carn de porc',                    pt: 'Porco',                          f: 'POR-ku' },
+      { ca: 'Peix',                            pt: 'Peixe',                          f: 'PEI-xe' },
+      { ca: 'Pasta',                           pt: 'Massa',                          f: 'MÀ-sa' },
+      { ca: 'Amanida',                         pt: 'Salada',                         f: 'sa-LÀ-da' },
+      { ca: 'Ous',                             pt: 'Ovos',                           f: 'Ó-vus' },
+      { ca: 'Postres',                         pt: 'Sobremesa',                      f: 'so-bre-MÈ-za' },
+      { ca: 'Patates fregides',                pt: 'Batatas fritas',                 f: 'ba-TÀ-tas FRÍ-tas' },
+      { ca: 'Oli',                             pt: 'Azeite',                         f: 'a-ZEI-te' },
+      { ca: 'Vinagre',                         pt: 'Vinagre',                        f: 'vi-NÀ-gre' },
+      { ca: 'Vull un suc de pinya/taronja/préssec', pt: 'Quero um sumo de ananás/laranja/pêssego', f: 'KÈ-ru um SU-mu de a-na-NÀS/la-RAN-xa/PÈ-se-gu' },
+    ]
+  },
+  {
+    id: 'numeros',
+    emoji: '🔢',
+    titol: 'Números, dies i pronoms',
+    frases: [
+      { ca: 'U, dos, tres, quatre, cinc',      pt: 'Um, dois, três, quatro, cinco',  f: 'um, doish, trèsh, KUÀT-ru, SIN-ku' },
+      { ca: 'Sis, set, vuit, nou, deu',        pt: 'Seis, sete, oito, nove, dez',   f: 'seish, SÈ-te, OI-tu, NÓ-ve, dèsh' },
+      { ca: 'Ahir / Avui / Demà',              pt: 'Ontem / Hoje / Amanhã',          f: 'ON-tem / O-xe / a-ma-ÑÀ' },
+      { ca: 'Demà passat',                     pt: 'Depois de amanhã',               f: 'de-POISH de a-ma-ÑÀ' },
+      { ca: 'Dilluns, dimarts, dimecres',      pt: 'Segunda, terça, quarta',         f: 'se-GUN-da, TÈR-sa, KUÀR-ta' },
+      { ca: 'Dijous, divendres',               pt: 'Quinta, sexta',                  f: 'KIN-ta, SÈSH-ta' },
+      { ca: 'Dissabte, diumenge',              pt: 'Sábado, domingo',                f: 'SÀ-ba-du, du-MIN-gu' },
+      { ca: 'Jo, tu, ell/ella',                pt: 'Eu, tu, ele/ela',                f: 'eu, tu, È-le/È-la' },
+      { ca: 'Nosaltres, vosaltres, ells/elles', pt: 'Nós, vós, eles/elas',           f: 'nosh, vosh, È-les/È-las' },
     ]
   },
 ];
@@ -143,7 +200,7 @@ function parla(text, btn) {
 
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = 'pt-PT';
-  utt.rate = 0.85;
+  utt.rate = 1.0;
   utt.pitch = 1;
 
   // Intenta usar veu portuguesa si existeix
@@ -161,8 +218,23 @@ function parla(text, btn) {
 }
 
 /* ──────────────────────────────────────────────────────────
-   TRADUCTOR (MyMemory API — gratuïta)
+   TRADUCTOR (MyMemory API — gratuïta, bidireccional)
    ────────────────────────────────────────────────────────── */
+let dirTrad = 'ca|pt'; // direcció actual
+
+function actualitzaDir() {
+  const label = document.getElementById('tradDirLabel');
+  const input = document.getElementById('tradInput');
+  if (dirTrad === 'ca|pt') {
+    label.textContent = 'CA → PT';
+    input.placeholder = 'Escriu en català...';
+  } else {
+    label.textContent = 'PT → CA';
+    input.placeholder = 'Escreve em português...';
+  }
+  // Neteja resultat anterior
+  document.getElementById('tradResultWrap').classList.remove('visible');
+}
 async function tradueix() {
   const text = document.getElementById('tradInput').value.trim();
   if (!text) return;
@@ -172,7 +244,7 @@ async function tradueix() {
   btn.querySelector('.pt-trad-btn-text').textContent = 'Traduint...';
 
   try {
-    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ca|pt&de=acores2026@viatge.cat`;
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${dirTrad}&de=acores2026@viatge.cat`;
     const resp = await fetch(url);
     const data = await resp.json();
     const traduccio = data.responseData?.translatedText || 'Error en la traducció';
@@ -296,6 +368,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tradCounter').textContent = `${input.value.length} / 500`;
   });
 
+  // Botó canviar direcció
+  document.getElementById('tradDirBtn').addEventListener('click', () => {
+    dirTrad = dirTrad === 'ca|pt' ? 'pt|ca' : 'ca|pt';
+    actualitzaDir();
+    input.value = '';
+    document.getElementById('tradCounter').textContent = '0 / 500';
+    input.focus();
+  });
+
   // Botó traduir
   document.getElementById('tradBtn').addEventListener('click', tradueix);
 
@@ -322,10 +403,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Escoltar resultat
+  // Escoltar resultat — llengua destí segons direcció
   document.getElementById('tradSpeak').addEventListener('click', () => {
     const text = document.getElementById('tradResult').textContent;
-    parla(text, document.getElementById('tradSpeak'));
+    const btn  = document.getElementById('tradSpeak');
+    const lang = dirTrad === 'ca|pt' ? 'pt-PT' : 'ca-ES';
+    const utt  = new SpeechSynthesisUtterance(text);
+    utt.lang = lang; utt.rate = 1.0;
+    const veus = window.speechSynthesis.getVoices();
+    const veu  = veus.find(v => v.lang.startsWith(lang.split('-')[0]));
+    if (veu) utt.voice = veu;
+    btn.classList.add('parlant');
+    utt.onend = () => btn.classList.remove('parlant');
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utt);
   });
 
   // Precarrega veus (alguns navegadors les carreguen asíncronament)
