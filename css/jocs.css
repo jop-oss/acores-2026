@@ -1,6 +1,6 @@
 :root {
       --bg:#0a1628; --bg2:#0f1f38; --verd:#2d5a3d; --verd2:#6aab7a; --verd3:#a8d8b0;
-      --gold:#f0b429; --gold2:#ffd166; --error:#e05555; --text:#e8f4ec; --text2:#9bbfaa;
+      --gold:#f0b429; --gold2:#27ae60; --error:#e05555; --text:#e8f4ec; --text2:#9bbfaa;
       --border:rgba(106,171,122,0.2);
     }
     *{box-sizing:border-box;margin:0;padding:0}
@@ -299,7 +299,7 @@
     .resultat-pts-badge{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;padding:.5rem 1.5rem;border-radius:16px;animation:slideIn .3s ease}
     .resultat-pts-badge.perfecte{color:var(--verd2);background:rgba(106,171,122,.15);border:2px solid var(--verd2)}
     .resultat-pts-badge.bo{color:var(--gold);background:rgba(240,180,41,.12);border:2px solid var(--gold)}
-    .resultat-pts-badge.approx{color:#ff9f43;background:rgba(255,159,67,.1);border:2px solid rgba(255,159,67,.5)}
+    .resultat-pts-badge.approx{color:#f1c40f;background:rgba(255,159,67,.1);border:2px solid rgba(255,159,67,.5)}
     .resultat-pts-badge.error{color:#ff8a8a;background:rgba(224,85,85,.1);border:2px solid rgba(224,85,85,.4)}
     .resultat-nom{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight:900;text-align:center}
     .resultat-dist{font-size:.9rem;color:var(--text2)}
@@ -366,12 +366,12 @@
       border: 2px solid transparent;
     }
     .pa-lletra-v  { background: #2d5a3d; border-color: #6aab7a; }
-    .pa-lletra-e  { background: #1a3a5c; border-color: #4a9eff; }
+    .pa-lletra-e  { background: #1a3a5c; border-color: #e74c3c; }
     .pa-lletra-r  { background: transparent; color: var(--text2); border-color: transparent; font-size: .8rem; }
     .pa-lletra-d  { background: #5a2d2d; border-color: #e05555; }
     .pa-lletra-e2 { background: #2d5a3d; border-color: #6aab7a; }
     .pa-lletra-r2 { background: #5a4a1a; border-color: #f0b429; }
-    .pa-lletra-d2 { background: #1a3a5c; border-color: #4a9eff; }
+    .pa-lletra-d2 { background: #1a3a5c; border-color: #e74c3c; }
     .pa-lletra-e3 { background: #2d5a3d; border-color: #6aab7a; }
     .pa-lletra-v2 { background: #5a2d2d; border-color: #e05555; }
     .pa-lletra-a  { background: #5a4a1a; border-color: #f0b429; }
@@ -4413,7 +4413,7 @@
 
     /* Caselles especials — fons neutre, text de color */
     .sc-cel-tp { background:#d4c9b8; } .sc-cel-tp .sc-cel-label { color:#c0392b; }
-    .sc-cel-dp { background:#d4c9b8; } .sc-cel-dp .sc-cel-label { color:#e67e22; }
+    .sc-cel-dp { background:#d4c9b8; } .sc-cel-dp .sc-cel-label { color:#e84393; }
     .sc-cel-tl { background:#d4c9b8; } .sc-cel-tl .sc-cel-label { color:#1a6fa8; }
     .sc-cel-dl { background:#d4c9b8; } .sc-cel-dl .sc-cel-label { color:#27ae60; }
     .sc-cel-centre { background:#d4c9b8; } .sc-cel-centre .sc-cel-label { color:#c0392b; font-size:clamp(7px,1.8vw,11px); }

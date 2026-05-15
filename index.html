@@ -10,24 +10,23 @@
 <style>
   @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
 
-  .trivial-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
-  .trivial-banner-text { flex: 1; font-size: .88rem; font-weight: 600; color: #f0b429; }
+  .trivial-banner-text { font-weight: 600; color: #f0b429; white-space: nowrap; }
   .trivial-banner-btn {
-    background: #f0b429; border: none; border-radius: 8px;
-    padding: .4rem 1rem; color: #000;
-    font-family: sans-serif; font-size: .82rem; font-weight: 700;
+    background: #f0b429; border: none; border-radius: 6px;
+    padding: .3rem .75rem; color: #000;
+    font-family: sans-serif; font-weight: 700;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
   }
   .fe-banner-btn {
-    background: #ec4899; border: none; border-radius: 8px;
-    padding: .4rem 1rem; color: #fff;
-    font-family: sans-serif; font-size: .82rem; font-weight: 700;
+    background: #ec4899; border: none; border-radius: 6px;
+    padding: .3rem .75rem; color: #fff;
+    font-family: sans-serif; font-weight: 700;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
   }
   .yahtzee-banner-btn {
-    background: #3b82f6; border: none; border-radius: 8px;
-    padding: .4rem 1rem; color: #fff;
-    font-family: sans-serif; font-size: .82rem; font-weight: 700;
+    background: #3b82f6; border: none; border-radius: 6px;
+    padding: .3rem .75rem; color: #fff;
+    font-family: sans-serif; font-weight: 700;
     cursor: pointer; white-space: nowrap; flex-shrink: 0;
   }
 </style>
@@ -37,21 +36,21 @@
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
   <div class="nav-links">
-    <a href="itinerari.html" class="nav-item">Itinerari</a>
     <a href="imprescindibles.html" class="nav-item">Imprescindibles</a>
-    <a href="temps.html" class="nav-item">Temps</a>
-    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
     <a href="logistica.html" class="nav-item">Logística</a>
     <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="temps.html" class="nav-item">El temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
     <a href="restaurants.html" class="nav-item">Restaurants</a>
-    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="despeses.html" class="nav-item">Despeses</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+    <a href="curiositats.html" class="nav-item">Saber-ne més</a>
     <a href="portugues.html" class="nav-item">Portuguès</a>
-    <a href="material-extra.html" class="nav-item">Material extra</a>
     <a href="jocs.html" class="nav-item">Jocs</a>
     <a href="reptes.html" class="nav-item">Reptes</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
-    <a href="despeses.html" class="nav-item">Despeses</a>
-    <a href="blog.html" class="nav-item">Blog</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap" id="nav-id-wrap">
@@ -60,32 +59,33 @@
   </div>
 </nav>
 
-<!-- Banner torn Trivial -->
-<div id="trivial-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(240,180,41,.15),rgba(240,180,41,.05));border:1px solid rgba(240,180,41,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
-  <span class="trivial-banner-icon">🎲</span>
-  <span class="trivial-banner-text">És el teu torn al Trivial!</span>
-  <button class="trivial-banner-btn" onclick="">Jugar ara →</button>
-</div>
+<!-- Banners torns (contenidor flex en fila) -->
+<div id="banners-torns" style="display:flex;flex-wrap:wrap;gap:.5rem;padding:.6rem 1rem;margin:0">
 
-<!-- Banner torn Scrabble -->
-<div id="scrabble-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(106,171,122,.15),rgba(106,171,122,.05));border:1px solid rgba(106,171,122,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
-  <span class="trivial-banner-icon">📝</span>
-  <span class="trivial-banner-text" style="color:var(--verd2,#6aab7a)">És el teu torn al Scrabble!</span>
-  <button class="trivial-banner-btn" style="background:#6aab7a" onclick="">Jugar ara →</button>
-</div>
+  <div id="trivial-torn-banner" style="display:none;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(240,180,41,.15),rgba(240,180,41,.05));border:1px solid rgba(240,180,41,.4);border-radius:10px;padding:.45rem .9rem;animation:slideIn .3s ease;flex-shrink:0">
+    <span style="font-size:1rem">🎓</span>
+    <span class="trivial-banner-text" style="font-size:.78rem">Torn al Trivial</span>
+    <button class="trivial-banner-btn" onclick="" style="font-size:.75rem;padding:.3rem .75rem;border-radius:6px">Jugar →</button>
+  </div>
 
-<!-- Banner torn Yahtzee -->
-<div id="yahtzee-torn-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05));border:1px solid rgba(59,130,246,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
-  <span class="trivial-banner-icon">🎲</span>
-  <span class="trivial-banner-text" style="color:#60a5fa">És el teu torn al Yahtzee!</span>
-  <button class="yahtzee-banner-btn" onclick="">Jugar ara →</button>
-</div>
+  <div id="scrabble-torn-banner" style="display:none;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(106,171,122,.15),rgba(106,171,122,.05));border:1px solid rgba(106,171,122,.4);border-radius:10px;padding:.45rem .9rem;animation:slideIn .3s ease;flex-shrink:0">
+    <span style="font-size:1rem">⌛</span>
+    <span class="trivial-banner-text" style="font-size:.78rem;color:#6aab7a">Torn al Scrabble</span>
+    <button class="trivial-banner-btn" style="background:#6aab7a;font-size:.75rem;padding:.3rem .75rem;border-radius:6px" onclick="">Jugar →</button>
+  </div>
 
-<!-- Banner torn Frase Esbojarrada -->
-<div id="frase-esbojarrada-banner" style="display:none;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(236,72,153,.05));border:1px solid rgba(236,72,153,.4);border-radius:14px;padding:.85rem 1.25rem;margin:.75rem 1rem 1.5rem;animation:slideIn .3s ease">
-  <span class="trivial-banner-icon">✍️</span>
-  <span class="trivial-banner-text fe-banner-text" style="color:#ec4899">És el teu torn a la Frase Esbojarrada!</span>
-  <button class="fe-banner-btn" onclick="location.href='jocs.html'">Jugar ara →</button>
+  <div id="yahtzee-torn-banner" style="display:none;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(59,130,246,.05));border:1px solid rgba(59,130,246,.4);border-radius:10px;padding:.45rem .9rem;animation:slideIn .3s ease;flex-shrink:0">
+    <span style="font-size:1rem">🎲</span>
+    <span class="trivial-banner-text" style="font-size:.78rem;color:#60a5fa">Torn al Yahtzee</span>
+    <button class="yahtzee-banner-btn" onclick="" style="font-size:.75rem;padding:.3rem .75rem;border-radius:6px">Jugar →</button>
+  </div>
+
+  <div id="frase-esbojarrada-banner" style="display:none;align-items:center;gap:.5rem;background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(236,72,153,.05));border:1px solid rgba(236,72,153,.4);border-radius:10px;padding:.45rem .9rem;animation:slideIn .3s ease;flex-shrink:0">
+    <span style="font-size:1rem">✍️</span>
+    <span class="trivial-banner-text fe-banner-text" style="font-size:.78rem;color:#ec4899">Torn a la Frase Esbojarrada</span>
+    <button class="fe-banner-btn" onclick="location.href='jocs.html'" style="font-size:.75rem;padding:.3rem .75rem;border-radius:6px">Jugar →</button>
+  </div>
+
 </div>
 
 <header class="hero">
@@ -285,70 +285,80 @@
     <h2>Tot el que necessites saber</h2>
     <div class="cards-grid container">
 
-      <div class="card">
+      <div class="card" onclick="location.href='imprescindibles.html'">
+        <div class="card-icon">🌋</div>
+        <h3>Imprescindibles</h3>
+        <p>Els llocs que no us podeu perdre</p>
+      </div>
+      <div class="card" onclick="location.href='itinerari.html'">
         <div class="card-icon">📍</div>
         <h3>Itinerari</h3>
         <p>Dia a dia, illa a illa</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🗺️</div>
-        <h3>Mapes</h3>
-        <p>Rutes i punts d'interès</p>
-      </div>
-      <div class="card" onclick="location.href='temps.html'">
-        <div class="card-icon">⛅</div>
-        <h3>Temps</h3>
-        <p>Previsió meteorològica</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📷</div>
-        <h3>Webcams</h3>
-        <p>En directe des de les illes</p>
-      </div>
-      <div class="card">
+      <div class="card" onclick="location.href='logistica.html'">
         <div class="card-icon">✈️</div>
         <h3>Logística</h3>
-        <p>Vols, transfers i consells</p>
+        <p>Vols, ferris i cotxes</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="location.href='allotjament.html'">
         <div class="card-icon">🏨</div>
         <h3>Allotjament</h3>
         <p>Cases i hotels</p>
       </div>
-      <div class="card">
+      <div class="card" onclick="location.href='temps.html'">
+        <div class="card-icon">⛅</div>
+        <h3>El temps</h3>
+        <p>Previsió meteorològica</p>
+      </div>
+      <div class="card" onclick="location.href='webcams.html'">
+        <div class="card-icon">📷</div>
+        <h3>Webcams</h3>
+        <p>En directe des de les illes</p>
+      </div>
+      <div class="card" onclick="location.href='restaurants.html'">
         <div class="card-icon">🍽️</div>
         <h3>Restaurants</h3>
         <p>On menjar bé</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🌋</div>
-        <h3>Curiositats</h3>
-        <p>Açores secrets</p>
+      <div class="card" onclick="location.href='despeses.html'">
+        <div class="card-icon">💰</div>
+        <h3>Despeses</h3>
+        <p>Control de despeses del grup</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🎵</div>
-        <h3>Playlist</h3>
-        <p>La banda sonora del viatge</p>
+      <div class="card" onclick="location.href='blog.html'">
+        <div class="card-icon">📖</div>
+        <h3>Blog</h3>
+        <p>Diari del viatge en temps real</p>
       </div>
-      <div class="card">
-        <div class="card-icon">📦</div>
-        <h3>Material extra</h3>
-        <p>Documents i recursos</p>
+      <div class="card" onclick="location.href='curiositats.html'">
+        <div class="card-icon">🤔</div>
+        <h3>Saber-ne més</h3>
+        <p>Curiositats de les Açores</p>
+      </div>
+      <div class="card" onclick="location.href='portugues.html'">
+        <div class="card-icon">🇵🇹</div>
+        <h3>Portuguès</h3>
+        <p>Frases i expressions útils</p>
       </div>
       <div class="card" onclick="location.href='jocs.html'">
         <div class="card-icon">🎮</div>
         <h3>Jocs</h3>
-        <p>Per al viatge</p>
+        <p>30 jocs per al viatge</p>
+      </div>
+      <div class="card" onclick="location.href='reptes.html'">
+        <div class="card-icon">🏆</div>
+        <h3>Reptes</h3>
+        <p>Desafiaments del grup</p>
       </div>
       <div class="card" onclick="location.href='ruleta.html'">
         <div class="card-icon">🎯</div>
         <h3>Ruleta</h3>
         <p>Qui ho fa?</p>
       </div>
-      <div class="card">
-        <div class="card-icon">📓</div>
-        <h3>Blog</h3>
-        <p>Crònica del viatge</p>
+      <div class="card" onclick="location.href='material-extra.html'">
+        <div class="card-icon">📦</div>
+        <h3>Material extra</h3>
+        <p>Documents i recursos</p>
       </div>
 
     </div>

@@ -390,7 +390,7 @@ const PIN_ESBORRA = "2468";
 // ── Confetti ──────────────────────────────────
 function llencaConfetti(colorBase) {
   const container = document.getElementById("confetti-container");
-  const colors = [colorBase, "#a8d8b0", "#6aab7a", "#fff", "#ffd166"];
+  const colors = [colorBase, "#a8d8b0", "#6aab7a", "#fff", "#27ae60"];
   for (let i = 0; i < 60; i++) {
     const piece = document.createElement("div");
     piece.className = "confetti-piece";

@@ -19,21 +19,21 @@
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
   <div class="nav-links">
-    <a href="itinerari.html" class="nav-item">Itinerari</a>
     <a href="imprescindibles.html" class="nav-item">Imprescindibles</a>
-    <a href="temps.html" class="nav-item">Temps</a>
-    <a href="webcams.html" class="nav-item">Webcams</a>
+    <a href="itinerari.html" class="nav-item">Itinerari</a>
     <a href="logistica.html" class="nav-item">Logística</a>
     <a href="allotjament.html" class="nav-item">Allotjament</a>
+    <a href="temps.html" class="nav-item">El temps</a>
+    <a href="webcams.html" class="nav-item">Webcams</a>
     <a href="restaurants.html" class="nav-item">Restaurants</a>
-    <a href="curiositats.html" class="nav-item">Curiositats</a>
+    <a href="despeses.html" class="nav-item">Despeses</a>
+    <a href="blog.html" class="nav-item">Blog</a>
+    <a href="curiositats.html" class="nav-item">Saber-ne més</a>
     <a href="portugues.html" class="nav-item">Portuguès</a>
-    <a href="material-extra.html" class="nav-item">Material extra</a>
     <a href="jocs.html" class="nav-item active">Jocs</a>
     <a href="reptes.html" class="nav-item">Reptes</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
-    <a href="despeses.html" class="nav-item">Despeses</a>
-    <a href="blog.html" class="nav-item">Blog</a>
+    <a href="material-extra.html" class="nav-item">Material extra</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap" id="nav-id-wrap">
@@ -80,7 +80,7 @@
         <img id="joc-selector-avatar" src="" alt="">
         <span id="joc-selector-nom"></span>
       </div>
-      <h2 class="joc-selector-title">A quin joc vols jugar?</h2>
+      <h2 class="joc-selector-title">🎮 A quin joc vols jugar?</h2>
       <!-- FILTRES -->
       <div class="joc-filtres-wrap">
         <div class="joc-filtres-grup">
@@ -149,7 +149,7 @@
         </button>
         <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="preguntes i respostes" onclick="seleccionarModeJoc('trivial')">
   <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
-          <span class="joc-selector-icon">🎲</span>
+          <span class="joc-selector-icon">🎓</span>
           <span class="joc-selector-label">Trivial Açores</span>
           <span class="joc-selector-sub">El joc de preguntes per torns</span>
         </button>
@@ -161,7 +161,7 @@
         </button>
         <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="estratègia;números;lletres" onclick="seleccionarModeJoc('cifras')">
   <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
-          <span class="joc-selector-icon">📝</span>
+          <span class="joc-selector-icon">🧮</span>
           <span class="joc-selector-label">Xifres i Lletres</span>
           <span class="joc-selector-sub">5 lletres + 10 xifres · 1 min cadascuna</span>
         </button>
@@ -227,7 +227,7 @@
         </button>
         <button class="joc-selector-btn" data-tipus="competitiu" data-modal="grup" data-tags="estratègia;lletres" onclick="seleccionarModeJoc('scrabble')">
   <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="En grup">👥</span></div>
-          <span class="joc-selector-icon">📝</span>
+          <span class="joc-selector-icon">⌛</span>
           <span class="joc-selector-label">Scrabble Açores</span>
           <span class="joc-selector-sub">Paraules · torns · individual o equips</span>
         </button>
@@ -287,7 +287,7 @@
         </button>
         <button class="joc-selector-btn" data-tipus="competitiu" data-modal="individual" data-tags="lògica" onclick="seleccionarModeJoc('colorfill')">
   <div class="joc-badge-wrap"><span class="joc-badge-tipus" title="Competitiu">🏆</span><span class="joc-badge-modal" title="Individual">👤</span></div>
-          <span class="joc-selector-icon">🌊</span>
+          <span class="joc-selector-icon">🎨</span>
           <span class="joc-selector-label">Color Fill</span>
           <span class="joc-selector-sub">3 nivells · 10 taulers · Flood It</span>
         </button>
@@ -314,9 +314,9 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mapa', this)">📍 Mapa</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('paraula', this)">🔤 Paraula</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('bingo', this)">🎯 Bingo</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎲 Trivial</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎓 Trivial</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sudoku', this)">🔢 Sudoku</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">📝 Xifres</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">🧮 Xifres</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
@@ -327,7 +327,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">📝 Scrabble</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">⌛ Scrabble</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
@@ -336,7 +336,7 @@
           <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
           <button class="rfj-btn" onclick="rankingFiltrarJoc('encreuats', this)">📝 Encreuats</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🌊 Color Fill</button>
+          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🎨 Color Fill</button>
         </div>
 
         <!-- Llista de jugadors -->

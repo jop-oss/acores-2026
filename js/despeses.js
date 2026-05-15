@@ -11,9 +11,9 @@ const GRUP_PAGADOR = ['Jordi', 'Joa', 'Mons', 'Xu']; // Divideixen despeses
 const TOTS         = ['Jordi', 'Joa', 'Mons', 'Xu', 'Anna', 'Laia'];
 
 const COLORS = {
-  Jordi: '#e74c3c', Joa: '#f39c12',
+  Jordi: '#e74c3c', Joa: '#f1c40f',
   Mons:  '#8e44ad', Xu:  '#2980b9',
-  Anna:  '#e67e22', Laia:'#27ae60',
+  Anna:  '#e84393', Laia:'#27ae60',
 };
 
 const CAT_EMOJI = {

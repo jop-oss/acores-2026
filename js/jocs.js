@@ -504,9 +504,9 @@ function rankingMostrarDetall(nom) {
     { icon: "📍", nom: "On és això?", key: "mapa" },
     { icon: "🔤", nom: "La Paraula", key: "paraula" },
     { icon: "🎯", nom: "Bingo", key: "bingo" },
-    { icon: "🎲", nom: "Trivial", key: "trivial" },
+    { icon: "🎓", nom: "Trivial", key: "trivial" },
     { icon: "🔢", nom: "Sudoku", key: "sudoku" },
-    { icon: "📝", nom: "Xifres i Lletres", key: "cifras" },
+    { icon: "🧮", nom: "Xifres i Lletres", key: "cifras" },
     { icon: "🪢", nom: "El Penjat", key: "penjat" },
     { icon: "🐍", nom: "Snake", key: "snake" },
     { icon: "🧱", nom: "Breakout", key: "breakout" },
@@ -518,7 +518,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🀄", nom: "Mahjong", key: "mahjong" },
     { icon: "🎯", nom: "Llança Bombes", key: "llancabombes" },
     { icon: "🪨", nom: "Sokoban", key: "sokoban" },
-    { icon: "📝", nom: "Scrabble", key: "scrabble" },
+    { icon: "⌛", nom: "Scrabble", key: "scrabble" },
     { icon: "🔍", nom: "Diferències", key: "diferencies" },
     { icon: "🃏", nom: "Gin Rummy", key: "ginrummy" },
     { icon: "🎲", nom: "Yahtzee", key: "yahtzee" },
@@ -527,7 +527,7 @@ function rankingMostrarDetall(nom) {
     { icon: "🧩", nom: "Nonogram", key: "nonogram" },
     { icon: "📸", nom: "Zoom out!", key: "jocfotos" },
     { icon: "📝", nom: "Encreuats", key: "encreuats" },
-    { icon: "🌊", nom: "Color Fill", key: "colorfill" },
+    { icon: "🎨", nom: "Color Fill", key: "colorfill" },
   ];
 
   cos.innerHTML = `

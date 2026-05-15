@@ -15,11 +15,11 @@ const FE_FRASES_INICIALS = [
 
 const FE_COLORS_JUGADORS = {
   Jordi: '#e74c3c',   // vermell
-  Anna:  '#e67e22',   // taronja
+  Anna:  '#e84393',   // taronja
   Laia:  '#27ae60',   // verd
   Mons:  '#8e44ad',   // violeta
   Xu:    '#2980b9',   // blau
-  Joa:   '#f39c12',   // groc daurat
+  Joa:   '#f1c40f',   // groc daurat
 };
 const FE_COLOR_AUTO = '#6b7280'; // gris per paraules automàtiques
 
