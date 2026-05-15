@@ -136,8 +136,10 @@ function impRenderCard(lloc, cfg, idx) {
     ? `<div class="imp-carr" id="carr-${lloc.id}">
         <div class="imp-carr-track" id="track-${lloc.id}">
           ${Array.from({length: lloc.fotos}, (_, i) =>
-            `<img class="imp-carr-img" src="img/imprescindibles/${lloc.prefix}_${String(i+1).padStart(2,'0')}.jpg"
-                  alt="${lloc.nom}" loading="lazy" onerror="this.style.display='none'">`
+            `<div class="imp-carr-slide">
+               <img class="imp-carr-img" src="img/imprescindibles/${lloc.prefix}-${String(i+1).padStart(2,'0')}.webp"
+                    alt="${lloc.nom}" loading="lazy" onerror="this.parentElement.style.display='none'">
+             </div>`
           ).join('')}
         </div>
         ${lloc.fotos > 1 ? `
@@ -149,6 +151,15 @@ function impRenderCard(lloc, cfg, idx) {
     : `<div class="imp-carr imp-carr-buit">
         <span class="imp-carr-buit-icon">${lloc.emoji}</span>
        </div>`;
+
+  const linksHTML = lloc.links?.length
+    ? `<div class="imp-card-links">
+        <span class="imp-card-links-lbl">Més informació:</span>
+        ${lloc.links.map(l =>
+          `<a class="imp-card-link" href="${l.url}" target="_blank" rel="noopener">${l.text}</a>`
+        ).join('')}
+       </div>`
+    : '';
 
   return `
     <article class="imp-card" style="animation-delay:${idx * 0.06}s" data-id="${lloc.id}">
@@ -163,6 +174,7 @@ function impRenderCard(lloc, cfg, idx) {
            style="background:${cfg.colorSuau};border-color:${cfg.colorBorde};color:${cfg.color}">
           📍 Obrir a Google Maps
         </a>
+        ${linksHTML}
       </div>
     </article>`;
 }
