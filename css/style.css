@@ -73,7 +73,7 @@ body {
 
 .nav-links {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   overflow-x: auto;
   flex: 1;
   scrollbar-width: none;
@@ -86,13 +86,14 @@ body {
 .nav-item {
   text-decoration: none;
   color: #6aab7a;
-  padding: 6px 14px;
+  padding: 5px 11px;
   border-radius: 20px;
   border: 1px solid transparent;
-  font-size: 0.85rem;
+  font-size: 0.90rem;
   white-space: nowrap;
   transition: all 0.2s;
   flex-shrink: 0;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .nav-item:hover,
