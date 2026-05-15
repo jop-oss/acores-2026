@@ -70,6 +70,13 @@ const SECCIONS = [
         illa: null,
         revers: 'Dels 27 sistemes volcànics de tot l\'arxipèlag, 18 estan considerats actius, és a dir, que han tingut activitat durant l\'Holocè (últims 10.000 anys). L\'última erupció important va ser la del volcà Capelinhos al Faial el 1957-58, que va emergir del mar i va ampliar l\'illa uns 2,4 km². Avui és un dels volcans submarins emergents més ben preservats del món.'
       },
+      {
+        emoji: '🏠',
+        titol: 'A Furnas hi ha una casa de cap per avall que és una subestació elèctrica',
+        tag: 'São Miguel',
+        illa: 'São Miguel',
+        revers: 'La Casa Invertida de Furnas és literalment una casa posada del revés: la teulada toca a terra i els fonaments apunten al cel. Però el secret és que a dins no hi viu ningú: és una subestació elèctrica de l\'EDA (Electricidade dos Açores) dissenyada amb enginy. Cases invertides similars existeixen a Szymbark (Polònia, 2007, la primera del món), Trassenheide (Alemanya, 2008) i una dotzena de llocs més, de Malàisia als EUA. La de Furnas és una de les poques que amaga una utilitat real darrere la broma arquitectònica.'
+      },
     ]
   },
   {
@@ -381,7 +388,23 @@ function renderSeccions() {
           </div>
         </div>
       `;
-      wrap2.addEventListener('click', () => wrap2.classList.toggle('girada'));
+      wrap2.addEventListener('click', () => {
+        wrap2.classList.toggle('girada');
+        // Quan girada, el inner ha de ser relative per expandir-se
+        const inner = wrap2.querySelector('.cur-card-inner');
+        if (wrap2.classList.contains('girada')) {
+          // Esperem que acabi l'animació i llavors posem el back en relative
+          setTimeout(() => {
+            inner.style.height = 'auto';
+            const back = wrap2.querySelector('.cur-card-back');
+            if (back) back.style.position = 'relative';
+          }, 560);
+        } else {
+          inner.style.height = '';
+          const back = wrap2.querySelector('.cur-card-back');
+          if (back) back.style.position = '';
+        }
+      });
       grid.appendChild(wrap2);
     });
   });

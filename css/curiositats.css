@@ -181,6 +181,11 @@
   perspective: 900px;
   height: 200px;
   cursor: pointer;
+  transition: height 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.cur-card-wrap.girada {
+  height: auto;
+  min-height: 200px;
 }
 .cur-card-wrap:hover .cur-card-inner { transform: rotateY(8deg); }
 .cur-card-wrap.girada .cur-card-inner { transform: rotateY(180deg); }
@@ -189,6 +194,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 200px;
   transform-style: preserve-3d;
   transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
@@ -259,6 +265,12 @@
   transform: rotateY(180deg);
   justify-content: space-between;
   overflow: hidden;
+  position: relative;
+  min-height: 200px;
+  height: auto;
+}
+.cur-card-wrap.girada .cur-card-back {
+  position: relative;
 }
 .cur-card-back::before {
   content: '';
@@ -282,10 +294,6 @@
   color: rgba(232,240,236,0.88);
   line-height: 1.55;
   flex: 1;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;
 }
 .cur-card-back-tag {
   font-size: 0.62rem;
