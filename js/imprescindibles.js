@@ -123,30 +123,32 @@ function impRenderSeccions() {
 function impRenderCard(lloc, cfg, idx) {
   const teFotos = lloc.fotos > 0;
 
-  // Genera els botons del carrusel
-  const fotosDots = teFotos
+  const slides = teFotos
+    ? Array.from({length: lloc.fotos}, (_, i) =>
+        `<div class="imp-carr-slide${i === 0 ? ' actiu' : ''}">
+           <img class="imp-carr-img"
+                src="img/imprescindibles/${lloc.prefix}-${String(i+1).padStart(2,'0')}.webp"
+                alt="${lloc.nom}" loading="lazy">
+         </div>`
+      ).join('')
+    : '';
+
+  const dots = teFotos && lloc.fotos > 1
     ? `<div class="imp-carr-dots" id="dots-${lloc.id}">
         ${Array.from({length: lloc.fotos}, (_, i) =>
-          `<span class="imp-carr-dot ${i === 0 ? 'actiu' : ''}" onclick="impCarrDot('${lloc.id}',${i},event)"></span>`
+          `<span class="imp-carr-dot${i === 0 ? ' actiu' : ''}" data-dot="${i}"
+                 onclick="impCarrDot('${lloc.id}',${i},event)"></span>`
         ).join('')}
        </div>`
     : '';
 
   const fotosHTML = teFotos
     ? `<div class="imp-carr" id="carr-${lloc.id}">
-        <div class="imp-carr-track" id="track-${lloc.id}">
-          ${Array.from({length: lloc.fotos}, (_, i) =>
-            `<div class="imp-carr-slide">
-               <img class="imp-carr-img" src="img/imprescindibles/${lloc.prefix}-${String(i+1).padStart(2,'0')}.webp"
-                    alt="${lloc.nom}" loading="lazy" onerror="this.parentElement.style.display='none'">
-             </div>`
-          ).join('')}
-        </div>
+        <div class="imp-carr-track" id="track-${lloc.id}">${slides}</div>
         ${lloc.fotos > 1 ? `
           <button class="imp-carr-btn prev" onclick="impCarrPrev('${lloc.id}',event)">‹</button>
-          <button class="imp-carr-btn next" onclick="impCarrNext('${lloc.id}',event)">›</button>
-        ` : ''}
-        ${fotosDots}
+          <button class="imp-carr-btn next" onclick="impCarrNext('${lloc.id}',event)">›</button>` : ''}
+        ${dots}
        </div>`
     : `<div class="imp-carr imp-carr-buit">
         <span class="imp-carr-buit-icon">${lloc.emoji}</span>
@@ -180,21 +182,35 @@ function impRenderCard(lloc, cfg, idx) {
 }
 
 /* ──────────────────────────────────────────────────────────
-   CARRUSEL
+   CARRUSEL  (basat en opacity + classe actiu)
    ────────────────────────────────────────────────────────── */
-const impCarrIdx = {}; // { id: índex actual }
+const impCarrIdx = {};
 
 function impCarrActualitza(id) {
   const track = document.getElementById(`track-${id}`);
   const dots  = document.getElementById(`dots-${id}`);
   if (!track) return;
   const idx = impCarrIdx[id] || 0;
-  track.style.transform = `translateX(-${idx * 100}%)`;
+
+  // Activa el slide correcte
+  track.querySelectorAll('.imp-carr-slide').forEach((slide, i) => {
+    slide.classList.toggle('actiu', i === idx);
+  });
+
+  // Actualitza els dots
   if (dots) {
     dots.querySelectorAll('.imp-carr-dot').forEach((d, i) => {
       d.classList.toggle('actiu', i === idx);
     });
   }
+}
+
+// Inicialitza tots els carrusels (primer slide actiu)
+function impCarrInicialitzaTots() {
+  document.querySelectorAll('.imp-carr-track').forEach(track => {
+    const primer = track.querySelector('.imp-carr-slide');
+    if (primer) primer.classList.add('actiu');
+  });
 }
 
 function impCarrPrev(id, e) {
@@ -219,7 +235,7 @@ function impCarrDot(id, idx, e) {
   impCarrActualitza(id);
 }
 
-/* Swipe tàctil al carrusel */
+/* Swipe tàctil */
 (function() {
   let startX = 0;
   document.addEventListener('touchstart', e => {

@@ -16,7 +16,7 @@ const IMPRESCINDIBLES = [
     coords: [37.85574, -25.78630],
     maps: 'https://maps.google.com/?q=37.85574,-25.78630',
     prefix: 'sete-cidades',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/lagoa-das-sete-cidades-la-laguna-encantada-e-inspiradora/' },
       { text: 'By Açores', url: 'https://byacores.com/es/lagoa-siete-ciudades/' },
@@ -32,7 +32,7 @@ const IMPRESCINDIBLES = [
     coords: [37.77286, -25.30392],
     maps: 'https://maps.google.com/?q=37.77286,-25.30392',
     prefix: 'caldeira-das-furnas',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/caldeiras-das-furnas-que-son-y-que-visitar/' },
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/fumarolas-caldeiras' },
@@ -48,7 +48,7 @@ const IMPRESCINDIBLES = [
     coords: [37.76255, -25.47430],
     maps: 'https://maps.google.com/?q=37.76255,-25.47430',
     prefix: 'lagoa-do-fogo',
-    fotos: 4,
+    fotos: 3,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/lagoa-do-fogo' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/lagoa-do-fogo-uno-de-los-lagos-mas-pintorescos-de-las-azores/' },
@@ -64,7 +64,7 @@ const IMPRESCINDIBLES = [
     coords: [37.78978, -25.14542],
     maps: 'https://maps.google.com/?q=37.78978,-25.14542',
     prefix: 'ponta-da-madrugada',
-    fotos: 3,
+    fotos: 4,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-da-madrugada/' },
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/miradouro-ponta-do-sossego' },
@@ -78,7 +78,7 @@ const IMPRESCINDIBLES = [
     coords: [37.77258, -25.31562],
     maps: 'https://maps.google.com/?q=37.77258,-25.31562',
     prefix: 'terra-nostra',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/parque-terra-nostra' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/terra-nostra-uno-de-los-jardines-mas-bellos-del-mundo/' },
@@ -94,7 +94,7 @@ const IMPRESCINDIBLES = [
     coords: [37.78452, -25.50104],
     maps: 'https://maps.google.com/?q=37.78452,-25.50104',
     prefix: 'caldeira-velha',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/caldeira-velha' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/caldeira-velha-el-monumento-natural-que-hay-que-visitar-en-las-azores/' },
@@ -110,7 +110,7 @@ const IMPRESCINDIBLES = [
     coords: [37.74221, -25.66859],
     maps: 'https://maps.google.com/?q=37.74221,-25.66859',
     prefix: 'ponta-delgada',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/post/ponta-delgada-sao-miguel-azores' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-delgada/' },
@@ -125,7 +125,7 @@ const IMPRESCINDIBLES = [
     coords: [37.84282, -25.26759],
     maps: 'https://maps.google.com/?q=37.84282,-25.26759',
     prefix: 'ribeira-dos-caldeiroes',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/ribeira-dos-caldeiroes' },
       { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/ribeira-dos-caldeiroes-parque-natural-de-sao-miguel' },
@@ -141,7 +141,7 @@ const IMPRESCINDIBLES = [
     coords: [37.70635, -25.44380],
     maps: 'https://maps.google.com/?q=37.70635,-25.44380',
     prefix: 'vila-franca-do-campo',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ilheu-de-vila-franca-el-idilico-anillo-de-la-princesa/' },
       { text: 'Aventura te a viajar', url: 'https://aventurateaviajar.com/noticias/2022-01-22/que-hacer-en-vila-franca-do-campo--azores-/' },
@@ -157,7 +157,7 @@ const IMPRESCINDIBLES = [
     coords: [37.74861, -25.68707],
     maps: 'https://maps.google.com/?q=37.74861,-25.68707',
     prefix: 'gruta-do-carvao',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/gruta-do-carvao' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/gruta-do-carvao-el-mundo-subterraneo-bajo-ponta-delgada/' },
@@ -173,7 +173,7 @@ const IMPRESCINDIBLES = [
     coords: [37.85880, -25.29047],
     maps: 'https://maps.google.com/?q=37.85880,-25.29047',
     prefix: 'poco-azul',
-    fotos: 3,
+    fotos: 4,
     links: [
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/poco-azul' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/poco-azul-la-famosa-laguna-azul-de-las-azores-2/' },
@@ -188,7 +188,7 @@ const IMPRESCINDIBLES = [
     coords: [37.85859, -25.85236],
     maps: 'https://maps.google.com/?q=37.85859,-25.85236',
     prefix: 'ponta-da-ferraria',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-da-ferraria-azores-la-guia-definitiva-para-el-visitante/' },
       { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/ponta-da-ferraria' },
@@ -208,7 +208,7 @@ const IMPRESCINDIBLES = [
     coords: [38.62513, -27.92876],
     maps: 'https://maps.google.com/?q=38.62513,-27.92876',
     prefix: 'faja-caldeira',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Futurismo – Santo Cristo', url: 'https://www.futurismo.pt/es/blog/faja-santo-cristo/' },
       { text: 'Futurismo – Cubres', url: 'https://www.futurismo.pt/es/blog/faja-dos-cubres-isla-de-sao-jorge/' },
@@ -224,7 +224,7 @@ const IMPRESCINDIBLES = [
     coords: [38.67865, -28.05009],
     maps: 'https://maps.google.com/?q=38.67865,-28.05009',
     prefix: 'faja-ouvidor',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'Futurismo – Simão Dias', url: 'https://www.futurismo.pt/es/blog/pocos-simao-dias/' },
       { text: 'By Açores', url: 'https://byacores.com/es/piscina-poza-simao-dias/' },
@@ -240,7 +240,7 @@ const IMPRESCINDIBLES = [
     coords: [38.73844, -28.26215],
     maps: 'https://maps.google.com/?q=38.73844,-28.26215',
     prefix: 'sete-fontes',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'Nunca Sin Viaje', url: 'https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/#Reserva_Forestal_Sete_Fontes' },
       { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/NR/exeres/C0D62F5F-11B5-4C21-ACE9-235A2AEECC4F' },
@@ -260,7 +260,7 @@ const IMPRESCINDIBLES = [
     coords: [38.46935, -28.39952],
     maps: 'https://maps.google.com/?q=38.46935,-28.39952',
     prefix: 'montanha-do-pico',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/montana-del-pico-guia-definitiva-de-la-montana-mas-alta-de-portugal-en-las-azores/' },
       { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-pico/montana-de-pico/' },
@@ -276,7 +276,7 @@ const IMPRESCINDIBLES = [
     coords: [38.55179, -28.46809],
     maps: 'https://maps.google.com/?q=38.55179,-28.46809',
     prefix: 'vinha',
-    fotos: 4,
+    fotos: 3,
     links: [
       { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-pico/paisaje-de-vinas-de-la-isla-de-pico-patrimonio-unesco/' },
       { text: 'By Açores', url: 'https://byacores.com/es/paisaje-cultural-de-la-vina-del-pico/' },
@@ -317,7 +317,7 @@ const IMPRESCINDIBLES = [
     coords: [38.39317, -28.23585],
     maps: 'https://maps.google.com/?q=38.39317,-28.23585',
     prefix: 'avistament',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Nadi Uiatges', url: 'https://www.nadiuviatges.com/ca/paradis-balenes-acores/' },
       { text: 'Futurismo', url: 'https://www.futurismo.pt/es/visitas/avistamiento-de-cetaceos-en-lajes-do-pico-azores/' },
@@ -366,7 +366,7 @@ const IMPRESCINDIBLES = [
     coords: [38.53135, -28.62534],
     maps: 'https://maps.google.com/?q=38.53135,-28.62534',
     prefix: 'horta-marina',
-    fotos: 4,
+    fotos: 5,
     links: [
       { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/node/73824' },
       { text: 'By Açores', url: 'https://byacores.com/es/marina-horta/' },
@@ -381,7 +381,7 @@ const IMPRESCINDIBLES = [
     coords: [38.52119, -28.62892],
     maps: 'https://maps.google.com/?q=38.52119,-28.62892',
     prefix: 'monte-da-guia',
-    fotos: 3,
+    fotos: 5,
     links: [
       { text: 'By Açores', url: 'https://byacores.com/es/monte-de-la-guia/' },
       { text: 'Wikiloc', url: 'https://es.wikiloc.com/rutas-senderismo/monte-da-guia-horta-marina-38591181' },
