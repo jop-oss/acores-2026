@@ -77,6 +77,90 @@ const SECCIONS = [
         illa: 'São Miguel',
         revers: 'La Casa Invertida de Furnas és literalment una casa posada del revés: la teulada toca a terra i els fonaments apunten al cel. Però el secret és que a dins no hi viu ningú: és una subestació elèctrica de l\'EDA (Electricidade dos Açores) dissenyada amb enginy. Cases invertides similars existeixen a Szymbark (Polònia, 2007, la primera del món), Trassenheide (Alemanya, 2008) i una dotzena de llocs més, de Malàisia als EUA. La de Furnas és una de les poques que amaga una utilitat real darrere la broma arquitectònica.'
       },
+      {
+        emoji: '🚢',
+        titol: 'Un naufraig de cocaïna va canviar per sempre un poble de São Miguel',
+        tag: 'São Miguel',
+        illa: 'São Miguel',
+        revers: 'El juny de 2001, el veler Sun Kiss 47 va naufragar prop de Rabo de Peixe, a São Miguel, alliberant uns 505 kg de cocaïna amb una puresa superior al 80%. Els habitants, sense saber que era, la van confondre amb farina i la van fer servir per cuinar, vendre i fins i tot per blanquejar parets. El resultat: una onada de toxicodependència que encara avui es nota. Rabo de Peixe és una de les zones amb major índex de drogoaddicció d\'Europa. La història va inspirar la sèrie «Rabo de Peixe» (Netflix, 2023).' 
+      },
+      {
+        emoji: '😳',
+        titol: 'Existeix un lloc a les Açores anomenat Cul de Judes',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'Al municipi de Praia da Vitória, a Terceira, hi ha efectivament un lloc anomenat «Cul de Judes» (Cu de Judas en portuguès). El topònim, d\'origen incert però probablement medieval, fa referència a un indret remot i de difícil accés, tal com s\'expressava popularment el lloc més llunyà de la civilització. No és l\'únic topònim sorprenent de les Açores: l\'arxipèlag té una llarga tradició de noms populars força gràfics.' 
+      },
+      {
+        emoji: '🐄',
+        titol: 'Hi ha dues vaques per cada habitant, i a São Jorge fins i tot tres',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'Les Açores tenen una de les densitats de boví més altes del món en relació a la població humana. A l\'arxipèlag hi viu aproximadament una vaca per cada mig habitant —és a dir, gairebé el doble de bovins que persones. A São Jorge la proporció és encara més extrema: tres vaques per habitant. Les pastures verdes de les illes, regades per la pluja atlàntica, permeten mantenir el bestiar a l\'exterior durant tot l\'any sense necessitat d\'estabulació.' 
+      },
+      {
+        emoji: '🏛️',
+        titol: 'Les Açores tenen tres capitals, una per cada grup d\'illes',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'Les nou illes de les Açores s\'organitzen en tres grups geogràfics, cadascun amb la seva capital: Ponta Delgada (São Miguel) per al grup Oriental, Angra do Heroísmo (Terceira) —Patrimoni de la Humanitat UNESCO— per al grup Central, i Horta (Faial) per al grup Occidental. Ponta Delgada és la capital administrativa de la Regió Autònoma, però les tres ciutats mantenen un pes institucional i cultural propi.' 
+      },
+      {
+        emoji: '☕',
+        titol: 'A São Miguel s\'hi cultiva l\'únic cafè d\'Europa',
+        tag: 'São Miguel',
+        illa: 'São Miguel',
+        revers: 'A més de tenir l\'única plantació de te d\'Europa (Gorreana), São Miguel alberga també la Fàbrica de Café Nunes —l\'única plantació de cafè de tot el continent europeu. Les condicions volcàniques, la humitat atlàntica i les temperatures suaus permeten el cultiu d\'un cafè arabica de gran qualitat. La producció és molt petita i quasi tota es ven a l\'illa, convertint-lo en un dels productes més exclusius que es poden portar com a souvenir.' 
+      },
+      {
+        emoji: '🎨',
+        titol: 'Cada illa de les Açores té el seu color i sobrenom característic',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'Cada illa té un color i un malnom que reflecteix la seva personalitat: São Miguel és la Illa Verda (per la vegetació exuberant), Faial la Illa Blava (pel blau de les hortènsies i l\'oceà), Santa Maria la Illa Groga (per les seves platges i paisatge assolellat), Graciosa la Illa Blanca (per les roques clares i l\'arquitectura), Terceira la Illa Porpra (pels tons pastís dels seus edificis), Flores la Illa Rosa (per les azalees i flors silvestres), Corvo la Illa Negra (pel cràter volcànic que la domina), Pico la Illa Gris/Negra (pel basalt del volcà i els currals de les vinyes), i São Jorge la Illa Marró (pels seus penya-segats i fajãs).' 
+      },
+      {
+        emoji: '🦅',
+        titol: 'El nom «Açores» probablement és un error de mapa del segle XV',
+        tag: 'Història',
+        illa: null,
+        revers: 'La teoria més acceptada és que el nom ve dels «açores» —els asors o falcons que els navegants portuguesos van creure veure en arribar. Però hi ha un problema: l\'au que hi vivia no era cap falcó, sinó el gavià d\'Atlàntida (Buteo buteo rothschildi). Sembla que els cartògrafs van confondre les aus o van copiar el nom erròniament d\'un mapa anterior. Una altra teoria apunta que el nom podria derivar del flamenc «haghedis» (llangardaix) per la presència de lacèrtids a les illes.' 
+      },
+      {
+        emoji: '🌍',
+        titol: 'La Punta do Almograve a Flores és el punt més occidental d\'Europa',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'L\'illa de Flores, al grup Occidental de les Açores, alberga el punt geogràfic més occidental de tot el continent europeu. Situada sobre la placa Nord-americana, Flores és tècnicament l\'única terra europea sobre aquella placa tectònica. Des d\'aquí, la costa d\'Amèrica del Nord queda a uns 1.900 km, mentre que Lisboa és a gairebé 2.000 km. L\'aïllament d\'aquesta illa la fa ser una de les menys visitades, però de les més salvatges de l\'arxipèlag.' 
+      },
+      {
+        emoji: '💧',
+        titol: 'L\'aigua de l\'aixeta a les Açores és d\'una qualitat excepcional',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'L\'aigua potable de les Açores prové de fonts naturals volcàniques i aqüífers filtrats per capes de roca basàltica, cosa que li dona una puresa i mineralització natural envejable. Als restaurants i cafès de les illes és habitual que et portin aigua de l\'aixeta sense cost i sense que ningú ho consideri un problema. En nombroses classificacions europees de qualitat de l\'aigua potable, les illes açorianes figuren entre les primeres posicions.' 
+      },
+      {
+        emoji: '🏖️',
+        titol: 'L\'única platja de sorra daurada de les Açores és a Santa Maria',
+        tag: 'Curiositats',
+        illa: null,
+        revers: 'La gran majoria de platges de les Açores tenen sorra negra o còdols de lava volcànica. L\'excepció és Santa Maria, la illa més meridional i la primera formada geològicament, on hi ha platges de sorra daurada com la Praia Formosa —la més gran de tot l\'arxipèlag. La diferència és deguda a l\'edat de la illa: les roques calcàries i sedimentàries de Santa Maria porten milions d\'anys erosionant-se i creant sorra d\'un color càlid insòlit a les Açores.' 
+      },
+      {
+        emoji: '🇬🇧',
+        titol: 'Tanta gent parla anglès perquè un terç dels açorians va emigrar als EUA',
+        tag: 'Cultura',
+        illa: null,
+        revers: 'Les grans ones d\'emigració açoriana dels segles XIX i XX van portar centenars de milers de persones cap als EUA (sobretot Massachusetts, Rhode Island i Califòrnia) i el Canadà. La comunitat açoriana als EUA és avui d\'uns 700.000 persones —gairebé el doble de la població actual de les illes. Moltes famílies açorianes mantenen contacte constant amb parents americanitzats, i el retorn de fills i néts és habitual. Això fa que l\'anglès sigui molt present a les illes, fins i tot entre generacions grans.' 
+      },
+      {
+        emoji: '⭐',
+        titol: 'Tom Hanks, Nelly Furtado i Katy Perry tenen arrels açorianes',
+        tag: 'Cultura',
+        illa: null,
+        revers: 'L\'emigració açoriana als EUA ha deixat una empremta cultural notable. Tom Hanks és besnét d\'açorians; Nelly Furtado és filla d\'emigrants açorians de São Jorge i Pico; Katy Perry té avantpassats açorians per línia materna; James Franco té ascendència portuguesa-açoriana; i Nuno Bettencourt, guitarra del grup Extreme i un dels guitarristes de rock més tècnics del món, és d\'origen açorià. La llista de nord-americans notables amb arrels a les illes és sorprenentment llarga.' 
+      },
     ]
   },
   {
@@ -134,6 +218,20 @@ const SECCIONS = [
         illa: 'São Miguel',
         revers: 'La Lagoa do Fogo (Llac del Foc) és una reserva natural als 590 metres d\'altitud, al cràter del complex volcànic d\'Água de Pau, al centre de São Miguel. L\'aigua és d\'un verd-blavós intens i la zona al voltant és un dels ecosistemes més ben preservats de l\'arxipèlag. Sovint cobert de boira, té un aspecte misteriós i primigeni.'
       },
+      {
+        emoji: '🏝️',
+        titol: 'Les Açores es van formar fa més de 8 milions d\'anys, i Santa Maria va ser la primera',
+        tag: 'Geologia',
+        illa: null,
+        revers: 'La formació de les Açores va estar lligada al «punt calent» atlàntic i a l\'extensió de les plaques tectòniques. Santa Maria és la illa més antiga, amb uns 8,1 milions d\'anys d\'edat, seguida de São Miguel (4 milions). Les illes occidentals, com Flores i Corvo, es van formar molt més tard. La descoberta europea va tenir lloc entre 1427 i 1452, amb l\'expedició portuguesa de Gonçalo Velho Cabral. Les illes eren completament deshabitades en el moment del descobriment.' 
+      },
+      {
+        emoji: '🏜️',
+        titol: 'El Barreiro da Faneca: el desert volcànic de les Açores, a Santa Maria',
+        tag: 'Santa Maria',
+        illa: null,
+        revers: 'A l\'extrem nord-est de Santa Maria hi ha el Barreiro da Faneca, un paisatge abruptament diferent de la resta de les Açores: una extensió de terres argiloses de color vermell i ocre, completament sense vegetació, que sembla un desert marcià. La seva formació és deguda a l\'edat de la illa —la més antiga de l\'arxipèlag— i a l\'erosió de les roques volcàniques argiloses per la pluja i el vent durant milions d\'anys. Declarat Paisatge Protegit, és un dels contrastos visuals més sorprenents de totes les illes.' 
+      },
     ]
   },
   {
@@ -190,6 +288,13 @@ const SECCIONS = [
         tag: 'Natura',
         illa: null,
         revers: 'La tortuga babaua (Caretta caretta) utilitza les aigües açorianes com a zona d\'alimentació i descans durant les seves llargues migracions atlàntiques. L\'arxipèlag, situat al mig de l\'Atlàntic, actua com a punt estratègic en la ruta entre les costes americanes i les platges de desova mediterrànies. Avistaments des de barca durant l\'estiu són relativament habituals.'
+      },
+      {
+        emoji: '😴',
+        titol: 'Els dofins dormen nedant i les balenes ho fan en posició vertical',
+        tag: 'Fauna',
+        illa: null,
+        revers: 'Els cetacis han desenvolupat formes de dormir úniques al món animal. Els dofins fan servir el «son uniemisfèric»: dormen un hemisferi cerebral a la vegada mentre l\'altre roman actiu, permetent-los seguir nedant i respirant. Les balenes, en canvi, fan llargs períodes de son estàtics en posició vertical just sota la superfície —un fenomen anomenat «logging». Quant a la comunicació, els cachalots produeixen «codas» de clics que funcionen com a signatures familiars identificatives, i cada grup familiar manté la seva pròpia seqüència de clics única, transmesa de generació en generació.' 
       },
     ]
   },
@@ -304,6 +409,27 @@ const SECCIONS = [
         tag: 'Cultura',
         illa: null,
         revers: 'La música tradicional de les Açores barreja influències portugueses, flamences i africanes. El "baile do carnaval" i les marchas são característiques de cada illa. El "chicharito" és una mena de guatlla de fusta que produeix sons percussius únics. Cada illa té les seves pròpies tonades i balls, conservats en festes populars i concursos. La música en viu als festivals de l\'estiu és una experiència genuïna.'
+      },
+      {
+        emoji: '🏚️',
+        titol: 'El Monte Palace: l\'hotel abandonat de São Miguel que es va convertir en jardí',
+        tag: 'São Miguel',
+        illa: 'São Miguel',
+        revers: 'El Monte Palace Hotel de Sete Cidades, inaugurat el 1991 a la vora de la Lagoa das Sete Cidades, va tancar als pocs mesos sense arribar a funcionar plenament, víctima d\'una fallida empresarial i d\'un accés impossible per als turistes de l\'època. Durant dècades va quedar abandonat, convertit en ruïnes envoltades per la vegetació exuberant de São Miguel. Avui és un dels «urbex» (exploració urbana) més fotografiats de les Açores, amb murals, columnates i piscines buides guanyades per les falgueres.' 
+      },
+      {
+        emoji: '🐉',
+        titol: 'São Jorge és coneguda com «l\'illa del drac» pel seu perfil des del mar',
+        tag: 'São Jorge',
+        illa: 'São Jorge',
+        revers: 'El malnom de «Ilha do Dragão» que rep São Jorge ve de la seva silueta vista des del mar: una illa llarga, prima i elevada, amb penya-segats abruptes a banda i banda, que des de lluny recorda el perfil d\'un drac ajagut sobre l\'oceà. La cresta central de l\'illa supera els 1.000 metres d\'alçada en diversos punts, i les seves flancs cauen directament al mar en penya-segats de fins a 700 metres —els més alts de tot l\'arxipèlag açorià.' 
+      },
+      {
+        emoji: '💕',
+        titol: 'La llegenda de Sete Cidades: dues llàgrimes que van omplir dos llacs',
+        tag: 'São Miguel',
+        illa: 'São Miguel',
+        revers: 'La llegenda explica que un rei tenia una filla, la princesa Antília, d\'ulls blaus com el cel. Un dia, pasturant pel camp, la princesa es va enamorar d\'un pastor d\'ulls verds. El rei, en assabentar-se\'n, va separar-los per sempre. En l\'últim adéu, ella va plorar llàgrimes blaves i ell llàgrimes verdes. Les llàgrimes de tots dos van omplir el cràter volcànic, creant la Lagoa Azul i la Lagoa Verde. Per això, diuen, els dos llacs de Sete Cidades tenen colors tan diferents.' 
       },
     ]
   }

@@ -86,7 +86,35 @@
       </div>
     </section>
 
-    <!-- FILTRES CATEGORIA -->
+    <!-- TRADUCTOR DE FOTO -->
+    <section class="pt-foto-trad" id="ptFotoTrad">
+      <div class="pt-trad-header">
+        <span class="pt-trad-icon">📷</span>
+        <h2 class="pt-trad-titol">Traductor de foto</h2>
+      </div>
+      <p class="pt-foto-sub">Fes o puja una foto d'un text en qualsevol idioma i la IA el traduirà al català</p>
+      <div class="pt-foto-body">
+        <input type="file" id="fotoTradInput" accept="image/*" capture="environment" style="display:none">
+        <div class="pt-foto-zona" id="ptFotoZona" onclick="document.getElementById('fotoTradInput').click()">
+          <div class="pt-foto-zona-inner" id="ptFotoZonaInner">
+            <span class="pt-foto-zona-icon">📷</span>
+            <span class="pt-foto-zona-text">Toca per fer o pujar una foto</span>
+          </div>
+        </div>
+        <button class="pt-trad-btn" id="fotoTradBtn" style="display:none" onclick="tradueixFoto()">
+          <span class="pt-trad-btn-text">Tradueix la foto</span>
+          <span class="pt-trad-btn-arrow">→</span>
+        </button>
+        <div class="pt-trad-result-wrap" id="fotoTradResultWrap">
+          <div class="pt-foto-trad-original" id="fotoTradOriginal"></div>
+          <div class="pt-foto-trad-sep">▼ Traducció al català</div>
+          <div class="pt-trad-result" id="fotoTradResult"></div>
+          <div class="pt-trad-result-actions">
+            <button class="pt-trad-action" id="fotoTradCopy">📋 Copiar</button>
+          </div>
+        </div>
+      </div>
+    </section>
     <div class="pt-filtres-wrap">
       <div class="pt-filtres" id="ptFiltres"></div>
     </div>

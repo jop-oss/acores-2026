@@ -263,8 +263,121 @@ async function tradueix() {
 }
 
 /* ──────────────────────────────────────────────────────────
-   RENDER FILTRES
+   TRADUCTOR DE FOTO (Claude Vision)
    ────────────────────────────────────────────────────────── */
+let fotoTradBase64 = null;
+let fotoTradMime   = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const inputFoto = document.getElementById('fotoTradInput');
+  if (!inputFoto) return;
+
+  inputFoto.addEventListener('change', () => {
+    const file = inputFoto.files[0];
+    if (!file) return;
+
+    // Comprova mida màxima (5 MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('La foto és massa gran. El màxim és 5 MB.');
+      inputFoto.value = '';
+      return;
+    }
+
+    fotoTradMime = file.type || 'image/jpeg';
+    const reader = new FileReader();
+    reader.onload = e => {
+      fotoTradBase64 = e.target.result.split(',')[1]; // només el base64
+      // Mostra preview
+      const zona = document.getElementById('ptFotoZonaInner');
+      zona.innerHTML = `
+        <img src="${e.target.result}" alt="Preview"
+             style="max-width:100%;max-height:200px;border-radius:8px;object-fit:contain;">
+        <span style="font-size:0.75rem;color:var(--pt-muted);margin-top:6px">
+          Toca per canviar la foto
+        </span>`;
+      document.getElementById('fotoTradBtn').style.display = 'flex';
+      document.getElementById('fotoTradResultWrap').classList.remove('visible');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Copiar resultat foto
+  document.getElementById('fotoTradCopy')?.addEventListener('click', () => {
+    const text = document.getElementById('fotoTradResult').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('fotoTradCopy');
+      btn.textContent = '✅ Copiat!';
+      setTimeout(() => { btn.textContent = '📋 Copiar'; }, 1500);
+    });
+  });
+});
+
+async function tradueixFoto() {
+  if (!fotoTradBase64) return;
+
+  const btn = document.getElementById('fotoTradBtn');
+  btn.classList.add('carregant');
+  btn.querySelector('.pt-trad-btn-text').textContent = 'Analitzant...';
+
+  try {
+    const apiKey = typeof CONFIG !== 'undefined' ? CONFIG.ANTHROPIC_API_KEY : null;
+    if (!apiKey) throw new Error('Clau API no disponible');
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: fotoTradMime,
+                data: fotoTradBase64,
+              }
+            },
+            {
+              type: 'text',
+              text: 'Aquesta imatge conté text. Si us plau:\n1. Extreu tot el text que hi veus (en l\'idioma original)\n2. Tradueix-lo al català\n\nRespon en aquest format exacte:\nORIGINAL:\n[el text en l\'idioma original]\n\nTRADUCCIÓ:\n[la traducció al català]\n\nSi la imatge no conté text llegible, indica-ho breument.'
+            }
+          ]
+        }]
+      })
+    });
+
+    const data = await resp.json();
+    const resposta = data.content?.[0]?.text || 'No s\'ha pogut processar la imatge.';
+
+    // Separa original i traducció
+    const partOriginal  = resposta.match(/ORIGINAL:\s*([\s\S]*?)(?=TRADUCCIÓ:|$)/i)?.[1]?.trim() || '';
+    const partTraduccio = resposta.match(/TRADUCCIÓ:\s*([\s\S]*?)$/i)?.[1]?.trim() || resposta;
+
+    const wrap = document.getElementById('fotoTradResultWrap');
+    document.getElementById('fotoTradOriginal').textContent = partOriginal;
+    document.getElementById('fotoTradResult').textContent   = partTraduccio;
+    wrap.classList.add('visible');
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch(err) {
+    console.error('Error traductor foto:', err);
+    document.getElementById('fotoTradResult').textContent = 'Error en processar la imatge. Torna-ho a intentar.';
+    document.getElementById('fotoTradOriginal').textContent = '';
+    document.getElementById('fotoTradResultWrap').classList.add('visible');
+  } finally {
+    btn.classList.remove('carregant');
+    btn.querySelector('.pt-trad-btn-text').textContent = 'Tradueix la foto';
+  }
+}
+
+
 function renderFiltres() {
   const wrap = document.getElementById('ptFiltres');
 
