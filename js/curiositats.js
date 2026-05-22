@@ -107,10 +107,10 @@ const SECCIONS = [
       },
       {
         emoji: '☕',
-        titol: 'A São Miguel s\'hi cultiva l\'únic cafè d\'Europa',
-        tag: 'São Miguel',
-        illa: 'São Miguel',
-        revers: 'A més de tenir l\'única plantació de te d\'Europa (Gorreana), São Miguel alberga també la Fàbrica de Café Nunes —l\'única plantació de cafè de tot el continent europeu. Les condicions volcàniques, la humitat atlàntica i les temperatures suaus permeten el cultiu d\'un cafè arabica de gran qualitat. La producció és molt petita i quasi tota es ven a l\'illa, convertint-lo en un dels productes més exclusius que es poden portar com a souvenir.' 
+        titol: 'A la Fajã dos Vimes de São Jorge hi ha l\'única plantació de cafè d\'Europa',
+        tag: 'São Jorge',
+        illa: 'São Jorge',
+        revers: 'A la Fajã dos Vimes, a la costa sud de São Jorge, la família Nunes porta generacions cultivant l\'únic cafè produït a Europa. Tot el procés és manual i familiar: Manuel Nunes cultiva els grans, els asseca al sol, els torra al fogó de casa i els serveix al seu propi Café Nunes. La producció ronda els 450-700 kg anuals —suficient per als cafès del local, però no per exportar. Qui el vulgui tastar ha de baixar fins a la fajã. Molts turistes viatgen expressament a São Jorge només per provar aquest cafè únic.' 
       },
       {
         emoji: '🎨',
