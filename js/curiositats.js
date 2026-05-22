@@ -232,6 +232,13 @@ const SECCIONS = [
         illa: null,
         revers: 'A l\'extrem nord-est de Santa Maria hi ha el Barreiro da Faneca, un paisatge abruptament diferent de la resta de les Açores: una extensió de terres argiloses de color vermell i ocre, completament sense vegetació, que sembla un desert marcià. La seva formació és deguda a l\'edat de la illa —la més antiga de l\'arxipèlag— i a l\'erosió de les roques volcàniques argiloses per la pluja i el vent durant milions d\'anys. Declarat Paisatge Protegit, és un dels contrastos visuals més sorprenents de totes les illes.' 
       },
+      {
+        emoji: '🌋',
+        titol: 'Una illa britànica al bell mig de les Açores? Sí, però per pocs mesos',
+        tag: 'Geologia',
+        illa: null,
+        revers: 'Al juny de 1811, una potent erupció volcànica submarina a un quilòmetre de la costa de São Miguel va fer emergir una nova illa. El capità del vaixell de guerra britànic HMS Sabrina va desembarcar-hi, va reclamar el territori per a la corona britànica i la va batejar amb el nom de la seva nau. La disputa diplomàtica amb Portugal va durar poc: formada únicament per cendra i piroclasts solts, els forts corrents i l\'erosió marina la van fer desaparèixer completament pocs mesos després. Avui dia, en el lloc on va existir la Ilha Sabrina, només hi ha un baix fons marí.'
+      },
     ]
   },
   {
