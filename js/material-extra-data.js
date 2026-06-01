@@ -5080,3 +5080,895 @@ const ME_LINKS = [
     "favorit": false
   }
 ];
+
+
+/* ── Aventura ── */
+const ME_ACTIVITATS = [
+  {
+    "tipus": "Barranquisme",
+    "img": "barranquisme",
+    "emoji": "🏞️",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ribeira dos Caldeiroes",
+        "coords": "37.8423, -25.267"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Salto do Cabrito (Ribeira Grande)",
+        "coords": "37.7963, -25.4946"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Lomba de São Pedro",
+        "coords": "37.8469, -25.315"
+      }
+    ]
+  },
+  {
+    "tipus": "Snorkel",
+    "img": "snorkel",
+    "emoji": "🤿",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Vila Franca do Campo",
+        "coords": "37.7171, -25.4328"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "São Roque",
+        "coords": "37.7475, -25.6358"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Santa Iria",
+        "coords": "37.8225, -25.5181"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta de Ferraria",
+        "coords": "37.8583, -25.855"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Mosteiros",
+        "coords": "37.8922, -25.8197"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Madalena",
+        "coords": "38.5358, -28.5278"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Lajes do Pico",
+        "coords": "38.3975, -28.2542"
+      },
+      {
+        "illa": "Faial",
+        "lloc": "Horta",
+        "coords": "38.5364, -28.6256"
+      }
+    ]
+  },
+  {
+    "tipus": "Bici",
+    "img": "bici",
+    "emoji": "🚴",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Sete Cidades",
+        "coords": "37.8736, -25.7839"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Lagoa das Furnas",
+        "coords": "37.7539, -25.3339"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ribeira Grande",
+        "coords": "37.8214, -25.5189"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta Delgada",
+        "coords": "37.7412, -25.6756"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Lagoa do Fogo",
+        "coords": "37.7633, -25.4853"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Madalena",
+        "coords": "38.5358, -28.5278"
+      }
+    ]
+  },
+  {
+    "tipus": "Kayak o Paddle Surf",
+    "img": "kayak",
+    "emoji": "🚣",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Sete Cidades",
+        "coords": "37.8736, -25.7839"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Vila Franca do Campo",
+        "coords": "37.7171, -25.4328"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta Delgada",
+        "coords": "37.7412, -25.6756"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Caloura",
+        "coords": "37.7183, -25.5008"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Rabo de Peixe",
+        "coords": "37.8017, -25.5806"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Lagoa das Furnas",
+        "coords": "37.7539, -25.3339"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Furnas",
+        "coords": "37.7728, -25.3117"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Lajes do Pico",
+        "coords": "38.3975, -28.2542"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Cais da Madalena",
+        "coords": "38.5354, -28.5292"
+      }
+    ]
+  },
+  {
+    "tipus": "Busseig",
+    "img": "busseig",
+    "emoji": "🐠",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Vila Franca do Campo",
+        "coords": "37.7171, -25.4328"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Madalena",
+        "coords": "38.5358, -28.5278"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Lajes do Pico",
+        "coords": "38.3975, -28.2542"
+      },
+      {
+        "illa": "Faial",
+        "lloc": "Horta",
+        "coords": "38.5364, -28.6256"
+      }
+    ]
+  },
+  {
+    "tipus": "Coasteering",
+    "img": "coasteering",
+    "emoji": "🧗",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Caloura",
+        "coords": "37.7183, -25.5008"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "São Roque",
+        "coords": "37.7475, -25.6358"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ribeirinha",
+        "coords": "37.8183, -25.4764"
+      }
+    ]
+  },
+  {
+    "tipus": "Nedar amb dofins",
+    "img": "nedar-dofins",
+    "emoji": "🐬",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Vila Franca do Campo",
+        "coords": "37.7171, -25.4328"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta Delgada",
+        "coords": "37.7412, -25.6756"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Madalena",
+        "coords": "38.5358, -28.5278"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Lajes do Pico",
+        "coords": "38.3975, -28.2542"
+      }
+    ]
+  },
+  {
+    "tipus": "Escalada",
+    "img": "escalada",
+    "emoji": "⛰️",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Água de Pau",
+        "coords": "37.7192, -25.5119"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Sete Cidades",
+        "coords": "37.8736, -25.7839"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta da Ferraria",
+        "coords": "37.8583, -25.855"
+      }
+    ]
+  },
+  {
+    "tipus": "Surf",
+    "img": "surf",
+    "emoji": "🏄",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Praia do Areal de Santa Bárbara",
+        "coords": "37.8217, -25.5392"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Praia dos Mosteiros",
+        "coords": "37.8903, -25.8153"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ribeira Quente",
+        "coords": "37.7347, -25.3017"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Baixa da Viola",
+        "coords": "37.8164, -25.4347"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Santa Iria",
+        "coords": "37.8225, -25.5181"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ribeira Grande",
+        "coords": "37.8214, -25.5189"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Praia de Milícias",
+        "coords": "37.7472, -25.6264"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Rabo de Peixe",
+        "coords": "37.8017, -25.5806"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "Praia do Areal de Fajã",
+        "coords": "38.5294, -28.5147"
+      },
+      {
+        "illa": "Pico",
+        "lloc": "São Roque do Pico",
+        "coords": "38.5211, -28.3208"
+      },
+      {
+        "illa": "Faial",
+        "lloc": "Praia do Almoxarife",
+        "coords": "38.5606, -28.6183"
+      },
+      {
+        "illa": "Faial",
+        "lloc": "Praia do Norte",
+        "coords": "38.6083, -28.7525"
+      }
+    ]
+  },
+  {
+    "tipus": "Moto aquàtica",
+    "img": "moto-aquatica",
+    "emoji": "🛥️",
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Caloura",
+        "coords": "37.7183, -25.5008"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Vila Franca do Campo",
+        "coords": "37.7171, -25.4328"
+      },
+      {
+        "illa": "Sao Miguel",
+        "lloc": "Ponta Delgada",
+        "coords": "37.7412, -25.6756"
+      }
+    ]
+  }
+];
+
+const ME_AVENT_EMPRESES = [
+  {
+    "url": "https://azoresadventureislands.com/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.splash-azoresadventure.pt/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresepicadventures.com/es/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.picosdeaventura.com/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://wildflow.pt/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://fun-activities.net/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoreanblueberry.com/es",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azorescanyoningexperiences.com/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Barranquisme",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azzurro.pt/pt/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresboatadventures.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresislandsexperience.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.bigblueadventures.pt/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://fun-activities.net/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://sail4sailing.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.picosdeaventura.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://seasonchallenge.pt/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.bestspotazores.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresdiving.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://oceaneyeazores.pt/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoressub.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://espiritoazul.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://agexpeditions.pt/es-eu",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresepicadventures.com/es/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://terradopico.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Snorkel",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.updowntrails.com/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresadventureislands.com/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://fun-activities.net/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresforall.com/en/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoronbike.pt/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Bici",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://parquegrena.pt/boats",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azorseaadventures.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://kayakazores.pt/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://vilawatersportscenter.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresepicadventures.com/es/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://garoupa.pt/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresforall.com/en/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresadventureislands.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://fun-activities.net/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.picosdeaventura.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "http://www.enjoyazores.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.bestspotazores.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresdiving.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresdivingcharters.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://ontraveldmc.com/azores/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azzurro.pt/pt/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresboatadventures.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoressub.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://vilawatersportscenter.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://espiritoazul.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoressub.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Busseig",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://basalticazores.com/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresepicadventures.com/es/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://fun-activities.net/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://atazores.com/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.splash-azoresadventure.pt/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresadventureislands.com/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoreanblueberry.com/es",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Coasteering",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://lagoa-acores.pt/menu/viver/desporto/instalacoes-desportivas/parede.escalada/m/8446b08e8ed0406db5b95441e1693e12",
+    "tipus": "Escalada",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoresepicadventures.com/es/",
+    "tipus": "Escalada",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.gowildazoresadventures.pt/",
+    "tipus": "Escalada",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoreswhalewatch.com/",
+    "tipus": "Nedar amb dofins",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.picosdeaventura.com/",
+    "tipus": "Nedar amb dofins",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Nedar amb dofins",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoresurf.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azoressurfschool.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.blacksandbox.pt/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.santabarbarasurfschoolazores.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://ecosurfingazores.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://azores-surf-co.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoressurfcenter.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.oceanflowazores.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.azoreswatergliders.com/",
+    "tipus": "Surf",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.enjoyazores.com/",
+    "tipus": "Moto aquàtica",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://sailingside.com/",
+    "tipus": "Moto aquàtica",
+    "illa": "Sao Miguel"
+  },
+  {
+    "url": "https://www.cwazores.com/snorkeling-tours",
+    "tipus": "Snorkel",
+    "illa": "Pico"
+  },
+  {
+    "url": "http://www.diversclubazores.com/",
+    "tipus": "Snorkel",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.twinpeaksdivingcentre.com/",
+    "tipus": "Snorkel",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.lavasteps.pt/",
+    "tipus": "Bici",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://hominisnatura.com/",
+    "tipus": "Bici",
+    "illa": "Pico"
+  },
+  {
+    "url": "http://hominisnatura.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Pico"
+  },
+  {
+    "url": "http://www.pico-sport.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.seakayakingazores.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.cwazores.com/",
+    "tipus": "Busseig",
+    "illa": "Pico"
+  },
+  {
+    "url": "http://www.diversclubazores.com/",
+    "tipus": "Busseig",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.twinpeaksdivingcentre.com/",
+    "tipus": "Busseig",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.pico-island-adventures.com/",
+    "tipus": "Busseig",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.cwazores.com/",
+    "tipus": "Nedar amb dofins",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.pico-island-adventures.com/",
+    "tipus": "Surf",
+    "illa": "Pico"
+  },
+  {
+    "url": "https://www.norbertodiver.pt/",
+    "tipus": "Snorkel",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://www.gosharkazores.com/",
+    "tipus": "Snorkel",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://azores4fun.com/",
+    "tipus": "Snorkel",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://www.diveazores.net/",
+    "tipus": "Snorkel",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://azores4fun.com/",
+    "tipus": "Kayak o Paddle Surf",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://www.norbertodiver.pt/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "http://www.diveazores.net/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "http://www.divesearidersazores.com/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://seatherapy.pt/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://haliotis.pt/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://www.gosharkazores.com/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://www.capelinhosoceantours.com/",
+    "tipus": "Busseig",
+    "illa": "Faial"
+  },
+  {
+    "url": "https://espacotalassa.com/en/",
+    "tipus": "Nedar amb dofins",
+    "illa": "Pico"
+  }
+];
+
+const ME_AVENT_POSTS = [
+  "https://byacores.com/es/ride-with-the-wave/",
+  "https://www.turismoazores.es/isla-pico/nadar-con-delfines-en-la-isla-de-pico/",
+  "https://www.azoreschoice.com/blog/diving-in-the-azores/",
+  "https://www.azoreschoice.com/blog/wild-swimming-in-the-azores/",
+  "https://azoresbpk.com/2021/09/07/the-best-snorkeling-spots-on-sao-miguel-island/",
+  "https://www.turismoazores.es/isla-faial/snorkel-en-la-isla-de-faial-azores/"
+];

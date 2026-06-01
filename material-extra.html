@@ -52,67 +52,102 @@
       <div class="me-hero-stats">
         <div class="me-stat"><span class="me-stat-num">305</span><span class="me-stat-lbl">Llocs</span></div>
         <div class="me-stat-sep">·</div>
-        <div class="me-stat"><span class="me-stat-num">137</span><span class="me-stat-lbl">Destacats</span></div>
+        <div class="me-stat"><span class="me-stat-num">10</span><span class="me-stat-lbl">Activitats</span></div>
         <div class="me-stat-sep">·</div>
-        <div class="me-stat"><span class="me-stat-num">10</span><span class="me-stat-lbl">Categories</span></div>
+        <div class="me-stat"><span class="me-stat-num">8</span><span class="me-stat-lbl">Seccions</span></div>
         <div class="me-stat-sep">·</div>
         <div class="me-stat"><span class="me-stat-num">4</span><span class="me-stat-lbl">Illes</span></div>
       </div>
     </div>
   </header>
 
-  <!-- ── FILTRES ── -->
-  <div class="me-filtres-wrap">
-    <div class="me-filtres-inner">
-
-      <!-- Fila 1: Illes -->
-      <div class="me-filtres-illes" id="meIlles"></div>
-
-      <!-- Fila 2: Categories -->
-      <div class="me-filtres-fila2">
-        <div class="me-filtres-cats" id="meCats"></div>
-      </div>
-
-      <!-- Fila 2b: Sub-pills Naturalesa (fila pròpia, condicional) -->
-      <div class="me-filtres-subcats-fila" id="meSubcatsFila">
-        <div class="me-subcats hidden" id="meSubcats"></div>
-      </div>
-
-      <!-- Fila 3: Destacat + Zona + Comptador -->
-      <div class="me-filtres-extra">
-        <button class="me-toggle-destacat" id="meToggleDestacat" onclick="meToggleDestacat()">
-          <span class="me-toggle-ico">⭐</span>
-          <span class="me-toggle-txt">Destacats</span>
-        </button>
-
-        <div class="me-zona-wrap">
-          <span class="me-zona-label">Zona:</span>
-          <select class="me-zona-select" id="meZonaSelect" onchange="meSetZona()" disabled>
-            <option value="">Selecciona primer una illa</option>
-          </select>
-        </div>
-
-        <div class="me-comptador" id="meComptador">— llocs</div>
-      </div>
-
+  <!-- ── NAV DE SECCIONS ── -->
+  <div class="me-sec-nav-wrap">
+    <div class="me-sec-nav" id="meSecNav">
+      <button class="me-sec-btn actiu" onclick="meSetSeccio('llocs')">🗺️ Llocs d'interès</button>
+      <button class="me-sec-btn" onclick="meSetSeccio('aventura')">🧗 Aventura</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('senderisme')">🥾 Senderisme</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('excursions')">🚌 Excursions</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('itineraris')">🗓️ Itineraris alt.</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('gastronomia')">🍽️ Gastronomia</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('maleta')">🧳 La maleta</button>
+      <button class="me-sec-btn me-sec-pendent" onclick="meSetSeccio('info')">💡 Més info</button>
     </div>
   </div>
 
-  <!-- ── CONTINGUT ── -->
-  <div class="me-contingut">
+  <!-- ══════════════════════════════════════
+       SECCIÓ: LLOCS D'INTERÈS
+       ══════════════════════════════════════ -->
+  <div class="me-seccio" id="sec-llocs">
 
-    <!-- Grid de cards -->
-    <div class="me-grid" id="meGrid"></div>
-
-    <!-- Estat buit -->
-    <div class="me-buit" id="meBuit">
-      <div class="me-buit-ico">🔍</div>
-      <p>Cap lloc correspon als filtres seleccionats.</p>
+    <!-- Filtres llocs -->
+    <div class="me-filtres-wrap">
+      <div class="me-filtres-inner">
+        <div class="me-filtres-illes" id="meIlles"></div>
+        <div class="me-filtres-fila2">
+          <div class="me-filtres-cats" id="meCats"></div>
+        </div>
+        <div class="me-filtres-subcats-fila" id="meSubcatsFila">
+          <div class="me-subcats hidden" id="meSubcats"></div>
+        </div>
+        <div class="me-filtres-extra">
+          <button class="me-toggle-destacat" id="meToggleDestacat" onclick="meToggleDestacat()">
+            <span class="me-toggle-ico">⭐</span>
+            <span class="me-toggle-txt">Destacats</span>
+          </button>
+          <div class="me-zona-wrap">
+            <span class="me-zona-label">Zona:</span>
+            <select class="me-zona-select" id="meZonaSelect" onchange="meSetZona()" disabled>
+              <option value="">Selecciona primer una illa</option>
+            </select>
+          </div>
+          <div class="me-comptador" id="meComptador">— llocs</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Secció de links (generat per JS) -->
-    <div class="me-links-seccio" id="meLinksWrap" style="display:none"></div>
+    <!-- Grid i links llocs -->
+    <div class="me-contingut">
+      <div class="me-grid" id="meGrid"></div>
+      <div class="me-buit" id="meBuit">
+        <div class="me-buit-ico">🔍</div>
+        <p>Cap lloc correspon als filtres seleccionats.</p>
+      </div>
+      <div class="me-links-seccio" id="meLinksWrap" style="display:none"></div>
+    </div>
 
+  </div><!-- /sec-llocs -->
+
+  <!-- ══════════════════════════════════════
+       SECCIÓ: AVENTURA
+       ══════════════════════════════════════ -->
+  <div class="me-seccio hidden" id="sec-aventura">
+    <div class="me-contingut">
+      <div class="av-grid" id="avGrid"></div>
+      <div class="me-links-seccio" id="avLinksWrap" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECCIONS PENDENTS
+       ══════════════════════════════════════ -->
+  <div class="me-seccio hidden" id="sec-senderisme">
+    <div class="me-contingut me-pendent-msg">🥾 Senderisme — <em>Pròximament</em></div>
+  </div>
+  <div class="me-seccio hidden" id="sec-excursions">
+    <div class="me-contingut me-pendent-msg">🚌 Excursions — <em>Pròximament</em></div>
+  </div>
+  <div class="me-seccio hidden" id="sec-itineraris">
+    <div class="me-contingut me-pendent-msg">🗓️ Itineraris alternatius — <em>Pròximament</em></div>
+  </div>
+  <div class="me-seccio hidden" id="sec-gastronomia">
+    <div class="me-contingut me-pendent-msg">🍽️ Gastronomia — <em>Pròximament</em></div>
+  </div>
+  <div class="me-seccio hidden" id="sec-maleta">
+    <div class="me-contingut me-pendent-msg">🧳 La maleta — <em>Pròximament</em></div>
+  </div>
+  <div class="me-seccio hidden" id="sec-info">
+    <div class="me-contingut me-pendent-msg">💡 Més informació útil — <em>Pròximament</em></div>
   </div>
 
 </main>

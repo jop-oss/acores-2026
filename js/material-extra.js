@@ -43,6 +43,235 @@ let _linksTabIlla = 'General';
 let _linksTabCat  = null;
 
 /* ── Inici ── */
+
+/* ══════════════════════════════════════════════
+   NAVEGACIÓ DE SECCIONS
+   ══════════════════════════════════════════════ */
+let _seccioActiva = 'llocs';
+
+function meSetSeccio(id) {
+  _seccioActiva = id;
+  // Amaga totes les seccions
+  document.querySelectorAll('.me-seccio').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.me-sec-btn').forEach(b => b.classList.remove('actiu'));
+  // Mostra la seleccionada
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.remove('hidden');
+  // Marca el botó
+  const btn = [...document.querySelectorAll('.me-sec-btn')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
+  if (btn) btn.classList.add('actiu');
+  // Scroll al top del contingut
+  document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Init aventura si cal
+  if (id === 'aventura' && !_avInit) initAventura();
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓ: AVENTURA
+   ══════════════════════════════════════════════ */
+let _avInit   = false;
+let _avTipus  = null;
+let _avIlla   = null;
+
+const AV_ILLA_EMOJI = { 'Sao Miguel':'🌋', 'Pico':'⛰️', 'Sao Jorge':'🐉', 'Faial':'💙' };
+const AV_ILLA_LBL   = { 'Sao Miguel':'São Miguel', 'Pico':'Pico', 'Sao Jorge':'São Jorge', 'Faial':'Faial' };
+
+function initAventura() {
+  _avInit = true;
+  renderAvCards();
+  renderAvLinks();
+}
+
+/* ── Cards d'activitat ── */
+function renderAvCards() {
+  const grid = document.getElementById('avGrid');
+  if (!grid) return;
+  grid.innerHTML = ME_ACTIVITATS.map((act, i) => renderAvCard(act, i)).join('');
+}
+
+function renderAvCard(act, i) {
+  const imgSrc = `img/material-extra/fons-${act.img}.webp`;
+  const delay  = i * 50;
+
+  // Agrupar llocs per illa
+  const perIlla = {};
+  act.llocs.forEach(l => {
+    if (!perIlla[l.illa]) perIlla[l.illa] = [];
+    perIlla[l.illa].push(l.lloc);
+  });
+
+  const total = act.llocs.length;
+  const illes = Object.keys(perIlla);
+
+  const llocsHtml = illes.map(ill => {
+    const emoji = AV_ILLA_EMOJI[ill] || '🏝️';
+    const lbl   = AV_ILLA_LBL[ill]   || ill;
+    const llocs = perIlla[ill];
+    return `<div class="av-card-illa-grup">
+      <span class="av-card-illa-lbl">${emoji} ${lbl}</span>
+      <div class="av-card-llocs">
+        ${llocs.map(l => `<span class="av-card-lloc">📍 ${escHtml(l)}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+  <article class="av-card" style="animation-delay:${delay}ms"
+    onclick="avCardClick(this, '${escHtml(act.tipus)}')">
+    <div class="av-card-foto" style="background-image:url('${imgSrc}')">
+      <div class="av-card-overlay"></div>
+      <div class="av-card-header">
+        <span class="av-card-emoji">${act.emoji}</span>
+        <h3 class="av-card-nom">${escHtml(act.tipus)}</h3>
+        <span class="av-card-count">${total} lloc${total !== 1 ? 's' : ''}</span>
+      </div>
+    </div>
+    <div class="av-card-cos">${llocsHtml}</div>
+  </article>`;
+}
+
+function avCardClick(el, tipus) {
+  // Expandeix/col·lapsa la card
+  el.classList.toggle('expandida');
+}
+
+/* ── Links aventura ── */
+function renderAvLinks() {
+  const wrap = document.getElementById('avLinksWrap');
+  if (!wrap) return;
+  wrap.style.display = 'block';
+
+  const tipus_list = ['Barranquisme','Snorkel','Bici','Kayak o Paddle Surf',
+    'Busseig','Coasteering','Nedar amb dofins','Escalada','Surf','Moto aquàtica'];
+  const illa_list  = ['Totes','Sao Miguel','Pico','Faial'];
+
+  // Posts (sempre visibles)
+  const postsHtml = ME_AVENT_POSTS.map(p =>
+    `<a class="me-link-item" href="${escHtml(p)}" target="_blank" rel="noopener">
+      <span class="me-link-url">${escHtml(p)}</span>
+    </a>`
+  ).join('');
+
+  // Empreses filtrades i desduplicades
+  function getEmpreses() {
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (_avTipus === null || e.tipus === _avTipus) &&
+      (_avIlla  === null || _avIlla === 'Totes' || e.illa === _avIlla.toLowerCase() ||
+       e.illa === _avIlla || normalIlla(e.illa) === _avIlla)
+    );
+    // Deduplicar per URL quan no hi ha filtre de tipus
+    if (_avTipus === null) {
+      const seen = new Set();
+      emp = emp.filter(e => { if (seen.has(e.url)) return false; seen.add(e.url); return true; });
+    }
+    return emp;
+  }
+
+  function cntTipus(t) {
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (t === null || e.tipus === t) &&
+      (_avIlla === null || _avIlla === 'Totes' || normalIlla(e.illa) === _avIlla)
+    );
+    if (t === null) { const s = new Set(); emp = emp.filter(e => { if(s.has(e.url)) return false; s.add(e.url); return true; }); }
+    return emp.length;
+  }
+  function cntIlla(ill) {
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (_avTipus === null || e.tipus === _avTipus) &&
+      (ill === 'Totes' || normalIlla(e.illa) === ill)
+    );
+    if (_avTipus === null) { const s = new Set(); emp = emp.filter(e => { if(s.has(e.url)) return false; s.add(e.url); return true; }); }
+    return emp.length;
+  }
+
+  const empreses = getEmpreses();
+
+  // Tabs tipus
+  const tipusTabs = [['Tots',null], ...tipus_list.map(t=>[t,t])].map(([lbl,val]) => {
+    const cnt = cntTipus(val);
+    if (cnt === 0 && val !== null) return '';
+    const actiu = _avTipus === val;
+    const vlbl  = val === null ? 'Tots' : lbl;
+    const vesc  = val ? escHtml(val) : 'null';
+    return `<button class="me-links-tab${actiu?' actiu':''}"
+      onclick="avSetTipus(${val?`'${vesc}'`:'null'})">${vlbl} <span class="me-filtre-num">${cnt}</span></button>`;
+  }).join('');
+
+  // Tabs illa
+  const illaTabs = illa_list.map(ill => {
+    const cnt = cntIlla(ill);
+    if (cnt === 0) return '';
+    const actiu = _avIlla === ill || (_avIlla === null && ill === 'Totes');
+    const emoji = ill === 'Totes' ? '🏝️' : (AV_ILLA_EMOJI[ill]||'');
+    const lbl   = ill === 'Totes' ? 'Totes' : (AV_ILLA_LBL[ill]||ill);
+    return `<button class="me-links-tab${actiu?' actiu':''}"
+      onclick="avSetIlla('${ill}')">${emoji} ${lbl} <span class="me-filtre-num">${cnt}</span></button>`;
+  }).join('');
+
+  const empresesHtml = empreses.length
+    ? empreses.map(e => `<a class="me-link-item" href="${escHtml(e.url)}" target="_blank" rel="noopener">
+        <span class="me-link-url">${escHtml(e.url)}</span>
+      </a>`).join('')
+    : `<p class="me-links-buit">Cap empresa per a aquesta combinació</p>`;
+
+  const totalEmp = ME_AVENT_EMPRESES.filter((e,i,a)=>a.findIndex(x=>x.url===e.url)===i).length;
+
+  wrap.innerHTML = `
+  <div class="me-links-header" onclick="avToggleLinks()">
+    <h3 class="me-links-titol">🔗 Posts i empreses d'aventura</h3>
+    <span class="me-links-count">${totalEmp} empreses · ${ME_AVENT_POSTS.length} posts</span>
+    <span class="me-links-toggle${_avLinksOpen?' obert':''}" id="avLinksIco">▼</span>
+  </div>
+  <div class="me-links-cos${_avLinksOpen?' obert':''}" id="avLinksCos">
+
+    <div class="av-links-posts-bloc">
+      <div class="me-links-bloc-titol">📰 Posts recomanats</div>
+      <div class="me-links-grid">${postsHtml}</div>
+    </div>
+
+    <div class="av-links-emp-bloc">
+      <div class="me-links-bloc-titol" style="margin-top:20px">🏢 Empreses</div>
+      <div class="me-links-filtres-wrap" style="margin-bottom:12px">
+        <div class="me-links-fila">
+          <span class="me-links-filtre-lbl">Activitat</span>
+          <div class="me-links-tabs">${tipusTabs}</div>
+        </div>
+        <div class="me-links-fila">
+          <span class="me-links-filtre-lbl">Illa</span>
+          <div class="me-links-tabs">${illaTabs}</div>
+        </div>
+        <div class="me-links-fila me-links-fila-extra">
+          <span class="me-comptador"><span>${empreses.length}</span> empreses</span>
+        </div>
+      </div>
+      <div class="me-links-grid">${empresesHtml}</div>
+    </div>
+
+  </div>`;
+}
+
+let _avLinksOpen = false;
+function avToggleLinks() {
+  _avLinksOpen = !_avLinksOpen;
+  document.getElementById('avLinksCos')?.classList.toggle('obert', _avLinksOpen);
+  document.getElementById('avLinksIco')?.classList.toggle('obert', _avLinksOpen);
+}
+function avSetTipus(t) {
+  _avTipus = t === 'null' ? null : t;
+  renderAvLinks();
+  if (_avLinksOpen) document.getElementById('avLinksCos')?.classList.add('obert');
+}
+function avSetIlla(ill) {
+  _avIlla = (ill === 'Totes') ? null : ill;
+  renderAvLinks();
+  if (_avLinksOpen) document.getElementById('avLinksCos')?.classList.add('obert');
+}
+function normalIlla(s) {
+  if (!s) return '';
+  const m = {'sao miguel':'Sao Miguel','pico':'Pico','faial':'Faial','sao jorge':'Sao Jorge'};
+  return m[s.toLowerCase()] || s;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderIlles(); renderCats(); renderSubcats(); renderExtres(); render();
 });
