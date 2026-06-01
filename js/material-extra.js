@@ -63,7 +63,8 @@ function meSetSeccio(id) {
   // Scroll al top del contingut
   document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   // Init aventura si cal
-  if (id === 'aventura' && !_avInit) initAventura();
+  if (id === 'aventura'   && !_avInit)   initAventura();
+  if (id === 'excursions' && !_excInit)  initExcursions();
 }
 
 /* ══════════════════════════════════════════════
@@ -570,4 +571,223 @@ function escHtml(s) {
 }
 function linkHostname(url) {
   try { return new URL(url).hostname.replace('www.',''); } catch { return url; }
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓ: EXCURSIONS
+   ══════════════════════════════════════════════ */
+let _excTab  = 'cetacis';
+let _excInit = false;
+
+const EXC_TABS = [
+  { id:'cetacis',  emoji:'🐋', label:'Avistament de Cetacis' },
+  { id:'barco',    emoji:'⛵', label:'Passeig amb Barco' },
+  { id:'estrelles',emoji:'🔭', label:"Observació d'Estrelles" },
+];
+const EXC_ILLA_EMOJI = {'Sao Miguel':'🌋','Pico':'⛰️','Faial':'💙','Sao Jorge':'🐉'};
+const EXC_ILLA_LBL   = {'Sao Miguel':'São Miguel','Pico':'Pico','Faial':'Faial','Sao Jorge':'São Jorge'};
+
+function initExcursions() {
+  _excInit = true;
+  renderExcNav();
+  renderExcContingut();
+}
+
+function renderExcNav() {
+  const nav = document.getElementById('excNav');
+  if (!nav) return;
+  nav.innerHTML = EXC_TABS.map(t =>
+    `<button class="exc-tab${_excTab===t.id?' actiu':''}" onclick="excSetTab('${t.id}')">
+      ${t.emoji} ${t.label}
+    </button>`
+  ).join('');
+}
+
+function excSetTab(id) {
+  _excTab = id;
+  renderExcNav();
+  renderExcContingut();
+}
+
+function renderExcContingut() {
+  const wrap = document.getElementById('excContingut');
+  if (!wrap) return;
+  if (_excTab === 'cetacis')   wrap.innerHTML = renderCetacis();
+  if (_excTab === 'barco')     wrap.innerHTML = renderBarco();
+  if (_excTab === 'estrelles') wrap.innerHTML = renderEstrelles();
+}
+
+/* ── CETACIS ── */
+function renderCetacis() {
+  const d = ME_EXCURSIONS.cetacis;
+
+  const especies = d.especies.map(e =>
+    `<div class="exc-especie">
+      <span class="exc-especie-nom">${escHtml(e.nom)}</span>
+      <span class="exc-especie-det">${escHtml(e.detall)}</span>
+    </div>`
+  ).join('');
+
+  const llocsPerIlla = {};
+  d.llocs.forEach(l => {
+    if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
+    llocsPerIlla[l.illa].push(l);
+  });
+
+  const llocsHtml = Object.entries(llocsPerIlla).map(([illa, llocs]) => `
+    <div class="exc-illa-bloc">
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa]||'🏝️'} ${EXC_ILLA_LBL[illa]||illa}</h3>
+      <div class="exc-llocs-grid">
+        ${llocs.map(l => `
+          <div class="exc-lloc-card">
+            <div class="exc-lloc-nom">📍 ${escHtml(l.nom)}</div>
+            <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
+            ${l.links.length ? `<div class="exc-lloc-links">
+              ${l.links.map(lk=>`<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">${escHtml(linkHostname(lk))}</a>`).join('')}
+            </div>` : ''}
+          </div>`
+        ).join('')}
+      </div>
+    </div>`
+  ).join('');
+
+  const consells = d.consells.map(c =>
+    `<div class="exc-consell"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`
+  ).join('');
+
+  const linkGen = d.links_generals.map(lk =>
+    `<a class="me-link-item" href="${escHtml(lk)}" target="_blank" rel="noopener"><span class="me-link-url">${escHtml(lk)}</span></a>`
+  ).join('');
+
+  return `
+  <div class="exc-hero exc-hero-cetacis">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">🐋 Avistament de Cetacis</h2>
+      <p class="exc-hero-sub">Un dels millors llocs del món per observar balenes i dofins en llibertat</p>
+    </div>
+  </div>
+
+  <div class="exc-cos">
+    <div class="exc-intro-grid">
+      <div class="exc-intro-text">
+        ${d.intro.split('\n\n').map(p=>`<p>${escHtml(p)}</p>`).join('')}
+      </div>
+      <div class="exc-especies-wrap">
+        <div class="exc-especies-titol">🐠 Espècies habituals</div>
+        ${especies}
+      </div>
+    </div>
+
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">📍 On fer-ho · per porta d'embarcament</h3></div>
+    ${llocsHtml}
+
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">💡 Consells</h3></div>
+    <div class="exc-consells">${consells}</div>
+
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🔗 Més informació</h3></div>
+    <div class="me-links-grid">${linkGen}</div>
+  </div>`;
+}
+
+/* ── BARCO ── */
+function renderBarco() {
+  const d = ME_EXCURSIONS.barco;
+
+  const genLinks = d.links_generals.map(l =>
+    `<a class="exc-gen-link" href="${escHtml(l.url)}" target="_blank" rel="noopener">
+      <span class="exc-gen-link-ico">${l.url.includes('manawa')?'🛒':'⭐'}</span>
+      <span class="exc-gen-link-nom">${escHtml(l.nom)}</span>
+      <span class="exc-gen-link-arr">→</span>
+    </a>`
+  ).join('');
+
+  const manawa = d.activitats.filter(a => a.font === 'manawa');
+  const tripad = d.activitats.filter(a => a.font === 'tripadvisor');
+
+  const actCard = (a, i) => `
+    <a class="exc-act-card" href="${escHtml(a.url)}" target="_blank" rel="noopener"
+       style="animation-delay:${i*40}ms">
+      <div class="exc-act-top">
+        <span class="exc-act-font exc-act-font-${a.font}">${a.font==='manawa'?'Manawa':'TripAdvisor'}</span>
+        <span class="exc-act-durada">⏱ ${a.durada}</span>
+      </div>
+      <div class="exc-act-nom">${escHtml(a.nom)}</div>
+      ${a.empresa?`<div class="exc-act-empresa">🏢 ${escHtml(a.empresa)}</div>`:''}
+    </a>`;
+
+  return `
+  <div class="exc-hero exc-hero-barco">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">⛵ Passeig amb Barco</h2>
+      <p class="exc-hero-sub">Explora les costes volcàniques des del mar · São Miguel</p>
+    </div>
+  </div>
+
+  <div class="exc-cos">
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🌐 Plataformes de reserva</h3></div>
+    <div class="exc-gen-links">${genLinks}</div>
+
+    <div class="exc-seccio-sep" style="margin-top:32px">
+      <h3 class="exc-seccio-titol">🛒 Activitats a Manawa <span class="exc-count">${manawa.length}</span></h3>
+    </div>
+    <div class="exc-act-grid">${manawa.map(actCard).join('')}</div>
+
+    <div class="exc-seccio-sep" style="margin-top:32px">
+      <h3 class="exc-seccio-titol">⭐ Activitats a TripAdvisor <span class="exc-count">${tripad.length}</span></h3>
+    </div>
+    <div class="exc-act-grid">${tripad.map((a,i)=>actCard(a,i+manawa.length)).join('')}</div>
+  </div>`;
+}
+
+/* ── ESTRELLES ── */
+function renderEstrelles() {
+  const d = ME_EXCURSIONS.estrelles;
+
+  const llocsPerIlla = {};
+  d.llocs.forEach(l => {
+    if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
+    llocsPerIlla[l.illa].push(l);
+  });
+
+  const llocsHtml = Object.entries(llocsPerIlla).map(([illa, llocs]) => `
+    <div class="exc-illa-bloc">
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa]||'🏝️'} ${EXC_ILLA_LBL[illa]||illa}</h3>
+      <div class="exc-llocs-grid exc-llocs-grid-estrelles">
+        ${llocs.map((l,i) => `
+          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i*60}ms">
+            <div class="exc-lloc-ico">${l.ico}</div>
+            <div class="exc-lloc-nom">${escHtml(l.nom)}</div>
+            <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
+          </div>`
+        ).join('')}
+      </div>
+    </div>`
+  ).join('');
+
+  const consells = d.consells.map(c =>
+    `<div class="exc-consell exc-consell-nit">
+      <span class="exc-consell-ico">${c.ico}</span>
+      <span>${escHtml(c.text)}</span>
+    </div>`
+  ).join('');
+
+  return `
+  <div class="exc-hero exc-hero-estrelles">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">🔭 Observació d'Estrelles</h2>
+      <p class="exc-hero-sub">Cel fosc, poc contaminació lumínica · els millors punts per illa</p>
+    </div>
+  </div>
+
+  <div class="exc-cos">
+    ${llocsHtml}
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🚗 Consells de conducció nocturna</h3></div>
+    <div class="exc-consells">${consells}</div>
+  </div>`;
 }

@@ -1144,3 +1144,228 @@ body.light .av-card { background: #fff; }
   .av-grid { grid-template-columns: 1fr; }
   .me-sec-btn { padding: 10px 12px; font-size: 0.78rem; }
 }
+
+/* ════════════════════════════════════════════
+   SECCIÓ: EXCURSIONS
+   ════════════════════════════════════════════ */
+
+/* Sub-nav de les 3 excursions */
+.exc-nav-wrap {
+  background: rgba(10,22,40,0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(106,171,122,0.15);
+  position: sticky;
+  top: calc(52px + 49px);
+  z-index: 180;
+}
+.exc-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.exc-nav::-webkit-scrollbar { display: none; }
+.exc-tab {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 20px;
+  background: none; border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--me-muted);
+  font-family: 'Lora', serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  margin-bottom: -2px;
+  flex-shrink: 0;
+}
+.exc-tab:hover { color: var(--me-green3); border-bottom-color: rgba(106,171,122,0.3); }
+.exc-tab.actiu { color: var(--me-green3); border-bottom-color: var(--me-green2); font-weight: 600; }
+
+/* Hero d'excursió */
+.exc-hero {
+  position: relative;
+  height: 220px;
+  background-size: cover; background-position: center;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+.exc-hero-cetacis  { background: linear-gradient(135deg, #0a2a4a 0%, #0d4060 50%, #0a3050 100%); }
+.exc-hero-barco    { background: linear-gradient(135deg, #0a1a3a 0%, #1a3a5a 50%, #0d2840 100%); }
+.exc-hero-estrelles{ background: linear-gradient(135deg, #05081a 0%, #0a1030 50%, #0d0a20 100%); }
+.exc-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(5,10,20,0.85) 0%, rgba(5,10,20,0.2) 100%);
+}
+.exc-hero-content { position: relative; z-index: 1; padding: 28px 32px; }
+.exc-hero-eyebrow {
+  font-family: 'Lora', serif; font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--me-green2); margin-bottom: 6px;
+}
+.exc-hero-titol {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700; color: #fff; margin: 0 0 6px; line-height: 1.1;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+.exc-hero-sub {
+  font-family: 'Lora', serif; font-style: italic; font-size: 0.9rem;
+  color: rgba(255,255,255,0.65); margin: 0;
+}
+
+/* Cos general */
+.exc-cos {
+  max-width: 1100px; margin: 0 auto; padding: 32px 20px 80px;
+}
+
+/* Separadors de secció interna */
+.exc-seccio-sep {
+  display: flex; align-items: center; gap: 12px;
+  margin: 32px 0 16px; padding-bottom: 10px;
+  border-bottom: 1px solid rgba(106,171,122,0.15);
+}
+.exc-seccio-titol {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem;
+  font-weight: 700; color: var(--me-green3); margin: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.exc-count {
+  font-family: 'Lora', serif; font-size: 0.7rem; font-weight: 400;
+  color: var(--me-muted); background: rgba(45,90,61,0.3);
+  border: 1px solid rgba(106,171,122,0.15); padding: 1px 8px; border-radius: 10px;
+}
+
+/* Intro cetacis: 2 columnes */
+.exc-intro-grid {
+  display: grid; grid-template-columns: 1fr 320px; gap: 28px; margin-bottom: 8px;
+}
+.exc-intro-text p {
+  font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.7;
+  color: rgba(232,240,236,0.85); margin-bottom: 12px;
+}
+.exc-especies-wrap {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(106,171,122,0.15);
+  border-radius: 14px; padding: 16px;
+}
+.exc-especies-titol {
+  font-family: 'Lora', serif; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--me-muted); margin-bottom: 12px;
+}
+.exc-especie {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 7px 0; border-bottom: 1px solid rgba(106,171,122,0.08);
+}
+.exc-especie:last-child { border-bottom: none; }
+.exc-especie-nom { font-family: 'Lora', serif; font-size: 0.82rem; color: var(--me-green3); font-weight: 600; }
+.exc-especie-det { font-family: 'Lora', serif; font-size: 0.72rem; color: var(--me-muted); }
+
+/* Bloc per illa */
+.exc-illa-bloc { margin-bottom: 32px; }
+.exc-illa-titol {
+  font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+  color: var(--me-green2); margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+
+/* Grid de llocs */
+.exc-llocs-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+}
+.exc-lloc-card {
+  background: var(--me-surface); border: 1px solid var(--me-border);
+  border-radius: var(--me-radius); padding: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  animation: fadeInUp 0.3s ease both;
+}
+.exc-lloc-card:hover { border-color: rgba(106,171,122,0.35); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.exc-lloc-nom {
+  font-family: 'Playfair Display', serif; font-size: 0.95rem;
+  font-weight: 700; color: var(--me-text); margin-bottom: 8px;
+}
+.exc-lloc-desc {
+  font-family: 'Lora', serif; font-size: 0.78rem; color: rgba(232,240,236,0.75);
+  line-height: 1.55; margin: 0 0 10px;
+}
+.exc-lloc-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.exc-link-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.68rem; color: var(--me-green2);
+  border: 1px solid rgba(106,171,122,0.2); padding: 3px 9px;
+  border-radius: 8px; background: rgba(45,90,61,0.2);
+  text-decoration: none; transition: all 0.2s; white-space: nowrap;
+}
+.exc-link-btn::before { content:'🔗'; font-size:0.65rem; }
+.exc-link-btn:hover { background: rgba(45,90,61,0.5); border-color: var(--me-green2); color: var(--me-green3); }
+
+/* Consells */
+.exc-consells { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+.exc-consell {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; border-radius: 10px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(106,171,122,0.1);
+  font-family: 'Lora', serif; font-size: 0.82rem;
+  color: rgba(232,240,236,0.85); line-height: 1.5;
+}
+.exc-consell-ico { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.exc-consell-nit { background: rgba(10,10,40,0.4); border-color: rgba(100,100,200,0.15); }
+
+/* Links generals barco */
+.exc-gen-links { display: flex; flex-direction: column; gap: 10px; }
+.exc-gen-link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(106,171,122,0.18);
+  text-decoration: none; transition: all 0.2s;
+}
+.exc-gen-link:hover { background: rgba(45,90,61,0.25); border-color: rgba(106,171,122,0.4); transform: translateX(4px); }
+.exc-gen-link-ico { font-size: 1.4rem; flex-shrink: 0; }
+.exc-gen-link-nom { font-family: 'Lora', serif; font-size: 0.88rem; color: var(--me-green3); flex: 1; }
+.exc-gen-link-arr { color: var(--me-green2); font-size: 1rem; }
+
+/* Cards d'activitats barco */
+.exc-act-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px;
+}
+.exc-act-card {
+  display: block; text-decoration: none;
+  background: var(--me-surface); border: 1px solid var(--me-border);
+  border-radius: 12px; padding: 14px 16px;
+  transition: all 0.2s; animation: fadeInUp 0.3s ease both;
+}
+.exc-act-card:hover { background: rgba(45,90,61,0.2); border-color: rgba(106,171,122,0.4); transform: translateY(-2px); }
+.exc-act-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.exc-act-font {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 2px 8px; border-radius: 6px;
+}
+.exc-act-font-manawa    { background: rgba(255,140,0,0.15);  color: #ff9a40; border: 1px solid rgba(255,140,0,0.25); }
+.exc-act-font-tripadvisor{ background: rgba(0,160,80,0.15);  color: #40c080; border: 1px solid rgba(0,160,80,0.25); }
+.exc-act-durada { font-family:'Lora',serif; font-size: 0.72rem; color: var(--me-muted); margin-left: auto; }
+.exc-act-nom { font-family:'Lora',serif; font-size: 0.82rem; color: var(--me-text); line-height: 1.4; margin-bottom: 6px; }
+.exc-act-empresa { font-size: 0.7rem; color: var(--me-muted); font-family:'Lora',serif; }
+
+/* Estrelles: cards especials (estil nocturn) */
+.exc-lloc-card-estrelles {
+  background: rgba(5,8,25,0.6);
+  border-color: rgba(100,120,200,0.2);
+}
+.exc-lloc-card-estrelles:hover { border-color: rgba(150,170,255,0.4); box-shadow: 0 4px 20px rgba(50,50,150,0.2); }
+.exc-lloc-ico { font-size: 2rem; margin-bottom: 8px; }
+.exc-lloc-card-estrelles .exc-lloc-nom { color: rgba(200,220,255,0.95); }
+.exc-lloc-card-estrelles .exc-lloc-desc { color: rgba(180,200,240,0.7); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .exc-intro-grid { grid-template-columns: 1fr; }
+  .exc-hero { height: 180px; }
+  .exc-hero-content { padding: 20px; }
+  .exc-llocs-grid { grid-template-columns: 1fr; }
+  .exc-act-grid { grid-template-columns: 1fr; }
+}
+
+/* Mode clar */
+body.light .exc-lloc-card { background: #fff; }
+body.light .exc-intro-text p { color: #2a4a3a; }
+body.light .exc-act-card { background: #fff; }
+body.light .exc-consell { background: rgba(45,90,61,0.05); }

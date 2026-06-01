@@ -5972,3 +5972,296 @@ const ME_AVENT_POSTS = [
   "https://azoresbpk.com/2021/09/07/the-best-snorkeling-spots-on-sao-miguel-island/",
   "https://www.turismoazores.es/isla-faial/snorkel-en-la-isla-de-faial-azores/"
 ];
+
+
+/* ── Excursions ── */
+const ME_EXCURSIONS = {
+  "cetacis": {
+    "intro": "Parlar de les Açores és parlar de naturalesa en estat pur. L'oceà que envolta l'arxipèlag guarda un tresor sorprenent: fins a 24 espècies de cetacis, equivalent a un terç de les existents al planeta. L'arxipèlag s'ha consolidat com un dels millors llocs del món per observar balenes i dofins en llibertat.\n\nEl contrast històric és colpidor: durant dècades les Açores van ser un centre de caça de balenes. Avui s'han reinventat com un referent mundial en observació responsable. Cada sortida és diferent: de vegades en minuts es veuen diverses espècies, d'altres la trobada és més tímida. Aquesta incertesa forma part de l'encant.",
+    "especies": [
+      {
+        "nom": "Catxalot",
+        "detall": "Resident tot l'any · emblema de les Açores"
+      },
+      {
+        "nom": "Balena blava",
+        "detall": "Present a la primavera · fins a 30 m de longitud"
+      },
+      {
+        "nom": "Balena geperuda",
+        "detall": "Més freqüent a primavera i estiu"
+      },
+      {
+        "nom": "Dofí mular",
+        "detall": "El més popular · present tot l'any"
+      },
+      {
+        "nom": "Dofins tacats de l'Atlàntic",
+        "detall": "Molt abundants a l'estiu · s'acosten a les embarcacions"
+      },
+      {
+        "nom": "Dofí llistat i comú",
+        "detall": "Habituals en diferents èpoques"
+      }
+    ],
+    "links_generals": [
+      "https://viveportugalweb.com/donde-ver-ballenas-en-azores-de-forma-responsable/",
+      "https://randomtrip.es/avistamiento-cetaceos-ballenas-delfines-sao-miguel-azores/",
+      "https://www.azoreschoice.com/blog/whale-watching-in-the-azores/"
+    ],
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "nom": "Ponta Delgada",
+        "desc": "La capital és el punt de partida més popular. La particularitat és la figura del guaita a terra: observadors des de la costa avisen per ràdio les embarcacions. Catxalots, balenes d'aleta, dofins i de vegades balenes blaves. Les excursions duren 2-3 hores.",
+        "links": [
+          "https://www.seacolorsazores.com/",
+          "https://www.futurismo.pt/es/visitas/avistamiento-de-cetaceos-en-ponta-delgada-sao-miguel-azores/",
+          "https://www.mobydick-tours.com/",
+          "https://terradopico.com/"
+        ]
+      },
+      {
+        "illa": "Sao Miguel",
+        "nom": "Vila Franca do Campo",
+        "desc": "Inclou visita a l'illot de Vila Franca, un cràter volcànic que forma una piscina natural circular perfecta per al bany. Els guies es centren en els dofins, abundants en aquesta zona.",
+        "links": [
+          "https://www.azoreswhalewatch.com/",
+          "https://oceaneyeazores.pt/",
+          "https://azoreaneye.pt/"
+        ]
+      },
+      {
+        "illa": "Sao Miguel",
+        "nom": "Rabo de Peixe",
+        "desc": "Combina el contacte amb la fauna marina amb el pols d'un autèntic poble de pescadors. Veure els vaixells locals sortir a pescar mentre uns altres busquen cetacis explica com tradició i turisme conviuen.",
+        "links": [
+          "https://www.futurismo.pt/?utm_campaign=GMB-Store-Rabo-de-Peixe&utm_medium=gmb_stores&utm_source=google"
+        ]
+      },
+      {
+        "illa": "Pico",
+        "nom": "Lajes do Pico",
+        "desc": "Pico és sinònim de balenes. Lajes va ser durant segles un port balener i avui és el cor de la conservació. La probabilitat de veure catxalots és especialment alta. La silueta del Montanha do Pico (2.351 m) converteix cada travessia en una postal inoblidable.",
+        "links": [
+          "https://www.futurismo.pt/?utm_campaign=GMB-Store-Lajes-do-Pico&utm_medium=gmb_stores&utm_source=google",
+          "https://aquaacores.pt/"
+        ]
+      },
+      {
+        "illa": "Pico",
+        "nom": "Madalena",
+        "desc": "Port principal de Pico, amb diverses empreses que ofereixen excursions als canals entre illes, una de les zones de biodiversitat marina més riques de l'Atlàntic nord.",
+        "links": [
+          "https://www.futurismo.pt/?utm_campaign=GMB-Store-Madalena&utm_medium=gmb_stores&utm_source=google",
+          "https://pico-island-adventures.com/",
+          "https://www.cwazores.com/",
+          "https://aquaacores.pt/"
+        ]
+      },
+      {
+        "illa": "Faial",
+        "nom": "Horta",
+        "desc": "Horta és sinònim de navegació. Des del port ple de murals pintats per mariners que creuen l'Atlàntic surten excursions al canal Faial-Pico, un dels corredors marins més actius. No és estrany veure diverses espècies en una mateixa sortida.",
+        "links": [
+          "https://www.norbertodiver.pt/",
+          "https://whalewatchazores.com/",
+          "https://azoresexperiences.com/en/home-2/",
+          "https://www.diveazores.net/",
+          "https://www.naturalist.pt/",
+          "https://www.petercafesport.com/whale-watching/?lang=en"
+        ]
+      }
+    ],
+    "consells": [
+      {
+        "ico": "🏢",
+        "text": "Tria empreses responsables. Evita les que garanteixen albiraments concrets — allò natural no es programa."
+      },
+      {
+        "ico": "🧥",
+        "text": "Porta jaqueta i protecció solar. L'Atlàntic és imprevisible encara que sigui estiu."
+      },
+      {
+        "ico": "🌊",
+        "text": "No et frustris si veus poques espècies. Hi ha jornades espectaculars i d'altres de tranquil·les. Forma part de l'autenticitat."
+      },
+      {
+        "ico": "📷",
+        "text": "Gaudeix més enllà de la càmera. Fes fotos, però dedica temps a observar només amb els ulls."
+      },
+      {
+        "ico": "📅",
+        "text": "Reserva amb antelació. En temporada alta les places volen, sobretot a São Miguel i Pico."
+      }
+    ]
+  },
+  "barco": {
+    "links_generals": [
+      {
+        "nom": "Manawa — Passeig amb barco a São Miguel",
+        "url": "https://www.manawa.com/es/destinations/2269-sao-miguel/1542-paseo-en-barco"
+      },
+      {
+        "nom": "TripAdvisor — Activitats en vaixell a les Açores",
+        "url": "https://www.tripadvisor.es/Attractions-g189123-Activities-c55-Azores.html"
+      }
+    ],
+    "activitats": [
+      {
+        "nom": "Excursió amb vaixell amb fons de vidre i snorkel a l'illa de São Miguel",
+        "durada": "2h",
+        "empresa": "Oceaneye",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/glass-bottom-boat-tour-and-snorkel-in-sao-miguel-island/14204"
+      },
+      {
+        "nom": "Passeig amb vaixell des del port de Rabo de Peixe a la Praia de Moinhos a Porto Formoso",
+        "durada": "3h",
+        "empresa": "Azores Boat Adventures",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/paseo-en-barco-desde-el-puerto-de-rabo-de-peixe-a-la-praia-de-moinhos-en-porto-formoso-islas-azores/18061"
+      },
+      {
+        "nom": "Excursió amb vaixell a la Reserva Natural de l'illot del volcà de Vila Franca",
+        "durada": "3h",
+        "empresa": "Azores Whale Watch",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/excursion-en-barco-a-la-reserva-natural-del-islote-del-volcan-de-vila-franca-sao-miguel/13215"
+      },
+      {
+        "nom": "Passeig amb vaixell privat a l'illot de Vila Franca do Campo",
+        "durada": "1.5h",
+        "empresa": "Epic Volcanic",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/paseo-en-barco-privado-al-islote-de-vila-franca-do-campo-sao-miguel-azores/25518"
+      },
+      {
+        "nom": "Passeig amb vaixell al capvespre a Vila Franca do Campo",
+        "durada": "3.5h",
+        "empresa": "Oceaneye",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/paseo-en-barco-al-atardecer-en-vila-franca-do-campo-sao-miguel-azores/25422"
+      },
+      {
+        "nom": "Passeig amb vaixell per l'illot de Vila Franca do Campo",
+        "durada": "1h",
+        "empresa": "Oceaneye",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/paseo-en-barco-por-el-islote-de-vila-franca-do-campo-azores/25421"
+      },
+      {
+        "nom": "Passeig amb vaixell per l'illot de Vila Franca",
+        "durada": "45m",
+        "empresa": "Azores Sub Dive Center",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/paseo-en-barco-por-el-islote-de-vila-franca-sao-miguel/24900"
+      },
+      {
+        "nom": "Excursió en speedboat per la badia de Porto Formoso",
+        "durada": "2h",
+        "empresa": "Azores Seascape",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/excursion-en-speedboat-por-la-bahia-de-porto-formoso-sao-miguel/24466"
+      },
+      {
+        "nom": "Excursió amb vaixell al capvespre al Cap Cintrão i Ribeira Grande des de Rabo de Peixe",
+        "durada": "2h",
+        "empresa": "Azores Seascape",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/excursion-en-barco-al-atardecer-al-cabo-cintrao-y-ribeira-grande-desde-rabo-de-peixe-en-sao-miguel-azores/24381"
+      },
+      {
+        "nom": "Excursió en speedboat per la badia de Porto Formoso",
+        "durada": "3.5h",
+        "empresa": "Azores Seascape",
+        "font": "manawa",
+        "url": "https://www.manawa.com/es-ES/actividad/azores/sao-miguel/paseo-en-barco/excursion-en-speedboat-por-la-bahia-de-porto-formoso-sao-miguel/18099"
+      },
+      {
+        "nom": "São Miguel: passeig amb vaixell meravelles volcàniques, coves i història",
+        "durada": "3h",
+        "empresa": "",
+        "font": "tripadvisor",
+        "url": "https://www.tripadvisor.es/AttractionProductReview-g189134-d27721501-San_Miguel_Boat_Tour_Volcanic_Wonders_Caves_History-Sao_Miguel_Azores.html"
+      },
+      {
+        "nom": "São Miguel: Excursió amb Vaixell per Coves i Penya-segats",
+        "durada": "2h",
+        "empresa": "",
+        "font": "tripadvisor",
+        "url": "https://www.tripadvisor.es/AttractionProductReview-g189134-d33151545-Sao_Miguel_Sea_Caves_Volcanic_Cliffs_Boat_Tour-Sao_Miguel_Azores.html"
+      },
+      {
+        "nom": "São Miguel: Tour Privat en Vaixell als Illots Mosteiros",
+        "durada": "2.5h",
+        "empresa": "",
+        "font": "tripadvisor",
+        "url": "https://www.tripadvisor.es/AttractionProductReview-g189134-d33151544-Sao_Miguel_Private_Boat_Tour_to_the_Mosteiros_Islets-Sao_Miguel_Azores.html"
+      },
+      {
+        "nom": "São Miguel: Tour privat amb vaixell per les coves del mar",
+        "durada": "2.5h",
+        "empresa": "",
+        "font": "tripadvisor",
+        "url": "https://www.tripadvisor.es/AttractionProductReview-g189134-d34290843-Sao_Miguel_Sea_Caves_Swim_and_Drinks_Private_Boat_Tour-Sao_Miguel_Azores.html"
+      }
+    ]
+  },
+  "estrelles": {
+    "llocs": [
+      {
+        "illa": "Sao Miguel",
+        "nom": "Lagoa do Fogo",
+        "ico": "🌋",
+        "desc": "La carretera EN5-2A recorre la carena de la caldera. Diversos miradors amb aparcament a gairebé 600 metres d'altitud, sovint per sobre de la boira baixa de la costa."
+      },
+      {
+        "illa": "Sao Miguel",
+        "nom": "Miradouro del Pico do Carvão",
+        "ico": "🔭",
+        "desc": "Carretera cap a Sete Cidades (EN5-2A). Aparcament ampli i vista neta de 360 graus, lluny de les llums de Ponta Delgada."
+      },
+      {
+        "illa": "Sao Miguel",
+        "nom": "Nordeste — Pico do Bartolomeu",
+        "ico": "🌑",
+        "desc": "Es puja en cotxe per una carretera estreta asfaltada fins a les antenes del cim. El punt més fosc i aïllat de l'illa, ideal si us allotgeu a la zona est."
+      },
+      {
+        "illa": "Pico",
+        "nom": "Casa da Montanha",
+        "ico": "⛰️",
+        "desc": "Carretera asfaltada fins al centre de visitants a 1.200 m d'altitud. Des de l'aparcament la foscor és absoluta i la Via Làctia es veu de forma espectacular. No cal fer l'ascensió al cim."
+      },
+      {
+        "illa": "Pico",
+        "nom": "Planalto Central — Lagoa do Capitão",
+        "ico": "💫",
+        "desc": "La carretera longitudinal interior passa a prop de diversos llacs volcànics. L'entorn de la Lagoa do Capitão és molt fosc: permet fotografiar la galàxia reflectida a l'aigua amb la silueta del volcà de fons."
+      },
+      {
+        "illa": "Faial",
+        "nom": "Miradouro da Caldeira",
+        "ico": "🌌",
+        "desc": "Carretera asfaltada fins al cràter central a 900 m. L'aparcament queda completament protegit de la contaminació lumínica d'Horta gràcies a les parets del volcà."
+      },
+      {
+        "illa": "Faial",
+        "nom": "Vulcão dos Capelinhos",
+        "ico": "🌠",
+        "desc": "Extrem oest de l'illa. Paisatge lunar completament fosc i obert cap a l'oceà. Aparca prop del centre d'interpretació o del far i camina dos minuts per gaudir d'un cel net mirant a l'oest."
+      }
+    ],
+    "consells": [
+      {
+        "ico": "🐄",
+        "text": "Atenció a la fauna: a les carreteres interiors de Pico i São Miguel és molt habitual trobar vaques soles o en grup enmig de la calçada a la nit. Condueix a velocitat moderada."
+      },
+      {
+        "ico": "🌫️",
+        "text": "Boira densa: les zones altes poden quedar cobertes en minuts. Si la visibilitat disminueix, usa els llums de boira i pren com a referència les línies blanques de la carretera."
+      }
+    ]
+  }
+};
