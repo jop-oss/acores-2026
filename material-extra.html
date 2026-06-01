@@ -3,46 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Material extra · Açores 2026</title>
+  <title>+INFO · Açores 2026</title>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/material-extra.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <style>
-    .tmp-main {
-      min-height: 100vh;
-      background: #0a1628;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .tmp-eyebrow {
-      font-family: 'Lora', serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #6aab7a;
-      margin-bottom: 16px;
-    }
-    .tmp-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
-      font-weight: 700;
-      color: #a8d8b0;
-      margin: 0 0 24px;
-      letter-spacing: -0.02em;
-    }
-    .tmp-proximament {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: #7a9e8a;
-    }
-  </style>
 </head>
 <body>
 
@@ -64,7 +31,7 @@
     <a href="jocs.html" class="nav-item">Jocs</a>
     <a href="reptes.html" class="nav-item">Reptes</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
-    <a href="material-extra.html" class="nav-item active">Material extra</a>
+    <a href="material-extra.html" class="nav-item active">Extra</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap" id="nav-id-wrap">
@@ -73,10 +40,84 @@
   </div>
 </nav>
 
-<main class="tmp-main">
-  <div class="tmp-eyebrow">Açores 2026</div>
-  <h1 class="tmp-title">📦 Material extra</h1>
-  <p class="tmp-proximament">Pròximament...</p>
+<main class="me-main">
+
+  <!-- ── HERO ── -->
+  <header class="me-hero">
+    <div class="me-hero-bg"></div>
+    <div class="me-hero-content">
+      <div class="me-hero-eyebrow">Açores 2026</div>
+      <h1 class="me-hero-title">📦 +INFO</h1>
+      <p class="me-hero-sub">Tot el que val la pena explorar a les illes</p>
+      <div class="me-hero-stats">
+        <div class="me-stat"><span class="me-stat-num">305</span><span class="me-stat-lbl">Llocs</span></div>
+        <div class="me-stat-sep">·</div>
+        <div class="me-stat"><span class="me-stat-num">137</span><span class="me-stat-lbl">Destacats</span></div>
+        <div class="me-stat-sep">·</div>
+        <div class="me-stat"><span class="me-stat-num">10</span><span class="me-stat-lbl">Categories</span></div>
+        <div class="me-stat-sep">·</div>
+        <div class="me-stat"><span class="me-stat-num">4</span><span class="me-stat-lbl">Illes</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── FILTRES ── -->
+  <div class="me-filtres-wrap">
+    <div class="me-filtres-inner">
+
+      <!-- Fila 1: Illes -->
+      <div class="me-filtres-illes" id="meIlles"></div>
+
+      <!-- Fila 2: Categories + sub-pills Naturalesa -->
+      <div style="display:flex; align-items:center; flex-wrap:wrap; gap:0">
+        <div class="me-filtres-cats" id="meCats"></div>
+        <div class="me-subcats hidden" id="meSubcats"></div>
+      </div>
+
+      <!-- Fila 3: Destacat + Zona + Comptador -->
+      <div class="me-filtres-extra">
+        <button class="me-toggle-destacat" id="meToggleDestacat" onclick="meToggleDestacat()">
+          <span class="me-toggle-ico">⭐</span>
+          <span class="me-toggle-txt">Destacats</span>
+        </button>
+
+        <div class="me-zona-wrap">
+          <span class="me-zona-label">Zona:</span>
+          <select class="me-zona-select" id="meZonaSelect" onchange="meSetZona()" disabled>
+            <option value="">Selecciona primer una illa</option>
+          </select>
+        </div>
+
+        <div class="me-comptador" id="meComptador">— llocs</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── CONTINGUT ── -->
+  <div class="me-contingut">
+
+    <!-- Grid de cards -->
+    <div class="me-grid" id="meGrid"></div>
+
+    <!-- Estat buit -->
+    <div class="me-buit" id="meBuit">
+      <div class="me-buit-ico">🔍</div>
+      <p>Cap lloc correspon als filtres seleccionats.</p>
+    </div>
+
+    <!-- Secció de links -->
+    <div class="me-links-seccio" id="meLinksWrap" style="display:none">
+      <div class="me-links-header" onclick="meToggleLinks()">
+        <h3 class="me-links-titol">🔗 Recursos i enllaços</h3>
+        <span class="me-links-count" id="meLinksCount"></span>
+        <span class="me-links-toggle" id="meLinksIco">▼</span>
+      </div>
+      <div class="me-links-cos" id="meLinksCos"></div>
+    </div>
+
+  </div>
+
 </main>
 
 <footer class="main-footer">
@@ -84,6 +125,8 @@
   <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
 </footer>
 
+<script src="js/material-extra-data.js"></script>
+<script src="js/material-extra.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
