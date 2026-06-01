@@ -68,9 +68,13 @@
       <!-- Fila 1: Illes -->
       <div class="me-filtres-illes" id="meIlles"></div>
 
-      <!-- Fila 2: Categories + sub-pills Naturalesa -->
-      <div style="display:flex; align-items:center; flex-wrap:wrap; gap:0">
+      <!-- Fila 2: Categories -->
+      <div class="me-filtres-fila2">
         <div class="me-filtres-cats" id="meCats"></div>
+      </div>
+
+      <!-- Fila 2b: Sub-pills Naturalesa (fila pròpia, condicional) -->
+      <div class="me-filtres-subcats-fila" id="meSubcatsFila">
         <div class="me-subcats hidden" id="meSubcats"></div>
       </div>
 
@@ -106,15 +110,8 @@
       <p>Cap lloc correspon als filtres seleccionats.</p>
     </div>
 
-    <!-- Secció de links -->
-    <div class="me-links-seccio" id="meLinksWrap" style="display:none">
-      <div class="me-links-header" onclick="meToggleLinks()">
-        <h3 class="me-links-titol">🔗 Recursos i enllaços</h3>
-        <span class="me-links-count" id="meLinksCount"></span>
-        <span class="me-links-toggle" id="meLinksIco">▼</span>
-      </div>
-      <div class="me-links-cos" id="meLinksCos"></div>
-    </div>
+    <!-- Secció de links (generat per JS) -->
+    <div class="me-links-seccio" id="meLinksWrap" style="display:none"></div>
 
   </div>
 

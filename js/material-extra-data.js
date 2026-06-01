@@ -4328,150 +4328,755 @@ const ME_LLOCS = [
   }
 ];
 
-const ME_MPP_LINKS = {
-  "Platges": [
-    "https://byacores.com/es/playas-sao-miguel/",
-    "https://byacores.com/es/playas-faial/",
-    "https://www.futurismo.pt/es/blog/las-mejores-playas-de-las-islas-azores/",
-    "https://www.turismoazores.es/isla-de-sao-miguel/playas-de-la-isla-de-sao-miguel/",
-    "https://www.turismoazores.es/playas-de-la-isla-de-faial/",
-    "https://welikeazores.com/mejores-playas-de-sao-miguel/",
-    "https://welikeazores.com/mejores-playas-piscinas-naturales-faial/",
-    "https://welikeazores.com/mejores-playas-piscinas-naturales-faial/",
-    "https://www.verplayas.com/playas-lajinha-faial/"
-  ],
-  "Piscines": [
-    "https://welikeazores.com/termas-piscinas-naturales-sao-miguel/",
-    "https://welikeazores.com/playas-piscinas-naturales-pico-azores/",
-    "https://www.azoren-online.info/es/pico/informationen-ueber-pico/baden-auf-pico/",
-    "https://www.escapadarural.com/blog/mejores-lugares-para-banarse-en-islas-azores/",
-    "https://www.elrincondesele.com/termas-y-piscinas-naturales-en-las-azores/"
-  ],
-  "Miradors": [
-    "https://trotandomundos.com/los-mejores-miradores-isla-sao-miguel-en-azores/",
-    "https://www.miguelenruta.com/2016/02/Ruta-midadores-Sao-Miguel-Azores.html",
-    "https://territorioluismi.com/mejores-miradores-de-sao-miguel/",
-    "https://visitnordeste.pt/en/miradouros.html"
-  ]
-};
-
-const ME_LINKS_GENERALS = [
-  "https://byacores.com/es",
-  "https://www.futurismo.pt/es",
-  "https://www.turismoazores.es",
-  "https://www.visitazores.com/es/los-azores",
-  "https://www.visitportugal.com/es/destinos/acores",
-  "https://www.azoreschoice.com/azores/",
-  "https://welikeazores.com/",
-  "https://www.turismoenportugal.org/azores",
-  "https://www.viajecomigo.com/category/portugal/ilhas/",
-  "https://viajesbengala.com/azores/",
-  "https://www.vivodeviajes.com/islas-azores-mapa-guia-para-entender-este-paraiso-en-medio-del-atlantico/",
-  "https://www.rutaenfamilia.com/azores-aventura-y-naturaleza-en-familia/",
-  "https://viewpoints.azores.gov.pt/?lang=pt",
-  "https://mapcarta.com/es/N763242612",
-  "https://parquesnaturais.azores.gov.pt/pt/",
-  "https://elgiroscopo.es/viaje-a-las-islas-azores-faial-pico-sao-jorge/"
-];
-
-const ME_LINKS_PER_ILLA = {
-  "Faial": [
-    "https://www.revigorate.com/things-to-do-in-faial-es.html",
-    "https://randomtrip.es/guia-faial-azores/",
-    "https://www.nuncasinviaje.com/que-ver-en-faial-azores-guia-organizar-viaje-isla/",
-    "https://viajeconpablo.com/que-ver-en-faial-azores-guia-viaje/",
-    "https://byacores.com/es/faial-es/",
-    "https://byacores.com/es/isla-faial-puntos-de-interes/",
-    "https://byacores.com/es/10-cosas-que-hacer-en-la-isla-de-faial/",
-    "https://www.futurismo.pt/es/islas/isla-de-faial-azores/",
-    "https://www.visitazores.com/es/los-acores/faial",
-    "https://www.turismoazores.es/isla-faial/",
-    "https://www.visitportugal.com/es/destinos/acores/73818",
-    "https://welikeazores.com/isla-faial-isla-azul-puerto-horta/",
-    "https://welikeazores.com/mejores-cosas-ver-hacer-faial-azores/",
-    "https://www.turismoenportugal.org/isla-de-faial",
-    "https://www.explorefaialisland.com/",
-    "https://visitfaial.com/",
-    "https://byacores.com/es/tiempo-faial/"
-  ],
-  "Pico": [
-    "https://www.revigorate.com/things-to-do-in-pico-es.html",
-    "https://randomtrip.es/guia-pico-azores/",
-    "https://www.nuncasinviaje.com/que-hacer-isla-pico-rutas-tres-cinco-siete-dias-azores/",
-    "https://viajeconpablo.com/pico-azores/",
-    "https://byacores.com/es/pico-es/",
-    "https://byacores.com/es/isla-pico-puntos-de-interes/",
-    "https://www.futurismo.pt/es/islas/pico-isla-azores-2/",
-    "https://www.futurismo.pt/es/blog/lo-mejor-que-hacer-en-pico-isla-azores/",
-    "https://www.visitazores.com/es/los-acores/pico",
-    "https://www.turismoazores.es/isla-pico/",
-    "https://www.visitportugal.com/es/destinos/acores/73819",
-    "https://welikeazores.com/isla-pico-volcan-mas-alto-portugal/",
-    "https://welikeazores.com/cosas-que-ver-hacer-pico-azores/",
-    "https://www.turismoenportugal.org/isla-do-pico",
-    "https://www.explorepicoisland.com/",
-    "https://lamochilaalhombro.com/blog-de-viajes/destinos-para-viajar/viajar-a-europa/europa-del-sur/portugal/que-ver-en-pico-azores/",
-    "https://www.portugalplease.com/es/acores/pico/descricao",
-    "https://danae-explore.com/en/pico-island-azores/",
-    "https://www.vagamundos.pt/visitar-ilha-do-pico-roteiro/",
-    "https://www.macaronesian.org/es/show/isla-de-pico-azores",
-    "https://drrf.azores.gov.pt/reservas-florestais-de-recreio-do-pico/",
-    "https://byacores.com/es/tiempo-pico/"
-  ],
-  "Sao Miguel": [
-    "https://www.revigorate.com/things-to-do-in-sao-miguel-es.html",
-    "https://randomtrip.es/guia-sao-miguel-azores/",
-    "https://www.nuncasinviaje.com/que-ver-hacer-sao-miguel-azores-guia-viajar/",
-    "https://viajeconpablo.com/que-ver-en-sao-miguel-guia-viaje/",
-    "https://byacores.com/es/sao-miguel-es/",
-    "https://byacores.com/es/sao-miguel-lugares-para-visitar/",
-    "https://byacores.com/es/top-actividades-sao-miguel/",
-    "https://www.futurismo.pt/es/islas/isla-de-sao-miguel-azores/",
-    "https://www.visitazores.com/es/los-acores/sao-miguel",
-    "https://www.turismoazores.es/isla-de-sao-miguel/",
-    "https://www.visitportugal.com/es/destinos/acores/73816",
-    "https://welikeazores.com/isla-sao-miguel-te-atreves-vivir-experiencia-mas-increible-azores/",
-    "https://welikeazores.com/que-ver-y-hacer-en-sao-miguel-azores/",
-    "https://www.turismoenportugal.org/isla-de-san-miguel",
-    "https://tusguiasdeviaje.com/que-ver-en-san-miguel-azores-guia-de-viaje/",
-    "https://azoresgetaways.com/es-es/vacation-packages/sao-miguel-car?origin=AGP",
-    "https://destinosuroeste.com/que-ver-en-sao-miguel-azores/",
-    "https://www.codigotravel.com/portugal/azores/que-ver-en-sao-miguel/#mapa_con_los_lugares_que_ver_en_s_o_miguel",
-    "https://www.travelisnotjusttourism.es/que-ver-y-hacer-en-sao-miguel-azores/",
-    "https://mamaquefemdema.com/2025/08/12/sao-miguel-azores/",
-    "https://byacores.com/es/sao-miguel-cuando-llueve/",
-    "https://www.azoreschoice.com/blog/azores-hot-springs/",
-    "https://www.vagamundos.pt/cascatas-de-sao-miguel-acores/",
-    "https://byacores.com/es/mejores-lugares-atardecer-sao-miguel/",
-    "https://byacores.com/es/como-e-o-clima-tempo-na-ilha-de-sao-miguel-es/"
-  ],
-  "Sao Jorge": [
-    "https://www.revigorate.com/things-to-do-in-sao-jorge-es.html",
-    "https://randomtrip.es/guia-sao-jorge-azores/",
-    "https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/",
-    "https://viajeconpablo.com/sao-jorge-azores/",
-    "https://byacores.com/es/sao-jorge-es/",
-    "https://byacores.com/es/sao-jorge-puntos-de-interes/",
-    "https://www.futurismo.pt/es/islas/isla-de-sao-jorge-azores-2/",
-    "https://www.futurismo.pt/es/blog/los-mejores-lugares-para-visitar-en-la-isla-de-sao-jorge/",
-    "https://www.visitazores.com/es/los-acores/sao-jorge",
-    "https://www.turismoazores.es/isla-sao-jorge/",
-    "https://www.turismoazores.es/isla-sao-jorge/fajas-de-la-isla-de-sao-jorge/",
-    "https://www.visitportugal.com/es/destinos/acores/73820",
-    "https://welikeazores.com/isla-sao-jorge-fajas-paisajes-unicos/",
-    "https://welikeazores.com/mejores-cosas-ver-hacer-faial-azores/",
-    "https://www.turismoenportugal.org/isla-de-san-jorge",
-    "https://www.exploresaojorgeisland.com/",
-    "https://agolpedebotas.com/azores-isla-de-sao-jorge",
-    "https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/",
-    "https://www.travelpixelz.com/blog/sao-jorge-photo-spots",
-    "https://byacores.com/es/clima-sao-jorge/"
-  ]
-};
-
-const ME_LINKS_ALTRES = [
-  "https://www.futurismo.pt/es/blog/el-tiempo-en-las-azores-en-julio/",
-  "https://www.futurismo.pt/es/blog/hablan-ingles-en-las-azores/",
-  "https://www.azoreschoice.com/blog/azores-volcanoes-caves-and-lava-tunnels/",
-  "https://www.azoreschoice.com/blog/a-brief-history-of-the-azores-part-one/"
+const ME_LINKS = [
+  {
+    "url": "https://byacores.com/es/playas-sao-miguel/",
+    "cat": "Platges",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/playas-faial/",
+    "cat": "Platges",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.futurismo.pt/es/blog/las-mejores-playas-de-las-islas-azores/",
+    "cat": "Platges",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-de-sao-miguel/playas-de-la-isla-de-sao-miguel/",
+    "cat": "Platges",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/playas-de-la-isla-de-faial/",
+    "cat": "Platges",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/mejores-playas-de-sao-miguel/",
+    "cat": "Platges",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/termas-piscinas-naturales-sao-miguel/",
+    "cat": "Piscines",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/mejores-playas-piscinas-naturales-faial/",
+    "cat": "Platges",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/playas-piscinas-naturales-pico-azores/",
+    "cat": "Piscines",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/mejores-playas-piscinas-naturales-faial/",
+    "cat": "Platges",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.azoren-online.info/es/pico/informationen-ueber-pico/baden-auf-pico/",
+    "cat": "Piscines",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.escapadarural.com/blog/mejores-lugares-para-banarse-en-islas-azores/",
+    "cat": "Piscines",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://trotandomundos.com/los-mejores-miradores-isla-sao-miguel-en-azores/",
+    "cat": "Miradors",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.miguelenruta.com/2016/02/Ruta-midadores-Sao-Miguel-Azores.html",
+    "cat": "Miradors",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.elrincondesele.com/termas-y-piscinas-naturales-en-las-azores/",
+    "cat": "Piscines",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://territorioluismi.com/mejores-miradores-de-sao-miguel/",
+    "cat": "Miradors",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://visitnordeste.pt/en/miradouros.html",
+    "cat": "Miradors",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.verplayas.com/playas-lajinha-faial/",
+    "cat": "Platges",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": true
+  },
+  {
+    "url": "https://www.futurismo.pt/es",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": true
+  },
+  {
+    "url": "https://www.turismoazores.es",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitazores.com/es/los-azores",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitportugal.com/es/destinos/acores",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.azoreschoice.com/azores/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoenportugal.org/azores",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.viajecomigo.com/category/portugal/ilhas/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://viajesbengala.com/azores/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.vivodeviajes.com/islas-azores-mapa-guia-para-entender-este-paraiso-en-medio-del-atlantico/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.rutaenfamilia.com/azores-aventura-y-naturaleza-en-familia/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://viewpoints.azores.gov.pt/?lang=pt",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://mapcarta.com/es/N763242612",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://parquesnaturais.azores.gov.pt/pt/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://elgiroscopo.es/viaje-a-las-islas-azores-faial-pico-sao-jorge/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.revigorate.com/things-to-do-in-faial-es.html",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://www.revigorate.com/things-to-do-in-pico-es.html",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://www.revigorate.com/things-to-do-in-sao-jorge-es.html",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://www.revigorate.com/things-to-do-in-sao-miguel-es.html",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://randomtrip.es/guia-faial-azores/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://randomtrip.es/guia-pico-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://randomtrip.es/guia-sao-jorge-azores/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://randomtrip.es/guia-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://www.nuncasinviaje.com/que-ver-en-faial-azores-guia-organizar-viaje-isla/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://www.nuncasinviaje.com/que-hacer-isla-pico-rutas-tres-cinco-siete-dias-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://www.nuncasinviaje.com/que-ver-hacer-sao-miguel-azores-guia-viajar/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://viajeconpablo.com/que-ver-en-faial-azores-guia-viaje/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://viajeconpablo.com/pico-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://viajeconpablo.com/sao-jorge-azores/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://viajeconpablo.com/que-ver-en-sao-miguel-guia-viaje/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://byacores.com/es/sao-miguel-es/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://byacores.com/es/sao-miguel-lugares-para-visitar/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/top-actividades-sao-miguel/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/sao-jorge-es/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://byacores.com/es/sao-jorge-puntos-de-interes/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/faial-es/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://byacores.com/es/isla-faial-puntos-de-interes/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/10-cosas-que-hacer-en-la-isla-de-faial/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/pico-es/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://byacores.com/es/isla-pico-puntos-de-interes/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/5-actividades-al-aire-libre-isla-del-pico-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.futurismo.pt/es/islas/isla-de-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": true
+  },
+  {
+    "url": "https://www.futurismo.pt/es/islas/isla-de-sao-jorge-azores-2/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": true
+  },
+  {
+    "url": "https://www.futurismo.pt/es/blog/los-mejores-lugares-para-visitar-en-la-isla-de-sao-jorge/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.futurismo.pt/es/islas/isla-de-faial-azores/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": true
+  },
+  {
+    "url": "https://www.futurismo.pt/es/islas/pico-isla-azores-2/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": true
+  },
+  {
+    "url": "https://www.futurismo.pt/es/blog/lo-mejor-que-hacer-en-pico-isla-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitazores.com/es/los-acores/sao-miguel",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitazores.com/es/los-acores/sao-jorge",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitazores.com/es/los-acores/faial",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitazores.com/es/los-acores/pico",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-de-sao-miguel/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-sao-jorge/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-sao-jorge/fajas-de-la-isla-de-sao-jorge/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-faial/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoazores.es/isla-pico/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitportugal.com/es/destinos/acores/73816",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitportugal.com/es/destinos/acores/73820",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitportugal.com/es/destinos/acores/73818",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.visitportugal.com/es/destinos/acores/73819",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/isla-sao-miguel-te-atreves-vivir-experiencia-mas-increible-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/que-ver-y-hacer-en-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/isla-faial-isla-azul-puerto-horta/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/mejores-cosas-ver-hacer-faial-azores/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/isla-pico-volcan-mas-alto-portugal/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/cosas-que-ver-hacer-pico-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/isla-sao-jorge-fajas-paisajes-unicos/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://welikeazores.com/mejores-cosas-ver-hacer-faial-azores/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoenportugal.org/isla-de-san-miguel",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoenportugal.org/isla-do-pico",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoenportugal.org/isla-de-faial",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.turismoenportugal.org/isla-de-san-jorge",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://aventurateaviajar.com/noticias/2022-01-22/mejores-lugares-que-ver-en-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.saomiguelguide.com/post/que-ver-sao-miguel-azores",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.explorefaialisland.com/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://www.exploresaojorgeisland.com/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.explorepicoisland.com/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://visitfaial.com/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://tusguiasdeviaje.com/que-ver-en-san-miguel-azores-guia-de-viaje/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://azoresgetaways.com/es-es/vacation-packages/sao-miguel-car?origin=AGP",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://lamochilaalhombro.com/blog-de-viajes/destinos-para-viajar/viajar-a-europa/europa-del-sur/portugal/que-ver-en-pico-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://destinosuroeste.com/que-ver-en-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.codigotravel.com/portugal/azores/que-ver-en-sao-miguel/#mapa_con_los_lugares_que_ver_en_s_o_miguel",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.travelisnotjusttourism.es/que-ver-y-hacer-en-sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://agolpedebotas.com/azores-isla-de-sao-jorge",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.portugalplease.com/es/acores/pico/descricao",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://mamaquefemdema.com/2025/08/12/sao-miguel-azores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://danae-explore.com/en/pico-island-azores/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.vagamundos.pt/visitar-ilha-do-pico-roteiro/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.travelpixelz.com/blog/sao-jorge-photo-spots",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://www.macaronesian.org/es/show/isla-de-pico-azores",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://drrf.azores.gov.pt/reservas-florestais-de-recreio-do-pico/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/sao-miguel-cuando-llueve/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.azoreschoice.com/blog/azores-hot-springs/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://www.vagamundos.pt/cascatas-de-sao-miguel-acores/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/mejores-lugares-atardecer-sao-miguel/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/como-e-o-clima-tempo-na-ilha-de-sao-miguel-es/",
+    "cat": "General",
+    "illa": "Sao Miguel",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/clima-sao-jorge/",
+    "cat": "General",
+    "illa": "Sao Jorge",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/tiempo-faial/",
+    "cat": "General",
+    "illa": "Faial",
+    "favorit": false
+  },
+  {
+    "url": "https://byacores.com/es/tiempo-pico/",
+    "cat": "General",
+    "illa": "Pico",
+    "favorit": false
+  },
+  {
+    "url": "https://www.futurismo.pt/es/blog/el-tiempo-en-las-azores-en-julio/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.futurismo.pt/es/blog/hablan-ingles-en-las-azores/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.azoreschoice.com/blog/azores-volcanoes-caves-and-lava-tunnels/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  },
+  {
+    "url": "https://www.azoreschoice.com/blog/a-brief-history-of-the-azores-part-one/",
+    "cat": "General",
+    "illa": "Totes",
+    "favorit": false
+  }
 ];
