@@ -63,8 +63,9 @@ function meSetSeccio(id) {
   // Scroll al top del contingut
   document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   // Init aventura si cal
-  if (id === 'aventura'   && !_avInit)   initAventura();
-  if (id === 'excursions' && !_excInit)  initExcursions();
+  if (id === 'aventura'    && !_avInit)    initAventura();
+  if (id === 'excursions'  && !_excInit)   initExcursions();
+  if (id === 'gastronomia' && !_gastInit)  initGastronomia();
 }
 
 /* ══════════════════════════════════════════════
@@ -790,4 +791,99 @@ function renderEstrelles() {
     <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🚗 Consells de conducció nocturna</h3></div>
     <div class="exc-consells">${consells}</div>
   </div>`;
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓ: GASTRONOMIA
+   ══════════════════════════════════════════════ */
+let _gastInit = false;
+
+function initGastronomia() {
+  _gastInit = true;
+  renderGastronomia();
+}
+
+function renderGastronomia() {
+  const wrap = document.getElementById('gastContingut');
+  if (!wrap) return;
+
+  const cats = ME_GASTRONOMIA.categories;
+  const total = cats.reduce((s,c) => s + c.items.length, 0);
+
+  /* ── Àncores de navegació ── */
+  const ancoresHtml = `
+    <div class="gast-filtres-wrap">
+      <div class="gast-filtres">
+        ${cats.map(c => `
+          <a class="gast-filtre-btn" href="#gast-${c.id}" onclick="gastScrollTo('${c.id}')">
+            ${c.emoji} ${c.label}
+          </a>`).join('')}
+      </div>
+    </div>`;
+
+  /* ── Intro ── */
+  const introHtml = `
+    <div class="gast-intro">
+      <p>${escHtml(ME_GASTRONOMIA.intro)}</p>
+    </div>`;
+
+  /* ── Seccions ── */
+  const seccionHtml = cats.map(cat => {
+    const itemsAmbFoto   = cat.items.filter(it => it.foto);
+    const itemsSenseFoto = cat.items.filter(it => !it.foto);
+
+    /* Items amb foto: tractament feature alternat */
+    let fotoIdx = 0;
+    const featuresHtml = cat.items.map((it, i) => {
+      if (!it.foto) return null;
+      const imgSrc = `img/material-extra/${it.foto}.webp`;
+      const alt    = fotoIdx % 2 === 0 ? 'dreta' : 'esquerra';
+      fotoIdx++;
+      return `
+        <div class="gast-feature gast-feature-${alt}">
+          <div class="gast-feature-img-wrap">
+            <img class="gast-feature-img" src="${imgSrc}" alt="${escHtml(it.nom)}" loading="lazy"
+              onerror="this.closest('.gast-feature').classList.add('gast-feature-no-img')">
+          </div>
+          <div class="gast-feature-text">
+            <h4 class="gast-feature-nom">${escHtml(it.nom)}</h4>
+            <p class="gast-feature-desc">${escHtml(it.desc)}</p>
+          </div>
+        </div>`;
+    }).filter(Boolean).join('');
+
+    /* Items sense foto: prosa contínua */
+    const prosasHtml = itemsSenseFoto.length ? `
+      <div class="gast-prosa">
+        ${itemsSenseFoto.map(it => `
+          <div class="gast-prosa-item">
+            <span class="gast-prosa-nom">${escHtml(it.nom)}</span>
+            <span class="gast-prosa-sep"> — </span>
+            <span class="gast-prosa-desc">${escHtml(it.desc)}</span>
+          </div>`).join('')}
+      </div>` : '';
+
+    /* Intercalar features i prosa: prosa primer, features a sobre */
+    return `
+      <section class="gast-seccio" id="gast-${cat.id}">
+        <div class="gast-seccio-header">
+          <span class="gast-seccio-emoji">${cat.emoji}</span>
+          <h3 class="gast-seccio-titol">${cat.label}</h3>
+          <span class="gast-seccio-count">${cat.items.length} items</span>
+        </div>
+        ${featuresHtml}
+        ${prosasHtml}
+      </section>`;
+  }).join('');
+
+  wrap.innerHTML = ancoresHtml + introHtml + `<div class="gast-cos">${seccionHtml}</div>`;
+}
+
+function gastScrollTo(id) {
+  event.preventDefault();
+  const el = document.getElementById('gast-' + id);
+  if (!el) return;
+  const offset = 52 + 49 + 45; // nav + secnav + gastfiltres
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
 }

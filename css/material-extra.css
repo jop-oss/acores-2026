@@ -1370,3 +1370,203 @@ body.light .exc-lloc-card { background: #fff; }
 body.light .exc-intro-text p { color: #2a4a3a; }
 body.light .exc-act-card { background: #fff; }
 body.light .exc-consell { background: rgba(45,90,61,0.05); }
+
+/* ════════════════════════════════════════════
+   SECCIÓ: GASTRONOMIA — layout editorial
+   ════════════════════════════════════════════ */
+
+/* Àncores de navegació */
+.gast-filtres-wrap {
+  position: sticky;
+  top: calc(52px + 49px);
+  z-index: 170;
+  background: rgba(10,22,40,0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(106,171,122,0.12);
+  padding: 0 20px;
+}
+.gast-filtres {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(106,171,122,0.3) transparent;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.gast-filtres::-webkit-scrollbar { height: 3px; }
+.gast-filtres::-webkit-scrollbar-thumb { background: rgba(106,171,122,0.3); border-radius: 2px; }
+.gast-filtre-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 15px;
+  border-radius: 24px;
+  border: 1px solid rgba(106,171,122,0.2);
+  background: none;
+  color: var(--me-muted);
+  font-family: 'Lora', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.gast-filtre-btn:hover { border-color: rgba(106,171,122,0.5); color: var(--me-green3); background: rgba(45,90,61,0.2); }
+
+/* Intro */
+.gast-intro {
+  max-width: 860px;
+  margin: 36px auto 0;
+  padding: 0 20px;
+  border-left: 3px solid var(--me-green1);
+  padding-left: 20px;
+}
+.gast-intro p {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(232,240,236,0.7);
+}
+
+/* Cos principal */
+.gast-cos {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 12px 20px 80px;
+}
+
+/* Secció (categoria) */
+.gast-seccio {
+  margin-top: 52px;
+  scroll-margin-top: calc(52px + 49px + 50px);
+}
+.gast-seccio-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid rgba(106,171,122,0.2);
+}
+.gast-seccio-emoji { font-size: 1.8rem; line-height: 1; }
+.gast-seccio-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--me-green3);
+  margin: 0;
+}
+.gast-seccio-count {
+  margin-left: auto;
+  font-size: 0.68rem;
+  color: var(--me-muted);
+  background: rgba(45,90,61,0.3);
+  border: 1px solid rgba(106,171,122,0.12);
+  padding: 2px 9px;
+  border-radius: 10px;
+}
+
+/* ── Features (ítems amb foto) ── */
+.gast-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(106,171,122,0.12);
+  border-radius: 16px;
+  transition: border-color 0.2s;
+}
+.gast-feature:hover { border-color: rgba(106,171,122,0.28); }
+
+/* Alternar esquerra/dreta */
+.gast-feature-dreta  { }
+.gast-feature-esquerra { direction: rtl; }
+.gast-feature-esquerra > * { direction: ltr; }
+
+.gast-feature-img-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: rgba(45,90,61,0.2);
+}
+.gast-feature-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.gast-feature:hover .gast-feature-img { transform: scale(1.04); }
+
+/* Si la foto no carrega, mostra només el text centrat */
+.gast-feature-no-img { grid-template-columns: 1fr; }
+.gast-feature-no-img .gast-feature-img-wrap { display: none; }
+
+.gast-feature-text {
+  padding: 4px 0;
+}
+.gast-feature-nom {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--me-text);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.gast-feature-desc {
+  font-family: 'Lora', serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(232,240,236,0.75);
+  margin: 0;
+}
+
+/* ── Prosa (ítems sense foto) ── */
+.gast-prosa {
+  margin-top: 8px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid rgba(106,171,122,0.2);
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gast-prosa-item {
+  font-family: 'Lora', serif;
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: rgba(232,240,236,0.75);
+}
+.gast-prosa-nom {
+  font-weight: 700;
+  color: var(--me-green3);
+  font-style: italic;
+}
+.gast-prosa-sep {
+  color: var(--me-muted);
+}
+.gast-prosa-desc { }
+
+/* Mode clar */
+body.light .gast-filtres-wrap { background: rgba(244,247,244,0.97); }
+body.light .gast-filtre-btn { color: #4a7a5a; }
+body.light .gast-intro p { color: #3a5a4a; }
+body.light .gast-seccio-titol { color: #1a3a2a; }
+body.light .gast-feature { background: #fff; border-color: rgba(45,90,61,0.12); }
+body.light .gast-feature-nom { color: #1a3a2a; }
+body.light .gast-feature-desc { color: #2a4a3a; }
+body.light .gast-prosa { background: rgba(45,90,61,0.04); border-left-color: rgba(45,90,61,0.25); }
+body.light .gast-prosa-item { color: #2a4a3a; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .gast-feature { grid-template-columns: 1fr; }
+  .gast-feature-esquerra { direction: ltr; }
+  .gast-feature-img-wrap { aspect-ratio: 16/9; }
+  .gast-seccio-titol { font-size: 1.25rem; }
+}

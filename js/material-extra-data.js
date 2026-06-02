@@ -6265,3 +6265,297 @@ const ME_EXCURSIONS = {
     ]
   }
 };
+
+
+/* ── Gastronomia ── */
+const ME_GASTRONOMIA = {
+  "intro": "La gastronomia de les Açores està estretament lligada a la seva naturalesa volcànica i a la seva tradició pesquera. Els ingredients frescos, com el peix i el marisc, juntament amb una excel·lent carn local i les tècniques de cuinat tradicionals, ofereixen uns plats que han anat de generació en generació. Tot això acompanyat de fruites i verdures cultivades als sòls volcànics especialment fèrtils, i una gran varietat de formatges i vins locals.",
+  "categories": [
+    {
+      "id": "entrants-sopes",
+      "emoji": "🥗",
+      "label": "Entrants i Sopes",
+      "items": [
+        {
+          "nom": "Salada de Polvo",
+          "desc": "Amanida de pop",
+          "foto": null
+        },
+        {
+          "nom": "Pasteis de Bacalhau",
+          "desc": "Crestes de bacallà",
+          "foto": null
+        },
+        {
+          "nom": "Lapas",
+          "desc": "Pegellides crues o a la planxa amb all i llimona",
+          "foto": null
+        },
+        {
+          "nom": "Cracas",
+          "desc": "Una espècie de percebes únics de les Açores",
+          "foto": null
+        },
+        {
+          "nom": "Presunto",
+          "desc": "Pernil salat",
+          "foto": null
+        },
+        {
+          "nom": "Caldo Verde",
+          "desc": "Sopa de col amb patates i salsitxa fumada",
+          "foto": "caldo-verde"
+        },
+        {
+          "nom": "Caldeiradas",
+          "desc": "Guisat de vedella, peix o pollastre. Primer plat contundent",
+          "foto": null
+        },
+        {
+          "nom": "Sopa de Peixe",
+          "desc": "Caldo de peix aromàtic",
+          "foto": null
+        }
+      ]
+    },
+    {
+      "id": "peix",
+      "emoji": "🐟",
+      "label": "Peix i Marisc",
+      "items": [
+        {
+          "nom": "Atum",
+          "desc": "Tonyina a la brasa, molt present a tots els menús",
+          "foto": null
+        },
+        {
+          "nom": "Espadarte",
+          "desc": "Peix espasa",
+          "foto": null
+        },
+        {
+          "nom": "Cherne",
+          "desc": "Mero de fons, un dels peixos més valorats",
+          "foto": null
+        },
+        {
+          "nom": "Lapas grelhadas",
+          "desc": "Pegellides a la planxa adobades en la seva pròpia closca",
+          "foto": "lapas-grelhadas"
+        },
+        {
+          "nom": "Cavaco",
+          "desc": "Similar a una llagosta petita, especialitat local",
+          "foto": "cavaco"
+        },
+        {
+          "nom": "Chicharros Fritos com Molho de Vilão",
+          "desc": "Sorell fregit cruixent amb salsa de pebrots, all i oli",
+          "foto": "chicharros-fritos"
+        },
+        {
+          "nom": "Polvo Guisat",
+          "desc": "Pop amb vi aromàtic, pebre i xile, acompanyat de patates o arròs",
+          "foto": "polvo-guisat"
+        },
+        {
+          "nom": "Boca Negra Grelhada",
+          "desc": "Gallineta a la brasa, carn blanca i saborosa. El peix estrella de São Miguel",
+          "foto": "boca-nega-grelhada"
+        },
+        {
+          "nom": "Amêijoas de São Jorge",
+          "desc": "Cloïsses úniques al món, de la Fajã da Caldeira do Santo Cristo. Rares i de temporada",
+          "foto": "ameijoas-sao-jorge"
+        },
+        {
+          "nom": "Bacallà",
+          "desc": "365 maneres de cuinar-lo: à Brás, à Margarida da Praça, à Transmontana...",
+          "foto": null
+        }
+      ]
+    },
+    {
+      "id": "carns",
+      "emoji": "🥩",
+      "label": "Carns",
+      "items": [
+        {
+          "nom": "Cozido das Furnas",
+          "desc": "Cuit 7 hores enterrat a les calderes volcàniques. Carns, xoriço, morcilla i verdures",
+          "foto": "cozido-as-furnas"
+        },
+        {
+          "nom": "Alcatra",
+          "desc": "Plat estrella de Terceira: vedella tendra cuit a foc lent amb vi negre i espècies en olla de fang",
+          "foto": null
+        },
+        {
+          "nom": "Bife à Regional",
+          "desc": "Bistec de vedella amb salsa de mantega, all i pebrots, o amb formatge de São Jorge",
+          "foto": "bife-a-regional"
+        },
+        {
+          "nom": "Carne de Molha",
+          "desc": "Plat de carn amb una deliciosa salsa típica de Faial",
+          "foto": null
+        },
+        {
+          "nom": "Morcela com Ananás",
+          "desc": "Morcilla negra amb pinya brasejada. Sorprenent barreja present a gairebé totes les cartes",
+          "foto": "morcela_com_ananas"
+        }
+      ]
+    },
+    {
+      "id": "formatges",
+      "emoji": "🧀",
+      "label": "Formatges",
+      "items": [
+        {
+          "nom": "Queijo de São Jorge",
+          "desc": "DOP. Picant i semidur, elaborat des del segle XV amb llet crua de vaca. L'emblema de l'illa",
+          "foto": "queijo-sao-jorge"
+        },
+        {
+          "nom": "Queijo Vaquinha",
+          "desc": "Cremós i suau com la mantega. Emblema de Terceira",
+          "foto": null
+        },
+        {
+          "nom": "Queijo do Pico",
+          "desc": "DOP Europea. Tècnica tradicional, camps verds i aire fresc de l'oceà",
+          "foto": null
+        },
+        {
+          "nom": "Ilha dos Mistérios",
+          "desc": "De Pico. Color blanc, cremós i sabor únic. Elaborat als prats que envolten la vall volcànica de Serra de Pico",
+          "foto": "queijo-ilha-dos-misterios"
+        },
+        {
+          "nom": "Queijo Branco com Pimenta da Terra",
+          "desc": "Formatge fresc amb bitxo local mòlt. L'aperitiu imprescindible de São Miguel",
+          "foto": "queijo-branco-com-pimenta-da-terra"
+        }
+      ]
+    },
+    {
+      "id": "embotits",
+      "emoji": "🌭",
+      "label": "Embotits",
+      "items": [
+        {
+          "nom": "Linguiça",
+          "desc": "Embotit de porc amb all, pebrot vermell i vi. Ingredient clau del Cozido das Furnas",
+          "foto": "linguica"
+        },
+        {
+          "nom": "Chouriço",
+          "desc": "Similar a la linguiça però en budell gruixut, més intens i picant",
+          "foto": null
+        },
+        {
+          "nom": "Morcela",
+          "desc": "Botifarra negra dolça amb espècies. Se serveix amb rodanxes de pinya fresca",
+          "foto": null
+        },
+        {
+          "nom": "Torresmos",
+          "desc": "Torreznos fregits i cruixents, acompanyats d'inhame (tubercle local)",
+          "foto": "torresmos"
+        }
+      ]
+    },
+    {
+      "id": "postres",
+      "emoji": "🍮",
+      "label": "Postres i Dolços",
+      "items": [
+        {
+          "nom": "Queijadas da Vila",
+          "desc": "Pastissos de formatge icònics de São Miguel. Suaus, lleugerament dolços i cruixents",
+          "foto": null
+        },
+        {
+          "nom": "Massa Sovada",
+          "desc": "Pa dolç tradicional, esponjós i perfumat",
+          "foto": "massa-sovada"
+        },
+        {
+          "nom": "Bolos Lêvedos",
+          "desc": "Panets dolços tradicionals de Furnas. Des de 1935 a l'Hotel Terra Nostra",
+          "foto": "bolos-levedos"
+        },
+        {
+          "nom": "Fofas da Povoação",
+          "desc": "Éclair farcit de mantega, vainilla o llimona i recobert de xocolata. De Povoação, São Miguel",
+          "foto": "fofas-da-povoacao"
+        },
+        {
+          "nom": "Pinya i fruites tropicals",
+          "desc": "Plantacions úniques al món sota hivernacles de vidre a São Miguel. També maracujà i guaiaba",
+          "foto": null
+        },
+        {
+          "nom": "Arroz Doce",
+          "desc": "Arròs amb llet i canyella, postre clàssic portuguès",
+          "foto": null
+        }
+      ]
+    },
+    {
+      "id": "begudes",
+      "emoji": "🍷",
+      "label": "Begudes",
+      "items": [
+        {
+          "nom": "Vi de Pico",
+          "desc": "'Terras de Lava' (blanc) i 'Basalto' (negre). Vinyes als camps de lava basàltica, Patrimoni UNESCO",
+          "foto": null
+        },
+        {
+          "nom": "Verdelho",
+          "desc": "El vi de postres més famós de les Açores. De Pico i Graciosa",
+          "foto": null
+        },
+        {
+          "nom": "Chá dos Açores",
+          "desc": "Una de les poques zones d'Europa on es cultiva te. Sabor suau i únic gràcies al clima volcànic de São Miguel",
+          "foto": null
+        },
+        {
+          "nom": "Cervesa Especial",
+          "desc": "La marca local. Bona i bastant assequible",
+          "foto": null
+        },
+        {
+          "nom": "Kima",
+          "desc": "El refresc estrella de les Açores. Escumós amb maracujà real, menys sucre i un toc àcid",
+          "foto": "kima"
+        },
+        {
+          "nom": "Galão",
+          "desc": "Cafè amb abundant llet, servit en vas. La beguda del dia per excel·lència",
+          "foto": null
+        }
+      ]
+    },
+    {
+      "id": "productes",
+      "emoji": "🌿",
+      "label": "Productes Típics",
+      "items": [
+        {
+          "nom": "Inhame dos Açores",
+          "desc": "Tubercle entre 5-10 cm de diàmetre. Sabor similar al moniato. Molt usat com a guarnició en substitució de les patates",
+          "foto": "Inhame"
+        },
+        {
+          "nom": "Pimenta da Terra",
+          "desc": "Pebrot vermell picant de São Miguel. S'usa en pràcticament tots els plats, sovint com a pasta conservada en sal",
+          "foto": null
+        }
+      ]
+    }
+  ]
+};
