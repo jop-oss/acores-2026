@@ -1166,6 +1166,7 @@ body.light .av-card { background: #fff; }
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 16px;
+  justify-content: center;
 }
 .exc-nav::-webkit-scrollbar { display: none; }
 .exc-tab {
@@ -1200,7 +1201,7 @@ body.light .av-card { background: #fff; }
   position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(5,10,20,0.85) 0%, rgba(5,10,20,0.2) 100%);
 }
-.exc-hero-content { position: relative; z-index: 1; padding: 28px 32px; }
+.exc-hero-content { position: relative; z-index: 1; padding: 28px 32px; text-align: center; width: 100%; }
 .exc-hero-eyebrow {
   font-family: 'Lora', serif; font-size: 0.72rem; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--me-green2); margin-bottom: 6px;
