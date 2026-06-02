@@ -803,87 +803,135 @@ function initGastronomia() {
   renderGastronomia();
 }
 
+function gFoto(fitxer, peu) {
+  return `<figure class="gast-fig">
+    <img class="gast-fig-img" src="img/material-extra/${fitxer}.webp" alt="${escHtml(peu)}" loading="lazy">
+    <figcaption class="gast-fig-peu">${escHtml(peu)}</figcaption>
+  </figure>`;
+}
+
+function gTitol(emoji, text, id) {
+  return `<h3 class="gast-seccio-titol" id="gast-${id}">${emoji} ${text}</h3>`;
+}
+
 function renderGastronomia() {
   const wrap = document.getElementById('gastContingut');
   if (!wrap) return;
 
-  const cats = ME_GASTRONOMIA.categories;
-  const total = cats.reduce((s,c) => s + c.items.length, 0);
+  /* ── Àncores ── */
+  const SECCIONS = [
+    {id:'entrants', emoji:'🥗', label:'Entrants'},
+    {id:'sopes',    emoji:'🍲', label:'Sopes'},
+    {id:'peix',     emoji:'🐟', label:'Peix i Marisc'},
+    {id:'carns',    emoji:'🥩', label:'Carns'},
+    {id:'postres',  emoji:'🍮', label:'Postres'},
+    {id:'formatges',emoji:'🧀', label:'Formatges'},
+    {id:'embotits', emoji:'🌭', label:'Embotits'},
+    {id:'begudes',  emoji:'🍷', label:'Begudes'},
+    {id:'altres',   emoji:'🌿', label:'Altres productes'},
+    {id:'plats',    emoji:'🍽️', label:'Plats típics'},
+  ];
+  const ancores = `<div class="gast-filtres-wrap"><div class="gast-filtres">
+    ${SECCIONS.map(s=>`<a class="gast-filtre-btn" href="#gast-${s.id}" onclick="gastScrollTo('${s.id}',event)">${s.emoji} ${s.label}</a>`).join('')}
+  </div></div>`;
 
-  /* ── Àncores de navegació ── */
-  const ancoresHtml = `
-    <div class="gast-filtres-wrap">
-      <div class="gast-filtres">
-        ${cats.map(c => `
-          <a class="gast-filtre-btn" href="#gast-${c.id}" onclick="gastScrollTo('${c.id}')">
-            ${c.emoji} ${c.label}
-          </a>`).join('')}
+  /* ── Plats típics (cards) ── */
+  const PLATS = [
+    {n:1,  nom:'Morcela com Ananás',                foto:'morcela_com_ananas',       desc:'Rodanxes de morcilla negra amb pinya brasejada. Sorprenent barreja present a gairebé totes les cartes dels restaurants açorians.'},
+    {n:2,  nom:'Lapas Grelhadas',                   foto:'lapas-grelhadas',           desc:'Pegellides (una espècie de petxines) a la planxa adobades i cuinades en la seva pròpia closca. Perfectes com aperitiu.'},
+    {n:3,  nom:'Polvo Guisat',                      foto:'polvo-guisado',            desc:'Pop condimentat amb vi aromàtic, pebre i xile, acompanyat de patates o arròs. L\'estil varia d\'una illa a una altra.'},
+    {n:4,  nom:'Bolos Lêvedos',                     foto:'bolos-levedos',             desc:'Panet lleugerament dolç tradicional de la Vall de Furnas, fet amb ous, farina, sucre, mantega i llevat. Des de 1935 a l\'Hotel Terra Nostra.'},
+    {n:5,  nom:'Alcatra',                           foto:'alcatra',                   desc:'El plat estrella de Terceira: guisat de vedella molt tenda cuit a foc lent en olla de fang amb vi negre, cansalada, all i espècies.'},
+    {n:6,  nom:'Bife à Regional',                   foto:'bife-a-regional',           desc:'Bistec de vedella sucosa amb salsa de mantega, all i pebrots, o servit amb el formatge de São Jorge.'},
+    {n:7,  nom:'Cozido das Furnas',                 foto:'cozido-as-furnas',          desc:'Cuit 7 hores enterrat a les calderes volcàniques de Furnas. Carns, xoriço, morcilla, col, pastanaga i patates. No es serveix amb caldo.'},
+    {n:8,  nom:'Cracas',                            foto:'cracas',                    desc:'Un percebe únic de les Açores, adherit a roques volcàniques. Intens sabor marí, salat i salvatge. Com beure un xarrup del mateix oceà.'},
+    {n:9,  nom:'Bacallà',                           foto:'bacalhau-a-margarida-da-praca', desc:'365 maneres de cuinar-lo: à Brás, à Margarida da Praça, à Transmontana, à Boca Gil Eanes... Un per a cada dia de l\'any.'},
+    {n:10, nom:'Chicharros Fritos com Molho de Vilão', foto:'chicharros-fritos',      desc:'Sorell fregit cruixent amb salsa de pebrots, all i oli. Senzill però deliciós, especialment a São Miguel.'},
+    {n:11, nom:'Pinya i fruites tropicals',         foto:'ananas',                    desc:'Plantacions sota hivernacles de vidre encalat a São Miguel, úniques al món. També maracujà i guaiaba peruana.'},
+    {n:12, nom:'Queijadas da Vila',                 foto:'queijadas-da-vila',         desc:'Petits pastissos de formatge icònics de São Miguel. Suaus, lleugerament dolços i cruixents. Ideals amb cafè o te.'},
+    {n:13, nom:'Fofas da Povoação',                 foto:'fofas-da-povoacao',         desc:'Éclair farcit de mantega, vainilla o llimona i recobert de xocolata. Originari de Povoação, São Miguel.'},
+    {n:14, nom:'Queijo Branco com Pimenta da Terra',foto:'queijo-branco-com-pimenta-da-terra', desc:'Formatge fresc suau amb bitxo local mòlt. L\'aperitiu imprescindible de São Miguel. Servit amb pa, és perfecte.'},
+    {n:15, nom:'Boca Negra Grelhada',               foto:'boca-nega-grelhada',        desc:'Gallineta a la brasa. Carn blanca, humida i saborosa. El peix estrella de São Miguel, sempre fresc.'},
+    {n:16, nom:'Amêijoas de São Jorge',             foto:'ameijoas-sao-jorge',        desc:'Cloïsses úniques al món de la Fajã da Caldeira do Santo Cristo. Extremadament rares, només es cullen durant un curt període a l\'any.'},
+  ];
+
+  const platsHtml = PLATS.map((p, i) => {
+    const imgHtml = p.foto
+      ? `<div class="gast-plat-img-wrap"><img class="gast-plat-img" src="img/material-extra/${p.foto}.webp" alt="${escHtml(p.nom)}" loading="lazy" onerror="this.closest('.gast-plat-img-wrap').style.display='none'"></div>`
+      : `<div class="gast-plat-ico">🍽️</div>`;
+    return `<article class="gast-plat-card" style="animation-delay:${i*30}ms">
+      ${imgHtml}
+      <div class="gast-plat-cos">
+        <span class="gast-plat-num">${p.n}</span>
+        <h4 class="gast-plat-nom">${escHtml(p.nom)}</h4>
+        <p class="gast-plat-desc">${escHtml(p.desc)}</p>
       </div>
-    </div>`;
-
-  /* ── Intro ── */
-  const introHtml = `
-    <div class="gast-intro">
-      <p>${escHtml(ME_GASTRONOMIA.intro)}</p>
-    </div>`;
-
-  /* ── Seccions ── */
-  const seccionHtml = cats.map(cat => {
-    const itemsAmbFoto   = cat.items.filter(it => it.foto);
-    const itemsSenseFoto = cat.items.filter(it => !it.foto);
-
-    /* Items amb foto: tractament feature alternat */
-    let fotoIdx = 0;
-    const featuresHtml = cat.items.map((it, i) => {
-      if (!it.foto) return null;
-      const imgSrc = `img/material-extra/${it.foto}.webp`;
-      const alt    = fotoIdx % 2 === 0 ? 'dreta' : 'esquerra';
-      fotoIdx++;
-      return `
-        <div class="gast-feature gast-feature-${alt}">
-          <div class="gast-feature-img-wrap">
-            <img class="gast-feature-img" src="${imgSrc}" alt="${escHtml(it.nom)}" loading="lazy"
-              onerror="this.closest('.gast-feature').classList.add('gast-feature-no-img')">
-          </div>
-          <div class="gast-feature-text">
-            <h4 class="gast-feature-nom">${escHtml(it.nom)}</h4>
-            <p class="gast-feature-desc">${escHtml(it.desc)}</p>
-          </div>
-        </div>`;
-    }).filter(Boolean).join('');
-
-    /* Items sense foto: prosa contínua */
-    const prosasHtml = itemsSenseFoto.length ? `
-      <div class="gast-prosa">
-        ${itemsSenseFoto.map(it => `
-          <div class="gast-prosa-item">
-            <span class="gast-prosa-nom">${escHtml(it.nom)}</span>
-            <span class="gast-prosa-sep"> — </span>
-            <span class="gast-prosa-desc">${escHtml(it.desc)}</span>
-          </div>`).join('')}
-      </div>` : '';
-
-    /* Intercalar features i prosa: prosa primer, features a sobre */
-    return `
-      <section class="gast-seccio" id="gast-${cat.id}">
-        <div class="gast-seccio-header">
-          <span class="gast-seccio-emoji">${cat.emoji}</span>
-          <h3 class="gast-seccio-titol">${cat.label}</h3>
-          <span class="gast-seccio-count">${cat.items.length} items</span>
-        </div>
-        ${featuresHtml}
-        ${prosasHtml}
-      </section>`;
+    </article>`;
   }).join('');
 
-  wrap.innerHTML = ancoresHtml + introHtml + `<div class="gast-cos">${seccionHtml}</div>`;
+  /* ── HTML complet ── */
+  wrap.innerHTML = ancores + `<div class="gast-article">
+
+  <p class="gast-intro-text">La gastronomia de les Açores està estretament lligada a la seva naturalesa volcànica i a la seva tradició pesquera. Els ingredients frescos, com el peix i el marisc, juntament amb una excel·lent carn local i les tècniques de cuinat tradicionals, ofereixen uns plats que han anat de generació en generació. Tot això acompanyat per tota classe de fruites i verdures de primera qualitat cultivades als sòls volcànics especialment fèrtils, i sense oblidar la gran varietat de formatges i vins locals.</p>
+
+  ${gTitol('🥗','Entrants','entrants')}
+  <p>Hi ha una gran varietat que sovint inclou la <em>Salada de Polvo</em> (amanida de pop), els <em>Pasteis de Bacalhau</em> (crestes de bacallà), les <em>Lapas</em> (crues o a la planxa amb all i llimona), les <em>Cracas</em> (una espècie de percebes) i el <em>Presunto</em> (pernil salat).</p>
+
+  ${gTitol('🍲','Sopes','sopes')}
+  <p>L'arxipèlag de les Açores —com la resta de Portugal— és conegut per les seves delicioses sopes que sovint tenen una consistència d'estofat i poden omplir molt. Les que podem trobar a la majoria de menús són el <em>Caldo Verde</em> (una sopa de col amb patates i salsitxa fumada), la <em>Sopa de Legumes</em> (sopa de llegums), la <em>Sopa Hortalicias</em> (sopa de verdures), la <em>Sopa de Peixe</em> (caldo de peix), la <em>Sopa de Mariscos</em>, el <em>Caldo Azedo</em> (caldo agra) o el <em>Caldo de Nabos</em> (sopa de naps).</p>
+  <p>Més contundents són els diversos guisats que es solen oferir com a primer plat. Les <em>Caldeiradas</em>, que contenen carn de vedella, peix o pollastre.</p>
+  ${gFoto('caldo-verde','Caldo Verde')}
+
+  ${gTitol('🐟','Peix i Marisc','peix')}
+  <p>Lògicament, el peix forma part de la dieta habitual dels illencs. La majoria de plats de peix estan preparats a la brasa (<em>na brasa</em>) o fregits. Els peixos que podem trobar més habitualment en els menús són: <em>Atum</em> (tonyina), <em>Espadarte</em> (peix espasa), <em>Espada Preto</em> (peix sable negre), <em>Cherne</em> (mero de fons), <em>Chicharro</em> (un sorell de més qualitat), <em>Pescada</em> (llucet), <em>Pargo</em> (pagre), <em>Cavala</em> (cavalla), <em>Congro</em> (congre), <em>Garoupa</em> (mero), <em>Lulas</em> (calamars), <em>Polvo</em> (pop) i, per descomptat, les <em>Sardinhas</em> (sardines) i el <em>Bacalhau</em> (bacallà), importat i preparat de varies maneres diferents.</p>
+  <p>Respecte al marisc, destaquen les <em>Lapas</em> (pegellides), molt típiques de la regió. També trobarem <em>camarao</em> (gambes), <em>lagosta</em> (llagosta), <em>lagostinho</em> (llagostins), <em>cavaco</em> (semblant a una llagosta petita) i <em>santola</em> ("centollo"). Una especialitat especial és l'arròs de marisc, una colorida barreja de diferents mariscs cuinats amb arròs.</p>
+  ${gFoto('cavaco','Cavaco — semblant a una llagosta petita, especialitat local')}
+
+  ${gTitol('🥩','Carns','carns')}
+  <p>No és una sorpresa la gran varietat de plats de carn que trobem a l'arxipèlag, especialment de carn de vedella. Per començar tenim els <em>Bifes</em> (bistecs de tot tipus), el <em>Bitoque</em> (bistecs petits amb un ou ferrat a sobre), l'<em>Entrecosto</em> (entrecot), les <em>costilles</em> (costelles), la <em>Caçoila</em> (estofat de porc), la <em>Carne do porco</em> (carn de porc), la <em>Carne de Molha</em> (plat de carn amb una deliciosa salsa típica de Faial), el <em>Coelho</em> (conill), el <em>Frango</em> (pollastre)… i moltes altres!</p>
+
+  ${gTitol('🍮','Postres','postres')}
+  <p>Els postres són molt bons, però també molt dolços. Sempre hi ha disponibles <em>bolos</em> (pastissos), puddings i pinya fresca. La <em>Massa Sovada</em> i l'<em>arroz doce</em> (un dolç arròs amb llet i canela) són alguns dels postres típics.</p>
+  ${gFoto('massa-sovada','Massa Sovada — pa dolç i esponjós tradicional')}
+
+  ${gTitol('🧀','Formatges','formatges')}
+  <p>A les Açores, on s'elabora aproximadament la meitat dels formatges que es consumeixen a Portugal, el mite de les quatre estacions en un mateix dia és una realitat. Pluges generoses que amb el mateix ímpetu donen pas a un sol radiant i que afavoreixen una vegetació que frega el concepte de verger. Un paradís perfecte per al bestiar, que retoza feliç entre la frescor. Entre les 9 illes hi ha una infinitat de formatges artesanals, que en alguns casos mantenen els mètodes d'elaboració dels primers colons.</p>
+  <p>El més famós de tots és el <em>Queijo de São Jorge</em>, un formatge picant i semidur, elaborat des del segle XV amb llet crua de vaca, reconegut amb DOP. Ha aconseguit que São Jorge sigui coneguda com l'Illa del Formatge. Es pot visitar la fàbrica <a class="gast-link" href="https://www.uniqueijo.pt/" target="_blank" rel="noopener">Uniqueijo</a> en aquesta illa.</p>
+  ${gFoto('queijo-sao-jorge','Queijo de São Jorge — DOP, elaborat des del segle XV')}
+  <p>El <em>Queijo Vaquinha</em>, cremós i suau com la mantega, és un dels emblemes de l'illa Terceira. A São Miguel n'hi ha varis, com el <em>Queijo do Vale</em>, que procedeix de la Vall de la Lagoa Seca. A l'illa de Pico destaca el <em>Queijo do Pico</em> (o queijo de São João), amb DOP Europea des del 1998. També a Pico podem trobar el formatge <em>Ilha dos Mistérios</em>, on els camps de lava basàltica són claus per a la seva elaboració. Un formatge diferent que es destaca pel color blanc, la cremositat i el sabor únic.</p>
+  ${gFoto('queijo-ilha-dos-misterios','Queijo Ilha dos Mistérios — elaborat als prats volcànics de Pico')}
+
+  ${gTitol('🌭','Embotits','embotits')}
+  <p>Els embotits de les illes Açores es caracteritzen pel seu sabor rústic, intens i fumat. Destaquen la <em>morcela</em>, la <em>linguiça</em> i el tradicional <em>chouriço</em>. Aquests productes combinen a la perfecció amb els famosos formatges de la regió.</p>
+  <p>La <em>morcela</em> és una botifarra negra dolça que conté espècies i un toc de sucre, i se serveix tradicionalment cuita o fregida acompanyada de rodanxes de pinya fresca de l'illa. La <em>linguiça</em> i el <em>chouriço</em> són embotits de porc adobats amb molt d'all, pebrot vermell dolç i vi local. Es diferencien dels continentals per un curat més llarg i un perfil més fumat. Són un ingredient estrella de l'emblemàtic <em>Cozido das Furnas</em>.</p>
+  <p>També destaquen els <em>torresmos</em> (torreznos), típics a tota la regió. Se serveixen fregits i cruixents, sovint acompanyats amb inhame (un tubercle local).</p>
+  ${gFoto('linguica','Linguiça — embotit de porc fumat, ingredient del Cozido das Furnas')}
+  ${gFoto('torresmos','Torresmos — fregits i cruixents, acompanyats d\'inhame')}
+
+  ${gTitol('🍷','Begudes','begudes')}
+  <p>Una de les begudes més populars de les illes és la cervesa. Hi ha una marca local: <em>Especial</em>. És bona i bastant barata. El cafè també és imprescindible. Durant el dia, la gent prefereix el <em>Galão</em>, que es serveix en un vas amb abundant llet. Per la nit se sol prendre un cafè, comparable al expresso.</p>
+  <p>Per descomptat, també elaboren vi d'excel·lent qualitat. Entre les marques més conegudes destaquen <em>Terras de Lava</em> (blanc) i <em>Basalto</em> (negre) de Pico, i <em>Terra do Conde</em> (blanc i negre) de Graciosa. El <em>Verdelho</em> (de Pico i la Graciosa) és el vi de postres més famós de les Açores.</p>
+  <p>El <em>Chá dos Açores</em> és un dels productes més exclusius de la regió. Les Açores són una de les poques zones d'Europa on es cultiva te, i São Miguel és la illa principal productora. Té un sabor suau i característic degut a les condicions climàtiques i volcàniques de l'arxipèlag.</p>
+  <p>El refresc escumós estrella de les Açores, <em>Kima</em>, està aromatitzat amb la deliciosa maracujà o fruita de la passió de l'illa. Se serveix normalment amb gel a l'estiu. Hi ha una mica de polpa, ja que s'utilitza fruita real, i tot i que té menys sucre que altres refrescos, Kima encara és força dolça amb un gust àcid.</p>
+  ${gFoto('kima','Kima — el refresc estrella de les Açores, amb maracujà real')}
+
+  ${gTitol('🌿','Altres productes típics','altres')}
+  <p><strong>Inhame dos Açores</strong> — Els 'inhames' (nyams) són tubercles amb mides que oscil·len entre els 5 i els 10 cm de diàmetre. Té un sabor i textura similar al moniato. A les Açores és molt habitualment usat com a guarnició, en substitució de les patates.</p>
+  ${gFoto('Inhame','Inhame dos Açores — tubercle local, substitut habitual de les patates')}
+  <p><strong>Pimenta da terra</strong> — Pebrot vermell picant de São Miguel utilitzat en pràcticament tot. Normalment es conserva en sal i de vegades en vinagre. Sovint es mol fins a formar una pasta. Gairebé tots els plats utilitzen <em>pimenta da terra</em> d'alguna manera. És un dels ingredients més específics i populars de São Miguel.</p>
+
+  ${gTitol('🍽️','Plats típics','plats')}
+  <p class="gast-plats-intro">Una selecció dels plats que no us podeu perdre a les Açores:</p>
+  <div class="gast-plats-grid">${platsHtml}</div>
+
+  </div>`;
 }
 
-function gastScrollTo(id) {
-  event.preventDefault();
+function gastScrollTo(id, ev) {
+  if (ev) ev.preventDefault();
   const el = document.getElementById('gast-' + id);
   if (!el) return;
-  const offset = 52 + 49 + 45; // nav + secnav + gastfiltres
+  const offset = 52 + 49 + 46;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: 'smooth' });
 }
