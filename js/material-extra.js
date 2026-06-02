@@ -66,6 +66,7 @@ function meSetSeccio(id) {
   if (id === 'aventura'    && !_avInit)    initAventura();
   if (id === 'excursions'  && !_excInit)   initExcursions();
   if (id === 'gastronomia' && !_gastInit)  initGastronomia();
+  if (id === 'maleta'      && !_maletaInit) initMaleta();
 }
 
 /* ══════════════════════════════════════════════
@@ -934,4 +935,57 @@ function gastScrollTo(id, ev) {
   const offset = 52 + 49 + 46;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓ: LA MALETA
+   ══════════════════════════════════════════════ */
+let _maletaInit = false;
+
+function initMaleta() {
+  _maletaInit = true;
+  const wrap = document.getElementById('maletaContingut');
+  if (!wrap) return;
+
+  wrap.innerHTML = `<div class="mal-article">
+
+  <p class="mal-intro">Per viatjar a les Açores, fes les maletes pensant que <em>"viuràs les quatre estacions en un sol dia"</em>. És possible despertar amb molta boira —que en realitat amaga el sol i el cel blau— i acabar el dia amb molta pluja i vent. La temperatura a l'agost va dels 19 als 25 graus. En ser un lloc amb humitat constant i molt de vent, podries sentir més fred o calor del que indica el termòmetre.</p>
+
+  <section class="mal-seccio">
+    <h3 class="mal-titol">👟 Roba i calçat tècnic</h3>
+    <p>Opta per roba pràctica i fresca. La <strong>roba esportiva</strong> és molt recomanada tant pel seu confort com pel fet que s'asseca ràpidament en cas de pluja. Porta <strong>pantalons còmodes</strong> per caminar.</p>
+    <p>Independentment de l'estació, una <strong>jaqueta paravents impermeable i amb caputxa</strong> és altament recomanada — potser sigui la peça més important de la maleta. No només et protegirà de les pluges que poden arribar en qualsevol moment, sinó també del vent fred molt comú a la regió.</p>
+    <p>Porta <strong>calçat impermeable</strong>, ja siguin botes o bambes de trekking. Hi ha molts senders i camins que hauràs de recórrer per veure certs paisatges, i molts passen per llocs amb fang i relliscosos. El calçat còmode i antilliscant és ideal per a aquest viatge.</p>
+  </section>
+
+  <section class="mal-seccio">
+    <h3 class="mal-titol">🩱 Roba i calçat de bany</h3>
+    <p>Les famoses aigües termals ferruginoses (com les de Furnas) <strong>taquen la roba de bany clara de color taronja</strong>. Porta un <strong>banyador fosc o vell</strong> per a les termals, a més d'un altre per als banys a platges i piscines naturals.</p>
+    <p>Porta <strong>escarpins o sandàlies d'aigua</strong> — a les Açores hi ha molts tolls i gorgs naturals de pedra volcànica i platges de pedres. Una <strong>tovallola de microfibra</strong> d'assecat ràpid també serà necessària per visitar les platges i piscines naturals.</p>
+  </section>
+
+  <section class="mal-seccio">
+    <h3 class="mal-titol">🎒 Accessoris</h3>
+    <ul class="mal-llista">
+      <li><strong>Motxilla impermeable</strong> per portar aigua, l'impermeable, roba de recanvi i menjar per les excursions. Una ampolla reutilitzable o cantimplora és la millor opció per portar aigua.</li>
+      <li><strong>Gorra o barret, protector solar i ulleres de sol</strong> — l'índex UV pot ser alt fins i tot en dies ennuvolats.</li>
+      <li><strong>Prismàtics</strong> — un o dos per grup, de gran ajuda per les excursions d'avistament de cetacis.</li>
+      <li>Fundes de plàstic hermètiques per protegir el mòbil els dies de pluja.</li>
+      <li><strong>Kit de snorkel</strong> (màscara i tub) i càmera aquàtica — imprescindible si vols contemplar el fons marí.</li>
+      <li><strong>Bateria portàtil</strong> si el teu mòbil es descarrega ràpid. Mínim 10.000 mAh, recomanable 20.000 mAh.</li>
+    </ul>
+  </section>
+
+  <section class="mal-seccio">
+    <h3 class="mal-titol">💊 Mini farmaciola bàsica</h3>
+    <ul class="mal-llista">
+      <li>Tirites i apòsits per a butllofes (<strong>Compeed</strong>)</li>
+      <li>Analgèsics: <strong>paracetamol</strong> i <strong>ibuprofè</strong></li>
+      <li>Crema per a cops (<strong>Thrombocid</strong>)</li>
+      <li><strong>Pastilles per al mareig</strong> (<em>Biodramina</em> o similar) — imprescindible. Les carreteres de les illes fan moltes corbes i els trajectes amb barco poden ser molt moguts.</li>
+      <li>Bon <strong>repel·lent de mosquits</strong></li>
+    </ul>
+  </section>
+
+  </div>`;
 }
