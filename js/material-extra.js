@@ -1002,42 +1002,40 @@ const INFO_TABS = [
   { id:'consells', emoji:'💡', label:'Consells pràctics'  },
 ];
 
-// Illes que visitarem (per destacar a les taules)
 const INFO_ILLES_VISITA = new Set(['Faial','Pico','São Jorge','São Miguel']);
-const INFO_MUNS_VISITA  = new Set(['Horta','Madalena','Lajes do Pico','São Roque do Pico','Velas','Calheta','Ponta Delgada','Lagoa','Ribeira Grande','Nordeste','Povoação','Vila Franca do Campo']);
 
 const ILLES_DATA = [
-  { illa:'Corvo',       area:'17,1',   pop:'437',    dens:'25,6'  },
-  { illa:'Faial',       area:'173,0',  pop:'14.466', dens:'83,6'  },
-  { illa:'Flores',      area:'141,0',  pop:'3.570',  dens:'25,3'  },
-  { illa:'Graciosa',    area:'60,7',   pop:'4.070',  dens:'67,1'  },
-  { illa:'Pico',        area:'444,8',  pop:'14.418', dens:'32,4'  },
-  { illa:'Santa Maria', area:'96,9',   pop:'5.504',  dens:'56,8'  },
-  { illa:'São Jorge',   area:'243,7',  pop:'8.435',  dens:'34,6'  },
-  { illa:'São Miguel',  area:'744,5',  pop:'137.255',dens:'184,4' },
-  { illa:'Terceira',    area:'400,3',  pop:'53.563', dens:'133,8' },
+  { illa:'Corvo',       area:'17,1',   pop:'437',     dens:'25,6'  },
+  { illa:'Faial',       area:'173,0',  pop:'14.466',  dens:'83,6'  },
+  { illa:'Flores',      area:'141,0',  pop:'3.570',   dens:'25,3'  },
+  { illa:'Graciosa',    area:'60,7',   pop:'4.070',   dens:'67,1'  },
+  { illa:'Pico',        area:'444,8',  pop:'14.418',  dens:'32,4'  },
+  { illa:'Santa Maria', area:'96,9',   pop:'5.504',   dens:'56,8'  },
+  { illa:'São Jorge',   area:'243,7',  pop:'8.435',   dens:'34,6'  },
+  { illa:'São Miguel',  area:'744,5',  pop:'137.255', dens:'184,4' },
+  { illa:'Terceira',    area:'400,3',  pop:'53.563',  dens:'133,8' },
 ];
 
 const MUNS_DATA = [
-  { mun:'Angra do Heroísmo',    zip:'9701', illa:'Terceira',    area:'239,0', pop:'33.701', dens:'141,0' },
-  { mun:'Calheta',              zip:'9850', illa:'São Jorge',   area:'126,3', pop:'3.486',  dens:'27,6'  },
-  { mun:'Horta',                zip:'9900', illa:'Faial',       area:'173,0', pop:'14.466', dens:'83,6'  },
-  { mun:'Lagoa',                zip:'9560', illa:'São Miguel',  area:'45,6',  pop:'15.130', dens:'331,8' },
-  { mun:'Lajes das Flores',     zip:'9960', illa:'Flores',      area:'70,0',  pop:'1.456',  dens:'20,8'  },
-  { mun:'Lajes do Pico',        zip:'9930', illa:'Pico',        area:'155,3', pop:'4.398',  dens:'28,3'  },
-  { mun:'Madalena',             zip:'9950', illa:'Pico',        area:'147,1', pop:'6.559',  dens:'44,6'  },
-  { mun:'Nordeste',             zip:'9630', illa:'São Miguel',  area:'101,5', pop:'4.439',  dens:'43,7'  },
-  { mun:'Ponta Delgada',        zip:'9500', illa:'São Miguel',  area:'233,0', pop:'69.038', dens:'296,3' },
-  { mun:'Povoação',             zip:'9650', illa:'São Miguel',  area:'106,4', pop:'5.883',  dens:'55,3'  },
-  { mun:'Praia da Vitória',     zip:'9760', illa:'Terceira',    area:'161,3', pop:'19.862', dens:'123,1' },
-  { mun:'Ribeira Grande',       zip:'9600', illa:'São Miguel',  area:'180,1', pop:'32.397', dens:'179,9' },
-  { mun:'Santa Cruz da Graciosa',zip:'9880',illa:'Graciosa',   area:'60,7',  pop:'4.070',  dens:'67,1'  },
-  { mun:'Santa Cruz das Flores',zip:'9970', illa:'Flores',      area:'70,9',  pop:'2.114',  dens:'29,8'  },
-  { mun:'São Roque do Pico',    zip:'9940', illa:'Pico',        area:'142,4', pop:'3.461',  dens:'24,3'  },
-  { mun:'Velas',                zip:'9800', illa:'São Jorge',   area:'117,4', pop:'4.949',  dens:'42,2'  },
-  { mun:'Vila do Corvo',        zip:'9908', illa:'Corvo',       area:'17,1',  pop:'437',    dens:'25,6'  },
-  { mun:'Vila do Porto',        zip:'9580', illa:'Santa Maria', area:'96,9',  pop:'5.504',  dens:'56,8'  },
-  { mun:'Vila Franca do Campo', zip:'9680', illa:'São Miguel',  area:'78,0',  pop:'10.368', dens:'132,9' },
+  { mun:'Angra do Heroísmo',     zip:'9701', illa:'Terceira',    area:'239,0', pop:'33.701', dens:'141,0' },
+  { mun:'Calheta',               zip:'9850', illa:'São Jorge',   area:'126,3', pop:'3.486',  dens:'27,6'  },
+  { mun:'Horta',                 zip:'9900', illa:'Faial',       area:'173,0', pop:'14.466', dens:'83,6'  },
+  { mun:'Lagoa',                 zip:'9560', illa:'São Miguel',  area:'45,6',  pop:'15.130', dens:'331,8' },
+  { mun:'Lajes das Flores',      zip:'9960', illa:'Flores',      area:'70,0',  pop:'1.456',  dens:'20,8'  },
+  { mun:'Lajes do Pico',         zip:'9930', illa:'Pico',        area:'155,3', pop:'4.398',  dens:'28,3'  },
+  { mun:'Madalena',              zip:'9950', illa:'Pico',        area:'147,1', pop:'6.559',  dens:'44,6'  },
+  { mun:'Nordeste',              zip:'9630', illa:'São Miguel',  area:'101,5', pop:'4.439',  dens:'43,7'  },
+  { mun:'Ponta Delgada',         zip:'9500', illa:'São Miguel',  area:'233,0', pop:'69.038', dens:'296,3' },
+  { mun:'Povoação',              zip:'9650', illa:'São Miguel',  area:'106,4', pop:'5.883',  dens:'55,3'  },
+  { mun:'Praia da Vitória',      zip:'9760', illa:'Terceira',    area:'161,3', pop:'19.862', dens:'123,1' },
+  { mun:'Ribeira Grande',        zip:'9600', illa:'São Miguel',  area:'180,1', pop:'32.397', dens:'179,9' },
+  { mun:'Santa Cruz da Graciosa',zip:'9880', illa:'Graciosa',    area:'60,7',  pop:'4.070',  dens:'67,1'  },
+  { mun:'Santa Cruz das Flores', zip:'9970', illa:'Flores',      area:'70,9',  pop:'2.114',  dens:'29,8'  },
+  { mun:'São Roque do Pico',     zip:'9940', illa:'Pico',        area:'142,4', pop:'3.461',  dens:'24,3'  },
+  { mun:'Velas',                 zip:'9800', illa:'São Jorge',   area:'117,4', pop:'4.949',  dens:'42,2'  },
+  { mun:'Vila do Corvo',         zip:'9908', illa:'Corvo',       area:'17,1',  pop:'437',    dens:'25,6'  },
+  { mun:'Vila do Porto',         zip:'9580', illa:'Santa Maria', area:'96,9',  pop:'5.504',  dens:'56,8'  },
+  { mun:'Vila Franca do Campo',  zip:'9680', illa:'São Miguel',  area:'78,0',  pop:'10.368', dens:'132,9' },
 ];
 
 function initInfo() {
@@ -1050,9 +1048,7 @@ function renderInfoNav() {
   const nav = document.getElementById('infoNav');
   if (!nav) return;
   nav.innerHTML = INFO_TABS.map(t =>
-    `<button class="exc-tab${_infoTab===t.id?' actiu':''}" onclick="infoSetTab('${t.id}')">
-      ${t.emoji} ${t.label}
-    </button>`
+    `<button class="exc-tab${_infoTab===t.id?' actiu':''}" onclick="infoSetTab('${t.id}')">${t.emoji} ${t.label}</button>`
   ).join('');
 }
 
@@ -1072,7 +1068,8 @@ function renderInfoContingut() {
 function renderInfoGeneral() {
   const illesRows = ILLES_DATA.map(r => {
     const vis = INFO_ILLES_VISITA.has(r.illa);
-    return `<tr class="${vis?'info-taula-visita':''}">
+    const cls = 'info-tr-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    return `<tr class="${cls}${vis?' info-taula-visita':''}">
       <td class="info-taula-illa">${vis?'<span class="info-visita-dot">★</span>':''} ${escHtml(r.illa)}</td>
       <td>${r.area}</td><td>${r.pop}</td><td>${r.dens}</td>
     </tr>`;
@@ -1080,72 +1077,81 @@ function renderInfoGeneral() {
 
   const munsRows = MUNS_DATA.map(r => {
     const vis = INFO_ILLES_VISITA.has(r.illa);
-    return `<tr class="${vis?'info-taula-visita':''}">
+    const trCls  = 'info-tr-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    const tagCls = 'info-illa-tag-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    return `<tr class="${trCls}${vis?' info-taula-visita':''}">
       <td class="info-taula-mun">${escHtml(r.mun)}</td>
       <td class="info-taula-zip">${r.zip}</td>
-      <td class="info-taula-illa-badge"><span class="info-illa-tag info-illa-tag-${r.illa.replace(/\s/g,'-').toLowerCase()}">${escHtml(r.illa)}</span></td>
+      <td><span class="info-illa-tag ${tagCls}">${escHtml(r.illa)}</span></td>
       <td>${r.area}</td><td>${r.pop}</td><td>${r.dens}</td>
     </tr>`;
   }).join('');
 
   return `<div class="info-article">
 
-  <p class="info-intro">Les Açores, oficialment la <strong>Regió Autònoma de les Açores</strong>, són un arxipèlag de Portugal a l'oceà Atlàntic, a uns 1.400 km a l'oest de la costa portuguesa. Juntament amb Madeira, és una de les dues regions autònomes de Portugal i el punt més occidental de la Unió Europea.</p>
-  <p>L'arxipèlag està compost per nou illes volcàniques en tres grups principals: Flores i Corvo a l'oest; Graciosa, Terceira, São Jorge, Pico i Faial al centre; i São Miguel, Santa Maria i els illots Formigas a l'est. S'estenen per més de 600 km en direcció nord-oest-sud-est.</p>
-  <p>El punt més alt és el <strong>mont Pico (2.351 m)</strong>, que és alhora el punt més alt de Portugal. Les Açores es troben al límit de la triple conjunció tectònica on es troben les plaques nord-americana, euroasiàtica i africana.</p>
+  <p class="info-font-ref">Font: <a class="gast-link" href="https://en.wikipedia.org/wiki/Azores" target="_blank" rel="noopener">Wikipedia — Azores</a></p>
+
+  <p>Les Açores, oficialment la Regió Autònoma de les Açores, són un arxipèlag de Portugal, a l'oceà Atlàntic, a uns 1.400 km (870 milles) a l'oest de Portugal. Políticament i administrativament, juntament amb Madeira, és una de les dues regions autònomes de Portugal i un territori especial de la Unió Europea. És el punt i la regió més occidental de Portugal i de la Unió Europea.</p>
+
+  <p>Les Açores són un arxipèlag compost per nou illes volcàniques a la regió de la Macaronèsia de l'oceà Atlàntic Nord. Hi ha nou illes açorianes principals i un grup d'illots, distribuïdes en tres grups principals. Aquests són Flores i Corvo a l'oest; Graciosa, Terceira, São Jorge, Pico i Faial al centre; i São Miguel, Santa Maria i els illots Formigas a l'est. S'estenen per més de 600 km i es troben en direcció nord-oest-sud-est.</p>
+
+  <p>Totes les illes tenen orígens volcànics, tot i que algunes, com Santa Maria, no han tingut activitat registrada des que les illes van ser poblades fa diversos segles. El mont Pico, a l'illa de Pico, és el punt més alt de Portugal, amb 2.351 m (7.713 peus). Si es mesura des de la seva base al fons de l'oceà fins als seus cims, les Açores es troben entre les muntanyes més altes del planeta. Les Açores es troben al límit de la placa de triple conjunció de les Açores, sísmicament activa, on es troben la placa nord-americana, la placa euroasiàtica i la placa africana.</p>
+
+  <p>El clima és suau, influenciat per la seva distància dels continents i pel pas del corrent del Golf. A causa de la influència marina, les temperatures es mantenen suaus durant tot l'any. Les temperatures diürnes normalment oscil·len entre els 16 i els 25 °C segons l'estació. Es desconeixen temperatures superiors a 30 °C o inferiors a 3 °C als principals centres de població. També generalment és humit i ennuvolat.</p>
+
+  <p>Les seves principals indústries són l'agricultura, la ramaderia lletera, la ramaderia, la pesca i el turisme, que s'ha convertit en una activitat de serveis important a la regió. Al segle XX i, en certa mesura, al segle XXI, les Açores han servit com a punt de pas per al proveïment de combustible dels avions que volen entre Europa i Amèrica del Nord. El govern de les Açores dóna feina a un gran percentatge de la població directament o indirectament en els sectors serveis i terciari. La ciutat més gran és Ponta Delgada. La cultura, el dialecte, la gastronomia i les tradicions de les illes varien considerablement, ja que aquestes illes remotes van ser poblades esporàdicament durant un període de dos segles.</p>
 
   <div class="info-sub"><span class="info-sub-emoji">🌋</span><h3 class="info-sub-titol">Geografia</h3></div>
+  <p>Cadascuna de les illes té les seves pròpies característiques geomorfològiques que les fan úniques:</p>
   <ul class="info-llista">
-    <li><strong>Corvo</strong> — un cràter d'una important erupció pliniana</li>
-    <li><strong>Flores</strong> — illa accidentada esculpida per moltes valls i escarpes</li>
-    <li><strong>Faial</strong> — caracteritzada pel seu volcà en escut i la caldera</li>
-    <li><strong>Pico</strong> — el punt més alt a 2.351 m, el cim més elevat de Portugal</li>
-    <li><strong>Graciosa</strong> — coneguda pels seus Furnas do Enxofre actius i cons volcànics</li>
-    <li><strong>São Jorge</strong> — illa llarga i esvelta formada per erupcions fissurals durant milers d'anys</li>
+    <li><strong>Corvo</strong> — és un cràter d'una important erupció pliniana</li>
+    <li><strong>Flores</strong> (el seu veí de la placa nord-americana) — és una illa accidentada esculpida per moltes valls i escarpes</li>
+    <li><strong>Faial</strong> — es caracteritza pel seu volcà en escut i la caldera (volcà Caldeira)</li>
+    <li><strong>Pico</strong> — té el punt més alt, a 2.351 m (7.713 peus), a les Açores i Portugal</li>
+    <li><strong>Graciosa</strong> — és coneguda pels seus Furnas do Enxofre actius i la barreja de cons volcànics i planes</li>
+    <li><strong>São Jorge</strong> — és una illa llarga i esvelta, formada a partir d'erupcions fissurals durant milers d'anys</li>
     <li><strong>Terceira</strong> — gairebé circular, conté un dels cràters més grans de la regió</li>
-    <li><strong>São Miguel</strong> — plena de cràters grans i camps de cons per tot arreu</li>
-    <li><strong>Santa Maria</strong> — la més antiga, molt erosionada, un dels pocs llocs amb platges de sorra marró</li>
+    <li><strong>São Miguel</strong> — està plena de molts cràters grans i camps de cons per tot arreu</li>
+    <li><strong>Santa Maria</strong> — l'illa més antiga, està molt erosionada, sent un dels pocs llocs on trobar platges de sorra marró a l'arxipèlag</li>
   </ul>
 
   <div class="info-sub"><span class="info-sub-emoji">🌊</span><h3 class="info-sub-titol">Erupcions volcàniques i terratrèmols</h3></div>
-  <p>Des del poblament de les illes al voltant del segle XV, hi ha hagut <strong>28 erupcions volcàniques registrades</strong> (15 terrestres i 13 submarines). L'última erupció significativa va ser el <strong>volcà Capelinhos a Faial el 1957</strong>. La regió és un centre d'intensa activitat sísmica, particularment al llarg de la dorsal mesoatlàntica. El terratrèmol més sever es va registrar el 1757 prop de Calheta, superant la magnitud 7.</p>
+  <p>Des del començament de l'assentament de les illes al voltant del segle XV, hi ha hagut 28 erupcions volcàniques registrades (15 terrestres i 13 submarines). L'última erupció volcànica significativa, el volcà Capelinhos (Vulcão dos Capelinhos), va tenir lloc davant la costa de Faial el 1957; l'activitat volcànica més recent es va produir a les muntanyes submarines i als volcans submarins davant la costa de Serreta i al canal Pico-São Jorge.</p>
+  <p>A causa del seu entorn geodinàmic, la regió ha estat un centre d'intensa activitat sísmica, particularment al llarg dels seus límits tectònics a la dorsal mesoatlàntica i el rift de Terceira. Els esdeveniments sísmics, tot i que freqüents, solen ser de naturalesa tectònica o vulcotectònica, però en general són d'intensitats baixes o mitjanes, ocasionalment interromputs per esdeveniments de magnitud 5 o superior. El terratrèmol més sever es va registrar el 1757, prop de Calheta, que va superar la magnitud 7.</p>
 
   <div class="info-sub"><span class="info-sub-emoji">🌦️</span><h3 class="info-sub-titol">Clima</h3></div>
-  <p>El clima és suau i influenciat pel corrent del Golf. Les temperatures diürnes oscil·len entre els <strong>16 i els 25 °C</strong> segons l'estació, i mai es registren temperatures superiors a 30 °C ni inferiors a 3 °C als nuclis de població. La precipitació mitjana anual varia entre els 700 mm a Santa Maria i els 1.600 mm a Flores. La humitat relativa a la costa sol ser del 80%, i supera el 90% per sobre dels 400 m. Els estius, especialment l'agost, poden ser especialment humits.</p>
+  <p>L'arxipèlag de les Açores es troba en una zona de transició i confrontació entre masses d'aire d'origen tropical i masses d'aire més fred d'origen polar. El clima està determinat en gran mesura per les variacions del camp de pressió atmosfèrica sobre l'Atlàntic Nord. Aquestes variacions, condicionades per la massa del continent americà i la massa d'aigua atlàntica, se superposen per un anticicló atlàntic subtropical semipermanent, conegut comunament com l'anticicló de les Açores.</p>
+  <p>Les temperatures màximes diàries a baixa altitud solen oscil·lar entre els 16 i els 25 °C. La precipitació mitjana anual generalment augmenta d'est a oest, oscil·lant entre els 700 mm a Santa Maria i els 1.600 mm a Flores, i arribant a valors superiors als 5.000 mm a les terres altes de Pico.</p>
+  <p>La humitat relativa mitjana pot variar des del 80% a la costa fins a més del 90% per sobre dels 400 m (1.300 peus). Tanmateix, les elevacions més altes per sobre de la capa límit planetària poden experimentar valors extremadament baixos, propers al 10%. Els estius són especialment humits a l'agost i poden augmentar la temperatura percebuda en uns quants graus.</p>
+  <p>Malgrat la posició septentrional que ocupa l'arxipèlag, les Açores poden veure's afectades pel pas de ciclons tropicals o de tempestes tropicals derivades d'ells. Alguns poden ser el resultat d'anomalies de sistemes de baixa latitud, mentre que d'altres són el resultat del retorn a l'Atlàntic després d'una ruta propera o fins i tot sobre el continent americà. Tot i que sovint són petits i en procés de dissipació, aquests ciclons provoquen moltes de les pitjors tempestes a què està subjecte l'arxipèlag.</p>
 
   <div class="info-sub"><span class="info-sub-emoji">👥</span><h3 class="info-sub-titol">Demografia</h3></div>
-  <p>Les Açores estan dividides en <strong>19 municipis</strong> i 156 parròquies. Hi ha 6 ciutats: Ponta Delgada, Lagoa i Ribeira Grande (São Miguel); Angra do Heroísmo i Praia da Vitória (Terceira); i Horta (Faial). La capital és Ponta Delgada. <span class="info-llegenda-visita">★ Illes i municipis que visitem</span></p>
+  <p>Les Açores estan dividides en 19 municipis (concelhos); cada municipi es divideix al seu torn en freguesies (parròquies administratives civils), de les quals n'hi ha un total de 156 a totes les Açores.</p>
+  <p>Hi ha 6 ciutats: Ponta Delgada, Lagoa i Ribeira Grande a São Miguel; Angra do Heroísmo i Praia da Vitória a Terceira; i Horta sobre Faial. Tres d'aquestes, Ponta Delgada, Angra i Horta, es consideren capitals/ciutats administratives per al govern regional: són la seu del president (Ponta Delgada), el poder judicial (Angra) i l'Assemblea Regional (Horta). Angra també serveix com a centre eclesiàstic de la diòcesi catòlica romana d'Angra, la seu episcopal de les Açores.</p>
+  <p><span class="info-llegenda-visita">★ Illes que visitem</span></p>
 
   <div class="info-taula-wrap">
-    <div class="info-taula-titol">Per illa</div>
+    <div class="info-taula-titol">Superfície, població i densitat per illa</div>
     <div class="info-taula-scroll">
       <table class="info-taula">
-        <thead><tr>
-          <th>Illa</th><th>Àrea (km²)</th><th>Població</th><th>Densitat (hab./km²)</th>
-        </tr></thead>
+        <thead><tr><th>Illa</th><th>Àrea (km²)</th><th>Població</th><th>Densitat (hab./km²)</th></tr></thead>
         <tbody>${illesRows}</tbody>
-        <tfoot><tr class="info-taula-total">
-          <td>Total</td><td>2.322,0</td><td>241.718</td><td>104,1</td>
-        </tr></tfoot>
+        <tfoot><tr class="info-taula-total"><td>Total</td><td>2.322,0</td><td>241.718</td><td>104,1</td></tr></tfoot>
       </table>
     </div>
-    <p class="info-taula-font">Font: estimació 2025 · <a class="gast-link" href="https://www.geo-ref.net/sp/xaz.htm" target="_blank" rel="noopener">geo-ref.net</a></p>
+    <p class="info-taula-font">Font: estimació de població el 2025 a partir de les dades del cens de 2021 · <a class="gast-link" href="https://www.geo-ref.net/sp/xaz.htm" target="_blank" rel="noopener">geo-ref.net</a></p>
   </div>
 
   <div class="info-taula-wrap">
-    <div class="info-taula-titol">Per municipi</div>
+    <div class="info-taula-titol">Superfície, població i densitat per municipi</div>
     <div class="info-taula-scroll">
       <table class="info-taula">
-        <thead><tr>
-          <th>Municipi</th><th>ZIP</th><th>Illa</th><th>Àrea (km²)</th><th>Població</th><th>Densitat (hab./km²)</th>
-        </tr></thead>
+        <thead><tr><th>Municipi</th><th>ZIP</th><th>Illa</th><th>Àrea (km²)</th><th>Població</th><th>Densitat (hab./km²)</th></tr></thead>
         <tbody>${munsRows}</tbody>
-        <tfoot><tr class="info-taula-total">
-          <td colspan="3">Total</td><td>2.322,0</td><td>241.718</td><td>104,1</td>
-        </tr></tfoot>
+        <tfoot><tr class="info-taula-total"><td colspan="3">Total</td><td>2.322,0</td><td>241.718</td><td>104,1</td></tr></tfoot>
       </table>
     </div>
-    <p class="info-taula-font">Font: estimació 2025 · <a class="gast-link" href="https://www.geo-ref.net/sp/xaz.htm" target="_blank" rel="noopener">geo-ref.net</a></p>
+    <p class="info-taula-font">Font: estimació de població el 2025 a partir de les dades del cens de 2021 · <a class="gast-link" href="https://www.geo-ref.net/sp/xaz.htm" target="_blank" rel="noopener">geo-ref.net</a></p>
   </div>
 
   </div>`;
@@ -1156,35 +1162,33 @@ function renderInfoConsells() {
   return `<div class="info-article">
 
   <div class="info-sub"><span class="info-sub-emoji">📱</span><h3 class="info-sub-titol">App del temps</h3></div>
-  <p>El clima a les Açores és molt canviant, fins i tot dins d'un mateix dia. És molt recomanable consultar el temps abans de cada visita. La web de <a class="gast-link" href="https://spotazores.com/" target="_blank" rel="noopener">Spot Azores</a> permet veure el temps real a través de diverses càmeres a cada illa. Disponible per <a class="gast-link" href="https://play.google.com/store/apps/details?id=spotazores.app.azx&hl=ca" target="_blank" rel="noopener">Android</a> i <a class="gast-link" href="https://apps.apple.com/es/app/spotazores-new/id6755051347" target="_blank" rel="noopener">iOS</a>.</p>
+  <p>El clima a les Açores és molt canviant, fins i tot dins d'un mateix dia. Per això és molt recomanable consultar el temps abans de cada visita. La web de <a class="gast-link" href="https://spotazores.com/" target="_blank" rel="noopener">Spot Azores</a> permet veure el temps real a través de diverses càmeres que hi ha a diferents punts de cada illa. Hi ha disponible una versió de la app per <a class="gast-link" href="https://play.google.com/store/apps/details?id=spotazores.app.azx&hl=ca" target="_blank" rel="noopener">Android</a> i <a class="gast-link" href="https://apps.apple.com/es/app/spotazores-new/id6755051347" target="_blank" rel="noopener">iOS</a>.</p>
 
   <div class="info-sub"><span class="info-sub-emoji">🪼</span><h3 class="info-sub-titol">Atenció amb les caravelles portugueses</h3></div>
-  <p>Les caravelles portugueses no són meduses sinó colònies d'hidroides que col·laboren com si fossin un sol organisme. Són un perill real: els seus tentacles poden mesurar fins a <strong>10 metres</strong> i el verí és fins a 10 vegades més potent que el d'una medusa comuna. Pot provocar dolor intens, febre, vòmits, problemes respiratoris i fins i tot arrítmies cardíaques.</p>
+  <p>Les caravelles portugueses o medusa caravella són un sinofor, és a dir, té aparença de medusa, però en realitat és l'agrupació o colònia d'un grup dels anomenats hidroides que són organismes aquàtics que col·laboren entre ells i semblen un sol organisme.</p>
+  <p>Són un perill real, encara que les vegis a la platja flotant i no t'hi acostis, ja que els seus tentacles poden mesurar fins a 10 metres i els símptomes de la picada són gairebé 10 vegades més fortes que les meduses comuns, doncs el seu verí és extremadament dolorós i potencialment greu. Els símptomes que provoca la seva picada són: dolor intens a la zona de la picada, dolor abdominal, febre, vòmits, mal de cap, dolors musculars, problemes respiratoris i fins i tot pot arribar a produir en alguns casos arrítmies cardíaques.</p>
   <div class="info-alerta">
     <div class="info-alerta-titol">⚠️ En cas de picada</div>
-    <ul class="info-llista info-llista-alerta">
-      <li>Netejar la zona amb <strong>aigua de mar</strong> (mai amb aigua dolça)</li>
-      <li>Retirar les restes amb pinces o similar (<strong>mai directament amb les mans</strong>)</li>
-      <li>Aplicar fred (bossa de gel) durant <strong>20 minuts</strong></li>
-      <li>Si l'estat no millora, anar immediatament a un centre mèdic</li>
-    </ul>
+    <p class="info-alerta-text">En cas de picada, es recomana netejar la zona amb <strong>aigua de mar (mai amb aigua dolça!)</strong> sense fregar la pell, retirar les restes amb molta cura utilitzant unes pinces o similar <strong>(mai directament amb les mans!)</strong>, i aplicar-hi fred amb una bossa de gel durant 20 minuts per reduir la inflamació i alleujar el dolor. Si l'estat de la persona no millora, anar immediatament a un centre mèdic.</p>
   </div>
 
   <div class="info-sub"><span class="info-sub-emoji">💧</span><h3 class="info-sub-titol">Qualitat de l'aigua</h3></div>
-  <p>La qualitat de l'aigua potable a les Açores és excel·lent, proveïda d'aqüífers volcànics que compleixen els estàndards de la UE. <strong>L'aigua de l'aixeta és totalment apta per al consum humà.</strong></p>
-  <p>Respecte a fonts i manantials, només beure si estan clarament marcats com a agua potable. A prop de zones geotèrmiques com Furnas, l'aigua pot tenir minerals i olor de sofre. Si surt directament de la terra en zona de pastura, cal tractar-la sempre amb filtres o pastilles purificadores.</p>
+  <p>La qualitat de l'aigua potable a les Açores és excel·lent i comparable a la dels manantials de muntanya de màxima qualitat. L'arxipèlag s'abasteix d'aigües subterrànies d'aqüífers volcànics que compleixen els estàndards estrictes de la UE i de l'Autoritat Reguladora Portuguesa (ERSAR). Per tot això, l'aigua de l'aixeta és totalment apta per al consum humà.</p>
+  <p>Respecte a l'aigua de fonts i manantials de muntanya, només s'ha de beure si l'aigua és de la xarxa pública o de fonts clarament marcades com a aigua potable. Si l'aigua surt directament de la terra en zona de pastura, encara que sembli transparent pot estar contaminada i cal tractar-la sempre amb filtres o pastilles purificadores.</p>
+  <p>A més a més, a l'interior i prop de zones geotèrmiques (com a Furnas), l'aigua pot tenir un alt contingut de minerals i una lleugera olor de sofre.</p>
 
   <div class="info-sub"><span class="info-sub-emoji">💶</span><h3 class="info-sub-titol">Diners en metàl·lic</h3></div>
-  <p>A São Miguel es pot pagar gairebé tot amb targeta, però és convenient portar efectiu per a:</p>
+  <p>A les Açores, i especialment a l'illa de São Miguel, podrem pagar gairebé tot amb targeta (Visa i Mastercard són àmpliament acceptades), però és totalment necessari portar una mica de diners en metàl·lic per a situacions específiques durant la nostra ruta:</p>
   <ul class="info-llista">
-    <li><strong>Petits quioscos i foodtrucks</strong> — sovint sense datàfon o amb consum mínim alt</li>
-    <li><strong>Aparcaments i parquímetres</strong> — alguns parkings en pobles com Furnas o Ribeira Grande requereixen monedes</li>
-    <li><strong>Petits comerços tradicionals</strong> — botigues d'artesania i bars de poble sovint només accepten efectiu per a imports inferiors a 5-10 €</li>
-    <li><strong>Entrades a llocs secundaris</strong> — rutes privades, banys termals petits o donacions per a mapes</li>
+    <li><strong>Petits quioscos i foodtrucks:</strong> sovint no tenen datàfon o demanen un consum mínim alt.</li>
+    <li><strong>Aparcaments i parquímetres:</strong> alguns parkings petits o zones blaves en pobles com Furnas o Ribeira Grande requereixen monedes.</li>
+    <li><strong>Petits comerços tradicionals:</strong> botigues d'artesania locals o petits bars de poble de vegades només accepten efectiu per a imports inferiors a 5 € o 10 €.</li>
+    <li><strong>Entrades a llocs secundaris:</strong> l'accés a algunes rutes privades, banys termals petits o donacions per a mapes requereixen efectiu.</li>
   </ul>
 
-  <div class="info-sub"><span class="info-sub-emoji">🗺️</span><h3 class="info-sub-titol">Descarregar mapes off-line</h3></div>
-  <p>L'orografia volcànica —cràters i valls tancades— fa que la cobertura mòbil s'anul·li en molts punts naturals. Recomanem descarregar prèviament els mapes de <strong>Google Maps</strong> i <strong>Wikiloc</strong> de les illes que visitareu per poder-los consultar sense connexió.</p>
+  <div class="info-sub"><span class="info-sub-emoji">🗺️</span><h3 class="info-sub-titol">Descarregar mapes per poder-los consultar off-line</h3></div>
+  <p>Tot i que les illes tenen una bona infraestructura, la seva orografia volcànica, els cràters i les valls tancades fan que la cobertura mòbil s'anul·li o sigui molt inestable en molts dels punts naturals.</p>
+  <p>Per aquest motiu és recomanable descarregar al mòbil els mapes de <strong>Google Maps</strong> o <strong>Mappy</strong> i de <strong>Wikiloc</strong> de les illes que visitarem i així poder-los consultar quan no tinguem cobertura.</p>
 
   </div>`;
 }

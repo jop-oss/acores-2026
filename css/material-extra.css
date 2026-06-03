@@ -1784,8 +1784,9 @@ body.light .mal-llista li { background: #fff; border-color: rgba(45,90,61,0.12);
 }
 .info-taula thead th:not(:first-child) { text-align: right; }
 .info-taula tbody td {
-  padding: 9px 14px; color: rgba(232,240,236,0.75);
+  padding: 9px 14px; color: rgba(232,240,236,0.85);
   border-bottom: 1px solid rgba(106,171,122,0.07);
+  background: rgba(255,255,255,0.04);
   transition: background 0.15s;
 }
 .info-taula tbody td:not(:first-child):not(.info-taula-illa-badge) { text-align: right; }
@@ -1852,3 +1853,47 @@ body.light .info-taula tbody tr:hover td { background: rgba(45,90,61,0.06); }
   .info-taula { font-size: 0.76rem; }
   .info-taula thead th, .info-taula tbody td { padding: 7px 10px; }
 }
+.info-font-ref {
+  font-family: 'Lora', serif; font-size: 0.75rem;
+  color: var(--me-muted); margin-bottom: 20px; font-style: italic;
+}
+.info-alerta-text {
+  font-family: 'Lora', serif; font-size: 0.87rem;
+  line-height: 1.7; color: rgba(255,200,150,0.85); margin: 0;
+}
+.info-alerta-text strong { color: #ffb340; }
+
+/* ── Colors per illa (badges + files de taula) ── */
+.info-illa-tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 0.68rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+
+.info-illa-tag-sao-miguel  { background: rgba(45,120,50,0.18);   color: #6abf70;  border-color: rgba(45,120,50,0.35); }
+.info-illa-tag-santa-maria { background: rgba(200,170,0,0.18);   color: #d4b800;  border-color: rgba(200,170,0,0.35); }
+.info-illa-tag-terceira    { background: rgba(130,60,180,0.18);  color: #b07dd4;  border-color: rgba(130,60,180,0.35); }
+.info-illa-tag-graciosa    { background: rgba(200,200,200,0.15); color: #c8c8c8;  border-color: rgba(200,200,200,0.35); }
+.info-illa-tag-sao-jorge   { background: rgba(120,70,30,0.22);   color: #c4895a;  border-color: rgba(120,70,30,0.4); }
+.info-illa-tag-pico        { background: rgba(100,100,100,0.35); color: #888888;  border-color: rgba(100,100,100,0.6); }
+.info-illa-tag-faial       { background: rgba(30,100,200,0.18);  color: #5fa8e8;  border-color: rgba(30,100,200,0.35); }
+.info-illa-tag-flores      { background: rgba(210,70,130,0.18);  color: #e87aaa;  border-color: rgba(210,70,130,0.35); }
+.info-illa-tag-corvo       { background: rgba(10,10,10,0.85);    color: #404040;  border-color: rgba(40,40,40,0.9); }
+
+/* Files de taula amb color per illa (línia esquerra + nom en color) */
+.info-tr-sao-miguel  td { border-left: 3px solid #6abf70 !important; }
+.info-tr-sao-miguel  td:first-child { color: #6abf70 !important; font-weight: 600; }
+.info-tr-santa-maria td { border-left: 3px solid #d4b800 !important; }
+.info-tr-santa-maria td:first-child { color: #d4b800 !important; font-weight: 600; }
+.info-tr-terceira    td { border-left: 3px solid #b07dd4 !important; }
+.info-tr-terceira    td:first-child { color: #b07dd4 !important; font-weight: 600; }
+.info-tr-graciosa    td { border-left: 3px solid #c8c8c8 !important; }
+.info-tr-graciosa    td:first-child { color: #c8c8c8 !important; font-weight: 600; }
+.info-tr-sao-jorge   td { border-left: 3px solid #c4895a !important; }
+.info-tr-sao-jorge   td:first-child { color: #c4895a !important; font-weight: 600; }
+.info-tr-pico        td { border-left: 3px solid #888888 !important; }
+.info-tr-pico        td:first-child { color: #888888 !important; font-weight: 600; }
+.info-tr-faial       td { border-left: 3px solid #5fa8e8 !important; }
+.info-tr-faial       td:first-child { color: #5fa8e8 !important; font-weight: 600; }
+.info-tr-flores      td { border-left: 3px solid #e87aaa !important; }
+.info-tr-flores      td:first-child { color: #e87aaa !important; font-weight: 600; }
+.info-tr-corvo       td { border-left: 3px solid #303030 !important; }
+.info-tr-corvo       td:first-child { color: #404040 !important; font-weight: 600; }
+
+.info-taula-zip  { color: var(--me-muted) !important; font-size: 0.75rem; }
