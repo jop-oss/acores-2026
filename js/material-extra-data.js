@@ -8662,3 +8662,140 @@ const ME_ITINERARIS = {
     }
   ]
 };
+
+
+/* ── Reserves i restriccions ── */
+const ME_RESERVES = [
+  {
+    "illa": "Pico",
+    "nom": "Montanha do Pico",
+    "desc": "No es pot pujar a la muntanya Pico sense reserva d'entrada (uns 45€). Pot intentar anar a cegues a la Casa da Montanha i esperar que encara quedin places disponibles, però especialment a l'estiu les possibilitats són força escasses. Hi ha limitacions en quant al nombre d'ascensions (160 simultàniament i un màxim de 320 per dia). L'ascensió final al \"Piquinho\" encara té restriccions més acusades: 30 visitants simultàniament, i la durada de cada visitant no pot superar un període màxim de 20 minuts. Els horaris d'inici són 0:00, 8:00, 12:00 i 18:00. Actualment només hi ha places per fer l'ascensió per lliure per l'horari de les 18:00.",
+    "descExtra": "guies",
+    "links": [
+      "https://www.cestee.es/destino/portugal/pico/monte-pico",
+      "https://montanhapico.azores.gov.pt/?lang=en"
+    ],
+    "anchor": "reserva-montanha-do-pico"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Gruta do Carvão",
+    "desc": "Només és possible visitar la secció Paim de Gruta do Carvão des del Centre de Visitants de Ponta Prima. És obligatori portar un guia local. Tingueu en compte que és millor reservar la visita amb antelació. Hi ha dos tipus de visites: curta (200 m, 30-40 min, fins 15 persones) i llarga (800 m, 2h, fins 5 persones, requereix bona condició física). Portar calçat còmode, roba d'abric (15ºC a l'interior). Visita guiada en anglès o portuguès.",
+    "links": [
+      "https://www.futurismo.pt/es/blog/gruta-do-carvao-el-mundo-subterraneo-bajo-ponta-delgada/",
+      "https://grutadocarvao.pt/pt/reservations"
+    ],
+    "anchor": "reserva-gruta-do-carvao"
+  },
+  {
+    "illa": "Pico",
+    "nom": "Gruta das Torres",
+    "desc": "La Gruta das Torres és el tub de lava més gran de Portugal, amb 5.150 metres de longitud. Es va formar fa uns 1.500 anys durant una erupció al Cabeço Bravo. La visita recorre 450 metres de la cova durant aproximadament una hora. Actualment tancada per raons de seguretat. Verificar els dies abans si segueix tancada.",
+    "links": [
+      "https://www.futurismo.pt/es/blog/centro-de-visitantes-da-gruta-das-torres/",
+      "https://parquesnaturais.azores.gov.pt/bilheteira/grutadastorres/"
+    ],
+    "anchor": "reserva-gruta-das-torres"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Caldeira Velha",
+    "desc": "L'accés als gorgs termals de Caldeira Velha està estrictament regulat per preservar l'ecosistema. El temps màxim de bany està limitat a 2 hores i hi ha un aforament màxim de 125 persones al parc i 50 persones a les piscines. S'aconsella reservar l'entrada amb antelació.",
+    "links": [
+      "https://www.futurismo.pt/es/blog/caldeira-velha-el-monumento-natural-que-hay-que-visitar-en-las-azores/",
+      "https://parquesnaturais.azores.gov.pt/bilheteira/caldeiravelha/"
+    ],
+    "anchor": "reserva-caldeira-velha"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Poça da Dona Beija",
+    "desc": "Les entrades es compren a l'entrada o a la web. Es permet estar dins del complex durant 1,5 hores (inclou cistella per a pertinences, vestidors i dutxes). Es pot llogar taquilla per 2€ més dipòsit de 20€. Obert de 8:30 a 23:00 tots els dies. Última entrada a les 22:15. Si s'hi va en temporada alta o es vol la visita nocturna, cal reservar amb antelació.",
+    "links": [
+      "https://www.futurismo.pt/es/blog/poca-da-dona-beija-una-fuente-termal-bajo-el-cielo-nocturno/",
+      "https://pocadadonabeija.com/en/"
+    ],
+    "anchor": "reserva-poca-da-dona-beija"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Parque Terra Nostra",
+    "desc": "Un dels llocs més visitats de les Açores, conegut per les seves aigües termals i vegetació exuberant. Es pot comprar l'entrada per internet triant dia i hora d'entrada. Un cop dins, no hi ha límit de temps fins al tancament (16:30h). També és possible comprar l'entrada a la taquilla (màxim 15 dies d'antelació).",
+    "links": [
+      "https://www.saomiguelguide.com/parque-terra-nostra",
+      "https://www.parqueterranostra.com/pt/bilhetica/comprar/?token=d481496b159ca2b3602cf714a4dacb30"
+    ],
+    "anchor": "reserva-parque-terra-nostra"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Ilhéu de Vila Franca do Campo",
+    "desc": "Les visites es realitzen de juny a octubre, amb sortides diàries amb vaixell des de la Marina de Vila Franca do Campo. L'accés està limitat a 400 persones al dia. Es recomana comprar el bitllet amb antelació (màxim 15 dies, mínim 24h abans). Si els bitllets estan esgotats en línia, es poden comprar el mateix dia a la taquilla.",
+    "links": [
+      "https://byacores.com/es/islote-de-vila-franca-do-campo/",
+      "https://bilheteira.cnvfc.net/"
+    ],
+    "anchor": "reserva-ilheu-de-vila-franca-do-campo"
+  },
+  {
+    "illa": "Sao Miguel",
+    "nom": "Lagoa do Fogo",
+    "desc": "Des del 15 de juny al 30 de setembre del 2026, l'accés es realitza mitjançant un servei de shuttle (bus). La carretera entre Caldeira Velha (Ribeira Grande) i la Casa da Água (Lagoa) estarà restringida per als cotxes de lloguer de 9:00 a 19:00, però romandrà oberta per a la resta de vehicles. Fora d'aquest horari l'accés és lliure.",
+    "links": [
+      "https://byacores.com/es/lagoa-fogo/",
+      "https://lagoadofogo.pt/?utm_source=byAcores#tm-section-book"
+    ],
+    "anchor": "reserva-lagoa-do-fogo"
+  }
+];
+
+/* ── Guies oficials Montanha do Pico ── */
+const ME_GUIES_PICO = [
+  {nom:"Andreas Stuwe",email:"stueweazoren@yahoo.de",tel:"292642970 / 926811287"},
+  {nom:"António Norberto Nunes Vieira",email:"antoniovieira78@sapo.pt",tel:"292672659 / 914935948"},
+  {nom:"Bruno Filipe Rodrigues da Silveira",email:"info@tobogaazores.pt",tel:"967331788 / 968749742"},
+  {nom:"Bruno Miguel Pereira Leal",email:"bruneal89@gmail.com",tel:"916306887"},
+  {nom:"Carlos Alexandre B. dos Santos André",email:"andrecarlos@net.sapo.pt",tel:"965853849"},
+  {nom:"Cecília Jorge",email:"ceciliajuju@gmail.com",tel:"916168806"},
+  {nom:"Celina Gabriela Moiron das Neves Vieira",email:"celinamoironneves@gmail.com",tel:"924432585"},
+  {nom:"Cláudia Isabel Bettencourt Melo",email:"claudiamelopico@gmail.com",tel:"962956196"},
+  {nom:"Daniel Henrique Pena Antunes",email:"dhpena@gmail.com",tel:"919570352"},
+  {nom:"David Marcos Garcia",email:"davidmargarcia@hotmail.com",tel:"912605505 / 292622663"},
+  {nom:"Davide Sousa",email:"davidesousa@sapo.pt",tel:"910808502"},
+  {nom:"Duarte Filipe da Costa Pereira",email:"girapico@gmail.com",tel:"914488843"},
+  {nom:"Edi Salvador Bettencourt de Melo",email:"mbse@sapo.pt",tel:"910953801 / 292622572"},
+  {nom:"Eva Stuwe",email:"eva.stuewe@gmail.com",tel:"292642970 / 926811287"},
+  {nom:"Francisco Jesus Medeiros",email:"piconature@gmail.com",tel:"292623254 / 964298237"},
+  {nom:"Henry José da Silva Simões",email:"go@lostinpico.com",tel:"964414181"},
+  {nom:"Jaime Fernando Bettencourt Pereira",email:"jaimefbpereira@hotmail.com",tel:"919821513 / 295412262"},
+  {nom:"Jennifer Kiefer",email:"info@futurismo.pt",tel:"964103100 / 296628522"},
+  {nom:"João Carlos Dias Xavier",email:"caminhandoazores@gmail.com",tel:"962408417 / 910999440 / 292623353"},
+  {nom:"Joaquim Nené",email:"lavasteps@gmail.com",tel:"915254476"},
+  {nom:"José António Sousa da Silva",email:"jose.assilva@hotmail.com",tel:"914234941"},
+  {nom:"José Carlos Alberto Goulart",email:"",tel:"963510157"},
+  {nom:"Karine Bénédicte Petit",email:"karine_petit@hotmail.fr",tel:"917915946"},
+  {nom:"Manuel Celestino Tavares Goulart",email:"picomeup@gmail.com",tel:"968 714 701"},
+  {nom:"Manuel Fernando Furtado",email:"manuel_furtado@hotmail.com",tel:"918261165"},
+  {nom:"Manuel Pereira Leal",email:"",tel:"919095778 / 292699523"},
+  {nom:"Márcia Isabel Ferreira Soares",email:"marcia_ifs@hotmail.com",tel:"916543270"},
+  {nom:"Marco Aurélio Robalo dos Santos",email:"marco_robalo@hotmail.com",tel:"962961996"},
+  {nom:"Marco Paulo Garcia Silva",email:"marcogarcia.silva@hotmail.com",tel:"916013204"},
+  {nom:"Marcos Furtado Cabral",email:"mcabral1984@gmail.com",tel:"916340849"},
+  {nom:"Maria João Rafôto Leal",email:"mariarafoto@gmail.com",tel:"918539736"},
+  {nom:"Mário César Mendes",email:"mmendested89@gmail.com",tel:"968599525"},
+  {nom:"Matteo Miguel Carosi Cordeiro",email:"info@tripixazores.com",tel:"912966996 / 292623616"},
+  {nom:"Monica Raquel da Cruz Mota",email:"atipicoazores@gmail.com",tel:"915340487"},
+  {nom:"Nélia Maria Valim Vieira Xavier",email:"turispico.nelia.xavier@hotmail.com",tel:"915980412 / 292666541"},
+  {nom:"Nilton Cruz André Goulart",email:"info.hominisnatura@gmail.com",tel:"913496731"},
+  {nom:"Noël René Holzer",email:"lesbiosotis@gmail.com",tel:"918148464"},
+  {nom:"Nuno Helder Ávila Dinis",email:"nuno_dinis@sapo.pt",tel:"917906879"},
+  {nom:"Nuno Miguel Ávila Gonçalves",email:"atipicoazores@gmail.com",tel:"919991776"},
+  {nom:"Pedro Manuel Cardoso da Silva",email:"23451@sapo.pt",tel:"914991557"},
+  {nom:"Pedro Miguel Mendes Marques",email:"pmarquesvet@gmail.com",tel:""},
+  {nom:"Raisa de Oliveira",email:"info@goclimbpico.com",tel:"914093007"},
+  {nom:"Renato Manuel Gonçalves Goulart",email:"experience2351@gmail.com",tel:"919293471 / 292622400"},
+  {nom:"Ricardo Duarte Ávila",email:"ricardopico2351@gmail.com",tel:"965625753"},
+  {nom:"Samanta Machado Freitas",email:"samantafreitas349@gmail.com",tel:"915730412"},
+  {nom:"Sérgio António Vieira Jorge",email:"sergiojorge977@gmail.com",tel:"914555261"},
+  {nom:"Steffi Denecker",email:"info.hominisnatura@gmail.com",tel:"+32 479738166"}
+];

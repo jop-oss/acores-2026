@@ -279,6 +279,8 @@ function normalIlla(s) {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderIlles(); renderCats(); renderSubcats(); renderExtres(); render();
+  // Deep link a reserves
+  if (location.hash.startsWith('#reserva-')) initReservaHash();
 });
 
 /* ── Filtres ── */
@@ -1001,6 +1003,7 @@ let _infoTab  = 'general';
 const INFO_TABS = [
   { id:'general',  emoji:'🌍', label:'Informació general' },
   { id:'consells', emoji:'💡', label:'Consells pràctics'  },
+  { id:'reserves', emoji:'📋', label:'Reserves i restriccions' },
 ];
 
 const INFO_ILLES_VISITA = new Set(['Faial','Pico','São Jorge','São Miguel']);
@@ -1062,7 +1065,9 @@ function infoSetTab(id) {
 function renderInfoContingut() {
   const wrap = document.getElementById('infoContingut');
   if (!wrap) return;
-  wrap.innerHTML = _infoTab === 'general' ? renderInfoGeneral() : renderInfoConsells();
+  wrap.innerHTML = _infoTab === 'general' ? renderInfoGeneral()
+    : _infoTab === 'consells' ? renderInfoConsells()
+    : renderInfoReserves();
 }
 
 /* ── INFORMACIÓ GENERAL ── */
@@ -1403,4 +1408,105 @@ function itinFocusMarker(mapId, idx) {
   // Destacar l'ítem de la llista
   const list = document.querySelector(`#${mapId}`).closest('.itin-card').querySelectorAll('.itin-lloc-item');
   list.forEach((li, i) => li.classList.toggle('itin-lloc-actiu', i === idx));
+}
+
+/* ── RESERVES I RESTRICCIONS ── */
+function renderInfoReserves() {
+  const ILLA_COLOR = {
+    'Sao Miguel':'#6abf70','Pico':'#888888','Sao Jorge':'#c4895a','Faial':'#5fa8e8'
+  };
+  const ILLA_EMOJI = { 'Sao Miguel':'🌋','Pico':'⛰️','Sao Jorge':'🐉','Faial':'💙' };
+  const ILLA_LBL   = { 'Sao Miguel':'São Miguel','Pico':'Pico','Sao Jorge':'São Jorge','Faial':'Faial' };
+
+  const cards = ME_RESERVES.map(r => {
+    const color = ILLA_COLOR[r.illa] || '#6aab7a';
+    const emoji = ILLA_EMOJI[r.illa] || '🏝️';
+    const lbl   = ILLA_LBL[r.illa]  || r.illa;
+    const links = r.links.map((lk, i) =>
+      `<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">
+        ${i === r.links.length-1 ? '📅 Reservar' : '🔗 Més info'}
+      </a>`
+    ).join('');
+
+    let desc = escHtml(r.desc).replace(
+      /Actualment tancada[^.]+\.[^<]*/g,
+      m => `<span class="res-tancada">⚠️ ${m}</span>`
+    );
+
+    let extraHtml = '';
+    if (r.descExtra === 'guies') {
+      extraHtml = `<p class="res-card-desc">Si es vol pujar amb guia consultar empreses especialitzades (com
+        <a class="res-inline-link" href="https://atipicoazores.com/es#atipico" target="_blank" rel="noopener">atipico</a> o
+        <a class="res-inline-link" href="https://tripixazores.com/book/mount-pico-day-climb/" target="_blank" rel="noopener">tripixazores</a>)
+        o la <button class="res-guies-btn" onclick="resShowGuies()">llista oficial de guies de muntanya autoritzats</button>.</p>`;
+    }
+
+    return `<div class="res-card" id="${escHtml(r.anchor)}" style="--res-color:${color}">
+      <div class="res-card-header">
+        <span class="res-illa-badge" style="background:${color}22;color:${color};border-color:${color}55">${emoji} ${lbl}</span>
+        <h4 class="res-card-nom">${escHtml(r.nom)}</h4>
+      </div>
+      <p class="res-card-desc">${desc}</p>
+      ${extraHtml}
+      <div class="res-card-links">${links}</div>
+    </div>`;
+  }).join('');
+
+  const guiesRows = (typeof ME_GUIES_PICO !== 'undefined' ? ME_GUIES_PICO : []).map(g =>
+    `<tr>
+      <td class="res-guia-nom">${escHtml(g.nom)}</td>
+      <td>${g.email ? `<a class="res-inline-link" href="mailto:${escHtml(g.email)}">${escHtml(g.email)}</a>` : '—'}</td>
+      <td class="res-guia-tel">${escHtml(g.tel)||'—'}</td>
+    </tr>`
+  ).join('');
+
+  return `<div class="info-article">
+    <p class="info-intro">Llocs on cal reservar amb antelació o que tenen restriccions d'accés.</p>
+    <div class="res-grid">${cards}</div>
+  </div>
+  <div class="res-modal-bg" id="resGuiesModal" onclick="resHideGuies(event)">
+    <div class="res-modal">
+      <div class="res-modal-header">
+        <h3>⛰️ Guies oficials de la Montanha do Pico</h3>
+        <button class="res-modal-close" onclick="resHideGuies()">✕</button>
+      </div>
+      <div class="res-modal-body">
+        <table class="res-guies-taula">
+          <thead><tr><th>Nom</th><th>Email</th><th>Telèfon</th></tr></thead>
+          <tbody>${guiesRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+function resShowGuies() {
+  const modal = document.getElementById('resGuiesModal');
+  if (modal) { modal.classList.add('visible'); document.body.style.overflow = 'hidden'; }
+}
+function resHideGuies(e) {
+  if (e && e.target !== document.getElementById('resGuiesModal')) return;
+  const modal = document.getElementById('resGuiesModal');
+  if (modal) { modal.classList.remove('visible'); document.body.style.overflow = ''; }
+}
+
+
+/* ── Deep link via hash ── */
+function initReservaHash() {
+  const hash = location.hash.replace('#','');
+  if (!hash.startsWith('reserva-')) return;
+  // Navegar a la secció 'info' i al tab 'reserves'
+  meSetSeccio('info');
+  _infoTab = 'reserves';
+  renderInfoNav();
+  renderInfoContingut();
+  // Scroll fins a la card
+  setTimeout(() => {
+    const el = document.getElementById(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('res-card-highlight');
+      setTimeout(() => el.classList.remove('res-card-highlight'), 2000);
+    }
+  }, 300);
 }
