@@ -1897,3 +1897,153 @@ body.light .info-taula tbody tr:hover td { background: rgba(45,90,61,0.06); }
 .info-tr-corvo       td:first-child { color: #404040 !important; font-weight: 600; }
 
 .info-taula-zip  { color: var(--me-muted) !important; font-size: 0.75rem; }
+
+/* ════════════════════════════════════════════
+   SECCIÓ: ITINERARIS ALTERNATIUS
+   ════════════════════════════════════════════ */
+
+/* Filtres */
+.itin-filtres-wrap {
+  position: sticky;
+  top: calc(52px + 49px);
+  z-index: 170;
+  background: rgba(10,22,40,0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(106,171,122,0.12);
+  padding: 0 20px;
+}
+.itin-fila-illes, .itin-fila-zones {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 9px 0; scrollbar-width: thin;
+  scrollbar-color: rgba(106,171,122,0.3) transparent;
+  max-width: 1100px; margin: 0 auto;
+}
+.itin-fila-illes { border-bottom: 1px solid rgba(106,171,122,0.08); padding-bottom: 8px; }
+.itin-fila-zones { padding-top: 7px; padding-bottom: 10px; }
+.itin-fila-illes::-webkit-scrollbar,
+.itin-fila-zones::-webkit-scrollbar { height: 3px; }
+.itin-fila-illes::-webkit-scrollbar-thumb,
+.itin-fila-zones::-webkit-scrollbar-thumb { background: rgba(106,171,122,0.3); border-radius: 2px; }
+
+/* Pills */
+.itin-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 15px; border-radius: 24px; border: 1px solid var(--pill-color, rgba(106,171,122,0.25));
+  background: none; color: var(--me-muted);
+  font-family: 'Lora', serif; font-size: 0.8rem;
+  cursor: pointer; white-space: nowrap; transition: all 0.2s; flex-shrink: 0;
+}
+.itin-pill:hover { color: var(--me-green3); border-color: rgba(106,171,122,0.5); }
+.itin-pill-illa.actiu {
+  background: color-mix(in srgb, var(--pill-color) 20%, transparent);
+  border-color: var(--pill-color); color: var(--pill-color); font-weight: 600;
+}
+.itin-pill-zona.actiu {
+  background: color-mix(in srgb, var(--zona-color, #6aab7a) 18%, transparent);
+  border-color: var(--zona-color, #6aab7a); color: var(--zona-color, #6aab7a); font-weight: 600;
+}
+
+/* Contingut */
+.itin-contingut {
+  max-width: 1100px; margin: 0 auto;
+  padding: 28px 20px 80px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+
+/* Card d'itinerari */
+.itin-card {
+  border: 1px solid rgba(106,171,122,0.15);
+  border-radius: 16px; overflow: hidden;
+  background: var(--me-surface);
+  transition: border-color 0.2s;
+}
+.itin-card:hover { border-color: color-mix(in srgb, var(--itin-color) 40%, transparent); }
+.itin-card-millor {
+  border-color: color-mix(in srgb, var(--itin-color) 30%, transparent);
+  background: color-mix(in srgb, var(--itin-color) 4%, transparent);
+}
+
+.itin-card-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(106,171,122,0.1);
+  background: color-mix(in srgb, var(--itin-color) 8%, transparent);
+}
+.itin-badge-millor {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 3px 9px; border-radius: 8px;
+  background: color-mix(in srgb, var(--itin-color) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--itin-color) 40%, transparent);
+  color: var(--itin-color); white-space: nowrap; flex-shrink: 0;
+}
+.itin-card-titol {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem;
+  font-weight: 700; color: var(--me-text); margin: 0; flex: 1;
+}
+.itin-font-link {
+  font-family: 'Lora', serif; font-size: 0.72rem;
+  color: var(--me-muted); text-decoration: none;
+  border: 1px solid rgba(106,171,122,0.15); padding: 3px 9px;
+  border-radius: 8px; white-space: nowrap; flex-shrink: 0;
+  transition: all 0.2s;
+}
+.itin-font-link:hover { color: var(--me-green2); border-color: rgba(106,171,122,0.4); }
+
+.itin-card-cos {
+  display: grid; grid-template-columns: 280px 1fr; gap: 0;
+}
+
+/* Llista de llocs */
+.itin-llocs-list {
+  list-style: none; padding: 16px; margin: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  border-right: 1px solid rgba(106,171,122,0.1);
+  max-height: 380px; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: rgba(106,171,122,0.2) transparent;
+}
+.itin-llocs-list::-webkit-scrollbar { width: 4px; }
+.itin-llocs-list::-webkit-scrollbar-thumb { background: rgba(106,171,122,0.2); border-radius: 2px; }
+.itin-lloc-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-family: 'Lora', serif; font-size: 0.78rem;
+  color: rgba(232,240,236,0.8); line-height: 1.4;
+}
+.itin-lloc-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; border-radius: 50%;
+  border: 1px solid; font-size: 0.65rem; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+}
+.itin-lloc-nom { flex: 1; }
+
+/* Mapa */
+.itin-map-wrap { position: relative; }
+.itin-map {
+  width: 100%; height: 380px;
+  background: #0a1628;
+}
+.itin-map-buit {
+  height: 380px; display: flex; align-items: center; justify-content: center;
+  color: var(--me-muted); font-family: 'Lora', serif; font-style: italic; font-size: 0.85rem;
+}
+
+/* Leaflet overrides per tema fosc */
+.itin-map .leaflet-popup-content-wrapper { background: #0f1f38; border: 1px solid rgba(106,171,122,0.3); color: #a8d8b0; border-radius: 10px; }
+.itin-map .leaflet-popup-tip { background: #0f1f38; }
+.itin-map .leaflet-popup-content { font-family: 'Lora', serif; font-size: 0.82rem; margin: 8px 12px; }
+.itin-map .leaflet-control-zoom a { background: #0f1f38; color: #6aab7a; border-color: rgba(106,171,122,0.3); }
+.itin-map .leaflet-control-zoom a:hover { background: #1a3a2a; }
+
+/* Mode clar */
+body.light .itin-filtres-wrap { background: rgba(244,247,244,0.97); }
+body.light .itin-pill { color: #4a7a5a; }
+body.light .itin-card { background: #fff; }
+body.light .itin-lloc-item { color: #2a3a2a; }
+body.light .itin-card-titol { color: #1a3a2a; }
+
+/* Responsive */
+@media (max-width: 720px) {
+  .itin-card-cos { grid-template-columns: 1fr; }
+  .itin-llocs-list { max-height: 240px; border-right: none; border-bottom: 1px solid rgba(106,171,122,0.1); }
+  .itin-map { height: 280px; }
+}

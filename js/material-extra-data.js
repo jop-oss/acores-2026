@@ -6559,3 +6559,2106 @@ const ME_GASTRONOMIA = {
     }
   ]
 };
+const ME_ITINERARIS = {
+  "Faial": [
+    {
+      "nom": "Horta i els seus voltants",
+      "font": "https://www.revigorate.com/things-to-do-in-faial.html",
+      "llocs": [
+        {
+          "nom": "Horta",
+          "coords": [
+            38.526494,
+            -28.628584
+          ]
+        },
+        {
+          "nom": "Marina da Horta",
+          "coords": [
+            38.531169,
+            -28.625376
+          ]
+        },
+        {
+          "nom": "Observación de ballenas",
+          "coords": [
+            38.530071,
+            -28.626526
+          ]
+        },
+        {
+          "nom": "Forte de Santa Cruz",
+          "coords": [
+            38.531484,
+            -28.625959
+          ]
+        },
+        {
+          "nom": "Igreja São Salvador",
+          "coords": [
+            38.53727,
+            -28.626636
+          ]
+        },
+        {
+          "nom": "Museu da Horta",
+          "coords": [
+            38.536877,
+            -28.62664
+          ]
+        },
+        {
+          "nom": "Peter Café Sport",
+          "coords": [
+            38.529563,
+            -28.626782
+          ]
+        },
+        {
+          "nom": "Praia do Porto Pim",
+          "coords": [
+            38.524833,
+            -28.625723
+          ]
+        },
+        {
+          "nom": "Monte da Guia",
+          "coords": [
+            38.520413,
+            -28.627768
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nord de Faial",
+      "font": "https://www.revigorate.com/things-to-do-in-faial.html",
+      "llocs": [
+        {
+          "nom": "Miradouro Nossa Senhora da Conceição",
+          "coords": [
+            38.547878,
+            -28.616239
+          ]
+        },
+        {
+          "nom": "Praia do Almoxarife",
+          "coords": [
+            38.554193,
+            -28.60934
+          ]
+        },
+        {
+          "nom": "Porto do Salão",
+          "coords": [
+            38.625863,
+            -28.658234
+          ]
+        },
+        {
+          "nom": "Cedros",
+          "coords": [
+            38.635588,
+            -28.69408
+          ]
+        },
+        {
+          "nom": "Miradouro da Ribeira das Cabras",
+          "coords": [
+            38.608287,
+            -28.749736
+          ]
+        },
+        {
+          "nom": "Praia da Fajã",
+          "coords": [
+            38.6102,
+            -28.757538
+          ]
+        },
+        {
+          "nom": "Vulcão dos Capelinhos",
+          "coords": [
+            38.5967,
+            -28.823354
+          ]
+        },
+        {
+          "nom": "Porto do Comprido",
+          "coords": [
+            38.592709,
+            -28.827059
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Sud de Faial",
+      "font": "https://www.revigorate.com/things-to-do-in-faial.html",
+      "llocs": [
+        {
+          "nom": "Piscinas Naturais do Varadouro",
+          "coords": [
+            38.564751,
+            -28.774398
+          ]
+        },
+        {
+          "nom": "Queijaria O Morro",
+          "coords": [
+            38.546939,
+            -28.748894
+          ]
+        },
+        {
+          "nom": "Morro de Castelo Branco",
+          "coords": [
+            38.525356,
+            -28.746916
+          ]
+        },
+        {
+          "nom": "Poça da Rainha",
+          "coords": [
+            38.523165,
+            -28.668927
+          ]
+        },
+        {
+          "nom": "Miradouro Ponta Furada",
+          "coords": [
+            38.523019,
+            -28.657667
+          ]
+        },
+        {
+          "nom": "Piscina Lajinha",
+          "coords": [
+            38.523165,
+            -28.651655
+          ]
+        },
+        {
+          "nom": "Jardim Botânico do Faial",
+          "coords": [
+            38.550905,
+            -28.639333
+          ]
+        },
+        {
+          "nom": "Caldeira do Cabeço Gordo",
+          "coords": [
+            38.580542,
+            -28.706317
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "El millor de Faial",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-faial",
+      "llocs": [
+        {
+          "nom": "Horta (Marina, Porto Pim, Monte da Guía, Miradouros, Peter Cafe Sport…)",
+          "coords": [
+            38.526494,
+            -28.628584
+          ]
+        },
+        {
+          "nom": "Caldeira (sendero alrededor del cráter)",
+          "coords": [
+            38.580542,
+            -28.706317
+          ]
+        },
+        {
+          "nom": "Levadas (sendero)",
+          "coords": [
+            38.581533,
+            -28.745573
+          ]
+        },
+        {
+          "nom": "Vulcão dos Capelinhos (Centro de interpretación, Faro, miradouros)",
+          "coords": [
+            38.5967,
+            -28.823354
+          ]
+        },
+        {
+          "nom": "Porto Comprido",
+          "coords": [
+            38.592709,
+            -28.827059
+          ]
+        },
+        {
+          "nom": "Praia da Fajã (sendero Rocha da Fajã)",
+          "coords": [
+            38.6102,
+            -28.757538
+          ]
+        },
+        {
+          "nom": "Miradouro Ribeira das Cabras",
+          "coords": [
+            38.608287,
+            -28.749736
+          ]
+        },
+        {
+          "nom": "Ribeirinha (restos terremoto: Faro e Iglesia)",
+          "coords": [
+            38.589752,
+            -28.613013
+          ]
+        },
+        {
+          "nom": "Praia de Almoxarife",
+          "coords": [
+            38.554193,
+            -28.60934
+          ]
+        },
+        {
+          "nom": "Miradouro Nossa Senhora da Conceição",
+          "coords": [
+            38.547878,
+            -28.616239
+          ]
+        },
+        {
+          "nom": "Poça da Rainha",
+          "coords": [
+            38.523165,
+            -28.668927
+          ]
+        },
+        {
+          "nom": "Ponta do Morro",
+          "coords": [
+            38.525356,
+            -28.746916
+          ]
+        },
+        {
+          "nom": "Piscinas de Varadouro",
+          "coords": [
+            38.564751,
+            -28.774398
+          ]
+        }
+      ]
+    }
+  ],
+  "Sao Jorge": [
+    {
+      "nom": "Sud de Sao Jorge",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-jorge.html",
+      "llocs": [
+        {
+          "nom": "Urzelina",
+          "coords": [
+            38.651218,
+            -28.138123
+          ]
+        },
+        {
+          "nom": "Igreja Santa Bárbara",
+          "coords": [
+            38.631998,
+            -28.096376
+          ]
+        },
+        {
+          "nom": "Fajã das Almas",
+          "coords": [
+            38.628199,
+            -28.078488
+          ]
+        },
+        {
+          "nom": "Calheta",
+          "coords": [
+            38.601158,
+            -28.010782
+          ]
+        },
+        {
+          "nom": "Fajã Grande",
+          "coords": [
+            38.604626,
+            -28.028256
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Centre de Sao Jorge",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-jorge.html",
+      "llocs": [
+        {
+          "nom": "Pico da Esperança",
+          "coords": [
+            38.650044,
+            -28.083333
+          ]
+        },
+        {
+          "nom": "Fajã dos Cubres",
+          "coords": [
+            38.642323,
+            -27.965887
+          ]
+        },
+        {
+          "nom": "Fajã da Ribeira da Areia",
+          "coords": [
+            38.670923,
+            -28.024349
+          ]
+        },
+        {
+          "nom": "Fajã do Ouvidor",
+          "coords": [
+            38.677583,
+            -28.051779
+          ]
+        },
+        {
+          "nom": "Fajã de Além",
+          "coords": [
+            38.67944,
+            -28.071357
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Oest de Sao Jorge",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-jorge.html",
+      "llocs": [
+        {
+          "nom": "Velas",
+          "coords": [
+            38.679418,
+            -28.205295
+          ]
+        },
+        {
+          "nom": "Igreja São Jorge",
+          "coords": [
+            38.679859,
+            -28.20498
+          ]
+        },
+        {
+          "nom": "União de Cooperativas Agricolas de Lacticínios de São Jorge",
+          "coords": [
+            38.700879,
+            -28.199628
+          ]
+        },
+        {
+          "nom": "Fajã de João Dias",
+          "coords": [
+            38.730628,
+            -28.227891
+          ]
+        },
+        {
+          "nom": "Parque Florestal das Sete Fontes",
+          "coords": [
+            38.735529,
+            -28.262358
+          ]
+        },
+        {
+          "nom": "Ponta dos Rosais",
+          "coords": [
+            38.75546,
+            -28.316743
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Est de Sao Jorge",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-jorge.html",
+      "llocs": [
+        {
+          "nom": "Farol do Topo",
+          "coords": [
+            38.549138,
+            -27.75478
+          ]
+        },
+        {
+          "nom": "Cascata do Cruzal",
+          "coords": [
+            38.546454,
+            -27.811355
+          ]
+        },
+        {
+          "nom": "Fajã de São João",
+          "coords": [
+            38.547263,
+            -27.86038
+          ]
+        },
+        {
+          "nom": "Fajã dos Vimes",
+          "coords": [
+            38.584939,
+            -27.934568
+          ]
+        },
+        {
+          "nom": "Fajã dos Bodes",
+          "coords": [
+            38.574634,
+            -27.918775
+          ]
+        },
+        {
+          "nom": "Fajã da Caldeira de Santo Cristo",
+          "coords": [
+            38.625558,
+            -27.927911
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "El millor de Sao Jorge",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-jorge",
+      "llocs": [
+        {
+          "nom": "Fajã do Ouvidor (Poça Simão Dias, piscina natural, Miradouro)",
+          "coords": [
+            38.677583,
+            -28.051779
+          ]
+        },
+        {
+          "nom": "Fajã da Ribeira da areia (Arco natural)",
+          "coords": [
+            38.670923,
+            -28.024349
+          ]
+        },
+        {
+          "nom": "Fajã dos Cubres",
+          "coords": [
+            38.642323,
+            -27.965887
+          ]
+        },
+        {
+          "nom": "Fajã da Caldeira de Santo Cristo (sendero desde Serra do Topo)",
+          "coords": [
+            38.625558,
+            -27.927911
+          ]
+        },
+        {
+          "nom": "Pico da Esperança",
+          "coords": [
+            38.650044,
+            -28.083333
+          ]
+        },
+        {
+          "nom": "Urzelina (piscina natural, molinos, artesanato)",
+          "coords": [
+            38.651218,
+            -28.138123
+          ]
+        },
+        {
+          "nom": "Fajã das Almas (piscina natural, miradouros)",
+          "coords": [
+            38.628199,
+            -28.078488
+          ]
+        },
+        {
+          "nom": "Fajã Grande (piscinas naturales)",
+          "coords": [
+            38.604626,
+            -28.028256
+          ]
+        },
+        {
+          "nom": "Fajã dos Vimes (plantación de café, miradouros)",
+          "coords": [
+            38.584939,
+            -27.934568
+          ]
+        },
+        {
+          "nom": "Fajã de São Joao",
+          "coords": [
+            38.547263,
+            -27.86038
+          ]
+        },
+        {
+          "nom": "Topo (piscina natural, ilheu do Topo, Faro)",
+          "coords": [
+            38.547218,
+            -27.766961
+          ]
+        },
+        {
+          "nom": "Velas (piscinas naturales, jardim municipal)",
+          "coords": [
+            38.679418,
+            -28.205295
+          ]
+        },
+        {
+          "nom": "Parque forestal Sete Fontes",
+          "coords": [
+            38.735529,
+            -28.262358
+          ]
+        },
+        {
+          "nom": "Ponta dos Rosais (Farol, Vigia da Baleia)",
+          "coords": [
+            38.75546,
+            -28.316743
+          ]
+        }
+      ]
+    }
+  ],
+  "Pico": [
+    {
+      "nom": "Oest de Pico",
+      "font": "https://www.revigorate.com/things-to-do-in-pico.html",
+      "llocs": [
+        {
+          "nom": "Gruta das Torres",
+          "coords": [
+            38.494353,
+            -28.502384
+          ]
+        },
+        {
+          "nom": "Criação Velha",
+          "coords": [
+            38.505013,
+            -28.541249
+          ]
+        },
+        {
+          "nom": "Moinho Do Frade",
+          "coords": [
+            38.51423,
+            -28.534066
+          ]
+        },
+        {
+          "nom": "Madalena",
+          "coords": [
+            38.534647,
+            -28.528167
+          ]
+        },
+        {
+          "nom": "Adega Cooperativa Vitivinícola",
+          "coords": [
+            38.530918,
+            -28.532959
+          ]
+        },
+        {
+          "nom": "Piscinas Naturais de Areia Funda",
+          "coords": [
+            38.533809,
+            -28.530577
+          ]
+        },
+        {
+          "nom": "Igreja Santa Maria Madalena",
+          "coords": [
+            38.534382,
+            -28.527939
+          ]
+        },
+        {
+          "nom": "Museu do Vinho",
+          "coords": [
+            38.536288,
+            -28.516313
+          ]
+        },
+        {
+          "nom": "Piscinas Naturais da Barca",
+          "coords": [
+            38.54334,
+            -28.520652
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Pujada al cim de Pico",
+      "font": "https://www.revigorate.com/things-to-do-in-pico.html",
+      "llocs": [
+        {
+          "nom": "Montanha do Pico",
+          "coords": [
+            38.468688,
+            -28.399258
+          ]
+        },
+        {
+          "nom": "Casa da Montanha",
+          "coords": [
+            38.470565,
+            -28.426494
+          ]
+        },
+        {
+          "nom": "Furna do Frei Matias",
+          "coords": [
+            38.494854,
+            -28.448117
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nord de Pico",
+      "font": "https://www.revigorate.com/things-to-do-in-pico.html",
+      "llocs": [
+        {
+          "nom": "Zona Balnear do Cachorro",
+          "coords": [
+            38.555957,
+            -28.44709
+          ]
+        },
+        {
+          "nom": "Centro de Interpretação da Paisagem da Cultura da Vinha da Ilha do Pico",
+          "coords": [
+            38.556944,
+            -28.427636
+          ]
+        },
+        {
+          "nom": "Adega A Buraca",
+          "coords": [
+            38.535318,
+            -28.341625
+          ]
+        },
+        {
+          "nom": "Furna de Santo António",
+          "coords": [
+            38.535218,
+            -28.335802
+          ]
+        },
+        {
+          "nom": "Whaling Industry Museum",
+          "coords": [
+            38.529527,
+            -28.322263
+          ]
+        },
+        {
+          "nom": "Ponta Rasa",
+          "coords": [
+            38.52338,
+            -28.310829
+          ]
+        },
+        {
+          "nom": "São Roque do Pico",
+          "coords": [
+            38.518165,
+            -28.309843
+          ]
+        },
+        {
+          "nom": "Prainha",
+          "coords": [
+            38.459387,
+            -28.19272
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Est de Pico",
+      "font": "https://www.revigorate.com/things-to-do-in-pico.html",
+      "llocs": [
+        {
+          "nom": "Lagoa do Capitão",
+          "coords": [
+            38.48798,
+            -28.319153
+          ]
+        },
+        {
+          "nom": "Lagoa Seca",
+          "coords": [
+            38.456041,
+            -28.245853
+          ]
+        },
+        {
+          "nom": "Lagoa da Rosada",
+          "coords": [
+            38.432663,
+            -28.185883
+          ]
+        },
+        {
+          "nom": "Lagoa do Peixinho",
+          "coords": [
+            38.434654,
+            -28.173938
+          ]
+        },
+        {
+          "nom": "Lajes do Pico",
+          "coords": [
+            38.392654,
+            -28.250975
+          ]
+        },
+        {
+          "nom": "Miradouro da Ponta do Arrife",
+          "coords": [
+            38.389091,
+            -28.221911
+          ]
+        },
+        {
+          "nom": "Ribeiras",
+          "coords": [
+            38.405619,
+            -28.187606
+          ]
+        },
+        {
+          "nom": "Calheta de Nesquim",
+          "coords": [
+            38.402872,
+            -28.08247
+          ]
+        },
+        {
+          "nom": "Poça das Mujas",
+          "coords": [
+            38.400129,
+            -28.082887
+          ]
+        },
+        {
+          "nom": "Farol da Ponta da Ilha",
+          "coords": [
+            38.412521,
+            -28.030509
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "El millor de Pico",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-pico",
+      "llocs": [
+        {
+          "nom": "Ascensión al Piquinho (con Atipico)",
+          "coords": [
+            38.468688,
+            -28.399258
+          ]
+        },
+        {
+          "nom": "Estrada longitudinal (EN3)",
+          "coords": [
+            38.499247,
+            -28.4628
+          ]
+        },
+        {
+          "nom": "Madalena (piscina municipal, Cella Bar…)",
+          "coords": [
+            38.534647,
+            -28.528167
+          ]
+        },
+        {
+          "nom": "Paisagem da Vinha de Criação Velha (sendero desde Madalena, Moinho do Frade)",
+          "coords": [
+            38.512371,
+            -28.537628
+          ]
+        },
+        {
+          "nom": "Gruta das Torres",
+          "coords": [
+            38.494353,
+            -28.502384
+          ]
+        },
+        {
+          "nom": "MiratecArts Galeria Costa",
+          "coords": [
+            38.458883,
+            -28.511556
+          ]
+        },
+        {
+          "nom": "Lajes do Pico (Whale Watching)",
+          "coords": [
+            38.392654,
+            -28.250975
+          ]
+        },
+        {
+          "nom": "Calheta de Nesquim (piscinas naturales)",
+          "coords": [
+            38.402872,
+            -28.08247
+          ]
+        },
+        {
+          "nom": "Ponta da Ilha (Faro, Oleiro)",
+          "coords": [
+            38.412521,
+            -28.030509
+          ]
+        },
+        {
+          "nom": "Lagoas",
+          "coords": [
+            38.48798,
+            -28.319153
+          ]
+        },
+        {
+          "nom": "Santo Amaro (pasear y restaurante Magma)",
+          "coords": [
+            38.456566,
+            -28.163679
+          ]
+        },
+        {
+          "nom": "Prainha (piscinas naturales, Ponta do Misterio)",
+          "coords": [
+            38.459387,
+            -28.19272
+          ]
+        },
+        {
+          "nom": "Sao Roque (piscinas naturales)",
+          "coords": [
+            38.518165,
+            -28.309843
+          ]
+        },
+        {
+          "nom": "Lajido y Cachorro",
+          "coords": [
+            38.555957,
+            -28.44709
+          ]
+        }
+      ]
+    }
+  ],
+  "Sao Miguel": [
+    {
+      "nom": "Oest de Sao Miguel",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-miguel.html",
+      "llocs": [
+        {
+          "nom": "Miradouro do Pico do Carvão",
+          "coords": [
+            37.819165,
+            -25.751098
+          ]
+        },
+        {
+          "nom": "Lagoa das Empadadas",
+          "coords": [
+            37.824383,
+            -25.746985
+          ]
+        },
+        {
+          "nom": "Lagoa do Canário",
+          "coords": [
+            37.835984,
+            -25.759685
+          ]
+        },
+        {
+          "nom": "Miradouro da Boca do Inferno",
+          "coords": [
+            37.842856,
+            -25.763623
+          ]
+        },
+        {
+          "nom": "Miradouro da Vista do Rei",
+          "coords": [
+            37.839293,
+            -25.794936
+          ]
+        },
+        {
+          "nom": "Lagoa das Sete Cidades",
+          "coords": [
+            37.86024,
+            -25.791829
+          ]
+        },
+        {
+          "nom": "Mosteiros",
+          "coords": [
+            37.890417,
+            -25.820631
+          ]
+        },
+        {
+          "nom": "Miradouro da Ponta do Escalvado",
+          "coords": [
+            37.87123,
+            -25.841336
+          ]
+        },
+        {
+          "nom": "Ponta da Ferraria",
+          "coords": [
+            37.8584,
+            -25.852272
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Centre de Sao Miguel I",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-miguel.html",
+      "llocs": [
+        {
+          "nom": "Avistamiento de ballenas",
+          "coords": [
+            37.73956,
+            -25.664059
+          ]
+        },
+        {
+          "nom": "Ponta Delgada",
+          "coords": [
+            37.74308,
+            -25.665768
+          ]
+        },
+        {
+          "nom": "Jardim António Borges",
+          "coords": [
+            37.87123,
+            -25.841336
+          ]
+        },
+        {
+          "nom": "Plantación de piñas de las Azores",
+          "coords": [
+            37.748545,
+            -25.65468
+          ]
+        },
+        {
+          "nom": "Salto do Cabrito",
+          "coords": [
+            37.796048,
+            -25.49461
+          ]
+        },
+        {
+          "nom": "Caldeira Velha",
+          "coords": [
+            37.784581,
+            -25.501002
+          ]
+        },
+        {
+          "nom": "Pico da Barrosa",
+          "coords": [
+            37.762698,
+            -25.491917
+          ]
+        },
+        {
+          "nom": "Lagoa do Fogo",
+          "coords": [
+            37.762074,
+            -25.474133
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Sud de Sao Miguel",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-miguel.html",
+      "llocs": [
+        {
+          "nom": "Cascadas Faial da Terra y Salto do Prego",
+          "coords": [
+            37.760968,
+            -25.19669
+          ]
+        },
+        {
+          "nom": "Ribeira Quente",
+          "coords": [
+            37.734721,
+            -25.298926
+          ]
+        },
+        {
+          "nom": "Furnas",
+          "coords": [
+            37.773263,
+            -25.310292
+          ]
+        },
+        {
+          "nom": "Parque de Terra Nostra Park",
+          "coords": [
+            37.772521,
+            -25.315628
+          ]
+        },
+        {
+          "nom": "Poça da Dona Beija",
+          "coords": [
+            37.769449,
+            -25.319375
+          ]
+        },
+        {
+          "nom": "Lagoa das Furnas",
+          "coords": [
+            37.75716,
+            -25.332954
+          ]
+        },
+        {
+          "nom": "Miradouro do Castelo Branco",
+          "coords": [
+            37.754298,
+            -25.355435
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Centre de Sao Miguel II",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-miguel.html",
+      "llocs": [
+        {
+          "nom": "Areal de Santa Bárbara",
+          "coords": [
+            37.818956,
+            -25.541835
+          ]
+        },
+        {
+          "nom": "Ribeira Grande",
+          "coords": [
+            37.821206,
+            -25.523203
+          ]
+        },
+        {
+          "nom": "Miradouro de Santa Iria",
+          "coords": [
+            37.82383,
+            -25.462352
+          ]
+        },
+        {
+          "nom": "Porto Formoso",
+          "coords": [
+            37.815359,
+            -25.424893
+          ]
+        },
+        {
+          "nom": "Gorreana tea",
+          "coords": [
+            37.818382,
+            -25.402471
+          ]
+        },
+        {
+          "nom": "Lagoa do Congro",
+          "coords": [
+            37.756253,
+            -25.407581
+          ]
+        },
+        {
+          "nom": "Vila Franca de Campo",
+          "coords": [
+            37.714578,
+            -25.434325
+          ]
+        },
+        {
+          "nom": "Praia de Água D'Alto",
+          "coords": [
+            37.717,
+            -25.473907
+          ]
+        },
+        {
+          "nom": "Miradouro do Pisão",
+          "coords": [
+            37.714905,
+            -25.494259
+          ]
+        },
+        {
+          "nom": "Caloura",
+          "coords": [
+            37.713795,
+            -25.498501
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nord-est de Sao Miguel",
+      "font": "https://www.revigorate.com/things-to-do-in-sao-miguel.html",
+      "llocs": [
+        {
+          "nom": "Ponta da Madrugada",
+          "coords": [
+            37.789595,
+            -25.145421
+          ]
+        },
+        {
+          "nom": "Ponta do Sossego",
+          "coords": [
+            37.799251,
+            -25.145884
+          ]
+        },
+        {
+          "nom": "Farol do Arnel",
+          "coords": [
+            37.824101,
+            -25.13554
+          ]
+        },
+        {
+          "nom": "Nordeste",
+          "coords": [
+            37.832152,
+            -25.145868
+          ]
+        },
+        {
+          "nom": "Ribeira dos Caldeirões",
+          "coords": [
+            37.842655,
+            -25.267559
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Furnas i voltants",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-miguel",
+      "llocs": [
+        {
+          "nom": "Lagoa das Furnas",
+          "coords": [
+            37.75716,
+            -25.332954
+          ]
+        },
+        {
+          "nom": "Parque Terra Nostra (piscina termal cerrada temporalmente)",
+          "coords": [
+            37.772521,
+            -25.315628
+          ]
+        },
+        {
+          "nom": "Poça Dona Beija",
+          "coords": [
+            37.769449,
+            -25.319375
+          ]
+        },
+        {
+          "nom": "Furnas",
+          "coords": [
+            37.773263,
+            -25.310292
+          ]
+        },
+        {
+          "nom": "Caldeiras",
+          "coords": [
+            37.76858,
+            -25.331472
+          ]
+        },
+        {
+          "nom": "Miradouros (Pico do Ferro, Salto do Cavalo…)",
+          "coords": [
+            37.772022,
+            -25.334121
+          ]
+        },
+        {
+          "nom": "Praia do Fogo (Ribeira Quente)",
+          "coords": [
+            37.730778,
+            -25.3094
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Oest (Sete Cidades i Mosteiros)",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-miguel",
+      "llocs": [
+        {
+          "nom": "Lagoa das Sete Cidades y miradouros (Vista do Rei, Cerrado das Freiras…)",
+          "coords": [
+            37.839293,
+            -25.794936
+          ]
+        },
+        {
+          "nom": "Ruinas hotel Monte Palace",
+          "coords": [
+            37.838924,
+            -25.794201
+          ]
+        },
+        {
+          "nom": "Lagoa de Santiago",
+          "coords": [
+            37.849066,
+            -25.773821
+          ]
+        },
+        {
+          "nom": "Miradouro da boca do inferno",
+          "coords": [
+            37.842856,
+            -25.763623
+          ]
+        },
+        {
+          "nom": "Lagoa do Canario",
+          "coords": [
+            37.835984,
+            -25.759685
+          ]
+        },
+        {
+          "nom": "Sendero Serra Devassa (Lagoa das Eguas, Lagoa das Empadadas…)",
+          "coords": [
+            37.834578,
+            -25.75851
+          ]
+        },
+        {
+          "nom": "Sete Cidades",
+          "coords": [
+            37.86024,
+            -25.791829
+          ]
+        },
+        {
+          "nom": "Miradouro Ponta do Escalvado",
+          "coords": [
+            37.87123,
+            -25.841336
+          ]
+        },
+        {
+          "nom": "Ponta da Ferraria",
+          "coords": [
+            37.8584,
+            -25.852272
+          ]
+        },
+        {
+          "nom": "Praia dos Mosteiros",
+          "coords": [
+            37.888468,
+            -25.824081
+          ]
+        },
+        {
+          "nom": "Piscinas naturales de Mosteiros",
+          "coords": [
+            37.898054,
+            -25.822314
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nord i Centre",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-miguel",
+      "llocs": [
+        {
+          "nom": "Caldeira Velha",
+          "coords": [
+            37.784581,
+            -25.501002
+          ]
+        },
+        {
+          "nom": "Salto do Cabrito",
+          "coords": [
+            37.796048,
+            -25.49461
+          ]
+        },
+        {
+          "nom": "Lagoa do Fogo y miradouros",
+          "coords": [
+            37.762074,
+            -25.474133
+          ]
+        },
+        {
+          "nom": "Lagoa do Congro",
+          "coords": [
+            37.756253,
+            -25.407581
+          ]
+        },
+        {
+          "nom": "Lagoa de São Bras",
+          "coords": [
+            37.793026,
+            -25.409722
+          ]
+        },
+        {
+          "nom": "Plantaciones de té (Gorreana / Porto Formoso)",
+          "coords": [
+            37.818382,
+            -25.402471
+          ]
+        },
+        {
+          "nom": "Praia dos Moinhos",
+          "coords": [
+            37.82341,
+            -25.445064
+          ]
+        },
+        {
+          "nom": "Miradouro Santa Iria",
+          "coords": [
+            37.82383,
+            -25.462352
+          ]
+        },
+        {
+          "nom": "Ribeira Grande",
+          "coords": [
+            37.821206,
+            -25.523203
+          ]
+        },
+        {
+          "nom": "Praia de Santa Bárbara",
+          "coords": [
+            37.818956,
+            -25.541835
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Sud, Ponta Delgada i voltants",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-miguel",
+      "llocs": [
+        {
+          "nom": "Ponta Delgada (Portas da Cidade, Portas do Mar, Mercado da Graça,…)",
+          "coords": [
+            37.74308,
+            -25.665768
+          ]
+        },
+        {
+          "nom": "Avistamiento de cetáceos (ballenas, delfines…) en libertad",
+          "coords": [
+            37.73956,
+            -25.664059
+          ]
+        },
+        {
+          "nom": "Ilheu de Vila Franca do Campo",
+          "coords": [
+            37.70552,
+            -25.443605
+          ]
+        },
+        {
+          "nom": "Caloura",
+          "coords": [
+            37.713795,
+            -25.498501
+          ]
+        },
+        {
+          "nom": "Playas (Milicias, Populo, Amora, Baixa D’Areia…)",
+          "coords": [
+            37.751058,
+            -25.623436
+          ]
+        },
+        {
+          "nom": "Plantaciones de piñas",
+          "coords": [
+            37.748545,
+            -25.65468
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nord-est i Povoação",
+      "font": "https://randomtrip.es/guia-azores/#que-ver-en-sao-miguel",
+      "llocs": [
+        {
+          "nom": "Salto da Farinha",
+          "coords": [
+            37.850711,
+            -25.29428
+          ]
+        },
+        {
+          "nom": "Poço Azul",
+          "coords": [
+            37.850497,
+            -25.289534
+          ]
+        },
+        {
+          "nom": "Ribeira dos Caldeirões",
+          "coords": [
+            37.842655,
+            -25.267559
+          ]
+        },
+        {
+          "nom": "Miradouros Nordeste (Ponta do Arnel, Vista dos barcos, Ponta do Sossego, Ponta da Madrugada…)",
+          "coords": [
+            37.824479,
+            -25.13962
+          ]
+        },
+        {
+          "nom": "Centro Ambiental do Priolo",
+          "coords": [
+            37.801556,
+            -25.163196
+          ]
+        },
+        {
+          "nom": "Salto do Prego",
+          "coords": [
+            37.760968,
+            -25.19669
+          ]
+        },
+        {
+          "nom": "Miradouro Pico dos Bodes",
+          "coords": [
+            37.747001,
+            -25.219072
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Visita completa a Ponta Delgada",
+      "font": "https://www.futurismo.pt/es/blog/itinerario-de-5-dias-isla-de-sao-miguel/",
+      "llocs": [
+        {
+          "nom": "Mirador y Ermita de Mãe de Deus",
+          "coords": [
+            37.743953,
+            -25.660535
+          ]
+        },
+        {
+          "nom": "Iglesias de Ponta Delgada",
+          "coords": [
+            37.738163,
+            -25.673157
+          ]
+        },
+        {
+          "nom": "Jardines de António Borges y José do Canto",
+          "coords": [
+            37.87123,
+            -25.841336
+          ]
+        },
+        {
+          "nom": "Gruta do Carvão",
+          "coords": [
+            37.748183,
+            -25.687064
+          ]
+        },
+        {
+          "nom": "Plantaciones de piña",
+          "coords": [
+            37.748545,
+            -25.65468
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Sete Cidades i part oest",
+      "font": "https://www.futurismo.pt/es/blog/itinerario-de-5-dias-isla-de-sao-miguel/",
+      "llocs": [
+        {
+          "nom": "Miradores icónicos de Vista do Rei y Grota do Inferno",
+          "coords": [
+            37.839293,
+            -25.794936
+          ]
+        },
+        {
+          "nom": "Rutas de senderismo: Cumeeira Grande y Serra Devassa",
+          "coords": [
+            37.834575,
+            -25.75851
+          ]
+        },
+        {
+          "nom": "Aldea Sete Cidades",
+          "coords": [
+            37.86024,
+            -25.791829
+          ]
+        },
+        {
+          "nom": "Ponta da Ferraria",
+          "coords": [
+            37.8584,
+            -25.852272
+          ]
+        },
+        {
+          "nom": "Mosteiros",
+          "coords": [
+            37.890417,
+            -25.820631
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Vila Franca do Campo i Furnas",
+      "font": "https://www.futurismo.pt/es/blog/itinerario-de-5-dias-isla-de-sao-miguel/",
+      "llocs": [
+        {
+          "nom": "Vila Franca do Campo",
+          "coords": [
+            37.714578,
+            -25.434325
+          ]
+        },
+        {
+          "nom": "Islote de Vila Franca do Campo",
+          "coords": [
+            37.70552,
+            -25.443605
+          ]
+        },
+        {
+          "nom": "Lagoa do Congro",
+          "coords": [
+            37.756253,
+            -25.407581
+          ]
+        },
+        {
+          "nom": "Lagoa das Furnas y Caldeiras das Furnas",
+          "coords": [
+            37.75716,
+            -25.332954
+          ]
+        },
+        {
+          "nom": "Jardín Terra Nostra",
+          "coords": [
+            37.772521,
+            -25.315628
+          ]
+        },
+        {
+          "nom": "Pueblo de Furnas",
+          "coords": [
+            37.773263,
+            -25.310292
+          ]
+        },
+        {
+          "nom": "Poça da Dona Beija",
+          "coords": [
+            37.769449,
+            -25.319375
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Nordeste i part oriental",
+      "font": "https://www.futurismo.pt/es/blog/itinerario-de-5-dias-isla-de-sao-miguel/",
+      "llocs": [
+        {
+          "nom": "Parque de la Ribeira dos Caldeirões",
+          "coords": [
+            37.842655,
+            -25.267559
+          ]
+        },
+        {
+          "nom": "Pueblo Nordeste y Farol do Arnel",
+          "coords": [
+            37.832152,
+            -25.145868
+          ]
+        },
+        {
+          "nom": "Mirador del Pico da Vara",
+          "coords": [
+            37.814363,
+            -25.200034
+          ]
+        },
+        {
+          "nom": "Povoação",
+          "coords": [
+            37.746501,
+            -25.245471
+          ]
+        },
+        {
+          "nom": "Faial da Terra",
+          "coords": [
+            37.744334,
+            -25.197444
+          ]
+        },
+        {
+          "nom": "Fábrica de té Gorreana",
+          "coords": [
+            37.818382,
+            -25.402471
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Lagoa do Fogo i Ribeira Grande",
+      "font": "https://www.futurismo.pt/es/blog/itinerario-de-5-dias-isla-de-sao-miguel/",
+      "llocs": [
+        {
+          "nom": "Miradores de Lagoa do Fogo",
+          "coords": [
+            37.762074,
+            -25.474133
+          ]
+        },
+        {
+          "nom": "Caldeira Velha",
+          "coords": [
+            37.784581,
+            -25.501002
+          ]
+        },
+        {
+          "nom": "Salto do Cabrito",
+          "coords": [
+            37.796048,
+            -25.49461
+          ]
+        },
+        {
+          "nom": "Ribeira Grande y Playa de Santa Bárbara",
+          "coords": [
+            37.821206,
+            -25.523203
+          ]
+        },
+        {
+          "nom": "Mirador de Santa Iria",
+          "coords": [
+            37.82383,
+            -25.462352
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Lagoa do Fogo i els seus miradors i Caldeira Velha i Ribeira Grande",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Lagoa do Fogo",
+          "coords": [
+            37.762074,
+            -25.474133
+          ]
+        },
+        {
+          "nom": "Miradouro Pico da Barrosa",
+          "coords": [
+            37.762698,
+            -25.491917
+          ]
+        },
+        {
+          "nom": "Miradouro Lagoa do Fogo",
+          "coords": [
+            37.778039,
+            -25.495712
+          ]
+        },
+        {
+          "nom": "Miradouro Bela Vista",
+          "coords": [
+            37.778039,
+            -25.495712
+          ]
+        },
+        {
+          "nom": "Caldeira Velha (Poça dos Vimes, Zona de fumarolas y Poça de la Cascata)",
+          "coords": [
+            37.784581,
+            -25.501002
+          ]
+        },
+        {
+          "nom": "Ribeira Grande",
+          "coords": [
+            37.821206,
+            -25.523203
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Lagoa das Furnas, miradors i fumaroles",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Miradouro Pico do Ferro",
+          "coords": [
+            37.772022,
+            -25.334121
+          ]
+        },
+        {
+          "nom": "Lagoa das Furnas",
+          "coords": [
+            37.75716,
+            -25.332954
+          ]
+        },
+        {
+          "nom": "Casa abandonada Grená",
+          "coords": [
+            37.767955,
+            -25.332261
+          ]
+        },
+        {
+          "nom": "Caldeiras del pueblo de Furnas",
+          "coords": [
+            37.768578,
+            -25.331473
+          ]
+        },
+        {
+          "nom": "Poça da Dona Beija",
+          "coords": [
+            37.769449,
+            -25.319375
+          ]
+        },
+        {
+          "nom": "Casa invertida de Furnas",
+          "coords": [
+            37.772621,
+            -25.310289
+          ]
+        },
+        {
+          "nom": "Parque Botánico Terra Nostra",
+          "coords": [
+            37.772521,
+            -25.315628
+          ]
+        },
+        {
+          "nom": "Vila Franca do Campo",
+          "coords": [
+            37.714578,
+            -25.434325
+          ]
+        },
+        {
+          "nom": "Santuario de Nossa Senhora da Paz",
+          "coords": [
+            37.727951,
+            -25.431485
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Lagoa Sete Cidades, miradors, Mosteiros i Ferraria",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Miradouro Pico do Carvão",
+          "coords": [
+            37.819165,
+            -25.751098
+          ]
+        },
+        {
+          "nom": "Lagoa do Canario",
+          "coords": [
+            37.835984,
+            -25.759685
+          ]
+        },
+        {
+          "nom": "Miradouro Boca do Inferno",
+          "coords": [
+            37.842856,
+            -25.763623
+          ]
+        },
+        {
+          "nom": "Miradouro Vista do Rei",
+          "coords": [
+            37.839293,
+            -25.794936
+          ]
+        },
+        {
+          "nom": "Hotel abandonado en Vista do Rei (Monte Palace)",
+          "coords": [
+            37.838924,
+            -25.794201
+          ]
+        },
+        {
+          "nom": "Miradouro Cerrado das Freiras",
+          "coords": [
+            37.853957,
+            -25.775827
+          ]
+        },
+        {
+          "nom": "El pueblo Sete Cidades",
+          "coords": [
+            37.86024,
+            -25.791829
+          ]
+        },
+        {
+          "nom": "Mosteiros",
+          "coords": [
+            37.890417,
+            -25.820631
+          ]
+        },
+        {
+          "nom": "Miradouro Ponta do Escalvado",
+          "coords": [
+            37.87123,
+            -25.841336
+          ]
+        },
+        {
+          "nom": "Miradouro da Ihla Sabrina",
+          "coords": [
+            37.858019,
+            -25.850667
+          ]
+        },
+        {
+          "nom": "Termas Ponta da Ferraria",
+          "coords": [
+            37.8584,
+            -25.852272
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Plantacions de te de Sao Miguel i Porto Formoso",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Visita a la fábrica de Porto Formoso",
+          "coords": [
+            37.815359,
+            -25.424893
+          ]
+        },
+        {
+          "nom": "Visita a Chá Gorreana",
+          "coords": [
+            37.818382,
+            -25.402471
+          ]
+        },
+        {
+          "nom": "Pueblo de Porto Formoso",
+          "coords": [
+            37.822308,
+            -25.426152
+          ]
+        },
+        {
+          "nom": "Miradouro das Pedras Negras",
+          "coords": [
+            37.835524,
+            -25.672461
+          ]
+        },
+        {
+          "nom": "Molino do Pico Vermelho",
+          "coords": [
+            37.89525,
+            -25.747648
+          ]
+        },
+        {
+          "nom": "San Antonio",
+          "coords": [
+            37.859232,
+            -25.702981
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Ponta Delgada i plantacions de pinyes",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Plantación Ananas dos Açores",
+          "coords": [
+            37.748546,
+            -25.65468
+          ]
+        },
+        {
+          "nom": "Plantación Ananases Arruda Açores",
+          "coords": [
+            37.763132,
+            -25.641331
+          ]
+        },
+        {
+          "nom": "Plaza del Ayuntamiento",
+          "coords": [
+            37.739316,
+            -25.668923
+          ]
+        },
+        {
+          "nom": "Puertas de la Ciudad",
+          "coords": [
+            37.739507,
+            -25.668466
+          ]
+        },
+        {
+          "nom": "Iglesia de São Sebastião",
+          "coords": [
+            37.740036,
+            -25.668441
+          ]
+        }
+      ]
+    },
+    {
+      "nom": "Parc Natural Ribeira dos Caldeirões i Nordeste",
+      "font": "https://lagavetavoladora.com/que-ver-en-sao-miguel-6-dias-en-azores",
+      "llocs": [
+        {
+          "nom": "Miradouro do Cintrão",
+          "coords": [
+            37.843217,
+            -25.489705
+          ]
+        },
+        {
+          "nom": "Miradouro Salto da Farihna – Pedra dos Estorninhos",
+          "coords": [
+            37.853705,
+            -25.297675
+          ]
+        },
+        {
+          "nom": "Parque Ribeira dos Caldeirões",
+          "coords": [
+            37.842655,
+            -25.267559
+          ]
+        },
+        {
+          "nom": "Nordeste",
+          "coords": [
+            37.832152,
+            -25.145868
+          ]
+        },
+        {
+          "nom": "Miradouro Ponta do Sossego",
+          "coords": [
+            37.799251,
+            -25.145884
+          ]
+        },
+        {
+          "nom": "Miradouro Ponta do Madrugada",
+          "coords": [
+            37.789595,
+            -25.145421
+          ]
+        }
+      ]
+    }
+  ]
+};

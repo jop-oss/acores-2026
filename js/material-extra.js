@@ -63,11 +63,12 @@ function meSetSeccio(id) {
   // Scroll al top del contingut
   document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   // Init aventura si cal
-  if (id === 'aventura'    && !_avInit)    initAventura();
-  if (id === 'excursions'  && !_excInit)   initExcursions();
-  if (id === 'gastronomia' && !_gastInit)  initGastronomia();
+  if (id === 'aventura'    && !_avInit)     initAventura();
+  if (id === 'excursions'  && !_excInit)    initExcursions();
+  if (id === 'gastronomia' && !_gastInit)   initGastronomia();
   if (id === 'maleta'      && !_maletaInit) initMaleta();
-  if (id === 'info'        && !_infoInit)  initInfo();
+  if (id === 'info'        && !_infoInit)   initInfo();
+  if (id === 'itineraris'  && !_itinInit)   initItineraris();
 }
 
 /* ══════════════════════════════════════════════
@@ -1191,4 +1192,179 @@ function renderInfoConsells() {
   <p>Per aquest motiu és recomanable descarregar al mòbil els mapes de <strong>Google Maps</strong> o <strong>Mappy</strong> i de <strong>Wikiloc</strong> de les illes que visitarem i així poder-los consultar quan no tinguem cobertura.</p>
 
   </div>`;
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓ: ITINERARIS ALTERNATIUS
+   ══════════════════════════════════════════════ */
+let _itinInit  = false;
+let _itinIlla  = 'Sao Miguel';
+let _itinZona  = 'Tots';
+const _itinMaps = {};  // mapId → L.map instance
+
+const ITIN_ILLES = [
+  { id:'Sao Miguel', emoji:'🌋', label:'São Miguel', color:'#6abf70' },
+  { id:'Pico',       emoji:'⛰️', label:'Pico',       color:'#a8a8a8' },
+  { id:'Sao Jorge',  emoji:'🐉', label:'São Jorge',  color:'#c4895a' },
+  { id:'Faial',      emoji:'💙', label:'Faial',      color:'#5fa8e8' },
+];
+
+function initItineraris() {
+  _itinInit = true;
+  renderItinFiltres();
+  renderItinContingut();
+}
+
+/* ── Filtres ── */
+function renderItinFiltres() {
+  const wrap = document.getElementById('itinFiltresWrap');
+  if (!wrap) return;
+
+  const illes = ITIN_ILLES.map(ill => {
+    const cnt = (ME_ITINERARIS[ill.id]||[]).length;
+    const actiu = _itinIlla === ill.id;
+    return `<button class="itin-pill itin-pill-illa${actiu?' actiu':''}"
+      style="${actiu?`--pill-color:${ill.color}`:'--pill-color:rgba(106,171,122,0.4)'}"
+      onclick="itinSetIlla('${ill.id}')">
+      ${ill.emoji} ${ill.label} <span class="me-filtre-num">${cnt}</span>
+    </button>`;
+  }).join('');
+
+  const itins  = ME_ITINERARIS[_itinIlla] || [];
+  const zones  = itins.map(it => it.nom);
+  const zonesHtml = [`<button class="itin-pill itin-pill-zona${'Tots'===_itinZona?' actiu':''}" onclick="itinSetZona('Tots')">
+    🗺️ Tots <span class="me-filtre-num">${itins.length}</span></button>`,
+    ...zones.map(z => `<button class="itin-pill itin-pill-zona${'${z}'===_itinZona?' actiu':''}"
+      onclick="itinSetZona(\`${z.replace(/`/g,"'")}\`)">${z}</button>`)
+  ].join('');
+
+  const illaColor = ITIN_ILLES.find(i=>i.id===_itinIlla)?.color || '#6aab7a';
+
+  wrap.innerHTML = `
+    <div class="itin-fila-illes">${illes}</div>
+    <div class="itin-fila-zones" style="--zona-color:${illaColor}">${zonesHtml}</div>`;
+}
+
+function itinSetIlla(illa) {
+  _itinIlla = illa;
+  _itinZona = 'Tots';
+  // Destruir maps existents
+  Object.values(_itinMaps).forEach(m => m.remove());
+  Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
+  renderItinFiltres();
+  renderItinContingut();
+}
+
+function itinSetZona(zona) {
+  _itinZona = zona;
+  // Destruir maps
+  Object.values(_itinMaps).forEach(m => m.remove());
+  Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
+  renderItinFiltres();
+  renderItinContingut();
+}
+
+/* ── Contingut ── */
+function renderItinContingut() {
+  const wrap = document.getElementById('itinContingut');
+  if (!wrap) return;
+
+  const itins = (ME_ITINERARIS[_itinIlla] || [])
+    .filter(it => _itinZona === 'Tots' || it.nom === _itinZona);
+
+  if (!itins.length) {
+    wrap.innerHTML = '<div class="me-buit visible"><div class="me-buit-ico">🗺️</div><p>Cap itinerari trobat</p></div>';
+    return;
+  }
+
+  const illaColor = ITIN_ILLES.find(i=>i.id===_itinIlla)?.color || '#6aab7a';
+  const esMirlor  = nom => nom.toLowerCase().includes('millor');
+
+  wrap.innerHTML = itins.map((it, idx) => {
+    const mapId  = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
+    const llocsList = it.llocs.map((l, i) =>
+      `<li class="itin-lloc-item">
+        <span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i+1}</span>
+        <span class="itin-lloc-nom">${escHtml(l.nom)}</span>
+      </li>`
+    ).join('');
+    const fontHtml = it.font
+      ? `<a class="itin-font-link" href="${escHtml(it.font)}" target="_blank" rel="noopener">🔗 Font</a>`
+      : '';
+    const millorClass = esMirlor(it.nom) ? ' itin-card-millor' : '';
+
+    return `<div class="itin-card${millorClass}" style="--itin-color:${illaColor}">
+      <div class="itin-card-header">
+        ${esMirlor(it.nom) ? '<span class="itin-badge-millor">⭐ El millor</span>' : ''}
+        <h3 class="itin-card-titol">${escHtml(it.nom)}</h3>
+        ${fontHtml}
+      </div>
+      <div class="itin-card-cos">
+        <ol class="itin-llocs-list">${llocsList}</ol>
+        <div class="itin-map-wrap">
+          <div class="itin-map" id="${mapId}" data-llocs='${JSON.stringify(it.llocs)}'></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Inicialitzar maps lazy
+  itins.forEach((it, idx) => {
+    const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
+    initItinMapLazy(mapId, it.llocs, illaColor);
+  });
+}
+
+function initItinMapLazy(mapId, llocs, color) {
+  const el = document.getElementById(mapId);
+  if (!el) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      observer.disconnect();
+      initItinMap(mapId, llocs, color);
+    }
+  }, { threshold: 0.1 });
+  observer.observe(el);
+}
+
+function initItinMap(mapId, llocs, color) {
+  if (_itinMaps[mapId]) return;
+  const el = document.getElementById(mapId);
+  if (!el) return;
+
+  const validLlocs = llocs.filter(l => l.coords);
+  if (!validLlocs.length) {
+    el.innerHTML = '<div class="itin-map-buit">📍 Coordenades no disponibles</div>';
+    return;
+  }
+
+  const map = L.map(mapId, { zoomControl: true, scrollWheelZoom: false });
+  _itinMaps[mapId] = map;
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+    attribution: '© CartoDB',
+    maxZoom: 18,
+  }).addTo(map);
+
+  const bounds = [];
+  validLlocs.forEach((l, i) => {
+    const [lat, lng] = l.coords;
+    bounds.push([lat, lng]);
+
+    // Marcador numèric SVG
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+      <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
+      <circle cx="14" cy="14" r="9" fill="rgba(0,0,0,0.35)"/>
+      <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="white">${i+1}</text>
+    </svg>`;
+    const icon = L.divIcon({
+      html: svg, className: '', iconSize: [28,36], iconAnchor: [14,36], popupAnchor: [0,-36]
+    });
+    L.marker([lat, lng], { icon })
+      .addTo(map)
+      .bindPopup(`<strong>${i+1}. ${l.nom}</strong>`);
+  });
+
+  map.fitBounds(bounds, { padding: [20, 20], maxZoom: 14 });
 }
