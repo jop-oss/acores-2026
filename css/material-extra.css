@@ -2047,3 +2047,37 @@ body.light .itin-card-titol { color: #1a3a2a; }
   .itin-llocs-list { max-height: 240px; border-right: none; border-bottom: 1px solid rgba(106,171,122,0.1); }
   .itin-map { height: 280px; }
 }
+
+/* Tooltip Leaflet itineraris */
+.itin-tooltip {
+  background: rgba(10,22,40,0.92) !important;
+  border: 1px solid rgba(106,171,122,0.4) !important;
+  border-radius: 8px !important;
+  color: #a8d8b0 !important;
+  font-family: 'Lora', serif !important;
+  font-size: 0.78rem !important;
+  padding: 5px 10px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;
+  white-space: nowrap;
+}
+.itin-tooltip::before { display: none !important; }
+
+/* Ítem de llista clicat / actiu */
+.itin-lloc-item {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 3px 4px;
+  transition: background 0.15s;
+}
+.itin-lloc-item:hover { background: rgba(106,171,122,0.08); }
+.itin-lloc-actiu {
+  background: rgba(106,171,122,0.14) !important;
+}
+.itin-lloc-actiu .itin-lloc-nom { color: var(--me-green3) !important; }
+
+/* Mapa Leaflet: Voyager (clar) → overrides mínims */
+.itin-map .leaflet-popup-content-wrapper { background: rgba(10,22,40,0.92); border: 1px solid rgba(106,171,122,0.3); color: #a8d8b0; border-radius: 10px; }
+.itin-map .leaflet-popup-tip { background: rgba(10,22,40,0.92); }
+.itin-map .leaflet-popup-content { font-family: 'Lora', serif; font-size: 0.82rem; margin: 8px 12px; }
+.itin-map .leaflet-control-zoom a { background: rgba(10,22,40,0.85); color: #6aab7a; border-color: rgba(106,171,122,0.3); }
+.itin-map .leaflet-control-zoom a:hover { background: #1a3a2a; color: #a8d8b0; }

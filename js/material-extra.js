@@ -1249,7 +1249,7 @@ function itinSetIlla(illa) {
   _itinIlla = illa;
   _itinZona = 'Tots';
   // Destruir maps existents
-  Object.values(_itinMaps).forEach(m => m.remove());
+  Object.values(_itinMaps).forEach(m => { if (m && m.map) m.map.remove(); else if (m && m.remove) m.remove(); });
   Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
   renderItinFiltres();
   renderItinContingut();
@@ -1258,7 +1258,7 @@ function itinSetIlla(illa) {
 function itinSetZona(zona) {
   _itinZona = zona;
   // Destruir maps
-  Object.values(_itinMaps).forEach(m => m.remove());
+  Object.values(_itinMaps).forEach(m => { if (m && m.map) m.map.remove(); else if (m && m.remove) m.remove(); });
   Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
   renderItinFiltres();
   renderItinContingut();
@@ -1282,12 +1282,13 @@ function renderItinContingut() {
 
   wrap.innerHTML = itins.map((it, idx) => {
     const mapId  = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
-    const llocsList = it.llocs.map((l, i) =>
-      `<li class="itin-lloc-item">
+    const llocsList = it.llocs.map((l, i) => {
+      const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
+      return `<li class="itin-lloc-item" onclick="itinFocusMarker('${mapId}',${i})">
         <span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i+1}</span>
         <span class="itin-lloc-nom">${escHtml(l.nom)}</span>
-      </li>`
-    ).join('');
+      </li>`;
+    }).join('');
     const fontHtml = it.font
       ? `<a class="itin-font-link" href="${escHtml(it.font)}" target="_blank" rel="noopener">🔗 Font</a>`
       : '';
@@ -1342,29 +1343,64 @@ function initItinMap(mapId, llocs, color) {
   const map = L.map(mapId, { zoomControl: true, scrollWheelZoom: false });
   _itinMaps[mapId] = map;
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+  // Mapa clar (Voyager)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '© CartoDB',
     maxZoom: 18,
   }).addTo(map);
 
-  const bounds = [];
+  const markers = [];
+  const bounds  = [];
+
   validLlocs.forEach((l, i) => {
     const [lat, lng] = l.coords;
     bounds.push([lat, lng]);
 
-    // Marcador numèric SVG
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+    const svgNormal = (sz, fs) => `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz*1.29)}" viewBox="0 0 28 36">
       <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
-      <circle cx="14" cy="14" r="9" fill="rgba(0,0,0,0.35)"/>
-      <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="white">${i+1}</text>
+      <circle cx="14" cy="14" r="9" fill="rgba(0,0,0,0.3)"/>
+      <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="${fs}" font-weight="700" fill="white">${i+1}</text>
     </svg>`;
-    const icon = L.divIcon({
-      html: svg, className: '', iconSize: [28,36], iconAnchor: [14,36], popupAnchor: [0,-36]
+
+    const makeIcon = (sz) => L.divIcon({
+      html: svgNormal(sz, sz < 30 ? 11 : 14),
+      className: '', iconSize: [sz, Math.round(sz*1.29)],
+      iconAnchor: [sz/2, Math.round(sz*1.29)], popupAnchor: [0, -Math.round(sz*1.29)]
     });
-    L.marker([lat, lng], { icon })
+
+    const marker = L.marker([lat, lng], { icon: makeIcon(28) })
       .addTo(map)
-      .bindPopup(`<strong>${i+1}. ${l.nom}</strong>`);
+      .bindTooltip(`<strong>${i+1}.</strong> ${l.nom}`, {
+        permanent: false, direction: 'top', className: 'itin-tooltip'
+      });
+
+    markers.push({ marker, lat, lng, makeIcon });
   });
 
+  _itinMaps[mapId] = { map, markers };
   map.fitBounds(bounds, { padding: [20, 20], maxZoom: 14 });
+}
+
+function itinFocusMarker(mapId, idx) {
+  const entry = _itinMaps[mapId];
+  if (!entry || !entry.markers) return;
+  const { map, markers } = entry;
+  const m = markers[idx];
+  if (!m) return;
+
+  // Pan al marcador
+  map.setView([m.lat, m.lng], Math.max(map.getZoom(), 13), { animate: true });
+
+  // Animació: fer gran → tornar normal
+  const bigIcon   = m.makeIcon(42);
+  const normIcon  = m.makeIcon(28);
+  m.marker.setIcon(bigIcon);
+  m.marker.openTooltip();
+  setTimeout(() => {
+    m.marker.setIcon(normIcon);
+  }, 800);
+
+  // Destacar l'ítem de la llista
+  const list = document.querySelector(`#${mapId}`).closest('.itin-card').querySelectorAll('.itin-lloc-item');
+  list.forEach((li, i) => li.classList.toggle('itin-lloc-actiu', i === idx));
 }

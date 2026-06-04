@@ -7567,8 +7567,8 @@ const ME_ITINERARIS = {
         {
           "nom": "Jardim António Borges",
           "coords": [
-            37.87123,
-            -25.841336
+            37.742599,
+            -25.675573
           ]
         },
         {
@@ -8118,8 +8118,8 @@ const ME_ITINERARIS = {
         {
           "nom": "Jardines de António Borges y José do Canto",
           "coords": [
-            37.87123,
-            -25.841336
+            37.742599,
+            -25.675573
           ]
         },
         {
