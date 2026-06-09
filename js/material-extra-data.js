@@ -8745,6 +8745,7 @@ const ME_RESERVES = [
       "https://byacores.com/es/lagoa-fogo/",
       "https://lagoadofogo.pt/?utm_source=byAcores#tm-section-book"
     ],
+    "mapImg": "img/material-extra/mapa-ruta-autobus-lagoa-do-fogo.webp",
     "anchor": "reserva-lagoa-do-fogo"
   }
 ];

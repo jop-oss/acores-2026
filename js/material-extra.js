@@ -3,145 +3,83 @@
    ============================================================ */
 
 const ME_CATS = [
-  { id: "Tots", emoji: "🗺️", label: "Tots" },
-  { id: "Miradors", emoji: "🏔️", label: "Miradors" },
-  { id: "Platges", emoji: "🏖️", label: "Platges" },
-  { id: "Piscines", emoji: "🏊", label: "Piscines" },
-  { id: "Naturalesa", emoji: "🌿", label: "Naturalesa" },
-  { id: "Aigues Termals", emoji: "♨️", label: "Aigues Termals" },
-  { id: "Jardi Botanic", emoji: "🌺", label: "Jardí Botànic" },
-  { id: "Pobles", emoji: "🏘️", label: "Pobles" },
-  { id: "Fars", emoji: "🔦", label: "Fars" },
-  { id: "Coves", emoji: "🦇", label: "Coves" },
-  { id: "Altres", emoji: "⭐", label: "Altres" },
+  { id: 'Tots',          emoji: '🗺️',  label: 'Tots' },
+  { id: 'Miradors',      emoji: '🏔️',  label: 'Miradors' },
+  { id: 'Platges',       emoji: '🏖️',  label: 'Platges' },
+  { id: 'Piscines',      emoji: '🏊',  label: 'Piscines' },
+  { id: 'Naturalesa',    emoji: '🌿',  label: 'Naturalesa' },
+  { id: 'Aigues Termals',emoji: '♨️',  label: 'Aigues Termals' },
+  { id: 'Jardi Botanic', emoji: '🌺',  label: 'Jardí Botànic' },
+  { id: 'Pobles',        emoji: '🏘️',  label: 'Pobles' },
+  { id: 'Fars',          emoji: '🔦',  label: 'Fars' },
+  { id: 'Coves',         emoji: '🦇',  label: 'Coves' },
+  { id: 'Altres',        emoji: '⭐',  label: 'Altres' },
 ];
 
 const ME_SUBCATS = [
-  { id: "Tots", label: "Totes" },
-  { id: "Paisatge", label: "Paisatge" },
-  { id: "Llacs", label: "Llacs" },
-  { id: "Geologia", label: "Geologia" },
+  { id: 'Tots',          label: 'Totes' },
+  { id: 'Paisatge',      label: 'Paisatge' },
+  { id: 'Llacs',         label: 'Llacs' },
+  { id: 'Geologia',      label: 'Geologia' },
   { id: "Salts d'aigua", label: "Salts d'aigua" },
 ];
 
 const ME_ILLES = [
-  { id: "Totes", emoji: "🏝️", label: "Totes" },
-  { id: "Sao Miguel", emoji: "🌋", label: "São Miguel" },
-  { id: "Pico", emoji: "⛰️", label: "Pico" },
-  { id: "Sao Jorge", emoji: "🐉", label: "São Jorge" },
-  { id: "Faial", emoji: "💙", label: "Faial" },
+  { id: 'Totes',     emoji: '🏝️', label: 'Totes' },
+  { id: 'Sao Miguel',emoji: '🌋', label: 'São Miguel' },
+  { id: 'Pico',      emoji: '⛰️', label: 'Pico' },
+  { id: 'Sao Jorge', emoji: '🐉', label: 'São Jorge' },
+  { id: 'Faial',     emoji: '💙', label: 'Faial' },
 ];
 
-const ME_CAT_EMOJI = {
-  Miradors: "🏔️",
-  Platges: "🏖️",
-  Piscines: "🏊",
-  Naturalesa: "🌿",
-  "Aigues Termals": "♨️",
-  "Jardi Botanic": "🌺",
-  Pobles: "🏘️",
-  Fars: "🔦",
-  Coves: "🦇",
-  Altres: "⭐",
-};
-const ME_CAT_LABEL = {
-  Miradors: "Mirador",
-  Platges: "Platja",
-  Piscines: "Piscina natural",
-  Naturalesa: "Naturalesa",
-  "Aigues Termals": "Aigues Termals",
-  "Jardi Botanic": "Jardí Botànic",
-  Pobles: "Poble/Ciutat",
-  Fars: "Far",
-  Coves: "Cova",
-  Altres: "Altres",
-};
-const ME_ILLA_LABEL = {
-  "Sao Miguel": "São Miguel",
-  Pico: "Pico",
-  "Sao Jorge": "São Jorge",
-  Faial: "Faial",
-};
-const ME_CAT_PLCHLD = {
-  Miradors: "🏔️",
-  Platges: "🏖️",
-  Piscines: "🌊",
-  Naturalesa: "🌿",
-  "Aigues Termals": "♨️",
-  "Jardi Botanic": "🌸",
-  Pobles: "🏘️",
-  Fars: "🔦",
-  Coves: "🦇",
-  Altres: "⭐",
-};
+const ME_CAT_EMOJI  = { Miradors:'🏔️', Platges:'🏖️', Piscines:'🏊', Naturalesa:'🌿', 'Aigues Termals':'♨️', 'Jardi Botanic':'🌺', Pobles:'🏘️', Fars:'🔦', Coves:'🦇', Altres:'⭐' };
+const ME_CAT_LABEL  = { Miradors:'Mirador', Platges:'Platja', Piscines:'Piscina natural', Naturalesa:'Naturalesa', 'Aigues Termals':'Aigues Termals', 'Jardi Botanic':'Jardí Botànic', Pobles:'Poble/Ciutat', Fars:'Far', Coves:'Cova', Altres:'Altres' };
+const ME_ILLA_LABEL = { 'Sao Miguel':'São Miguel', Pico:'Pico', 'Sao Jorge':'São Jorge', Faial:'Faial' };
+const ME_CAT_PLCHLD = { Miradors:'🏔️', Platges:'🏖️', Piscines:'🌊', Naturalesa:'🌿', 'Aigues Termals':'♨️', 'Jardi Botanic':'🌸', Pobles:'🏘️', Fars:'🔦', Coves:'🦇', Altres:'⭐' };
 
 /* ── Estat ── */
-const ME = {
-  illa: "Totes",
-  cat: "Tots",
-  subcat: "Tots",
-  destacat: false,
-  zona: "",
-};
-let _linksTabIlla = "General";
-let _linksTabCat = null;
+const ME = { illa:'Totes', cat:'Tots', subcat:'Tots', destacat:false, zona:'' };
+let _linksTabIlla = 'General';
+let _linksTabCat  = null;
 
 /* ── Inici ── */
 
 /* ══════════════════════════════════════════════
    NAVEGACIÓ DE SECCIONS
    ══════════════════════════════════════════════ */
-let _seccioActiva = "llocs";
+let _seccioActiva = 'llocs';
 
 function meSetSeccio(id) {
   _seccioActiva = id;
   // Amaga totes les seccions
-  document
-    .querySelectorAll(".me-seccio")
-    .forEach((s) => s.classList.add("hidden"));
-  document
-    .querySelectorAll(".me-sec-btn")
-    .forEach((b) => b.classList.remove("actiu"));
+  document.querySelectorAll('.me-seccio').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.me-sec-btn').forEach(b => b.classList.remove('actiu'));
   // Mostra la seleccionada
-  const sec = document.getElementById("sec-" + id);
-  if (sec) sec.classList.remove("hidden");
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.remove('hidden');
   // Marca el botó
-  const btn = [...document.querySelectorAll(".me-sec-btn")].find((b) =>
-    b.getAttribute("onclick")?.includes("'" + id + "'"),
-  );
-  if (btn) btn.classList.add("actiu");
+  const btn = [...document.querySelectorAll('.me-sec-btn')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
+  if (btn) btn.classList.add('actiu');
   // Scroll al top del contingut
-  document
-    .querySelector(".me-sec-nav-wrap")
-    ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   // Init aventura si cal
-  if (id === "aventura" && !_avInit) initAventura();
-  if (id === "excursions" && !_excInit) initExcursions();
-  if (id === "gastronomia" && !_gastInit) initGastronomia();
-  if (id === "maleta" && !_maletaInit) initMaleta();
-  if (id === "info" && !_infoInit) initInfo();
-  if (id === "itineraris" && !_itinInit) initItineraris();
+  if (id === 'aventura'    && !_avInit)     initAventura();
+  if (id === 'excursions'  && !_excInit)    initExcursions();
+  if (id === 'gastronomia' && !_gastInit)   initGastronomia();
+  if (id === 'maleta'      && !_maletaInit) initMaleta();
+  if (id === 'info'        && !_infoInit)   initInfo();
+  if (id === 'itineraris'  && !_itinInit)   initItineraris();
 }
 
 /* ══════════════════════════════════════════════
    SECCIÓ: AVENTURA
    ══════════════════════════════════════════════ */
-let _avInit = false;
-let _avTipus = null;
-let _avIlla = null;
+let _avInit   = false;
+let _avTipus  = null;
+let _avIlla   = null;
 
-const AV_ILLA_EMOJI = {
-  "Sao Miguel": "🌋",
-  Pico: "⛰️",
-  "Sao Jorge": "🐉",
-  Faial: "💙",
-};
-const AV_ILLA_LBL = {
-  "Sao Miguel": "São Miguel",
-  Pico: "Pico",
-  "Sao Jorge": "São Jorge",
-  Faial: "Faial",
-};
+const AV_ILLA_EMOJI = { 'Sao Miguel':'🌋', 'Pico':'⛰️', 'Sao Jorge':'🐉', 'Faial':'💙' };
+const AV_ILLA_LBL   = { 'Sao Miguel':'São Miguel', 'Pico':'Pico', 'Sao Jorge':'São Jorge', 'Faial':'Faial' };
 
 function initAventura() {
   _avInit = true;
@@ -151,18 +89,18 @@ function initAventura() {
 
 /* ── Cards d'activitat ── */
 function renderAvCards() {
-  const grid = document.getElementById("avGrid");
+  const grid = document.getElementById('avGrid');
   if (!grid) return;
-  grid.innerHTML = ME_ACTIVITATS.map((act, i) => renderAvCard(act, i)).join("");
+  grid.innerHTML = ME_ACTIVITATS.map((act, i) => renderAvCard(act, i)).join('');
 }
 
 function renderAvCard(act, i) {
   const imgSrc = `img/material-extra/fons-${act.img}.webp`;
-  const delay = i * 50;
+  const delay  = i * 50;
 
   // Agrupar llocs per illa
   const perIlla = {};
-  act.llocs.forEach((l) => {
+  act.llocs.forEach(l => {
     if (!perIlla[l.illa]) perIlla[l.illa] = [];
     perIlla[l.illa].push(l.lloc);
   });
@@ -170,19 +108,17 @@ function renderAvCard(act, i) {
   const total = act.llocs.length;
   const illes = Object.keys(perIlla);
 
-  const llocsHtml = illes
-    .map((ill) => {
-      const emoji = AV_ILLA_EMOJI[ill] || "🏝️";
-      const lbl = AV_ILLA_LBL[ill] || ill;
-      const llocs = perIlla[ill];
-      return `<div class="av-card-illa-grup">
+  const llocsHtml = illes.map(ill => {
+    const emoji = AV_ILLA_EMOJI[ill] || '🏝️';
+    const lbl   = AV_ILLA_LBL[ill]   || ill;
+    const llocs = perIlla[ill];
+    return `<div class="av-card-illa-grup">
       <span class="av-card-illa-lbl">${emoji} ${lbl}</span>
       <div class="av-card-llocs">
-        ${llocs.map((l) => `<span class="av-card-lloc">📍 ${escHtml(l)}</span>`).join("")}
+        ${llocs.map(l => `<span class="av-card-lloc">📍 ${escHtml(l)}</span>`).join('')}
       </div>
     </div>`;
-    })
-    .join("");
+  }).join('');
 
   return `
   <article class="av-card" style="animation-delay:${delay}ms"
@@ -192,7 +128,7 @@ function renderAvCard(act, i) {
       <div class="av-card-header">
         <span class="av-card-emoji">${act.emoji}</span>
         <h3 class="av-card-nom">${escHtml(act.tipus)}</h3>
-        <span class="av-card-count">${total} lloc${total !== 1 ? "s" : ""}</span>
+        <span class="av-card-count">${total} lloc${total !== 1 ? 's' : ''}</span>
       </div>
     </div>
     <div class="av-card-cos">${llocsHtml}</div>
@@ -201,146 +137,97 @@ function renderAvCard(act, i) {
 
 function avCardClick(el, tipus) {
   // Expandeix/col·lapsa la card
-  el.classList.toggle("expandida");
+  el.classList.toggle('expandida');
 }
 
 /* ── Links aventura ── */
 function renderAvLinks() {
-  const wrap = document.getElementById("avLinksWrap");
+  const wrap = document.getElementById('avLinksWrap');
   if (!wrap) return;
-  wrap.style.display = "block";
+  wrap.style.display = 'block';
 
-  const tipus_list = [
-    "Barranquisme",
-    "Snorkel",
-    "Bici",
-    "Kayak o Paddle Surf",
-    "Busseig",
-    "Coasteering",
-    "Nedar amb dofins",
-    "Escalada",
-    "Surf",
-    "Moto aquàtica",
-  ];
-  const illa_list = ["Totes", "Sao Miguel", "Pico", "Faial"];
+  const tipus_list = ['Barranquisme','Snorkel','Bici','Kayak o Paddle Surf',
+    'Busseig','Coasteering','Nedar amb dofins','Escalada','Surf','Moto aquàtica'];
+  const illa_list  = ['Totes','Sao Miguel','Pico','Faial'];
 
   // Posts (sempre visibles)
-  const postsHtml = ME_AVENT_POSTS.map(
-    (p) =>
-      `<a class="me-link-item" href="${escHtml(p)}" target="_blank" rel="noopener">
+  const postsHtml = ME_AVENT_POSTS.map(p =>
+    `<a class="me-link-item" href="${escHtml(p)}" target="_blank" rel="noopener">
       <span class="me-link-url">${escHtml(p)}</span>
-    </a>`,
-  ).join("");
+    </a>`
+  ).join('');
 
   // Empreses filtrades i desduplicades
   function getEmpreses() {
-    let emp = ME_AVENT_EMPRESES.filter(
-      (e) =>
-        (_avTipus === null || e.tipus === _avTipus) &&
-        (_avIlla === null ||
-          _avIlla === "Totes" ||
-          e.illa === _avIlla.toLowerCase() ||
-          e.illa === _avIlla ||
-          normalIlla(e.illa) === _avIlla),
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (_avTipus === null || e.tipus === _avTipus) &&
+      (_avIlla  === null || _avIlla === 'Totes' || e.illa === _avIlla.toLowerCase() ||
+       e.illa === _avIlla || normalIlla(e.illa) === _avIlla)
     );
     // Deduplicar per URL quan no hi ha filtre de tipus
     if (_avTipus === null) {
       const seen = new Set();
-      emp = emp.filter((e) => {
-        if (seen.has(e.url)) return false;
-        seen.add(e.url);
-        return true;
-      });
+      emp = emp.filter(e => { if (seen.has(e.url)) return false; seen.add(e.url); return true; });
     }
     return emp;
   }
 
   function cntTipus(t) {
-    let emp = ME_AVENT_EMPRESES.filter(
-      (e) =>
-        (t === null || e.tipus === t) &&
-        (_avIlla === null ||
-          _avIlla === "Totes" ||
-          normalIlla(e.illa) === _avIlla),
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (t === null || e.tipus === t) &&
+      (_avIlla === null || _avIlla === 'Totes' || normalIlla(e.illa) === _avIlla)
     );
-    if (t === null) {
-      const s = new Set();
-      emp = emp.filter((e) => {
-        if (s.has(e.url)) return false;
-        s.add(e.url);
-        return true;
-      });
-    }
+    if (t === null) { const s = new Set(); emp = emp.filter(e => { if(s.has(e.url)) return false; s.add(e.url); return true; }); }
     return emp.length;
   }
   function cntIlla(ill) {
-    let emp = ME_AVENT_EMPRESES.filter(
-      (e) =>
-        (_avTipus === null || e.tipus === _avTipus) &&
-        (ill === "Totes" || normalIlla(e.illa) === ill),
+    let emp = ME_AVENT_EMPRESES.filter(e =>
+      (_avTipus === null || e.tipus === _avTipus) &&
+      (ill === 'Totes' || normalIlla(e.illa) === ill)
     );
-    if (_avTipus === null) {
-      const s = new Set();
-      emp = emp.filter((e) => {
-        if (s.has(e.url)) return false;
-        s.add(e.url);
-        return true;
-      });
-    }
+    if (_avTipus === null) { const s = new Set(); emp = emp.filter(e => { if(s.has(e.url)) return false; s.add(e.url); return true; }); }
     return emp.length;
   }
 
   const empreses = getEmpreses();
 
   // Tabs tipus
-  const tipusTabs = [["Tots", null], ...tipus_list.map((t) => [t, t])]
-    .map(([lbl, val]) => {
-      const cnt = cntTipus(val);
-      if (cnt === 0 && val !== null) return "";
-      const actiu = _avTipus === val;
-      const vlbl = val === null ? "Tots" : lbl;
-      const vesc = val ? escHtml(val) : "null";
-      return `<button class="me-links-tab${actiu ? " actiu" : ""}"
-      onclick="avSetTipus(${val ? `'${vesc}'` : "null"})">${vlbl} <span class="me-filtre-num">${cnt}</span></button>`;
-    })
-    .join("");
+  const tipusTabs = [['Tots',null], ...tipus_list.map(t=>[t,t])].map(([lbl,val]) => {
+    const cnt = cntTipus(val);
+    if (cnt === 0 && val !== null) return '';
+    const actiu = _avTipus === val;
+    const vlbl  = val === null ? 'Tots' : lbl;
+    const vesc  = val ? escHtml(val) : 'null';
+    return `<button class="me-links-tab${actiu?' actiu':''}"
+      onclick="avSetTipus(${val?`'${vesc}'`:'null'})">${vlbl} <span class="me-filtre-num">${cnt}</span></button>`;
+  }).join('');
 
   // Tabs illa
-  const illaTabs = illa_list
-    .map((ill) => {
-      const cnt = cntIlla(ill);
-      if (cnt === 0) return "";
-      const actiu = _avIlla === ill || (_avIlla === null && ill === "Totes");
-      const emoji = ill === "Totes" ? "🏝️" : AV_ILLA_EMOJI[ill] || "";
-      const lbl = ill === "Totes" ? "Totes" : AV_ILLA_LBL[ill] || ill;
-      return `<button class="me-links-tab${actiu ? " actiu" : ""}"
+  const illaTabs = illa_list.map(ill => {
+    const cnt = cntIlla(ill);
+    if (cnt === 0) return '';
+    const actiu = _avIlla === ill || (_avIlla === null && ill === 'Totes');
+    const emoji = ill === 'Totes' ? '🏝️' : (AV_ILLA_EMOJI[ill]||'');
+    const lbl   = ill === 'Totes' ? 'Totes' : (AV_ILLA_LBL[ill]||ill);
+    return `<button class="me-links-tab${actiu?' actiu':''}"
       onclick="avSetIlla('${ill}')">${emoji} ${lbl} <span class="me-filtre-num">${cnt}</span></button>`;
-    })
-    .join("");
+  }).join('');
 
   const empresesHtml = empreses.length
-    ? empreses
-        .map(
-          (
-            e,
-          ) => `<a class="me-link-item" href="${escHtml(e.url)}" target="_blank" rel="noopener">
+    ? empreses.map(e => `<a class="me-link-item" href="${escHtml(e.url)}" target="_blank" rel="noopener">
         <span class="me-link-url">${escHtml(e.url)}</span>
-      </a>`,
-        )
-        .join("")
+      </a>`).join('')
     : `<p class="me-links-buit">Cap empresa per a aquesta combinació</p>`;
 
-  const totalEmp = ME_AVENT_EMPRESES.filter(
-    (e, i, a) => a.findIndex((x) => x.url === e.url) === i,
-  ).length;
+  const totalEmp = ME_AVENT_EMPRESES.filter((e,i,a)=>a.findIndex(x=>x.url===e.url)===i).length;
 
   wrap.innerHTML = `
   <div class="me-links-header" onclick="avToggleLinks()">
     <h3 class="me-links-titol">🔗 Posts i empreses d'aventura</h3>
     <span class="me-links-count">${totalEmp} empreses · ${ME_AVENT_POSTS.length} posts</span>
-    <span class="me-links-toggle${_avLinksOpen ? " obert" : ""}" id="avLinksIco">▼</span>
+    <span class="me-links-toggle${_avLinksOpen?' obert':''}" id="avLinksIco">▼</span>
   </div>
-  <div class="me-links-cos${_avLinksOpen ? " obert" : ""}" id="avLinksCos">
+  <div class="me-links-cos${_avLinksOpen?' obert':''}" id="avLinksCos">
 
     <div class="av-links-posts-bloc">
       <div class="me-links-bloc-titol">📰 Posts recomanats</div>
@@ -371,162 +258,103 @@ function renderAvLinks() {
 let _avLinksOpen = false;
 function avToggleLinks() {
   _avLinksOpen = !_avLinksOpen;
-  document
-    .getElementById("avLinksCos")
-    ?.classList.toggle("obert", _avLinksOpen);
-  document
-    .getElementById("avLinksIco")
-    ?.classList.toggle("obert", _avLinksOpen);
+  document.getElementById('avLinksCos')?.classList.toggle('obert', _avLinksOpen);
+  document.getElementById('avLinksIco')?.classList.toggle('obert', _avLinksOpen);
 }
 function avSetTipus(t) {
-  _avTipus = t === "null" ? null : t;
+  _avTipus = t === 'null' ? null : t;
   renderAvLinks();
-  if (_avLinksOpen)
-    document.getElementById("avLinksCos")?.classList.add("obert");
+  if (_avLinksOpen) document.getElementById('avLinksCos')?.classList.add('obert');
 }
 function avSetIlla(ill) {
-  _avIlla = ill === "Totes" ? null : ill;
+  _avIlla = (ill === 'Totes') ? null : ill;
   renderAvLinks();
-  if (_avLinksOpen)
-    document.getElementById("avLinksCos")?.classList.add("obert");
+  if (_avLinksOpen) document.getElementById('avLinksCos')?.classList.add('obert');
 }
 function normalIlla(s) {
-  if (!s) return "";
-  const m = {
-    "sao miguel": "Sao Miguel",
-    pico: "Pico",
-    faial: "Faial",
-    "sao jorge": "Sao Jorge",
-  };
+  if (!s) return '';
+  const m = {'sao miguel':'Sao Miguel','pico':'Pico','faial':'Faial','sao jorge':'Sao Jorge'};
   return m[s.toLowerCase()] || s;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderIlles();
-  renderCats();
-  renderSubcats();
-  renderExtres();
-  render();
+document.addEventListener('DOMContentLoaded', () => {
+  renderIlles(); renderCats(); renderSubcats(); renderExtres(); render();
   // Deep link a reserves
-  if (location.hash.startsWith("#reserva-")) initReservaHash();
+  if (location.hash.startsWith('#reserva-')) initReservaHash();
 });
 
 /* ── Filtres ── */
 function renderIlles() {
-  document.getElementById("meIlles").innerHTML = ME_ILLES.map(
-    (ill) =>
-      `<button class="me-filtre-illa${ME.illa === ill.id ? " actiu" : ""}" onclick="meSetIlla('${ill.id}')">
+  document.getElementById('meIlles').innerHTML = ME_ILLES.map(ill =>
+    `<button class="me-filtre-illa${ME.illa===ill.id?' actiu':''}" onclick="meSetIlla('${ill.id}')">
       ${ill.emoji} ${ill.label}
-    </button>`,
-  ).join("");
+    </button>`
+  ).join('');
 }
 
 function renderCats() {
-  document.getElementById("meCats").innerHTML = ME_CATS.map((c) => {
-    const count = ME_LLOCS.filter(
-      (l) =>
-        (ME.illa === "Totes" || l.illa === ME.illa) &&
-        (c.id === "Tots" || l.categoria === c.id),
+  document.getElementById('meCats').innerHTML = ME_CATS.map(c => {
+    const count = ME_LLOCS.filter(l =>
+      (ME.illa==='Totes'||l.illa===ME.illa) && (c.id==='Tots'||l.categoria===c.id)
     ).length;
-    if (count === 0 && c.id !== "Tots") return "";
-    return `<button class="me-filtre-cat${ME.cat === c.id ? " actiu" : ""}" onclick="meSetCat('${c.id}')">
+    if (count===0 && c.id!=='Tots') return '';
+    return `<button class="me-filtre-cat${ME.cat===c.id?' actiu':''}" onclick="meSetCat('${c.id}')">
       ${c.emoji} ${c.label} <span class="me-filtre-num">${count}</span>
     </button>`;
-  }).join("");
+  }).join('');
 }
 
 function renderSubcats() {
-  const wrap = document.getElementById("meSubcats");
-  const fila = document.getElementById("meSubcatsFila");
-  const show = ME.cat === "Naturalesa";
-  wrap.classList.toggle("hidden", !show);
-  if (fila) fila.classList.toggle("visible", show);
+  const wrap = document.getElementById('meSubcats');
+  const fila = document.getElementById('meSubcatsFila');
+  const show = ME.cat==='Naturalesa';
+  wrap.classList.toggle('hidden', !show);
+  if (fila) fila.classList.toggle('visible', show);
   if (!show) return;
-  wrap.innerHTML = ME_SUBCATS.map((s) => {
-    const count = ME_LLOCS.filter(
-      (l) =>
-        l.categoria === "Naturalesa" &&
-        (ME.illa === "Totes" || l.illa === ME.illa) &&
-        (s.id === "Tots" || l.subcat === s.id),
+  wrap.innerHTML = ME_SUBCATS.map(s => {
+    const count = ME_LLOCS.filter(l =>
+      l.categoria==='Naturalesa' &&
+      (ME.illa==='Totes'||l.illa===ME.illa) &&
+      (s.id==='Tots'||l.subcat===s.id)
     ).length;
-    return `<button class="me-filtre-subcat${ME.subcat === s.id ? " actiu" : ""}" onclick="meSetSubcat('${s.id}')">
+    return `<button class="me-filtre-subcat${ME.subcat===s.id?' actiu':''}" onclick="meSetSubcat('${s.id}')">
       ${s.label} <span class="me-filtre-num">${count}</span>
     </button>`;
-  }).join("");
+  }).join('');
 }
 
 function renderExtres() {
-  document
-    .getElementById("meToggleDestacat")
-    .classList.toggle("actiu", ME.destacat);
-  const sel = document.getElementById("meZonaSelect");
-  sel.disabled = ME.illa === "Totes";
-  const zones =
-    ME.illa === "Totes"
-      ? []
-      : [
-          ...new Set(
-            ME_LLOCS.filter((l) => l.illa === ME.illa && l.zona).map(
-              (l) => l.zona,
-            ),
-          ),
-        ].sort();
-  sel.innerHTML =
-    `<option value="">Totes les zones</option>` +
-    zones
-      .map(
-        (z) =>
-          `<option value="${z}"${ME.zona === z ? " selected" : ""}>${z}</option>`,
-      )
-      .join("");
+  document.getElementById('meToggleDestacat').classList.toggle('actiu', ME.destacat);
+  const sel = document.getElementById('meZonaSelect');
+  sel.disabled = ME.illa==='Totes';
+  const zones = ME.illa==='Totes' ? [] :
+    [...new Set(ME_LLOCS.filter(l=>l.illa===ME.illa&&l.zona).map(l=>l.zona))].sort();
+  sel.innerHTML = `<option value="">Totes les zones</option>` +
+    zones.map(z=>`<option value="${z}"${ME.zona===z?' selected':''}>${z}</option>`).join('');
 }
 
 /* ── Accions ── */
 function meSetIlla(illa) {
-  ME.illa = illa;
-  ME.zona = "";
-  _linksTabIlla = illa === "Totes" ? "General" : ME_ILLA_LABEL[illa] || illa;
-  renderIlles();
-  renderCats();
-  renderSubcats();
-  renderExtres();
-  render();
+  ME.illa=illa; ME.zona='';
+  _linksTabIlla = illa==='Totes' ? 'General' : ME_ILLA_LABEL[illa]||illa;
+  renderIlles(); renderCats(); renderSubcats(); renderExtres(); render();
 }
 function meSetCat(cat) {
-  ME.cat = cat;
-  if (cat !== "Naturalesa") ME.subcat = "Tots";
-  renderCats();
-  renderSubcats();
-  render();
+  ME.cat=cat; if(cat!=='Naturalesa') ME.subcat='Tots';
+  renderCats(); renderSubcats(); render();
 }
-function meSetSubcat(sub) {
-  ME.subcat = sub;
-  renderSubcats();
-  render();
-}
-function meToggleDestacat() {
-  ME.destacat = !ME.destacat;
-  renderExtres();
-  render();
-}
-function meSetZona() {
-  ME.zona = document.getElementById("meZonaSelect").value;
-  render();
-}
+function meSetSubcat(sub) { ME.subcat=sub; renderSubcats(); render(); }
+function meToggleDestacat() { ME.destacat=!ME.destacat; renderExtres(); render(); }
+function meSetZona() { ME.zona=document.getElementById('meZonaSelect').value; render(); }
 
 /* ── Filtratge ── */
 function filtrarLlocs() {
-  return ME_LLOCS.filter((l) => {
-    if (ME.illa !== "Totes" && l.illa !== ME.illa) return false;
-    if (ME.cat !== "Tots" && l.categoria !== ME.cat) return false;
-    if (
-      ME.cat === "Naturalesa" &&
-      ME.subcat !== "Tots" &&
-      l.subcat !== ME.subcat
-    )
-      return false;
+  return ME_LLOCS.filter(l => {
+    if (ME.illa!=='Totes' && l.illa!==ME.illa) return false;
+    if (ME.cat!=='Tots' && l.categoria!==ME.cat) return false;
+    if (ME.cat==='Naturalesa' && ME.subcat!=='Tots' && l.subcat!==ME.subcat) return false;
     if (ME.destacat && !l.destacat) return false;
-    if (ME.zona && l.zona !== ME.zona) return false;
+    if (ME.zona && l.zona!==ME.zona) return false;
     return true;
   });
 }
@@ -534,70 +362,59 @@ function filtrarLlocs() {
 /* ── Render principal ── */
 function render() {
   const llocs = filtrarLlocs();
-  const grid = document.getElementById("meGrid");
-  const buit = document.getElementById("meBuit");
-  const comp = document.getElementById("meComptador");
+  const grid  = document.getElementById('meGrid');
+  const buit  = document.getElementById('meBuit');
+  const comp  = document.getElementById('meComptador');
 
-  comp.innerHTML = `<span>${llocs.length}</span> lloc${llocs.length !== 1 ? "s" : ""}`;
+  comp.innerHTML = `<span>${llocs.length}</span> lloc${llocs.length!==1?'s':''}`;
 
-  if (llocs.length === 0) {
-    grid.innerHTML = "";
-    buit.classList.add("visible");
-    renderLinks();
-    return;
+  if (llocs.length===0) {
+    grid.innerHTML=''; buit.classList.add('visible');
+    renderLinks(); return;
   }
-  buit.classList.remove("visible");
-  grid.innerHTML = llocs.map((l, i) => renderCard(l, i)).join("");
+  buit.classList.remove('visible');
+  grid.innerHTML = llocs.map((l,i) => renderCard(l,i)).join('');
   renderLinks();
 }
 
 function renderCard(l, i) {
   const fotoSrc = l.foto ? `img/material-extra/${l.foto}.webp` : null;
-  const ill_lbl = ME_ILLA_LABEL[l.illa] || l.illa;
-  const cat_lbl = ME_CAT_LABEL[l.categoria] || l.categoria;
-  const ph = ME_CAT_PLCHLD[l.categoria] || "📍";
-  const delay = Math.min(i * 25, 300);
+  const ill_lbl = ME_ILLA_LABEL[l.illa]||l.illa;
+  const cat_lbl = ME_CAT_LABEL[l.categoria]||l.categoria;
+  const ph      = ME_CAT_PLCHLD[l.categoria]||'📍';
+  const delay   = Math.min(i*25,300);
 
   const fotoHtml = fotoSrc
     ? `<img class="me-card-foto" src="${fotoSrc}" alt="${escHtml(l.nom)}" loading="lazy"
          onerror="this.parentNode.innerHTML='<div class=\\'me-card-foto-placeholder\\'>${ph}</div>'">`
     : `<div class="me-card-foto-placeholder">${ph}</div>`;
 
-  const linksHtml =
-    l.links && l.links.length
-      ? `<div class="me-card-footer">${l.links
-          .slice(0, 3)
-          .map(
-            (lk, li) =>
-              `<a class="me-card-link" href="${escHtml(lk)}" target="_blank" rel="noopener">Més info${l.links.length > 1 ? " " + (li + 1) : ""}</a>`,
-          )
-          .join("")}</div>`
-      : "";
+  const linksHtml = l.links&&l.links.length
+    ? `<div class="me-card-footer">${l.links.slice(0,3).map((lk,li)=>
+        `<a class="me-card-link" href="${escHtml(lk)}" target="_blank" rel="noopener">Més info${l.links.length>1?' '+(li+1):''}</a>`
+      ).join('')}</div>`
+    : '';
 
-  const desc = l.desc || "";
-  const descLng = desc.length > 160;
+  const desc    = l.desc||'';
+  const descLng = desc.length>160;
 
   return `
-  <article class="me-card${l.destacat ? " destacada" : ""}" style="animation-delay:${delay}ms">
+  <article class="me-card${l.destacat?' destacada':''}" style="animation-delay:${delay}ms">
     <div class="me-card-foto-wrap">
       ${fotoHtml}
-      ${l.destacat ? `<span class="me-badge-destacat">⭐ Destacat</span>` : ""}
+      ${l.destacat?`<span class="me-badge-destacat">⭐ Destacat</span>`:''}
       <span class="me-badge-illa">${ill_lbl}</span>
     </div>
     <div class="me-card-cos">
       <div class="me-card-meta">
         <span class="me-card-cat-badge">${ph} ${cat_lbl}</span>
-        ${l.zona ? `<span class="me-card-zona">${escHtml(l.zona)}</span>` : ""}
+        ${l.zona?`<span class="me-card-zona">${escHtml(l.zona)}</span>`:''}
       </div>
       <h3 class="me-card-nom">${escHtml(l.nom)}</h3>
-      ${
-        desc
-          ? `<div class="me-card-desc">
+      ${desc?`<div class="me-card-desc">
         <div class="me-card-desc-text" id="desc-${l.id}">${escHtml(desc)}</div>
-        ${descLng ? `<button class="me-card-llegir-mes" onclick="meExpandDesc(${l.id},this)">Llegir més ▾</button>` : ""}
-      </div>`
-          : ""
-      }
+        ${descLng?`<button class="me-card-llegir-mes" onclick="meExpandDesc(${l.id},this)">Llegir més ▾</button>`:''}
+      </div>`:''}
     </div>
     ${linksHtml}
   </article>`;
@@ -605,125 +422,92 @@ function renderCard(l, i) {
 
 function meExpandDesc(id, btn) {
   const el = document.getElementById(`desc-${id}`);
-  const ex = el.classList.toggle("expandit");
-  btn.textContent = ex ? "Llegir menys ▴" : "Llegir més ▾";
+  const ex = el.classList.toggle('expandit');
+  btn.textContent = ex ? 'Llegir menys ▴' : 'Llegir més ▾';
 }
 
 /* ══════════════════════════════════════════════
    SECCIÓ DE LINKS — filtres per categoria, illa i favorits
    ══════════════════════════════════════════════ */
 
-const ME_LINK_CATS = ["General", "Miradors", "Platges", "Piscines"];
-const ME_LINK_ILLES = ["Totes", "Sao Miguel", "Pico", "Sao Jorge", "Faial"];
-const ME_LINK_CAT_EMOJI = {
-  General: "🌐",
-  Miradors: "🏔️",
-  Platges: "🏖️",
-  Piscines: "🏊",
-};
-const ME_LINK_ILLA_EMOJI = {
-  Totes: "🏝️",
-  "Sao Miguel": "🌋",
-  Pico: "⛰️",
-  "Sao Jorge": "🐉",
-  Faial: "💙",
-};
-const ME_LINK_ILLA_LBL = {
-  Totes: "Totes",
-  "Sao Miguel": "São Miguel",
-  Pico: "Pico",
-  "Sao Jorge": "São Jorge",
-  Faial: "Faial",
-};
+const ME_LINK_CATS  = ['General', 'Miradors', 'Platges', 'Piscines'];
+const ME_LINK_ILLES = ['Totes', 'Sao Miguel', 'Pico', 'Sao Jorge', 'Faial'];
+const ME_LINK_CAT_EMOJI  = { General:'🌐', Miradors:'🏔️', Platges:'🏖️', Piscines:'🏊' };
+const ME_LINK_ILLA_EMOJI = { Totes:'🏝️', 'Sao Miguel':'🌋', Pico:'⛰️', 'Sao Jorge':'🐉', Faial:'💙' };
+const ME_LINK_ILLA_LBL   = { Totes:'Totes', 'Sao Miguel':'São Miguel', Pico:'Pico', 'Sao Jorge':'São Jorge', Faial:'Faial' };
 
 // Estat inicial: cap filtre seleccionat, favorits activats
-let _lnkCat = null;
-let _lnkIlla = null;
-let _lnkFavorit = true; // per defecte mostra favorits
-let _linksOpen = false;
+let _lnkCat     = null;
+let _lnkIlla    = null;
+let _lnkFavorit = true;   // per defecte mostra favorits
+let _linksOpen  = false;
 
 function _filtrarLinks() {
-  return ME_LINKS.filter(
-    (l) =>
-      (_lnkCat === null || l.cat === _lnkCat) &&
-      (_lnkIlla === null ||
-        _lnkIlla === "Totes" ||
-        l.illa === _lnkIlla ||
-        l.illa === "Totes") &&
-      (!_lnkFavorit || l.favorit),
+  return ME_LINKS.filter(l =>
+    (_lnkCat     === null  || l.cat  === _lnkCat) &&
+    (_lnkIlla    === null  || _lnkIlla === 'Totes' || l.illa === _lnkIlla || l.illa === 'Totes') &&
+    (!_lnkFavorit || l.favorit)
   );
 }
 
 function renderLinks() {
-  const wrap = document.getElementById("meLinksWrap");
-  wrap.style.display = "block";
+  const wrap = document.getElementById('meLinksWrap');
+  wrap.style.display = 'block';
 
   // Comptadors
   function cntCat(c) {
-    return ME_LINKS.filter(
-      (l) =>
-        (c === null || l.cat === c) &&
-        (_lnkIlla === null ||
-          _lnkIlla === "Totes" ||
-          l.illa === _lnkIlla ||
-          l.illa === "Totes") &&
-        (!_lnkFavorit || l.favorit),
+    return ME_LINKS.filter(l =>
+      (c === null || l.cat === c) &&
+      (_lnkIlla === null || _lnkIlla === 'Totes' || l.illa === _lnkIlla || l.illa === 'Totes') &&
+      (!_lnkFavorit || l.favorit)
     ).length;
   }
   function cntIlla(ill) {
-    return ME_LINKS.filter(
-      (l) =>
-        (_lnkCat === null || l.cat === _lnkCat) &&
-        (ill === null ||
-          ill === "Totes" ||
-          l.illa === ill ||
-          l.illa === "Totes") &&
-        (!_lnkFavorit || l.favorit),
+    return ME_LINKS.filter(l =>
+      (_lnkCat === null || l.cat === _lnkCat) &&
+      (ill === null || ill === 'Totes' || l.illa === ill || l.illa === 'Totes') &&
+      (!_lnkFavorit || l.favorit)
     ).length;
   }
 
-  const llocs = _filtrarLinks();
-  const total = ME_LINKS.length;
-  const favCnt = ME_LINKS.filter((l) => l.favorit).length;
+  const llocs  = _filtrarLinks();
+  const total  = ME_LINKS.length;
+  const favCnt = ME_LINKS.filter(l => l.favorit).length;
 
   // Pestanyes categoria
-  const catTabs = ME_LINK_CATS.map((c) => {
+  const catTabs = ME_LINK_CATS.map(c => {
     const cnt = cntCat(c);
-    if (cnt === 0) return "";
-    return `<button class="me-links-tab${_lnkCat === c ? " actiu" : ""}" onclick="meLnkSetCat('${c}')">
+    if (cnt === 0) return '';
+    return `<button class="me-links-tab${_lnkCat===c?' actiu':''}" onclick="meLnkSetCat('${c}')">
       ${ME_LINK_CAT_EMOJI[c]} ${c} <span class="me-filtre-num">${cnt}</span>
     </button>`;
-  }).join("");
+  }).join('');
 
   // Pestanyes illa
-  const illaTabs = ME_LINK_ILLES.map((ill) => {
+  const illaTabs = ME_LINK_ILLES.map(ill => {
     const cnt = cntIlla(ill);
-    if (cnt === 0) return "";
-    return `<button class="me-links-tab${_lnkIlla === ill ? " actiu" : ""}" onclick="meLnkSetIlla('${ill}')">
+    if (cnt === 0) return '';
+    return `<button class="me-links-tab${_lnkIlla===ill?' actiu':''}" onclick="meLnkSetIlla('${ill}')">
       ${ME_LINK_ILLA_EMOJI[ill]} ${ME_LINK_ILLA_LBL[ill]} <span class="me-filtre-num">${cnt}</span>
     </button>`;
-  }).join("");
+  }).join('');
 
   // Grid de links
   const gridHtml = llocs.length
-    ? llocs
-        .map(
-          (l) => `
-      <a class="me-link-item${l.favorit ? " favorit" : ""}" href="${escHtml(l.url)}" target="_blank" rel="noopener">
-        ${l.favorit ? '<span class="me-link-star">⭐</span>' : ""}
+    ? llocs.map(l => `
+      <a class="me-link-item${l.favorit?' favorit':''}" href="${escHtml(l.url)}" target="_blank" rel="noopener">
+        ${l.favorit ? '<span class="me-link-star">⭐</span>' : ''}
         <span class="me-link-url">${escHtml(l.url)}</span>
-      </a>`,
-        )
-        .join("")
+      </a>`).join('')
     : `<p class="me-links-buit">Cap recurs per a aquesta combinació</p>`;
 
   wrap.innerHTML = `
   <div class="me-links-header" onclick="meToggleLinks()">
     <h3 class="me-links-titol">🔗 Recursos i enllaços</h3>
     <span class="me-links-count">${total} recursos</span>
-    <span class="me-links-toggle${_linksOpen ? " obert" : ""}" id="meLinksIco">▼</span>
+    <span class="me-links-toggle${_linksOpen?' obert':''}" id="meLinksIco">▼</span>
   </div>
-  <div class="me-links-cos${_linksOpen ? " obert" : ""}" id="meLinksCos">
+  <div class="me-links-cos${_linksOpen?' obert':''}" id="meLinksCos">
 
     <div class="me-links-filtres-wrap">
 
@@ -738,15 +522,13 @@ function renderLinks() {
       </div>
 
       <div class="me-links-fila me-links-fila-extra">
-        <button class="me-toggle-destacat${_lnkFavorit ? " actiu" : ""}" onclick="meLnkToggleFavorit()">
+        <button class="me-toggle-destacat${_lnkFavorit?' actiu':''}" onclick="meLnkToggleFavorit()">
           <span class="me-toggle-ico">⭐</span>
           <span>Favorits <span class="me-filtre-num">${favCnt}</span></span>
         </button>
-        ${
-          _lnkCat || _lnkIlla || _lnkFavorit
-            ? `<button class="me-links-reset" onclick="meLnkReset()">✕ Netejar filtres</button>`
-            : ""
-        }
+        ${(_lnkCat||_lnkIlla||_lnkFavorit)
+          ? `<button class="me-links-reset" onclick="meLnkReset()">✕ Netejar filtres</button>`
+          : ''}
         <span class="me-comptador" style="margin-left:auto">
           <span>${llocs.length}</span> de ${total}
         </span>
@@ -763,73 +545,53 @@ let _linksOpen_flag = false;
 
 function meToggleLinks() {
   _linksOpen = !_linksOpen;
-  document.getElementById("meLinksCos")?.classList.toggle("obert", _linksOpen);
-  document.getElementById("meLinksIco")?.classList.toggle("obert", _linksOpen);
+  document.getElementById('meLinksCos')?.classList.toggle('obert', _linksOpen);
+  document.getElementById('meLinksIco')?.classList.toggle('obert', _linksOpen);
 }
 
 function meLnkSetCat(c) {
-  _lnkCat = _lnkCat === c ? null : c;
+  _lnkCat = (_lnkCat === c) ? null : c;
   renderLinks();
-  if (_linksOpen) document.getElementById("meLinksCos")?.classList.add("obert");
+  if (_linksOpen) document.getElementById('meLinksCos')?.classList.add('obert');
 }
 function meLnkSetIlla(ill) {
-  _lnkIlla = _lnkIlla === ill ? null : ill;
+  _lnkIlla = (_lnkIlla === ill) ? null : ill;
   renderLinks();
-  if (_linksOpen) document.getElementById("meLinksCos")?.classList.add("obert");
+  if (_linksOpen) document.getElementById('meLinksCos')?.classList.add('obert');
 }
 function meLnkToggleFavorit() {
   _lnkFavorit = !_lnkFavorit;
   renderLinks();
-  if (_linksOpen) document.getElementById("meLinksCos")?.classList.add("obert");
+  if (_linksOpen) document.getElementById('meLinksCos')?.classList.add('obert');
 }
 function meLnkReset() {
-  _lnkCat = null;
-  _lnkIlla = null;
-  _lnkFavorit = false;
+  _lnkCat = null; _lnkIlla = null; _lnkFavorit = false;
   renderLinks();
-  if (_linksOpen) document.getElementById("meLinksCos")?.classList.add("obert");
+  if (_linksOpen) document.getElementById('meLinksCos')?.classList.add('obert');
 }
 
 /* ── Utils ── */
 function escHtml(s) {
-  if (!s) return "";
-  return String(s)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function linkHostname(url) {
-  try {
-    return new URL(url).hostname.replace("www.", "");
-  } catch {
-    return url;
-  }
+  try { return new URL(url).hostname.replace('www.',''); } catch { return url; }
 }
 
 /* ══════════════════════════════════════════════
    SECCIÓ: EXCURSIONS
    ══════════════════════════════════════════════ */
-let _excTab = "cetacis";
+let _excTab  = 'cetacis';
 let _excInit = false;
 
 const EXC_TABS = [
-  { id: "cetacis", emoji: "🐋", label: "Avistament de Cetacis" },
-  { id: "barco", emoji: "⛵", label: "Passeig amb Barco" },
-  { id: "estrelles", emoji: "🔭", label: "Observació d'Estrelles" },
+  { id:'cetacis',  emoji:'🐋', label:'Avistament de Cetacis' },
+  { id:'barco',    emoji:'⛵', label:'Passeig amb Barco' },
+  { id:'estrelles',emoji:'🔭', label:"Observació d'Estrelles" },
 ];
-const EXC_ILLA_EMOJI = {
-  "Sao Miguel": "🌋",
-  Pico: "⛰️",
-  Faial: "💙",
-  "Sao Jorge": "🐉",
-};
-const EXC_ILLA_LBL = {
-  "Sao Miguel": "São Miguel",
-  Pico: "Pico",
-  Faial: "Faial",
-  "Sao Jorge": "São Jorge",
-};
+const EXC_ILLA_EMOJI = {'Sao Miguel':'🌋','Pico':'⛰️','Faial':'💙','Sao Jorge':'🐉'};
+const EXC_ILLA_LBL   = {'Sao Miguel':'São Miguel','Pico':'Pico','Faial':'Faial','Sao Jorge':'São Jorge'};
 
 function initExcursions() {
   _excInit = true;
@@ -838,14 +600,13 @@ function initExcursions() {
 }
 
 function renderExcNav() {
-  const nav = document.getElementById("excNav");
+  const nav = document.getElementById('excNav');
   if (!nav) return;
-  nav.innerHTML = EXC_TABS.map(
-    (t) =>
-      `<button class="exc-tab${_excTab === t.id ? " actiu" : ""}" onclick="excSetTab('${t.id}')">
+  nav.innerHTML = EXC_TABS.map(t =>
+    `<button class="exc-tab${_excTab===t.id?' actiu':''}" onclick="excSetTab('${t.id}')">
       ${t.emoji} ${t.label}
-    </button>`,
-  ).join("");
+    </button>`
+  ).join('');
 }
 
 function excSetTab(id) {
@@ -855,73 +616,54 @@ function excSetTab(id) {
 }
 
 function renderExcContingut() {
-  const wrap = document.getElementById("excContingut");
+  const wrap = document.getElementById('excContingut');
   if (!wrap) return;
-  if (_excTab === "cetacis") wrap.innerHTML = renderCetacis();
-  if (_excTab === "barco") wrap.innerHTML = renderBarco();
-  if (_excTab === "estrelles") wrap.innerHTML = renderEstrelles();
+  if (_excTab === 'cetacis')   wrap.innerHTML = renderCetacis();
+  if (_excTab === 'barco')     wrap.innerHTML = renderBarco();
+  if (_excTab === 'estrelles') wrap.innerHTML = renderEstrelles();
 }
 
 /* ── CETACIS ── */
 function renderCetacis() {
   const d = ME_EXCURSIONS.cetacis;
 
-  const especies = d.especies
-    .map(
-      (e) =>
-        `<div class="exc-especie">
+  const especies = d.especies.map(e =>
+    `<div class="exc-especie">
       <span class="exc-especie-nom">${escHtml(e.nom)}</span>
       <span class="exc-especie-det">${escHtml(e.detall)}</span>
-    </div>`,
-    )
-    .join("");
+    </div>`
+  ).join('');
 
   const llocsPerIlla = {};
-  d.llocs.forEach((l) => {
+  d.llocs.forEach(l => {
     if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
     llocsPerIlla[l.illa].push(l);
   });
 
-  const llocsHtml = Object.entries(llocsPerIlla)
-    .map(
-      ([illa, llocs]) => `
+  const llocsHtml = Object.entries(llocsPerIlla).map(([illa, llocs]) => `
     <div class="exc-illa-bloc">
-      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa]||'🏝️'} ${EXC_ILLA_LBL[illa]||illa}</h3>
       <div class="exc-llocs-grid">
-        ${llocs
-          .map(
-            (l) => `
+        ${llocs.map(l => `
           <div class="exc-lloc-card">
             <div class="exc-lloc-nom">📍 ${escHtml(l.nom)}</div>
             <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
-            ${
-              l.links.length
-                ? `<div class="exc-lloc-links">
-              ${l.links.map((lk) => `<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">${escHtml(linkHostname(lk))}</a>`).join("")}
-            </div>`
-                : ""
-            }
-          </div>`,
-          )
-          .join("")}
+            ${l.links.length ? `<div class="exc-lloc-links">
+              ${l.links.map(lk=>`<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">${escHtml(linkHostname(lk))}</a>`).join('')}
+            </div>` : ''}
+          </div>`
+        ).join('')}
       </div>
-    </div>`,
-    )
-    .join("");
+    </div>`
+  ).join('');
 
-  const consells = d.consells
-    .map(
-      (c) =>
-        `<div class="exc-consell"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`,
-    )
-    .join("");
+  const consells = d.consells.map(c =>
+    `<div class="exc-consell"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`
+  ).join('');
 
-  const linkGen = d.links_generals
-    .map(
-      (lk) =>
-        `<a class="me-link-item" href="${escHtml(lk)}" target="_blank" rel="noopener"><span class="me-link-url">${escHtml(lk)}</span></a>`,
-    )
-    .join("");
+  const linkGen = d.links_generals.map(lk =>
+    `<a class="me-link-item" href="${escHtml(lk)}" target="_blank" rel="noopener"><span class="me-link-url">${escHtml(lk)}</span></a>`
+  ).join('');
 
   return `
   <div class="exc-hero exc-hero-cetacis">
@@ -936,10 +678,7 @@ function renderCetacis() {
   <div class="exc-cos">
     <div class="exc-intro-grid">
       <div class="exc-intro-text">
-        ${d.intro
-          .split("\n\n")
-          .map((p) => `<p>${escHtml(p)}</p>`)
-          .join("")}
+        ${d.intro.split('\n\n').map(p=>`<p>${escHtml(p)}</p>`).join('')}
       </div>
       <div class="exc-especies-wrap">
         <div class="exc-especies-titol">🐠 Espècies habituals</div>
@@ -962,29 +701,26 @@ function renderCetacis() {
 function renderBarco() {
   const d = ME_EXCURSIONS.barco;
 
-  const genLinks = d.links_generals
-    .map(
-      (l) =>
-        `<a class="exc-gen-link" href="${escHtml(l.url)}" target="_blank" rel="noopener">
-      <span class="exc-gen-link-ico">${l.url.includes("manawa") ? "🛒" : "⭐"}</span>
+  const genLinks = d.links_generals.map(l =>
+    `<a class="exc-gen-link" href="${escHtml(l.url)}" target="_blank" rel="noopener">
+      <span class="exc-gen-link-ico">${l.url.includes('manawa')?'🛒':'⭐'}</span>
       <span class="exc-gen-link-nom">${escHtml(l.nom)}</span>
       <span class="exc-gen-link-arr">→</span>
-    </a>`,
-    )
-    .join("");
+    </a>`
+  ).join('');
 
-  const manawa = d.activitats.filter((a) => a.font === "manawa");
-  const tripad = d.activitats.filter((a) => a.font === "tripadvisor");
+  const manawa = d.activitats.filter(a => a.font === 'manawa');
+  const tripad = d.activitats.filter(a => a.font === 'tripadvisor');
 
   const actCard = (a, i) => `
     <a class="exc-act-card" href="${escHtml(a.url)}" target="_blank" rel="noopener"
-       style="animation-delay:${i * 40}ms">
+       style="animation-delay:${i*40}ms">
       <div class="exc-act-top">
-        <span class="exc-act-font exc-act-font-${a.font}">${a.font === "manawa" ? "Manawa" : "TripAdvisor"}</span>
+        <span class="exc-act-font exc-act-font-${a.font}">${a.font==='manawa'?'Manawa':'TripAdvisor'}</span>
         <span class="exc-act-durada">⏱ ${a.durada}</span>
       </div>
       <div class="exc-act-nom">${escHtml(a.nom)}</div>
-      ${a.empresa ? `<div class="exc-act-empresa">🏢 ${escHtml(a.empresa)}</div>` : ""}
+      ${a.empresa?`<div class="exc-act-empresa">🏢 ${escHtml(a.empresa)}</div>`:''}
     </a>`;
 
   return `
@@ -1004,12 +740,12 @@ function renderBarco() {
     <div class="exc-seccio-sep" style="margin-top:32px">
       <h3 class="exc-seccio-titol">🛒 Activitats a Manawa <span class="exc-count">${manawa.length}</span></h3>
     </div>
-    <div class="exc-act-grid">${manawa.map(actCard).join("")}</div>
+    <div class="exc-act-grid">${manawa.map(actCard).join('')}</div>
 
     <div class="exc-seccio-sep" style="margin-top:32px">
       <h3 class="exc-seccio-titol">⭐ Activitats a TripAdvisor <span class="exc-count">${tripad.length}</span></h3>
     </div>
-    <div class="exc-act-grid">${tripad.map((a, i) => actCard(a, i + manawa.length)).join("")}</div>
+    <div class="exc-act-grid">${tripad.map((a,i)=>actCard(a,i+manawa.length)).join('')}</div>
   </div>`;
 }
 
@@ -1018,41 +754,32 @@ function renderEstrelles() {
   const d = ME_EXCURSIONS.estrelles;
 
   const llocsPerIlla = {};
-  d.llocs.forEach((l) => {
+  d.llocs.forEach(l => {
     if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
     llocsPerIlla[l.illa].push(l);
   });
 
-  const llocsHtml = Object.entries(llocsPerIlla)
-    .map(
-      ([illa, llocs]) => `
+  const llocsHtml = Object.entries(llocsPerIlla).map(([illa, llocs]) => `
     <div class="exc-illa-bloc">
-      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa]||'🏝️'} ${EXC_ILLA_LBL[illa]||illa}</h3>
       <div class="exc-llocs-grid exc-llocs-grid-estrelles">
-        ${llocs
-          .map(
-            (l, i) => `
-          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i * 60}ms">
+        ${llocs.map((l,i) => `
+          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i*60}ms">
             <div class="exc-lloc-ico">${l.ico}</div>
             <div class="exc-lloc-nom">${escHtml(l.nom)}</div>
             <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
-          </div>`,
-          )
-          .join("")}
+          </div>`
+        ).join('')}
       </div>
-    </div>`,
-    )
-    .join("");
+    </div>`
+  ).join('');
 
-  const consells = d.consells
-    .map(
-      (c) =>
-        `<div class="exc-consell exc-consell-nit">
+  const consells = d.consells.map(c =>
+    `<div class="exc-consell exc-consell-nit">
       <span class="exc-consell-ico">${c.ico}</span>
       <span>${escHtml(c.text)}</span>
-    </div>`,
-    )
-    .join("");
+    </div>`
+  ).join('');
 
   return `
   <div class="exc-hero exc-hero-estrelles">
@@ -1093,131 +820,51 @@ function gTitol(emoji, text, id) {
 }
 
 function renderGastronomia() {
-  const wrap = document.getElementById("gastContingut");
+  const wrap = document.getElementById('gastContingut');
   if (!wrap) return;
 
   /* ── Àncores ── */
   const SECCIONS = [
-    { id: "entrants", emoji: "🥗", label: "Entrants" },
-    { id: "sopes", emoji: "🍲", label: "Sopes" },
-    { id: "peix", emoji: "🐟", label: "Peix i Marisc" },
-    { id: "carns", emoji: "🥩", label: "Carns" },
-    { id: "postres", emoji: "🍮", label: "Postres" },
-    { id: "formatges", emoji: "🧀", label: "Formatges" },
-    { id: "embotits", emoji: "🌭", label: "Embotits" },
-    { id: "begudes", emoji: "🍷", label: "Begudes" },
-    { id: "altres", emoji: "🌿", label: "Altres productes" },
-    { id: "plats", emoji: "🍽️", label: "Plats típics" },
+    {id:'entrants', emoji:'🥗', label:'Entrants'},
+    {id:'sopes',    emoji:'🍲', label:'Sopes'},
+    {id:'peix',     emoji:'🐟', label:'Peix i Marisc'},
+    {id:'carns',    emoji:'🥩', label:'Carns'},
+    {id:'postres',  emoji:'🍮', label:'Postres'},
+    {id:'formatges',emoji:'🧀', label:'Formatges'},
+    {id:'embotits', emoji:'🌭', label:'Embotits'},
+    {id:'begudes',  emoji:'🍷', label:'Begudes'},
+    {id:'altres',   emoji:'🌿', label:'Altres productes'},
+    {id:'plats',    emoji:'🍽️', label:'Plats típics'},
   ];
   const ancores = `<div class="gast-filtres-wrap"><div class="gast-filtres">
-    ${SECCIONS.map((s) => `<a class="gast-filtre-btn" href="#gast-${s.id}" onclick="gastScrollTo('${s.id}',event)">${s.emoji} ${s.label}</a>`).join("")}
+    ${SECCIONS.map(s=>`<a class="gast-filtre-btn" href="#gast-${s.id}" onclick="gastScrollTo('${s.id}',event)">${s.emoji} ${s.label}</a>`).join('')}
   </div></div>`;
 
   /* ── Plats típics (cards) ── */
   const PLATS = [
-    {
-      n: 1,
-      nom: "Morcela com Ananás",
-      foto: "morcela_com_ananas",
-      desc: "Rodanxes de morcilla negra amb pinya brasejada. Sorprenent barreja present a gairebé totes les cartes dels restaurants açorians.",
-    },
-    {
-      n: 2,
-      nom: "Lapas Grelhadas",
-      foto: "lapas-grelhadas",
-      desc: "Pegellides (una espècie de petxines) a la planxa adobades i cuinades en la seva pròpia closca. Perfectes com aperitiu.",
-    },
-    {
-      n: 3,
-      nom: "Polvo Guisat",
-      foto: "polvo-guisado",
-      desc: "Pop condimentat amb vi aromàtic, pebre i xile, acompanyat de patates o arròs. L'estil varia d'una illa a una altra.",
-    },
-    {
-      n: 4,
-      nom: "Bolos Lêvedos",
-      foto: "bolos-levedos",
-      desc: "Panet lleugerament dolç tradicional de la Vall de Furnas, fet amb ous, farina, sucre, mantega i llevat. Des de 1935 a l'Hotel Terra Nostra.",
-    },
-    {
-      n: 5,
-      nom: "Alcatra",
-      foto: "alcatra",
-      desc: "El plat estrella de Terceira: guisat de vedella molt tenda cuit a foc lent en olla de fang amb vi negre, cansalada, all i espècies.",
-    },
-    {
-      n: 6,
-      nom: "Bife à Regional",
-      foto: "bife-a-regional",
-      desc: "Bistec de vedella sucosa amb salsa de mantega, all i pebrots, o servit amb el formatge de São Jorge.",
-    },
-    {
-      n: 7,
-      nom: "Cozido das Furnas",
-      foto: "cozido-as-furnas",
-      desc: "Cuit 7 hores enterrat a les calderes volcàniques de Furnas. Carns, xoriço, morcilla, col, pastanaga i patates. No es serveix amb caldo.",
-    },
-    {
-      n: 8,
-      nom: "Cracas",
-      foto: "cracas",
-      desc: "Un percebe únic de les Açores, adherit a roques volcàniques. Intens sabor marí, salat i salvatge. Com beure un xarrup del mateix oceà.",
-    },
-    {
-      n: 9,
-      nom: "Bacallà",
-      foto: "bacalhau-a-margarida-da-praca",
-      desc: "365 maneres de cuinar-lo: à Brás, à Margarida da Praça, à Transmontana, à Boca Gil Eanes... Un per a cada dia de l'any.",
-    },
-    {
-      n: 10,
-      nom: "Chicharros Fritos com Molho de Vilão",
-      foto: "chicharros-fritos",
-      desc: "Sorell fregit cruixent amb salsa de pebrots, all i oli. Senzill però deliciós, especialment a São Miguel.",
-    },
-    {
-      n: 11,
-      nom: "Pinya i fruites tropicals",
-      foto: "ananas",
-      desc: "Plantacions sota hivernacles de vidre encalat a São Miguel, úniques al món. També maracujà i guaiaba peruana.",
-    },
-    {
-      n: 12,
-      nom: "Queijadas da Vila",
-      foto: "queijadas-da-vila",
-      desc: "Petits pastissos de formatge icònics de São Miguel. Suaus, lleugerament dolços i cruixents. Ideals amb cafè o te.",
-    },
-    {
-      n: 13,
-      nom: "Fofas da Povoação",
-      foto: "fofas-da-povoacao",
-      desc: "Éclair farcit de mantega, vainilla o llimona i recobert de xocolata. Originari de Povoação, São Miguel.",
-    },
-    {
-      n: 14,
-      nom: "Queijo Branco com Pimenta da Terra",
-      foto: "queijo-branco-com-pimenta-da-terra",
-      desc: "Formatge fresc suau amb bitxo local mòlt. L'aperitiu imprescindible de São Miguel. Servit amb pa, és perfecte.",
-    },
-    {
-      n: 15,
-      nom: "Boca Negra Grelhada",
-      foto: "boca-nega-grelhada",
-      desc: "Gallineta a la brasa. Carn blanca, humida i saborosa. El peix estrella de São Miguel, sempre fresc.",
-    },
-    {
-      n: 16,
-      nom: "Amêijoas de São Jorge",
-      foto: "ameijoas-sao-jorge",
-      desc: "Cloïsses úniques al món de la Fajã da Caldeira do Santo Cristo. Extremadament rares, només es cullen durant un curt període a l'any.",
-    },
+    {n:1,  nom:'Morcela com Ananás',                foto:'morcela_com_ananas',       desc:'Rodanxes de morcilla negra amb pinya brasejada. Sorprenent barreja present a gairebé totes les cartes dels restaurants açorians.'},
+    {n:2,  nom:'Lapas Grelhadas',                   foto:'lapas-grelhadas',           desc:'Pegellides (una espècie de petxines) a la planxa adobades i cuinades en la seva pròpia closca. Perfectes com aperitiu.'},
+    {n:3,  nom:'Polvo Guisat',                      foto:'polvo-guisado',            desc:'Pop condimentat amb vi aromàtic, pebre i xile, acompanyat de patates o arròs. L\'estil varia d\'una illa a una altra.'},
+    {n:4,  nom:'Bolos Lêvedos',                     foto:'bolos-levedos',             desc:'Panet lleugerament dolç tradicional de la Vall de Furnas, fet amb ous, farina, sucre, mantega i llevat. Des de 1935 a l\'Hotel Terra Nostra.'},
+    {n:5,  nom:'Alcatra',                           foto:'alcatra',                   desc:'El plat estrella de Terceira: guisat de vedella molt tenda cuit a foc lent en olla de fang amb vi negre, cansalada, all i espècies.'},
+    {n:6,  nom:'Bife à Regional',                   foto:'bife-a-regional',           desc:'Bistec de vedella sucosa amb salsa de mantega, all i pebrots, o servit amb el formatge de São Jorge.'},
+    {n:7,  nom:'Cozido das Furnas',                 foto:'cozido-as-furnas',          desc:'Cuit 7 hores enterrat a les calderes volcàniques de Furnas. Carns, xoriço, morcilla, col, pastanaga i patates. No es serveix amb caldo.'},
+    {n:8,  nom:'Cracas',                            foto:'cracas',                    desc:'Un percebe únic de les Açores, adherit a roques volcàniques. Intens sabor marí, salat i salvatge. Com beure un xarrup del mateix oceà.'},
+    {n:9,  nom:'Bacallà',                           foto:'bacalhau-a-margarida-da-praca', desc:'365 maneres de cuinar-lo: à Brás, à Margarida da Praça, à Transmontana, à Boca Gil Eanes... Un per a cada dia de l\'any.'},
+    {n:10, nom:'Chicharros Fritos com Molho de Vilão', foto:'chicharros-fritos',      desc:'Sorell fregit cruixent amb salsa de pebrots, all i oli. Senzill però deliciós, especialment a São Miguel.'},
+    {n:11, nom:'Pinya i fruites tropicals',         foto:'ananas',                    desc:'Plantacions sota hivernacles de vidre encalat a São Miguel, úniques al món. També maracujà i guaiaba peruana.'},
+    {n:12, nom:'Queijadas da Vila',                 foto:'queijadas-da-vila',         desc:'Petits pastissos de formatge icònics de São Miguel. Suaus, lleugerament dolços i cruixents. Ideals amb cafè o te.'},
+    {n:13, nom:'Fofas da Povoação',                 foto:'fofas-da-povoacao',         desc:'Éclair farcit de mantega, vainilla o llimona i recobert de xocolata. Originari de Povoação, São Miguel.'},
+    {n:14, nom:'Queijo Branco com Pimenta da Terra',foto:'queijo-branco-com-pimenta-da-terra', desc:'Formatge fresc suau amb bitxo local mòlt. L\'aperitiu imprescindible de São Miguel. Servit amb pa, és perfecte.'},
+    {n:15, nom:'Boca Negra Grelhada',               foto:'boca-nega-grelhada',        desc:'Gallineta a la brasa. Carn blanca, humida i saborosa. El peix estrella de São Miguel, sempre fresc.'},
+    {n:16, nom:'Amêijoas de São Jorge',             foto:'ameijoas-sao-jorge',        desc:'Cloïsses úniques al món de la Fajã da Caldeira do Santo Cristo. Extremadament rares, només es cullen durant un curt període a l\'any.'},
   ];
 
   const platsHtml = PLATS.map((p, i) => {
     const imgHtml = p.foto
       ? `<div class="gast-plat-img-wrap"><img class="gast-plat-img" src="img/material-extra/${p.foto}.webp" alt="${escHtml(p.nom)}" loading="lazy" onerror="this.closest('.gast-plat-img-wrap').style.display='none'"></div>`
       : `<div class="gast-plat-ico">🍽️</div>`;
-    return `<article class="gast-plat-card" style="animation-delay:${i * 30}ms">
+    return `<article class="gast-plat-card" style="animation-delay:${i*30}ms">
       ${imgHtml}
       <div class="gast-plat-cos">
         <span class="gast-plat-num">${p.n}</span>
@@ -1225,62 +872,60 @@ function renderGastronomia() {
         <p class="gast-plat-desc">${escHtml(p.desc)}</p>
       </div>
     </article>`;
-  }).join("");
+  }).join('');
 
   /* ── HTML complet ── */
-  wrap.innerHTML =
-    ancores +
-    `<div class="gast-article">
+  wrap.innerHTML = ancores + `<div class="gast-article">
 
   <p class="gast-intro-text">La gastronomia de les Açores està estretament lligada a la seva naturalesa volcànica i a la seva tradició pesquera. Els ingredients frescos, com el peix i el marisc, juntament amb una excel·lent carn local i les tècniques de cuinat tradicionals, ofereixen uns plats que han anat de generació en generació. Tot això acompanyat per tota classe de fruites i verdures de primera qualitat cultivades als sòls volcànics especialment fèrtils, i sense oblidar la gran varietat de formatges i vins locals.</p>
 
-  ${gTitol("🥗", "Entrants", "entrants")}
+  ${gTitol('🥗','Entrants','entrants')}
   <p>Hi ha una gran varietat que sovint inclou la <em>Salada de Polvo</em> (amanida de pop), els <em>Pasteis de Bacalhau</em> (crestes de bacallà), les <em>Lapas</em> (crues o a la planxa amb all i llimona), les <em>Cracas</em> (una espècie de percebes) i el <em>Presunto</em> (pernil salat).</p>
 
-  ${gTitol("🍲", "Sopes", "sopes")}
+  ${gTitol('🍲','Sopes','sopes')}
   <p>L'arxipèlag de les Açores —com la resta de Portugal— és conegut per les seves delicioses sopes que sovint tenen una consistència d'estofat i poden omplir molt. Les que podem trobar a la majoria de menús són el <em>Caldo Verde</em> (una sopa de col amb patates i salsitxa fumada), la <em>Sopa de Legumes</em> (sopa de llegums), la <em>Sopa Hortalicias</em> (sopa de verdures), la <em>Sopa de Peixe</em> (caldo de peix), la <em>Sopa de Mariscos</em>, el <em>Caldo Azedo</em> (caldo agra) o el <em>Caldo de Nabos</em> (sopa de naps).</p>
   <p>Més contundents són els diversos guisats que es solen oferir com a primer plat. Les <em>Caldeiradas</em>, que contenen carn de vedella, peix o pollastre.</p>
-  ${gFoto("caldo-verde", "Caldo Verde")}
+  ${gFoto('caldo-verde','Caldo Verde')}
 
-  ${gTitol("🐟", "Peix i Marisc", "peix")}
+  ${gTitol('🐟','Peix i Marisc','peix')}
   <p>Lògicament, el peix forma part de la dieta habitual dels illencs. La majoria de plats de peix estan preparats a la brasa (<em>na brasa</em>) o fregits. Els peixos que podem trobar més habitualment en els menús són: <em>Atum</em> (tonyina), <em>Espadarte</em> (peix espasa), <em>Espada Preto</em> (peix sable negre), <em>Cherne</em> (mero de fons), <em>Chicharro</em> (un sorell de més qualitat), <em>Pescada</em> (llucet), <em>Pargo</em> (pagre), <em>Cavala</em> (cavalla), <em>Congro</em> (congre), <em>Garoupa</em> (mero), <em>Lulas</em> (calamars), <em>Polvo</em> (pop) i, per descomptat, les <em>Sardinhas</em> (sardines) i el <em>Bacalhau</em> (bacallà), importat i preparat de varies maneres diferents.</p>
   <p>Respecte al marisc, destaquen les <em>Lapas</em> (pegellides), molt típiques de la regió. També trobarem <em>camarao</em> (gambes), <em>lagosta</em> (llagosta), <em>lagostinho</em> (llagostins), <em>cavaco</em> (semblant a una llagosta petita) i <em>santola</em> ("centollo"). Una especialitat especial és l'arròs de marisc, una colorida barreja de diferents mariscs cuinats amb arròs.</p>
-  ${gFoto("cavaco", "Cavaco — semblant a una llagosta petita, especialitat local")}
+  ${gFoto('cavaco','Cavaco — semblant a una llagosta petita, especialitat local')}
 
-  ${gTitol("🥩", "Carns", "carns")}
+  ${gTitol('🥩','Carns','carns')}
   <p>No és una sorpresa la gran varietat de plats de carn que trobem a l'arxipèlag, especialment de carn de vedella. Per començar tenim els <em>Bifes</em> (bistecs de tot tipus), el <em>Bitoque</em> (bistecs petits amb un ou ferrat a sobre), l'<em>Entrecosto</em> (entrecot), les <em>costilles</em> (costelles), la <em>Caçoila</em> (estofat de porc), la <em>Carne do porco</em> (carn de porc), la <em>Carne de Molha</em> (plat de carn amb una deliciosa salsa típica de Faial), el <em>Coelho</em> (conill), el <em>Frango</em> (pollastre)… i moltes altres!</p>
 
-  ${gTitol("🍮", "Postres", "postres")}
+  ${gTitol('🍮','Postres','postres')}
   <p>Els postres són molt bons, però també molt dolços. Sempre hi ha disponibles <em>bolos</em> (pastissos), puddings i pinya fresca. La <em>Massa Sovada</em> i l'<em>arroz doce</em> (un dolç arròs amb llet i canela) són alguns dels postres típics.</p>
-  ${gFoto("massa-sovada", "Massa Sovada — pa dolç i esponjós tradicional")}
+  ${gFoto('massa-sovada','Massa Sovada — pa dolç i esponjós tradicional')}
 
-  ${gTitol("🧀", "Formatges", "formatges")}
+  ${gTitol('🧀','Formatges','formatges')}
   <p>A les Açores, on s'elabora aproximadament la meitat dels formatges que es consumeixen a Portugal, el mite de les quatre estacions en un mateix dia és una realitat. Pluges generoses que amb el mateix ímpetu donen pas a un sol radiant i que afavoreixen una vegetació que frega el concepte de verger. Un paradís perfecte per al bestiar, que retoza feliç entre la frescor. Entre les 9 illes hi ha una infinitat de formatges artesanals, que en alguns casos mantenen els mètodes d'elaboració dels primers colons.</p>
   <p>El més famós de tots és el <em>Queijo de São Jorge</em>, un formatge picant i semidur, elaborat des del segle XV amb llet crua de vaca, reconegut amb DOP. Ha aconseguit que São Jorge sigui coneguda com l'Illa del Formatge. Es pot visitar la fàbrica <a class="gast-link" href="https://www.uniqueijo.pt/" target="_blank" rel="noopener">Uniqueijo</a> en aquesta illa.</p>
-  ${gFoto("queijo-sao-jorge", "Queijo de São Jorge — DOP, elaborat des del segle XV")}
+  ${gFoto('queijo-sao-jorge','Queijo de São Jorge — DOP, elaborat des del segle XV')}
   <p>El <em>Queijo Vaquinha</em>, cremós i suau com la mantega, és un dels emblemes de l'illa Terceira. A São Miguel n'hi ha varis, com el <em>Queijo do Vale</em>, que procedeix de la Vall de la Lagoa Seca. A l'illa de Pico destaca el <em>Queijo do Pico</em> (o queijo de São João), amb DOP Europea des del 1998. També a Pico podem trobar el formatge <em>Ilha dos Mistérios</em>, on els camps de lava basàltica són claus per a la seva elaboració. Un formatge diferent que es destaca pel color blanc, la cremositat i el sabor únic.</p>
-  ${gFoto("queijo-ilha-dos-misterios", "Queijo Ilha dos Mistérios — elaborat als prats volcànics de Pico")}
+  ${gFoto('queijo-ilha-dos-misterios','Queijo Ilha dos Mistérios — elaborat als prats volcànics de Pico')}
 
-  ${gTitol("🌭", "Embotits", "embotits")}
+  ${gTitol('🌭','Embotits','embotits')}
   <p>Els embotits de les illes Açores es caracteritzen pel seu sabor rústic, intens i fumat. Destaquen la <em>morcela</em>, la <em>linguiça</em> i el tradicional <em>chouriço</em>. Aquests productes combinen a la perfecció amb els famosos formatges de la regió.</p>
   <p>La <em>morcela</em> és una botifarra negra dolça que conté espècies i un toc de sucre, i se serveix tradicionalment cuita o fregida acompanyada de rodanxes de pinya fresca de l'illa. La <em>linguiça</em> i el <em>chouriço</em> són embotits de porc adobats amb molt d'all, pebrot vermell dolç i vi local. Es diferencien dels continentals per un curat més llarg i un perfil més fumat. Són un ingredient estrella de l'emblemàtic <em>Cozido das Furnas</em>.</p>
   <p>També destaquen els <em>torresmos</em> (torreznos), típics a tota la regió. Se serveixen fregits i cruixents, sovint acompanyats amb inhame (un tubercle local).</p>
-  ${gFoto("linguica", "Linguiça — embotit de porc fumat, ingredient del Cozido das Furnas")}
-  ${gFoto("torresmos", "Torresmos — fregits i cruixents, acompanyats d'inhame")}
+  ${gFoto('linguica','Linguiça — embotit de porc fumat, ingredient del Cozido das Furnas')}
+  ${gFoto('torresmos','Torresmos — fregits i cruixents, acompanyats d\'inhame')}
 
-  ${gTitol("🍷", "Begudes", "begudes")}
+  ${gTitol('🍷','Begudes','begudes')}
   <p>Una de les begudes més populars de les illes és la cervesa. Hi ha una marca local: <em>Especial</em>. És bona i bastant barata. El cafè també és imprescindible. Durant el dia, la gent prefereix el <em>Galão</em>, que es serveix en un vas amb abundant llet. Per la nit se sol prendre un cafè, comparable al expresso.</p>
   <p>Per descomptat, també elaboren vi d'excel·lent qualitat. Entre les marques més conegudes destaquen <em>Terras de Lava</em> (blanc) i <em>Basalto</em> (negre) de Pico, i <em>Terra do Conde</em> (blanc i negre) de Graciosa. El <em>Verdelho</em> (de Pico i la Graciosa) és el vi de postres més famós de les Açores.</p>
   <p>El <em>Chá dos Açores</em> és un dels productes més exclusius de la regió. Les Açores són una de les poques zones d'Europa on es cultiva te, i São Miguel és la illa principal productora. Té un sabor suau i característic degut a les condicions climàtiques i volcàniques de l'arxipèlag.</p>
   <p>El refresc escumós estrella de les Açores, <em>Kima</em>, està aromatitzat amb la deliciosa maracujà o fruita de la passió de l'illa. Se serveix normalment amb gel a l'estiu. Hi ha una mica de polpa, ja que s'utilitza fruita real, i tot i que té menys sucre que altres refrescos, Kima encara és força dolça amb un gust àcid.</p>
-  ${gFoto("kima", "Kima — el refresc estrella de les Açores, amb maracujà real")}
+  ${gFoto('kima','Kima — el refresc estrella de les Açores, amb maracujà real')}
 
-  ${gTitol("🌿", "Altres productes típics", "altres")}
+  ${gTitol('🌿','Altres productes típics','altres')}
   <p><strong>Inhame dos Açores</strong> — Els 'inhames' (nyams) són tubercles amb mides que oscil·len entre els 5 i els 10 cm de diàmetre. Té un sabor i textura similar al moniato. A les Açores és molt habitualment usat com a guarnició, en substitució de les patates.</p>
-  ${gFoto("Inhame", "Inhame dos Açores — tubercle local, substitut habitual de les patates")}
+  ${gFoto('Inhame','Inhame dos Açores — tubercle local, substitut habitual de les patates')}
   <p><strong>Pimenta da terra</strong> — Pebrot vermell picant de São Miguel utilitzat en pràcticament tot. Normalment es conserva en sal i de vegades en vinagre. Sovint es mol fins a formar una pasta. Gairebé tots els plats utilitzen <em>pimenta da terra</em> d'alguna manera. És un dels ingredients més específics i populars de São Miguel.</p>
 
-  ${gTitol("🍽️", "Plats típics", "plats")}
+  ${gTitol('🍽️','Plats típics','plats')}
   <p class="gast-plats-intro">Una selecció dels plats que no us podeu perdre a les Açores:</p>
   <div class="gast-plats-grid">${platsHtml}</div>
 
@@ -1289,11 +934,11 @@ function renderGastronomia() {
 
 function gastScrollTo(id, ev) {
   if (ev) ev.preventDefault();
-  const el = document.getElementById("gast-" + id);
+  const el = document.getElementById('gast-' + id);
   if (!el) return;
   const offset = 52 + 49 + 46;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top, behavior: "smooth" });
+  window.scrollTo({ top, behavior: 'smooth' });
 }
 
 /* ══════════════════════════════════════════════
@@ -1303,7 +948,7 @@ let _maletaInit = false;
 
 function initMaleta() {
   _maletaInit = true;
-  const wrap = document.getElementById("maletaContingut");
+  const wrap = document.getElementById('maletaContingut');
   if (!wrap) return;
 
   wrap.innerHTML = `<div class="mal-article">
@@ -1343,7 +988,6 @@ function initMaleta() {
       <li>Crema per a cops (<strong>Thrombocid</strong>)</li>
       <li><strong>Pastilles per al mareig</strong> (<em>Biodramina</em> o similar) — imprescindible. Les carreteres de les illes fan moltes corbes i els trajectes amb barco poden ser molt moguts.</li>
       <li>Bon <strong>repel·lent de mosquits</strong></li>
-      <li><strong>Esparadrap: </strong>imprescindible per la tranquil·litat de tothom...</li>
     </ul>
   </section>
 
@@ -1354,181 +998,48 @@ function initMaleta() {
    SECCIÓ: ALTRES (Informació general + Consells)
    ══════════════════════════════════════════════ */
 let _infoInit = false;
-let _infoTab = "general";
+let _infoTab  = 'general';
 
 const INFO_TABS = [
-  { id: "general", emoji: "🌍", label: "Informació general" },
-  { id: "consells", emoji: "💡", label: "Consells pràctics" },
-  { id: "reserves", emoji: "📋", label: "Reserves i restriccions" },
+  { id:'general',  emoji:'🌍', label:'Informació general' },
+  { id:'consells', emoji:'💡', label:'Consells pràctics'  },
+  { id:'reserves', emoji:'📋', label:'Reserves i restriccions' },
 ];
 
-const INFO_ILLES_VISITA = new Set(["Faial", "Pico", "São Jorge", "São Miguel"]);
+const INFO_ILLES_VISITA = new Set(['Faial','Pico','São Jorge','São Miguel']);
 
 const ILLES_DATA = [
-  { illa: "Corvo", area: "17,1", pop: "437", dens: "25,6" },
-  { illa: "Faial", area: "173,0", pop: "14.466", dens: "83,6" },
-  { illa: "Flores", area: "141,0", pop: "3.570", dens: "25,3" },
-  { illa: "Graciosa", area: "60,7", pop: "4.070", dens: "67,1" },
-  { illa: "Pico", area: "444,8", pop: "14.418", dens: "32,4" },
-  { illa: "Santa Maria", area: "96,9", pop: "5.504", dens: "56,8" },
-  { illa: "São Jorge", area: "243,7", pop: "8.435", dens: "34,6" },
-  { illa: "São Miguel", area: "744,5", pop: "137.255", dens: "184,4" },
-  { illa: "Terceira", area: "400,3", pop: "53.563", dens: "133,8" },
+  { illa:'Corvo',       area:'17,1',   pop:'437',     dens:'25,6'  },
+  { illa:'Faial',       area:'173,0',  pop:'14.466',  dens:'83,6'  },
+  { illa:'Flores',      area:'141,0',  pop:'3.570',   dens:'25,3'  },
+  { illa:'Graciosa',    area:'60,7',   pop:'4.070',   dens:'67,1'  },
+  { illa:'Pico',        area:'444,8',  pop:'14.418',  dens:'32,4'  },
+  { illa:'Santa Maria', area:'96,9',   pop:'5.504',   dens:'56,8'  },
+  { illa:'São Jorge',   area:'243,7',  pop:'8.435',   dens:'34,6'  },
+  { illa:'São Miguel',  area:'744,5',  pop:'137.255', dens:'184,4' },
+  { illa:'Terceira',    area:'400,3',  pop:'53.563',  dens:'133,8' },
 ];
 
 const MUNS_DATA = [
-  {
-    mun: "Angra do Heroísmo",
-    zip: "9701",
-    illa: "Terceira",
-    area: "239,0",
-    pop: "33.701",
-    dens: "141,0",
-  },
-  {
-    mun: "Calheta",
-    zip: "9850",
-    illa: "São Jorge",
-    area: "126,3",
-    pop: "3.486",
-    dens: "27,6",
-  },
-  {
-    mun: "Horta",
-    zip: "9900",
-    illa: "Faial",
-    area: "173,0",
-    pop: "14.466",
-    dens: "83,6",
-  },
-  {
-    mun: "Lagoa",
-    zip: "9560",
-    illa: "São Miguel",
-    area: "45,6",
-    pop: "15.130",
-    dens: "331,8",
-  },
-  {
-    mun: "Lajes das Flores",
-    zip: "9960",
-    illa: "Flores",
-    area: "70,0",
-    pop: "1.456",
-    dens: "20,8",
-  },
-  {
-    mun: "Lajes do Pico",
-    zip: "9930",
-    illa: "Pico",
-    area: "155,3",
-    pop: "4.398",
-    dens: "28,3",
-  },
-  {
-    mun: "Madalena",
-    zip: "9950",
-    illa: "Pico",
-    area: "147,1",
-    pop: "6.559",
-    dens: "44,6",
-  },
-  {
-    mun: "Nordeste",
-    zip: "9630",
-    illa: "São Miguel",
-    area: "101,5",
-    pop: "4.439",
-    dens: "43,7",
-  },
-  {
-    mun: "Ponta Delgada",
-    zip: "9500",
-    illa: "São Miguel",
-    area: "233,0",
-    pop: "69.038",
-    dens: "296,3",
-  },
-  {
-    mun: "Povoação",
-    zip: "9650",
-    illa: "São Miguel",
-    area: "106,4",
-    pop: "5.883",
-    dens: "55,3",
-  },
-  {
-    mun: "Praia da Vitória",
-    zip: "9760",
-    illa: "Terceira",
-    area: "161,3",
-    pop: "19.862",
-    dens: "123,1",
-  },
-  {
-    mun: "Ribeira Grande",
-    zip: "9600",
-    illa: "São Miguel",
-    area: "180,1",
-    pop: "32.397",
-    dens: "179,9",
-  },
-  {
-    mun: "Santa Cruz da Graciosa",
-    zip: "9880",
-    illa: "Graciosa",
-    area: "60,7",
-    pop: "4.070",
-    dens: "67,1",
-  },
-  {
-    mun: "Santa Cruz das Flores",
-    zip: "9970",
-    illa: "Flores",
-    area: "70,9",
-    pop: "2.114",
-    dens: "29,8",
-  },
-  {
-    mun: "São Roque do Pico",
-    zip: "9940",
-    illa: "Pico",
-    area: "142,4",
-    pop: "3.461",
-    dens: "24,3",
-  },
-  {
-    mun: "Velas",
-    zip: "9800",
-    illa: "São Jorge",
-    area: "117,4",
-    pop: "4.949",
-    dens: "42,2",
-  },
-  {
-    mun: "Vila do Corvo",
-    zip: "9908",
-    illa: "Corvo",
-    area: "17,1",
-    pop: "437",
-    dens: "25,6",
-  },
-  {
-    mun: "Vila do Porto",
-    zip: "9580",
-    illa: "Santa Maria",
-    area: "96,9",
-    pop: "5.504",
-    dens: "56,8",
-  },
-  {
-    mun: "Vila Franca do Campo",
-    zip: "9680",
-    illa: "São Miguel",
-    area: "78,0",
-    pop: "10.368",
-    dens: "132,9",
-  },
+  { mun:'Angra do Heroísmo',     zip:'9701', illa:'Terceira',    area:'239,0', pop:'33.701', dens:'141,0' },
+  { mun:'Calheta',               zip:'9850', illa:'São Jorge',   area:'126,3', pop:'3.486',  dens:'27,6'  },
+  { mun:'Horta',                 zip:'9900', illa:'Faial',       area:'173,0', pop:'14.466', dens:'83,6'  },
+  { mun:'Lagoa',                 zip:'9560', illa:'São Miguel',  area:'45,6',  pop:'15.130', dens:'331,8' },
+  { mun:'Lajes das Flores',      zip:'9960', illa:'Flores',      area:'70,0',  pop:'1.456',  dens:'20,8'  },
+  { mun:'Lajes do Pico',         zip:'9930', illa:'Pico',        area:'155,3', pop:'4.398',  dens:'28,3'  },
+  { mun:'Madalena',              zip:'9950', illa:'Pico',        area:'147,1', pop:'6.559',  dens:'44,6'  },
+  { mun:'Nordeste',              zip:'9630', illa:'São Miguel',  area:'101,5', pop:'4.439',  dens:'43,7'  },
+  { mun:'Ponta Delgada',         zip:'9500', illa:'São Miguel',  area:'233,0', pop:'69.038', dens:'296,3' },
+  { mun:'Povoação',              zip:'9650', illa:'São Miguel',  area:'106,4', pop:'5.883',  dens:'55,3'  },
+  { mun:'Praia da Vitória',      zip:'9760', illa:'Terceira',    area:'161,3', pop:'19.862', dens:'123,1' },
+  { mun:'Ribeira Grande',        zip:'9600', illa:'São Miguel',  area:'180,1', pop:'32.397', dens:'179,9' },
+  { mun:'Santa Cruz da Graciosa',zip:'9880', illa:'Graciosa',    area:'60,7',  pop:'4.070',  dens:'67,1'  },
+  { mun:'Santa Cruz das Flores', zip:'9970', illa:'Flores',      area:'70,9',  pop:'2.114',  dens:'29,8'  },
+  { mun:'São Roque do Pico',     zip:'9940', illa:'Pico',        area:'142,4', pop:'3.461',  dens:'24,3'  },
+  { mun:'Velas',                 zip:'9800', illa:'São Jorge',   area:'117,4', pop:'4.949',  dens:'42,2'  },
+  { mun:'Vila do Corvo',         zip:'9908', illa:'Corvo',       area:'17,1',  pop:'437',    dens:'25,6'  },
+  { mun:'Vila do Porto',         zip:'9580', illa:'Santa Maria', area:'96,9',  pop:'5.504',  dens:'56,8'  },
+  { mun:'Vila Franca do Campo',  zip:'9680', illa:'São Miguel',  area:'78,0',  pop:'10.368', dens:'132,9' },
 ];
 
 function initInfo() {
@@ -1538,12 +1049,11 @@ function initInfo() {
 }
 
 function renderInfoNav() {
-  const nav = document.getElementById("infoNav");
+  const nav = document.getElementById('infoNav');
   if (!nav) return;
-  nav.innerHTML = INFO_TABS.map(
-    (t) =>
-      `<button class="exc-tab${_infoTab === t.id ? " actiu" : ""}" onclick="infoSetTab('${t.id}')">${t.emoji} ${t.label}</button>`,
-  ).join("");
+  nav.innerHTML = INFO_TABS.map(t =>
+    `<button class="exc-tab${_infoTab===t.id?' actiu':''}" onclick="infoSetTab('${t.id}')">${t.emoji} ${t.label}</button>`
+  ).join('');
 }
 
 function infoSetTab(id) {
@@ -1553,56 +1063,35 @@ function infoSetTab(id) {
 }
 
 function renderInfoContingut() {
-  const wrap = document.getElementById("infoContingut");
+  const wrap = document.getElementById('infoContingut');
   if (!wrap) return;
-  wrap.innerHTML =
-    _infoTab === "general"
-      ? renderInfoGeneral()
-      : _infoTab === "consells"
-        ? renderInfoConsells()
-        : renderInfoReserves();
+  wrap.innerHTML = _infoTab === 'general' ? renderInfoGeneral()
+    : _infoTab === 'consells' ? renderInfoConsells()
+    : renderInfoReserves();
 }
 
 /* ── INFORMACIÓ GENERAL ── */
 function renderInfoGeneral() {
-  const illesRows = ILLES_DATA.map((r) => {
+  const illesRows = ILLES_DATA.map(r => {
     const vis = INFO_ILLES_VISITA.has(r.illa);
-    const cls =
-      "info-tr-" +
-      r.illa
-        .replace(/\s/g, "-")
-        .replace(/ã/g, "a")
-        .replace(/é/g, "e")
-        .toLowerCase();
-    return `<tr class="${cls}${vis ? " info-taula-visita" : ""}">
-      <td class="info-taula-illa">${vis ? '<span class="info-visita-dot">★</span>' : ""} ${escHtml(r.illa)}</td>
+    const cls = 'info-tr-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    return `<tr class="${cls}${vis?' info-taula-visita':''}">
+      <td class="info-taula-illa">${vis?'<span class="info-visita-dot">★</span>':''} ${escHtml(r.illa)}</td>
       <td>${r.area}</td><td>${r.pop}</td><td>${r.dens}</td>
     </tr>`;
-  }).join("");
+  }).join('');
 
-  const munsRows = MUNS_DATA.map((r) => {
+  const munsRows = MUNS_DATA.map(r => {
     const vis = INFO_ILLES_VISITA.has(r.illa);
-    const trCls =
-      "info-tr-" +
-      r.illa
-        .replace(/\s/g, "-")
-        .replace(/ã/g, "a")
-        .replace(/é/g, "e")
-        .toLowerCase();
-    const tagCls =
-      "info-illa-tag-" +
-      r.illa
-        .replace(/\s/g, "-")
-        .replace(/ã/g, "a")
-        .replace(/é/g, "e")
-        .toLowerCase();
-    return `<tr class="${trCls}${vis ? " info-taula-visita" : ""}">
+    const trCls  = 'info-tr-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    const tagCls = 'info-illa-tag-' + r.illa.replace(/\s/g,'-').replace(/ã/g,'a').replace(/é/g,'e').toLowerCase();
+    return `<tr class="${trCls}${vis?' info-taula-visita':''}">
       <td class="info-taula-mun">${escHtml(r.mun)}</td>
       <td class="info-taula-zip">${r.zip}</td>
       <td><span class="info-illa-tag ${tagCls}">${escHtml(r.illa)}</span></td>
       <td>${r.area}</td><td>${r.pop}</td><td>${r.dens}</td>
     </tr>`;
-  }).join("");
+  }).join('');
 
   return `<div class="info-article">
 
@@ -1713,16 +1202,16 @@ function renderInfoConsells() {
 /* ══════════════════════════════════════════════
    SECCIÓ: ITINERARIS ALTERNATIUS
    ══════════════════════════════════════════════ */
-let _itinInit = false;
-let _itinIlla = "Sao Miguel";
-let _itinZona = "Tots";
-const _itinMaps = {}; // mapId → L.map instance
+let _itinInit  = false;
+let _itinIlla  = 'Sao Miguel';
+let _itinZona  = 'Tots';
+const _itinMaps = {};  // mapId → L.map instance
 
 const ITIN_ILLES = [
-  { id: "Sao Miguel", emoji: "🌋", label: "São Miguel", color: "#6abf70" },
-  { id: "Pico", emoji: "⛰️", label: "Pico", color: "#a8a8a8" },
-  { id: "Sao Jorge", emoji: "🐉", label: "São Jorge", color: "#c4895a" },
-  { id: "Faial", emoji: "💙", label: "Faial", color: "#5fa8e8" },
+  { id:'Sao Miguel', emoji:'🌋', label:'São Miguel', color:'#6abf70' },
+  { id:'Pico',       emoji:'⛰️', label:'Pico',       color:'#a8a8a8' },
+  { id:'Sao Jorge',  emoji:'🐉', label:'São Jorge',  color:'#c4895a' },
+  { id:'Faial',      emoji:'💙', label:'Faial',      color:'#5fa8e8' },
 ];
 
 function initItineraris() {
@@ -1733,34 +1222,28 @@ function initItineraris() {
 
 /* ── Filtres ── */
 function renderItinFiltres() {
-  const wrap = document.getElementById("itinFiltresWrap");
+  const wrap = document.getElementById('itinFiltresWrap');
   if (!wrap) return;
 
-  const illes = ITIN_ILLES.map((ill) => {
-    const cnt = (ME_ITINERARIS[ill.id] || []).length;
+  const illes = ITIN_ILLES.map(ill => {
+    const cnt = (ME_ITINERARIS[ill.id]||[]).length;
     const actiu = _itinIlla === ill.id;
-    return `<button class="itin-pill itin-pill-illa${actiu ? " actiu" : ""}"
-      style="${actiu ? `--pill-color:${ill.color}` : "--pill-color:rgba(106,171,122,0.4)"}"
+    return `<button class="itin-pill itin-pill-illa${actiu?' actiu':''}"
+      style="${actiu?`--pill-color:${ill.color}`:'--pill-color:rgba(106,171,122,0.4)'}"
       onclick="itinSetIlla('${ill.id}')">
       ${ill.emoji} ${ill.label} <span class="me-filtre-num">${cnt}</span>
     </button>`;
-  }).join("");
+  }).join('');
 
-  const itins = ME_ITINERARIS[_itinIlla] || [];
-  const zones = itins.map((it) => it.nom);
-  const zonesHtml = [
-    `<button class="itin-pill itin-pill-zona${"Tots" === _itinZona ? " actiu" : ""}" onclick="itinSetZona('Tots')">
+  const itins  = ME_ITINERARIS[_itinIlla] || [];
+  const zones  = itins.map(it => it.nom);
+  const zonesHtml = [`<button class="itin-pill itin-pill-zona${'Tots'===_itinZona?' actiu':''}" onclick="itinSetZona('Tots')">
     🗺️ Tots <span class="me-filtre-num">${itins.length}</span></button>`,
-    ...zones.map(
-      (
-        z,
-      ) => `<button class="itin-pill itin-pill-zona${"${z}" === _itinZona ? " actiu" : ""}"
-      onclick="itinSetZona(\`${z.replace(/`/g, "'")}\`)">${z}</button>`,
-    ),
-  ].join("");
+    ...zones.map(z => `<button class="itin-pill itin-pill-zona${'${z}'===_itinZona?' actiu':''}"
+      onclick="itinSetZona(\`${z.replace(/`/g,"'")}\`)">${z}</button>`)
+  ].join('');
 
-  const illaColor =
-    ITIN_ILLES.find((i) => i.id === _itinIlla)?.color || "#6aab7a";
+  const illaColor = ITIN_ILLES.find(i=>i.id===_itinIlla)?.color || '#6aab7a';
 
   wrap.innerHTML = `
     <div class="itin-fila-illes">${illes}</div>
@@ -1769,13 +1252,10 @@ function renderItinFiltres() {
 
 function itinSetIlla(illa) {
   _itinIlla = illa;
-  _itinZona = "Tots";
+  _itinZona = 'Tots';
   // Destruir maps existents
-  Object.values(_itinMaps).forEach((m) => {
-    if (m && m.map) m.map.remove();
-    else if (m && m.remove) m.remove();
-  });
-  Object.keys(_itinMaps).forEach((k) => delete _itinMaps[k]);
+  Object.values(_itinMaps).forEach(m => { if (m && m.map) m.map.remove(); else if (m && m.remove) m.remove(); });
+  Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
   renderItinFiltres();
   renderItinContingut();
 }
@@ -1783,54 +1263,45 @@ function itinSetIlla(illa) {
 function itinSetZona(zona) {
   _itinZona = zona;
   // Destruir maps
-  Object.values(_itinMaps).forEach((m) => {
-    if (m && m.map) m.map.remove();
-    else if (m && m.remove) m.remove();
-  });
-  Object.keys(_itinMaps).forEach((k) => delete _itinMaps[k]);
+  Object.values(_itinMaps).forEach(m => { if (m && m.map) m.map.remove(); else if (m && m.remove) m.remove(); });
+  Object.keys(_itinMaps).forEach(k => delete _itinMaps[k]);
   renderItinFiltres();
   renderItinContingut();
 }
 
 /* ── Contingut ── */
 function renderItinContingut() {
-  const wrap = document.getElementById("itinContingut");
+  const wrap = document.getElementById('itinContingut');
   if (!wrap) return;
 
-  const itins = (ME_ITINERARIS[_itinIlla] || []).filter(
-    (it) => _itinZona === "Tots" || it.nom === _itinZona,
-  );
+  const itins = (ME_ITINERARIS[_itinIlla] || [])
+    .filter(it => _itinZona === 'Tots' || it.nom === _itinZona);
 
   if (!itins.length) {
-    wrap.innerHTML =
-      '<div class="me-buit visible"><div class="me-buit-ico">🗺️</div><p>Cap itinerari trobat</p></div>';
+    wrap.innerHTML = '<div class="me-buit visible"><div class="me-buit-ico">🗺️</div><p>Cap itinerari trobat</p></div>';
     return;
   }
 
-  const illaColor =
-    ITIN_ILLES.find((i) => i.id === _itinIlla)?.color || "#6aab7a";
-  const esMirlor = (nom) => nom.toLowerCase().includes("millor");
+  const illaColor = ITIN_ILLES.find(i=>i.id===_itinIlla)?.color || '#6aab7a';
+  const esMirlor  = nom => nom.toLowerCase().includes('millor');
 
-  wrap.innerHTML = itins
-    .map((it, idx) => {
-      const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g, "_");
-      const llocsList = it.llocs
-        .map((l, i) => {
-          const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g, "_");
-          return `<li class="itin-lloc-item" onclick="itinFocusMarker('${mapId}',${i})">
-        <span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i + 1}</span>
+  wrap.innerHTML = itins.map((it, idx) => {
+    const mapId  = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
+    const llocsList = it.llocs.map((l, i) => {
+      const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
+      return `<li class="itin-lloc-item" onclick="itinFocusMarker('${mapId}',${i})">
+        <span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i+1}</span>
         <span class="itin-lloc-nom">${escHtml(l.nom)}</span>
       </li>`;
-        })
-        .join("");
-      const fontHtml = it.font
-        ? `<a class="itin-font-link" href="${escHtml(it.font)}" target="_blank" rel="noopener">🔗 Font</a>`
-        : "";
-      const millorClass = esMirlor(it.nom) ? " itin-card-millor" : "";
+    }).join('');
+    const fontHtml = it.font
+      ? `<a class="itin-font-link" href="${escHtml(it.font)}" target="_blank" rel="noopener">🔗 Font</a>`
+      : '';
+    const millorClass = esMirlor(it.nom) ? ' itin-card-millor' : '';
 
-      return `<div class="itin-card${millorClass}" style="--itin-color:${illaColor}">
+    return `<div class="itin-card${millorClass}" style="--itin-color:${illaColor}">
       <div class="itin-card-header">
-        ${esMirlor(it.nom) ? '<span class="itin-badge-millor">⭐ El millor</span>' : ""}
+        ${esMirlor(it.nom) ? '<span class="itin-badge-millor">⭐ El millor</span>' : ''}
         <h3 class="itin-card-titol">${escHtml(it.nom)}</h3>
         ${fontHtml}
       </div>
@@ -1841,12 +1312,11 @@ function renderItinContingut() {
         </div>
       </div>
     </div>`;
-    })
-    .join("");
+  }).join('');
 
   // Inicialitzar maps lazy
   itins.forEach((it, idx) => {
-    const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g, "_");
+    const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g,'_');
     initItinMapLazy(mapId, it.llocs, illaColor);
   });
 }
@@ -1855,15 +1325,12 @@ function initItinMapLazy(mapId, llocs, color) {
   const el = document.getElementById(mapId);
   if (!el) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries[0].isIntersecting) {
-        observer.disconnect();
-        initItinMap(mapId, llocs, color);
-      }
-    },
-    { threshold: 0.1 },
-  );
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      observer.disconnect();
+      initItinMap(mapId, llocs, color);
+    }
+  }, { threshold: 0.1 });
   observer.observe(el);
 }
 
@@ -1872,10 +1339,9 @@ function initItinMap(mapId, llocs, color) {
   const el = document.getElementById(mapId);
   if (!el) return;
 
-  const validLlocs = llocs.filter((l) => l.coords);
+  const validLlocs = llocs.filter(l => l.coords);
   if (!validLlocs.length) {
-    el.innerHTML =
-      '<div class="itin-map-buit">📍 Coordenades no disponibles</div>';
+    el.innerHTML = '<div class="itin-map-buit">📍 Coordenades no disponibles</div>';
     return;
   }
 
@@ -1883,45 +1349,34 @@ function initItinMap(mapId, llocs, color) {
   _itinMaps[mapId] = map;
 
   // Mapa clar (Voyager)
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-    {
-      attribution: "© CartoDB",
-      maxZoom: 18,
-    },
-  ).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© CartoDB',
+    maxZoom: 18,
+  }).addTo(map);
 
   const markers = [];
-  const bounds = [];
+  const bounds  = [];
 
   validLlocs.forEach((l, i) => {
     const [lat, lng] = l.coords;
     bounds.push([lat, lng]);
 
-    const svgNormal = (
-      sz,
-      fs,
-    ) => `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz * 1.29)}" viewBox="0 0 28 36">
+    const svgNormal = (sz, fs) => `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz*1.29)}" viewBox="0 0 28 36">
       <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
       <circle cx="14" cy="14" r="9" fill="rgba(0,0,0,0.3)"/>
-      <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="${fs}" font-weight="700" fill="white">${i + 1}</text>
+      <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="${fs}" font-weight="700" fill="white">${i+1}</text>
     </svg>`;
 
-    const makeIcon = (sz) =>
-      L.divIcon({
-        html: svgNormal(sz, sz < 30 ? 11 : 14),
-        className: "",
-        iconSize: [sz, Math.round(sz * 1.29)],
-        iconAnchor: [sz / 2, Math.round(sz * 1.29)],
-        popupAnchor: [0, -Math.round(sz * 1.29)],
-      });
+    const makeIcon = (sz) => L.divIcon({
+      html: svgNormal(sz, sz < 30 ? 11 : 14),
+      className: '', iconSize: [sz, Math.round(sz*1.29)],
+      iconAnchor: [sz/2, Math.round(sz*1.29)], popupAnchor: [0, -Math.round(sz*1.29)]
+    });
 
     const marker = L.marker([lat, lng], { icon: makeIcon(28) })
       .addTo(map)
-      .bindTooltip(`<strong>${i + 1}.</strong> ${l.nom}`, {
-        permanent: false,
-        direction: "top",
-        className: "itin-tooltip",
+      .bindTooltip(`<strong>${i+1}.</strong> ${l.nom}`, {
+        permanent: false, direction: 'top', className: 'itin-tooltip'
       });
 
     markers.push({ marker, lat, lng, makeIcon });
@@ -1942,8 +1397,8 @@ function itinFocusMarker(mapId, idx) {
   map.setView([m.lat, m.lng], Math.max(map.getZoom(), 13), { animate: true });
 
   // Animació: fer gran → tornar normal
-  const bigIcon = m.makeIcon(42);
-  const normIcon = m.makeIcon(28);
+  const bigIcon   = m.makeIcon(42);
+  const normIcon  = m.makeIcon(28);
   m.marker.setIcon(bigIcon);
   m.marker.openTooltip();
   setTimeout(() => {
@@ -1951,54 +1406,39 @@ function itinFocusMarker(mapId, idx) {
   }, 800);
 
   // Destacar l'ítem de la llista
-  const list = document
-    .querySelector(`#${mapId}`)
-    .closest(".itin-card")
-    .querySelectorAll(".itin-lloc-item");
-  list.forEach((li, i) => li.classList.toggle("itin-lloc-actiu", i === idx));
+  const list = document.querySelector(`#${mapId}`).closest('.itin-card').querySelectorAll('.itin-lloc-item');
+  list.forEach((li, i) => li.classList.toggle('itin-lloc-actiu', i === idx));
 }
 
 /* ── RESERVES I RESTRICCIONS ── */
 function renderInfoReserves() {
   const ILLA_COLOR = {
-    "Sao Miguel": "#6abf70",
-    Pico: "#888888",
-    "Sao Jorge": "#c4895a",
-    Faial: "#5fa8e8",
+    'Sao Miguel':'#6abf70','Pico':'#888888','Sao Jorge':'#c4895a','Faial':'#5fa8e8'
   };
-  const ILLA_EMOJI = {
-    "Sao Miguel": "🌋",
-    Pico: "⛰️",
-    "Sao Jorge": "🐉",
-    Faial: "💙",
-  };
-  const ILLA_LBL = {
-    "Sao Miguel": "São Miguel",
-    Pico: "Pico",
-    "Sao Jorge": "São Jorge",
-    Faial: "Faial",
-  };
+  const ILLA_EMOJI = { 'Sao Miguel':'🌋','Pico':'⛰️','Sao Jorge':'🐉','Faial':'💙' };
+  const ILLA_LBL   = { 'Sao Miguel':'São Miguel','Pico':'Pico','Sao Jorge':'São Jorge','Faial':'Faial' };
 
-  const cards = ME_RESERVES.map((r) => {
-    const color = ILLA_COLOR[r.illa] || "#6aab7a";
-    const emoji = ILLA_EMOJI[r.illa] || "🏝️";
-    const lbl = ILLA_LBL[r.illa] || r.illa;
-    const links = r.links
-      .map(
-        (lk, i) =>
-          `<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">
-        ${i === r.links.length - 1 ? "📅 Reservar" : "🔗 Més info"}
-      </a>`,
-      )
-      .join("");
+  const cards = ME_RESERVES.map(r => {
+    const color = ILLA_COLOR[r.illa] || '#6aab7a';
+    const emoji = ILLA_EMOJI[r.illa] || '🏝️';
+    const lbl   = ILLA_LBL[r.illa]  || r.illa;
+    const links = r.links.map((lk, i) =>
+      `<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">
+        ${i === r.links.length-1 ? '📅 Reservar' : '🔗 Més info'}
+      </a>`
+    ).join('');
+
+    const mapBtn = r.mapImg
+      ? `<button class="exc-link-btn res-map-btn" onclick="resShowImg('${escHtml(r.mapImg)}','${escHtml(r.nom)}')">🗺️ Veure mapa autobús</button>`
+      : '';
 
     let desc = escHtml(r.desc).replace(
       /Actualment tancada[^.]+\.[^<]*/g,
-      (m) => `<span class="res-tancada">⚠️ ${m}</span>`,
+      m => `<span class="res-tancada">⚠️ ${m}</span>`
     );
 
-    let extraHtml = "";
-    if (r.descExtra === "guies") {
+    let extraHtml = '';
+    if (r.descExtra === 'guies') {
       extraHtml = `<p class="res-card-desc">Si es vol pujar amb guia consultar empreses especialitzades (com
         <a class="res-inline-link" href="https://atipicoazores.com/es#atipico" target="_blank" rel="noopener">atipico</a> o
         <a class="res-inline-link" href="https://tripixazores.com/book/mount-pico-day-climb/" target="_blank" rel="noopener">tripixazores</a>)
@@ -2012,20 +1452,17 @@ function renderInfoReserves() {
       </div>
       <p class="res-card-desc">${desc}</p>
       ${extraHtml}
-      <div class="res-card-links">${links}</div>
+      <div class="res-card-links">${links}${mapBtn}</div>
     </div>`;
-  }).join("");
+  }).join('');
 
-  const guiesRows = (typeof ME_GUIES_PICO !== "undefined" ? ME_GUIES_PICO : [])
-    .map(
-      (g) =>
-        `<tr>
+  const guiesRows = (typeof ME_GUIES_PICO !== 'undefined' ? ME_GUIES_PICO : []).map(g =>
+    `<tr>
       <td class="res-guia-nom">${escHtml(g.nom)}</td>
-      <td>${g.email ? `<a class="res-inline-link" href="mailto:${escHtml(g.email)}">${escHtml(g.email)}</a>` : "—"}</td>
-      <td class="res-guia-tel">${escHtml(g.tel) || "—"}</td>
-    </tr>`,
-    )
-    .join("");
+      <td>${g.email ? `<a class="res-inline-link" href="mailto:${escHtml(g.email)}">${escHtml(g.email)}</a>` : '—'}</td>
+      <td class="res-guia-tel">${escHtml(g.tel)||'—'}</td>
+    </tr>`
+  ).join('');
 
   return `<div class="info-article">
     <p class="info-intro">Llocs on cal reservar amb antelació o que tenen restriccions d'accés.</p>
@@ -2044,41 +1481,61 @@ function renderInfoReserves() {
         </table>
       </div>
     </div>
+  </div>
+  <div class="res-modal-bg" id="resImgModal" onclick="resHideImg(event)">
+    <div class="res-img-modal">
+      <div class="res-modal-header">
+        <h3 id="resImgTitol"></h3>
+        <button class="res-modal-close" onclick="resHideImg()">✕</button>
+      </div>
+      <div class="res-img-modal-body">
+        <img id="resImgEl" src="" alt="" class="res-img-modal-img">
+      </div>
+    </div>
   </div>`;
 }
 
 function resShowGuies() {
-  const modal = document.getElementById("resGuiesModal");
-  if (modal) {
-    modal.classList.add("visible");
-    document.body.style.overflow = "hidden";
-  }
+  const modal = document.getElementById('resGuiesModal');
+  if (modal) { modal.classList.add('visible'); document.body.style.overflow = 'hidden'; }
 }
 function resHideGuies(e) {
-  if (e && e.target !== document.getElementById("resGuiesModal")) return;
-  const modal = document.getElementById("resGuiesModal");
-  if (modal) {
-    modal.classList.remove("visible");
-    document.body.style.overflow = "";
-  }
+  if (e && e.target !== document.getElementById('resGuiesModal')) return;
+  const modal = document.getElementById('resGuiesModal');
+  if (modal) { modal.classList.remove('visible'); document.body.style.overflow = ''; }
 }
+
+function resShowImg(src, titol) {
+  const modal = document.getElementById('resImgModal');
+  if (!modal) return;
+  document.getElementById('resImgEl').src = src;
+  document.getElementById('resImgTitol').textContent = '🗺️ ' + titol;
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+function resHideImg(e) {
+  if (e && e.target !== document.getElementById('resImgModal')) return;
+  const modal = document.getElementById('resImgModal');
+  if (modal) { modal.classList.remove('visible'); document.body.style.overflow = ''; }
+}
+
 
 /* ── Deep link via hash ── */
 function initReservaHash() {
-  const hash = location.hash.replace("#", "");
-  if (!hash.startsWith("reserva-")) return;
+  const hash = location.hash.replace('#','');
+  if (!hash.startsWith('reserva-')) return;
   // Navegar a la secció 'info' i al tab 'reserves'
-  meSetSeccio("info");
-  _infoTab = "reserves";
+  meSetSeccio('info');
+  _infoTab = 'reserves';
   renderInfoNav();
   renderInfoContingut();
   // Scroll fins a la card
   setTimeout(() => {
     const el = document.getElementById(hash);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.classList.add("res-card-highlight");
-      setTimeout(() => el.classList.remove("res-card-highlight"), 2000);
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('res-card-highlight');
+      setTimeout(() => el.classList.remove('res-card-highlight'), 2000);
     }
   }, 300);
 }
