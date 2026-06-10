@@ -64,6 +64,7 @@ function meSetSeccio(id) {
   document.querySelector('.me-sec-nav-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   // Init aventura si cal
   if (id === 'aventura'    && !_avInit)     initAventura();
+  if (id === 'senderisme'  && !_sendInit)   initSenderisme();
   if (id === 'excursions'  && !_excInit)    initExcursions();
   if (id === 'gastronomia' && !_gastInit)   initGastronomia();
   if (id === 'maleta'      && !_maletaInit) initMaleta();
@@ -1538,4 +1539,554 @@ function initReservaHash() {
       setTimeout(() => el.classList.remove('res-card-highlight'), 2000);
     }
   }, 300);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SECCIÓ: SENDERISME
+   ══════════════════════════════════════════════════════════════ */
+
+let _sendInit  = false;
+let _sendTab   = 'rutes';
+let _sendIlla  = 'Totes';
+let _sendDif   = 'Totes';
+let _sendOrdre = 'prioritat';
+let _sendMap   = null;   // Leaflet map instance al modal
+
+const SEND_ILLES = [
+  { id:'Totes',      emoji:'🏝️', label:'Totes',       color:'#6aab7a' },
+  { id:'Sao Miguel', emoji:'🌋', label:'São Miguel',   color:'#6abf70' },
+  { id:'Pico',       emoji:'⛰️', label:'Pico',         color:'#a8a8a8' },
+  { id:'Sao Jorge',  emoji:'🐉', label:'São Jorge',    color:'#c4895a' },
+  { id:'Faial',      emoji:'💙', label:'Faial',        color:'#5fa8e8' },
+];
+const SEND_DIFS = [
+  { id:'Totes',    label:'Totes',     color:'#6aab7a' },
+  { id:'Fàcil',    label:'Fàcil',     color:'#4caf50' },
+  { id:'Moderada', label:'Moderada',  color:'#ff9800' },
+  { id:'Difícil',  label:'Difícil',   color:'#f44336' },
+];
+const SEND_DIF_COLOR  = { 'Fàcil':'#4caf50','Moderada':'#ff9800','Difícil':'#f44336' };
+const SEND_ILLA_COLOR = { 'Sao Miguel':'#6abf70','Pico':'#a8a8a8','Sao Jorge':'#c4895a','Faial':'#5fa8e8' };
+const SEND_ILLA_LABEL = { 'Sao Miguel':'São Miguel','Pico':'Pico','Sao Jorge':'São Jorge','Faial':'Faial' };
+const SEND_ILLA_EMOJI = { 'Sao Miguel':'🌋','Pico':'⛰️','Sao Jorge':'🐉','Faial':'💙' };
+const SEND_TIPUS_ICON = { 'Circular':'🔄','Només anada':'➡️','Anada i tornada':'↔️' };
+const SEND_ORDRES     = [
+  { id:'prioritat', label:'Per prioritat' },
+  { id:'km',        label:'Per distància' },
+  { id:'dp',        label:'Per D+' },
+  { id:'nom',       label:'Alfabètic' },
+];
+
+/* ── Init ── */
+function initSenderisme() {
+  _sendInit = true;
+  const sec = document.getElementById('sec-senderisme');
+  sec.innerHTML = `
+    <div class="send-subnav-wrap">
+      <div class="send-subnav" id="sendSubnav">
+        <button class="send-subnav-btn actiu" onclick="sendSetTab('rutes')">🥾 Rutes</button>
+        <button class="send-subnav-btn" onclick="sendSetTab('consells')">💡 Consells generals</button>
+        <button class="send-subnav-btn" onclick="sendSetTab('links')">🔗 Més informació</button>
+      </div>
+    </div>
+    <div id="sendContingut" class="me-contingut"></div>
+    <div class="send-modal-overlay" id="sendModalOverlay" onclick="sendCloseModal(event)">
+      <div class="send-modal" id="sendModal">
+        <button class="send-modal-close" onclick="sendHideModal()">✕</button>
+        <div id="sendModalContingut"></div>
+      </div>
+    </div>`;
+  sendRenderTab();
+}
+
+function sendSetTab(tab) {
+  _sendTab = tab;
+  document.querySelectorAll('#sendSubnav .send-subnav-btn').forEach((b, i) => {
+    b.classList.toggle('actiu', ['rutes','consells','links'][i] === tab);
+  });
+  sendRenderTab();
+}
+
+function sendRenderTab() {
+  const wrap = document.getElementById('sendContingut');
+  if (!wrap) return;
+  if (_sendTab === 'rutes')    renderSendRutes(wrap);
+  else if (_sendTab === 'consells') renderSendConsells(wrap);
+  else renderSendLinks(wrap);
+}
+
+/* ══════════════════════════
+   TAB: RUTES
+   ══════════════════════════ */
+function renderSendRutes(wrap) {
+  const illes = SEND_ILLES.map(ill => {
+    const cnt = ill.id === 'Totes' ? ME_RUTES_SENDERISME.length
+              : ME_RUTES_SENDERISME.filter(r => r.illa === ill.id).length;
+    const actiu = _sendIlla === ill.id;
+    return `<button class="send-pill send-pill-illa${actiu?' actiu':''}"
+      style="${actiu?`--pill-c:${ill.color}`:''}"
+      onclick="sendSetIlla('${ill.id}')">
+      ${ill.emoji} ${ill.label} <span class="send-pill-cnt">${cnt}</span>
+    </button>`;
+  }).join('');
+
+  const difs = SEND_DIFS.map(d => {
+    const actiu = _sendDif === d.id;
+    return `<button class="send-pill send-pill-dif${actiu?' actiu':''}"
+      style="${actiu?`--pill-c:${d.color}`:''}"
+      onclick="sendSetDif('${d.id}')">
+      ${d.label}
+    </button>`;
+  }).join('');
+
+  const ordreOpts = SEND_ORDRES.map(o =>
+    `<option value="${o.id}"${_sendOrdre===o.id?' selected':''}>${o.label}</option>`
+  ).join('');
+
+  const rutes = sendFiltrarRutes();
+  const comptador = `<span class="send-comptador">${rutes.length} ruta${rutes.length!==1?'s':''}</span>`;
+
+  const cardsHtml = rutes.length
+    ? rutes.map(r => renderSendCard(r)).join('')
+    : `<div class="me-buit visible"><div class="me-buit-ico">🥾</div><p>Cap ruta amb els filtres seleccionats.</p></div>`;
+
+  wrap.innerHTML = `
+    <div class="send-filtres-wrap">
+      <div class="send-filtres-inner">
+        <div class="send-filtres-illes">${illes}</div>
+        <div class="send-filtres-fila2">
+          <div class="send-filtres-difs">${difs}</div>
+          <div class="send-filtres-extra">
+            <select class="send-ordre-sel" onchange="sendSetOrdre(this.value)">${ordreOpts}</select>
+            ${comptador}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="send-grid">${cardsHtml}</div>`;
+}
+
+function sendFiltrarRutes() {
+  let rutes = ME_RUTES_SENDERISME.filter(r => {
+    if (_sendIlla !== 'Totes' && r.illa !== _sendIlla) return false;
+    if (_sendDif  !== 'Totes' && r.dificultat !== _sendDif)  return false;
+    return true;
+  });
+  if (_sendOrdre === 'prioritat') rutes.sort((a,b) => a.prioritat - b.prioritat || a.km - b.km);
+  else if (_sendOrdre === 'km')   rutes.sort((a,b) => a.km - b.km);
+  else if (_sendOrdre === 'dp')   rutes.sort((a,b) => b.dp - a.dp);
+  else rutes.sort((a,b) => a.nom.localeCompare(b.nom));
+  return rutes;
+}
+
+function renderSendCard(r) {
+  const illaColor = SEND_ILLA_COLOR[r.illa] || '#6aab7a';
+  const difColor  = SEND_DIF_COLOR[r.dificultat] || '#6aab7a';
+  const illaEmoji = SEND_ILLA_EMOJI[r.illa] || '';
+  const illaLbl   = SEND_ILLA_LABEL[r.illa] || r.illa;
+  const tipusIco  = SEND_TIPUS_ICON[r.tipus] || '';
+  const isPri1    = r.prioritat === 1;
+
+  const linkBtns = [
+    r.visitazores && `<a class="send-card-link" href="${escHtml(r.visitazores)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🌐 VisitAzores</a>`,
+    r.wikiloc     && `<a class="send-card-link" href="${escHtml(r.wikiloc)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 Wikiloc</a>`,
+    r.fullet      && `<a class="send-card-link" href="${escHtml(r.fullet)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 PDF</a>`,
+  ].filter(Boolean).join('');
+
+  const descTrunc = r.desc && r.desc.length > 130 ? r.desc.slice(0,130) + '…' : (r.desc||'');
+
+  return `<div class="send-card${isPri1?' send-card-pri':''}" style="--send-color:${illaColor}"
+    onclick="sendOpenModal('${escHtml(r.id)}')" tabindex="0" role="button">
+    <div class="send-card-header">
+      ${isPri1 ? '<span class="send-badge-pri">⭐ Prioritari</span>' : ''}
+      <span class="send-badge-codi">${escHtml(r.codi)}</span>
+      <span class="send-badge-dif" style="background:${difColor}22;color:${difColor};border-color:${difColor}44">${escHtml(r.dificultat)}</span>
+    </div>
+    <h3 class="send-card-nom">${escHtml(r.nom)}</h3>
+    <div class="send-card-meta">
+      <span class="send-card-illa" style="color:${illaColor}">${illaEmoji} ${escHtml(illaLbl)}</span>
+      <span class="send-card-tipus">${tipusIco} ${escHtml(r.tipus)}</span>
+    </div>
+    <div class="send-card-stats">
+      <span title="Distància">📏 <strong>${r.km} km</strong></span>
+      <span title="Desnivell positiu">↑ <strong>${r.dp} m</strong></span>
+      <span title="Temps aproximat">⏱️ <strong>${sendFmtTemps(r.temps)}</strong></span>
+    </div>
+    <p class="send-card-desc">${escHtml(descTrunc)}</p>
+    <div class="send-card-links">${linkBtns}</div>
+  </div>`;
+}
+
+function sendSetIlla(illa) { _sendIlla = illa; sendRenderTab(); }
+function sendSetDif(dif)   { _sendDif  = dif;  sendRenderTab(); }
+function sendSetOrdre(o)   { _sendOrdre = o;   sendRenderTab(); }
+
+function sendFmtTemps(t) {
+  if (!t) return '—';
+  const p = t.split(':');
+  const h = parseInt(p[0]||0), m = parseInt(p[1]||0);
+  if (h > 0) return m > 0 ? `${h}h ${m}min` : `${h}h`;
+  return `${m}min`;
+}
+
+/* ══════════════════════════
+   MODAL DE RUTA
+   ══════════════════════════ */
+function sendOpenModal(routeId) {
+  const r = ME_RUTES_SENDERISME.find(x => x.id === routeId);
+  if (!r) return;
+  const overlay = document.getElementById('sendModalOverlay');
+  const content = document.getElementById('sendModalContingut');
+  if (!overlay || !content) return;
+
+  const illaColor = SEND_ILLA_COLOR[r.illa] || '#6aab7a';
+  const difColor  = SEND_DIF_COLOR[r.dificultat] || '#6aab7a';
+  const illaEmoji = SEND_ILLA_EMOJI[r.illa] || '';
+  const illaLbl   = SEND_ILLA_LABEL[r.illa] || r.illa;
+  const tipusIco  = SEND_TIPUS_ICON[r.tipus] || '';
+
+  const consellsHtml = r.consells && r.consells.length
+    ? `<div class="send-modal-consells">
+        <h4 class="send-modal-sub">💡 Consells específics</h4>
+        <ul class="send-modal-tips">${r.consells.map(c => `<li>${escHtml(c)}</li>`).join('')}</ul>
+      </div>` : '';
+
+  const altresLinks = (r.altres||[]).map(u =>
+    `<a class="send-modal-link" href="${escHtml(u)}" target="_blank" rel="noopener">🔗 ${escHtml(linkHostname(u))}</a>`
+  ).join('');
+
+  const linksHtml = [
+    r.visitazores && `<a class="send-modal-link" href="${escHtml(r.visitazores)}" target="_blank" rel="noopener">🌐 VisitAzores</a>`,
+    r.wikiloc     && `<a class="send-modal-link" href="${escHtml(r.wikiloc)}"     target="_blank" rel="noopener">📍 Wikiloc</a>`,
+    r.fullet      && `<a class="send-modal-link" href="${escHtml(r.fullet)}"      target="_blank" rel="noopener">📄 Full informatiu PDF</a>`,
+    altresLinks,
+  ].filter(Boolean).join('');
+
+  content.innerHTML = `
+    <div class="send-modal-header">
+      <div class="send-modal-header-top">
+        <span class="send-modal-codi">${escHtml(r.codi)}</span>
+        <span class="send-badge-dif" style="background:${difColor}22;color:${difColor};border-color:${difColor}44">${escHtml(r.dificultat)}</span>
+        <span class="send-modal-tipus">${tipusIco} ${escHtml(r.tipus)}</span>
+      </div>
+      <h2 class="send-modal-nom" style="color:${illaColor}">${escHtml(r.nom)}</h2>
+      <div class="send-modal-illa" style="color:${illaColor}">${illaEmoji} ${escHtml(illaLbl)}</div>
+    </div>
+    <div class="send-modal-body">
+      <div class="send-modal-vis">
+        <div class="send-modal-map" id="sendModalMap"></div>
+        <div class="send-modal-elev-wrap">
+          ${buildElevSvg(r.profile, illaColor)}
+        </div>
+      </div>
+      <div class="send-modal-info">
+        <div class="send-modal-stats-grid">
+          <div class="send-modal-stat"><span class="send-stat-ico">📏</span><span class="send-stat-val">${r.km} km</span><span class="send-stat-lbl">Distància</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">↑</span><span class="send-stat-val">${r.dp} m</span><span class="send-stat-lbl">Desnivell +</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">↓</span><span class="send-stat-val">${r.dn} m</span><span class="send-stat-lbl">Desnivell −</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">⏱️</span><span class="send-stat-val">${sendFmtTemps(r.temps)}</span><span class="send-stat-lbl">Temps net</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">⏳</span><span class="send-stat-val">${sendFmtTemps(r.temps_total)}</span><span class="send-stat-lbl">Temps total</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">${tipusIco}</span><span class="send-stat-val">${escHtml(r.tipus)}</span><span class="send-stat-lbl">Tipus</span></div>
+        </div>
+        ${r.inici ? `<div class="send-modal-inici">📍 <strong>Punt d'inici:</strong> ${escHtml(r.inici)}</div>` : ''}
+        ${r.desc  ? `<p class="send-modal-desc">${escHtml(r.desc)}</p>` : ''}
+        ${consellsHtml}
+        ${linksHtml ? `<div class="send-modal-links-row">${linksHtml}</div>` : ''}
+      </div>
+    </div>`;
+
+  overlay.classList.add('visible');
+  document.body.classList.add('send-modal-open');
+  setTimeout(() => initSendModalMap(r), 120);
+}
+
+function sendHideModal() {
+  if (_sendMap) { _sendMap.remove(); _sendMap = null; }
+  const overlay = document.getElementById('sendModalOverlay');
+  if (overlay) overlay.classList.remove('visible');
+  document.body.classList.remove('send-modal-open');
+}
+
+function sendCloseModal(e) {
+  if (e.target === document.getElementById('sendModalOverlay')) sendHideModal();
+}
+
+/* ── Mapa Leaflet al modal ── */
+function initSendModalMap(r) {
+  if (_sendMap) { _sendMap.remove(); _sendMap = null; }
+  const el = document.getElementById('sendModalMap');
+  if (!el) return;
+
+  const illaColor = SEND_ILLA_COLOR[r.illa] || '#6aab7a';
+
+  const map = L.map('sendModalMap', { zoomControl: true, scrollWheelZoom: false });
+  _sendMap = map;
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    attribution: '© CartoDB', maxZoom: 18,
+  }).addTo(map);
+
+  // Track polyline
+  if (r.track && r.track.length > 1) {
+    const poly = L.polyline(r.track, {
+      color: illaColor, weight: 3.5, opacity: 0.9, smoothFactor: 1.5,
+    }).addTo(map);
+
+    // Marcador d'inici
+    const startPt = r.start || r.track[0];
+    if (startPt) {
+      const startIcon = L.divIcon({
+        html: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+          <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${illaColor}"/>
+          <circle cx="14" cy="14" r="6" fill="rgba(0,0,0,0.4)"/>
+          <text x="14" y="18.5" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="700" fill="white">S</text>
+        </svg>`,
+        className: '', iconSize: [28,36], iconAnchor: [14,36], popupAnchor: [0,-36],
+      });
+      L.marker(startPt, { icon: startIcon }).addTo(map)
+        .bindTooltip('Punt d\'inici', { direction:'top', className:'itin-tooltip' });
+    }
+
+    map.fitBounds(poly.getBounds(), { padding: [22, 22], maxZoom: 15 });
+  } else if (r.coords_inici) {
+    map.setView(r.coords_inici, 13);
+  }
+
+  // Leaflet needs a size recalc after display
+  setTimeout(() => map.invalidateSize(), 50);
+}
+
+/* ── SVG perfil d'elevació ── */
+function buildElevSvg(profile, color) {
+  if (!profile || profile.length < 2) return '<div class="send-elev-na">Perfil no disponible</div>';
+
+  // Downsample a màx 150 punts
+  let pts = profile;
+  if (pts.length > 150) {
+    const step = Math.ceil(pts.length / 150);
+    pts = pts.filter((_, i) => i % step === 0);
+    const last = profile[profile.length - 1];
+    if (pts[pts.length-1] !== last) pts = [...pts, last];
+  }
+
+  const W = 600, H = 110;
+  const PL = 44, PR = 10, PT = 10, PB = 26;
+  const cW = W - PL - PR, cH = H - PT - PB;
+
+  const maxKm = pts[pts.length-1][0] || 1;
+  const elevs  = pts.map(p => p[1]);
+  const minEl  = Math.min(...elevs);
+  const maxEl  = Math.max(...elevs);
+  const rngEl  = maxEl - minEl || 10;
+
+  const sx = km => PL + (km / maxKm) * cW;
+  const sy = el => PT + cH - ((el - minEl) / rngEl) * cH;
+
+  const pStr = pts.map(p => `${sx(p[0]).toFixed(1)},${sy(p[1]).toFixed(1)}`).join(' ');
+  const fStr = `${PL},${PT+cH} ${pStr} ${sx(maxKm).toFixed(1)},${PT+cH}`;
+
+  // Eixos km (4 ticks)
+  const xTicks = [0, 1, 2, 3].map(i => {
+    const km = maxKm * i / 3;
+    return `<text x="${sx(km).toFixed(1)}" y="${H-4}" text-anchor="middle"
+      font-family="sans-serif" font-size="9" fill="rgba(168,216,176,0.55)">${km.toFixed(1)} km</text>`;
+  }).join('');
+
+  // Eixos elevació (min, max)
+  const yTicks = [
+    `<text x="${PL-4}" y="${(sy(minEl)+4).toFixed(1)}" text-anchor="end"
+      font-family="sans-serif" font-size="9" fill="rgba(168,216,176,0.55)">${Math.round(minEl)} m</text>`,
+    `<text x="${PL-4}" y="${(sy(maxEl)+4).toFixed(1)}" text-anchor="end"
+      font-family="sans-serif" font-size="9" fill="rgba(168,216,176,0.55)">${Math.round(maxEl)} m</text>`,
+  ].join('');
+
+  // Línies de grid horitzontals (2)
+  const mid1 = minEl + rngEl / 3, mid2 = minEl + 2 * rngEl / 3;
+  const gridLines = [mid1, mid2].map(v =>
+    `<line x1="${PL}" y1="${sy(v).toFixed(1)}" x2="${W-PR}" y2="${sy(v).toFixed(1)}"
+      stroke="rgba(106,171,122,0.1)" stroke-width="1" stroke-dasharray="3,4"/>`
+  ).join('');
+
+  const gradId = `eg${Math.random().toString(36).slice(2,6)}`;
+
+  return `<svg class="send-elev-svg" viewBox="0 0 ${W} ${H}"
+    xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity="0.03"/>
+      </linearGradient>
+    </defs>
+    ${gridLines}
+    <line x1="${PL}" y1="${PT}" x2="${PL}" y2="${PT+cH}" stroke="rgba(106,171,122,0.2)" stroke-width="1"/>
+    <line x1="${PL}" y1="${PT+cH}" x2="${W-PR}" y2="${PT+cH}" stroke="rgba(106,171,122,0.2)" stroke-width="1"/>
+    <polygon points="${fStr}" fill="url(#${gradId})"/>
+    <polyline points="${pStr}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round"/>
+    ${yTicks}${xTicks}
+  </svg>`;
+}
+
+/* ══════════════════════════
+   TAB: CONSELLS GENERALS
+   ══════════════════════════ */
+function renderSendConsells(wrap) {
+  wrap.innerHTML = `
+  <div class="send-cons-wrap">
+    <section class="send-cons-sec">
+      <h2 class="send-cons-titol">🌤️ El temps</h2>
+      <ul class="send-cons-list">
+        <li>Les Açores tenen un clima oceànic: els canvis meteorològics poden ser sobtats, especialment als cims i rutes d'interior.</li>
+        <li>Consulta sempre la previsió a <strong>SpotAzores</strong> o la secció <em>El temps</em> d'aquesta app abans de sortir.</li>
+        <li>Porta impermeables fins i tot si fa sol al matí. La boira pot aparèixer ràpidament a les zones altes.</li>
+        <li>Evita sortir amb boira densa o vent fort, especialment en rutes amb vores de penya-segat.</li>
+        <li>La temperatura baixa uns 4–6 °C per cada 1.000 m d'altitud. Planifica la roba en capes.</li>
+      </ul>
+    </section>
+    <section class="send-cons-sec">
+      <h2 class="send-cons-titol">🎒 Equipament</h2>
+      <ul class="send-cons-list">
+        <li><strong>Calçat de senderisme</strong> amb turmell alt, imprescindible per als camins de terra, pedra volcànica i arrels humides.</li>
+        <li><strong>Roba en capes:</strong> camiseta tècnica, forro polar lleuger i impermeable. L'amplitud tèrmica entre la costa i els cims pot ser gran.</li>
+        <li>Bastó de senderisme: molt útil en pendents amb terra relliscosa o trams amb pedra volcànica irregular.</li>
+        <li>Aigua abundant: mínim 1,5 L per ruta. No sempre hi ha fonts als senders.</li>
+        <li>Protecció solar, gorra i ulleres: el sol atlàntic és intens fins i tot amb núvols prims.</li>
+        <li>Mapes offline (AllTrails, Wikiloc) al mòbil per si perds el senyal GPS a zones de bosc dens.</li>
+      </ul>
+    </section>
+    <section class="send-cons-sec">
+      <h2 class="send-cons-titol">🧭 Logística i Seguretat</h2>
+      <ul class="send-cons-list">
+        <li>Moltes rutes d'anada sola requereixen <strong>transport de retorn:</strong> coordina bé els cotxes del grup per no quedar-se a mitja ruta.</li>
+        <li>Avisa sempre algun membre del grup on vas, quina ruta fas i quan esperes tornar.</li>
+        <li>Porta el telèfon carregat. Número d'emergències: <strong>112</strong>. La cobertura pot ser limitada a zones de bosc dens.</li>
+        <li>No t'apartis dels senders senyalitzats. La vegetació densa pot desorientar ràpidament, sobretot amb boira.</li>
+        <li>Respecta la flora endèmica: no arrenques plantes ni molestis la fauna. Moltes espècies estan protegides per llei.</li>
+        <li>Les rutes <strong>Difícil</strong> requereixen bona forma física i experiència en senderisme de muntanya.</li>
+      </ul>
+    </section>
+    <section class="send-cons-sec send-cons-senyals">
+      <h2 class="send-cons-titol">🪧 Senyals dels senders</h2>
+      <p class="send-cons-intro">Els senders de les Açores segueixen la senyalització estàndard portuguesa. Aprèn a reconèixer els signes per no perdre't mai el camí.</p>
+      <div class="send-senyals-grid">
+        <div class="send-senyals-grup">
+          <div class="send-senyals-titol">
+            ${sendFranjaSvg('#f5c518','#d32f2f')} Petites Rutes (PR / PRC) — groc i vermell
+          </div>
+          <div class="send-senyals-fila">
+            ${buildSenyalSvg('pr','correcte')}
+            ${buildSenyalSvg('pr','erroni')}
+            ${buildSenyalSvg('pr','dreta')}
+            ${buildSenyalSvg('pr','esquerra')}
+          </div>
+        </div>
+        <div class="send-senyals-grup">
+          <div class="send-senyals-titol">
+            ${sendFranjaSvg('#f0f0f0','#d32f2f')} Grans Rutes (GR) — blanc i vermell
+          </div>
+          <div class="send-senyals-fila">
+            ${buildSenyalSvg('gr','correcte')}
+            ${buildSenyalSvg('gr','erroni')}
+            ${buildSenyalSvg('gr','dreta')}
+            ${buildSenyalSvg('gr','esquerra')}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
+
+/* ── Senyals SVG ── */
+function sendFranjaSvg(c1, c2) {
+  return `<svg width="28" height="14" viewBox="0 0 28 14" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;border-radius:3px;flex-shrink:0">
+    <rect width="28" height="7" fill="${c1}"/>
+    <rect y="7" width="28" height="7" fill="${c2}"/>
+  </svg>`;
+}
+
+function buildSenyalSvg(tipus, signe) {
+  const c1 = tipus === 'pr' ? '#f5c518' : '#f0f0f0';
+  const c2 = '#d32f2f';
+  const nom = signe === 'correcte' ? 'Camí Correcte'
+    : signe === 'erroni'   ? 'Camí Erroni'
+    : signe === 'dreta'    ? 'Gira Dreta'
+    : 'Gira Esquerra';
+
+  let svgBody = '';
+  // Each SVG: 64×88 viewBox. Bars are ~44px wide × 14px tall.
+  if (signe === 'correcte') {
+    svgBody = `
+      <rect x="10" y="20" width="44" height="14" rx="2" fill="${c1}"/>
+      <rect x="10" y="40" width="44" height="14" rx="2" fill="${c2}"/>`;
+  } else if (signe === 'erroni') {
+    svgBody = `
+      <rect x="10" y="20" width="44" height="14" rx="2" fill="${c1}"/>
+      <rect x="10" y="40" width="44" height="14" rx="2" fill="${c2}"/>
+      <line x1="12" y1="14" x2="52" y2="74" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+      <line x1="52" y1="14" x2="12" y2="74" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.85"/>`;
+  } else if (signe === 'dreta') {
+    // Bars go horizontal then bend down-right (L rotated 90° CW)
+    svgBody = `
+      <rect x="8"  y="16" width="28" height="13" rx="2" fill="${c1}"/>
+      <rect x="8"  y="36" width="28" height="13" rx="2" fill="${c2}"/>
+      <rect x="34" y="36" width="22" height="13" rx="2" fill="${c1}"/>
+      <rect x="34" y="56" width="22" height="13" rx="2" fill="${c2}"/>`;
+  } else { // esquerra
+    svgBody = `
+      <rect x="28" y="16" width="28" height="13" rx="2" fill="${c1}"/>
+      <rect x="28" y="36" width="28" height="13" rx="2" fill="${c2}"/>
+      <rect x="8"  y="36" width="22" height="13" rx="2" fill="${c1}"/>
+      <rect x="8"  y="56" width="22" height="13" rx="2" fill="${c2}"/>`;
+  }
+
+  return `<div class="send-senyal-item">
+    <svg viewBox="0 0 64 88" class="send-senyal-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="88" rx="6" fill="rgba(255,255,255,0.06)"/>
+      ${svgBody}
+    </svg>
+    <span class="send-senyal-lbl">${nom}</span>
+  </div>`;
+}
+
+/* ══════════════════════════
+   TAB: MÉS INFORMACIÓ
+   ══════════════════════════ */
+function renderSendLinks(wrap) {
+  const seccions = [
+    {
+      titol: '🌍 General', links: [
+        { url:'https://trails.visitazores.com/es/', nom:'VisitAzores – Portal oficial de senders', desc:'Totes les rutes oficials amb fitxes, mapes i fullets PDF.' },
+        { url:'https://www.alltrails.com/pt/portugal/azores', nom:'AllTrails – Açores', desc:'Mapes interactius, fotos i valoracions de la comunitat.' },
+        { url:'https://ca.wikiloc.com/rutes-senderisme/world/pt-AZO', nom:'Wikiloc – Açores', desc:'Tracks GPS dels senders de totes les illes.' },
+        { url:'https://www.visitazores.com/es/the-azores/outdoor-activities/hiking', nom:'VisitAzores – Activitats outdoors', desc:'Guia general de senderisme i activitats a les Açores.' },
+      ]
+    },
+    {
+      titol: '🌋 São Miguel', links: [
+        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/sao-miguel', nom:'Rutes oficials de São Miguel', desc:'Totes les rutes PR i PRC de l\'illa gran.' },
+        { url:'https://www.alltrails.com/pt/portugal/azores/sao-miguel?ref=sidebar', nom:'AllTrails – São Miguel', desc:'Fitxes detallades i tracks GPS.' },
+      ]
+    },
+    {
+      titol: '⛰️🐉💙 Resta d\'illes', links: [
+        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/pico', nom:'Rutes oficials de Pico', desc:'Inclou el famós Caminho das Lagoas i la Montanha do Pico.' },
+        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/sao-jorge', nom:'Rutes oficials de São Jorge', desc:'Serra do Topo i les rutes cap a les fajãs.' },
+        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/faial', nom:'Rutes oficials de Faial', desc:'Caldeira, Capelinhos i les rutes de levada.' },
+      ]
+    },
+  ];
+
+  const html = seccions.map(s => `
+    <div class="send-links-sec">
+      <h3 class="send-links-titol">${s.titol}</h3>
+      <div class="send-links-grid">
+        ${s.links.map(l => `
+          <a class="send-links-card" href="${escHtml(l.url)}" target="_blank" rel="noopener">
+            <span class="send-links-nom">${escHtml(l.nom)}</span>
+            <span class="send-links-desc">${escHtml(l.desc)}</span>
+            <span class="send-links-url">${escHtml(linkHostname(l.url))}</span>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
+
+  wrap.innerHTML = `<div class="send-links-wrap">${html}</div>`;
 }
