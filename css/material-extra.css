@@ -2625,6 +2625,12 @@ body.send-modal-open { overflow: hidden; }
   padding: 4px 12px; transition: all 0.18s;
 }
 .send-modal-link:hover { background: rgba(106,171,122,0.12); color: var(--me-green3); }
+button.send-modal-gpx {
+  background: rgba(106,171,122,0.1);
+  border: 1px solid rgba(106,171,122,0.35);
+  cursor: pointer;
+}
+button.send-modal-gpx:hover { background: rgba(106,171,122,0.22); }
 
 /* ── Tab Consells ── */
 .send-cons-wrap {
@@ -2683,7 +2689,7 @@ body.send-modal-open { overflow: hidden; }
   display: flex; flex-direction: column; align-items: center; gap: 7px;
 }
 .send-senyal-svg {
-  width: 54px; height: 74px; display: block;
+  width: 72px; height: 72px; display: block;
 }
 .send-senyal-lbl {
   font-family: 'Lora', serif; font-size: 0.62rem;

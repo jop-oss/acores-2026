@@ -1735,6 +1735,8 @@ function sendFmtTemps(t) {
 function sendOpenModal(routeId) {
   const r = ME_RUTES_SENDERISME.find(x => x.id === routeId);
   if (!r) return;
+  _sendElevRoute = r;
+  _sendCumDist   = r.track ? sendCalcCumDist(r.track) : null;
   const overlay = document.getElementById('sendModalOverlay');
   const content = document.getElementById('sendModalContingut');
   if (!overlay || !content) return;
@@ -1756,6 +1758,7 @@ function sendOpenModal(routeId) {
   ).join('');
 
   const linksHtml = [
+    r.track       && `<button class="send-modal-link send-modal-gpx" onclick="sendDownloadGPX()">⬇️ GPX</button>`,
     r.visitazores && `<a class="send-modal-link" href="${escHtml(r.visitazores)}" target="_blank" rel="noopener">🌐 VisitAzores</a>`,
     r.wikiloc     && `<a class="send-modal-link" href="${escHtml(r.wikiloc)}"     target="_blank" rel="noopener">📍 Wikiloc</a>`,
     r.fullet      && `<a class="send-modal-link" href="${escHtml(r.fullet)}"      target="_blank" rel="noopener">📄 Full informatiu PDF</a>`,
@@ -1816,7 +1819,10 @@ function sendOpenModal(routeId) {
 }
 
 function sendHideModal() {
-  if (_sendMap) { _sendMap.remove(); _sendMap = null; }
+  _sendElevMarker = null;
+  _sendElevRoute  = null;
+  _sendCumDist    = null;
+  if (_sendMap) { try { _sendMap.off(); _sendMap.remove(); } catch(e) {} _sendMap = null; }
   const overlay = document.getElementById('sendModalOverlay');
   if (overlay) overlay.classList.remove('visible');
   document.body.classList.remove('send-modal-open');
@@ -1874,6 +1880,13 @@ function initSendModalMap(r) {
 
   // Leaflet needs a size recalc after display.
   // Capture the instance so we don't crash if modal was closed in the meantime.
+  // Marcador interactiu per al perfil d'elevació (inicialment invisible)
+  _sendElevMarker = L.circleMarker(
+    (r.start || (r.track && r.track[0]) || [0,0]),
+    { radius: 8, color: '#ffffff', weight: 2,
+      fillColor: illaColor, fillOpacity: 0, opacity: 0, interactive: false }
+  ).addTo(map);
+
   const mapInst = map;
   setTimeout(() => {
     if (_sendMap === mapInst) {
@@ -1933,9 +1946,10 @@ function buildElevSvg(profile, color) {
       stroke="rgba(106,171,122,0.1)" stroke-width="1" stroke-dasharray="3,4"/>`
   ).join('');
 
-  const gradId = `eg${Math.random().toString(36).slice(2,6)}`;
+  const gradId  = `eg${Math.random().toString(36).slice(2,6)}`;
+  const cursorColor = color;
 
-  return `<svg class="send-elev-svg" viewBox="0 0 ${W} ${H}"
+  return `<svg id="sendElevSvg" class="send-elev-svg" viewBox="0 0 ${W} ${H}"
     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <defs>
       <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
@@ -1949,6 +1963,19 @@ function buildElevSvg(profile, color) {
     <polygon points="${fStr}" fill="url(#${gradId})"/>
     <polyline points="${pStr}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round"/>
     ${yTicks}${xTicks}
+    <g id="sendElevCursor" style="display:none" pointer-events="none">
+      <line id="sendElevCursorLine" x1="0" y1="${PT}" x2="0" y2="${PT+cH}"
+        stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+      <circle id="sendElevCursorDot" cx="0" cy="0" r="4"
+        fill="${color}" stroke="white" stroke-width="1.5"/>
+      <rect id="sendElevCursorBg" x="0" y="0" width="72" height="13" rx="3"
+        fill="rgba(10,22,40,0.82)"/>
+      <text id="sendElevCursorLbl" x="0" y="0"
+        font-family="sans-serif" font-size="9" fill="rgba(200,230,205,0.95)"></text>
+    </g>
+    <rect x="${PL}" y="${PT}" width="${cW}" height="${cH}"
+      fill="transparent" style="cursor:crosshair"
+      onmousemove="sendElevHover(event)" onmouseleave="sendElevLeave()"/>
   </svg>`;
 }
 
@@ -1973,6 +2000,7 @@ function renderSendConsells(wrap) {
         <li><strong>Sistema de capes:</strong> Samarreta transpirable, capa d'abric (polar prim) i, sobretot, un bon impermeable. Porteu sempre aquestes peces a la motxilla, independentment del pronòstic.</li>
         <li><strong>Calçat de senderisme:</strong> Els camins s'enfanguen amb facilitat i les pedres humides rellisquen molt. Calçat amb bona adherència (sola Vibram) i impermeable (Gore-Tex) és obligatori.</li>
         <li><strong>Bastons de trekking:</strong> Molt recomanables per a zones de forta baixada i per mantenir l'equilibri en trams enfangats.</li>
+        <li><strong>Protecció solar, gorra i ulleres:</strong> El sol atlàntic és intens fins i tot amb núvols prims.</li>
       </ul>
     </section>
     <section class="send-cons-sec">
@@ -1984,6 +2012,9 @@ function renderSendConsells(wrap) {
         <li><strong>Respecta els tancaments de bestiar:</strong> Molts senders creuen pastures privades. Obre la tanca per passar i torna-la a tancar immediatament per evitar que les vaques s'escapin.</li>
         <li><strong>Rutes lineals:</strong> Molts dels senders més bonics de les Açores són lineals (PR). Planifica el transport de tornada abans de començar: anota telèfons de taxis locals o acorda el trajecte.</li>
         <li><strong>Aigua i provisions:</strong> Fora dels nuclis urbans no trobaràs botigues ni fonts als senders de muntanya. Carrega sempre un mínim d'1,5 L per persona.</li>
+        <li><strong>Telèfon i bateria:</strong> Porta el telèfon carregat i una bateria externa. Per estalviar bateria usa'l en mode avió: el GPS funcionarà igualment per seguir la ruta.</li>
+        <li><strong>No t'apartis dels senders senyalitzats:</strong> La vegetació densa pot desorientar ràpidament, sobretot amb boira.</li>
+        <li><strong>Respecta la flora endèmica:</strong> No arrenques plantes ni molestis la fauna. Moltes espècies estan protegides per llei.</li>
       </ul>
     </section>
 
@@ -2035,40 +2066,48 @@ function buildSenyalSvg(tipus, signe) {
     : signe === 'dreta'    ? 'Gira a la Dreta'
     : "Gira a l'Esquerra";
 
+  // ViewBox 72×72. Yellow bar full-width at top (y=8–21).
+  // Gap 4px. Red shape starts y=25.
+  // Dreta:    foot LEFT  + arrowhead pointing RIGHT →
+  // Esquerra: foot RIGHT + arrowhead pointing LEFT  ←
   let body = '';
   if (signe === 'correcte') {
-    // Two full-width horizontal bars (yellow top, red bottom)
     body = `
-      <rect x="8" y="22" width="48" height="14" rx="1" fill="${c1}"/>
-      <rect x="8" y="50" width="48" height="14" rx="1" fill="${c2}"/>`;
+      <rect x="8" y="21" width="56" height="13" rx="1" fill="${c1}"/>
+      <rect x="8" y="38" width="56" height="13" rx="1" fill="${c2}"/>`;
+
   } else if (signe === 'erroni') {
-    // Crossing diagonals: c1 (\), c2 (/) — c2 on top where they cross
     body = `
-      <line x1="13" y1="14" x2="51" y2="74"
-        stroke="${c1}" stroke-width="13" stroke-linecap="round"/>
-      <line x1="51" y1="14" x2="13" y2="74"
-        stroke="${c2}" stroke-width="13" stroke-linecap="round"/>`;
+      <line x1="11" y1="11" x2="61" y2="61"
+        stroke="${c1}" stroke-width="14" stroke-linecap="round"/>
+      <line x1="61" y1="11" x2="11" y2="61"
+        stroke="${c2}" stroke-width="14" stroke-linecap="round"/>`;
+
   } else if (signe === 'dreta') {
-    // c1 bar top-left | c2: vertical left going down + horizontal going right
+    // Foot on LEFT, triangle arrowhead pointing RIGHT at end of horizontal
     body = `
-      <rect x="8"  y="10" width="30" height="13" rx="1" fill="${c1}"/>
-      <rect x="8"  y="23" width="13" height="38" rx="1" fill="${c2}"/>
-      <rect x="21" y="48" width="35" height="13" rx="1" fill="${c2}"/>`;
+      <rect x="8" y="8" width="56" height="13" rx="1" fill="${c1}"/>
+      <polygon points="8,25 62,25 68,32 62,39 22,39 22,63 8,63" fill="${c2}"/>`;
+
   } else {
-    // c1 bar top-right | c2: vertical right going down + horizontal going left
+    // Foot on RIGHT, triangle arrowhead pointing LEFT at start of horizontal
     body = `
-      <rect x="26" y="10" width="30" height="13" rx="1" fill="${c1}"/>
-      <rect x="43" y="23" width="13" height="38" rx="1" fill="${c2}"/>
-      <rect x="8"  y="48" width="35" height="13" rx="1" fill="${c2}"/>`;
+      <rect x="8" y="8" width="56" height="13" rx="1" fill="${c1}"/>
+      <polygon points="4,32 10,25 64,25 64,63 50,63 50,39 10,39" fill="${c2}"/>`;
   }
+
   return `<div class="send-senyal-item">
-    <svg viewBox="0 0 64 88" class="send-senyal-svg" xmlns="http://www.w3.org/2000/svg">
-      <rect width="64" height="88" rx="6" fill="rgba(200,189,212,0.18)"/>
+    <svg viewBox="0 0 72 72" class="send-senyal-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="72" height="72" rx="6" fill="rgba(200,189,212,0.18)"/>
       ${body}
     </svg>
     <span class="send-senyal-lbl">${nom}</span>
   </div>`;
 }
+
+
+
+
 
 
 /* ══════════════════════════
@@ -2126,3 +2165,163 @@ function renderSendLinks(wrap) {
   wrap.innerHTML = `<div class="send-links-wrap">${html}</div>`;
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   SENDERISME — FUNCIONS INTERACTIVES (GPX + Perfil d'elevació)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Descàrrega GPX ── */
+function sendDownloadGPX() {
+  const r = _sendElevRoute;
+  if (!r || !r.track) return;
+  const cum      = _sendCumDist || sendCalcCumDist(r.track);
+  const totalKm  = cum[cum.length - 1];
+  const maxKmPro = r.profile ? r.profile[r.profile.length - 1][0] : 0;
+
+  const trkpts = r.track.map((pt, i) => {
+    const km   = cum[i] / totalKm * maxKmPro;
+    const elev = r.profile ? sendInterpElev(r.profile, km, maxKmPro) : null;
+    const ele  = elev !== null ? `<ele>${elev.toFixed(1)}</ele>` : '';
+    return `      <trkpt lat="${pt[0].toFixed(6)}" lon="${pt[1].toFixed(6)}">${ele}</trkpt>`;
+  }).join('\n');
+
+  const gpxStr = `<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Açores 2026"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <trk>
+    <name>${escHtml(r.nom)}</name>
+    <desc>${escHtml(r.codi)} — ${escHtml(SEND_ILLA_LABEL[r.illa]||r.illa)}</desc>
+    <trkseg>
+${trkpts}
+    </trkseg>
+  </trk>
+</gpx>`;
+
+  const blob = new Blob([gpxStr], { type: 'application/gpx+xml' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: `${r.id}.gpx` });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ── Distàncies acumulades del track (km) ── */
+function sendCalcCumDist(track) {
+  const R = 6371;
+  const rad = d => d * Math.PI / 180;
+  const cum = [0];
+  for (let i = 1; i < track.length; i++) {
+    const [la1, lo1] = track[i - 1], [la2, lo2] = track[i];
+    const dlat = rad(la2 - la1), dlng = rad(lo2 - lo1);
+    const a = Math.sin(dlat / 2) ** 2
+            + Math.cos(rad(la1)) * Math.cos(rad(la2)) * Math.sin(dlng / 2) ** 2;
+    cum.push(cum[cum.length - 1] + R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+  }
+  return cum;
+}
+
+/* ── Interpolació d'elevació (profile[][km,elev], km en espai del perfil) ── */
+function sendInterpElev(profile, km, maxKm) {
+  if (!profile || !profile.length) return null;
+  if (km <= 0) return profile[0][1];
+  if (km >= maxKm) return profile[profile.length - 1][1];
+  let lo = 0, hi = profile.length - 1;
+  while (lo < hi - 1) {
+    const mid = (lo + hi) >> 1;
+    if (profile[mid][0] <= km) lo = mid; else hi = mid;
+  }
+  const range = profile[hi][0] - profile[lo][0];
+  if (range <= 0) return profile[lo][1];
+  const t = (km - profile[lo][0]) / range;
+  return profile[lo][1] + t * (profile[hi][1] - profile[lo][1]);
+}
+
+/* ── Punt del track a una distància acumulada donada ── */
+function sendTrackPtAtKm(track, cumDist, km) {
+  if (!track || !cumDist || km <= 0) return track[0];
+  const total = cumDist[cumDist.length - 1];
+  if (km >= total) return track[track.length - 1];
+  let lo = 0, hi = cumDist.length - 1;
+  while (lo < hi - 1) {
+    const mid = (lo + hi) >> 1;
+    if (cumDist[mid] <= km) lo = mid; else hi = mid;
+  }
+  const t = (cumDist[hi] - cumDist[lo]) > 0
+    ? (km - cumDist[lo]) / (cumDist[hi] - cumDist[lo]) : 0;
+  return [
+    track[lo][0] + t * (track[hi][0] - track[lo][0]),
+    track[lo][1] + t * (track[hi][1] - track[lo][1]),
+  ];
+}
+
+/* ── Handler mousemove sobre el perfil d'elevació ── */
+function sendElevHover(e) {
+  const r = _sendElevRoute;
+  if (!r || !r.profile) return;
+  const svgEl = document.getElementById('sendElevSvg');
+  if (!svgEl) return;
+
+  const bbox = svgEl.getBoundingClientRect();
+  const W = 600, H = 110, PL = 44, PR = 10, PT = 10, PB = 26;
+  const cW = W - PL - PR, cH = H - PT - PB;
+
+  // Mouse X en coordenades del viewBox (scale non-uniform amb preserveAspectRatio:none)
+  const svgX = ((e.clientX - bbox.left) / bbox.width) * W;
+  if (svgX < PL || svgX > W - PR) { sendElevLeave(); return; }
+
+  const maxKm = r.profile[r.profile.length - 1][0];
+  const km    = (svgX - PL) / cW * maxKm;
+  const elev  = sendInterpElev(r.profile, km, maxKm);
+
+  // Y en coordenades viewBox
+  const elevs = r.profile.map(p => p[1]);
+  const minEl = Math.min(...elevs), maxEl = Math.max(...elevs);
+  const rngEl = maxEl - minEl || 10;
+  const svgY  = PT + cH - ((elev - minEl) / rngEl) * cH;
+
+  // Actualitzar línia cursor
+  const cursorG = document.getElementById('sendElevCursor');
+  if (!cursorG) return;
+  cursorG.style.display = '';
+  document.getElementById('sendElevCursorLine')
+    .setAttribute('x1', svgX.toFixed(1));
+  document.getElementById('sendElevCursorLine')
+    .setAttribute('x2', svgX.toFixed(1));
+
+  // Dot
+  const dot = document.getElementById('sendElevCursorDot');
+  dot.setAttribute('cx', svgX.toFixed(1));
+  dot.setAttribute('cy', svgY.toFixed(1));
+
+  // Label (tooltip) — ajustar posició per no sortir del SVG
+  const lbl  = document.getElementById('sendElevCursorLbl');
+  const bg   = document.getElementById('sendElevCursorBg');
+  const lblW = 72, lblH = 13;
+  const lblX = svgX + 7 + lblW > W - PR ? svgX - lblW - 5 : svgX + 7;
+  const lblY = Math.max(PT + lblH, svgY - 2);
+  bg.setAttribute('x', lblX.toFixed(1));
+  bg.setAttribute('y', (lblY - lblH + 2).toFixed(1));
+  lbl.setAttribute('x', (lblX + 4).toFixed(1));
+  lbl.setAttribute('y', (lblY - 3).toFixed(1));
+  lbl.textContent = `${km.toFixed(1)} km  ·  ${Math.round(elev)} m`;
+
+  // Moure marcador al mapa
+  if (_sendMap && _sendCumDist && _sendElevMarker && r.track) {
+    const trackTotal = _sendCumDist[_sendCumDist.length - 1];
+    const trackKm    = km / maxKm * trackTotal;
+    const [lat, lng] = sendTrackPtAtKm(r.track, _sendCumDist, trackKm);
+    try {
+      _sendElevMarker.setLatLng([lat, lng]);
+      _sendElevMarker.setStyle({ opacity: 1, fillOpacity: 0.85 });
+    } catch(err) {}
+  }
+}
+
+function sendElevLeave() {
+  const cursorG = document.getElementById('sendElevCursor');
+  if (cursorG) cursorG.style.display = 'none';
+  if (_sendElevMarker) {
+    try { _sendElevMarker.setStyle({ opacity: 0, fillOpacity: 0 }); } catch(e) {}
+  }
+}
