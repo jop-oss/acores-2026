@@ -7,64 +7,33 @@
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+  <link rel="stylesheet" href="css/mapes.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <style>
-    .tmp-main {
-      min-height: 100vh;
-      background: #0a1628;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .tmp-eyebrow {
-      font-family: 'Lora', serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #6aab7a;
-      margin-bottom: 16px;
-    }
-    .tmp-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
-      font-weight: 700;
-      color: #a8d8b0;
-      margin: 0 0 24px;
-      letter-spacing: -0.02em;
-    }
-    .tmp-proximament {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: #7a9e8a;
-    }
-  </style>
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
   <div class="nav-links">
     <a href="imprescindibles.html" class="nav-item">Imprescindibles</a>
-    <a href="itinerari.html" class="nav-item">Itinerari</a>
-    <a href="logistica.html" class="nav-item">Logística</a>
-    <a href="allotjament.html" class="nav-item">Allotjament</a>
-    <a href="temps.html" class="nav-item">El temps</a>
-    <a href="webcams.html" class="nav-item">Webcams</a>
-    <a href="restaurants.html" class="nav-item">Restaurants</a>
-    <a href="mapes.html" class="nav-item active">Mapes</a>
-    <a href="despeses.html" class="nav-item">Despeses</a>
-    <a href="blog.html" class="nav-item">Blog</a>
-    <a href="curiositats.html" class="nav-item">Curiositats</a>
-    <a href="portugues.html" class="nav-item">Portuguès</a>
-    <a href="jocs.html" class="nav-item">Jocs</a>
-    <a href="reptes.html" class="nav-item">Reptes</a>
-    <a href="ruleta.html" class="nav-item">Ruleta</a>
-    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="itinerari.html"       class="nav-item">Itinerari</a>
+    <a href="logistica.html"       class="nav-item">Logística</a>
+    <a href="allotjament.html"     class="nav-item">Allotjament</a>
+    <a href="temps.html"           class="nav-item">El temps</a>
+    <a href="webcams.html"         class="nav-item">Webcams</a>
+    <a href="restaurants.html"     class="nav-item">Restaurants</a>
+    <a href="mapes.html"           class="nav-item active">Mapes</a>
+    <a href="despeses.html"        class="nav-item">Despeses</a>
+    <a href="blog.html"            class="nav-item">Blog</a>
+    <a href="curiositats.html"     class="nav-item">Curiositats</a>
+    <a href="portugues.html"       class="nav-item">Portuguès</a>
+    <a href="jocs.html"            class="nav-item">Jocs</a>
+    <a href="reptes.html"          class="nav-item">Reptes</a>
+    <a href="ruleta.html"          class="nav-item">Ruleta</a>
+    <a href="material-extra.html"  class="nav-item">Extra</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap" id="nav-id-wrap">
@@ -73,17 +42,76 @@
   </div>
 </nav>
 
-<main class="tmp-main">
-  <div class="tmp-eyebrow">Açores 2026</div>
-  <h1 class="tmp-title">🗺️ Mapes</h1>
-  <p class="tmp-proximament">Pròximament...</p>
-</main>
+<!-- ── ILLA FILTER BAR ── -->
+<div class="mp-illes">
+  <button class="mp-illa-btn active" data-illa="">🌐 Totes</button>
+  <button class="mp-illa-btn" data-illa="sm">🌋 São Miguel</button>
+  <button class="mp-illa-btn" data-illa="pi">⛰️ Pico</button>
+  <button class="mp-illa-btn" data-illa="sj">🏔️ São Jorge</button>
+  <button class="mp-illa-btn" data-illa="fa">⚓ Faial</button>
+</div>
 
-<footer class="main-footer">
-  <p class="footer-title">Estiu 2026 · Illes Açores</p>
-  <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
-</footer>
+<!-- ── MAP WRAP ── -->
+<div class="mp-wrap">
 
+  <!-- Leaflet map -->
+  <div id="mp-map"></div>
+
+  <!-- Loading overlay -->
+  <div id="mp-loading" class="mp-loading">
+    <span class="mp-loading-ico">🗺️</span>
+    <span class="mp-loading-text">Carregant el mapa…</span>
+  </div>
+
+  <!-- Panel toggle button (shown when panel is closed) -->
+  <button id="mp-panel-toggle" class="mp-panel-toggle" style="display:none">
+    ☰ Capes
+  </button>
+
+  <!-- Layer panel -->
+  <div id="mp-panel" class="mp-panel">
+    <div class="mp-panel-head">
+      <span>🗂️ Capes</span>
+      <button id="mp-panel-close" class="mp-panel-close" title="Tancar">✕</button>
+    </div>
+    <div id="mp-panel-body" class="mp-panel-body">
+      <!-- generated by mapes.js -->
+    </div>
+  </div>
+
+  <!-- Info panel -->
+  <div id="mp-info" class="mp-info">
+    <div class="mp-info-header">
+      <span id="mp-info-head-capa" class="mp-info-capa"></span>
+      <button id="mp-info-close" class="mp-info-close" title="Tancar">✕</button>
+    </div>
+    <div id="mp-info-body" class="mp-info-body">
+      <!-- filled by mapes.js -->
+    </div>
+  </div>
+
+  <!-- Map controls -->
+  <div class="mp-ctrls">
+    <button id="mp-fit" class="mp-ctrl-btn" title="Ajusta la vista a les capes actives">⊞</button>
+    <button id="mp-geo" class="mp-ctrl-btn" title="La meva posició">📍</button>
+    <div class="mp-basemap-sel">
+      <select id="mp-basemap" title="Fons del mapa">
+        <option value="voyager" selected>Voyager</option>
+        <option value="clar">Clar</option>
+        <option value="topo">Topo</option>
+        <option value="satellit">Satèl·lit</option>
+      </select>
+    </div>
+  </div>
+
+</div><!-- /.mp-wrap -->
+
+<!-- Scripts: data first, logic after, app.js last -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="js/imprescindibles-data.js"></script>
+<script src="js/restaurants-data.js"></script>
+<script src="js/material-extra-data.js"></script>
+<script src="js/mapes.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
