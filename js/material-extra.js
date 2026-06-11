@@ -1644,7 +1644,7 @@ function renderSendRutes(wrap) {
   ).join('');
 
   const rutes = sendFiltrarRutes();
-  const comptador = `<span class="send-comptador">${rutes.length} ruta${rutes.length!==1?'s':''}</span>`;
+  const comptador = `<span class="send-comptador">${rutes.length !== 1 ? rutes.length + ' rutes' : '1 ruta'}</span>`;
 
   const cardsHtml = rutes.length
     ? rutes.map(r => renderSendCard(r)).join('')
@@ -1797,7 +1797,22 @@ function sendOpenModal(routeId) {
 
   overlay.classList.add('visible');
   document.body.classList.add('send-modal-open');
-  setTimeout(() => initSendModalMap(r), 120);
+
+  // Assign explicit height to info panel so overflow-y:auto works reliably.
+  // (flex:1 in a row container doesn't always give a concrete height for scroll.)
+  requestAnimationFrame(() => {
+    const modal  = document.getElementById('sendModal');
+    const header = modal?.querySelector('.send-modal-header');
+    const info   = modal?.querySelector('.send-modal-info');
+    if (modal && header && info) {
+      const h = modal.clientHeight - header.offsetHeight;
+      info.style.height    = h + 'px';
+      info.style.maxHeight = h + 'px';
+      info.style.overflowY = 'auto';
+    }
+  });
+
+  setTimeout(() => initSendModalMap(r), 140);
 }
 
 function sendHideModal() {
@@ -1813,9 +1828,14 @@ function sendCloseModal(e) {
 
 /* ── Mapa Leaflet al modal ── */
 function initSendModalMap(r) {
-  if (_sendMap) { _sendMap.remove(); _sendMap = null; }
+  if (_sendMap) {
+    try { _sendMap.off(); _sendMap.remove(); } catch(e) {}
+    _sendMap = null;
+  }
   const el = document.getElementById('sendModalMap');
   if (!el) return;
+  // Clear any stale Leaflet state on the DOM node
+  delete el._leaflet_id;
 
   const illaColor = SEND_ILLA_COLOR[r.illa] || '#6aab7a';
 
@@ -1852,8 +1872,14 @@ function initSendModalMap(r) {
     map.setView(r.coords_inici, 13);
   }
 
-  // Leaflet needs a size recalc after display
-  setTimeout(() => map.invalidateSize(), 50);
+  // Leaflet needs a size recalc after display.
+  // Capture the instance so we don't crash if modal was closed in the meantime.
+  const mapInst = map;
+  setTimeout(() => {
+    if (_sendMap === mapInst) {
+      try { mapInst.invalidateSize(); } catch(e) {}
+    }
+  }, 60);
 }
 
 /* ── SVG perfil d'elevació ── */
@@ -1933,44 +1959,42 @@ function renderSendConsells(wrap) {
   wrap.innerHTML = `
   <div class="send-cons-wrap">
     <section class="send-cons-sec">
-      <h2 class="send-cons-titol">🌤️ El temps</h2>
+      <h2 class="send-cons-titol">🌤️ 1. El temps: el gran protagonista</h2>
       <ul class="send-cons-list">
-        <li>Les Açores tenen un clima oceànic: els canvis meteorològics poden ser sobtats, especialment als cims i rutes d'interior.</li>
-        <li>Consulta sempre la previsió a <strong>SpotAzores</strong> o la secció <em>El temps</em> d'aquesta app abans de sortir.</li>
-        <li>Porta impermeables fins i tot si fa sol al matí. La boira pot aparèixer ràpidament a les zones altes.</li>
-        <li>Evita sortir amb boira densa o vent fort, especialment en rutes amb vores de penya-segat.</li>
-        <li>La temperatura baixa uns 4–6 °C per cada 1.000 m d'altitud. Planifica la roba en capes.</li>
+        <li><strong>Les "quatre estacions" en un dia:</strong> El clima canvia molt ràpidament. Podeu sortir amb un sol radiant i trobar boira densa o pluja en qüestió de minuts.</li>
+        <li><strong>Previsió i Webcams:</strong> No confieu només en l'aplicació del temps. Useu <em>SpotAzores</em> per veure en directe l'estat de les muntanyes i els llacs a través de les càmeres web.</li>
+        <li><strong>La boira (<em>nevoeiro</em>):</strong> Les rutes de muntanya alta o carena de cràter (Caldeira, Serra Devassa, Pico da Esperança) canvien radicalment amb la boira. Si la visibilitat és nul·la, no comencis la ruta: és perillós i et perdràs les vistes.</li>
+        <li><strong>Flexibilitat:</strong> Si el cim d'un volcà està cobert de núvols, canvieu els plans i feu una ruta costanera o de boscos baixos aquell mateix dia.</li>
       </ul>
     </section>
     <section class="send-cons-sec">
-      <h2 class="send-cons-titol">🎒 Equipament</h2>
+      <h2 class="send-cons-titol">🎒 2. Equipament indispensable</h2>
       <ul class="send-cons-list">
-        <li><strong>Calçat de senderisme</strong> amb turmell alt, imprescindible per als camins de terra, pedra volcànica i arrels humides.</li>
-        <li><strong>Roba en capes:</strong> camiseta tècnica, forro polar lleuger i impermeable. L'amplitud tèrmica entre la costa i els cims pot ser gran.</li>
-        <li>Bastó de senderisme: molt útil en pendents amb terra relliscosa o trams amb pedra volcànica irregular.</li>
-        <li>Aigua abundant: mínim 1,5 L per ruta. No sempre hi ha fonts als senders.</li>
-        <li>Protecció solar, gorra i ulleres: el sol atlàntic és intens fins i tot amb núvols prims.</li>
-        <li>Mapes offline (AllTrails, Wikiloc) al mòbil per si perds el senyal GPS a zones de bosc dens.</li>
+        <li><strong>Sistema de capes:</strong> Samarreta transpirable, capa d'abric (polar prim) i, sobretot, un bon impermeable. Porteu sempre aquestes peces a la motxilla, independentment del pronòstic.</li>
+        <li><strong>Calçat de senderisme:</strong> Els camins s'enfanguen amb facilitat i les pedres humides rellisquen molt. Calçat amb bona adherència (sola Vibram) i impermeable (Gore-Tex) és obligatori.</li>
+        <li><strong>Bastons de trekking:</strong> Molt recomanables per a zones de forta baixada i per mantenir l'equilibri en trams enfangats.</li>
       </ul>
     </section>
     <section class="send-cons-sec">
-      <h2 class="send-cons-titol">🧭 Logística i Seguretat</h2>
+      <h2 class="send-cons-titol">🧭 3. Logística i Seguretat</h2>
       <ul class="send-cons-list">
-        <li>Moltes rutes d'anada sola requereixen <strong>transport de retorn:</strong> coordina bé els cotxes del grup per no quedar-se a mitja ruta.</li>
-        <li>Avisa sempre algun membre del grup on vas, quina ruta fas i quan esperes tornar.</li>
-        <li>Porta el telèfon carregat. Número d'emergències: <strong>112</strong>. La cobertura pot ser limitada a zones de bosc dens.</li>
-        <li>No t'apartis dels senders senyalitzats. La vegetació densa pot desorientar ràpidament, sobretot amb boira.</li>
-        <li>Respecta la flora endèmica: no arrenques plantes ni molestis la fauna. Moltes espècies estan protegides per llei.</li>
-        <li>Les rutes <strong>Difícil</strong> requereixen bona forma física i experiència en senderisme de muntanya.</li>
+        <li><strong>La Guia Oficial:</strong> Consulteu sempre <a class="send-cons-link" href="https://trails.visitazores.com/es/senderos-de-las-azores" target="_blank">trails.visitazores.com</a> per a l'estat dels senders: dificultat, distància i temps. Seguiu sempre les marques oficials.</li>
+        <li><strong>Orientació offline:</strong> En zones de vegetació densa, molt útil tenir el mapa descarregat a <a class="send-cons-link" href="https://ca.wikiloc.com/" target="_blank">Wikiloc</a> o <a class="send-cons-link" href="https://mapy.com/es/turisticka?x=-27.3587758&y=38.1903513&z=8" target="_blank">mapy.cz</a>.</li>
+        <li><strong>Respecte a l'entorn:</strong> Les Açores són zones protegides. No deixeu cap residu i manteniu-vos sempre dins dels camins per evitar l'erosió i respectar la flora autòctona.</li>
+        <li><strong>Respecta els tancaments de bestiar:</strong> Molts senders creuen pastures privades. Obre la tanca per passar i torna-la a tancar immediatament per evitar que les vaques s'escapin.</li>
+        <li><strong>Rutes lineals:</strong> Molts dels senders més bonics de les Açores són lineals (PR). Planifica el transport de tornada abans de començar: anota telèfons de taxis locals o acorda el trajecte.</li>
+        <li><strong>Aigua i provisions:</strong> Fora dels nuclis urbans no trobaràs botigues ni fonts als senders de muntanya. Carrega sempre un mínim d'1,5 L per persona.</li>
       </ul>
     </section>
+
+    <!-- Senyals dels senders -->
     <section class="send-cons-sec send-cons-senyals">
       <h2 class="send-cons-titol">🪧 Senyals dels senders</h2>
       <p class="send-cons-intro">Els senders de les Açores segueixen la senyalització estàndard portuguesa. Aprèn a reconèixer els signes per no perdre't mai el camí.</p>
       <div class="send-senyals-grid">
         <div class="send-senyals-grup">
           <div class="send-senyals-titol">
-            ${sendFranjaSvg('#f5c518','#d32f2f')} Petites Rutes (PR / PRC) — groc i vermell
+            ${sendFranjaSvg('#f7c01a','#d42020')} Petites Rutes (PR / PRC) — groc i vermell
           </div>
           <div class="send-senyals-fila">
             ${buildSenyalSvg('pr','correcte')}
@@ -1981,7 +2005,7 @@ function renderSendConsells(wrap) {
         </div>
         <div class="send-senyals-grup">
           <div class="send-senyals-titol">
-            ${sendFranjaSvg('#f0f0f0','#d32f2f')} Grans Rutes (GR) — blanc i vermell
+            ${sendFranjaSvg('#f0f0f0','#d42020')} Grans Rutes (GR) — blanc i vermell
           </div>
           <div class="send-senyals-fila">
             ${buildSenyalSvg('gr','correcte')}
@@ -1995,7 +2019,7 @@ function renderSendConsells(wrap) {
   </div>`;
 }
 
-/* ── Senyals SVG ── */
+
 function sendFranjaSvg(c1, c2) {
   return `<svg width="28" height="14" viewBox="0 0 28 14" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;border-radius:3px;flex-shrink:0">
     <rect width="28" height="7" fill="${c1}"/>
@@ -2004,48 +2028,48 @@ function sendFranjaSvg(c1, c2) {
 }
 
 function buildSenyalSvg(tipus, signe) {
-  const c1 = tipus === 'pr' ? '#f5c518' : '#f0f0f0';
-  const c2 = '#d32f2f';
+  const c1  = tipus === 'pr' ? '#f7c01a' : '#f0f0f0';
+  const c2  = '#d42020';
   const nom = signe === 'correcte' ? 'Camí Correcte'
     : signe === 'erroni'   ? 'Camí Erroni'
-    : signe === 'dreta'    ? 'Gira Dreta'
-    : 'Gira Esquerra';
+    : signe === 'dreta'    ? 'Gira a la Dreta'
+    : "Gira a l'Esquerra";
 
-  let svgBody = '';
-  // Each SVG: 64×88 viewBox. Bars are ~44px wide × 14px tall.
+  let body = '';
   if (signe === 'correcte') {
-    svgBody = `
-      <rect x="10" y="20" width="44" height="14" rx="2" fill="${c1}"/>
-      <rect x="10" y="40" width="44" height="14" rx="2" fill="${c2}"/>`;
+    // Two full-width horizontal bars (yellow top, red bottom)
+    body = `
+      <rect x="8" y="22" width="48" height="14" rx="1" fill="${c1}"/>
+      <rect x="8" y="50" width="48" height="14" rx="1" fill="${c2}"/>`;
   } else if (signe === 'erroni') {
-    svgBody = `
-      <rect x="10" y="20" width="44" height="14" rx="2" fill="${c1}"/>
-      <rect x="10" y="40" width="44" height="14" rx="2" fill="${c2}"/>
-      <line x1="12" y1="14" x2="52" y2="74" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
-      <line x1="52" y1="14" x2="12" y2="74" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.85"/>`;
+    // Crossing diagonals: c1 (\), c2 (/) — c2 on top where they cross
+    body = `
+      <line x1="13" y1="14" x2="51" y2="74"
+        stroke="${c1}" stroke-width="13" stroke-linecap="round"/>
+      <line x1="51" y1="14" x2="13" y2="74"
+        stroke="${c2}" stroke-width="13" stroke-linecap="round"/>`;
   } else if (signe === 'dreta') {
-    // Bars go horizontal then bend down-right (L rotated 90° CW)
-    svgBody = `
-      <rect x="8"  y="16" width="28" height="13" rx="2" fill="${c1}"/>
-      <rect x="8"  y="36" width="28" height="13" rx="2" fill="${c2}"/>
-      <rect x="34" y="36" width="22" height="13" rx="2" fill="${c1}"/>
-      <rect x="34" y="56" width="22" height="13" rx="2" fill="${c2}"/>`;
-  } else { // esquerra
-    svgBody = `
-      <rect x="28" y="16" width="28" height="13" rx="2" fill="${c1}"/>
-      <rect x="28" y="36" width="28" height="13" rx="2" fill="${c2}"/>
-      <rect x="8"  y="36" width="22" height="13" rx="2" fill="${c1}"/>
-      <rect x="8"  y="56" width="22" height="13" rx="2" fill="${c2}"/>`;
+    // c1 bar top-left | c2: vertical left going down + horizontal going right
+    body = `
+      <rect x="8"  y="10" width="30" height="13" rx="1" fill="${c1}"/>
+      <rect x="8"  y="23" width="13" height="38" rx="1" fill="${c2}"/>
+      <rect x="21" y="48" width="35" height="13" rx="1" fill="${c2}"/>`;
+  } else {
+    // c1 bar top-right | c2: vertical right going down + horizontal going left
+    body = `
+      <rect x="26" y="10" width="30" height="13" rx="1" fill="${c1}"/>
+      <rect x="43" y="23" width="13" height="38" rx="1" fill="${c2}"/>
+      <rect x="8"  y="48" width="35" height="13" rx="1" fill="${c2}"/>`;
   }
-
   return `<div class="send-senyal-item">
     <svg viewBox="0 0 64 88" class="send-senyal-svg" xmlns="http://www.w3.org/2000/svg">
-      <rect width="64" height="88" rx="6" fill="rgba(255,255,255,0.06)"/>
-      ${svgBody}
+      <rect width="64" height="88" rx="6" fill="rgba(200,189,212,0.18)"/>
+      ${body}
     </svg>
     <span class="send-senyal-lbl">${nom}</span>
   </div>`;
 }
+
 
 /* ══════════════════════════
    TAB: MÉS INFORMACIÓ
@@ -2054,27 +2078,39 @@ function renderSendLinks(wrap) {
   const seccions = [
     {
       titol: '🌍 General', links: [
-        { url:'https://trails.visitazores.com/es/', nom:'VisitAzores – Portal oficial de senders', desc:'Totes les rutes oficials amb fitxes, mapes i fullets PDF.' },
-        { url:'https://www.alltrails.com/pt/portugal/azores', nom:'AllTrails – Açores', desc:'Mapes interactius, fotos i valoracions de la comunitat.' },
-        { url:'https://ca.wikiloc.com/rutes-senderisme/world/pt-AZO', nom:'Wikiloc – Açores', desc:'Tracks GPS dels senders de totes les illes.' },
-        { url:'https://www.visitazores.com/es/the-azores/outdoor-activities/hiking', nom:'VisitAzores – Activitats outdoors', desc:'Guia general de senderisme i activitats a les Açores.' },
+        { url:'https://trails.visitazores.com/es/senderos-de-las-azores', nom:'VisitAzores – Senders oficials', desc:'Totes les rutes homologades amb fitxes, mapes i fullets PDF.' },
+        { url:'https://www.alltrails.com/es/portugal/azores', nom:'AllTrails – Açores', desc:'Mapes interactius, fotos i valoracions de la comunitat.' },
+        { url:'https://ca.wikiloc.com/rutes/senderisme/portugal/azores', nom:'Wikiloc – Açores', desc:'Tracks GPS de totes les illes descarregables offline.' },
+        { url:'https://byacores.com/es/rutas-senderismo/', nom:'ByAzores – Rutes de senderisme', desc:'Selecció comentada de rutes per illes.' },
+        { url:'https://www.trilhosecaminhadas.pt/percursos/distrito/acores/', nom:'Trilhos e Caminhadas – Açores', desc:'Directori de percursos pedestres portuguesos.' },
+        { url:'https://www.azoren-wanderfuehrer.de/es/rutas-de-senderismo-tur%C3%ADstico/', nom:'Azoren-Wanderführer', desc:'Guia de senderisme turístic de les Açores.' },
+        { url:'https://travesiapirenaica.com/rutas-azores/', nom:'Travesía Pirenaica – Açores', desc:'Anàlisi detallada de les millors rutes.' },
+        { url:'https://www.dareyouspot.com/Routes/ListSearch', nom:'DareYouSpot – Rutes', desc:'Recerca de rutes per zona i dificultat.' },
       ]
     },
     {
       titol: '🌋 São Miguel', links: [
-        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/sao-miguel', nom:'Rutes oficials de São Miguel', desc:'Totes les rutes PR i PRC de l\'illa gran.' },
-        { url:'https://www.alltrails.com/pt/portugal/azores/sao-miguel?ref=sidebar', nom:'AllTrails – São Miguel', desc:'Fitxes detallades i tracks GPS.' },
+        { url:'https://destinoymaleta.com/europa/portugal/senderismo-en-sao-miguel/', nom:'Destino y Maleta – Senderisme São Miguel', desc:"Guia completa de senderisme a l'illa gran." },
+        { url:'https://www.viajarnotieneedad.com/senderismo-sao-miguel-6-paseos-inolvidables/', nom:'Viajar no tiene edad – 6 passejos', desc:'Sis rutes memorables a São Miguel.' },
+        { url:'https://www.codigotravel.com/portugal/azores/senderismo-sao-miguel/', nom:'Código Travel – São Miguel', desc:'Descripció detallada de les principals rutes.' },
+        { url:'https://gataconbotas.com/rutas/portugal/azores/', nom:'Gata con Botas – Açores', desc:'Rutes des d\'una perspectiva de senderisme actiu.' },
+        { url:'https://www.saomiguelguide.com/post/rutas-faciles-sao-miguel-azores', nom:'São Miguel Guide – Rutes fàcils', desc:'Les millors rutes per a tots els nivells.' },
+        { url:'https://www.saomiguelguide.com/post/rutas-senderismo-sao-miguel-azores', nom:'São Miguel Guide – Senderisme', desc:'Guia general de senderisme a São Miguel.' },
+        { url:'https://www.azoreschoice.com/blog/azores-walking-guides-sao-miguel/', nom:'AzoresChoice – Walking Guide São Miguel', desc:'Guia de caminades amb informació pràctica.' },
+        { url:'https://welikeazores.com/mejores-rutas-de-senderismo-en-sao-miguel/', nom:'WeLikeAzores – Les millors rutes SM', desc:'Selecció de les rutes més destacades.' },
+        { url:'https://azoresgetaways.com/pt-pt/destination/azores/islands/sao-miguel/trilhos-percursos-pedestres-ilha-sao-miguel', nom:'Azores Getaways – Trilhos São Miguel', desc:'Percursos pedestres oficials de l\'illa.' },
       ]
     },
     {
-      titol: '⛰️🐉💙 Resta d\'illes', links: [
-        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/pico', nom:'Rutes oficials de Pico', desc:'Inclou el famós Caminho das Lagoas i la Montanha do Pico.' },
-        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/sao-jorge', nom:'Rutes oficials de São Jorge', desc:'Serra do Topo i les rutes cap a les fajãs.' },
-        { url:'https://trails.visitazores.com/es/senderos-de-las-azores/faial', nom:'Rutes oficials de Faial', desc:'Caldeira, Capelinhos i les rutes de levada.' },
+      titol: "⛰️🐉💙 Resta d'illes", links: [
+        { url:'https://www.azoreschoice.com/blog/azores-walking-guides-sao-jorge/', nom:'AzoresChoice – Walking Guide São Jorge', desc:'Les rutes cap a les fajãs i les crestes.' },
+        { url:'https://www.azoreschoice.com/blog/azores-walking-guides-faial/', nom:'AzoresChoice – Walking Guide Faial', desc:'Caldeira, Capelinhos i les rutes de levada.' },
+        { url:'https://www.azoreschoice.com/blog/azores-walking-guides-pico/', nom:'AzoresChoice – Walking Guide Pico', desc:'Caminho das Lagoas i les rutes volcàniques.' },
+        { url:'https://welikeazores.com/10-mejores-rutas-senderismo-faial/', nom:'WeLikeAzores – 10 millors rutes Faial', desc:'Les rutes més recomanades de Faial.' },
+        { url:'https://welikeazores.com/rutas-senderismo-pico-azores/', nom:"WeLikeAzores – Senderisme Pico", desc:"Rutes de senderisme per l'illa del volcà." },
       ]
     },
   ];
-
   const html = seccions.map(s => `
     <div class="send-links-sec">
       <h3 class="send-links-titol">${s.titol}</h3>
@@ -2087,6 +2123,6 @@ function renderSendLinks(wrap) {
           </a>`).join('')}
       </div>
     </div>`).join('');
-
   wrap.innerHTML = `<div class="send-links-wrap">${html}</div>`;
 }
+
