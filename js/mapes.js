@@ -583,8 +583,9 @@ document.addEventListener('DOMContentLoaded', () => {
   mpMap = L.map('mp-map', {
     center: [38.2, -27.0],
     zoom: 8,
-    zoomControl: true,
+    zoomControl: false,
   });
+  L.control.zoom({ position: 'topright' }).addTo(mpMap);
   mpTileLayer = MP_TILES.voyager();
   mpTileLayer.addTo(mpMap);
 

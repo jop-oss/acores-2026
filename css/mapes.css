@@ -389,7 +389,7 @@
 /* ── Map controls ── */
 .mp-ctrls {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   right: 10px;
   z-index: 700;
   display: flex;
