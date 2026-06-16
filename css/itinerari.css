@@ -906,6 +906,96 @@
   margin-top: 4px;
 }
 
+/* ── VOL TABLE (2 seccions × 4 columnes) ────────────────── */
+.itin-vol-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 720px;
+}
+.itin-vol-title {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: var(--col-green-pale);
+  padding-left: 2px;
+}
+
+.vol-table-block {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.vol-table-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.vol-table-section + .vol-table-section {
+  border-top: 2px solid rgba(10,22,40,0.7);
+}
+.vol-table-label {
+  padding: 7px 14px;
+  font-size: 0.68rem;
+  color: var(--col-text-dim);
+  background: rgba(45,90,61,0.18);
+  border-right: 1px solid rgba(45,90,61,0.25);
+  border-bottom: 1px solid rgba(45,90,61,0.2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.vol-table-label:last-child { border-right: none; }
+.vol-table-val {
+  padding: 11px 14px;
+  font-size: 0.90rem;
+  color: var(--col-green-pale);
+  border-right: 1px solid rgba(45,90,61,0.15);
+  font-weight: 500;
+}
+.vol-table-val:last-child { border-right: none; }
+.vol-table-val strong { color: var(--col-sm); font-weight: 700; }
+
+@media (max-width: 580px) {
+  .vol-table-section { grid-template-columns: repeat(2, 1fr); }
+  .vol-table-label, .vol-table-val {
+    font-size: 0.78rem;
+    padding: 8px 12px;
+  }
+}
+
+/* ── MAP COLUMN (mini map + obrir a maps) ────────────────── */
+.itin-map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.itin-map-open-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--col-border);
+  background: var(--col-card);
+  color: var(--col-green-mid);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Segoe UI', sans-serif;
+  align-self: center;
+  width: 100%;
+  justify-content: center;
+}
+.itin-map-open-btn:hover {
+  background: var(--col-green);
+  color: var(--col-green-pale);
+  border-color: var(--col-green);
+}
+
 /* ── LIGHT MODE ──────────────────────────────────────────── */
 body.light .itin-day-nav { background: #f0f4f0; border-color: #6aab7a; }
 body.light .itin-progress-badge { background: rgba(45,90,61,0.1); }

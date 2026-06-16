@@ -47,7 +47,7 @@
   <div class="itin-progress-badge" id="progress-badge">Dia 1 de 12</div>
   <div class="itin-day-pills">
     <button class="itin-day-pill active" data-dia="1">
-      <span class="pill-num">22 jul</span>Viatge d'anada
+      <span class="pill-num">22 jul</span>Comença l'aventura
     </button>
     <button class="itin-day-pill" data-dia="2">
       <span class="pill-num">23 jul</span>Sete Cidades
@@ -76,221 +76,266 @@
     <div class="itin-hero-overlay"></div>
     <div class="itin-hero-content">
       <div class="itin-hero-eyebrow">Dimecres 22 de juliol · Dia 1 de 12</div>
-      <h1 class="itin-hero-title">✈️ Viatge d'anada</h1>
+      <h1 class="itin-hero-title">✈️ Comença l'aventura</h1>
       <p class="itin-hero-sub">Barcelona · Porto · Terceira · Ponta Delgada</p>
       <div class="itin-hero-meta">
-        <span class="itin-hero-chip">🕐 Sortida 10:35h</span>
-        <span class="itin-hero-chip">🛬 Arribada 20:25h</span>
-        <span class="itin-hero-chip">✈️ 3 vols</span>
-        <span class="itin-hero-chip">🚗 Lloguer cotxes</span>
+        <span class="itin-hero-chip">🕗 Terminal 2 BCN a les 8:30h</span>
+        <span class="itin-hero-chip">🛬 Arribada PDL 20:25h</span>
+        <span class="itin-hero-chip">✈️ 3 vols · 🚗 Lloguer cotxes</span>
       </div>
     </div>
   </div>
 
-  <div class="itin-content">
+  <div class="itin-content" style="gap:28px; max-width:860px; margin:0 auto">
 
-    <!-- VOLS -->
-    <div>
-      <div class="itin-section-title">
-        <span class="emoji">✈️</span>
-        <h2>Vols</h2>
-        <div class="line"></div>
+    <!-- INTRO TEXT -->
+    <div class="itin-narrativa">
+      <p>
+        A les <strong>8:30h</strong>, tothom qui vulgui, a la <strong>terminal 2 de l'aeroport de Barcelona</strong>.
+        No fa ni falta dir-ho, però pels despistats, <strong>no us oblideu el DNI</strong> o us quedareu aquí.
+      </p>
+      <p>
+        Si tot va a l'hora, a les <strong>10:35h</strong> agafarem el primer avió (de Ryanair ✈️) amb destinació Porto.
+        A l'hora d'embarcar, com que ja portarem dues hores junts (<em>Déu meu, quina creu!</em>),
+        seurem tots a llocs diferents i així no ens barallarem.
+      </p>
+    </div>
+
+    <!-- VOL 1: BCN → OPO -->
+    <div class="itin-vol-wrap">
+      <div class="itin-vol-title"><em>Vol Barcelona – Porto</em></div>
+      <div class="vol-table-block">
+        <div class="vol-table-section">
+          <span class="vol-table-label">Origen</span>
+          <span class="vol-table-label">Hora Sortida</span>
+          <span class="vol-table-label">Destí (+1h)</span>
+          <span class="vol-table-label">Hora Arribada</span>
+          <span class="vol-table-val">Barcelona (BCN)</span>
+          <span class="vol-table-val"><strong>10:35</strong></span>
+          <span class="vol-table-val">Porto (OPO)</span>
+          <span class="vol-table-val"><strong>11:35</strong></span>
+        </div>
+        <div class="vol-table-section">
+          <span class="vol-table-label">Durada del vol</span>
+          <span class="vol-table-label">Companyia</span>
+          <span class="vol-table-label">Nº Vol</span>
+          <span class="vol-table-label">Nº Reserva</span>
+          <span class="vol-table-val">2:00</span>
+          <span class="vol-table-val">Ryanair</span>
+          <span class="vol-table-val">FR4585</span>
+          <span class="vol-table-val">J78B7U</span>
+        </div>
       </div>
+    </div>
 
-      <div class="itin-vols-list">
+    <!-- TEXT ENTRE VOL 1 I VOL 2 -->
+    <div class="itin-narrativa">
+      <p>
+        Al cap d'un parell d'hores aterrarem a <strong>Porto</strong>, seran les <strong>11:35h</strong>
+        (i sí, sortim a les 10:35, el vol dura 2 hores i arribem a les 11:35, i tot és correcte:
+        és que pels poc informats, se'ls fa saber que al Portugal continental és una hora menys que a Catalunya).
+      </p>
+      <p>
+        Aquí la Laia, que de tants viatges a fer surf ja es coneix l'aeroport com el palmell de la mà,
+        ens farà un tour guiat per les millors botigues i ens portarà a dinar a un bon lloc.
+        Sense pressa, tenim <strong>4 hores d'escala</strong>…
+      </p>
+      <p>
+        Si tot va segons el previst, a les <strong>15:40h</strong> ens enlairarem de nou,
+        aquesta vegada cap a l'illa de <strong>Terceira</strong>, on aterrarem al cap de 2:40h de vol,
+        és a dir a les <strong>17:20h</strong> (i sí, també és correcte: a les Açores hi ha una hora
+        més de diferència que a Portugal continental). Seguirem la pràctica d'anar en seients separats
+        per no discutir i no enfadar-nos, que ja hi haurà prou dies per endavant.
+      </p>
+    </div>
 
-        <!-- Vol 1: BCN → OPO -->
-        <div class="vol-card">
-          <div class="vol-card-header">
-            <span class="vol-airline">✈ Ryanair <span class="vol-num">FR4585</span></span>
-            <span class="vol-reserva">Reserva: J78B7U</span>
-          </div>
-          <div class="vol-card-body">
-            <div class="vol-airport">
-              <div class="vol-airport-code">BCN</div>
-              <div class="vol-airport-name">Barcelona El Prat</div>
-              <div class="vol-airport-time">10:35</div>
-            </div>
-            <div class="vol-middle">
-              <div class="vol-arrow-line">
-                <div class="vol-arrow-bar"></div>
-                <span>→</span>
-              </div>
-              <div class="vol-duration">2h 00m</div>
-            </div>
-            <div class="vol-airport vol-airport-right">
-              <div class="vol-airport-code">OPO</div>
-              <div class="vol-airport-name">Porto</div>
-              <div class="vol-airport-time">11:35</div>
-              <div class="vol-tz-note">−1h (hora PT continental)</div>
-            </div>
-          </div>
-          <div class="vol-card-footer">
-            <span>⏱ Escala Porto: <strong>4 hores</strong></span>
-            <span>🛄 Terminal 2 BCN</span>
-          </div>
+    <!-- VOL 2: OPO → TER -->
+    <div class="itin-vol-wrap">
+      <div class="itin-vol-title"><em>Vol Porto – Terceira</em></div>
+      <div class="vol-table-block">
+        <div class="vol-table-section">
+          <span class="vol-table-label">Origen</span>
+          <span class="vol-table-label">Hora Sortida</span>
+          <span class="vol-table-label">Destí (+1h)</span>
+          <span class="vol-table-label">Hora Arribada</span>
+          <span class="vol-table-val">Porto (OPO)</span>
+          <span class="vol-table-val"><strong>15:40</strong></span>
+          <span class="vol-table-val">Terceira (TER)</span>
+          <span class="vol-table-val"><strong>17:20</strong></span>
         </div>
-
-        <div class="itin-connector">Escala a Porto · 4h · Dinar i visita amb la Laia</div>
-
-        <!-- Vol 2: OPO → TER -->
-        <div class="vol-card">
-          <div class="vol-card-header">
-            <span class="vol-airline">✈ SATA <span class="vol-num">S4183</span></span>
-            <span class="vol-reserva">Reserva: XV5ZHM</span>
-          </div>
-          <div class="vol-card-body">
-            <div class="vol-airport">
-              <div class="vol-airport-code">OPO</div>
-              <div class="vol-airport-name">Porto</div>
-              <div class="vol-airport-time">15:40</div>
-            </div>
-            <div class="vol-middle">
-              <div class="vol-arrow-line">
-                <div class="vol-arrow-bar"></div>
-                <span>→</span>
-              </div>
-              <div class="vol-duration">2h 40m</div>
-            </div>
-            <div class="vol-airport vol-airport-right">
-              <div class="vol-airport-code">TER</div>
-              <div class="vol-airport-name">Terceira (Açores)</div>
-              <div class="vol-airport-time">17:20</div>
-              <div class="vol-tz-note">−1h (hora Açores)</div>
-            </div>
-          </div>
-          <div class="vol-card-footer">
-            <span>⏱ Escala Terceira: <strong>2h 20m</strong></span>
-            <span style="color:#f59e0b">⚠️ Escala tècnica, no ens movem de l'aeroport</span>
-          </div>
+        <div class="vol-table-section">
+          <span class="vol-table-label">Durada del vol</span>
+          <span class="vol-table-label">Companyia</span>
+          <span class="vol-table-label">Nº Vol</span>
+          <span class="vol-table-label">Nº Reserva</span>
+          <span class="vol-table-val">2:40</span>
+          <span class="vol-table-val">SATA</span>
+          <span class="vol-table-val">S4183</span>
+          <span class="vol-table-val">XV5ZHM</span>
         </div>
+      </div>
+    </div>
 
-        <div class="itin-connector">Escala Terceira · 2h 20m · Sí, ens hem equivocat d'illa 😅</div>
+    <!-- TEXT ENTRE VOL 2 I VOL 3 -->
+    <div class="itin-narrativa">
+      <p>
+        I direu, <em>ja hi som! Ja som a les Açores!</em> I sí, ja som a les Açores,
+        però <strong>ens hem equivocat d'illa!!!</strong> A Terceira no hi tenim res a fer nosaltres…
+        (hi anem a parar perquè era l'opció més barata i així podem estalviar quatre cèntims).
+      </p>
+      <p>
+        Així que encara haurem d'agafar un altre avió. Serà a les <strong>19:40h</strong>, després
+        d'una escala de 2:20h, i aquest sí, aquest ens portarà a <strong>Ponta Delgada</strong>,
+        capital de l'illa de <strong>São Miguel</strong>, on hi estarem els propers 6 dies.
+        Aquest vol, on també anirem separats per no perdre el costum, només durarà 3/4 d'hora,
+        i per tant, si tot ha anat segons el previst, aterrarem a les <strong>20:25h</strong>.
+      </p>
+    </div>
 
-        <!-- Vol 3: TER → PDL -->
-        <div class="vol-card">
-          <div class="vol-card-header">
-            <span class="vol-airline">✈ SATA <span class="vol-num">SP491</span></span>
-            <span class="vol-reserva">Reserva: XV5ZHM</span>
-          </div>
-          <div class="vol-card-body">
-            <div class="vol-airport">
-              <div class="vol-airport-code">TER</div>
-              <div class="vol-airport-name">Terceira</div>
-              <div class="vol-airport-time">19:40</div>
-            </div>
-            <div class="vol-middle">
-              <div class="vol-arrow-line">
-                <div class="vol-arrow-bar"></div>
-                <span>→</span>
-              </div>
-              <div class="vol-duration">0h 45m</div>
-            </div>
-            <div class="vol-airport vol-airport-right">
-              <div class="vol-airport-code">PDL</div>
-              <div class="vol-airport-name">Ponta Delgada</div>
-              <div class="vol-airport-time">20:25</div>
-            </div>
-          </div>
-          <div class="vol-card-footer">
-            <span style="color:#6abf70">🏝️ Finalment a São Miguel!</span>
-            <span>14 hores des de casa</span>
-          </div>
+    <!-- VOL 3: TER → PDL -->
+    <div class="itin-vol-wrap">
+      <div class="itin-vol-title"><em>Vol Terceira – Ponta Delgada</em></div>
+      <div class="vol-table-block">
+        <div class="vol-table-section">
+          <span class="vol-table-label">Origen</span>
+          <span class="vol-table-label">Hora Sortida</span>
+          <span class="vol-table-label">Destí (+1h)</span>
+          <span class="vol-table-label">Hora Arribada</span>
+          <span class="vol-table-val">Terceira (TER)</span>
+          <span class="vol-table-val"><strong>19:40</strong></span>
+          <span class="vol-table-val">Ponta Delgada (PDL)</span>
+          <span class="vol-table-val"><strong>20:25</strong></span>
         </div>
+        <div class="vol-table-section">
+          <span class="vol-table-label">Durada del vol</span>
+          <span class="vol-table-label">Companyia</span>
+          <span class="vol-table-label">Nº Vol</span>
+          <span class="vol-table-label">Nº Reserva</span>
+          <span class="vol-table-val">0:45</span>
+          <span class="vol-table-val">SATA</span>
+          <span class="vol-table-val">SP491</span>
+          <span class="vol-table-val">XV5ZHM</span>
+        </div>
+      </div>
+    </div>
 
-      </div><!-- /itin-vols-list -->
+    <!-- TEXT FINAL VOLS + TRANSICIÓ A COTXES -->
+    <div class="itin-narrativa">
+      <p>
+        Ara sí que ja hi som! Des que hem sortit de casa aquest matí, <strong>només hauran passat 14 hores</strong>.
+      </p>
+      <p>
+        Com que ja portarem les maletes amb nosaltres, només aterrar ens dirigirem a buscar
+        els <strong>cotxes de lloguer</strong> pels següents 6 dies.
+      </p>
     </div>
 
     <!-- COTXES DE LLOGUER -->
-    <div>
-      <div class="itin-section-title">
-        <span class="emoji">🚗</span>
-        <h2>Cotxes de lloguer</h2>
-        <div class="line"></div>
-      </div>
-
-      <div class="itin-info-grid">
-        <div>
-          <div class="itin-info-table">
-            <div class="itin-info-row">
-              <span class="itin-info-label">Data recollida</span>
-              <span class="itin-info-val">22 jul · 21:00h</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Empresa</span>
-              <span class="itin-info-val">Ilha Verde</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Adreça</span>
-              <span class="itin-info-val">Aeroporto João Paulo II, Ponta Delgada</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Model</span>
-              <span class="itin-info-val">Hyundai Kauai × 2 (o similar)</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Conductors</span>
-              <span class="itin-info-val">Mons · Joa</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Reserves</span>
-              <span class="itin-info-val">#617341895 · #690580949</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Dipòsit</span>
-              <span class="itin-info-val">2.100 € <small style="color:#6aab7a">(pendent confirmar)</small></span>
-            </div>
-          </div>
-          <div class="itin-nota">
-            <strong>Hyundai Kauai = Hyundai Kona</strong> — A Portugal es canvia el nom perquè <em>Kona</em> sona igual a una paraula portuguesa molt grollera. Ara ja ho sabeu.
-          </div>
+    <div class="itin-vol-title"><em>Lloguer de cotxes a São Miguel</em></div>
+    <div class="itin-info-grid">
+      <div class="itin-info-table">
+        <div class="itin-info-row">
+          <span class="itin-info-label">Data i hora recollida</span>
+          <span class="itin-info-val">22-07-2026 · <strong>21:00h</strong></span>
         </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Empresa</span>
+          <span class="itin-info-val">Ilha Verde</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Adreça</span>
+          <span class="itin-info-val">Aeroporto João Paulo II, 9504-749 Ponta Delgada</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Model</span>
+          <span class="itin-info-val">Hyundai Kauai o similar · 2 vehicles</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Conductors</span>
+          <span class="itin-info-val">Mons · Joa</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Nº Reserves</span>
+          <span class="itin-info-val">#617341895 · #690580949</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Dipòsit</span>
+          <span class="itin-info-val">2.100 €</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Pendent de pagar</span>
+          <span class="itin-info-val" style="color:#6abf70">0 €</span>
+        </div>
+      </div>
+      <div class="itin-map-col">
         <div id="map-cotxes" class="itin-mini-map"></div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=37.749585685919435,-25.71000906540439"
+           target="_blank" class="itin-map-open-btn">📍 Obrir a Maps</a>
       </div>
     </div>
 
-    <!-- ALLOTJAMENT -->
-    <div>
-      <div class="itin-section-title">
-        <span class="emoji">🏠</span>
-        <h2>Allotjament</h2>
-        <div class="line"></div>
-      </div>
+    <!-- NOTA KAUAI / KONA -->
+    <div class="itin-narrativa">
+      <p>
+        Nota per als que s'estiguin preguntant quin model és el <strong>Hyundai Kauai</strong>.
+        És el que aquí, i a la resta del món, coneixem com a <strong>Hyundai Kona</strong>,
+        només que a Portugal se li va canviar el nom. La raó és que <em>Kona</em> sona igual
+        a la paraula portuguesa <em>cona</em>, que és una manera grollera de referir-se a la vagina.
+      </p>
+      <p>
+        Un cop tinguem els cotxes, ens dirigirem cap al nostre primer allotjament de l'illa,
+        la fantàstica <strong><em>Santo Cristo House</em></strong>, situat a la mateixa capital.
+      </p>
+    </div>
 
-      <div class="itin-info-grid">
-        <div>
-          <div class="itin-info-table">
-            <div class="itin-info-row">
-              <span class="itin-info-label">Check-in</span>
-              <span class="itin-info-val">22 jul · ~21:30h</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Nom</span>
-              <span class="itin-info-val"><strong>Santo Cristo House</strong></span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Adreça</span>
-              <span class="itin-info-val">Rua São Francisco Xavier nº 8, 9500-243 Ponta Delgada</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Tipus</span>
-              <span class="itin-info-val">Casa · 3 hab / 3 banys</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Llits</span>
-              <span class="itin-info-val">2 dobles + 2 individuals</span>
-            </div>
-            <div class="itin-info-row">
-              <span class="itin-info-label">Pendent</span>
-              <span class="itin-info-val" style="color:#6abf70">0 €</span>
-            </div>
-          </div>
-          <div class="itin-nota">
-            A l'hora que arribareu, és molt probable que no hi hagi restaurants oberts per sopar. <strong>Instal·leu-vos i a dormir d'hora</strong>: demà comença l'aventura.
-          </div>
+    <!-- ALLOTJAMENT -->
+    <div class="itin-vol-title"><em>Allotjament (I) a São Miguel</em></div>
+    <div class="itin-info-grid">
+      <div class="itin-info-table">
+        <div class="itin-info-row">
+          <span class="itin-info-label">Check-in</span>
+          <span class="itin-info-val">22-07-2026 · <strong>~21:30h</strong></span>
         </div>
-        <div id="map-allotjament1" class="itin-mini-map"></div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Check-out</span>
+          <span class="itin-info-val">24-07-2026 · ~9:00h</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Nom</span>
+          <span class="itin-info-val"><strong>Santo Cristo House</strong></span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Adreça</span>
+          <span class="itin-info-val">Rua São Francisco Xavier nº 8, 9500-243 Ponta Delgada</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Tipus / Llits</span>
+          <span class="itin-info-val">Casa · 3 hab / 3 banys · 2 dobles + 2 individuals</span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Rentadora</span>
+          <span class="itin-info-val">Sí </span>
+        </div>
+        <div class="itin-info-row">
+          <span class="itin-info-label">Pendent de pagar</span>
+          <span class="itin-info-val" style="color:#6abf70">0 €</span>
+        </div>
       </div>
+      <div class="itin-map-col">
+        <div id="map-allotjament1" class="itin-mini-map"></div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=37.74239172034,-25.6737514624388"
+           target="_blank" class="itin-map-open-btn">📍 Obrir a Maps</a>
+      </div>
+    </div>
+
+    <!-- TEXT FINAL -->
+    <div class="itin-narrativa">
+      <p>
+        A l'hora que arribarem, difícilment trobarem cap lloc per sopar. Es pot intentar,
+        però el més probable és que <strong>aquest dia no es sopi</strong>.
+        Així que ens instal·lem i a dormir d'hora, que estarem cansats de tants avions
+        i demà comença l'aventura!!!
+      </p>
     </div>
 
   </div><!-- /itin-content dia-1 -->
