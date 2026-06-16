@@ -521,12 +521,13 @@
 }
 .tl-stop.highlight .tl-circle {
   border-color: var(--col-sm);
-  background: var(--col-sm-dim);
+  background: #0d2b15;
   color: var(--col-sm);
 }
 .tl-stop.meal .tl-circle {
   border-color: rgba(251,191,36,0.5);
   color: #fbbf24;
+  background: #1a1500;
 }
 .tl-stop.transport .tl-circle {
   border-color: rgba(96,165,250,0.4);
@@ -642,21 +643,67 @@
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+
+/* ── PHOTO FLIP CARD ─────────────────────────────────────── */
 .itin-foto-item {
   position: relative;
   border-radius: var(--radius-sm);
-  overflow: hidden;
   aspect-ratio: 4/3;
   background: var(--col-card);
   border: 1px solid var(--col-border);
+  perspective: 1000px;
+  cursor: pointer;
 }
-.itin-foto-item img {
+.itin-foto-inner {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  border-radius: var(--radius-sm);
+}
+.itin-foto-item.flipped .itin-foto-inner { transform: rotateY(180deg); }
+.itin-foto-front, .itin-foto-back {
+  position: absolute; inset: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.itin-foto-front img {
   width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
+  object-fit: cover; display: block;
   transition: transform 0.4s;
 }
-.itin-foto-item:hover img { transform: scale(1.04); }
+.itin-foto-item:not(.flipped):hover .itin-foto-front img { transform: scale(1.04); }
+.itin-foto-back {
+  transform: rotateY(180deg);
+  background: #0d1c2e;
+  display: flex; flex-direction: column;
+}
+.itin-flip-map { flex: 1; min-height: 0; }
+.itin-flip-info {
+  padding: 8px 10px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 5px;
+  background: #0f2318;
+  border-top: 1px solid var(--col-border);
+}
+.itin-flip-nom {
+  font-size: 0.74rem; font-weight: 600;
+  color: var(--col-green-pale); text-align: center; line-height: 1.3;
+}
+.itin-flip-btn {
+  font-size: 0.71rem; padding: 4px 12px;
+  border-radius: 12px; border: 1px solid var(--col-border);
+  color: var(--col-green-mid); text-decoration: none;
+  background: rgba(45,90,61,0.3); transition: all 0.15s;
+}
+.itin-flip-btn:hover { background: var(--col-green); color: var(--col-green-pale); }
+.itin-foto-flip-hint {
+  position: absolute; bottom: 36px; right: 7px; z-index: 2;
+  font-size: 0.60rem; color: rgba(255,255,255,0.75);
+  background: rgba(0,0,0,0.42); border-radius: 5px; padding: 2px 5px;
+  pointer-events: none;
+}
 .itin-foto-caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -680,6 +727,15 @@
 }
 .itin-foto-placeholder .ph-icon { font-size: 2rem; opacity: 0.4; }
 .itin-foto-placeholder .ph-text { font-size: 0.75rem; text-align: center; padding: 0 12px; opacity: 0.5; }
+
+/* ── AVÍS INFO (blau) ────────────────────────────────────── */
+.itin-avis-info {
+  background: rgba(59,130,246,0.10);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-left: 4px solid #3b82f6;
+  color: #bfdbfe;
+}
+.itin-avis-info .itin-avis-text strong { color: #eff6ff; display: block; margin-bottom: 4px; }
 
 /* ── SENDERISME ACCORDION ────────────────────────────────── */
 .itin-accordion {
@@ -995,6 +1051,349 @@
   color: var(--col-green-pale);
   border-color: var(--col-green);
 }
+
+/* ── SENDERISME LAYOUT (row-1 / row-2-2col / row-3) ─────── */
+.send-layout { display: flex; flex-direction: column; gap: 12px; }
+
+.send-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 720px) { .send-row-2col { grid-template-columns: 1fr; } }
+
+.send-map {
+  height: 310px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+.send-map-note {
+  font-size: 0.70rem;
+  color: var(--col-text-dim);
+  font-style: italic;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* ── RESTAURANT LIST (groc / ocre) ───────────────────────── */
+.itin-rest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.itin-rest-list-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(120,80,0,0.12);
+  border: 1px solid rgba(184,134,11,0.2);
+  border-left: 3px solid rgba(180,83,9,0.55);
+  border-radius: 8px;
+}
+.itin-rest-list-nom {
+  font-family: 'Lora', serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #d97706;
+  flex: 1;
+  min-width: 140px;
+}
+.itin-rest-list-punt {
+  font-size: 0.80rem;
+  color: #fbbf24;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.itin-rest-list-links {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.itin-rest-list-link {
+  font-size: 0.73rem;
+  color: #b45309;
+  text-decoration: none;
+  border: 1px solid rgba(184,134,11,0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+  background: rgba(120,80,0,0.15);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.itin-rest-list-link:hover {
+  background: rgba(184,134,11,0.25);
+  color: #f59e0b;
+  border-color: rgba(245,158,11,0.4);
+}
+
+/* ── STOPS LIST (explicit badges, no CSS counter) ────────── */
+.itin-stops-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.itin-stops-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: 'Lora', serif;
+  font-size: 0.88rem;
+  color: #c8dcd4;
+  padding: 10px 14px;
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-sm);
+  line-height: 1.45;
+}
+.itin-stops-list li.star-stop {
+  border-color: rgba(106,191,112,0.3);
+  background: rgba(106,191,112,0.05);
+  color: var(--col-green-pale);
+}
+.stop-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--col-sm);
+  background: var(--col-sm-dim);
+  border: 1px solid rgba(106,191,112,0.3);
+  border-radius: 50%;
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.stop-badge.start-badge {
+  background: rgba(34,197,94,0.15);
+  border-color: rgba(34,197,94,0.45);
+  color: #22c55e;
+  font-size: 0.72rem;
+}
+.stop-badge.finish-badge {
+  background: rgba(239,68,68,0.1);
+  border-color: rgba(239,68,68,0.3);
+  color: #f87171;
+  font-size: 0.72rem;
+}
+
+/* ── POI MAP ─────────────────────────────────────────────── */
+.itin-poi-map {
+  height: 440px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+
+/* ── SENDERISME GRID (1-2col-1 layout) ───────────────────── */
+.send-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.send-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+.send-map-box {
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+  min-height: 300px;
+}
+@media (max-width: 720px) {
+  .send-row-2col { grid-template-columns: 1fr; }
+  .send-map-box  { min-height: 240px; }
+}
+
+/* ── RESTAURANT LIST (amber/ochre style) ─────────────────── */
+.rest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rest-list-item {
+  background: #fffbeb;
+  border: 1px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.rest-list-nom {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #78350f;
+  flex: 1;
+  min-width: 160px;
+}
+.rest-list-rating {
+  font-size: 0.85rem;
+  color: #92400e;
+  white-space: nowrap;
+}
+.rest-list-stars { color: #d97706; letter-spacing: 1px; }
+.rest-list-num   { font-weight: 700; margin-left: 4px; }
+.rest-list-links { display: flex; gap: 6px; }
+.rest-list-link  {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  text-decoration: none;
+  background: rgba(245,158,11,0.12);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.rest-list-link:hover { background: #f59e0b; color: #fff; border-color: #d97706; }
+.rest-list-nobd {
+  font-size: 0.75rem;
+  color: #b45309;
+  font-style: italic;
+}
+
+/* ── POI MAP (full width, end of day) ────────────────────── */
+.itin-poi-map {
+  height: 480px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+
+/* ── ROUTE MAP FLIP (Leaflet ↔ Google Maps) ──────────────── */
+.itin-map-flip-wrap {
+  perspective: 1400px;
+  height: 460px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--col-border);
+}
+.itin-map-flip-inner {
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+  position: relative;
+}
+.itin-map-flip-wrap.flipped .itin-map-flip-inner { transform: rotateY(180deg); }
+.itin-map-flip-front, .itin-map-flip-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.itin-map-flip-back {
+  transform: rotateY(180deg);
+  background: #0d1c2e;
+}
+.itin-map-flip-back iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
+.itin-map-flip-toggle {
+  font-size: 0.82rem;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--col-border);
+  background: var(--col-card2);
+  color: var(--col-green-mid);
+  cursor: pointer;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.2s;
+}
+.itin-map-flip-toggle:hover { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green); }
+
+/* ── SENDERISME CARDS (no accordion) ────────────────────── */
+.send-card {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.send-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: rgba(45,90,61,0.1);
+  border-bottom: 1px solid rgba(45,90,61,0.3);
+}
+.send-card-color {
+  width: 5px; height: 44px;
+  border-radius: 3px; flex-shrink: 0;
+}
+.send-card-body { padding: 16px 18px; }
+.send-card-stats {
+  display: flex; gap: 14px;
+  flex-wrap: wrap; margin-top: 4px;
+}
+.send-card-stat {
+  font-size: 0.78rem; color: var(--col-text-dim);
+  display: flex; align-items: center; gap: 4px;
+}
+.send-card-codi {
+  font-size: 0.7rem; font-family: monospace;
+  color: var(--col-text-dim); letter-spacing: 0.08em; margin-bottom: 2px;
+}
+.send-card-nom {
+  font-size: 0.95rem; font-weight: 600; color: var(--col-green-pale);
+}
+.send-card-desc {
+  font-family: 'Lora', serif; font-size: 0.88rem;
+  color: #c8dcd4; line-height: 1.75; margin-bottom: 14px;
+}
+.send-card-logistica {
+  font-size: 0.8rem; color: rgba(251,191,36,0.8);
+  background: rgba(251,191,36,0.07);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px; margin-top: 10px; line-height: 1.5;
+}
+.send-embed-wrap {
+  height: 280px; margin-top: 14px;
+  border-radius: var(--radius-sm);
+  overflow: hidden; border: 1px solid var(--col-border);
+  background: #0d1c2e;
+}
+.send-embed-wrap iframe { width: 100%; height: 100%; border: none; }
+
+/* ── POI MAP FILTERS ─────────────────────────────────────── */
+.poi-filter-bar {
+  display: flex; gap: 8px;
+  flex-wrap: wrap; margin-bottom: 12px; align-items: center;
+}
+.poi-filter-pill {
+  border: 1px solid var(--col-border);
+  background: transparent; color: var(--col-green-mid);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 0.8rem; cursor: pointer;
+  font-family: 'Segoe UI', sans-serif; transition: all 0.2s;
+}
+.poi-filter-pill:hover { border-color: var(--col-green-mid); color: var(--col-green-pale); }
+.poi-filter-pill.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green); }
+.poi-filter-clear {
+  border-color: rgba(239,68,68,0.35); color: #f87171;
+  margin-left: auto;
+}
+.poi-filter-clear:hover { background: rgba(239,68,68,0.15); border-color: #f87171; color: #fff; }
 
 /* ── LIGHT MODE ──────────────────────────────────────────── */
 body.light .itin-day-nav { background: #f0f4f0; border-color: #6aab7a; }
