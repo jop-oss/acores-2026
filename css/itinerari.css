@@ -1,0 +1,938 @@
+/* ============================================================
+   ITINERARI.CSS  ·  Açores 2026
+   ============================================================ */
+
+/* ── VARIABLES ───────────────────────────────────────────── */
+:root {
+  --col-sm: #6abf70;
+  --col-sm-dim: rgba(106,191,112,0.15);
+  --col-green: #2d5a3d;
+  --col-green-mid: #6aab7a;
+  --col-green-pale: #a8d8b0;
+  --col-bg: #0a1628;
+  --col-card: #0f2318;
+  --col-card2: #0d1c2e;
+  --col-border: #2d5a3d;
+  --col-text: #e8f4f8;
+  --col-text-dim: #7a9e8a;
+  --col-warn-bg: rgba(245,158,11,0.10);
+  --col-warn-border: #f59e0b;
+  --col-danger-bg: rgba(220,38,38,0.12);
+  --col-danger-border: #dc2626;
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+/* ── DAY SELECTOR NAV ────────────────────────────────────── */
+.itin-day-nav {
+  position: sticky;
+  top: 52px;
+  z-index: 900;
+  background: #0a1628;
+  border-bottom: 1px solid var(--col-border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  height: 48px;
+}
+
+.itin-progress-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--col-sm);
+  background: var(--col-sm-dim);
+  border: 1px solid rgba(106,191,112,0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.itin-day-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+.itin-day-pills::-webkit-scrollbar { display: none; }
+
+.itin-day-pill {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--col-text-dim);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  padding: 4px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.itin-day-pill:hover { color: var(--col-green-pale); border-color: var(--col-border); }
+.itin-day-pill.active {
+  background: var(--col-green);
+  color: var(--col-green-pale);
+  border-color: var(--col-green);
+  font-weight: 600;
+}
+.itin-day-pill:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.itin-day-pill .pill-num {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--col-sm);
+  line-height: 1;
+}
+
+/* ── SECTION / DAY ───────────────────────────────────────── */
+.itin-dia { display: none; }
+.itin-dia.active { display: block; }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.itin-hero {
+  position: relative;
+  height: 340px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #0a1628;
+}
+.itin-hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  opacity: 0.55;
+}
+.itin-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, #0a1628 0%, rgba(10,22,40,0.6) 60%, transparent 100%);
+}
+.itin-hero-content {
+  position: relative;
+  padding: 32px 40px;
+  width: 100%;
+}
+.itin-hero-eyebrow {
+  font-family: 'Lora', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--col-sm);
+  margin-bottom: 8px;
+}
+.itin-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--col-green-pale);
+  margin: 0 0 6px;
+  line-height: 1.1;
+}
+.itin-hero-sub {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--col-green-mid);
+}
+.itin-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+.itin-hero-chip {
+  font-size: 0.78rem;
+  color: var(--col-green-pale);
+  background: rgba(45,90,61,0.5);
+  border: 1px solid var(--col-border);
+  border-radius: 20px;
+  padding: 3px 12px;
+}
+/* Hero gradient only (no image, for Dia 1) */
+.itin-hero-gradient {
+  background: linear-gradient(135deg, #0a1628 0%, #0f2a1c 60%, #0a1628 100%);
+}
+
+/* ── CONTENT WRAPPER ─────────────────────────────────────── */
+.itin-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* ── SECTION TITLES ──────────────────────────────────────── */
+.itin-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.itin-section-title .emoji {
+  font-size: 1.5rem;
+}
+.itin-section-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--col-green-pale);
+  font-weight: 700;
+}
+.itin-section-title .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--col-border), transparent);
+}
+
+/* ── VOL CARDS (BOARDING PASS) ───────────────────────────── */
+.itin-vols-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itin-connector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  color: var(--col-text-dim);
+  font-size: 0.82rem;
+  font-style: italic;
+}
+.itin-connector::before,
+.itin-connector::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  border-top: 1px dashed var(--col-border);
+}
+
+.vol-card {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+.vol-card-header {
+  background: rgba(45,90,61,0.25);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--col-border);
+}
+.vol-airline {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  color: var(--col-green-pale);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vol-num {
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--col-sm);
+  background: var(--col-sm-dim);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.vol-reserva {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--col-text-dim);
+}
+.vol-card-body {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.vol-airport {
+  flex: 1;
+}
+.vol-airport-code {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--col-green-pale);
+  line-height: 1;
+}
+.vol-airport-name {
+  font-size: 0.75rem;
+  color: var(--col-text-dim);
+  margin-top: 2px;
+}
+.vol-airport-time {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--col-green-mid);
+  margin-top: 4px;
+}
+.vol-middle {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 0 24px;
+}
+.vol-arrow-line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--col-text-dim);
+}
+.vol-arrow-bar {
+  flex: 1;
+  height: 1px;
+  background: var(--col-border);
+  min-width: 60px;
+}
+.vol-duration {
+  font-size: 0.75rem;
+  color: var(--col-text-dim);
+  margin-top: 4px;
+}
+.vol-escala-badge {
+  font-size: 0.7rem;
+  background: rgba(245,158,11,0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-top: 6px;
+  display: inline-block;
+}
+.vol-airport-right { text-align: right; }
+.vol-tz-note {
+  font-size: 0.7rem;
+  color: #a0aec0;
+  font-style: italic;
+  margin-top: 2px;
+}
+.vol-card-footer {
+  padding: 8px 24px 14px;
+  font-size: 0.75rem;
+  color: var(--col-text-dim);
+  border-top: 1px dashed rgba(45,90,61,0.4);
+  display: flex;
+  gap: 16px;
+}
+
+/* ── INFO TABLE (COTXES / ALLOTJAMENT) ───────────────────── */
+.itin-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .itin-info-grid { grid-template-columns: 1fr; }
+}
+
+.itin-info-table {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.itin-info-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  border-bottom: 1px solid rgba(45,90,61,0.35);
+}
+.itin-info-row:last-child { border-bottom: none; }
+.itin-info-label {
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  color: var(--col-text-dim);
+  background: rgba(0,0,0,0.2);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.itin-info-val {
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  color: var(--col-text);
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+.itin-info-val a { color: var(--col-sm); text-decoration: none; }
+.itin-info-val a:hover { text-decoration: underline; }
+
+.itin-mini-map {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--col-border);
+  height: 260px;
+  background: #0d1c2e;
+}
+
+/* ── NOTA / CURIOSITAT ───────────────────────────────────── */
+.itin-nota {
+  background: rgba(106,191,112,0.07);
+  border: 1px solid rgba(106,191,112,0.2);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: var(--col-green-pale);
+  line-height: 1.7;
+  margin-top: 16px;
+}
+.itin-nota strong { color: var(--col-sm); }
+
+/* ── AVÍS / WARNING ──────────────────────────────────────── */
+.itin-avis {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.itin-avis-warn {
+  background: var(--col-warn-bg);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-left: 4px solid var(--col-warn-border);
+  color: #fde68a;
+}
+.itin-avis-danger {
+  background: var(--col-danger-bg);
+  border: 1px solid rgba(220,38,38,0.3);
+  border-left: 4px solid var(--col-danger-border);
+  color: #fca5a5;
+}
+.itin-avis-icon { font-size: 1.5rem; flex-shrink: 0; padding-top: 2px; }
+.itin-avis-text { flex: 1; }
+.itin-avis-text strong { color: #fff; display: block; margin-bottom: 4px; }
+
+/* ── NARRATIVE TEXT ──────────────────────────────────────── */
+.itin-narrativa {
+  font-family: 'Lora', serif;
+  font-size: 1.0rem;
+  line-height: 1.85;
+  color: #c8dcd4;
+  max-width: 780px;
+}
+.itin-narrativa p { margin-bottom: 1.1em; }
+.itin-narrativa p:last-child { margin-bottom: 0; }
+
+/* POI link (hover tooltip) */
+.poi-link {
+  color: var(--col-green-mid);
+  border-bottom: 1px dashed var(--col-green-mid);
+  cursor: default;
+  font-style: normal;
+  transition: color 0.15s, border-color 0.15s;
+}
+.poi-link:hover { color: var(--col-sm); border-color: var(--col-sm); }
+
+/* Global tooltip */
+#poi-tooltip {
+  position: fixed;
+  z-index: 2000;
+  pointer-events: none;
+  background: #0f2318;
+  border: 1px solid var(--col-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 190px;
+  max-width: 260px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+  opacity: 0;
+  transition: opacity 0.12s;
+  display: none;
+}
+#poi-tooltip.visible { opacity: 1; display: block; }
+#poi-tooltip .tt-nom {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--col-green-pale);
+  margin-bottom: 4px;
+}
+#poi-tooltip .tt-desc {
+  font-size: 0.78rem;
+  color: var(--col-text-dim);
+  line-height: 1.5;
+}
+
+/* ── MAIN GRID (TIMELINE + MAP) ──────────────────────────── */
+.itin-ruta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .itin-ruta-grid { grid-template-columns: 1fr; }
+}
+
+/* ── TIMELINE ────────────────────────────────────────────── */
+.itin-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.itin-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--col-sm) 0%, var(--col-border) 100%);
+}
+
+.tl-stop {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 24px;
+}
+.tl-stop:last-child { padding-bottom: 0; }
+
+.tl-circle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--col-card);
+  border: 2px solid var(--col-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--col-text-dim);
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s;
+}
+.tl-stop.highlight .tl-circle {
+  border-color: var(--col-sm);
+  background: var(--col-sm-dim);
+  color: var(--col-sm);
+}
+.tl-stop.meal .tl-circle {
+  border-color: rgba(251,191,36,0.5);
+  color: #fbbf24;
+}
+.tl-stop.transport .tl-circle {
+  border-color: rgba(96,165,250,0.4);
+  color: #60a5fa;
+}
+
+.tl-body {
+  flex: 1;
+  padding-top: 6px;
+  min-width: 0;
+}
+.tl-time {
+  font-size: 0.73rem;
+  color: var(--col-text-dim);
+  margin-bottom: 3px;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+.tl-nom {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--col-green-pale);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tl-nom .star { color: var(--col-sm); font-size: 0.8rem; }
+.tl-icon { font-size: 1rem; }
+.tl-note {
+  font-size: 0.82rem;
+  color: var(--col-text-dim);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.tl-dist {
+  font-size: 0.72rem;
+  color: rgba(96,165,250,0.7);
+  margin-top: 6px;
+  font-style: italic;
+}
+.tl-optional {
+  font-size: 0.7rem;
+  color: rgba(251,191,36,0.7);
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+/* ── ROUTE MAP ───────────────────────────────────────────── */
+.itin-ruta-map-wrap {
+  position: sticky;
+  top: 108px;
+}
+.itin-ruta-map {
+  height: 460px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+.itin-map-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.itin-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--col-border);
+  background: var(--col-card);
+  color: var(--col-green-mid);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Segoe UI', sans-serif;
+}
+.itin-map-btn:hover {
+  background: var(--col-green);
+  color: var(--col-green-pale);
+  border-color: var(--col-green);
+}
+.itin-map-btn.primary {
+  background: var(--col-sm-dim);
+  border-color: rgba(106,191,112,0.4);
+  color: var(--col-sm);
+}
+.itin-map-loading {
+  font-size: 0.78rem;
+  color: var(--col-text-dim);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PHOTO GRID ──────────────────────────────────────────── */
+.itin-fotos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.itin-foto-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+}
+.itin-foto-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.itin-foto-item:hover img { transform: scale(1.04); }
+.itin-foto-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(10,22,40,0.9) 0%, transparent 100%);
+  padding: 20px 12px 10px;
+  font-size: 0.78rem;
+  color: var(--col-green-pale);
+  font-family: 'Lora', serif;
+  font-style: italic;
+}
+/* Placeholder quan no hi ha foto */
+.itin-foto-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--col-text-dim);
+  background: linear-gradient(135deg, #0f2318 0%, #0a1628 100%);
+}
+.itin-foto-placeholder .ph-icon { font-size: 2rem; opacity: 0.4; }
+.itin-foto-placeholder .ph-text { font-size: 0.75rem; text-align: center; padding: 0 12px; opacity: 0.5; }
+
+/* ── SENDERISME ACCORDION ────────────────────────────────── */
+.itin-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.itin-acc-item {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.itin-acc-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+  list-style: none;
+}
+.itin-acc-header:hover { background: rgba(45,90,61,0.2); }
+.itin-acc-color {
+  width: 5px;
+  height: 44px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.itin-acc-header-info { flex: 1; min-width: 0; }
+.itin-acc-codi {
+  font-size: 0.7rem;
+  font-family: monospace;
+  color: var(--col-text-dim);
+  margin-bottom: 2px;
+  letter-spacing: 0.08em;
+}
+.itin-acc-nom {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--col-green-pale);
+}
+.itin-acc-stats {
+  display: flex;
+  gap: 14px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+.itin-acc-stat {
+  font-size: 0.78rem;
+  color: var(--col-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.itin-acc-dif {
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+.dif-facil   { background: rgba(34,197,94,0.15); color: #4ade80; }
+.dif-moderada { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.dif-difícil { background: rgba(239,68,68,0.15); color: #f87171; }
+
+.itin-acc-chevron {
+  font-size: 1.1rem;
+  color: var(--col-text-dim);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.itin-acc-item.open .itin-acc-chevron { transform: rotate(180deg); }
+
+.itin-acc-body {
+  display: none;
+  padding: 0 20px 20px 39px;
+  border-top: 1px solid rgba(45,90,61,0.35);
+}
+.itin-acc-item.open .itin-acc-body { display: block; }
+
+.itin-acc-desc {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: #c8dcd4;
+  line-height: 1.75;
+  padding-top: 16px;
+  margin-bottom: 16px;
+}
+.itin-acc-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.itin-acc-link {
+  font-size: 0.8rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--col-border);
+  color: var(--col-green-mid);
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.itin-acc-link:hover {
+  background: var(--col-green);
+  color: var(--col-green-pale);
+  border-color: var(--col-green);
+}
+.itin-acc-logistica {
+  font-size: 0.8rem;
+  color: rgba(251,191,36,0.8);
+  background: rgba(251,191,36,0.07);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+/* ── RESTAURANT CARDS ────────────────────────────────────── */
+.itin-rest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.itin-rest-card {
+  background: var(--col-card);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.itin-rest-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--col-green-mid);
+}
+.itin-rest-foto {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+.itin-rest-foto-placeholder {
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(135deg, #0f2318, #0a1628);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: rgba(106,171,122,0.3);
+}
+.itin-rest-info {
+  padding: 14px 16px;
+}
+.itin-rest-nom {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--col-green-pale);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.itin-rest-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.itin-rest-stars {
+  color: #f59e0b;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+.itin-rest-punt {
+  font-size: 0.8rem;
+  color: var(--col-text-dim);
+}
+.itin-rest-preu {
+  font-size: 0.75rem;
+  color: var(--col-sm);
+  background: var(--col-sm-dim);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: auto;
+}
+.itin-rest-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.itin-rest-link {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--col-border);
+  color: var(--col-green-mid);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.itin-rest-link:hover { background: var(--col-green); color: var(--col-green-pale); }
+.itin-rest-top10 {
+  width: 20px; height: 20px;
+  background: var(--col-sm-dim);
+  border: 1px solid rgba(106,191,112,0.3);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: var(--col-sm);
+  font-weight: 700;
+  margin-left: 6px;
+  title: 'Top 10 SM';
+}
+.itin-rest-nodatabase {
+  font-size: 0.72rem;
+  color: var(--col-text-dim);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── LIGHT MODE ──────────────────────────────────────────── */
+body.light .itin-day-nav { background: #f0f4f0; border-color: #6aab7a; }
+body.light .itin-progress-badge { background: rgba(45,90,61,0.1); }
+body.light .itin-hero-title { color: #1a3a2a; }
+body.light .itin-hero-sub { color: #2d5a3d; }
+body.light .vol-card,
+body.light .itin-info-table,
+body.light .itin-rest-card,
+body.light .itin-acc-item { background: #fff; border-color: #6aab7a; }
+body.light .vol-airport-code,
+body.light .itin-acc-nom,
+body.light .itin-rest-nom,
+body.light .tl-nom { color: #1a3a2a; }
+body.light .itin-narrativa { color: #2d4a3e; }
+body.light .itin-section-title h2 { color: #1a3a2a; }
+body.light #poi-tooltip { background: #fff; border-color: #6aab7a; }
+body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .itin-content { padding: 24px 16px 60px; gap: 40px; }
+  .itin-hero { height: 260px; }
+  .itin-hero-content { padding: 24px 20px; }
+  .itin-hero-title { font-size: 1.7rem; }
+  .itin-fotos-grid { gap: 8px; }
+  .vol-airport-code { font-size: 1.8rem; }
+  .vol-card-body { flex-direction: column; gap: 12px; text-align: center; }
+  .vol-airport-right { text-align: center; }
+  .itin-info-row { grid-template-columns: 120px 1fr; }
+}
