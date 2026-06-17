@@ -432,20 +432,46 @@ function initMapSenderisme() {
   map.fitBounds(L.latLngBounds(allCoords), { padding: [20, 20] });
 }
 
-/* ── POI MAP DIA 2 (amb filtres per categoria) ───────────── */
+/* ── POI MAP — CATEGORIES ────────────────────────────────── */
 const POI_CATS = [
-  { id: 'miradors',  label: '🔭 Miradors' },
-  { id: 'naturalesa',label: '🌿 Naturalesa' },
-  { id: 'piscines',  label: '🏊 Piscines' },
-  { id: 'platges',   label: '🏖️ Platges' },
-  { id: 'termals',   label: '♨️ Termals' },
-  { id: 'pobles',    label: '🏘️ Pobles' },
-  { id: 'altres',    label: '📌 Altres' },
+  { id: 'imprescindibles', label: '⭐ Imprescindibles' },
+  { id: 'restaurants',     label: '🍽️ Restaurants' },
+  { id: 'allotjaments',    label: '🏠 Allotjaments' },
+  { id: 'miradors',        label: '🔭 Miradors' },
+  { id: 'piscines',        label: '🏊 Piscines naturals' },
+  { id: 'platges',         label: '🏖️ Platges' },
+  { id: 'naturalesa',      label: '🌿 Naturalesa' },
+  { id: 'termals',         label: '♨️ Aigues Termals' },
+  { id: 'coves',           label: '🕳️ Coves' },
+  { id: 'fars',            label: '🔦 Fars' },
+  { id: 'jardins',         label: '🌺 Jardins Botànics' },
+  { id: 'pobles',          label: '🏘️ Pobles' },
+  { id: 'altres',          label: '📌 Altres' },
+  { id: 'senderisme',      label: '🥾 Senderisme' },
 ];
 const POI_CAT_COLORS = {
-  miradors: '#a78bfa', naturalesa: '#34d399', piscines: '#38bdf8',
-  platges: '#fbbf24', termals: '#f87171', pobles: '#6abf70', altres: '#94a3b8'
+  imprescindibles: '#fbbf24', restaurants: '#f97316', allotjaments: '#8b5cf6',
+  miradors: '#a78bfa', piscines: '#38bdf8', platges: '#fbbf24',
+  naturalesa: '#34d399', termals: '#f87171', coves: '#92400e',
+  fars: '#e2e8f0', jardins: '#ec4899', pobles: '#6abf70',
+  altres: '#94a3b8', senderisme: '#d97706',
 };
+const POI_CAT_EMOJIS = {
+  imprescindibles: '⭐', restaurants: '🍽️', allotjaments: '🏠',
+  miradors: '🔭', piscines: '🏊', platges: '🏖️',
+  naturalesa: '🌿', termals: '♨️', coves: '🕳️',
+  fars: '🔦', jardins: '🌺', pobles: '🏘️',
+  altres: '📌', senderisme: '🥾',
+};
+
+function meCategoria(cat) {
+  const m = {
+    'Miradors': 'miradors', 'Piscines': 'piscines', 'Platges': 'platges',
+    'Naturalesa': 'naturalesa', 'Aigues Termals': 'termals', 'Coves': 'coves',
+    'Fars': 'fars', 'Jardins Botànics': 'jardins', 'Pobles': 'pobles',
+  };
+  return m[cat] || 'altres';
+}
 
 let _poiMap = null, _poiMarkers = {};
 
@@ -456,33 +482,101 @@ function initMapPOID2() {
   _poiMap = L.map(el, { zoomControl: false, scrollWheelZoom: true });
   L.control.zoom({ position: 'topright' }).addTo(_poiMap);
   leafletTiles(_poiMap);
-
-  const allCoords = [];
   _poiMarkers = {};
 
-  Object.entries(POI).forEach(([key, p]) => {
-    const col = POI_CAT_COLORS[p.cat] || '#94a3b8';
-    const marker = L.marker(p.coords, {
+  // Helpers
+  function parseCoords(s) {
+    if (!s) return null;
+    const p = String(s).split(',').map(x => parseFloat(x.trim()));
+    return (p.length >= 2 && !isNaN(p[0]) && !isNaN(p[1])) ? [p[0], p[1]] : null;
+  }
+  function isWestSM(lat, lng) {
+    return lat > 37.70 && lat < 37.97 && lng < -25.58 && lng > -26.1;
+  }
+  function isSM(illa) {
+    return illa === 'São Miguel' || illa === 'Sao Miguel' || illa === 'sm';
+  }
+  function addMarker(cat, coords, nom, desc, mapsUrl) {
+    const col = POI_CAT_COLORS[cat] || '#94a3b8';
+    const emoji = POI_CAT_EMOJIS[cat] || '📌';
+    const popup = `<b style="color:${col}">${nom}</b>` +
+      (desc ? `<br><small style="color:#6aab7a">${String(desc).slice(0, 90)}…</small>` : '') +
+      (mapsUrl ? `<br><a href="${mapsUrl}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Maps</a>` : '');
+    const m = L.marker(coords, {
       icon: L.divIcon({
-        html: `<div style="font-size:1.2rem;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6))">${p.emoji}</div>`,
-        iconSize: [26, 26], iconAnchor: [13, 13], className: ''
+        html: `<span style="font-size:1.1rem;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))">${emoji}</span>`,
+        iconSize: [22, 22], iconAnchor: [11, 11], className: ''
       })
-    }).bindPopup(`<b style="color:${col}">${p.nom}</b><br><small style="color:#6aab7a">${p.desc.slice(0, 90)}…</small><br><a href="${p.maps}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Obrir a Maps</a>`);
-    marker.addTo(_poiMap);
-    if (!_poiMarkers[p.cat]) _poiMarkers[p.cat] = [];
-    _poiMarkers[p.cat].push(marker);
-    allCoords.push(p.coords);
-  });
+    }).bindPopup(popup);
+    m.addTo(_poiMap);
+    if (!_poiMarkers[cat]) _poiMarkers[cat] = [];
+    _poiMarkers[cat].push(m);
+  }
 
-  _poiMap.fitBounds(L.latLngBounds(allCoords), { padding: [30, 30] });
+  // 1. ME_LLOCS (305 llocs)
+  if (typeof ME_LLOCS !== 'undefined') {
+    ME_LLOCS.forEach(l => {
+      if (!isSM(l.illa)) return;
+      const c = parseCoords(l.coords);
+      if (!c || !isWestSM(c[0], c[1])) return;
+      addMarker(meCategoria(l.categoria), c, l.nom, l.desc,
+        `https://maps.google.com/?q=${c[0]},${c[1]}`);
+    });
+  }
 
-  // Render filter pills
+  // 2. IMPRESCINDIBLES (24 llocs, 4 illes)
+  if (typeof IMPRESCINDIBLES !== 'undefined') {
+    IMPRESCINDIBLES.filter(l => isSM(l.illa)).forEach(l => {
+      const c = l.coords || (l.lat ? [l.lat, l.lng || l.lon] : null);
+      if (!c || !isWestSM(c[0], c[1])) return;
+      addMarker('imprescindibles', c, l.nom, l.desc, l.maps || `https://maps.google.com/?q=${c[0]},${c[1]}`);
+    });
+  }
+
+  // 3. RESTAURANTS (SM, zona oest)
+  if (typeof RESTAURANTS !== 'undefined') {
+    RESTAURANTS.filter(r => isSM(r.illa) && r.lat && r.lon && isWestSM(r.lat, r.lon)).forEach(r => {
+      addMarker('restaurants', [r.lat, r.lon], r.nom,
+        r.localitat, r.googlemaps || `https://maps.google.com/?q=${r.lat},${r.lon}`);
+    });
+  }
+
+  // 4. Allotjament (dia 2)
+  addMarker('allotjaments', [37.74239, -25.67375], 'Santo Cristo House',
+    'Allotjament dies 1–3', 'https://maps.google.com/?q=37.74239,-25.67375');
+
+  // 5. ME_RUTES_SENDERISME (inici de rutes, SM zona oest)
+  if (typeof ME_RUTES_SENDERISME !== 'undefined') {
+    ME_RUTES_SENDERISME.filter(r => isSM(r.illa)).forEach(r => {
+      const c = r.coords_inici || r.start;
+      if (!c || !isWestSM(c[0], c[1])) return;
+      addMarker('senderisme', c, `${r.codi} · ${r.nom}`,
+        `${r.km} km · ${r.dificultat}`, `https://maps.google.com/?q=${c[0]},${c[1]}`);
+    });
+  }
+
+  // Fit bounds
+  const allM = Object.values(_poiMarkers).flat();
+  if (allM.length) {
+    _poiMap.fitBounds(L.featureGroup(allM).getBounds(), { padding: [30, 30] });
+  }
+
+  // Render filter pills (only show categories that have markers)
+  _renderPOIBar();
+}
+
+function _renderPOIBar() {
   const bar = document.getElementById('poi-filter-bar');
   if (!bar) return;
-  bar.innerHTML = POI_CATS.map(c =>
-    `<button class="poi-filter-pill active" data-cat="${c.id}" onclick="filterPOI('${c.id}',this)">${c.label}</button>`
-  ).join('') +
-  `<button class="poi-filter-pill poi-filter-clear" onclick="clearPOIFilters()">✕ Netejar filtres</button>`;
+  const pills = POI_CATS
+    .filter(c => (_poiMarkers[c.id] || []).length > 0)
+    .map(c => {
+      const n = (_poiMarkers[c.id] || []).length;
+      return `<button class="poi-filter-pill active" data-cat="${c.id}" onclick="filterPOI('${c.id}',this)">${c.label} <span style="opacity:0.55;font-size:0.68em">(${n})</span></button>`;
+    }).join('');
+  bar.innerHTML = pills +
+    `<button class="poi-filter-pill poi-filter-all" onclick="showAllPOIFilters()" style="margin-left:6px;border-color:rgba(106,171,122,0.5);color:#6aab7a">☑ Tot</button>` +
+    `<button class="poi-filter-pill poi-filter-clear" onclick="clearPOIFilters()">✕ Netejar</button>`;
 }
 
 function filterPOI(cat, btn) {
@@ -491,8 +585,17 @@ function filterPOI(cat, btn) {
   (_poiMarkers[cat] || []).forEach(m => show ? m.addTo(_poiMap) : m.remove());
 }
 
+function showAllPOIFilters() {
+  document.querySelectorAll('#poi-filter-bar .poi-filter-pill[data-cat]').forEach(b => {
+    if (!b.classList.contains('active')) {
+      b.classList.add('active');
+      (_poiMarkers[b.dataset.cat] || []).forEach(m => m.addTo(_poiMap));
+    }
+  });
+}
+
 function clearPOIFilters() {
-  document.querySelectorAll('.poi-filter-pill:not(.poi-filter-clear)').forEach(b => {
+  document.querySelectorAll('#poi-filter-bar .poi-filter-pill[data-cat]').forEach(b => {
     b.classList.remove('active');
   });
   Object.values(_poiMarkers).flat().forEach(m => m.remove());
