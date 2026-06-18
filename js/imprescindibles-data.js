@@ -1,418 +1,324 @@
-/* ============================================================
-   IMPRESCINDIBLES-DATA.JS  ·  Açores 2026
-   24 llocs imprescindibles de les 4 illes
-   Fotos: img/imprescindibles/PREFIX-01.webp ... PREFIX-NN.webp
-   ============================================================ */
+// Generat automàticament | Data: 2026-06-18
 
-const IMPRESCINDIBLES = [
-
-  /* ══════════════════════════════════════════════════════
-     SÃO MIGUEL  (12 llocs)
-  ══════════════════════════════════════════════════════ */
-  {
-    illa: 'São Miguel', id: 'sete-cidades',
-    nom: 'Lagoa das Sete Cidades', emoji: '🌊',
-    desc: 'El símbol de São Miguel: dos llacs volcànics units per un pont, un de verd i un de blau. El mirador Vista do Rei ofereix la postal més icònica dels Açores. La llegenda diu que els llacs van néixer de les llàgrimes d\'un pastor i una princesa.',
-    coords: [37.85574, -25.78630],
-    maps: 'https://maps.google.com/?q=37.85574,-25.78630',
-    prefix: 'sete-cidades',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/lagoa-das-sete-cidades-la-laguna-encantada-e-inspiradora/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/lagoa-siete-ciudades/' },
-      { text: 'Azores Getaways', url: 'https://azoresgetaways.com/es-es/destination/azores/islands/sao-miguel/sete-cidades' },
-      { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/sete-cidades-lagos-miradores-en-sao-miguel' },
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/sete-cidades-y-alrededores' },
-    ],
+const IMPRESCINDIBLES = {
+  "imp-smi-01": {
+    "illa": "Sao Miguel",
+    "lloc": "Lagoa das Sete Cidades",
+    "zona": "Sete Cidades",
+    "fotos": "sete-cidades-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/lagoa-das-sete-cidades-la-laguna-encantada-e-inspiradora/",
+      "https://byacores.com/es/lagoa-siete-ciudades/",
+      "https://azoresgetaways.com/es-es/destination/azores/islands/sao-miguel/sete-cidades",
+      "https://lagavetavoladora.com/sete-cidades-lagos-miradores-en-sao-miguel",
+      "https://www.saomiguelguide.com/sete-cidades-y-alrededores"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'furnas',
-    nom: 'Caldeira das Furnas', emoji: '♨️',
-    desc: 'La vall geotèrmica més espectacular dels Açores. Fumaroles, llot bullent i la famosa cozido das Furnas: un guisat cuit durant hores enterrat al terra volcànic. Un paisatge que sembla d\'un altre planeta, envoltat de jardins exuberants.',
-    coords: [37.77286, -25.30392],
-    maps: 'https://maps.google.com/?q=37.77286,-25.30392',
-    prefix: 'caldeira-das-furnas',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/caldeiras-das-furnas-que-son-y-que-visitar/' },
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/fumarolas-caldeiras' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-furnas/' },
-      { text: 'Travel Guide', url: 'https://travelguide.fun-activities.net/es/local.php?localid=26&tip=1' },
-      { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/que-ver-en-furnas-sao-miguel' },
-    ],
+  "imp-smi-02": {
+    "illa": "Sao Miguel",
+    "lloc": "Caldeira das Furnas",
+    "zona": "Furnas",
+    "fotos": "caldeira-das-furnas-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/caldeiras-das-furnas-que-son-y-que-visitar/",
+      "https://www.saomiguelguide.com/fumarolas-caldeiras",
+      "https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-furnas/",
+      "https://travelguide.fun-activities.net/es/local.php?localid=26&tip=1",
+      "https://lagavetavoladora.com/que-ver-en-furnas-sao-miguel"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'lagoa-fogo',
-    nom: 'Lagoa do Fogo', emoji: '🔥',
-    desc: 'El llac més salvatge i pur de São Miguel, encaixat al cràter del volcà Água de Pau. Sense infraestructura turística, amb platges de sorra volcànica i aigües cristal·lines. Quan no hi ha boira, la vista des del mirador és absolutament esplèndida.',
-    coords: [37.76255, -25.47430],
-    maps: 'https://maps.google.com/?q=37.76255,-25.47430',
-    prefix: 'lagoa-do-fogo',
-    fotos: 3,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/lagoa-do-fogo' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/lagoa-do-fogo-uno-de-los-lagos-mas-pintorescos-de-las-azores/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/lagoa-do-fogo-sao-miguel/' },
-      { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/lagoa-do-fogo-miradores-sao-miguel-azores' },
-      { text: 'Viajamos Juntos', url: 'https://www.viajamosjuntos.net/2021/12/23/lagoa-do-fogo-el-segundo-lago-mas-grande-de-sao-miguel-azores/' },
-    ],
+  "imp-smi-03": {
+    "illa": "Sao Miguel",
+    "lloc": "Lagoa do Fogo",
+    "zona": "Lagoa do Fogo",
+    "fotos": "lagoa-do-fogo-0x",
+    "nfotos": 3,
+    "links": [
+      "https://www.saomiguelguide.com/lagoa-do-fogo",
+      "https://www.futurismo.pt/es/blog/lagoa-do-fogo-uno-de-los-lagos-mas-pintorescos-de-las-azores/",
+      "https://www.turismoazores.es/isla-de-sao-miguel/lagoa-do-fogo-sao-miguel/",
+      "https://lagavetavoladora.com/lagoa-do-fogo-miradores-sao-miguel-azores",
+      "https://www.viajamosjuntos.net/2021/12/23/lagoa-do-fogo-el-segundo-lago-mas-grande-de-sao-miguel-azores/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'madrugada',
-    nom: 'Ponta da Madrugada', emoji: '🌅',
-    desc: 'L\'extrem est de São Miguel, famós per ser un dels primers llocs d\'Europa on surt el sol. Penya-segats imponents sobre l\'oceà, vegetació exuberant i una solitud absoluta. Ideal per veure l\'alba amb vistes a l\'Atlàntic obert.',
-    coords: [37.78978, -25.14542],
-    maps: 'https://maps.google.com/?q=37.78978,-25.14542',
-    prefix: 'ponta-da-madrugada',
-    fotos: 4,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-da-madrugada/' },
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/miradouro-ponta-do-sossego' },
-      { text: 'Wircky', url: 'https://wircky.com/mirador-ponta-da-madrugada-en-islas-azores/' },
-    ],
+  "imp-smi-04": {
+    "illa": "Sao Miguel",
+    "lloc": "Ponta da Madrugada",
+    "zona": "Água Retorta",
+    "fotos": "ponta-da-madrugada-0x",
+    "nfotos": 4,
+    "links": [
+      "https://www.futurismo.pt/es/blog/ponta-da-madrugada/",
+      "https://www.saomiguelguide.com/miradouro-ponta-do-sossego",
+      "https://wircky.com/mirador-ponta-da-madrugada-en-islas-azores/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'terra-nostra',
-    nom: 'Terra Nostra Garden', emoji: '🌿',
-    desc: 'Un dels jardins botànics més antics i bonics de l\'hemisferi nord, fundat al segle XVIII a Furnas. La seva atracció principal és la piscina termal natural de color ferruginós daurat, envoltada de sequoies centenàries, helechos tropicals i camèlies.',
-    coords: [37.77258, -25.31562],
-    maps: 'https://maps.google.com/?q=37.77258,-25.31562',
-    prefix: 'terra-nostra',
-    fotos: 5,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/parque-terra-nostra' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/terra-nostra-uno-de-los-jardines-mas-bellos-del-mundo/' },
-      { text: 'Web oficial', url: 'https://www.parqueterranostra.com/en/' },
-      { text: 'Salta conmigo', url: 'https://saltaconmigo.com/blog/2012/05/el-parque-terra-nostra/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/jardin-botanico-terra-nostra-garden/' },
-    ],
+  "imp-smi-05": {
+    "illa": "Sao Miguel",
+    "lloc": "Terra Nostra Garden",
+    "zona": "Furnas",
+    "fotos": "terra-nostra-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.saomiguelguide.com/parque-terra-nostra",
+      "https://www.futurismo.pt/es/blog/terra-nostra-uno-de-los-jardines-mas-bellos-del-mundo/",
+      "https://www.parqueterranostra.com/en/",
+      "https://saltaconmigo.com/blog/2012/05/el-parque-terra-nostra/",
+      "https://www.turismoazores.es/isla-de-sao-miguel/jardin-botanico-terra-nostra-garden/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'caldeira-velha',
-    nom: 'Caldeira Velha', emoji: '💧',
-    desc: 'Un racó màgic al cor del bosc laurisilva: cascades que cauen sobre piscines naturals termals d\'aigües verdoses. La temperatura de l\'aigua ronda els 38°C tot l\'any. Un bany aquí, envoltat de falgueres gegants i llum filtrada pels arbres, és una experiència inoblidable.',
-    coords: [37.78452, -25.50104],
-    maps: 'https://maps.google.com/?q=37.78452,-25.50104',
-    prefix: 'caldeira-velha',
-    fotos: 5,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/caldeira-velha' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/caldeira-velha-el-monumento-natural-que-hay-que-visitar-en-las-azores/' },
-      { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/que-ver-en-caldeira-velha-aguas-termales-sao-miguel' },
-      { text: 'By Açores', url: 'https://byacores.com/es/caldeira-velha/' },
-      { text: 'La Gran Escapada', url: 'https://lagranescapada.com/caldeira-velha-sao-miguel-azores/' },
-    ],
+  "imp-smi-06": {
+    "illa": "Sao Miguel",
+    "lloc": "Caldeira Velha",
+    "zona": "Lagoa do Fogo",
+    "fotos": "caldeira-velha-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.saomiguelguide.com/caldeira-velha",
+      "https://www.futurismo.pt/es/blog/caldeira-velha-el-monumento-natural-que-hay-que-visitar-en-las-azores/",
+      "https://lagavetavoladora.com/que-ver-en-caldeira-velha-aguas-termales-sao-miguel",
+      "https://byacores.com/es/caldeira-velha/",
+      "https://lagranescapada.com/caldeira-velha-sao-miguel-azores/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'ponta-delgada',
-    nom: 'Ponta Delgada', emoji: '🏛️',
-    desc: 'La capital dels Açores és una ciutat barroca encantadora. Les Portes da Cidade, símbol de l\'arxipèlag, la imponent església de Sant Sebastià, el mercat de la Graça ple de productes locals i el port on arriben transatlàntics. Una tarda passejar-hi és imprescindible.',
-    coords: [37.74221, -25.66859],
-    maps: 'https://maps.google.com/?q=37.74221,-25.66859',
-    prefix: 'ponta-delgada',
-    fotos: 5,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/post/ponta-delgada-sao-miguel-azores' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-delgada/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-ponta-delgada/' },
-      { text: 'Vive Portugal', url: 'https://viveportugalweb.com/que-ver-y-hacer-en-ponta-delgada-guia-viaje/' },
-    ],
+  "imp-smi-07": {
+    "illa": "Sao Miguel",
+    "lloc": "Ponta Delgada",
+    "zona": "Ponta Delgada",
+    "fotos": "ponta-delgada-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.saomiguelguide.com/post/ponta-delgada-sao-miguel-azores",
+      "https://www.futurismo.pt/es/blog/ponta-delgada/",
+      "https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-ponta-delgada/",
+      "https://viveportugalweb.com/que-ver-y-hacer-en-ponta-delgada-guia-viaje/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'ribeira-caldeiroes',
-    nom: 'Parque Natural da Ribeira dos Caldeirões', emoji: '🌳',
-    desc: 'Un dels parcs naturals més espectaculars de São Miguel, al nord de l\'illa. Una sèrie de cascades successives cau enmig d\'una vegetació subtropical exuberant. Molins d\'aigua restaurats, ponts de pedra i una ruta senzilla que segueix el curs del riu entre helechos gegants.',
-    coords: [37.84282, -25.26759],
-    maps: 'https://maps.google.com/?q=37.84282,-25.26759',
-    prefix: 'ribeira-dos-caldeiroes',
-    fotos: 5,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/ribeira-dos-caldeiroes' },
-      { text: 'La Gaveta Voladora', url: 'https://lagavetavoladora.com/ribeira-dos-caldeiroes-parque-natural-de-sao-miguel' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ribeira-dos-caldeiroes-una-escapada-a-la-naturaleza-accesible-para-todos/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-parque-natural-de-ribeira-dos-caldeiroes/' },
-      { text: 'Viajamos Juntos', url: 'https://www.viajamosjuntos.net/2021/11/10/parque-natural-da-ribeira-dos-caldeiroes-azores/' },
-    ],
+  "imp-smi-08": {
+    "illa": "Sao Miguel",
+    "lloc": "Parque Natural da Ribeira dos Caldeirões",
+    "zona": "Achada",
+    "fotos": "ribeira-dos-caldeiroes-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.saomiguelguide.com/ribeira-dos-caldeiroes",
+      "https://lagavetavoladora.com/ribeira-dos-caldeiroes-parque-natural-de-sao-miguel",
+      "https://www.futurismo.pt/es/blog/ribeira-dos-caldeiroes-una-escapada-a-la-naturaleza-accesible-para-todos/",
+      "https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-parque-natural-de-ribeira-dos-caldeiroes/",
+      "https://www.viajamosjuntos.net/2021/11/10/parque-natural-da-ribeira-dos-caldeiroes-azores/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'vila-franca',
-    nom: 'Ilhéu de Vila Franca do Campo', emoji: '🏝️',
-    desc: 'Un illot volcànic a 1 km de la costa, format per un cràter submergit que crea una laguna natural circular d\'aigües turqueses protegides. L\'accés és per barca des de Vila Franca do Campo. L\'entrada és limitada i cal reservar; és un dels banys de mar més singulars dels Açores.',
-    coords: [37.70635, -25.44380],
-    maps: 'https://maps.google.com/?q=37.70635,-25.44380',
-    prefix: 'vila-franca-do-campo',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ilheu-de-vila-franca-el-idilico-anillo-de-la-princesa/' },
-      { text: 'Aventura te a viajar', url: 'https://aventurateaviajar.com/noticias/2022-01-22/que-hacer-en-vila-franca-do-campo--azores-/' },
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/islote-vila-franca' },
-      { text: 'By Açores', url: 'https://byacores.com/es/islote-de-vila-franca-do-campo/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-islote-de-vila-franca-do-campo/' },
-    ],
+  "imp-smi-09": {
+    "illa": "Sao Miguel",
+    "lloc": "Ilhéu de Vila Franca do Campo",
+    "zona": "Vila Franca do Campo",
+    "fotos": "vila-franca-do-campo-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/ilheu-de-vila-franca-el-idilico-anillo-de-la-princesa/",
+      "https://aventurateaviajar.com/noticias/2022-01-22/que-hacer-en-vila-franca-do-campo--azores-/",
+      "https://www.saomiguelguide.com/islote-vila-franca",
+      "https://byacores.com/es/islote-de-vila-franca-do-campo/",
+      "https://www.turismoazores.es/isla-de-sao-miguel/isla-de-sao-miguel-islote-de-vila-franca-do-campo/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'gruta-carvao',
-    nom: 'Gruta do Carvão', emoji: '🕳️',
-    desc: 'El túnel de lava més llarg accessible dels Açores, al cor de Ponta Delgada. Formada fa uns 1.000 anys per colades de lava, té més de 2 km de llargada total. Les visites guiades mostren formacions geològiques úniques: estalagmites de lava, parets vidrioses i galeries de diferents alçades.',
-    coords: [37.74861, -25.68707],
-    maps: 'https://maps.google.com/?q=37.74861,-25.68707',
-    prefix: 'gruta-do-carvao',
-    fotos: 5,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/gruta-do-carvao' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/gruta-do-carvao-el-mundo-subterraneo-bajo-ponta-delgada/' },
-      { text: 'Mi Familia Viajera', url: 'https://mifamiliaviajera.com/gruta-do-carvao-ponta-delgada-visita-cueva-volcanica-sao-miguel/' },
-      { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/NR/exeres/C082B7DF-2848-4F19-86F8-C94A1A511027' },
-      { text: 'Parques Naturais', url: 'https://parquesnaturais.azores.gov.pt/pt/parques/9/areasprotegidas/108' },
-    ],
+  "imp-smi-10": {
+    "illa": "Sao Miguel",
+    "lloc": "Gruta do Carvão",
+    "zona": "Ponta Delgada",
+    "fotos": "gruta-do-carvao-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.saomiguelguide.com/gruta-do-carvao",
+      "https://www.futurismo.pt/es/blog/gruta-do-carvao-el-mundo-subterraneo-bajo-ponta-delgada/",
+      "https://mifamiliaviajera.com/gruta-do-carvao-ponta-delgada-visita-cueva-volcanica-sao-miguel/",
+      "https://www.visitportugal.com/es/NR/exeres/C082B7DF-2848-4F19-86F8-C94A1A511027",
+      "https://parquesnaturais.azores.gov.pt/pt/parques/9/areasprotegidas/108"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'poco-azul',
-    nom: 'Poço Azul', emoji: '💙',
-    desc: 'Una piscina natural d\'aigües d\'un blau intens, formada a l\'interior d\'un bosc exuberant al nord de São Miguel. L\'accés requereix una caminada breu per un sender forestal. Quan el sol entra a plom, l\'aigua brilla d\'un color turquesa irreal que justifica plenament el nom.',
-    coords: [37.85880, -25.29047],
-    maps: 'https://maps.google.com/?q=37.85880,-25.29047',
-    prefix: 'poco-azul',
-    fotos: 4,
-    links: [
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/poco-azul' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/poco-azul-la-famosa-laguna-azul-de-las-azores-2/' },
-      { text: 'Gata con Botas', url: 'https://gataconbotas.com/salto-da-farinha-y-poco-azul/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/poco-azul/' },
-    ],
+  "imp-smi-11": {
+    "illa": "Sao Miguel",
+    "lloc": "Poço Azul",
+    "zona": "Achadinha",
+    "fotos": "poco-azul-0x",
+    "nfotos": 4,
+    "links": [
+      "https://www.saomiguelguide.com/poco-azul",
+      "https://www.futurismo.pt/es/blog/poco-azul-la-famosa-laguna-azul-de-las-azores-2/",
+      "https://gataconbotas.com/salto-da-farinha-y-poco-azul/",
+      "https://byacores.com/es/poco-azul/"
+    ]
   },
-  {
-    illa: 'São Miguel', id: 'ferraria',
-    nom: 'Ponta da Ferraria', emoji: '🌋',
-    desc: 'A l\'extrem oest de São Miguel, on l\'oceà es barreja amb aigües termals volcàniques. Unes piscines naturals formades per lava es mantenen calentes gràcies a les emanacions del subsòl. La temperatura de l\'aigua canvia amb la marea: quan la mar puja, l\'aigua es refresca.',
-    coords: [37.85859, -25.85236],
-    maps: 'https://maps.google.com/?q=37.85859,-25.85236',
-    prefix: 'ponta-da-ferraria',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/ponta-da-ferraria-azores-la-guia-definitiva-para-el-visitante/' },
-      { text: 'São Miguel Guide', url: 'https://www.saomiguelguide.com/ponta-da-ferraria' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-de-sao-miguel/termas-de-ponta-da-ferraria/' },
-      { text: 'Granadino Errante', url: 'https://granadinoerrante.com/otros-destinos/portugal/isla-de-sao-miguel/ponta-da-ferraria/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/ponta-da-ferraria/' },
-    ],
+  "imp-smi-12": {
+    "illa": "Sao Miguel",
+    "lloc": "Ponta da Ferraria",
+    "zona": "Ginetes",
+    "fotos": "ponta-da-ferraria-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/ponta-da-ferraria-azores-la-guia-definitiva-para-el-visitante/",
+      "https://www.saomiguelguide.com/ponta-da-ferraria",
+      "https://www.turismoazores.es/isla-de-sao-miguel/termas-de-ponta-da-ferraria/",
+      "https://granadinoerrante.com/otros-destinos/portugal/isla-de-sao-miguel/ponta-da-ferraria/",
+      "https://byacores.com/es/ponta-da-ferraria/"
+    ]
   },
-
-  /* ══════════════════════════════════════════════════════
-     SÃO JORGE  (3 llocs)
-  ══════════════════════════════════════════════════════ */
-  {
-    illa: 'São Jorge', id: 'faja-caldeira',
-    nom: 'Fajãs da Caldeira de Santo Cristo i dos Cubres', emoji: '🦪',
-    desc: 'Dues de les fajãs més emblemàtiques dels Açores, connectades per un sender costaner espectacular. La Fajã dos Cubres acull una llacuna tranquil·la ideal per observar aus. La Fajã da Caldeira de Santo Cristo és l\'única del món on creixen les cloïsses dos Açores, un mol·lusc exclusiu. Un petit paradís aïllat, amb cases de pescadors i una llacuna singular.',
-    coords: [38.62513, -27.92876],
-    maps: 'https://maps.google.com/?q=38.62513,-27.92876',
-    prefix: 'faja-caldeira',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo – Santo Cristo', url: 'https://www.futurismo.pt/es/blog/faja-santo-cristo/' },
-      { text: 'Futurismo – Cubres', url: 'https://www.futurismo.pt/es/blog/faja-dos-cubres-isla-de-sao-jorge/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/faja-dos-cubres-sao-jorge-azores/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-sao-jorge/fajas-de-la-isla-de-sao-jorge/' },
-      { text: 'Wikiloc', url: 'https://ca.wikiloc.com/rutes-senderisme/caldeira-de-santo-cristo-y-faja-dos-cubres-18724266' },
-    ],
+  "imp-sjo-01": {
+    "illa": "Sao Jorge",
+    "lloc": "Fajã da Caldeira de Santo Cristo i Fajã dos Cubres",
+    "zona": "Fajã da Caldeira de Santo Cristo",
+    "fotos": "faja-caldeira-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/faja-santo-cristo/",
+      "https://www.futurismo.pt/es/blog/faja-dos-cubres-isla-de-sao-jorge/",
+      "https://byacores.com/es/faja-dos-cubres-sao-jorge-azores/",
+      "https://www.turismoazores.es/isla-sao-jorge/fajas-de-la-isla-de-sao-jorge/",
+      "https://ca.wikiloc.com/rutes-senderisme/caldeira-de-santo-cristo-y-faja-dos-cubres-18724266"
+    ]
   },
-  {
-    illa: 'São Jorge', id: 'faja-ouvidor',
-    nom: 'Fajã do Ouvidor i Piscines Naturals de Simão Dias', emoji: '🏊',
-    desc: 'Una fajã de gran bellesa a la costa nord de São Jorge, accessible per un sender que baixa pels penya-segats. Al seu peu hi ha les piscines naturals de Simão Dias, excavades a la roca volcànica i banyades per l\'Atlàntic. Les vistes des de dalt, amb els penya-segats i l\'oceà, són impressionants.',
-    coords: [38.67865, -28.05009],
-    maps: 'https://maps.google.com/?q=38.67865,-28.05009',
-    prefix: 'faja-ouvidor',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo – Simão Dias', url: 'https://www.futurismo.pt/es/blog/pocos-simao-dias/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/piscina-poza-simao-dias/' },
-      { text: 'Futurismo – Ouvidor', url: 'https://www.futurismo.pt/es/blog/faja-do-ouvidor/' },
-      { text: 'Vaiver', url: 'https://es.vaiver.com/acores/piscina-natural-simao-dias/' },
-      { text: '20 Minutos', url: 'https://www.20minutos.es/viajes/isla-sao-jorge-piscina-natural-azores-portugal-destino-moda-espanoles-5168783/' },
-    ],
+  "imp-sjo-02": {
+    "illa": "Sao Jorge",
+    "lloc": "Fajã do Ouvidor i Piscines Naturals de Simão Dias",
+    "zona": "Fajã do Ouvidor",
+    "fotos": "faja-ouvidor-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/pocos-simao-dias/",
+      "https://byacores.com/es/piscina-poza-simao-dias/",
+      "https://www.futurismo.pt/es/blog/faja-do-ouvidor/",
+      "https://es.vaiver.com/acores/piscina-natural-simao-dias/",
+      "https://www.20minutos.es/viajes/isla-sao-jorge-piscina-natural-azores-portugal-destino-moda-espanoles-5168783/"
+    ]
   },
-  {
-    illa: 'São Jorge', id: 'sete-fontes',
-    nom: 'Parque Florestal Sete Fontes', emoji: '🌲',
-    desc: 'Un bosc frondós a les altituds de São Jorge, creuat per set fonts d\'aigüa natural. Rutes de senderisme tranquil·les entre criptomèries japoneses, helechos gegants i hortènsies blaves. Un espai de pau i frescor que contrasta amb la rudesa dels penya-segats de la costa.',
-    coords: [38.73844, -28.26215],
-    maps: 'https://maps.google.com/?q=38.73844,-28.26215',
-    prefix: 'sete-fontes',
-    fotos: 5,
-    links: [
-      { text: 'Nunca Sin Viaje', url: 'https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/#Reserva_Forestal_Sete_Fontes' },
-      { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/NR/exeres/C0D62F5F-11B5-4C21-ACE9-235A2AEECC4F' },
-      { text: 'Random Trip', url: 'https://randomtrip.es/guia-sao-jorge-azores/' },
-      { text: 'Revigorate', url: 'https://www.revigorate.com/things-to-do-in-sao-jorge-es.html' },
-      { text: 'Azoren Online', url: 'https://www.azoren-online.info/es/sao-jorge/tipps-fuer-sao-jorge/naherholungsgebiete-auf-sao-jorge/reserva-florestal-de-recreio-das-sete-fontes-auf-sao-jorge/' },
-    ],
+  "imp-sjo-03": {
+    "illa": "Sao Jorge",
+    "lloc": "Parque Florestal Sete Fontes",
+    "zona": "Sete Fontes",
+    "fotos": "sete-fontes-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.nuncasinviaje.com/que-ver-en-sao-jorge-azores-isla-fajanas-dragon/#Reserva_Forestal_Sete_Fontes",
+      "https://www.visitportugal.com/es/NR/exeres/C0D62F5F-11B5-4C21-ACE9-235A2AEECC4F",
+      "https://randomtrip.es/guia-sao-jorge-azores/",
+      "https://www.revigorate.com/things-to-do-in-sao-jorge-es.html",
+      "https://www.azoren-online.info/es/sao-jorge/tipps-fuer-sao-jorge/naherholungsgebiete-auf-sao-jorge/reserva-florestal-de-recreio-das-sete-fontes-auf-sao-jorge/"
+    ]
   },
-
-  /* ══════════════════════════════════════════════════════
-     PICO  (5 llocs)
-  ══════════════════════════════════════════════════════ */
-  {
-    illa: 'Pico', id: 'montanha-pico',
-    nom: 'Montanha do Pico', emoji: '⛰️',
-    desc: 'El cim més alt de Portugal i de tot l\'Atlàntic nord: 2.351 metres sobre el mar. L\'ascensió dura entre 3 i 5 hores anada, requereix guia obligatori i reserva prèvia. Des del cràter, en dies clars, es veuen totes les illes del grup Central. Una experiència física i visual única.',
-    coords: [38.46935, -28.39952],
-    maps: 'https://maps.google.com/?q=38.46935,-28.39952',
-    prefix: 'montanha-do-pico',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/montana-del-pico-guia-definitiva-de-la-montana-mas-alta-de-portugal-en-las-azores/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-pico/montana-de-pico/' },
-      { text: 'Viaje con Pablo', url: 'https://viajeconpablo.com/subida-a-la-montana-de-pico-la-cima-mas-alta-de-portugal/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/montana-do-pico/' },
-      { text: 'Mendikat', url: 'https://www.mendikat.net/com/mount/12610' },
-    ],
+  "imp-pic-01": {
+    "illa": "Pico",
+    "lloc": "Montanha do Pico",
+    "zona": "Montanha do Pico",
+    "fotos": "montanha-do-pico-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/montana-del-pico-guia-definitiva-de-la-montana-mas-alta-de-portugal-en-las-azores/",
+      "https://www.turismoazores.es/isla-pico/montana-de-pico/",
+      "https://viajeconpablo.com/subida-a-la-montana-de-pico-la-cima-mas-alta-de-portugal/",
+      "https://byacores.com/es/montana-do-pico/",
+      "https://www.mendikat.net/com/mount/12610"
+    ]
   },
-  {
-    illa: 'Pico', id: 'cultura-vinha',
-    nom: 'Paisagem da Cultura da Vinha', emoji: '🍇',
-    desc: 'Patrimoni de la Humanitat per la UNESCO. Un paisatge únic format per milers de murs de pedra volcànica negra (currais) que protegeixen les vinyes del vent atlàntic. El vi de Pico, el Verdelho, és un dels vins d\'illa més antics i apreciats del món. La millor hora per fotografiar-lo: la posta de sol.',
-    coords: [38.55179, -28.46809],
-    maps: 'https://maps.google.com/?q=38.55179,-28.46809',
-    prefix: 'vinha',
-    fotos: 3,
-    links: [
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-pico/paisaje-de-vinas-de-la-isla-de-pico-patrimonio-unesco/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/paisaje-cultural-de-la-vina-del-pico/' },
-      { text: 'Visit Azores', url: 'https://www.visitazores.com/explorar/landscape-of-the-pico-island-vineyard-culture-interpretation-centre' },
-    ],
+  "imp-pic-02": {
+    "illa": "Pico",
+    "lloc": "Paisagem da Cultura da Vinha",
+    "zona": "Criação Velha",
+    "fotos": "vinha-0x",
+    "nfotos": 3,
+    "links": [
+      "https://www.turismoazores.es/isla-pico/paisaje-de-vinas-de-la-isla-de-pico-patrimonio-unesco/",
+      "https://byacores.com/es/paisaje-cultural-de-la-vina-del-pico/",
+      "https://www.visitazores.com/explorar/landscape-of-the-pico-island-vineyard-culture-interpretation-centre"
+    ]
   },
-  {
-    illa: 'Pico', id: 'lagoa-caiado',
-    nom: 'Lagoa do Caiado', emoji: '🏞️',
-    desc: 'Un llac de muntanya tranquil i poc visitat, envoltat de bosc i amb vistes al volcà. Ideal per fer una caminada tranquil·la allunyada del turisme. La seva situació en altitud garanteix temperatures fresques fins i tot a l\'estiu i unes vistes privilegiades sobre el paisatge de Pico.',
-    coords: [38.45686, -28.25084],
-    maps: 'https://maps.google.com/?q=38.45686,-28.25084',
-    prefix: 'lagoa-do-caiado',
-    fotos: 3,
-    links: [
-      { text: 'By Açores', url: 'https://byacores.com/es/lagoa-caiado/' },
-      { text: 'Vaiver', url: 'https://es.vaiver.com/acores/lajes-do-pico-lagoa-do-caiado/' },
-      { text: 'Turismo Azores', url: 'https://turismo.azores.gov.pt/en/pin/lagoa-do-caiado/' },
-    ],
+  "imp-pic-03": {
+    "illa": "Pico",
+    "lloc": "Lagoa do Caiado",
+    "zona": "Planalto da Achada",
+    "fotos": "lagoa-do-caiado-0x",
+    "nfotos": 3,
+    "links": [
+      "https://byacores.com/es/lagoa-caiado/",
+      "https://es.vaiver.com/acores/lajes-do-pico-lagoa-do-caiado/",
+      "https://turismo.azores.gov.pt/en/pin/lagoa-do-caiado/"
+    ]
   },
-  {
-    illa: 'Pico', id: 'piscines-arcos',
-    nom: 'Piscines Naturals dos Arcos', emoji: '🌊',
-    desc: 'Les piscines naturals més ben condicionades de Pico, formades per la lava que s\'ha endinsat al mar creant badies naturals protegides. Aigües netes i transparents amb fons de roca volcànica. Un entorn pur, sense artificialitat, on nedar amb vistes directes a l\'oceà obert.',
-    coords: [38.56037, -28.40897],
-    maps: 'https://maps.google.com/?q=38.56037,-28.40897',
-    prefix: 'piscines-arcos',
-    fotos: 3,
-    links: [
-      { text: 'Explore Pico Island', url: 'https://www.explorepicoisland.com/mapa-interativo/local/piscina-natural-dos-arcos/' },
-      { text: 'Turismo Azores', url: 'https://turismo.azores.gov.pt/en/pin/piscina-natural-dos-arcos/' },
-    ],
+  "imp-pic-04": {
+    "illa": "Pico",
+    "lloc": "Piscines Naturals dos Arcos",
+    "zona": "Lajido",
+    "fotos": "piscines-arcos-0x",
+    "nfotos": 3,
+    "links": [
+      "https://www.explorepicoisland.com/mapa-interativo/local/piscina-natural-dos-arcos/",
+      "https://turismo.azores.gov.pt/en/pin/piscina-natural-dos-arcos/"
+    ]
   },
-  {
-    illa: 'Pico', id: 'cetacis',
-    nom: 'Avistament de cetacis', emoji: '🐋',
-    desc: 'Els Açores són un dels millors llocs del món per veure balenes i dofins en llibertat. Des de Pico, antics vigies de baleines localitzen els animals i guien les embarcacions. És possible veure fins a 20 espècies, incloent el catxalot, el rorqual comú i diverses espècies de dofins. Cal reservar amb antelació.',
-    coords: [38.39317, -28.23585],
-    maps: 'https://maps.google.com/?q=38.39317,-28.23585',
-    prefix: 'avistament',
-    fotos: 5,
-    links: [
-      { text: 'Nadi Uiatges', url: 'https://www.nadiuviatges.com/ca/paradis-balenes-acores/' },
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/visitas/avistamiento-de-cetaceos-en-lajes-do-pico-azores/' },
-      { text: 'Con Peques se Puede', url: 'https://conpequessepuede.com/azores-en-familia-avistamiento-de-ballenas/' },
-      { text: 'Vive Portugal', url: 'https://viveportugalweb.com/donde-ver-ballenas-en-azores-de-forma-responsable/#Avistamiento_de_cetaceos_en_la_isla_de_Pico' },
-    ],
+  "imp-pic-05": {
+    "illa": "Pico",
+    "lloc": "Avistament de cetacis",
+    "zona": "Lajes do Pico",
+    "fotos": "avistament-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.nadiuviatges.com/ca/paradis-balenes-acores/",
+      "https://www.futurismo.pt/es/visitas/avistamiento-de-cetaceos-en-lajes-do-pico-azores/",
+      "https://conpequessepuede.com/azores-en-familia-avistamiento-de-ballenas/",
+      "https://viveportugalweb.com/donde-ver-ballenas-en-azores-de-forma-responsable/#Avistamiento_de_cetaceos_en_la_isla_de_Pico"
+    ]
   },
-
-  /* ══════════════════════════════════════════════════════
-     FAIAL  (4 llocs)
-  ══════════════════════════════════════════════════════ */
-  {
-    illa: 'Faial', id: 'caldeira-faial',
-    nom: 'Caldeira do Faial', emoji: '🌋',
-    desc: 'Un cràter volcànic gegant de 2 km de diàmetre i 400 metres de profunditat, cobert de bosc de criptomèries. La ruta circular pel vora del cràter (5 km) és una de les millors caminades dels Açores, amb vistes sobre tota l\'illa i, en dies clars, sobre el Pico al fons.',
-    coords: [38.58425, -28.71672],
-    maps: 'https://maps.google.com/?q=38.58425,-28.71672',
-    prefix: 'caldeira-do-faial',
-    fotos: 4,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/caldeira-do-faial-punto-de-referencia-de-la-isla-de-faial/' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-faial/caldeira-de-faial/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/caldera-cabeco-gordo-faial/' },
-    ],
+  "imp-fai-01": {
+    "illa": "Faial",
+    "lloc": "Caldeira do Faial",
+    "zona": "Caldeira do Faial",
+    "fotos": "caldeira-do-faial-0x",
+    "nfotos": 4,
+    "links": [
+      "https://www.futurismo.pt/es/blog/caldeira-do-faial-punto-de-referencia-de-la-isla-de-faial/",
+      "https://www.turismoazores.es/isla-faial/caldeira-de-faial/",
+      "https://byacores.com/es/caldera-cabeco-gordo-faial/"
+    ]
   },
-  {
-    illa: 'Faial', id: 'capelinhos',
-    nom: 'Capelinhos', emoji: '🌑',
-    desc: 'El lloc més singular de Faial: un volcà que va erupcionar entre 1957 i 1958 enmig de l\'oceà, creant nova terra i sepultant el far de Capelinhos fins a la meitat. El paisatge resultant és absolutament lunar: cendres, lava i el far mig enterrat. El museu adjacent, soterrani, és excel·lent.',
-    coords: [38.60201, -28.83169],
-    maps: 'https://maps.google.com/?q=38.60201,-28.83169',
-    prefix: 'capelinhos',
-    fotos: 5,
-    links: [
-      { text: 'Futurismo', url: 'https://www.futurismo.pt/es/blog/volcan-capelinhos-el-misterio-de-la-vulcanologia/' },
-      { text: 'By Açores', url: 'https://byacores.com/es/punta-dos-capelinhos-faial/' },
-      { text: 'IUGS Geoheritage', url: 'https://iugs-geoheritage.org/geoheritage_sites/capelinhos-volcano/' },
-      { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/node/156060' },
-      { text: 'AGERS', url: 'https://agers.es/erupcion-del-volcan-de-los-capelinhos-en-las-azores-un-recuerdo-de-destruccion-y-emigracion/' },
-    ],
+  "imp-fai-02": {
+    "illa": "Faial",
+    "lloc": "Capelinhos",
+    "zona": "Capelinhos",
+    "fotos": "capelinhos-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.futurismo.pt/es/blog/volcan-capelinhos-el-misterio-de-la-vulcanologia/",
+      "https://byacores.com/es/ponta-dos-capelinhos-faial/",
+      "https://iugs-geoheritage.org/geoheritage_sites/capelinhos-volcano/",
+      "https://www.visitportugal.com/es/node/156060",
+      "https://agers.es/erupcion-del-volcan-de-los-capelinhos-en-las-azores-un-recuerdo-de-destruccion-y-emigracion/"
+    ]
   },
-  {
-    illa: 'Faial', id: 'horta-marina',
-    nom: 'Marina da Horta', emoji: '⚓',
-    desc: 'La marina de Horta és la més famosa de l\'Atlàntic nord, escala obligatòria dels veliers transocèanics. Per tradició, cada tripulació pinta el seu emblema a les parets i el moll: milers de murals colorits cobreixen cada centímetre de les superfícies. El Café Sport, obert des del 1918, és la seva ànima.',
-    coords: [38.53135, -28.62534],
-    maps: 'https://maps.google.com/?q=38.53135,-28.62534',
-    prefix: 'horta-marina',
-    fotos: 5,
-    links: [
-      { text: 'Visit Portugal', url: 'https://www.visitportugal.com/es/node/73824' },
-      { text: 'By Açores', url: 'https://byacores.com/es/marina-horta/' },
-      { text: 'Minube', url: 'https://www.minube.com/rincon/marina-da-horta-a2229332' },
-      { text: 'Turisme en Portugal', url: 'https://www.turismoenportugal.org/horta-isla-de-faial' },
-    ],
+  "imp-fai-03": {
+    "illa": "Faial",
+    "lloc": "Marina da Horta",
+    "zona": "Horta",
+    "fotos": "horta-marina-0x",
+    "nfotos": 5,
+    "links": [
+      "https://www.visitportugal.com/es/node/73824",
+      "https://byacores.com/es/marina-horta/",
+      "https://www.minube.com/rincon/marina-da-horta-a2229332",
+      "https://www.turismoenportugal.org/horta-isla-de-faial"
+    ]
   },
-  {
-    illa: 'Faial', id: 'monte-guia',
-    nom: 'Monte da Guia', emoji: '🔭',
-    desc: 'Un con volcànic al sud de Horta que forma una península natural. La pujada a peu dura uns 20 minuts i recompensa amb una vista panoràmica de 360°: Horta als peus, el Pico dominant l\'horitzó al davant, i São Jorge i Graciosa a la llunyania. El millor mirador de Faial, especialment al capvespre.',
-    coords: [38.52119, -28.62892],
-    maps: 'https://maps.google.com/?q=38.52119,-28.62892',
-    prefix: 'monte-da-guia',
-    fotos: 5,
-    links: [
-      { text: 'By Açores', url: 'https://byacores.com/es/monte-de-la-guia/' },
-      { text: 'Wikiloc', url: 'https://es.wikiloc.com/rutas-senderismo/monte-da-guia-horta-marina-38591181' },
-      { text: 'Guia da Cidade', url: 'https://www.guiadacidade.pt/es/poi-monte-da-guia-18877' },
-      { text: 'Turismo Azores', url: 'https://www.turismoazores.es/isla-faial/horta/' },
-    ],
-  },
-];
-
-/* ── Ordre i config per illa ── */
-const ILLES_ORDRE = ['São Miguel', 'São Jorge', 'Pico', 'Faial'];
-
-const ILLES_CONFIG = {
-  'São Miguel': {
-    emoji: '🌋', color: '#e74c3c',
-    colorSuau: 'rgba(231,76,60,0.12)', colorBorde: 'rgba(231,76,60,0.3)',
-    coords: [37.785, -25.499], zoom: 10,
-  },
-  'São Jorge': {
-    emoji: '🏔️', color: '#27ae60',
-    colorSuau: 'rgba(39,174,96,0.12)', colorBorde: 'rgba(39,174,96,0.3)',
-    coords: [38.668, -28.070], zoom: 11,
-  },
-  'Pico': {
-    emoji: '⛰️', color: '#8e44ad',
-    colorSuau: 'rgba(142,68,173,0.12)', colorBorde: 'rgba(142,68,173,0.3)',
-    coords: [38.490, -28.330], zoom: 11,
-  },
-  'Faial': {
-    emoji: '⚓', color: '#2980b9',
-    colorSuau: 'rgba(41,128,185,0.12)', colorBorde: 'rgba(41,128,185,0.3)',
-    coords: [38.565, -28.720], zoom: 11,
-  },
+  "imp-fai-04": {
+    "illa": "Faial",
+    "lloc": "Monte da Guia",
+    "zona": "Horta",
+    "fotos": "monte-da-guia-0x",
+    "nfotos": 5,
+    "links": [
+      "https://byacores.com/es/monte-de-la-guia/",
+      "https://es.wikiloc.com/rutas-senderismo/monte-da-guia-horta-marina-38591181",
+      "https://www.guiadacidade.pt/es/poi-monte-da-guia-18877",
+      "https://www.turismoazores.es/isla-faial/horta/"
+    ]
+  }
 };
