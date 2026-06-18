@@ -2,38 +2,68 @@
 const GOOGLE_KEY = "AIzaSyDnvUnUEUUUrBiyaArGEHSQln_6A2Q_A84";
 
 const CAPITALS = {
-  faial: { lat: 38.5311, lon: -28.6267, nom: "Horta" },
-  pico: { lat: 38.532, lon: -28.5271, nom: "Madalena" },
-  "sao-jorge": { lat: 38.6784, lon: -28.2012, nom: "Velas" },
+  faial:        { lat: 38.5311, lon: -28.6267, nom: "Horta" },
+  pico:         { lat: 38.532,  lon: -28.5271, nom: "Madalena" },
+  "sao-jorge":  { lat: 38.6784, lon: -28.2012, nom: "Velas" },
   "sao-miguel": { lat: 37.7412, lon: -25.6756, nom: "Ponta Delgada" },
+};
+
+/* Mapatge slug del filtre → valor illa al nou format de dades */
+const ILLA_MAP = {
+  "faial":      "Faial",
+  "pico":       "Pico",
+  "sao-jorge":  "Sao Jorge",
+  "sao-miguel": "Sao Miguel",
 };
 
 const ILLA_NOMS = {
   "sao-miguel": "São Miguel",
-  "sao-jorge": "São Jorge",
-  pico: "Pico",
-  faial: "Faial",
+  "sao-jorge":  "São Jorge",
+  "pico":       "Pico",
+  "faial":      "Faial",
 };
 
-const PREU_ORDER = { "€": 1, "€€": 2, "€€€": 3, "€€€€": 4 };
-const DIST_CACHE_KEY = "rest_dist_capitals_v1";
+const PREU_ORDER   = { "€": 1, "€€": 2, "€€€": 3, "€€€€": 4 };
+const DIST_CACHE_KEY = "rest_dist_capitals_v2";  // v2: IDs nous incompatibles amb v1
+
+// ── LOOKUP POI_DATA ────────────────────────────────────────────────────
+/* Construïm el lookup un cop al carregar el fitxer */
+const REST_POI = {};
+if (typeof POI_DATA !== "undefined") {
+  POI_DATA.forEach(p => {
+    if (p.id && p.id.startsWith("res-")) REST_POI[p.id] = p;
+  });
+}
+
+/** Retorna { lat, lon } d'un restaurant des de POI_DATA, o null */
+function restCoords(id) {
+  const p = REST_POI[id];
+  return p ? { lat: p.lat, lon: p.lng } : null;  // POI_DATA usa .lng
+}
+
+// ── HELPER CUINES ─────────────────────────────────────────────────────
+/** El camp `cuina` ara és un string "A, B, C" — retorna array ["A","B","C"] */
+function restCuines(r) {
+  if (!r.cuina) return [];
+  return r.cuina.split(",").map(c => c.trim()).filter(Boolean);
+}
 
 // ── ESTAT ──────────────────────────────────────────────────────────────
 let state = {
-  illa: "totes",
-  cuines: [],
-  preu: "",
-  distMax: 0,
-  sortBy: "puntuacio",
-  userLat: null,
-  userLon: null,
+  illa:      "totes",
+  cuines:    [],
+  preu:      "",
+  distMax:   0,
+  sortBy:    "puntuacio",
+  userLat:   null,
+  userLon:   null,
   userLabel: null,
-  usingCap: true,
+  usingCap:  true,
   distances: {},
 };
 
-let map = null;
-let markers = {};
+let map        = null;
+let markers    = {};
 let filteredIds = [];
 
 // ── INIT ───────────────────────────────────────────────────────────────
@@ -43,19 +73,18 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAll();
   bindEvents();
   initDefaultDistances();
-  // Botons estil mapa fora de bindEvents per assegurar DOM llest
-  document.querySelectorAll(".map-style-btn").forEach((btn) => {
+  document.querySelectorAll(".map-style-btn").forEach(btn => {
     btn.addEventListener("click", () => setMapStyle(btn.dataset.style));
   });
 });
 
-// ── DISTÀNCIES A CAPITALS (càlcul únic, guardat a localStorage) ────────
+// ── DISTÀNCIES A CAPITALS ─────────────────────────────────────────────
 async function initDefaultDistances() {
   const cached = localStorage.getItem(DIST_CACHE_KEY);
   if (cached) {
     try {
       state.distances = JSON.parse(cached);
-      state.usingCap = true;
+      state.usingCap  = true;
       renderAll();
       return;
     } catch (e) {
@@ -63,44 +92,53 @@ async function initDefaultDistances() {
     }
   }
 
-  const illes = ["faial", "pico", "sao-jorge", "sao-miguel"];
+  const illes  = ["faial", "pico", "sao-jorge", "sao-miguel"];
   const allDist = {};
 
   for (const illa of illes) {
-    const cap = CAPITALS[illa];
-    const rests = RESTAURANTS.filter((r) => r.illa === illa && r.lat && r.lon);
+    const cap   = CAPITALS[illa];
+    const illaVal = ILLA_MAP[illa];
+
+    // Agafa els restaurants d'aquesta illa que tinguin coords a POI_DATA
+    const rests = Object.entries(RESTAURANTS)
+      .filter(([, r]) => r.illa === illaVal)
+      .map(([id]) => {
+        const c = restCoords(id);
+        return c ? { id, lat: c.lat, lon: c.lon } : null;
+      })
+      .filter(Boolean);
+
     if (!rests.length) continue;
     const chunks = [];
-    for (let i = 0; i < rests.length; i += 25)
-      chunks.push(rests.slice(i, i + 25));
+    for (let i = 0; i < rests.length; i += 25) chunks.push(rests.slice(i, i + 25));
 
     for (const chunk of chunks) {
       const origin = `${cap.lat},${cap.lon}`;
-      const dests = chunk.map((r) => `${r.lat},${r.lon}`).join("|");
+      const dests  = chunk.map(r => `${r.lat},${r.lon}`).join("|");
       try {
-        const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${encodeURIComponent(dests)}&mode=driving&language=ca&key=${GOOGLE_KEY}`;
-        const res = await fetch(url);
+        const url  = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${encodeURIComponent(dests)}&mode=driving&language=ca&key=${GOOGLE_KEY}`;
+        const res  = await fetch(url);
         const data = await res.json();
         if (data.rows && data.rows[0]) {
           data.rows[0].elements.forEach((el, i) => {
             if (el.status === "OK") {
               allDist[chunk[i].id] = {
-                dist: el.distance.text,
-                temps: el.duration.text,
+                dist:   el.distance.text,
+                temps:  el.duration.text,
                 distKm: el.distance.value / 1000,
-                cap: cap.nom,
+                cap:    cap.nom,
               };
             }
           });
         }
       } catch (e) {
-        chunk.forEach((r) => {
+        chunk.forEach(r => {
           const km = haversine(cap.lat, cap.lon, r.lat, r.lon);
           allDist[r.id] = {
-            dist: `~${km.toFixed(1)} km`,
-            temps: `~${Math.round((km / 40) * 60)} min`,
+            dist:   `~${km.toFixed(1)} km`,
+            temps:  `~${Math.round((km / 40) * 60)} min`,
             distKm: km,
-            cap: cap.nom,
+            cap:    cap.nom,
           };
         });
       }
@@ -109,27 +147,24 @@ async function initDefaultDistances() {
 
   localStorage.setItem(DIST_CACHE_KEY, JSON.stringify(allDist));
   state.distances = allDist;
-  state.usingCap = true;
+  state.usingCap  = true;
   renderAll();
 }
 
 function resetToCapitalDist() {
   const cached = localStorage.getItem(DIST_CACHE_KEY);
   if (cached) {
-    try {
-      state.distances = JSON.parse(cached);
-    } catch (e) {
-      state.distances = {};
-    }
+    try { state.distances = JSON.parse(cached); }
+    catch (e) { state.distances = {}; }
   } else {
     state.distances = {};
     initDefaultDistances();
     return;
   }
-  state.userLat = null;
-  state.userLon = null;
+  state.userLat   = null;
+  state.userLon   = null;
   state.userLabel = null;
-  state.usingCap = true;
+  state.usingCap  = true;
   document.getElementById("pos-status").textContent = "";
   document.getElementById("pos-text").value = "";
   document.getElementById("btn-gps").classList.remove("active");
@@ -138,13 +173,11 @@ function resetToCapitalDist() {
 
 // ── MAPA ───────────────────────────────────────────────────────────────
 const MAP_TILES = {
-  Voyager:
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-  Clar: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-  Topo: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-  "Satèl·lit":
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-  OSM: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  Voyager:     "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+  Clar:        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+  Topo:        "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  "Satèl·lit": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  OSM:         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 };
 
 let currentTileLayer = null;
@@ -161,25 +194,17 @@ function initMap() {
 
 function setMapStyle(style) {
   if (currentTileLayer) map.removeLayer(currentTileLayer);
-
-  const noSubdomains = ["Topo", "Satèl·lit"];
-  const opts = noSubdomains.includes(style)
+  const noSub = ["Topo", "Satèl·lit"];
+  const opts  = noSub.includes(style)
     ? { attribution: "© OpenStreetMap", maxZoom: 19 }
-    : {
-        attribution: "© OpenStreetMap © CARTO",
-        subdomains: "abcd",
-        maxZoom: 19,
-      };
-
+    : { attribution: "© OpenStreetMap © CARTO", subdomains: "abcd", maxZoom: 19 };
   currentTileLayer = L.tileLayer(MAP_TILES[style], opts).addTo(map);
-
-  document
-    .querySelectorAll(".map-style-btn")
-    .forEach((b) => b.classList.toggle("active", b.dataset.style === style));
+  document.querySelectorAll(".map-style-btn")
+    .forEach(b => b.classList.toggle("active", b.dataset.style === style));
 }
 
 function pinColor(r) {
-  if (r.top10) return "#f0b429";
+  if (r.top10)       return "#f0b429";
   if (r.editor === 1) return "#FFD700";
   if (r.editor === 2) return "#C0C0C0";
   if (r.editor === 3) return "#CD7F32";
@@ -188,38 +213,43 @@ function pinColor(r) {
 
 function pinIcon(r) {
   const color = pinColor(r);
-  const star = r.top10
-    ? "⭐"
-    : r.editor
-      ? ["🥇", "🥈", "🥉"][r.editor - 1]
-      : "";
+  const star  = r.top10 ? "⭐" : r.editor ? ["🥇","🥈","🥉"][r.editor - 1] : "";
   return L.divIcon({
     html: `<div style="background:${color};border:2px solid #fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:10px;box-shadow:0 1px 4px rgba(0,0,0,0.4);">${star || "🍽️"}</div>`,
     className: "",
-    iconSize: [22, 22],
-    iconAnchor: [11, 11],
-    popupAnchor: [0, -14],
+    iconSize:  [22, 22],
+    iconAnchor:[11, 11],
+    popupAnchor:[0, -14],
   });
 }
 
 function renderMarkers() {
-  Object.values(markers).forEach((m) => map.removeLayer(m));
+  Object.values(markers).forEach(m => map.removeLayer(m));
   markers = {};
-  const visible = RESTAURANTS.filter((r) => filteredIds.includes(r.id));
-  visible.forEach((r) => {
-    if (!r.lat || !r.lon) return;
-    const marker = L.marker([r.lat, r.lon], { icon: pinIcon(r) }).addTo(map);
-    const dist = state.distances[r.id];
+
+  const visible = Object.entries(RESTAURANTS)
+    .filter(([id]) => filteredIds.includes(id))
+    .map(([id, r]) => ({ id, ...r }));
+
+  const bounds = [];
+
+  visible.forEach(r => {
+    const coords = restCoords(r.id);
+    if (!coords) return;
+
+    const marker = L.marker([coords.lat, coords.lon], { icon: pinIcon(r) }).addTo(map);
+    const dist   = state.distances[r.id];
     const distText = dist
       ? `<div style="font-size:0.75rem;color:#6aab7a;">🚗 ${dist.temps} · ${dist.dist}</div>`
       : "";
+
     marker.bindPopup(`
       <div style="min-width:180px;">
         <strong style="font-size:0.9rem;color:#1a3a2a;">${r.nom}</strong>
-        <div style="font-size:0.78rem;color:#555;margin:2px 0;">${r.localitat} · ${r.preu_google || ""}</div>
+        <div style="font-size:0.78rem;color:#555;margin:2px 0;">${r.localitat} · ${r.preu_g || ""}</div>
         ${distText}
         <div style="margin-top:6px;font-size:0.78rem;">
-          ⭐ ${r.punt_ponderada || "—"}
+          ⭐ ${r.punt_p || "—"}
           ${r.top10 ? '<span style="color:#f0b429;margin-left:6px;">🏆 Top10</span>' : ""}
         </div>
       </div>
@@ -230,9 +260,7 @@ function renderMarkers() {
       if (card) card.classList.add("highlighted");
     });
     marker.on("mouseout", () => {
-      document
-        .querySelectorAll(".rest-card")
-        .forEach((c) => c.classList.remove("highlighted"));
+      document.querySelectorAll(".rest-card").forEach(c => c.classList.remove("highlighted"));
     });
     marker.on("click", () => {
       const card = document.querySelector(`.rest-card[data-id="${r.id}"]`);
@@ -242,75 +270,62 @@ function renderMarkers() {
       }
     });
     markers[r.id] = marker;
+    bounds.push([coords.lat, coords.lon]);
   });
-  if (visible.length > 0) {
-    const bounds = visible
-      .filter((r) => r.lat && r.lon)
-      .map((r) => [r.lat, r.lon]);
-    if (bounds.length)
-      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
-  }
+
+  if (bounds.length) map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
 }
 
 // ── FILTRE I ORDENACIÓ ─────────────────────────────────────────────────
 function filtered() {
-  let list = [...RESTAURANTS];
-  if (state.illa !== "totes") list = list.filter((r) => r.illa === state.illa);
+  let list = Object.entries(RESTAURANTS).map(([id, r]) => ({ id, ...r }));
+
+  if (state.illa !== "totes") {
+    const illaVal = ILLA_MAP[state.illa];
+    list = list.filter(r => r.illa === illaVal);
+  }
   if (state.cuines.length > 0) {
-    list = list.filter((r) =>
-      state.cuines.some((c) =>
-        r.cuines.map((x) => x.toLowerCase()).includes(c.toLowerCase()),
-      ),
+    list = list.filter(r =>
+      state.cuines.some(c =>
+        restCuines(r).map(x => x.toLowerCase()).includes(c.toLowerCase())
+      )
     );
   }
   if (state.preu) {
-    list = list.filter(
-      (r) =>
-        (r.preu_google || "").includes(state.preu) ||
-        (r.preu_ta || "").includes(state.preu),
+    list = list.filter(r =>
+      (r.preu_g  || "").includes(state.preu) ||
+      (r.preu_ta || "").includes(state.preu)
     );
   }
   if (state.distMax > 0 && Object.keys(state.distances).length > 0) {
-    list = list.filter((r) => {
+    list = list.filter(r => {
       const d = state.distances[r.id];
       return !d || d.distKm <= state.distMax;
     });
   }
+
   list.sort((a, b) => {
     switch (state.sortBy) {
-      case "puntuacio":
-        return (b.punt_ponderada || 0) - (a.punt_ponderada || 0);
-      case "preu-asc":
-        return (
-          (PREU_ORDER[preusimple(a)] || 0) - (PREU_ORDER[preusimple(b)] || 0)
-        );
-      case "preu-desc":
-        return (
-          (PREU_ORDER[preusimple(b)] || 0) - (PREU_ORDER[preusimple(a)] || 0)
-        );
-      case "distancia":
-        return (
-          (state.distances[a.id]?.distKm ?? 9999) -
-          (state.distances[b.id]?.distKm ?? 9999)
-        );
-      case "nom":
-        return a.nom.localeCompare(b.nom);
-      default:
-        return 0;
+      case "puntuacio": return (b.punt_p || 0) - (a.punt_p || 0);
+      case "preu-asc":  return (PREU_ORDER[preusimple(a)] || 0) - (PREU_ORDER[preusimple(b)] || 0);
+      case "preu-desc": return (PREU_ORDER[preusimple(b)] || 0) - (PREU_ORDER[preusimple(a)] || 0);
+      case "distancia": return (state.distances[a.id]?.distKm ?? 9999) - (state.distances[b.id]?.distKm ?? 9999);
+      case "nom":       return a.nom.localeCompare(b.nom);
+      default:          return 0;
     }
   });
   return list;
 }
 
 function preusimple(r) {
-  const m = (r.preu_google || r.preu_ta || "").match(/€+/);
+  const m = (r.preu_g || r.preu_ta || "").match(/€+/);
   return m ? m[0] : "€";
 }
 
 // ── RENDER ─────────────────────────────────────────────────────────────
 function renderAll() {
   const list = filtered();
-  filteredIds = list.map((r) => r.id);
+  filteredIds = list.map(r => r.id);
   const illaText = state.illa !== "totes" ? ` a ${ILLA_NOMS[state.illa]}` : "";
   document.querySelector(".rest-subtitle").innerHTML =
     `Selecció de restaurants a les Açores · <span id="rest-count">${list.length}</span> recomanats${illaText}`;
@@ -322,26 +337,23 @@ function renderAll() {
 function renderList(list) {
   const container = document.getElementById("rest-list");
   if (list.length === 0) {
-    container.innerHTML =
-      '<div class="rest-empty">Cap restaurant coincideix amb els filtres actuals.</div>';
+    container.innerHTML = '<div class="rest-empty">Cap restaurant coincideix amb els filtres actuals.</div>';
     return;
   }
-  container.innerHTML = list.map((r) => cardHtml(r)).join("");
-  container.querySelectorAll(".rest-card").forEach((card) => {
-    const id = parseInt(card.dataset.id);
+  container.innerHTML = list.map(r => cardHtml(r)).join("");
+  container.querySelectorAll(".rest-card").forEach(card => {
+    const id = card.dataset.id;   // string: "res-fai-01"
     initCarrusel(card);
     card.addEventListener("mouseenter", () => {
       const m = markers[id];
       if (m) m.openPopup();
     });
     card.addEventListener("mouseleave", () => {
-      Object.values(markers).forEach((m) => m.closePopup());
+      Object.values(markers).forEach(m => m.closePopup());
     });
-    card
-      .querySelector(".rest-card-top")
-      .addEventListener("click", () => toggleDetail(id));
-    card.querySelectorAll(".cuina-tag").forEach((tag) => {
-      tag.addEventListener("click", (e) => {
+    card.querySelector(".rest-card-top").addEventListener("click", () => toggleDetail(id));
+    card.querySelectorAll(".cuina-tag").forEach(tag => {
+      tag.addEventListener("click", e => {
         e.stopPropagation();
         addCuina(tag.dataset.cuina);
       });
@@ -351,85 +363,63 @@ function renderList(list) {
 
 function cardHtml(r) {
   // Primer TA (URLs estables), després Google
-  const fotosTA = (r.fotos_ta || []).map((f) => ({
-    url: f,
-    font: "TripAdvisor",
-  }));
-  const fotosG = (r.fotos_google || []).map((f) => ({
-    url: f,
-    font: "Google",
-  }));
-  const fotos = [...fotosTA, ...fotosG];
+  const fotosTA = (r.fotos_ta || []).map(f => ({ url: f, font: "TripAdvisor" }));
+  const fotosG  = (r.fotos_g  || []).map(f => ({ url: f, font: "Google" }));
+  const fotos   = [...fotosTA, ...fotosG];
 
   const fotosHtml = fotos.length
-    ? fotos
-        .slice(0, 8)
-        .map(
-          (f, i) => `
+    ? fotos.slice(0, 8).map((f, i) => `
         <div class="rest-foto-wrap${i === 0 ? " active" : ""}">
           <img class="rest-foto" src="${f.url}" loading="lazy" alt=""
                onerror="this.closest('.rest-foto-wrap').style.display='none'">
           <span class="foto-font">${f.font}</span>
-        </div>`,
-        )
-        .join("") +
+        </div>`
+      ).join("") +
       (fotos.length > 1
-        ? `<div class="foto-nav">${fotos
-            .slice(0, 8)
-            .map(
-              (_, i) =>
-                `<div class="foto-dot${i === 0 ? " active" : ""}" data-idx="${i}"></div>`,
-            )
-            .join("")}</div>`
+        ? `<div class="foto-nav">${fotos.slice(0, 8).map((_, i) =>
+            `<div class="foto-dot${i === 0 ? " active" : ""}" data-idx="${i}"></div>`
+          ).join("")}</div>`
         : "")
     : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#2d5a3d;font-size:2rem;">🍽️</div>';
 
   const editorBadge = r.editor
-    ? `<span class="badge-editor ${["gold", "silver", "bronze"][r.editor - 1]}">${["🥇", "🥈", "🥉"][r.editor - 1]}</span>`
+    ? `<span class="badge-editor ${["gold","silver","bronze"][r.editor - 1]}">${["🥇","🥈","🥉"][r.editor - 1]}</span>`
     : "";
   const top10Badge = r.top10 ? `<span class="badge-top10">🏆 Top10</span>` : "";
-  const puntGoogle = r.punt_google
-    ? `<span class="punt-item"><span class="punt-logo google">G</span><span class="punt-valor">${r.punt_google.toFixed(1)}</span><span style="font-size:0.7rem;color:#888">(${(r.res_google || 0).toLocaleString("ca")})</span></span>`
+  const puntGoogle = r.punt_g
+    ? `<span class="punt-item"><span class="punt-logo google">G</span><span class="punt-valor">${r.punt_g.toFixed(1)}</span><span style="font-size:0.7rem;color:#888">(${(r.res_g || 0).toLocaleString("ca")})</span></span>`
     : "";
   const puntTA = r.punt_ta
     ? `<span class="punt-item"><span class="punt-logo ta">T</span><span class="punt-valor">${r.punt_ta.toFixed(1)}</span><span style="font-size:0.7rem;color:#888">(${(r.res_ta || 0).toLocaleString("ca")})</span></span>`
     : "";
-  const puntPond = r.punt_ponderada
-    ? `<span class="punt-ponderada">${r.punt_ponderada.toFixed(1)}</span>`
+  const puntPond = r.punt_p
+    ? `<span class="punt-ponderada">${r.punt_p.toFixed(1)}</span>`
     : "";
   const preuHtml = [
-    r.preu_google
-      ? `<span class="preu-item"><span class="punt-logo google">G</span>${r.preu_google}</span>`
-      : "",
-    r.preu_ta
-      ? `<span class="preu-item"><span class="punt-logo ta">T</span>${r.preu_ta}</span>`
-      : "",
-  ]
-    .filter(Boolean)
-    .join("");
-  const cuinesHtml = r.cuines
-    .map((c) => `<span class="cuina-tag" data-cuina="${c}">${c}</span>`)
+    r.preu_g  ? `<span class="preu-item"><span class="punt-logo google">G</span>${r.preu_g}</span>`  : "",
+    r.preu_ta ? `<span class="preu-item"><span class="punt-logo ta">T</span>${r.preu_ta}</span>` : "",
+  ].filter(Boolean).join("");
+  const cuinesHtml = restCuines(r)
+    .map(c => `<span class="cuina-tag" data-cuina="${c}">${c}</span>`)
     .join("");
 
-  const dist = state.distances[r.id];
+  const dist    = state.distances[r.id];
   const distHtml = dist
     ? `<div class="rest-dist">🚗 <strong>${dist.temps}</strong>&nbsp;(${dist.dist}) des de ${dist.cap || state.userLabel || ""}</div>`
     : "";
 
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  const telBtn =
-    r.telefon && isMobile
-      ? `<a href="tel:${r.telefon}" class="action-btn" onclick="event.stopPropagation()">📞 Trucar</a>`
-      : "";
-  const waBtn =
-    r.google_maps && isMobile
-      ? `<a href="https://wa.me/?text=${encodeURIComponent(r.nom + " " + r.google_maps)}" class="action-btn" onclick="event.stopPropagation()">💬 Compartir</a>`
-      : "";
-  const mapsBtn = r.google_maps
-    ? `<a href="${r.google_maps}" target="_blank" class="action-btn primary" onclick="event.stopPropagation()">🗺️ Maps</a>`
+  const telBtn = r.tel && isMobile
+    ? `<a href="tel:${r.tel}" class="action-btn" onclick="event.stopPropagation()">📞 Trucar</a>`
     : "";
-  const taBtn = r.tripadvisor
-    ? `<a href="${r.tripadvisor}" target="_blank" class="action-btn" onclick="event.stopPropagation()">🦉 TripAdvisor</a>`
+  const waBtn = r.gmaps && isMobile
+    ? `<a href="https://wa.me/?text=${encodeURIComponent(r.nom + " " + r.gmaps)}" class="action-btn" onclick="event.stopPropagation()">💬 Compartir</a>`
+    : "";
+  const mapsBtn = r.gmaps
+    ? `<a href="${r.gmaps}" target="_blank" class="action-btn primary" onclick="event.stopPropagation()">🗺️ Maps</a>`
+    : "";
+  const taBtn = r.ta
+    ? `<a href="${r.ta}" target="_blank" class="action-btn" onclick="event.stopPropagation()">🦉 TripAdvisor</a>`
     : "";
 
   return `
@@ -459,19 +449,21 @@ function toggleDetail(id) {
   if (detail.classList.contains("open")) {
     detail.classList.remove("open");
     detail.innerHTML = "";
-  } else openDetail(id);
+  } else {
+    openDetail(id);
+  }
 }
 
 function openDetail(id) {
-  const r = RESTAURANTS.find((x) => x.id === id);
+  const r = RESTAURANTS[id];   // lookup directe per clau (era RESTAURANTS.find)
   if (!r) return;
   const detail = document.getElementById(`detail-${id}`);
   if (!detail) return;
-  const resHtml = (r.ressenyes || [])
-    .map((res) => {
-      const stars = "⭐".repeat(Math.round(res.puntuacio || 0));
-      const isTA = res.data && res.data.toLowerCase().includes("tripadvisor");
-      return `<div class="ressenya-item">
+
+  const resHtml = (r.ressenyes || []).map(res => {
+    const stars = "⭐".repeat(Math.round(res.punt || 0));   // era res.puntuacio
+    const isTA  = res.data && res.data.toLowerCase().includes("tripadvisor");
+    return `<div class="ressenya-item">
       <div class="ressenya-header">
         <span class="punt-logo ${isTA ? "ta" : "google"}">${isTA ? "T" : "G"}</span>
         <span class="ressenya-autor">Ressenya</span>
@@ -480,16 +472,15 @@ function openDetail(id) {
       </div>
       <div class="ressenya-text">${res.text || ""}</div>
     </div>`;
-    })
-    .join("");
+  }).join("");
+
   detail.innerHTML = `
     <div class="detail-section">
       <h4>ℹ️ Informació</h4>
       ${r.adreca ? `<div class="detail-info-item">📍 ${r.adreca}</div>` : ""}
-      ${r.plus_code ? `<div class="detail-info-item">🔲 ${r.plus_code}</div>` : ""}
       ${r.horari ? `<div class="detail-info-item">🕐 ${r.horari}</div>` : ""}
-      ${r.telefon ? `<div class="detail-info-item">📞 <a href="tel:${r.telefon}">${r.telefon}</a></div>` : ""}
-      ${r.web ? `<div class="detail-info-item">🌐 <a href="${r.web}" target="_blank">${r.web.replace(/^https?:\/\//, "")}</a></div>` : ""}
+      ${r.tel    ? `<div class="detail-info-item">📞 <a href="tel:${r.tel}">${r.tel}</a></div>` : ""}
+      ${r.web    ? `<div class="detail-info-item">🌐 <a href="${r.web}" target="_blank">${r.web.replace(/^https?:\/\//, "")}</a></div>` : ""}
     </div>
     <div class="detail-section">
       <h4>💬 Últimes ressenyes</h4>
@@ -501,7 +492,7 @@ function openDetail(id) {
 // ── CARRUSEL ───────────────────────────────────────────────────────────
 function initCarrusel(card) {
   const fotos = card.querySelectorAll(".rest-foto-wrap");
-  const dots = card.querySelectorAll(".foto-dot");
+  const dots  = card.querySelectorAll(".foto-dot");
   if (fotos.length <= 1) return;
   let current = 0;
   setInterval(() => {
@@ -511,8 +502,8 @@ function initCarrusel(card) {
     fotos[current].classList.add("active");
     dots[current]?.classList.add("active");
   }, 3000);
-  dots.forEach((dot) => {
-    dot.addEventListener("click", (e) => {
+  dots.forEach(dot => {
+    dot.addEventListener("click", e => {
       e.stopPropagation();
       fotos[current].classList.remove("active");
       dots[current]?.classList.remove("active");
@@ -529,36 +520,37 @@ async function calcDistances(ids) {
   const origin = `${state.userLat},${state.userLon}`;
   const chunks = [];
   for (let i = 0; i < ids.length; i += 25) chunks.push(ids.slice(i, i + 25));
+
   for (const chunk of chunks) {
-    const rests = chunk
-      .map((id) => RESTAURANTS.find((r) => r.id === id))
-      .filter(Boolean);
-    const dests = rests.map((r) => `${r.lat},${r.lon}`).join("|");
+    const rests = chunk.map(id => {
+      const c = restCoords(id);
+      return c ? { id, lat: c.lat, lon: c.lon } : null;
+    }).filter(Boolean);
+
+    const dests = rests.map(r => `${r.lat},${r.lon}`).join("|");
     try {
-      const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${encodeURIComponent(dests)}&mode=driving&language=ca&key=${GOOGLE_KEY}`;
-      const res = await fetch(url);
+      const url  = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origin}&destinations=${encodeURIComponent(dests)}&mode=driving&language=ca&key=${GOOGLE_KEY}`;
+      const res  = await fetch(url);
       const data = await res.json();
       if (data.rows && data.rows[0]) {
         data.rows[0].elements.forEach((el, i) => {
           if (el.status === "OK") {
             state.distances[rests[i].id] = {
-              dist: el.distance.text,
-              temps: el.duration.text,
+              dist:   el.distance.text,
+              temps:  el.duration.text,
               distKm: el.distance.value / 1000,
             };
           }
         });
       }
     } catch (e) {
-      rests.forEach((r) => {
-        if (r.lat && r.lon) {
-          const km = haversine(state.userLat, state.userLon, r.lat, r.lon);
-          state.distances[r.id] = {
-            dist: `~${km.toFixed(1)} km`,
-            temps: `~${Math.round((km / 40) * 60)} min`,
-            distKm: km,
-          };
-        }
+      rests.forEach(r => {
+        const km = haversine(state.userLat, state.userLon, r.lat, r.lon);
+        state.distances[r.id] = {
+          dist:   `~${km.toFixed(1)} km`,
+          temps:  `~${Math.round((km / 40) * 60)} min`,
+          distKm: km,
+        };
       });
     }
   }
@@ -566,14 +558,13 @@ async function calcDistances(ids) {
 }
 
 function haversine(lat1, lon1, lat2, lon2) {
-  const R = 6371,
-    dLat = ((lat2 - lat1) * Math.PI) / 180,
-    dLon = ((lon2 - lon1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
+  const R    = 6371,
+        dLat = ((lat2 - lat1) * Math.PI) / 180,
+        dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
     Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) ** 2;
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
@@ -581,17 +572,11 @@ async function geocodeText(text) {
   const queries = [`${text}, Açores, Portugal`, `${text}, Azores`, text];
   for (const q of queries) {
     try {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`;
-      const res = await fetch(url, {
-        headers: { "Accept-Language": "ca,pt,en" },
-      });
+      const url  = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`;
+      const res  = await fetch(url, { headers: { "Accept-Language": "ca,pt,en" } });
       const data = await res.json();
       if (data && data[0]) {
-        return {
-          lat: parseFloat(data[0].lat),
-          lon: parseFloat(data[0].lon),
-          label: data[0].display_name,
-        };
+        return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), label: data[0].display_name };
       }
     } catch (e) {
       console.warn("Geocode error:", e);
@@ -603,17 +588,16 @@ async function geocodeText(text) {
 // ── CUINES ─────────────────────────────────────────────────────────────
 function populateCuinesSelect() {
   const EXCLOURE = ["Bar", "Cafè", "Pub"];
-  const cuines = new Set();
-  RESTAURANTS.forEach((r) =>
-    r.cuines.forEach((c) => {
-      if (!EXCLOURE.includes(c.trim())) cuines.add(c.trim());
-    }),
+  const cuines   = new Set();
+  Object.values(RESTAURANTS).forEach(r =>
+    restCuines(r).forEach(c => {
+      if (!EXCLOURE.includes(c)) cuines.add(c);
+    })
   );
   const sel = document.getElementById("filter-cuina");
-  [...cuines].sort().forEach((c) => {
+  [...cuines].sort().forEach(c => {
     const o = document.createElement("option");
-    o.value = c;
-    o.textContent = c;
+    o.value = c; o.textContent = c;
     sel.appendChild(o);
   });
 }
@@ -626,7 +610,7 @@ function addCuina(cuina) {
 }
 
 function removeCuina(cuina) {
-  state.cuines = state.cuines.filter((c) => c !== cuina);
+  state.cuines = state.cuines.filter(c => c !== cuina);
   renderAll();
 }
 
@@ -638,62 +622,51 @@ function renderCuinesActives() {
     return;
   }
   wrap.classList.remove("hidden");
-  wrap.innerHTML =
-    '<span style="font-size:0.8rem;color:#6aab7a;">Cuina:</span> ' +
-    state.cuines
-      .map(
-        (c) => `<span class="cuina-tag-active" data-cuina="${c}">${c} ✕</span>`,
-      )
-      .join("");
-  wrap.querySelectorAll(".cuina-tag-active").forEach((tag) => {
+  wrap.innerHTML = '<span style="font-size:0.8rem;color:#6aab7a;">Cuina:</span> ' +
+    state.cuines.map(c => `<span class="cuina-tag-active" data-cuina="${c}">${c} ✕</span>`).join("");
+  wrap.querySelectorAll(".cuina-tag-active").forEach(tag => {
     tag.addEventListener("click", () => removeCuina(tag.dataset.cuina));
   });
 }
 
 // ── EVENTS ─────────────────────────────────────────────────────────────
 function bindEvents() {
-  document.querySelectorAll(".island-btn").forEach((btn) => {
+  document.querySelectorAll(".island-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".island-btn")
-        .forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".island-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       state.illa = btn.dataset.island;
       renderAll();
     });
   });
 
-  document.getElementById("filter-cuina").addEventListener("change", (e) => {
+  document.getElementById("filter-cuina").addEventListener("change", e => {
     if (e.target.value) {
       addCuina(e.target.value);
       e.target.value = "";
     }
   });
 
-  document.document
-    .getElementById("clear-cuina")
-    .addEventListener("click", () => {
-      state.cuines = [];
-      document.getElementById("filter-cuina").value = "";
-      renderAll();
-    });
+  // Fix: l'original tenia `document.document.getElementById` (bug)
+  document.getElementById("clear-cuina").addEventListener("click", () => {
+    state.cuines = [];
+    document.getElementById("filter-cuina").value = "";
+    renderAll();
+  });
 
-  document.querySelectorAll(".preu-btn").forEach((btn) => {
+  document.querySelectorAll(".preu-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".preu-btn")
-        .forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".preu-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       state.preu = btn.dataset.preu;
       renderAll();
     });
   });
 
-  document.getElementById("filter-dist").addEventListener("input", (e) => {
+  document.getElementById("filter-dist").addEventListener("input", e => {
     const val = parseInt(e.target.value);
     state.distMax = val;
-    document.getElementById("dist-label").textContent =
-      val === 0 ? "— km" : `${val} km`;
+    document.getElementById("dist-label").textContent = val === 0 ? "— km" : `${val} km`;
     document.getElementById("clear-dist").classList.toggle("hidden", val === 0);
     renderAll();
   });
@@ -708,30 +681,25 @@ function bindEvents() {
 
   document.getElementById("btn-gps").addEventListener("click", () => {
     const status = document.getElementById("pos-status");
-    if (!navigator.geolocation) {
-      status.textContent = "⚠️ GPS no disponible";
-      return;
-    }
+    if (!navigator.geolocation) { status.textContent = "⚠️ GPS no disponible"; return; }
     status.textContent = "🔄 Obtenint posició...";
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        state.userLat = pos.coords.latitude;
-        state.userLon = pos.coords.longitude;
+      pos => {
+        state.userLat   = pos.coords.latitude;
+        state.userLon   = pos.coords.longitude;
         state.userLabel = "posició actual";
-        state.usingCap = false;
+        state.usingCap  = false;
         status.textContent = "✅ Posició actual";
         document.getElementById("btn-gps").classList.add("active");
         state.distances = {};
-        calcDistances(filtered().map((r) => r.id));
+        calcDistances(filtered().map(r => r.id));
       },
-      () => {
-        status.textContent = "⚠️ No s'ha pogut obtenir la posició";
-      },
+      () => { status.textContent = "⚠️ No s'ha pogut obtenir la posició"; }
     );
   });
 
   document.getElementById("btn-pos-text").addEventListener("click", searchPos);
-  document.getElementById("pos-text").addEventListener("keydown", (e) => {
+  document.getElementById("pos-text").addEventListener("keydown", e => {
     if (e.key === "Enter") searchPos();
   });
 
@@ -742,24 +710,22 @@ function bindEvents() {
     status.textContent = "🔄 Cercant...";
     const result = await geocodeText(text);
     if (result) {
-      state.userLat = result.lat;
-      state.userLon = result.lon;
+      state.userLat   = result.lat;
+      state.userLon   = result.lon;
       state.userLabel = text;
-      state.usingCap = false;
+      state.usingCap  = false;
       status.textContent = `📍 ${result.label}`;
       document.getElementById("btn-gps").classList.remove("active");
       state.distances = {};
-      calcDistances(filtered().map((r) => r.id));
+      calcDistances(filtered().map(r => r.id));
     } else {
       status.textContent = "⚠️ No s'ha trobat la ubicació";
     }
   }
 
-  document
-    .getElementById("btn-reset-pos")
-    .addEventListener("click", resetToCapitalDist);
+  document.getElementById("btn-reset-pos").addEventListener("click", resetToCapitalDist);
 
-  document.getElementById("sort-by").addEventListener("change", (e) => {
+  document.getElementById("sort-by").addEventListener("change", e => {
     state.sortBy = e.target.value;
     renderAll();
   });

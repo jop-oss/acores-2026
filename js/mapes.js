@@ -64,6 +64,23 @@ const MP_EXC_ESTRELLES_COORDS = {
   'Vulcão dos Capelinhos':               { illa:'fa', coords:[38.6020, -28.8317] },
 };
 
+/* ══════════════════════════════════════════════════════════════
+   2b. POI_DATA LOOKUP  (coords imprescindibles + restaurants)
+══════════════════════════════════════════════════════════════ */
+const MP_POI = {};
+if (typeof POI_DATA !== 'undefined') {
+  POI_DATA.forEach(p => { if (p.id) MP_POI[p.id] = p; });
+}
+
+/** Extreu un text llegible de la URL per usar als links del panel d'info */
+function mpLinkText(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '');
+    return host.split('.')[0].replace(/-/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+  } catch { return 'Més info'; }
+}
+
 /* ── ME_ACTIVITATS.tipus → layer id ── */
 const AVENT_TIPUS_ID = {
   'Barranquisme':      'avent_barranquisme',
@@ -91,7 +108,7 @@ const CAT_EMOJI = {
 const LAYER_CFG = [
   { grup:'⭐ Essencials', open:true, items:[
     { id:'imprescindibles', label:'Imprescindibles',   emoji:'🏆', n:24,  on:true },
-    { id:'restaurants',     label:'Restaurants',       emoji:'🍽️', n:113 },
+    { id:'restaurants',     label:'Restaurants',       emoji:'🍽️', n:118 },
     { id:'allotjaments',    label:'Allotjaments',      emoji:'🏠', n:4,   on:true },
   ]},
   { grup:'📍 Llocs d\'interès', open:false, items:[
@@ -197,11 +214,16 @@ function buildLayer(id) {
   MDATA[id].inited = true;
 
   if (id === 'imprescindibles') {
-    for (const it of (IMPRESCINDIBLES || [])) {
+    // Nou format: IMPRESCINDIBLES és un objecte keyed ("imp-smi-01": {...})
+    // Camps: illa (sense accent), lloc (nom), fotos, nfotos, links (URL strings)
+    // Coords: de POI_DATA via MP_POI[key]
+    for (const [key, it] of Object.entries(IMPRESCINDIBLES || {})) {
+      const poi = MP_POI[key];
+      if (!poi) continue;
       const illa = normalIlla(it.illa);
-      addMkr(id, it.coords, illa, it.emoji || '🏆',
-        { title: it.nom, sub: MP_ILLA_NOM[illa] || '', capa:'Imprescindibles', capaEmoji:'🏆', illa,
-          desc: it.desc, links: (it.links||[]).map(l=>({text:l.text,url:l.url})),
+      addMkr(id, [poi.lat, poi.lng], illa, '🏆',
+        { title: it.lloc, sub: MP_ILLA_NOM[illa] || '', capa:'Imprescindibles', capaEmoji:'🏆', illa,
+          links: (it.links || []).map(url => ({ text: mpLinkText(url), url })),
           url:'imprescindibles.html' },
         30, true);
     }
@@ -209,19 +231,24 @@ function buildLayer(id) {
   }
 
   if (id === 'restaurants') {
-    const RMAP = { faial:'fa', pico:'pi', sj:'sj', sm:'sm' };
-    for (const r of (RESTAURANTS || [])) {
-      if (!r.lat || !r.lon) continue;
-      const illa = RMAP[r.illa] || null;
+    // Nou format: RESTAURANTS és un objecte keyed ("res-fai-01": {...})
+    // illa: "Faial"/"Pico"/"Sao Jorge"/"Sao Miguel" (normalIlla ho normalitza correctament)
+    // Coords: de POI_DATA via MP_POI[key]
+    // Camps: preu_g (era preu_google), gmaps (era google_maps), ta (era tripadvisor),
+    //         cuina string CSV (era cuines array)
+    for (const [key, r] of Object.entries(RESTAURANTS || {})) {
+      const poi = MP_POI[key];
+      if (!poi) continue;
+      const illa  = normalIlla(r.illa);
       const links = [
-        r.google_maps && { text:'Google Maps', url:r.google_maps },
-        r.web          && { text:'Web',         url:r.web },
-        r.tripadvisor  && { text:'TripAdvisor', url:r.tripadvisor },
+        r.gmaps && { text:'Google Maps', url:r.gmaps },
+        r.web   && { text:'Web',         url:r.web   },
+        r.ta    && { text:'TripAdvisor', url:r.ta    },
       ].filter(Boolean);
-      addMkr(id, [r.lat, r.lon], illa, '🍽️',
-        { title: r.nom, sub: (r.localitat || '') + (r.preu_google ? ` · ${r.preu_google}` : ''),
+      addMkr(id, [poi.lat, poi.lng], illa, '🍽️',
+        { title: r.nom, sub: (r.localitat || '') + (r.preu_g ? ` · ${r.preu_g}` : ''),
           capa:'Restaurants', capaEmoji:'🍽️', illa,
-          desc: (r.cuines||[]).join(', ') + (r.horari ? `\n${r.horari}` : ''),
+          desc: (r.cuina || '') + (r.horari ? `\n${r.horari}` : ''),
           links, url:'restaurants.html' },
         22);
     }

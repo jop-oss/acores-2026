@@ -30,7 +30,7 @@
     <a href="jocs.html" class="nav-item">Jocs</a>
     <a href="reptes.html" class="nav-item">Reptes</a>
     <a href="ruleta.html" class="nav-item">Ruleta</a>
-    <a href="material-extra.html" class="nav-item">Material extra</a>
+    <a href="material-extra.html" class="nav-item">Extra</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Canviar tema">🌙</button>
   <div class="nav-id-wrap" id="nav-id-wrap">
@@ -43,7 +43,7 @@
 
   <div class="rest-header">
     <h1>🍽️ Restaurants</h1>
-    <p class="rest-subtitle">Selecció de restaurants a les Açores · <span id="rest-count">113</span> recomanats</p>
+    <p class="rest-subtitle">Selecció de restaurants a les Açores · <span id="rest-count">118</span> recomanats</p>
   </div>
 
   <!-- FILTRES -->
@@ -99,9 +99,9 @@
           <button class="pos-btn" id="btn-gps" title="Usar GPS">📍 Posició actual</button>
           <div class="pos-input-wrap">
             <input type="text" id="pos-text" placeholder="Poble o adreça...">
-              <button class="pos-btn-small" id="btn-pos-text">→</button>
-              <button class="pos-btn-small" id="btn-reset-pos" title="Restablir a capital">↺</button>
-            </div>
+            <button class="pos-btn-small" id="btn-pos-text">→</button>
+            <button class="pos-btn-small" id="btn-reset-pos" title="Restablir a capital">↺</button>
+          </div>
           <span class="pos-status" id="pos-status"></span>
         </div>
       </div>
@@ -159,9 +159,10 @@
   <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
 </footer>
 
-<script src="js/app.js"></script>
-<script src="js/restaurants-data.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/poi-data.js"></script>
+<script src="js/restaurants-data.js"></script>
 <script src="js/restaurants.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
