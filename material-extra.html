@@ -51,7 +51,7 @@
       <h1 class="me-hero-title">📦 +INFO</h1>
       <p class="me-hero-sub">Tot el que val la pena explorar a les illes</p>
       <div class="me-hero-stats">
-        <div class="me-stat"><span class="me-stat-num">305</span><span class="me-stat-lbl">Llocs</span></div>
+        <div class="me-stat"><span class="me-stat-num">316</span><span class="me-stat-lbl">Llocs</span></div>
         <div class="me-stat-sep">·</div>
         <div class="me-stat"><span class="me-stat-num">10</span><span class="me-stat-lbl">Activitats</span></div>
         <div class="me-stat-sep">·</div>
@@ -76,12 +76,8 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SECCIÓ: LLOCS D'INTERÈS
-       ══════════════════════════════════════ -->
+  <!-- SECCIÓ: LLOCS D'INTERÈS -->
   <div class="me-seccio" id="sec-llocs">
-
-    <!-- Filtres llocs -->
     <div class="me-filtres-wrap">
       <div class="me-filtres-inner">
         <div class="me-filtres-illes" id="meIlles"></div>
@@ -106,8 +102,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Grid i links llocs -->
     <div class="me-contingut">
       <div class="me-grid" id="meGrid"></div>
       <div class="me-buit" id="meBuit">
@@ -116,12 +110,9 @@
       </div>
       <div class="me-links-seccio" id="meLinksWrap" style="display:none"></div>
     </div>
+  </div>
 
-  </div><!-- /sec-llocs -->
-
-  <!-- ══════════════════════════════════════
-       SECCIÓ: AVENTURA
-       ══════════════════════════════════════ -->
+  <!-- SECCIÓ: AVENTURA -->
   <div class="me-seccio hidden" id="sec-aventura">
     <div class="me-contingut">
       <div class="av-grid" id="avGrid"></div>
@@ -129,9 +120,6 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SECCIONS PENDENTS
-       ══════════════════════════════════════ -->
   <div class="me-seccio hidden" id="sec-senderisme"></div>
   <div class="me-seccio hidden" id="sec-excursions">
     <div class="exc-nav-wrap">
@@ -163,7 +151,14 @@
   <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
 </footer>
 
+<!-- Nova arquitectura POI: material-extra-data.js reduït (80KB en comptes de 925KB) -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/poi-data.js"></script>
+<script src="js/poi-categories.js"></script>
+<script src="js/llocs-data.js"></script>
+<script src="js/aventura-data.js"></script>
+<script src="js/excursions-data.js"></script>
+<script src="js/senderisme-data.js"></script>
 <script src="js/material-extra-data.js"></script>
 <script src="js/material-extra.js"></script>
 <script src="js/app.js"></script>

@@ -1,79 +1,142 @@
-/* ============================================================
-   MATERIAL-EXTRA.JS  ·  Açores 2026  ·  Secció: +INFO
-   ============================================================ */
-
+/* ── Categories de llocs (nova arquitectura POI) ── */
 const ME_CATS = [
-  { id: "Tots", emoji: "🗺️", label: "Tots" },
-  { id: "Miradors", emoji: "🏔️", label: "Miradors" },
-  { id: "Platges", emoji: "🏖️", label: "Platges" },
-  { id: "Piscines", emoji: "🏊", label: "Piscines" },
-  { id: "Naturalesa", emoji: "🌿", label: "Naturalesa" },
-  { id: "Aigues Termals", emoji: "♨️", label: "Aigues Termals" },
-  { id: "Jardi Botanic", emoji: "🌺", label: "Jardí Botànic" },
-  { id: "Pobles", emoji: "🏘️", label: "Pobles" },
-  { id: "Fars", emoji: "🔦", label: "Fars" },
-  { id: "Coves", emoji: "🦇", label: "Coves" },
-  { id: "Altres", emoji: "⭐", label: "Altres" },
+  { id: "Tots",       emoji: "🗺️", label: "Tots",          llocCat: null,           hasSubs: false },
+  { id: "Miradors",   emoji: "🔭", label: "Miradors",       llocCat: "Miradors",     hasSubs: false },
+  { id: "Bany",       emoji: "🏊", label: "Zones de bany",  llocCat: "Zona de bany", hasSubs: true  },
+  { id: "Naturalesa", emoji: "🌿", label: "Naturalesa",      llocCat: "Naturalesa",   hasSubs: true  },
+  { id: "Pobles",     emoji: "\U0001f3d8\ufe0f", label: "Pobles",    llocCat: "Poble/Ciutat", hasSubs: false },
+  { id: "Varis",      emoji: "📍", label: "Varis",           llocCat: "Varis",        hasSubs: true  },
 ];
-
-const ME_SUBCATS = [
-  { id: "Tots", label: "Totes" },
-  { id: "Paisatge", label: "Paisatge" },
-  { id: "Llacs", label: "Llacs" },
-  { id: "Geologia", label: "Geologia" },
-  { id: "Salts d'aigua", label: "Salts d'aigua" },
-];
-
+const ME_SUBCATS = {
+  Bany: [
+    { id: "Tots",                label: "Totes" },
+    { id: "Piscines Naturals",   label: "Piscines" },
+    { id: "Platges",             label: "Platges" },
+    { id: "Aig\u00fces termals", label: "Aigues Termals" },
+  ],
+  Naturalesa: [
+    { id: "Tots",                         label: "Totes" },
+    { id: "Paisatge",                     label: "Paisatge" },
+    { id: "Llacs",                        label: "Llacs" },
+    { id: "Geologia",                     label: "Geologia" },
+    { id: "Salts d\u2019aigua",           label: "Salts d\u2019aigua" },
+    { id: "Coves",                        label: "Coves" },
+    { id: "Jard\u00ed bot\u00e0nic",      label: "Jardins" },
+  ],
+  Varis: [
+    { id: "Tots",        label: "Tots" },
+    { id: "Fars",        label: "Fars" },
+    { id: "Plantacions", label: "Plantacions" },
+    { id: "Curiositats", label: "Curiositats" },
+    { id: "Molins",      label: "Molins" },
+    { id: "Altres",      label: "Altres" },
+  ],
+};
 const ME_ILLES = [
-  { id: "Totes", emoji: "🏝️", label: "Totes" },
-  { id: "Sao Miguel", emoji: "🌋", label: "São Miguel" },
-  { id: "Pico", emoji: "⛰️", label: "Pico" },
-  { id: "Sao Jorge", emoji: "🐉", label: "São Jorge" },
-  { id: "Faial", emoji: "💙", label: "Faial" },
+  { id: "Totes",      emoji: "🏝️", label: "Totes" },
+  { id: "Sao Miguel", emoji: "🌋", label: "S\u00e3o Miguel" },
+  { id: "Pico",       emoji: "⛰️", label: "Pico" },
+  { id: "Sao Jorge",  emoji: "🐉", label: "S\u00e3o Jorge" },
+  { id: "Faial",      emoji: "💙", label: "Faial" },
 ];
-
-const ME_CAT_EMOJI = {
-  Miradors: "🏔️",
-  Platges: "🏖️",
-  Piscines: "🏊",
-  Naturalesa: "🌿",
-  "Aigues Termals": "♨️",
-  "Jardi Botanic": "🌺",
-  Pobles: "🏘️",
-  Fars: "🔦",
-  Coves: "🦇",
-  Altres: "⭐",
-};
-const ME_CAT_LABEL = {
-  Miradors: "Mirador",
-  Platges: "Platja",
-  Piscines: "Piscina natural",
-  Naturalesa: "Naturalesa",
-  "Aigues Termals": "Aigues Termals",
-  "Jardi Botanic": "Jardí Botànic",
-  Pobles: "Poble/Ciutat",
-  Fars: "Far",
-  Coves: "Cova",
-  Altres: "Altres",
-};
 const ME_ILLA_LABEL = {
-  "Sao Miguel": "São Miguel",
-  Pico: "Pico",
-  "Sao Jorge": "São Jorge",
-  Faial: "Faial",
+  "Sao Miguel": "S\u00e3o Miguel", Pico: "Pico",
+  "Sao Jorge":  "S\u00e3o Jorge",  Faial: "Faial",
 };
-const ME_CAT_PLCHLD = {
-  Miradors: "🏔️",
-  Platges: "🏖️",
-  Piscines: "🌊",
-  Naturalesa: "🌿",
-  "Aigues Termals": "♨️",
-  "Jardi Botanic": "🌸",
-  Pobles: "🏘️",
-  Fars: "🔦",
-  Coves: "🦇",
-  Altres: "⭐",
-};
+
+function meCatLabel(cat, sub) {
+  if (cat === "Miradors")     return "Mirador";
+  if (cat === "Zona de bany") {
+    if (sub === "Piscines Naturals") return "Piscina natural";
+    if (sub === "Platges")           return "Platja";
+    return "Aigues Termals";
+  }
+  if (cat === "Naturalesa")    return (sub && sub !== "Tots") ? sub : "Naturalesa";
+  if (cat === "Poble/Ciutat")  return "Poble/Ciutat";
+  if (cat === "Varis")         return (sub && sub !== "Tots") ? sub : "Varis";
+  return cat;
+}
+function meCatPlaceholder(cat, sub) {
+  if (cat === "Miradors")     return "🔭";
+  if (cat === "Zona de bany") {
+    if (sub === "Platges")              return "🏖️";
+    if (sub === "Aig\u00fces termals")  return "♨️";
+    return "🏊";
+  }
+  if (cat === "Naturalesa") {
+    const m = { Llacs:"🏞️", Geologia:"🌋", Coves:"🕳️" };
+    if (sub && m[sub]) return m[sub];
+    if (sub === "Salts d\u2019aigua")        return "💦";
+    if (sub === "Jard\u00ed bot\u00e0nic")   return "🌺";
+    return "🌿";
+  }
+  if (cat === "Poble/Ciutat") return "\U0001f3d8\ufe0f";
+  if (cat === "Varis") {
+    const m = { Fars:"🔦", Plantacions:"🌳", Curiositats:"🤔", Molins:"⚙️" };
+    return m[sub] || "📍";
+  }
+  return "📍";
+}
+
+let _llocsArr = null;
+function getLlocsArr() {
+  if (!_llocsArr)
+    _llocsArr = Object.entries(LLOCS || {}).map(([key, l]) => ({ ...l, id: key, key }));
+  return _llocsArr;
+}
+function buildActivitats() {
+  const cats = (typeof POI_CATEGORIES !== "undefined" && POI_CATEGORIES.aventura && POI_CATEGORIES.aventura.subs) || {};
+  const byTypus = {};
+  Object.values(AVENTURA || {}).forEach((a) => {
+    if (!byTypus[a.sub]) byTypus[a.sub] = [];
+    byTypus[a.sub].push({ illa: a.illa, lloc: a.lloc });
+  });
+  return Object.entries(cats).map(([subKey, subCfg]) => {
+    const typusName = subCfg.label.includes("/") ? subCfg.label.split("/")[1] : subCfg.label;
+    return { tipus: typusName, emoji: subCfg.emoji, img: subKey, llocs: byTypus[typusName] || [] };
+  }).filter((a) => a.llocs.length > 0);
+}
+let _sendList = null;
+function getSendList() {
+  if (!_sendList) {
+    const poiMap = {};
+    (typeof POI_DATA !== "undefined" ? POI_DATA : []).forEach((p) => { poiMap[p.id] = p; });
+    _sendList = Object.entries(SENDERISME || {}).map(([key, r]) => {
+      const poi = poiMap[key];
+      return { ...r, id: key, key,
+        coords_inici: poi ? [poi.lat, poi.lng] : null,
+        start:        poi ? [poi.lat, poi.lng] : null,
+        temps: r.temps_cam, temps_total: r.temps_tot };
+    });
+  }
+  return _sendList;
+}
+const _gpxCache = {};
+let _gpxData = null;
+function parseGPXData(xmlText) {
+  try {
+    const doc = new DOMParser().parseFromString(xmlText, "application/xml");
+    const pts = [...doc.querySelectorAll("trkpt")];
+    const track = [], elevs = [];
+    pts.forEach((p) => {
+      const lat = parseFloat(p.getAttribute("lat")), lon = parseFloat(p.getAttribute("lon"));
+      const eleEl = p.querySelector("ele");
+      const ele = parseFloat(eleEl ? eleEl.textContent : "0");
+      if (!isNaN(lat) && !isNaN(lon)) { track.push([lat, lon]); elevs.push(isNaN(ele) ? 0 : ele); }
+    });
+    if (!track.length) return null;
+    const R = 6371, rad = (d) => (d * Math.PI) / 180;
+    const cumDist = [0];
+    for (let i = 1; i < track.length; i++) {
+      const [la1, lo1] = track[i-1], [la2, lo2] = track[i];
+      const dlat = rad(la2-la1), dlng = rad(lo2-lo1);
+      const a = Math.sin(dlat/2)**2 + Math.cos(rad(la1))*Math.cos(rad(la2))*Math.sin(dlng/2)**2;
+      cumDist.push(cumDist[cumDist.length-1] + R*2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    }
+    const profile = track.map((_, i) => [+(cumDist[i].toFixed(3)), Math.round(elevs[i])]);
+    return { track, profile, start: track[0], cumDist };
+  } catch (e) { return null; }
+}
 
 /* ── Estat ── */
 const ME = {
@@ -154,7 +217,7 @@ function initAventura() {
 function renderAvCards() {
   const grid = document.getElementById("avGrid");
   if (!grid) return;
-  grid.innerHTML = ME_ACTIVITATS.map((act, i) => renderAvCard(act, i)).join("");
+  grid.innerHTML = buildActivitats().map((act, i) => renderAvCard(act, i)).join("");
 }
 
 function renderAvCard(act, i) {
@@ -423,11 +486,11 @@ function renderIlles() {
 }
 
 function renderCats() {
+  const llocs = getLlocsArr();
   document.getElementById("meCats").innerHTML = ME_CATS.map((c) => {
-    const count = ME_LLOCS.filter(
-      (l) =>
-        (ME.illa === "Totes" || l.illa === ME.illa) &&
-        (c.id === "Tots" || l.categoria === c.id),
+    const count = llocs.filter((l) =>
+      (ME.illa === "Totes" || l.illa === ME.illa) &&
+      (c.id === "Tots" || l.cat === c.llocCat)
     ).length;
     if (count === 0 && c.id !== "Tots") return "";
     return `<button class="me-filtre-cat${ME.cat === c.id ? " actiu" : ""}" onclick="meSetCat('${c.id}')">
@@ -439,16 +502,18 @@ function renderCats() {
 function renderSubcats() {
   const wrap = document.getElementById("meSubcats");
   const fila = document.getElementById("meSubcatsFila");
-  const show = ME.cat === "Naturalesa";
+  const catCfg = ME_CATS.find((c) => c.id === ME.cat);
+  const show = catCfg && catCfg.hasSubs;
   wrap.classList.toggle("hidden", !show);
   if (fila) fila.classList.toggle("visible", show);
   if (!show) return;
-  wrap.innerHTML = ME_SUBCATS.map((s) => {
-    const count = ME_LLOCS.filter(
-      (l) =>
-        l.categoria === "Naturalesa" &&
-        (ME.illa === "Totes" || l.illa === ME.illa) &&
-        (s.id === "Tots" || l.subcat === s.id),
+  const llocs = getLlocsArr();
+  const subcatList = (ME_SUBCATS[ME.cat] || []);
+  wrap.innerHTML = subcatList.map((s) => {
+    const count = llocs.filter((l) =>
+      (ME.illa === "Totes" || l.illa === ME.illa) &&
+      l.cat === catCfg.llocCat &&
+      (s.id === "Tots" || l.sub === s.id)
     ).length;
     return `<button class="me-filtre-subcat${ME.subcat === s.id ? " actiu" : ""}" onclick="meSetSubcat('${s.id}')">
       ${s.label} <span class="me-filtre-num">${count}</span>
@@ -465,13 +530,7 @@ function renderExtres() {
   const zones =
     ME.illa === "Totes"
       ? []
-      : [
-          ...new Set(
-            ME_LLOCS.filter((l) => l.illa === ME.illa && l.zona).map(
-              (l) => l.zona,
-            ),
-          ),
-        ].sort();
+      : [...new Set(getLlocsArr().filter((l) => l.illa === ME.illa && l.zona).map((l) => l.zona))].sort();
   sel.innerHTML =
     `<option value="">Totes les zones</option>` +
     zones
@@ -495,7 +554,7 @@ function meSetIlla(illa) {
 }
 function meSetCat(cat) {
   ME.cat = cat;
-  if (cat !== "Naturalesa") ME.subcat = "Tots";
+  ME.subcat = "Tots";
   renderCats();
   renderSubcats();
   render();
@@ -517,15 +576,13 @@ function meSetZona() {
 
 /* ── Filtratge ── */
 function filtrarLlocs() {
-  return ME_LLOCS.filter((l) => {
+  const catCfg = ME_CATS.find((c) => c.id === ME.cat);
+  return getLlocsArr().filter((l) => {
     if (ME.illa !== "Totes" && l.illa !== ME.illa) return false;
-    if (ME.cat !== "Tots" && l.categoria !== ME.cat) return false;
-    if (
-      ME.cat === "Naturalesa" &&
-      ME.subcat !== "Tots" &&
-      l.subcat !== ME.subcat
-    )
-      return false;
+    if (ME.cat !== "Tots") {
+      if (!catCfg || l.cat !== catCfg.llocCat) return false;
+      if (catCfg.hasSubs && ME.subcat !== "Tots" && l.sub !== ME.subcat) return false;
+    }
     if (ME.destacat && !l.destacat) return false;
     if (ME.zona && l.zona !== ME.zona) return false;
     return true;
@@ -555,9 +612,10 @@ function render() {
 function renderCard(l, i) {
   const fotoSrc = l.foto ? `img/material-extra/${l.foto}.webp` : null;
   const ill_lbl = ME_ILLA_LABEL[l.illa] || l.illa;
-  const cat_lbl = ME_CAT_LABEL[l.categoria] || l.categoria;
-  const ph = ME_CAT_PLCHLD[l.categoria] || "📍";
+  const cat_lbl = meCatLabel(l.cat, l.sub);
+  const ph = meCatPlaceholder(l.cat, l.sub);
   const delay = Math.min(i * 25, 300);
+  const eid = l.key || l.id || i;
 
   const fotoHtml = fotoSrc
     ? `<img class="me-card-foto" src="${fotoSrc}" alt="${escHtml(l.nom)}" loading="lazy"
@@ -594,8 +652,8 @@ function renderCard(l, i) {
       ${
         desc
           ? `<div class="me-card-desc">
-        <div class="me-card-desc-text" id="desc-${l.id}">${escHtml(desc)}</div>
-        ${descLng ? `<button class="me-card-llegir-mes" onclick="meExpandDesc(${l.id},this)">Llegir més ▾</button>` : ""}
+        <div class="me-card-desc-text" id="desc-${eid}">${escHtml(desc)}</div>
+        ${descLng ? `<button class="me-card-llegir-mes" onclick="meExpandDesc('${eid}',this)">Llegir més ▾</button>` : ""}
       </div>`
           : ""
       }
@@ -864,212 +922,124 @@ function renderExcContingut() {
 }
 
 /* ── CETACIS ── */
+/* Espècies de cetacis observables */
+const EXC_CETACIS_ESPECIES = [
+  { nom: "Rorqual comú",     detall: "El segon cetaci més gran del món. Freqüent a les Açores." },
+  { nom: "Balena blava",     detall: "El major animal que ha existit. Ocasional a l'hivern." },
+  { nom: "Cachalot",         detall: "Resident permanent, especialment a Pico. Busseig profund." },
+  { nom: "Dofí mular",       detall: "El més comú i sociable. Present tot l'any." },
+  { nom: "Dofí comú",        detall: "S'observa en grups de centenars d'individus." },
+  { nom: "Dofí estenella",   detall: "Presenta una banda lateral daurada molt característica." },
+  { nom: "Orca",             detall: "Ocasional. Transita en ruta migratòria." },
+];
+
 function renderCetacis() {
-  const d = ME_EXCURSIONS.cetacis;
-
-  const especies = d.especies
-    .map(
-      (e) =>
-        `<div class="exc-especie">
-      <span class="exc-especie-nom">${escHtml(e.nom)}</span>
-      <span class="exc-especie-det">${escHtml(e.detall)}</span>
-    </div>`,
-    )
-    .join("");
-
-  const llocsPerIlla = {};
-  d.llocs.forEach((l) => {
-    if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
-    llocsPerIlla[l.illa].push(l);
+  const cetExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "cetacis");
+  const byIlla = {};
+  cetExcs.forEach(([key, e]) => {
+    if (!byIlla[e.illa]) byIlla[e.illa] = {};
+    if (!byIlla[e.illa][e.zona]) byIlla[e.illa][e.zona] = [];
+    byIlla[e.illa][e.zona].push(e);
   });
 
-  const llocsHtml = Object.entries(llocsPerIlla)
-    .map(
-      ([illa, llocs]) => `
+  const especiesHtml = EXC_CETACIS_ESPECIES.map((e) =>
+    `<div class="exc-especie">
+      <span class="exc-especie-nom">${escHtml(e.nom)}</span>
+      <span class="exc-especie-det">${escHtml(e.detall)}</span>
+    </div>`).join("");
+
+  const llocsHtml = Object.entries(byIlla).map(([illa, zones]) => `
     <div class="exc-illa-bloc">
       <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
       <div class="exc-llocs-grid">
-        ${llocs
-          .map(
-            (l) => `
+        ${Object.entries(zones).map(([zona, excs]) => `
           <div class="exc-lloc-card">
-            <div class="exc-lloc-nom">📍 ${escHtml(l.nom)}</div>
-            <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
-            ${
-              l.links.length
-                ? `<div class="exc-lloc-links">
-              ${l.links.map((lk) => `<a class="exc-link-btn" href="${escHtml(lk)}" target="_blank" rel="noopener">${escHtml(linkHostname(lk))}</a>`).join("")}
-            </div>`
-                : ""
-            }
-          </div>`,
-          )
-          .join("")}
+            <div class="exc-lloc-nom">📍 ${escHtml(zona)}</div>
+            <div class="exc-lloc-links">
+              ${excs.filter((e) => e.empresa).slice(0, 4).map((e) => {
+                const preuStr = e.preu && e.preu !== "n/d" ? ` · ${e.preu}€` : "";
+                const durStr = e.durada ? ` · ${e.durada}` : "";
+                const infoStr = e.info ? `<span class="exc-lloc-badge">${escHtml(e.info)}</span>` : "";
+                return `<a class="exc-lloc-link" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">
+                  ${infoStr} ${escHtml(e.sortides || "")}${durStr}${preuStr}
+                </a>`;
+              }).join("")}
+            </div>
+          </div>`).join("")}
       </div>
-    </div>`,
-    )
-    .join("");
-
-  const consells = d.consells
-    .map(
-      (c) =>
-        `<div class="exc-consell"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`,
-    )
-    .join("");
-
-  const linkGen = d.links_generals
-    .map(
-      (lk) =>
-        `<a class="me-link-item" href="${escHtml(lk)}" target="_blank" rel="noopener"><span class="me-link-url">${escHtml(lk)}</span></a>`,
-    )
-    .join("");
+    </div>`).join("");
 
   return `
-  <div class="exc-hero exc-hero-cetacis">
-    <div class="exc-hero-overlay"></div>
-    <div class="exc-hero-content">
-      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
-      <h2 class="exc-hero-titol">🐋 Avistament de Cetacis</h2>
-      <p class="exc-hero-sub">Un dels millors llocs del món per observar balenes i dofins en llibertat</p>
-    </div>
-  </div>
-
-  <div class="exc-cos">
-    <div class="exc-intro-grid">
-      <div class="exc-intro-text">
-        ${d.intro
-          .split("\n\n")
-          .map((p) => `<p>${escHtml(p)}</p>`)
-          .join("")}
+    <div class="exc-seccio">
+      <div class="exc-intro">
+        <p>Les Açores s'han convertit en un dels millors destins del món per a l'avistament de cetacis. La seva posició estratègica a l'Atlàntic, la profunditat dels seus fons i les seves aigues riques en nutrients atreuen una gran varietat d'espècies.</p>
+        <div class="exc-especies-grid">${especiesHtml}</div>
       </div>
-      <div class="exc-especies-wrap">
-        <div class="exc-especies-titol">🐠 Espècies habituals</div>
-        ${especies}
-      </div>
-    </div>
-
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">📍 On fer-ho · per porta d'embarcament</h3></div>
-    ${llocsHtml}
-
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">💡 Consells</h3></div>
-    <div class="exc-consells">${consells}</div>
-
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🔗 Més informació</h3></div>
-    <div class="me-links-grid">${linkGen}</div>
-  </div>`;
+      ${llocsHtml}
+    </div>`;
 }
 
 /* ── BARCO ── */
 function renderBarco() {
-  const d = ME_EXCURSIONS.barco;
+  const barcoExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "barco");
+  const byZona = {};
+  barcoExcs.forEach(([, e]) => {
+    if (!byZona[e.zona]) byZona[e.zona] = [];
+    byZona[e.zona].push(e);
+  });
 
-  const genLinks = d.links_generals
-    .map(
-      (l) =>
-        `<a class="exc-gen-link" href="${escHtml(l.url)}" target="_blank" rel="noopener">
-      <span class="exc-gen-link-ico">${l.url.includes("manawa") ? "🛒" : "⭐"}</span>
-      <span class="exc-gen-link-nom">${escHtml(l.nom)}</span>
-      <span class="exc-gen-link-arr">→</span>
-    </a>`,
-    )
-    .join("");
-
-  const manawa = d.activitats.filter((a) => a.font === "manawa");
-  const tripad = d.activitats.filter((a) => a.font === "tripadvisor");
-
-  const actCard = (a, i) => `
-    <a class="exc-act-card" href="${escHtml(a.url)}" target="_blank" rel="noopener"
-       style="animation-delay:${i * 40}ms">
-      <div class="exc-act-top">
-        <span class="exc-act-font exc-act-font-${a.font}">${a.font === "manawa" ? "Manawa" : "TripAdvisor"}</span>
-        <span class="exc-act-durada">⏱ ${a.durada}</span>
+  const zonesHtml = Object.entries(byZona).map(([zona, excs]) => `
+    <div class="exc-barco-zona">
+      <h3 class="exc-barco-titol">📍 ${escHtml(zona)}</h3>
+      <div class="exc-barco-grid">
+        ${excs.map((e) => {
+          const preuStr = e.preu && e.preu !== "n/d" ? `${e.preu}€` : "";
+          return `<div class="exc-barco-card${e.destacat ? " exc-barco-destacat" : ""}">
+            <div class="exc-barco-nom">${escHtml(e.nom)}</div>
+            ${e.info ? `<span class="exc-barco-tipus">${escHtml(e.info)}</span>` : ""}
+            ${e.durada ? `<span class="exc-barco-dur">⏱️ ${escHtml(e.durada)}</span>` : ""}
+            ${e.sortides ? `<div class="exc-barco-sort">🕐 ${escHtml(e.sortides)}</div>` : ""}
+            ${preuStr ? `<div class="exc-barco-preu">💶 ${preuStr}</div>` : ""}
+            ${e.empresa ? `<a class="exc-barco-link" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">Reservar</a>` : ""}
+          </div>`;
+        }).join("")}
       </div>
-      <div class="exc-act-nom">${escHtml(a.nom)}</div>
-      ${a.empresa ? `<div class="exc-act-empresa">🏢 ${escHtml(a.empresa)}</div>` : ""}
-    </a>`;
+    </div>`).join("");
 
   return `
-  <div class="exc-hero exc-hero-barco">
-    <div class="exc-hero-overlay"></div>
-    <div class="exc-hero-content">
-      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
-      <h2 class="exc-hero-titol">⛵ Passeig amb Barco</h2>
-      <p class="exc-hero-sub">Explora les costes volcàniques des del mar · São Miguel</p>
-    </div>
-  </div>
-
-  <div class="exc-cos">
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🌐 Plataformes de reserva</h3></div>
-    <div class="exc-gen-links">${genLinks}</div>
-
-    <div class="exc-seccio-sep" style="margin-top:32px">
-      <h3 class="exc-seccio-titol">🛒 Activitats a Manawa <span class="exc-count">${manawa.length}</span></h3>
-    </div>
-    <div class="exc-act-grid">${manawa.map(actCard).join("")}</div>
-
-    <div class="exc-seccio-sep" style="margin-top:32px">
-      <h3 class="exc-seccio-titol">⭐ Activitats a TripAdvisor <span class="exc-count">${tripad.length}</span></h3>
-    </div>
-    <div class="exc-act-grid">${tripad.map((a, i) => actCard(a, i + manawa.length)).join("")}</div>
-  </div>`;
+    <div class="exc-seccio">
+      <p class="exc-intro-text">Els passejos amb barco permeten descobrir la costa des del mar, explorar coves marines inaccessibles per terra i gaudir de postes de sol atlàntiques. La majoria de sortides es fan en zodiac.</p>
+      ${zonesHtml}
+    </div>`;
 }
 
 /* ── ESTRELLES ── */
 function renderEstrelles() {
-  const d = ME_EXCURSIONS.estrelles;
-
-  const llocsPerIlla = {};
-  d.llocs.forEach((l) => {
-    if (!llocsPerIlla[l.illa]) llocsPerIlla[l.illa] = [];
-    llocsPerIlla[l.illa].push(l);
+  const estExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "estrelles");
+  const byIlla = {};
+  estExcs.forEach(([, e]) => {
+    if (!byIlla[e.illa]) byIlla[e.illa] = [];
+    byIlla[e.illa].push(e);
   });
 
-  const llocsHtml = Object.entries(llocsPerIlla)
-    .map(
-      ([illa, llocs]) => `
-    <div class="exc-illa-bloc">
-      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
-      <div class="exc-llocs-grid exc-llocs-grid-estrelles">
-        ${llocs
-          .map(
-            (l, i) => `
-          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i * 60}ms">
-            <div class="exc-lloc-ico">${l.ico}</div>
-            <div class="exc-lloc-nom">${escHtml(l.nom)}</div>
-            <p class="exc-lloc-desc">${escHtml(l.desc)}</p>
-          </div>`,
-          )
-          .join("")}
+  const llocsHtml = Object.entries(byIlla).map(([illa, excs]) => `
+    <div class="exc-est-illa">
+      <h3 class="exc-est-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
+      <div class="exc-est-grid">
+        ${excs.map((e) => `
+          <div class="exc-est-card${e.destacat ? " exc-est-destacat" : ""}">
+            <div class="exc-est-nom">✨ ${escHtml(e.nom)}</div>
+            ${e.zona && e.zona !== e.nom ? `<div class="exc-est-zona">📍 ${escHtml(e.zona)}</div>` : ""}
+            ${e.info ? `<p class="exc-est-info">${escHtml(e.info)}</p>` : ""}
+          </div>`).join("")}
       </div>
-    </div>`,
-    )
-    .join("");
-
-  const consells = d.consells
-    .map(
-      (c) =>
-        `<div class="exc-consell exc-consell-nit">
-      <span class="exc-consell-ico">${c.ico}</span>
-      <span>${escHtml(c.text)}</span>
-    </div>`,
-    )
-    .join("");
+    </div>`).join("");
 
   return `
-  <div class="exc-hero exc-hero-estrelles">
-    <div class="exc-hero-overlay"></div>
-    <div class="exc-hero-content">
-      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
-      <h2 class="exc-hero-titol">🔭 Observació d'Estrelles</h2>
-      <p class="exc-hero-sub">Cel fosc, poc contaminació lumínica · els millors punts per illa</p>
-    </div>
-  </div>
-
-  <div class="exc-cos">
-    ${llocsHtml}
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🚗 Consells de conducció nocturna</h3></div>
-    <div class="exc-consells">${consells}</div>
-  </div>`;
+    <div class="exc-seccio">
+      <p class="exc-intro-text">Les Açores gaudeixen d'una de les cels nocturns més netes d'Europa. Allunyades de la contaminació lluminosa continental, les illes ofereixen condicions excepcionals per a l'observació astronòmica. Les zones d'alta muntanya, per sobre de la capa de boira baixa, permeten veure la Via Làctia a simple vista. Consell: comproveu primer la previsió de boira per a l'altitud!</p>
+      ${llocsHtml}
+    </div>`;
 }
 
 /* ══════════════════════════════════════════════
@@ -2217,11 +2187,9 @@ function sendRenderTab() {
    TAB: RUTES
    ══════════════════════════ */
 function renderSendRutes(wrap) {
+  const list = getSendList();
   const illes = SEND_ILLES.map((ill) => {
-    const cnt =
-      ill.id === "Totes"
-        ? ME_RUTES_SENDERISME.length
-        : ME_RUTES_SENDERISME.filter((r) => r.illa === ill.id).length;
+    const cnt = ill.id === "Totes" ? list.length : list.filter((r) => r.illa === ill.id).length;
     const actiu = _sendIlla === ill.id;
     return `<button class="send-pill send-pill-illa${actiu ? " actiu" : ""}"
       style="${actiu ? `--pill-c:${ill.color}` : ""}"
@@ -2240,8 +2208,7 @@ function renderSendRutes(wrap) {
   }).join("");
 
   const ordreOpts = SEND_ORDRES.map(
-    (o) =>
-      `<option value="${o.id}"${_sendOrdre === o.id ? " selected" : ""}>${o.label}</option>`,
+    (o) => `<option value="${o.id}"${_sendOrdre === o.id ? " selected" : ""}>${o.label}</option>`,
   ).join("");
 
   const rutes = sendFiltrarRutes();
@@ -2268,40 +2235,34 @@ function renderSendRutes(wrap) {
 }
 
 function sendFiltrarRutes() {
-  let rutes = ME_RUTES_SENDERISME.filter((r) => {
+  let rutes = getSendList().filter((r) => {
     if (_sendIlla !== "Totes" && r.illa !== _sendIlla) return false;
     if (_sendDif !== "Totes" && r.dificultat !== _sendDif) return false;
     return true;
   });
   if (_sendOrdre === "prioritat")
-    rutes.sort((a, b) => a.prioritat - b.prioritat || a.km - b.km);
+    rutes.sort((a, b) => (a.prioritat || 99) - (b.prioritat || 99) || a.km - b.km);
   else if (_sendOrdre === "km") rutes.sort((a, b) => a.km - b.km);
-  else if (_sendOrdre === "dp") rutes.sort((a, b) => b.dp - a.dp);
+  else if (_sendOrdre === "dp") rutes.sort((a, b) => (b.dp || 0) - (a.dp || 0));
   else rutes.sort((a, b) => a.nom.localeCompare(b.nom));
   return rutes;
 }
 
 function renderSendCard(r) {
   const illaColor = SEND_ILLA_COLOR[r.illa] || "#6aab7a";
-  const difColor = SEND_DIF_COLOR[r.dificultat] || "#6aab7a";
+  const difColor  = SEND_DIF_COLOR[r.dificultat] || "#6aab7a";
   const illaEmoji = SEND_ILLA_EMOJI[r.illa] || "";
-  const illaLbl = SEND_ILLA_LABEL[r.illa] || r.illa;
-  const tipusIco = SEND_TIPUS_ICON[r.tipus] || "";
-  const isPri1 = r.prioritat === 1;
+  const illaLbl   = SEND_ILLA_LABEL[r.illa] || r.illa;
+  const tipusIco  = SEND_TIPUS_ICON[r.tipus] || "";
+  const isPri1    = r.prioritat === 1;
 
   const linkBtns = [
-    r.visitazores &&
-      `<a class="send-card-link" href="${escHtml(r.visitazores)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🌐 VisitAzores</a>`,
-    r.wikiloc &&
-      `<a class="send-card-link" href="${escHtml(r.wikiloc)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 Wikiloc</a>`,
-    r.fullet &&
-      `<a class="send-card-link" href="${escHtml(r.fullet)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 PDF</a>`,
-  ]
-    .filter(Boolean)
-    .join("");
+    r.wikiloc && `<a class="send-card-link" href="${escHtml(r.wikiloc)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 Wikiloc</a>`,
+    r.fullet  && `<a class="send-card-link" href="${escHtml(r.fullet)}"  target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 PDF</a>`,
+    r.trails  && `<a class="send-card-link" href="${escHtml(r.trails)}"  target="_blank" rel="noopener" onclick="event.stopPropagation()">🏃 AllTrails</a>`,
+  ].filter(Boolean).join("");
 
-  const descTrunc =
-    r.desc && r.desc.length > 130 ? r.desc.slice(0, 130) + "…" : r.desc || "";
+  const descTrunc = r.desc && r.desc.length > 130 ? r.desc.slice(0, 130) + "…" : r.desc || "";
 
   return `<div class="send-card${isPri1 ? " send-card-pri" : ""}" style="--send-color:${illaColor}"
     onclick="sendOpenModal('${escHtml(r.id)}')" tabindex="0" role="button">
@@ -2317,13 +2278,14 @@ function renderSendCard(r) {
     </div>
     <div class="send-card-stats">
       <span title="Distància">📏 <strong>${r.km} km</strong></span>
-      <span title="Desnivell positiu">↑ <strong>${r.dp} m</strong></span>
+      <span title="Desnivell positiu">↑ <strong>${r.dp || 0} m</strong></span>
       <span title="Temps aproximat">⏱️ <strong>${sendFmtTemps(r.temps)}</strong></span>
     </div>
     <p class="send-card-desc">${escHtml(descTrunc)}</p>
     <div class="send-card-links">${linkBtns}</div>
   </div>`;
 }
+
 
 function sendSetIlla(illa) {
   _sendIlla = illa;
@@ -2350,49 +2312,65 @@ function sendFmtTemps(t) {
 /* ══════════════════════════
    MODAL DE RUTA
    ══════════════════════════ */
-function sendOpenModal(routeId) {
-  const r = ME_RUTES_SENDERISME.find((x) => x.id === routeId);
+async function sendOpenModal(routeId) {
+  const r = getSendList().find((x) => x.id === routeId);
   if (!r) return;
   _sendElevRoute = r;
-  _sendCumDist = r.track ? sendCalcCumDist(r.track) : null;
+  _gpxData = null;
+  _sendCumDist = null;
+
   const overlay = document.getElementById("sendModalOverlay");
   const content = document.getElementById("sendModalContingut");
   if (!overlay || !content) return;
 
   const illaColor = SEND_ILLA_COLOR[r.illa] || "#6aab7a";
-  const difColor = SEND_DIF_COLOR[r.dificultat] || "#6aab7a";
-  const illaEmoji = SEND_ILLA_EMOJI[r.illa] || "";
-  const illaLbl = SEND_ILLA_LABEL[r.illa] || r.illa;
-  const tipusIco = SEND_TIPUS_ICON[r.tipus] || "";
+  content.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:200px;color:${illaColor};font-size:1.1rem;">Carregant ruta...</div>`;
+  overlay.classList.add("visible");
+  document.body.classList.add("send-modal-open");
 
-  const consellsHtml =
-    r.consells && r.consells.length
-      ? `<div class="send-modal-consells">
+  /* Carregar GPX (amb cache) */
+  if (r.gpx) {
+    if (_gpxCache[r.id]) {
+      _gpxData = _gpxCache[r.id];
+    } else {
+      try {
+        const resp = await fetch("gpx/" + r.gpx + ".gpx");
+        if (resp.ok) {
+          _gpxData = parseGPXData(await resp.text());
+          if (_gpxData) _gpxCache[r.id] = _gpxData;
+        }
+      } catch (e) {}
+    }
+  }
+
+  /* Copiar dades GPX a _sendElevRoute per compatibilitat amb sendElevHover */
+  if (_gpxData) {
+    _sendElevRoute = Object.assign({}, r, {
+      track: _gpxData.track,
+      profile: _gpxData.profile,
+      start: _gpxData.start,
+    });
+    _sendCumDist = _gpxData.cumDist;
+  }
+
+  const difColor  = SEND_DIF_COLOR[r.dificultat] || "#6aab7a";
+  const illaEmoji = SEND_ILLA_EMOJI[r.illa] || "";
+  const illaLbl   = SEND_ILLA_LABEL[r.illa] || r.illa;
+  const tipusIco  = SEND_TIPUS_ICON[r.tipus] || "";
+  const hasTrack  = _gpxData && _gpxData.track && _gpxData.track.length > 1;
+
+  const consellsHtml = r.consells && r.consells.length
+    ? `<div class="send-modal-consells">
         <h4 class="send-modal-sub">💡 Consells específics</h4>
         <ul class="send-modal-tips">${r.consells.map((c) => `<li>${escHtml(c)}</li>`).join("")}</ul>
-      </div>`
-      : "";
-
-  const altresLinks = (r.altres || [])
-    .map(
-      (u) =>
-        `<a class="send-modal-link" href="${escHtml(u)}" target="_blank" rel="noopener">🔗 ${escHtml(linkHostname(u))}</a>`,
-    )
-    .join("");
+      </div>` : "";
 
   const linksHtml = [
-    r.track &&
-      `<button class="send-modal-link send-modal-gpx" onclick="sendDownloadGPX()">⬇️ GPX</button>`,
-    r.visitazores &&
-      `<a class="send-modal-link" href="${escHtml(r.visitazores)}" target="_blank" rel="noopener">🌐 VisitAzores</a>`,
-    r.wikiloc &&
-      `<a class="send-modal-link" href="${escHtml(r.wikiloc)}"     target="_blank" rel="noopener">📍 Wikiloc</a>`,
-    r.fullet &&
-      `<a class="send-modal-link" href="${escHtml(r.fullet)}"      target="_blank" rel="noopener">📄 Full informatiu PDF</a>`,
-    altresLinks,
-  ]
-    .filter(Boolean)
-    .join("");
+    r.gpx     && `<button class="send-modal-link send-modal-gpx" onclick="sendDownloadGPX()">⬇️ GPX</button>`,
+    r.wikiloc && `<a class="send-modal-link" href="${escHtml(r.wikiloc)}" target="_blank" rel="noopener">📍 Wikiloc</a>`,
+    r.fullet  && `<a class="send-modal-link" href="${escHtml(r.fullet)}"  target="_blank" rel="noopener">📄 Full informatiu PDF</a>`,
+    r.trails  && `<a class="send-modal-link" href="${escHtml(r.trails)}"  target="_blank" rel="noopener">🏃 AllTrails</a>`,
+  ].filter(Boolean).join("");
 
   content.innerHTML = `
     <div class="send-modal-header">
@@ -2408,14 +2386,14 @@ function sendOpenModal(routeId) {
       <div class="send-modal-vis">
         <div class="send-modal-map" id="sendModalMap"></div>
         <div class="send-modal-elev-wrap">
-          ${buildElevSvg(r.profile, illaColor)}
+          ${hasTrack ? buildElevSvg(_gpxData.profile, illaColor) : '<div class="send-elev-na">Perfil no disponible</div>'}
         </div>
       </div>
       <div class="send-modal-info">
         <div class="send-modal-stats-grid">
           <div class="send-modal-stat"><span class="send-stat-ico">📏</span><span class="send-stat-val">${r.km} km</span><span class="send-stat-lbl">Distància</span></div>
-          <div class="send-modal-stat"><span class="send-stat-ico">↑</span><span class="send-stat-val">${r.dp} m</span><span class="send-stat-lbl">Desnivell +</span></div>
-          <div class="send-modal-stat"><span class="send-stat-ico">↓</span><span class="send-stat-val">${r.dn} m</span><span class="send-stat-lbl">Desnivell −</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">↑</span><span class="send-stat-val">${r.dp || 0} m</span><span class="send-stat-lbl">Desnivell +</span></div>
+          <div class="send-modal-stat"><span class="send-stat-ico">↓</span><span class="send-stat-val">${r.dn || 0} m</span><span class="send-stat-lbl">Desnivell −</span></div>
           <div class="send-modal-stat"><span class="send-stat-ico">⏱️</span><span class="send-stat-val">${sendFmtTemps(r.temps)}</span><span class="send-stat-lbl">Temps net</span></div>
           <div class="send-modal-stat"><span class="send-stat-ico">⏳</span><span class="send-stat-val">${sendFmtTemps(r.temps_total)}</span><span class="send-stat-lbl">Temps total</span></div>
           <div class="send-modal-stat"><span class="send-stat-ico">${tipusIco}</span><span class="send-stat-val">${escHtml(r.tipus)}</span><span class="send-stat-lbl">Tipus</span></div>
@@ -2430,12 +2408,10 @@ function sendOpenModal(routeId) {
   overlay.classList.add("visible");
   document.body.classList.add("send-modal-open");
 
-  // Assign explicit height to info panel so overflow-y:auto works reliably.
-  // (flex:1 in a row container doesn't always give a concrete height for scroll.)
   requestAnimationFrame(() => {
     const modal = document.getElementById("sendModal");
-    const header = modal?.querySelector(".send-modal-header");
-    const info = modal?.querySelector(".send-modal-info");
+    const header = modal && modal.querySelector(".send-modal-header");
+    const info   = modal && modal.querySelector(".send-modal-info");
     if (modal && header && info) {
       const h = modal.clientHeight - header.offsetHeight;
       info.style.height = h + "px";
@@ -2444,8 +2420,9 @@ function sendOpenModal(routeId) {
     }
   });
 
-  setTimeout(() => initSendModalMap(r), 140);
+  setTimeout(() => initSendModalMap(_sendElevRoute), 140);
 }
+
 
 function sendHideModal() {
   _sendElevMarker = null;
@@ -2944,43 +2921,14 @@ function renderSendLinks(wrap) {
 /* ── Descàrrega GPX ── */
 function sendDownloadGPX() {
   const r = _sendElevRoute;
-  if (!r || !r.track) return;
-  const cum = _sendCumDist || sendCalcCumDist(r.track);
-  const totalKm = cum[cum.length - 1];
-  const maxKmPro = r.profile ? r.profile[r.profile.length - 1][0] : 0;
-
-  const trkpts = r.track
-    .map((pt, i) => {
-      const km = (cum[i] / totalKm) * maxKmPro;
-      const elev = r.profile ? sendInterpElev(r.profile, km, maxKmPro) : null;
-      const ele = elev !== null ? `<ele>${elev.toFixed(1)}</ele>` : "";
-      return `      <trkpt lat="${pt[0].toFixed(6)}" lon="${pt[1].toFixed(6)}">${ele}</trkpt>`;
-    })
-    .join("\n");
-
-  const gpxStr = `<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="Açores 2026"
-  xmlns="http://www.topografix.com/GPX/1/1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <trk>
-    <name>${escHtml(r.nom)}</name>
-    <desc>${escHtml(r.codi)} — ${escHtml(SEND_ILLA_LABEL[r.illa] || r.illa)}</desc>
-    <trkseg>
-${trkpts}
-    </trkseg>
-  </trk>
-</gpx>`;
-
-  const blob = new Blob([gpxStr], { type: "application/gpx+xml" });
-  const url = URL.createObjectURL(blob);
+  if (!r || !r.gpx) return;
   const a = Object.assign(document.createElement("a"), {
-    href: url,
-    download: `${r.id}.gpx`,
+    href: "gpx/" + r.gpx + ".gpx",
+    download: r.gpx + ".gpx",
   });
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 /* ── Distàncies acumulades del track (km) ── */
