@@ -1,0 +1,2737 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx xmlns:gpxtpx1="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v2" version="1.1" creator="RouteConverter 3.0">
+    <metadata>
+        <name>BUS1 to ZONA BALNEAR2; ZONA BALNEAR - CAISINHO</name>
+        <link href="http://www.garmin.com">
+            <text>Garmin International</text>
+        </link>
+        <time>2024-04-01T15:04:09.514Z</time>
+        <bounds minlat="38.445190032944083" minlon="-28.167354008182883" maxlat="38.456892678514123" maxlon="-28.11939300969243"/>
+    </metadata>
+    <wpt lat="38.456594" lon="-28.163395">
+        <ele>7.7</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>BUS1</name>
+        <cmt>BUS</cmt>
+        <desc>BUS</desc>
+        <sym>Ground Transportation</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456239" lon="-28.167354">
+        <ele>6.8</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>BUS2</name>
+        <cmt>BUS</cmt>
+        <desc>BUS</desc>
+        <sym>Ground Transportation</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.44519" lon="-28.119393">
+        <ele>405.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>BUS3</name>
+        <cmt>BUS</cmt>
+        <desc>BUS</desc>
+        <sym>Ground Transportation</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.452624" lon="-28.14645">
+        <ele>140.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>BUS_</name>
+        <cmt>BUS</cmt>
+        <desc>BUS</desc>
+        <sym>Ground Transportation</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456626" lon="-28.153745">
+        <ele>17.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>EIRA</name>
+        <cmt>EIRA</cmt>
+        <desc>EIRA</desc>
+        <sym>Custom 0</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456262" lon="-28.162324">
+        <ele>11.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>ESCOLA DE ARTESANATO</name>
+        <cmt>ESCOLA REGIONAL DE ARTESANATO</cmt>
+        <desc>ESCOLA REGIONAL DE ARTESANATO</desc>
+        <sym>School</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456188" lon="-28.163446">
+        <ele>8.6</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>IGREJA10</name>
+        <cmt>IGREJA</cmt>
+        <desc>IGREJA</desc>
+        <sym>Church</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456616" lon="-28.153894">
+        <ele>16.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>MERENDARIO1</name>
+        <cmt>MERENDRIO</cmt>
+        <desc>MERENDRIO</desc>
+        <sym>Picnic Area</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.445198" lon="-28.119507">
+        <ele>406.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>MIRADOURO TERRA ALTA</name>
+        <cmt>MIRADOURO DA TERRALTA</cmt>
+        <desc>MIRADOURO DA TERRALTA</desc>
+        <sym>Custom 1</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.45593" lon="-28.166269">
+        <ele>6.6</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>Museu Marítimo</name>
+        <cmt>MUSEU MAR
+TIMO DE CONSTRUO NAVAL</cmt>
+        <desc>MUSEU MAR TIMO DE CONSTRUO NAVAL</desc>
+        <sym>Museum</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.454438" lon="-28.142502">
+        <ele>5.2</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>POCO DE MARE3</name>
+        <cmt>POO DE MAR</cmt>
+        <desc>POO DE MAR</desc>
+        <sym>Custom 0</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456445" lon="-28.166556">
+        <ele>5.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>PORTO SANTO AMARO</name>
+        <cmt>PORTO DE SANTO AMARO (ZONA BALNEAR)</cmt>
+        <desc>PORTO DE SANTO AMARO (ZONA BALNEAR)</desc>
+        <sym>Marina</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.445235" lon="-28.119552">
+        <ele>404.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>PR 07 PIC</name>
+        <sym>Trail Head</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456439" lon="-28.153525">
+        <ele>20.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>WC21</name>
+        <cmt>WC</cmt>
+        <desc>WC</desc>
+        <sym>Restroom</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456315" lon="-28.166955">
+        <ele>5.7</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>WC5</name>
+        <cmt>WC</cmt>
+        <desc>WC</desc>
+        <sym>Restroom</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456212" lon="-28.151825">
+        <ele>12.0</ele>
+        <time>2015-11-06T17:25:59.000Z</time>
+        <name>ZONA BALNEAR2</name>
+        <cmt>ZONA BALNEAR - CAISINHO</cmt>
+        <desc>ZONA BALNEAR - CAISINHO</desc>
+        <sym>Swimming Area</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 07 PIC Caminho das Voltas</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 07 PIC Caminho das Voltas</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T17:25:59Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <trk>
+        <name>PR07 PIC</name>
+        <desc>&amp;nbsp;</desc>
+        <extensions>
+            <gpxx:TrackExtension>
+                <gpxx:DisplayColor>Red</gpxx:DisplayColor>
+            </gpxx:TrackExtension>
+        </extensions>
+        <trkseg>
+            <trkpt lat="38.4452493" lon="-28.1196538">
+                <ele>404.0</ele>
+                <name>Position 1</name>
+            </trkpt>
+            <trkpt lat="38.4452531" lon="-28.1196955">
+                <ele>405.0</ele>
+                <name>Position 2</name>
+            </trkpt>
+            <trkpt lat="38.4452829" lon="-28.1197849">
+                <ele>404.0</ele>
+                <name>Position 3</name>
+            </trkpt>
+            <trkpt lat="38.4452764" lon="-28.1197739">
+                <ele>404.0</ele>
+                <name>Position 4</name>
+            </trkpt>
+            <trkpt lat="38.4452764" lon="-28.1197908">
+                <ele>404.0</ele>
+                <name>Position 5</name>
+            </trkpt>
+            <trkpt lat="38.44532" lon="-28.1199263">
+                <ele>404.0</ele>
+                <name>Position 6</name>
+            </trkpt>
+            <trkpt lat="38.4453374" lon="-28.1199618">
+                <ele>403.0</ele>
+                <name>Position 7</name>
+            </trkpt>
+            <trkpt lat="38.4453905" lon="-28.1200816">
+                <ele>402.0</ele>
+                <name>Position 8</name>
+            </trkpt>
+            <trkpt lat="38.4454386" lon="-28.1201374">
+                <ele>400.0</ele>
+                <name>Position 9</name>
+            </trkpt>
+            <trkpt lat="38.4455122" lon="-28.1202183">
+                <ele>398.0</ele>
+                <name>Position 10</name>
+            </trkpt>
+            <trkpt lat="38.445522" lon="-28.1202392">
+                <ele>398.0</ele>
+                <name>Position 11</name>
+            </trkpt>
+            <trkpt lat="38.4455822" lon="-28.1203293">
+                <ele>396.0</ele>
+                <name>Position 12</name>
+            </trkpt>
+            <trkpt lat="38.4456199" lon="-28.1204486">
+                <ele>397.0</ele>
+                <name>Position 13</name>
+            </trkpt>
+            <trkpt lat="38.4457302" lon="-28.1206299">
+                <ele>397.0</ele>
+                <name>Position 14</name>
+            </trkpt>
+            <trkpt lat="38.4458539" lon="-28.1207634">
+                <ele>394.0</ele>
+                <name>Position 15</name>
+            </trkpt>
+            <trkpt lat="38.4459513" lon="-28.1209629">
+                <ele>387.0</ele>
+                <name>Position 16</name>
+            </trkpt>
+            <trkpt lat="38.4460849" lon="-28.121251">
+                <ele>377.0</ele>
+                <name>Position 17</name>
+            </trkpt>
+            <trkpt lat="38.4461304" lon="-28.1214066">
+                <ele>375.0</ele>
+                <name>Position 18</name>
+            </trkpt>
+            <trkpt lat="38.4461147" lon="-28.12147">
+                <ele>376.0</ele>
+                <name>Position 19</name>
+            </trkpt>
+            <trkpt lat="38.4460574" lon="-28.1215994">
+                <ele>382.0</ele>
+                <name>Position 20</name>
+            </trkpt>
+            <trkpt lat="38.4460102" lon="-28.1216818">
+                <ele>386.0</ele>
+                <name>Position 21</name>
+            </trkpt>
+            <trkpt lat="38.4460047" lon="-28.1217">
+                <ele>387.0</ele>
+                <name>Position 22</name>
+            </trkpt>
+            <trkpt lat="38.4460675" lon="-28.1218138">
+                <ele>382.0</ele>
+                <name>Position 23</name>
+            </trkpt>
+            <trkpt lat="38.4461393" lon="-28.1218842">
+                <ele>376.0</ele>
+                <name>Position 24</name>
+            </trkpt>
+            <trkpt lat="38.4462554" lon="-28.1220447">
+                <ele>368.0</ele>
+                <name>Position 25</name>
+            </trkpt>
+            <trkpt lat="38.4462949" lon="-28.122124">
+                <ele>365.0</ele>
+                <name>Position 26</name>
+            </trkpt>
+            <trkpt lat="38.4463219" lon="-28.122191">
+                <ele>363.0</ele>
+                <name>Position 27</name>
+            </trkpt>
+            <trkpt lat="38.4463938" lon="-28.1223118">
+                <ele>358.0</ele>
+                <name>Position 28</name>
+            </trkpt>
+            <trkpt lat="38.446442" lon="-28.1224024">
+                <ele>355.0</ele>
+                <name>Position 29</name>
+            </trkpt>
+            <trkpt lat="38.4464493" lon="-28.1224499">
+                <ele>355.0</ele>
+                <name>Position 30</name>
+            </trkpt>
+            <trkpt lat="38.446438" lon="-28.1224896">
+                <ele>356.0</ele>
+                <name>Position 31</name>
+            </trkpt>
+            <trkpt lat="38.446437" lon="-28.1225687">
+                <ele>355.0</ele>
+                <name>Position 32</name>
+            </trkpt>
+            <trkpt lat="38.4464751" lon="-28.1226868">
+                <ele>352.0</ele>
+                <name>Position 33</name>
+            </trkpt>
+            <trkpt lat="38.4465734" lon="-28.1228024">
+                <ele>344.0</ele>
+                <name>Position 34</name>
+            </trkpt>
+            <trkpt lat="38.4465736" lon="-28.1229137">
+                <ele>343.0</ele>
+                <name>Position 35</name>
+            </trkpt>
+            <trkpt lat="38.4465613" lon="-28.1230612">
+                <ele>343.0</ele>
+                <name>Position 36</name>
+            </trkpt>
+            <trkpt lat="38.4465137" lon="-28.1231613">
+                <ele>345.0</ele>
+                <name>Position 37</name>
+            </trkpt>
+            <trkpt lat="38.4464868" lon="-28.1232984">
+                <ele>346.0</ele>
+                <name>Position 38</name>
+            </trkpt>
+            <trkpt lat="38.4465551" lon="-28.1235829">
+                <ele>339.0</ele>
+                <name>Position 39</name>
+            </trkpt>
+            <trkpt lat="38.4466024" lon="-28.1238002">
+                <ele>334.0</ele>
+                <name>Position 40</name>
+            </trkpt>
+            <trkpt lat="38.4466095" lon="-28.1239372">
+                <ele>332.0</ele>
+                <name>Position 41</name>
+            </trkpt>
+            <trkpt lat="38.4466228" lon="-28.1241012">
+                <ele>329.0</ele>
+                <name>Position 42</name>
+            </trkpt>
+            <trkpt lat="38.4466646" lon="-28.1242504">
+                <ele>325.0</ele>
+                <name>Position 43</name>
+            </trkpt>
+            <trkpt lat="38.4466827" lon="-28.124347">
+                <ele>323.0</ele>
+                <name>Position 44</name>
+            </trkpt>
+            <trkpt lat="38.4466673" lon="-28.1245557">
+                <ele>322.0</ele>
+                <name>Position 45</name>
+            </trkpt>
+            <trkpt lat="38.4466858" lon="-28.1246875">
+                <ele>319.0</ele>
+                <name>Position 46</name>
+            </trkpt>
+            <trkpt lat="38.446719" lon="-28.1247832">
+                <ele>316.0</ele>
+                <name>Position 47</name>
+            </trkpt>
+            <trkpt lat="38.4467276" lon="-28.1248039">
+                <ele>315.0</ele>
+                <name>Position 48</name>
+            </trkpt>
+            <trkpt lat="38.4467216" lon="-28.124931">
+                <ele>314.0</ele>
+                <name>Position 49</name>
+            </trkpt>
+            <trkpt lat="38.4467014" lon="-28.1250384">
+                <ele>315.0</ele>
+                <name>Position 50</name>
+            </trkpt>
+            <trkpt lat="38.4467112" lon="-28.1251696">
+                <ele>314.0</ele>
+                <name>Position 51</name>
+            </trkpt>
+            <trkpt lat="38.4467696" lon="-28.1254341">
+                <ele>308.0</ele>
+                <name>Position 52</name>
+            </trkpt>
+            <trkpt lat="38.4468175" lon="-28.1256335">
+                <ele>304.0</ele>
+                <name>Position 53</name>
+            </trkpt>
+            <trkpt lat="38.4468345" lon="-28.1256748">
+                <ele>303.0</ele>
+                <name>Position 54</name>
+            </trkpt>
+            <trkpt lat="38.4468403" lon="-28.1256813">
+                <ele>302.0</ele>
+                <name>Position 55</name>
+            </trkpt>
+            <trkpt lat="38.4468498" lon="-28.1256856">
+                <ele>301.0</ele>
+                <name>Position 56</name>
+            </trkpt>
+            <trkpt lat="38.4468572" lon="-28.1257">
+                <ele>301.0</ele>
+                <name>Position 57</name>
+            </trkpt>
+            <trkpt lat="38.4468543" lon="-28.125694">
+                <ele>301.0</ele>
+                <name>Position 58</name>
+            </trkpt>
+            <trkpt lat="38.4468594" lon="-28.1256941">
+                <ele>301.0</ele>
+                <name>Position 59</name>
+            </trkpt>
+            <trkpt lat="38.4468469" lon="-28.125682">
+                <ele>302.0</ele>
+                <name>Position 60</name>
+            </trkpt>
+            <trkpt lat="38.4468926" lon="-28.125712">
+                <ele>298.0</ele>
+                <name>Position 61</name>
+            </trkpt>
+            <trkpt lat="38.4470122" lon="-28.1258111">
+                <ele>289.0</ele>
+                <name>Position 62</name>
+            </trkpt>
+            <trkpt lat="38.4470418" lon="-28.1259064">
+                <ele>287.0</ele>
+                <name>Position 63</name>
+            </trkpt>
+            <trkpt lat="38.4470579" lon="-28.126036">
+                <ele>285.0</ele>
+                <name>Position 64</name>
+            </trkpt>
+            <trkpt lat="38.4470761" lon="-28.1261442">
+                <ele>284.0</ele>
+                <name>Position 65</name>
+            </trkpt>
+            <trkpt lat="38.447098" lon="-28.1262321">
+                <ele>282.0</ele>
+                <name>Position 66</name>
+            </trkpt>
+            <trkpt lat="38.4470885" lon="-28.1263335">
+                <ele>283.0</ele>
+                <name>Position 67</name>
+            </trkpt>
+            <trkpt lat="38.4471114" lon="-28.1265552">
+                <ele>281.0</ele>
+                <name>Position 68</name>
+            </trkpt>
+            <trkpt lat="38.447122" lon="-28.1265737">
+                <ele>280.0</ele>
+                <name>Position 69</name>
+            </trkpt>
+            <trkpt lat="38.4471089" lon="-28.1267078">
+                <ele>281.0</ele>
+                <name>Position 70</name>
+            </trkpt>
+            <trkpt lat="38.4470795" lon="-28.1267998">
+                <ele>282.0</ele>
+                <name>Position 71</name>
+            </trkpt>
+            <trkpt lat="38.4469766" lon="-28.1270515">
+                <ele>288.0</ele>
+                <name>Position 72</name>
+            </trkpt>
+            <trkpt lat="38.4470095" lon="-28.127527">
+                <ele>281.0</ele>
+                <name>Position 73</name>
+            </trkpt>
+            <trkpt lat="38.4470144" lon="-28.1275994">
+                <ele>281.0</ele>
+                <name>Position 74</name>
+            </trkpt>
+            <trkpt lat="38.4470421" lon="-28.1276472">
+                <ele>278.0</ele>
+                <name>Position 75</name>
+            </trkpt>
+            <trkpt lat="38.4470894" lon="-28.1276883">
+                <ele>275.0</ele>
+                <name>Position 76</name>
+            </trkpt>
+            <trkpt lat="38.4471188" lon="-28.1277118">
+                <ele>273.0</ele>
+                <name>Position 77</name>
+            </trkpt>
+            <trkpt lat="38.447101" lon="-28.1278243">
+                <ele>273.0</ele>
+                <name>Position 78</name>
+            </trkpt>
+            <trkpt lat="38.4470434" lon="-28.1279479">
+                <ele>276.0</ele>
+                <name>Position 79</name>
+            </trkpt>
+            <trkpt lat="38.4469631" lon="-28.1280421">
+                <ele>281.0</ele>
+                <name>Position 80</name>
+            </trkpt>
+            <trkpt lat="38.4469057" lon="-28.1281523">
+                <ele>283.0</ele>
+                <name>Position 81</name>
+            </trkpt>
+            <trkpt lat="38.4468081" lon="-28.1282449">
+                <ele>288.0</ele>
+                <name>Position 82</name>
+            </trkpt>
+            <trkpt lat="38.4467678" lon="-28.1283404">
+                <ele>290.0</ele>
+                <name>Position 83</name>
+            </trkpt>
+            <trkpt lat="38.4468022" lon="-28.1283457">
+                <ele>288.0</ele>
+                <name>Position 84</name>
+            </trkpt>
+            <trkpt lat="38.4467901" lon="-28.1283948">
+                <ele>288.0</ele>
+                <name>Position 85</name>
+            </trkpt>
+            <trkpt lat="38.4468393" lon="-28.1284534">
+                <ele>286.0</ele>
+                <name>Position 86</name>
+            </trkpt>
+            <trkpt lat="38.4467821" lon="-28.1284538">
+                <ele>289.0</ele>
+                <name>Position 87</name>
+            </trkpt>
+            <trkpt lat="38.4467818" lon="-28.1284645">
+                <ele>289.0</ele>
+                <name>Position 88</name>
+            </trkpt>
+            <trkpt lat="38.4468831" lon="-28.1284979">
+                <ele>283.0</ele>
+                <name>Position 89</name>
+            </trkpt>
+            <trkpt lat="38.4469784" lon="-28.1286003">
+                <ele>278.0</ele>
+                <name>Position 90</name>
+            </trkpt>
+            <trkpt lat="38.4469936" lon="-28.1286919">
+                <ele>277.0</ele>
+                <name>Position 91</name>
+            </trkpt>
+            <trkpt lat="38.4470184" lon="-28.1288259">
+                <ele>275.0</ele>
+                <name>Position 92</name>
+            </trkpt>
+            <trkpt lat="38.4470596" lon="-28.1289794">
+                <ele>273.0</ele>
+                <name>Position 93</name>
+            </trkpt>
+            <trkpt lat="38.4470688" lon="-28.1291355">
+                <ele>272.0</ele>
+                <name>Position 94</name>
+            </trkpt>
+            <trkpt lat="38.4471424" lon="-28.1294043">
+                <ele>268.0</ele>
+                <name>Position 95</name>
+            </trkpt>
+            <trkpt lat="38.4472625" lon="-28.129774">
+                <ele>262.0</ele>
+                <name>Position 96</name>
+            </trkpt>
+            <trkpt lat="38.4473813" lon="-28.1299638">
+                <ele>255.0</ele>
+                <name>Position 97</name>
+            </trkpt>
+            <trkpt lat="38.4474385" lon="-28.1301182">
+                <ele>252.0</ele>
+                <name>Position 98</name>
+            </trkpt>
+            <trkpt lat="38.4474985" lon="-28.1303281">
+                <ele>249.0</ele>
+                <name>Position 99</name>
+            </trkpt>
+            <trkpt lat="38.4475611" lon="-28.1305651">
+                <ele>247.0</ele>
+                <name>Position 100</name>
+            </trkpt>
+            <trkpt lat="38.447638" lon="-28.1307479">
+                <ele>244.0</ele>
+                <name>Position 101</name>
+            </trkpt>
+            <trkpt lat="38.4476252" lon="-28.1308781">
+                <ele>245.0</ele>
+                <name>Position 102</name>
+            </trkpt>
+            <trkpt lat="38.4476223" lon="-28.1310719">
+                <ele>245.0</ele>
+                <name>Position 103</name>
+            </trkpt>
+            <trkpt lat="38.4476819" lon="-28.1311517">
+                <ele>242.0</ele>
+                <name>Position 104</name>
+            </trkpt>
+            <trkpt lat="38.4476974" lon="-28.1311847">
+                <ele>241.0</ele>
+                <name>Position 105</name>
+            </trkpt>
+            <trkpt lat="38.4476963" lon="-28.1312539">
+                <ele>241.0</ele>
+                <name>Position 106</name>
+            </trkpt>
+            <trkpt lat="38.4476951" lon="-28.1312724">
+                <ele>241.0</ele>
+                <name>Position 107</name>
+            </trkpt>
+            <trkpt lat="38.4476667" lon="-28.1313606">
+                <ele>243.0</ele>
+                <name>Position 108</name>
+            </trkpt>
+            <trkpt lat="38.4476655" lon="-28.1313878">
+                <ele>243.0</ele>
+                <name>Position 109</name>
+            </trkpt>
+            <trkpt lat="38.4476825" lon="-28.1315246">
+                <ele>242.0</ele>
+                <name>Position 110</name>
+            </trkpt>
+            <trkpt lat="38.4476904" lon="-28.1315556">
+                <ele>242.0</ele>
+                <name>Position 111</name>
+            </trkpt>
+            <trkpt lat="38.4476934" lon="-28.1315662">
+                <ele>241.0</ele>
+                <name>Position 112</name>
+            </trkpt>
+            <trkpt lat="38.4477391" lon="-28.13173">
+                <ele>239.0</ele>
+                <name>Position 113</name>
+            </trkpt>
+            <trkpt lat="38.4477859" lon="-28.131895">
+                <ele>236.0</ele>
+                <name>Position 114</name>
+            </trkpt>
+            <trkpt lat="38.447841" lon="-28.1320304">
+                <ele>233.0</ele>
+                <name>Position 115</name>
+            </trkpt>
+            <trkpt lat="38.4479019" lon="-28.132181">
+                <ele>230.0</ele>
+                <name>Position 116</name>
+            </trkpt>
+            <trkpt lat="38.4479071" lon="-28.1322652">
+                <ele>230.0</ele>
+                <name>Position 117</name>
+            </trkpt>
+            <trkpt lat="38.4479711" lon="-28.1324029">
+                <ele>226.0</ele>
+                <name>Position 118</name>
+            </trkpt>
+            <trkpt lat="38.4480343" lon="-28.1324783">
+                <ele>223.0</ele>
+                <name>Position 119</name>
+            </trkpt>
+            <trkpt lat="38.4480364" lon="-28.1324828">
+                <ele>223.0</ele>
+                <name>Position 120</name>
+            </trkpt>
+            <trkpt lat="38.448094" lon="-28.132544">
+                <ele>219.0</ele>
+                <name>Position 121</name>
+            </trkpt>
+            <trkpt lat="38.4481416" lon="-28.132657">
+                <ele>216.0</ele>
+                <name>Position 122</name>
+            </trkpt>
+            <trkpt lat="38.4481389" lon="-28.1328296">
+                <ele>216.0</ele>
+                <name>Position 123</name>
+            </trkpt>
+            <trkpt lat="38.4481066" lon="-28.1330384">
+                <ele>218.0</ele>
+                <name>Position 124</name>
+            </trkpt>
+            <trkpt lat="38.4481215" lon="-28.1332319">
+                <ele>217.0</ele>
+                <name>Position 125</name>
+            </trkpt>
+            <trkpt lat="38.4481405" lon="-28.1333463">
+                <ele>215.0</ele>
+                <name>Position 126</name>
+            </trkpt>
+            <trkpt lat="38.4481572" lon="-28.1334167">
+                <ele>214.0</ele>
+                <name>Position 127</name>
+            </trkpt>
+            <trkpt lat="38.4481938" lon="-28.1336122">
+                <ele>211.0</ele>
+                <name>Position 128</name>
+            </trkpt>
+            <trkpt lat="38.4481865" lon="-28.1337246">
+                <ele>211.0</ele>
+                <name>Position 129</name>
+            </trkpt>
+            <trkpt lat="38.448229" lon="-28.1338918">
+                <ele>208.0</ele>
+                <name>Position 130</name>
+            </trkpt>
+            <trkpt lat="38.4481964" lon="-28.1340457">
+                <ele>210.0</ele>
+                <name>Position 131</name>
+            </trkpt>
+            <trkpt lat="38.4481594" lon="-28.1341141">
+                <ele>212.0</ele>
+                <name>Position 132</name>
+            </trkpt>
+            <trkpt lat="38.4480981" lon="-28.1342232">
+                <ele>216.0</ele>
+                <name>Position 133</name>
+            </trkpt>
+            <trkpt lat="38.4481771" lon="-28.1345099">
+                <ele>211.0</ele>
+                <name>Position 134</name>
+            </trkpt>
+            <trkpt lat="38.4482099" lon="-28.1346052">
+                <ele>209.0</ele>
+                <name>Position 135</name>
+            </trkpt>
+            <trkpt lat="38.4483005" lon="-28.1347094">
+                <ele>204.0</ele>
+                <name>Position 136</name>
+            </trkpt>
+            <trkpt lat="38.4484412" lon="-28.1348274">
+                <ele>198.0</ele>
+                <name>Position 137</name>
+            </trkpt>
+            <trkpt lat="38.448483" lon="-28.1348375">
+                <ele>197.0</ele>
+                <name>Position 138</name>
+            </trkpt>
+            <trkpt lat="38.4485328" lon="-28.1348554">
+                <ele>195.0</ele>
+                <name>Position 139</name>
+            </trkpt>
+            <trkpt lat="38.448621" lon="-28.1348621">
+                <ele>191.0</ele>
+                <name>Position 140</name>
+            </trkpt>
+            <trkpt lat="38.448756" lon="-28.1348875">
+                <ele>186.0</ele>
+                <name>Position 141</name>
+            </trkpt>
+            <trkpt lat="38.4488556" lon="-28.1349917">
+                <ele>183.0</ele>
+                <name>Position 142</name>
+            </trkpt>
+            <trkpt lat="38.4488672" lon="-28.1350477">
+                <ele>183.0</ele>
+                <name>Position 143</name>
+            </trkpt>
+            <trkpt lat="38.4488697" lon="-28.1350414">
+                <ele>183.0</ele>
+                <name>Position 144</name>
+            </trkpt>
+            <trkpt lat="38.4488694" lon="-28.1350486">
+                <ele>183.0</ele>
+                <name>Position 145</name>
+            </trkpt>
+            <trkpt lat="38.4488749" lon="-28.1351202">
+                <ele>183.0</ele>
+                <name>Position 146</name>
+            </trkpt>
+            <trkpt lat="38.4488694" lon="-28.1351792">
+                <ele>184.0</ele>
+                <name>Position 147</name>
+            </trkpt>
+            <trkpt lat="38.4488842" lon="-28.1352398">
+                <ele>184.0</ele>
+                <name>Position 148</name>
+            </trkpt>
+            <trkpt lat="38.4489976" lon="-28.1353605">
+                <ele>180.0</ele>
+                <name>Position 149</name>
+            </trkpt>
+            <trkpt lat="38.4490709" lon="-28.1354185">
+                <ele>178.0</ele>
+                <name>Position 150</name>
+            </trkpt>
+            <trkpt lat="38.4491157" lon="-28.1355121">
+                <ele>176.0</ele>
+                <name>Position 151</name>
+            </trkpt>
+            <trkpt lat="38.4491511" lon="-28.1355866">
+                <ele>175.0</ele>
+                <name>Position 152</name>
+            </trkpt>
+            <trkpt lat="38.4491996" lon="-28.1357093">
+                <ele>174.0</ele>
+                <name>Position 153</name>
+            </trkpt>
+            <trkpt lat="38.4492071" lon="-28.1357412">
+                <ele>174.0</ele>
+                <name>Position 154</name>
+            </trkpt>
+            <trkpt lat="38.4492242" lon="-28.1357807">
+                <ele>173.0</ele>
+                <name>Position 155</name>
+            </trkpt>
+            <trkpt lat="38.4492295" lon="-28.135808">
+                <ele>173.2</ele>
+                <name>Position 156</name>
+            </trkpt>
+            <trkpt lat="38.4492485" lon="-28.1358512">
+                <ele>173.0</ele>
+                <name>Position 157</name>
+            </trkpt>
+            <trkpt lat="38.449297" lon="-28.1359906">
+                <ele>172.0</ele>
+                <name>Position 158</name>
+            </trkpt>
+            <trkpt lat="38.4493633" lon="-28.1361849">
+                <ele>171.0</ele>
+                <name>Position 159</name>
+            </trkpt>
+            <trkpt lat="38.449376" lon="-28.1362083">
+                <ele>171.0</ele>
+                <name>Position 160</name>
+            </trkpt>
+            <trkpt lat="38.4494018" lon="-28.1362791">
+                <ele>171.0</ele>
+                <name>Position 161</name>
+            </trkpt>
+            <trkpt lat="38.4494976" lon="-28.1364443">
+                <ele>169.0</ele>
+                <name>Position 162</name>
+            </trkpt>
+            <trkpt lat="38.4495704" lon="-28.1365423">
+                <ele>167.0</ele>
+                <name>Position 163</name>
+            </trkpt>
+            <trkpt lat="38.449579" lon="-28.1365529">
+                <ele>167.0</ele>
+                <name>Position 164</name>
+            </trkpt>
+            <trkpt lat="38.4496724" lon="-28.1366753">
+                <ele>165.0</ele>
+                <name>Position 165</name>
+            </trkpt>
+            <trkpt lat="38.4496886" lon="-28.1367618">
+                <ele>165.0</ele>
+                <name>Position 166</name>
+            </trkpt>
+            <trkpt lat="38.449706" lon="-28.1368311">
+                <ele>165.0</ele>
+                <name>Position 167</name>
+            </trkpt>
+            <trkpt lat="38.4497912" lon="-28.1370366">
+                <ele>163.0</ele>
+                <name>Position 168</name>
+            </trkpt>
+            <trkpt lat="38.4498338" lon="-28.1371453">
+                <ele>163.0</ele>
+                <name>Position 169</name>
+            </trkpt>
+            <trkpt lat="38.4499282" lon="-28.1372964">
+                <ele>161.0</ele>
+                <name>Position 170</name>
+            </trkpt>
+            <trkpt lat="38.449952" lon="-28.137361">
+                <ele>161.0</ele>
+                <name>Position 171</name>
+            </trkpt>
+            <trkpt lat="38.4499922" lon="-28.1374413">
+                <ele>160.0</ele>
+                <name>Position 172</name>
+            </trkpt>
+            <trkpt lat="38.4500529" lon="-28.1375557">
+                <ele>159.0</ele>
+                <name>Position 173</name>
+            </trkpt>
+            <trkpt lat="38.4500735" lon="-28.1376751">
+                <ele>159.0</ele>
+                <name>Position 174</name>
+            </trkpt>
+            <trkpt lat="38.4500864" lon="-28.1377153">
+                <ele>159.0</ele>
+                <name>Position 175</name>
+            </trkpt>
+            <trkpt lat="38.4501597" lon="-28.1379042">
+                <ele>157.0</ele>
+                <name>Position 176</name>
+            </trkpt>
+            <trkpt lat="38.4501644" lon="-28.1379164">
+                <ele>157.0</ele>
+                <name>Position 177</name>
+            </trkpt>
+            <trkpt lat="38.4502364" lon="-28.1380702">
+                <ele>155.0</ele>
+                <name>Position 178</name>
+            </trkpt>
+            <trkpt lat="38.4502716" lon="-28.1382101">
+                <ele>154.4</ele>
+                <name>Position 179</name>
+            </trkpt>
+            <trkpt lat="38.4502697" lon="-28.1382309">
+                <ele>154.0</ele>
+                <name>Position 180</name>
+            </trkpt>
+            <trkpt lat="38.4502826" lon="-28.1383807">
+                <ele>154.0</ele>
+                <name>Position 181</name>
+            </trkpt>
+            <trkpt lat="38.4503151" lon="-28.1384923">
+                <ele>154.0</ele>
+                <name>Position 182</name>
+            </trkpt>
+            <trkpt lat="38.4503774" lon="-28.1386241">
+                <ele>154.0</ele>
+                <name>Position 183</name>
+            </trkpt>
+            <trkpt lat="38.4504273" lon="-28.1387653">
+                <ele>154.0</ele>
+                <name>Position 184</name>
+            </trkpt>
+            <trkpt lat="38.4504501" lon="-28.1388345">
+                <ele>154.0</ele>
+                <name>Position 185</name>
+            </trkpt>
+            <trkpt lat="38.450478" lon="-28.1389155">
+                <ele>153.0</ele>
+                <name>Position 186</name>
+            </trkpt>
+            <trkpt lat="38.4505082" lon="-28.1390681">
+                <ele>154.0</ele>
+                <name>Position 187</name>
+            </trkpt>
+            <trkpt lat="38.45051" lon="-28.1390879">
+                <ele>154.0</ele>
+                <name>Position 188</name>
+            </trkpt>
+            <trkpt lat="38.4505223" lon="-28.1391627">
+                <ele>154.0</ele>
+                <name>Position 189</name>
+            </trkpt>
+            <trkpt lat="38.4505189" lon="-28.1391886">
+                <ele>154.0</ele>
+                <name>Position 190</name>
+            </trkpt>
+            <trkpt lat="38.4505291" lon="-28.1392284">
+                <ele>154.0</ele>
+                <name>Position 191</name>
+            </trkpt>
+            <trkpt lat="38.4505351" lon="-28.1392611">
+                <ele>154.0</ele>
+                <name>Position 192</name>
+            </trkpt>
+            <trkpt lat="38.4505788" lon="-28.1394263">
+                <ele>154.0</ele>
+                <name>Position 193</name>
+            </trkpt>
+            <trkpt lat="38.4505854" lon="-28.139498">
+                <ele>155.0</ele>
+                <name>Position 194</name>
+            </trkpt>
+            <trkpt lat="38.450614" lon="-28.1396542">
+                <ele>155.0</ele>
+                <name>Position 195</name>
+            </trkpt>
+            <trkpt lat="38.4506298" lon="-28.1397962">
+                <ele>155.0</ele>
+                <name>Position 196</name>
+            </trkpt>
+            <trkpt lat="38.4506497" lon="-28.1400466">
+                <ele>156.0</ele>
+                <name>Position 197</name>
+            </trkpt>
+            <trkpt lat="38.4506493" lon="-28.140078">
+                <ele>156.0</ele>
+                <name>Position 198</name>
+            </trkpt>
+            <trkpt lat="38.4506477" lon="-28.1401785">
+                <ele>156.8</ele>
+                <name>Position 199</name>
+            </trkpt>
+            <trkpt lat="38.4506457" lon="-28.1402173">
+                <ele>158.0</ele>
+                <name>Position 200</name>
+            </trkpt>
+            <trkpt lat="38.4506372" lon="-28.1403183">
+                <ele>159.0</ele>
+                <name>Position 201</name>
+            </trkpt>
+            <trkpt lat="38.4506354" lon="-28.1403562">
+                <ele>159.0</ele>
+                <name>Position 202</name>
+            </trkpt>
+            <trkpt lat="38.4506636" lon="-28.1404782">
+                <ele>159.0</ele>
+                <name>Position 203</name>
+            </trkpt>
+            <trkpt lat="38.4506685" lon="-28.1404909">
+                <ele>159.0</ele>
+                <name>Position 204</name>
+            </trkpt>
+            <trkpt lat="38.4506694" lon="-28.1405147">
+                <ele>160.0</ele>
+                <name>Position 205</name>
+            </trkpt>
+            <trkpt lat="38.4507016" lon="-28.1405448">
+                <ele>159.0</ele>
+                <name>Position 206</name>
+            </trkpt>
+            <trkpt lat="38.4507487" lon="-28.1405936">
+                <ele>158.0</ele>
+                <name>Position 207</name>
+            </trkpt>
+            <trkpt lat="38.4508186" lon="-28.1407393">
+                <ele>157.0</ele>
+                <name>Position 208</name>
+            </trkpt>
+            <trkpt lat="38.4508486" lon="-28.14087">
+                <ele>157.0</ele>
+                <name>Position 209</name>
+            </trkpt>
+            <trkpt lat="38.4508729" lon="-28.1409346">
+                <ele>157.0</ele>
+                <name>Position 210</name>
+            </trkpt>
+            <trkpt lat="38.4508873" lon="-28.141005">
+                <ele>157.0</ele>
+                <name>Position 211</name>
+            </trkpt>
+            <trkpt lat="38.4509396" lon="-28.1411262">
+                <ele>157.0</ele>
+                <name>Position 212</name>
+            </trkpt>
+            <trkpt lat="38.4509767" lon="-28.1412384">
+                <ele>157.0</ele>
+                <name>Position 213</name>
+            </trkpt>
+            <trkpt lat="38.4509906" lon="-28.1412684">
+                <ele>157.0</ele>
+                <name>Position 214</name>
+            </trkpt>
+            <trkpt lat="38.4510201" lon="-28.1414289">
+                <ele>157.0</ele>
+                <name>Position 215</name>
+            </trkpt>
+            <trkpt lat="38.4510429" lon="-28.141558">
+                <ele>158.3</ele>
+                <name>Position 216</name>
+            </trkpt>
+            <trkpt lat="38.4510804" lon="-28.1417276">
+                <ele>158.0</ele>
+                <name>Position 217</name>
+            </trkpt>
+            <trkpt lat="38.4511278" lon="-28.1419017">
+                <ele>158.0</ele>
+                <name>Position 218</name>
+            </trkpt>
+            <trkpt lat="38.4511688" lon="-28.1420916">
+                <ele>158.0</ele>
+                <name>Position 219</name>
+            </trkpt>
+            <trkpt lat="38.4512059" lon="-28.142282">
+                <ele>159.0</ele>
+                <name>Position 220</name>
+            </trkpt>
+            <trkpt lat="38.4512268" lon="-28.1423629">
+                <ele>159.0</ele>
+                <name>Position 221</name>
+            </trkpt>
+            <trkpt lat="38.4512325" lon="-28.1424031">
+                <ele>159.0</ele>
+                <name>Position 222</name>
+            </trkpt>
+            <trkpt lat="38.4512385" lon="-28.1424477">
+                <ele>159.0</ele>
+                <name>Position 223</name>
+            </trkpt>
+            <trkpt lat="38.4512621" lon="-28.1425131">
+                <ele>159.0</ele>
+                <name>Position 224</name>
+            </trkpt>
+            <trkpt lat="38.451271" lon="-28.1425452">
+                <ele>159.0</ele>
+                <name>Position 225</name>
+            </trkpt>
+            <trkpt lat="38.4513085" lon="-28.1425832">
+                <ele>158.0</ele>
+                <name>Position 226</name>
+            </trkpt>
+            <trkpt lat="38.4513223" lon="-28.1426059">
+                <ele>158.0</ele>
+                <name>Position 227</name>
+            </trkpt>
+            <trkpt lat="38.4513675" lon="-28.1426583">
+                <ele>157.0</ele>
+                <name>Position 228</name>
+            </trkpt>
+            <trkpt lat="38.4513771" lon="-28.1426963">
+                <ele>157.0</ele>
+                <name>Position 229</name>
+            </trkpt>
+            <trkpt lat="38.4514694" lon="-28.142831">
+                <ele>155.0</ele>
+                <name>Position 230</name>
+            </trkpt>
+            <trkpt lat="38.4515187" lon="-28.1429293">
+                <ele>154.4</ele>
+                <name>Position 231</name>
+            </trkpt>
+            <trkpt lat="38.451536" lon="-28.1429873">
+                <ele>154.0</ele>
+                <name>Position 232</name>
+            </trkpt>
+            <trkpt lat="38.4515877" lon="-28.1431536">
+                <ele>154.0</ele>
+                <name>Position 233</name>
+            </trkpt>
+            <trkpt lat="38.451603" lon="-28.1431897">
+                <ele>153.0</ele>
+                <name>Position 234</name>
+            </trkpt>
+            <trkpt lat="38.4516791" lon="-28.1433248">
+                <ele>152.0</ele>
+                <name>Position 235</name>
+            </trkpt>
+            <trkpt lat="38.4517013" lon="-28.1433682">
+                <ele>151.0</ele>
+                <name>Position 236</name>
+            </trkpt>
+            <trkpt lat="38.4517008" lon="-28.1433983">
+                <ele>150.0</ele>
+                <name>Position 237</name>
+            </trkpt>
+            <trkpt lat="38.4516994" lon="-28.1435045">
+                <ele>150.0</ele>
+                <name>Position 238</name>
+            </trkpt>
+            <trkpt lat="38.4516905" lon="-28.1435361">
+                <ele>151.0</ele>
+                <name>Position 239</name>
+            </trkpt>
+            <trkpt lat="38.451677" lon="-28.1436711">
+                <ele>151.1</ele>
+                <name>Position 240</name>
+            </trkpt>
+            <trkpt lat="38.4516548" lon="-28.1438232">
+                <ele>152.0</ele>
+                <name>Position 241</name>
+            </trkpt>
+            <trkpt lat="38.4516541" lon="-28.1439191">
+                <ele>152.0</ele>
+                <name>Position 242</name>
+            </trkpt>
+            <trkpt lat="38.4516329" lon="-28.1440959">
+                <ele>152.0</ele>
+                <name>Position 243</name>
+            </trkpt>
+            <trkpt lat="38.4515839" lon="-28.144303">
+                <ele>154.0</ele>
+                <name>Position 244</name>
+            </trkpt>
+            <trkpt lat="38.4515847" lon="-28.1443434">
+                <ele>154.0</ele>
+                <name>Position 245</name>
+            </trkpt>
+            <trkpt lat="38.4515964" lon="-28.1444298">
+                <ele>155.0</ele>
+                <name>Position 246</name>
+            </trkpt>
+            <trkpt lat="38.4516319" lon="-28.1445098">
+                <ele>154.0</ele>
+                <name>Position 247</name>
+            </trkpt>
+            <trkpt lat="38.4516487" lon="-28.1445232">
+                <ele>154.0</ele>
+                <name>Position 248</name>
+            </trkpt>
+            <trkpt lat="38.4516563" lon="-28.1445458">
+                <ele>154.0</ele>
+                <name>Position 249</name>
+            </trkpt>
+            <trkpt lat="38.4516595" lon="-28.1445767">
+                <ele>154.0</ele>
+                <name>Position 250</name>
+            </trkpt>
+            <trkpt lat="38.451692" lon="-28.1446358">
+                <ele>154.0</ele>
+                <name>Position 251</name>
+            </trkpt>
+            <trkpt lat="38.4517781" lon="-28.144695">
+                <ele>152.0</ele>
+                <name>Position 252</name>
+            </trkpt>
+            <trkpt lat="38.4518179" lon="-28.1447623">
+                <ele>151.0</ele>
+                <name>Position 253</name>
+            </trkpt>
+            <trkpt lat="38.4518571" lon="-28.1448307">
+                <ele>151.0</ele>
+                <name>Position 254</name>
+            </trkpt>
+            <trkpt lat="38.4518873" lon="-28.144896">
+                <ele>150.0</ele>
+                <name>Position 255</name>
+            </trkpt>
+            <trkpt lat="38.4519823" lon="-28.1450118">
+                <ele>149.0</ele>
+                <name>Position 256</name>
+            </trkpt>
+            <trkpt lat="38.452064" lon="-28.1451623">
+                <ele>148.0</ele>
+                <name>Position 257</name>
+            </trkpt>
+            <trkpt lat="38.4521172" lon="-28.1453219">
+                <ele>148.0</ele>
+                <name>Position 258</name>
+            </trkpt>
+            <trkpt lat="38.4521726" lon="-28.1454832">
+                <ele>148.0</ele>
+                <name>Position 259</name>
+            </trkpt>
+            <trkpt lat="38.4522315" lon="-28.145614">
+                <ele>148.0</ele>
+                <name>Position 260</name>
+            </trkpt>
+            <trkpt lat="38.4522691" lon="-28.1456948">
+                <ele>147.0</ele>
+                <name>Position 261</name>
+            </trkpt>
+            <trkpt lat="38.4523179" lon="-28.145866">
+                <ele>147.0</ele>
+                <name>Position 262</name>
+            </trkpt>
+            <trkpt lat="38.4523527" lon="-28.1459572">
+                <ele>147.0</ele>
+                <name>Position 263</name>
+            </trkpt>
+            <trkpt lat="38.4524046" lon="-28.1461214">
+                <ele>145.0</ele>
+                <name>Position 264</name>
+            </trkpt>
+            <trkpt lat="38.4524266" lon="-28.1461988">
+                <ele>145.0</ele>
+                <name>Position 265</name>
+            </trkpt>
+            <trkpt lat="38.452449" lon="-28.1462637">
+                <ele>144.0</ele>
+                <name>Position 266</name>
+            </trkpt>
+            <trkpt lat="38.4524763" lon="-28.1463131">
+                <ele>144.0</ele>
+                <name>Position 267</name>
+            </trkpt>
+            <trkpt lat="38.452508" lon="-28.1463702">
+                <ele>143.0</ele>
+                <name>Position 268</name>
+            </trkpt>
+            <trkpt lat="38.4525706" lon="-28.1464094">
+                <ele>141.0</ele>
+                <name>Position 269</name>
+            </trkpt>
+            <trkpt lat="38.4525745" lon="-28.1465946">
+                <ele>141.0</ele>
+                <name>Position 270</name>
+            </trkpt>
+            <trkpt lat="38.4526007" lon="-28.1466359">
+                <ele>141.0</ele>
+                <name>Position 271</name>
+            </trkpt>
+            <trkpt lat="38.4527675" lon="-28.1467233">
+                <ele>135.7</ele>
+                <name>Position 272</name>
+            </trkpt>
+            <trkpt lat="38.4528471" lon="-28.1468069">
+                <ele>133.0</ele>
+                <name>Position 273</name>
+            </trkpt>
+            <trkpt lat="38.4529139" lon="-28.146814">
+                <ele>132.0</ele>
+                <name>Position 274</name>
+            </trkpt>
+            <trkpt lat="38.4529451" lon="-28.1467711">
+                <ele>131.0</ele>
+                <name>Position 275</name>
+            </trkpt>
+            <trkpt lat="38.4530223" lon="-28.1467094">
+                <ele>130.0</ele>
+                <name>Position 276</name>
+            </trkpt>
+            <trkpt lat="38.4531327" lon="-28.1466059">
+                <ele>127.0</ele>
+                <name>Position 277</name>
+            </trkpt>
+            <trkpt lat="38.4532435" lon="-28.1465298">
+                <ele>124.0</ele>
+                <name>Position 278</name>
+            </trkpt>
+            <trkpt lat="38.4533479" lon="-28.1464874">
+                <ele>122.0</ele>
+                <name>Position 279</name>
+            </trkpt>
+            <trkpt lat="38.453411" lon="-28.1464755">
+                <ele>119.0</ele>
+                <name>Position 280</name>
+            </trkpt>
+            <trkpt lat="38.4535061" lon="-28.1464098">
+                <ele>115.0</ele>
+                <name>Position 281</name>
+            </trkpt>
+            <trkpt lat="38.4536199" lon="-28.1463438">
+                <ele>109.0</ele>
+                <name>Position 282</name>
+            </trkpt>
+            <trkpt lat="38.4537048" lon="-28.1463052">
+                <ele>105.0</ele>
+                <name>Position 283</name>
+            </trkpt>
+            <trkpt lat="38.4537501" lon="-28.1462418">
+                <ele>103.0</ele>
+                <name>Position 284</name>
+            </trkpt>
+            <trkpt lat="38.4537715" lon="-28.1462332">
+                <ele>102.0</ele>
+                <name>Position 285</name>
+            </trkpt>
+            <trkpt lat="38.4538127" lon="-28.1462162">
+                <ele>100.0</ele>
+                <name>Position 286</name>
+            </trkpt>
+            <trkpt lat="38.4538461" lon="-28.1462943">
+                <ele>99.0</ele>
+                <name>Position 287</name>
+            </trkpt>
+            <trkpt lat="38.4538506" lon="-28.1462975">
+                <ele>99.0</ele>
+                <name>Position 288</name>
+            </trkpt>
+            <trkpt lat="38.453858" lon="-28.1462672">
+                <ele>98.0</ele>
+                <name>Position 289</name>
+            </trkpt>
+            <trkpt lat="38.453868" lon="-28.1462304">
+                <ele>97.0</ele>
+                <name>Position 290</name>
+            </trkpt>
+            <trkpt lat="38.4539095" lon="-28.1461135">
+                <ele>94.0</ele>
+                <name>Position 291</name>
+            </trkpt>
+            <trkpt lat="38.4539222" lon="-28.1460549">
+                <ele>92.0</ele>
+                <name>Position 292</name>
+            </trkpt>
+            <trkpt lat="38.4539683" lon="-28.1461368">
+                <ele>91.0</ele>
+                <name>Position 293</name>
+            </trkpt>
+            <trkpt lat="38.4539918" lon="-28.146193">
+                <ele>91.0</ele>
+                <name>Position 294</name>
+            </trkpt>
+            <trkpt lat="38.4540686" lon="-28.1462335">
+                <ele>88.0</ele>
+                <name>Position 295</name>
+            </trkpt>
+            <trkpt lat="38.4540739" lon="-28.1462418">
+                <ele>88.0</ele>
+                <name>Position 296</name>
+            </trkpt>
+            <trkpt lat="38.4540939" lon="-28.1462434">
+                <ele>87.0</ele>
+                <name>Position 297</name>
+            </trkpt>
+            <trkpt lat="38.4541" lon="-28.1462375">
+                <ele>87.0</ele>
+                <name>Position 298</name>
+            </trkpt>
+            <trkpt lat="38.4541002" lon="-28.1462367">
+                <ele>87.0</ele>
+                <name>Position 299</name>
+            </trkpt>
+            <trkpt lat="38.4541104" lon="-28.1461755">
+                <ele>85.0</ele>
+                <name>Position 300</name>
+            </trkpt>
+            <trkpt lat="38.4541066" lon="-28.1462113">
+                <ele>86.0</ele>
+                <name>Position 301</name>
+            </trkpt>
+            <trkpt lat="38.4541115" lon="-28.1462489">
+                <ele>87.0</ele>
+                <name>Position 302</name>
+            </trkpt>
+            <trkpt lat="38.4541204" lon="-28.1462645">
+                <ele>86.0</ele>
+                <name>Position 303</name>
+            </trkpt>
+            <trkpt lat="38.4541391" lon="-28.1462776">
+                <ele>86.0</ele>
+                <name>Position 304</name>
+            </trkpt>
+            <trkpt lat="38.4541408" lon="-28.1462771">
+                <ele>86.0</ele>
+                <name>Position 305</name>
+            </trkpt>
+            <trkpt lat="38.4541403" lon="-28.1462524">
+                <ele>85.2</ele>
+                <name>Position 306</name>
+            </trkpt>
+            <trkpt lat="38.4541919" lon="-28.146235">
+                <ele>83.0</ele>
+                <name>Position 307</name>
+            </trkpt>
+            <trkpt lat="38.4542935" lon="-28.1462635">
+                <ele>79.0</ele>
+                <name>Position 308</name>
+            </trkpt>
+            <trkpt lat="38.4543116" lon="-28.1462704">
+                <ele>78.0</ele>
+                <name>Position 309</name>
+            </trkpt>
+            <trkpt lat="38.4544632" lon="-28.1463301">
+                <ele>73.0</ele>
+                <name>Position 310</name>
+            </trkpt>
+            <trkpt lat="38.4545016" lon="-28.1463288">
+                <ele>71.0</ele>
+                <name>Position 311</name>
+            </trkpt>
+            <trkpt lat="38.4544874" lon="-28.1462943">
+                <ele>72.0</ele>
+                <name>Position 312</name>
+            </trkpt>
+            <trkpt lat="38.4544627" lon="-28.1462407">
+                <ele>72.0</ele>
+                <name>Position 313</name>
+            </trkpt>
+            <trkpt lat="38.454468" lon="-28.1461708">
+                <ele>70.0</ele>
+                <name>Position 314</name>
+            </trkpt>
+            <trkpt lat="38.4545021" lon="-28.1461148">
+                <ele>68.0</ele>
+                <name>Position 315</name>
+            </trkpt>
+            <trkpt lat="38.4545001" lon="-28.1460477">
+                <ele>67.0</ele>
+                <name>Position 316</name>
+            </trkpt>
+            <trkpt lat="38.4545103" lon="-28.1460608">
+                <ele>67.0</ele>
+                <name>Position 317</name>
+            </trkpt>
+            <trkpt lat="38.4545089" lon="-28.1460665">
+                <ele>67.0</ele>
+                <name>Position 318</name>
+            </trkpt>
+            <trkpt lat="38.4545278" lon="-28.1460328">
+                <ele>66.0</ele>
+                <name>Position 319</name>
+            </trkpt>
+            <trkpt lat="38.4545379" lon="-28.1460211">
+                <ele>65.0</ele>
+                <name>Position 320</name>
+            </trkpt>
+            <trkpt lat="38.4545357" lon="-28.145969">
+                <ele>64.0</ele>
+                <name>Position 321</name>
+            </trkpt>
+            <trkpt lat="38.4545505" lon="-28.1458704">
+                <ele>62.0</ele>
+                <name>Position 322</name>
+            </trkpt>
+            <trkpt lat="38.4545688" lon="-28.1457344">
+                <ele>59.0</ele>
+                <name>Position 323</name>
+            </trkpt>
+            <trkpt lat="38.4545961" lon="-28.1456729">
+                <ele>57.0</ele>
+                <name>Position 324</name>
+            </trkpt>
+            <trkpt lat="38.4547456" lon="-28.1455921">
+                <ele>50.0</ele>
+                <name>Position 325</name>
+            </trkpt>
+            <trkpt lat="38.4548172" lon="-28.145534">
+                <ele>47.0</ele>
+                <name>Position 326</name>
+            </trkpt>
+            <trkpt lat="38.4548643" lon="-28.145414">
+                <ele>45.0</ele>
+                <name>Position 327</name>
+            </trkpt>
+            <trkpt lat="38.4548731" lon="-28.1453651">
+                <ele>44.0</ele>
+                <name>Position 328</name>
+            </trkpt>
+            <trkpt lat="38.4548401" lon="-28.1452115">
+                <ele>43.0</ele>
+                <name>Position 329</name>
+            </trkpt>
+            <trkpt lat="38.4547866" lon="-28.1450356">
+                <ele>42.0</ele>
+                <name>Position 330</name>
+            </trkpt>
+            <trkpt lat="38.4547277" lon="-28.1448488">
+                <ele>40.0</ele>
+                <name>Position 331</name>
+            </trkpt>
+            <trkpt lat="38.454707" lon="-28.1447867">
+                <ele>39.0</ele>
+                <name>Position 332</name>
+            </trkpt>
+            <trkpt lat="38.45462" lon="-28.1446037">
+                <ele>37.0</ele>
+                <name>Position 333</name>
+            </trkpt>
+            <trkpt lat="38.4545232" lon="-28.1444386">
+                <ele>34.0</ele>
+                <name>Position 334</name>
+            </trkpt>
+            <trkpt lat="38.454507" lon="-28.1443373">
+                <ele>32.0</ele>
+                <name>Position 335</name>
+            </trkpt>
+            <trkpt lat="38.4545441" lon="-28.144162">
+                <ele>29.0</ele>
+                <name>Position 336</name>
+            </trkpt>
+            <trkpt lat="38.4545413" lon="-28.1440932">
+                <ele>28.0</ele>
+                <name>Position 337</name>
+            </trkpt>
+            <trkpt lat="38.4544997" lon="-28.1439995">
+                <ele>26.0</ele>
+                <name>Position 338</name>
+            </trkpt>
+            <trkpt lat="38.4543828" lon="-28.1439279">
+                <ele>25.0</ele>
+                <name>Position 339</name>
+            </trkpt>
+            <trkpt lat="38.4542333" lon="-28.1439465">
+                <ele>25.0</ele>
+                <name>Position 340</name>
+            </trkpt>
+            <trkpt lat="38.454025" lon="-28.1439539">
+                <ele>30.0</ele>
+                <name>Position 341</name>
+            </trkpt>
+            <trkpt lat="38.4539825" lon="-28.1439097">
+                <ele>31.0</ele>
+                <name>Position 342</name>
+            </trkpt>
+            <trkpt lat="38.4539221" lon="-28.1437538">
+                <ele>29.0</ele>
+                <name>Position 343</name>
+            </trkpt>
+            <trkpt lat="38.4539177" lon="-28.1435989">
+                <ele>26.0</ele>
+                <name>Position 344</name>
+            </trkpt>
+            <trkpt lat="38.4539774" lon="-28.1434145">
+                <ele>20.0</ele>
+                <name>Position 345</name>
+            </trkpt>
+            <trkpt lat="38.4539915" lon="-28.1433632">
+                <ele>18.0</ele>
+                <name>Position 346</name>
+            </trkpt>
+            <trkpt lat="38.4540334" lon="-28.1432773">
+                <ele>16.0</ele>
+                <name>Position 347</name>
+            </trkpt>
+            <trkpt lat="38.4540451" lon="-28.1432377">
+                <ele>15.0</ele>
+                <name>Position 348</name>
+            </trkpt>
+            <trkpt lat="38.4541013" lon="-28.1430692">
+                <ele>12.0</ele>
+                <name>Position 349</name>
+            </trkpt>
+            <trkpt lat="38.4541063" lon="-28.1430584">
+                <ele>12.0</ele>
+                <name>Position 350</name>
+            </trkpt>
+            <trkpt lat="38.454192" lon="-28.1429008">
+                <ele>9.4</ele>
+                <name>Position 351</name>
+            </trkpt>
+            <trkpt lat="38.4543023" lon="-28.1427774">
+                <ele>8.2</ele>
+                <name>Position 352</name>
+            </trkpt>
+            <trkpt lat="38.4544" lon="-28.142651">
+                <ele>6.8</ele>
+                <name>Position 353</name>
+            </trkpt>
+            <trkpt lat="38.4544266" lon="-28.1425872">
+                <ele>6.1</ele>
+                <name>Position 354</name>
+            </trkpt>
+            <trkpt lat="38.454408" lon="-28.1426006">
+                <ele>6.3</ele>
+                <name>Position 355</name>
+            </trkpt>
+            <trkpt lat="38.4543952" lon="-28.1426291">
+                <ele>6.6</ele>
+                <name>Position 356</name>
+            </trkpt>
+            <trkpt lat="38.4543966" lon="-28.1426358">
+                <ele>6.7</ele>
+                <name>Position 357</name>
+            </trkpt>
+            <trkpt lat="38.4543059" lon="-28.1427502">
+                <ele>7.9</ele>
+                <name>Position 358</name>
+            </trkpt>
+            <trkpt lat="38.4542041" lon="-28.1428773">
+                <ele>9.1</ele>
+                <name>Position 359</name>
+            </trkpt>
+            <trkpt lat="38.4541907" lon="-28.14289">
+                <ele>9.3</ele>
+                <name>Position 360</name>
+            </trkpt>
+            <trkpt lat="38.454109" lon="-28.143022">
+                <ele>12.0</ele>
+                <name>Position 361</name>
+            </trkpt>
+            <trkpt lat="38.4541168" lon="-28.1430528">
+                <ele>12.0</ele>
+                <name>Position 362</name>
+            </trkpt>
+            <trkpt lat="38.4541024" lon="-28.1431103">
+                <ele>13.0</ele>
+                <name>Position 363</name>
+            </trkpt>
+            <trkpt lat="38.4540545" lon="-28.1432476">
+                <ele>15.0</ele>
+                <name>Position 364</name>
+            </trkpt>
+            <trkpt lat="38.4540032" lon="-28.1433803">
+                <ele>18.0</ele>
+                <name>Position 365</name>
+            </trkpt>
+            <trkpt lat="38.4539953" lon="-28.1434084">
+                <ele>19.0</ele>
+                <name>Position 366</name>
+            </trkpt>
+            <trkpt lat="38.4539914" lon="-28.1434461">
+                <ele>20.0</ele>
+                <name>Position 367</name>
+            </trkpt>
+            <trkpt lat="38.4539436" lon="-28.1434994">
+                <ele>22.0</ele>
+                <name>Position 368</name>
+            </trkpt>
+            <trkpt lat="38.4539305" lon="-28.1435186">
+                <ele>23.0</ele>
+                <name>Position 369</name>
+            </trkpt>
+            <trkpt lat="38.4539293" lon="-28.1435454">
+                <ele>24.0</ele>
+                <name>Position 370</name>
+            </trkpt>
+            <trkpt lat="38.4539252" lon="-28.1436376">
+                <ele>26.0</ele>
+                <name>Position 371</name>
+            </trkpt>
+            <trkpt lat="38.4539252" lon="-28.1436805">
+                <ele>27.0</ele>
+                <name>Position 372</name>
+            </trkpt>
+            <trkpt lat="38.4539483" lon="-28.1437368">
+                <ele>28.0</ele>
+                <name>Position 373</name>
+            </trkpt>
+            <trkpt lat="38.4539689" lon="-28.1437807">
+                <ele>28.0</ele>
+                <name>Position 374</name>
+            </trkpt>
+            <trkpt lat="38.453977" lon="-28.1438113">
+                <ele>29.0</ele>
+                <name>Position 375</name>
+            </trkpt>
+            <trkpt lat="38.4540187" lon="-28.1438607">
+                <ele>28.0</ele>
+                <name>Position 376</name>
+            </trkpt>
+            <trkpt lat="38.4540407" lon="-28.1438902">
+                <ele>28.0</ele>
+                <name>Position 377</name>
+            </trkpt>
+            <trkpt lat="38.4541151" lon="-28.1439326">
+                <ele>26.0</ele>
+                <name>Position 378</name>
+            </trkpt>
+            <trkpt lat="38.4541499" lon="-28.1439329">
+                <ele>25.0</ele>
+                <name>Position 379</name>
+            </trkpt>
+            <trkpt lat="38.4541702" lon="-28.1439427">
+                <ele>25.0</ele>
+                <name>Position 380</name>
+            </trkpt>
+            <trkpt lat="38.4542656" lon="-28.143963">
+                <ele>25.0</ele>
+                <name>Position 381</name>
+            </trkpt>
+            <trkpt lat="38.4542925" lon="-28.1439377">
+                <ele>25.0</ele>
+                <name>Position 382</name>
+            </trkpt>
+            <trkpt lat="38.4542903" lon="-28.1439341">
+                <ele>25.0</ele>
+                <name>Position 383</name>
+            </trkpt>
+            <trkpt lat="38.4542876" lon="-28.1439434">
+                <ele>25.0</ele>
+                <name>Position 384</name>
+            </trkpt>
+            <trkpt lat="38.4542882" lon="-28.14394">
+                <ele>25.0</ele>
+                <name>Position 385</name>
+            </trkpt>
+            <trkpt lat="38.4543369" lon="-28.1439637">
+                <ele>25.0</ele>
+                <name>Position 386</name>
+            </trkpt>
+            <trkpt lat="38.4544685" lon="-28.1440031">
+                <ele>26.0</ele>
+                <name>Position 387</name>
+            </trkpt>
+            <trkpt lat="38.4544838" lon="-28.1440117">
+                <ele>26.1</ele>
+                <name>Position 388</name>
+            </trkpt>
+            <trkpt lat="38.4545452" lon="-28.1440589">
+                <ele>27.0</ele>
+                <name>Position 389</name>
+            </trkpt>
+            <trkpt lat="38.4545155" lon="-28.1442704">
+                <ele>30.9</ele>
+                <name>Position 390</name>
+            </trkpt>
+            <trkpt lat="38.4545811" lon="-28.1445981">
+                <ele>37.0</ele>
+                <name>Position 391</name>
+            </trkpt>
+            <trkpt lat="38.4546477" lon="-28.144638">
+                <ele>37.0</ele>
+                <name>Position 392</name>
+            </trkpt>
+            <trkpt lat="38.4546834" lon="-28.144694">
+                <ele>38.0</ele>
+                <name>Position 393</name>
+            </trkpt>
+            <trkpt lat="38.4547064" lon="-28.1447376">
+                <ele>39.0</ele>
+                <name>Position 394</name>
+            </trkpt>
+            <trkpt lat="38.4547293" lon="-28.1448038">
+                <ele>39.0</ele>
+                <name>Position 395</name>
+            </trkpt>
+            <trkpt lat="38.4547786" lon="-28.1449437">
+                <ele>41.0</ele>
+                <name>Position 396</name>
+            </trkpt>
+            <trkpt lat="38.4547815" lon="-28.1449752">
+                <ele>41.0</ele>
+                <name>Position 397</name>
+            </trkpt>
+            <trkpt lat="38.4548348" lon="-28.1450967">
+                <ele>42.0</ele>
+                <name>Position 398</name>
+            </trkpt>
+            <trkpt lat="38.4548545" lon="-28.1452612">
+                <ele>43.0</ele>
+                <name>Position 399</name>
+            </trkpt>
+            <trkpt lat="38.4548755" lon="-28.1453342">
+                <ele>44.0</ele>
+                <name>Position 400</name>
+            </trkpt>
+            <trkpt lat="38.45491" lon="-28.1454147">
+                <ele>43.0</ele>
+                <name>Position 401</name>
+            </trkpt>
+            <trkpt lat="38.4549047" lon="-28.1454161">
+                <ele>44.0</ele>
+                <name>Position 402</name>
+            </trkpt>
+            <trkpt lat="38.4549063" lon="-28.1453939">
+                <ele>43.0</ele>
+                <name>Position 403</name>
+            </trkpt>
+            <trkpt lat="38.4549103" lon="-28.1454119">
+                <ele>43.0</ele>
+                <name>Position 404</name>
+            </trkpt>
+            <trkpt lat="38.4549104" lon="-28.1454195">
+                <ele>43.0</ele>
+                <name>Position 405</name>
+            </trkpt>
+            <trkpt lat="38.4549043" lon="-28.1454523">
+                <ele>44.0</ele>
+                <name>Position 406</name>
+            </trkpt>
+            <trkpt lat="38.4549103" lon="-28.1454998">
+                <ele>44.0</ele>
+                <name>Position 407</name>
+            </trkpt>
+            <trkpt lat="38.4549577" lon="-28.1456797">
+                <ele>44.0</ele>
+                <name>Position 408</name>
+            </trkpt>
+            <trkpt lat="38.4549852" lon="-28.1457191">
+                <ele>43.0</ele>
+                <name>Position 409</name>
+            </trkpt>
+            <trkpt lat="38.4550131" lon="-28.1457757">
+                <ele>43.0</ele>
+                <name>Position 410</name>
+            </trkpt>
+            <trkpt lat="38.4550384" lon="-28.1458204">
+                <ele>43.0</ele>
+                <name>Position 411</name>
+            </trkpt>
+            <trkpt lat="38.4550686" lon="-28.145903">
+                <ele>43.0</ele>
+                <name>Position 412</name>
+            </trkpt>
+            <trkpt lat="38.4551015" lon="-28.1459955">
+                <ele>43.0</ele>
+                <name>Position 413</name>
+            </trkpt>
+            <trkpt lat="38.4551466" lon="-28.1460539">
+                <ele>43.0</ele>
+                <name>Position 414</name>
+            </trkpt>
+            <trkpt lat="38.4552245" lon="-28.1461498">
+                <ele>42.4</ele>
+                <name>Position 415</name>
+            </trkpt>
+            <trkpt lat="38.4552958" lon="-28.146234">
+                <ele>40.0</ele>
+                <name>Position 416</name>
+            </trkpt>
+            <trkpt lat="38.4553439" lon="-28.1462955">
+                <ele>39.0</ele>
+                <name>Position 417</name>
+            </trkpt>
+            <trkpt lat="38.4554333" lon="-28.1465308">
+                <ele>38.0</ele>
+                <name>Position 418</name>
+            </trkpt>
+            <trkpt lat="38.4555134" lon="-28.1467638">
+                <ele>36.0</ele>
+                <name>Position 419</name>
+            </trkpt>
+            <trkpt lat="38.4555448" lon="-28.1469601">
+                <ele>35.0</ele>
+                <name>Position 420</name>
+            </trkpt>
+            <trkpt lat="38.4555624" lon="-28.1470157">
+                <ele>34.0</ele>
+                <name>Position 421</name>
+            </trkpt>
+            <trkpt lat="38.4556514" lon="-28.1472467">
+                <ele>30.0</ele>
+                <name>Position 422</name>
+            </trkpt>
+            <trkpt lat="38.4556677" lon="-28.1472788">
+                <ele>29.0</ele>
+                <name>Position 423</name>
+            </trkpt>
+            <trkpt lat="38.4556946" lon="-28.1473965">
+                <ele>28.0</ele>
+                <name>Position 424</name>
+            </trkpt>
+            <trkpt lat="38.455718" lon="-28.147533">
+                <ele>26.0</ele>
+                <name>Position 425</name>
+            </trkpt>
+            <trkpt lat="38.4557594" lon="-28.1475607">
+                <ele>24.0</ele>
+                <name>Position 426</name>
+            </trkpt>
+            <trkpt lat="38.4557542" lon="-28.1475641">
+                <ele>25.0</ele>
+                <name>Position 427</name>
+            </trkpt>
+            <trkpt lat="38.4557656" lon="-28.1475731">
+                <ele>24.0</ele>
+                <name>Position 428</name>
+            </trkpt>
+            <trkpt lat="38.4557636" lon="-28.1475701">
+                <ele>24.0</ele>
+                <name>Position 429</name>
+            </trkpt>
+            <trkpt lat="38.455732" lon="-28.1476814">
+                <ele>24.0</ele>
+                <name>Position 430</name>
+            </trkpt>
+            <trkpt lat="38.4556947" lon="-28.1478927">
+                <ele>24.0</ele>
+                <name>Position 431</name>
+            </trkpt>
+            <trkpt lat="38.4556579" lon="-28.1480988">
+                <ele>23.0</ele>
+                <name>Position 432</name>
+            </trkpt>
+            <trkpt lat="38.455578" lon="-28.1482797">
+                <ele>24.0</ele>
+                <name>Position 433</name>
+            </trkpt>
+            <trkpt lat="38.4555616" lon="-28.1484281">
+                <ele>23.0</ele>
+                <name>Position 434</name>
+            </trkpt>
+            <trkpt lat="38.455531" lon="-28.1484969">
+                <ele>24.0</ele>
+                <name>Position 435</name>
+            </trkpt>
+            <trkpt lat="38.4554898" lon="-28.1485731">
+                <ele>24.0</ele>
+                <name>Position 436</name>
+            </trkpt>
+            <trkpt lat="38.4554444" lon="-28.1486974">
+                <ele>24.0</ele>
+                <name>Position 437</name>
+            </trkpt>
+            <trkpt lat="38.4554294" lon="-28.1487583">
+                <ele>24.0</ele>
+                <name>Position 438</name>
+            </trkpt>
+            <trkpt lat="38.4553492" lon="-28.1489761">
+                <ele>23.0</ele>
+                <name>Position 439</name>
+            </trkpt>
+            <trkpt lat="38.4553414" lon="-28.1489902">
+                <ele>23.0</ele>
+                <name>Position 440</name>
+            </trkpt>
+            <trkpt lat="38.4552616" lon="-28.1492015">
+                <ele>22.0</ele>
+                <name>Position 441</name>
+            </trkpt>
+            <trkpt lat="38.4552537" lon="-28.14919">
+                <ele>22.0</ele>
+                <name>Position 442</name>
+            </trkpt>
+            <trkpt lat="38.4552569" lon="-28.1492057">
+                <ele>22.0</ele>
+                <name>Position 443</name>
+            </trkpt>
+            <trkpt lat="38.4552545" lon="-28.1491996">
+                <ele>22.0</ele>
+                <name>Position 444</name>
+            </trkpt>
+            <trkpt lat="38.4552047" lon="-28.1492507">
+                <ele>23.0</ele>
+                <name>Position 445</name>
+            </trkpt>
+            <trkpt lat="38.4551897" lon="-28.1492868">
+                <ele>23.0</ele>
+                <name>Position 446</name>
+            </trkpt>
+            <trkpt lat="38.4550591" lon="-28.1495239">
+                <ele>23.0</ele>
+                <name>Position 447</name>
+            </trkpt>
+            <trkpt lat="38.454965" lon="-28.1496547">
+                <ele>24.0</ele>
+                <name>Position 448</name>
+            </trkpt>
+            <trkpt lat="38.4549234" lon="-28.1496509">
+                <ele>26.0</ele>
+                <name>Position 449</name>
+            </trkpt>
+            <trkpt lat="38.4549218" lon="-28.1496336">
+                <ele>26.0</ele>
+                <name>Position 450</name>
+            </trkpt>
+            <trkpt lat="38.4549024" lon="-28.1497008">
+                <ele>26.0</ele>
+                <name>Position 451</name>
+            </trkpt>
+            <trkpt lat="38.4549061" lon="-28.1497107">
+                <ele>26.0</ele>
+                <name>Position 452</name>
+            </trkpt>
+            <trkpt lat="38.4548908" lon="-28.1497437">
+                <ele>26.0</ele>
+                <name>Position 453</name>
+            </trkpt>
+            <trkpt lat="38.4548788" lon="-28.1497964">
+                <ele>26.0</ele>
+                <name>Position 454</name>
+            </trkpt>
+            <trkpt lat="38.4548566" lon="-28.1498497">
+                <ele>27.0</ele>
+                <name>Position 455</name>
+            </trkpt>
+            <trkpt lat="38.454835" lon="-28.149873">
+                <ele>27.0</ele>
+                <name>Position 456</name>
+            </trkpt>
+            <trkpt lat="38.4547863" lon="-28.1500773">
+                <ele>28.0</ele>
+                <name>Position 457</name>
+            </trkpt>
+            <trkpt lat="38.4547674" lon="-28.1501282">
+                <ele>29.0</ele>
+                <name>Position 458</name>
+            </trkpt>
+            <trkpt lat="38.4547157" lon="-28.1501179">
+                <ele>31.0</ele>
+                <name>Position 459</name>
+            </trkpt>
+            <trkpt lat="38.4547127" lon="-28.1501644">
+                <ele>32.0</ele>
+                <name>Position 460</name>
+            </trkpt>
+            <trkpt lat="38.4547283" lon="-28.1503119">
+                <ele>31.0</ele>
+                <name>Position 461</name>
+            </trkpt>
+            <trkpt lat="38.4546717" lon="-28.1504799">
+                <ele>34.0</ele>
+                <name>Position 462</name>
+            </trkpt>
+            <trkpt lat="38.4546797" lon="-28.1505076">
+                <ele>33.0</ele>
+                <name>Position 463</name>
+            </trkpt>
+            <trkpt lat="38.4546727" lon="-28.1506448">
+                <ele>34.0</ele>
+                <name>Position 464</name>
+            </trkpt>
+            <trkpt lat="38.4546923" lon="-28.1507459">
+                <ele>33.0</ele>
+                <name>Position 465</name>
+            </trkpt>
+            <trkpt lat="38.4547006" lon="-28.1507925">
+                <ele>33.0</ele>
+                <name>Position 466</name>
+            </trkpt>
+            <trkpt lat="38.4546996" lon="-28.1508256">
+                <ele>33.0</ele>
+                <name>Position 467</name>
+            </trkpt>
+            <trkpt lat="38.4546887" lon="-28.1509044">
+                <ele>34.0</ele>
+                <name>Position 468</name>
+            </trkpt>
+            <trkpt lat="38.4546595" lon="-28.1510168">
+                <ele>35.0</ele>
+                <name>Position 469</name>
+            </trkpt>
+            <trkpt lat="38.4546764" lon="-28.1511156">
+                <ele>35.0</ele>
+                <name>Position 470</name>
+            </trkpt>
+            <trkpt lat="38.4546964" lon="-28.1511553">
+                <ele>34.0</ele>
+                <name>Position 471</name>
+            </trkpt>
+            <trkpt lat="38.4547026" lon="-28.1512095">
+                <ele>34.0</ele>
+                <name>Position 472</name>
+            </trkpt>
+            <trkpt lat="38.4546986" lon="-28.1512425">
+                <ele>35.0</ele>
+                <name>Position 473</name>
+            </trkpt>
+            <trkpt lat="38.4547394" lon="-28.1513796">
+                <ele>33.0</ele>
+                <name>Position 474</name>
+            </trkpt>
+            <trkpt lat="38.4547726" lon="-28.1514987">
+                <ele>32.0</ele>
+                <name>Position 475</name>
+            </trkpt>
+            <trkpt lat="38.4547973" lon="-28.1515809">
+                <ele>32.0</ele>
+                <name>Position 476</name>
+            </trkpt>
+            <trkpt lat="38.4548397" lon="-28.1516777">
+                <ele>30.0</ele>
+                <name>Position 477</name>
+            </trkpt>
+            <trkpt lat="38.4548717" lon="-28.1517617">
+                <ele>29.0</ele>
+                <name>Position 478</name>
+            </trkpt>
+            <trkpt lat="38.4549369" lon="-28.1518728">
+                <ele>27.0</ele>
+                <name>Position 479</name>
+            </trkpt>
+            <trkpt lat="38.4550068" lon="-28.1520376">
+                <ele>25.1</ele>
+                <name>Position 480</name>
+            </trkpt>
+            <trkpt lat="38.4550722" lon="-28.1521875">
+                <ele>25.0</ele>
+                <name>Position 481</name>
+            </trkpt>
+            <trkpt lat="38.4551237" lon="-28.1521611">
+                <ele>24.0</ele>
+                <name>Position 482</name>
+            </trkpt>
+            <trkpt lat="38.4551375" lon="-28.1521582">
+                <ele>24.0</ele>
+                <name>Position 483</name>
+            </trkpt>
+            <trkpt lat="38.4552734" lon="-28.1521188">
+                <ele>23.0</ele>
+                <name>Position 484</name>
+            </trkpt>
+            <trkpt lat="38.4553456" lon="-28.1521081">
+                <ele>21.8</ele>
+                <name>Position 485</name>
+            </trkpt>
+            <trkpt lat="38.4554625" lon="-28.1520365">
+                <ele>21.0</ele>
+                <name>Position 486</name>
+            </trkpt>
+            <trkpt lat="38.4555238" lon="-28.1519844">
+                <ele>20.0</ele>
+                <name>Position 487</name>
+            </trkpt>
+            <trkpt lat="38.4554832" lon="-28.1520092">
+                <ele>21.0</ele>
+                <name>Position 488</name>
+            </trkpt>
+            <trkpt lat="38.4555113" lon="-28.1519854">
+                <ele>20.0</ele>
+                <name>Position 489</name>
+            </trkpt>
+            <trkpt lat="38.45551" lon="-28.1520067">
+                <ele>20.0</ele>
+                <name>Position 490</name>
+            </trkpt>
+            <trkpt lat="38.4555662" lon="-28.1519279">
+                <ele>19.0</ele>
+                <name>Position 491</name>
+            </trkpt>
+            <trkpt lat="38.4556072" lon="-28.1518635">
+                <ele>18.0</ele>
+                <name>Position 492</name>
+            </trkpt>
+            <trkpt lat="38.4556988" lon="-28.1517073">
+                <ele>16.0</ele>
+                <name>Position 493</name>
+            </trkpt>
+            <trkpt lat="38.4557261" lon="-28.1516633">
+                <ele>16.0</ele>
+                <name>Position 494</name>
+            </trkpt>
+            <trkpt lat="38.4558339" lon="-28.1515064">
+                <ele>14.0</ele>
+                <name>Position 495</name>
+            </trkpt>
+            <trkpt lat="38.4558698" lon="-28.151434">
+                <ele>13.0</ele>
+                <name>Position 496</name>
+            </trkpt>
+            <trkpt lat="38.4559101" lon="-28.1514779">
+                <ele>13.0</ele>
+                <name>Position 497</name>
+            </trkpt>
+            <trkpt lat="38.4559636" lon="-28.1516275">
+                <ele>13.0</ele>
+                <name>Position 498</name>
+            </trkpt>
+            <trkpt lat="38.455975" lon="-28.1518482">
+                <ele>15.0</ele>
+                <name>Position 499</name>
+            </trkpt>
+            <trkpt lat="38.4559993" lon="-28.1519577">
+                <ele>15.0</ele>
+                <name>Position 500</name>
+            </trkpt>
+            <trkpt lat="38.4560703" lon="-28.1520145">
+                <ele>15.0</ele>
+                <name>Position 501</name>
+            </trkpt>
+            <trkpt lat="38.4561737" lon="-28.1520209">
+                <ele>14.0</ele>
+                <name>Position 502</name>
+            </trkpt>
+            <trkpt lat="38.4562502" lon="-28.1520777">
+                <ele>14.0</ele>
+                <name>Position 503</name>
+            </trkpt>
+            <trkpt lat="38.4562771" lon="-28.1520532">
+                <ele>13.0</ele>
+                <name>Position 504</name>
+            </trkpt>
+            <trkpt lat="38.4563437" lon="-28.1520266">
+                <ele>12.0</ele>
+                <name>Position 505</name>
+            </trkpt>
+            <trkpt lat="38.4564021" lon="-28.1520778">
+                <ele>11.7</ele>
+                <name>Position 506</name>
+            </trkpt>
+            <trkpt lat="38.4564227" lon="-28.1520914">
+                <ele>12.0</ele>
+                <name>Position 507</name>
+            </trkpt>
+            <trkpt lat="38.4564463" lon="-28.1521141">
+                <ele>12.0</ele>
+                <name>Position 508</name>
+            </trkpt>
+            <trkpt lat="38.4564575" lon="-28.1521549">
+                <ele>12.0</ele>
+                <name>Position 509</name>
+            </trkpt>
+            <trkpt lat="38.4564697" lon="-28.1522471">
+                <ele>13.0</ele>
+                <name>Position 510</name>
+            </trkpt>
+            <trkpt lat="38.4565786" lon="-28.1523934">
+                <ele>13.0</ele>
+                <name>Position 511</name>
+            </trkpt>
+            <trkpt lat="38.4565922" lon="-28.1524469">
+                <ele>14.0</ele>
+                <name>Position 512</name>
+            </trkpt>
+            <trkpt lat="38.4566033" lon="-28.1524857">
+                <ele>14.0</ele>
+                <name>Position 513</name>
+            </trkpt>
+            <trkpt lat="38.4567296" lon="-28.1526342">
+                <ele>13.6</ele>
+                <name>Position 514</name>
+            </trkpt>
+            <trkpt lat="38.4567384" lon="-28.1527936">
+                <ele>14.0</ele>
+                <name>Position 515</name>
+            </trkpt>
+            <trkpt lat="38.4567179" lon="-28.1528558">
+                <ele>15.0</ele>
+                <name>Position 516</name>
+            </trkpt>
+            <trkpt lat="38.4566913" lon="-28.1529813">
+                <ele>16.0</ele>
+                <name>Position 517</name>
+            </trkpt>
+            <trkpt lat="38.4566877" lon="-28.1530489">
+                <ele>17.0</ele>
+                <name>Position 518</name>
+            </trkpt>
+            <trkpt lat="38.4567086" lon="-28.1531192">
+                <ele>17.0</ele>
+                <name>Position 519</name>
+            </trkpt>
+            <trkpt lat="38.45671" lon="-28.1531224">
+                <ele>17.0</ele>
+                <name>Position 520</name>
+            </trkpt>
+            <trkpt lat="38.4567236" lon="-28.1531262">
+                <ele>16.0</ele>
+                <name>Position 521</name>
+            </trkpt>
+            <trkpt lat="38.4567272" lon="-28.1531293">
+                <ele>16.0</ele>
+                <name>Position 522</name>
+            </trkpt>
+            <trkpt lat="38.4567305" lon="-28.1531284">
+                <ele>16.0</ele>
+                <name>Position 523</name>
+            </trkpt>
+            <trkpt lat="38.4567307" lon="-28.153129">
+                <ele>16.0</ele>
+                <name>Position 524</name>
+            </trkpt>
+            <trkpt lat="38.4567767" lon="-28.1532126">
+                <ele>16.0</ele>
+                <name>Position 525</name>
+            </trkpt>
+            <trkpt lat="38.456783" lon="-28.1532297">
+                <ele>16.0</ele>
+                <name>Position 526</name>
+            </trkpt>
+            <trkpt lat="38.4567929" lon="-28.1532863">
+                <ele>16.0</ele>
+                <name>Position 527</name>
+            </trkpt>
+            <trkpt lat="38.4568441" lon="-28.1534604">
+                <ele>15.0</ele>
+                <name>Position 528</name>
+            </trkpt>
+            <trkpt lat="38.4568493" lon="-28.1534834">
+                <ele>15.0</ele>
+                <name>Position 529</name>
+            </trkpt>
+            <trkpt lat="38.4568927" lon="-28.1535945">
+                <ele>13.0</ele>
+                <name>Position 530</name>
+            </trkpt>
+            <trkpt lat="38.4568834" lon="-28.153691">
+                <ele>13.0</ele>
+                <name>Position 531</name>
+            </trkpt>
+            <trkpt lat="38.4567715" lon="-28.1537783">
+                <ele>15.0</ele>
+                <name>Position 532</name>
+            </trkpt>
+            <trkpt lat="38.4566744" lon="-28.1538405">
+                <ele>16.0</ele>
+                <name>Position 533</name>
+            </trkpt>
+            <trkpt lat="38.4566644" lon="-28.1538541">
+                <ele>16.0</ele>
+                <name>Position 534</name>
+            </trkpt>
+            <trkpt lat="38.4566529" lon="-28.153884">
+                <ele>16.0</ele>
+                <name>Position 535</name>
+            </trkpt>
+            <trkpt lat="38.4565561" lon="-28.1539864">
+                <ele>17.0</ele>
+                <name>Position 536</name>
+            </trkpt>
+            <trkpt lat="38.4565267" lon="-28.1539799">
+                <ele>17.0</ele>
+                <name>Position 537</name>
+            </trkpt>
+            <trkpt lat="38.4564502" lon="-28.1538996">
+                <ele>18.0</ele>
+                <name>Position 538</name>
+            </trkpt>
+            <trkpt lat="38.4563955" lon="-28.1537431">
+                <ele>20.0</ele>
+                <name>Position 539</name>
+            </trkpt>
+            <trkpt lat="38.4563443" lon="-28.1536636">
+                <ele>20.0</ele>
+                <name>Position 540</name>
+            </trkpt>
+            <trkpt lat="38.4563149" lon="-28.1536291">
+                <ele>20.8</ele>
+                <name>Position 541</name>
+            </trkpt>
+            <trkpt lat="38.4562821" lon="-28.1535784">
+                <ele>21.0</ele>
+                <name>Position 542</name>
+            </trkpt>
+            <trkpt lat="38.4562273" lon="-28.1534968">
+                <ele>22.0</ele>
+                <name>Position 543</name>
+            </trkpt>
+            <trkpt lat="38.4561921" lon="-28.1534693">
+                <ele>22.0</ele>
+                <name>Position 544</name>
+            </trkpt>
+            <trkpt lat="38.4560979" lon="-28.1533452">
+                <ele>23.0</ele>
+                <name>Position 545</name>
+            </trkpt>
+            <trkpt lat="38.4560375" lon="-28.1532723">
+                <ele>24.0</ele>
+                <name>Position 546</name>
+            </trkpt>
+            <trkpt lat="38.4560192" lon="-28.1532523">
+                <ele>24.0</ele>
+                <name>Position 547</name>
+            </trkpt>
+            <trkpt lat="38.4559929" lon="-28.1532354">
+                <ele>24.0</ele>
+                <name>Position 548</name>
+            </trkpt>
+            <trkpt lat="38.4558342" lon="-28.1531547">
+                <ele>24.7</ele>
+                <name>Position 549</name>
+            </trkpt>
+            <trkpt lat="38.4558287" lon="-28.1531747">
+                <ele>24.7</ele>
+                <name>Position 550</name>
+            </trkpt>
+            <trkpt lat="38.455956" lon="-28.1536725">
+                <ele>24.0</ele>
+                <name>Position 551</name>
+            </trkpt>
+            <trkpt lat="38.456178" lon="-28.1553323">
+                <ele>17.0</ele>
+                <name>Position 552</name>
+            </trkpt>
+            <trkpt lat="38.4561716" lon="-28.1567673">
+                <ele>16.0</ele>
+                <name>Position 553</name>
+            </trkpt>
+            <trkpt lat="38.4561368" lon="-28.1579193">
+                <ele>21.0</ele>
+                <name>Position 554</name>
+            </trkpt>
+            <trkpt lat="38.4561069" lon="-28.1588862">
+                <ele>23.0</ele>
+                <name>Position 555</name>
+            </trkpt>
+            <trkpt lat="38.4561292" lon="-28.1589196">
+                <ele>22.3</ele>
+                <name>Position 556</name>
+            </trkpt>
+            <trkpt lat="38.4564634" lon="-28.159264">
+                <ele>15.0</ele>
+                <name>Position 557</name>
+            </trkpt>
+            <trkpt lat="38.4566317" lon="-28.1598915">
+                <ele>13.0</ele>
+                <name>Position 558</name>
+            </trkpt>
+            <trkpt lat="38.4566509" lon="-28.1612146">
+                <ele>11.0</ele>
+                <name>Position 559</name>
+            </trkpt>
+            <trkpt lat="38.4566343" lon="-28.1613892">
+                <ele>11.0</ele>
+                <name>Position 560</name>
+            </trkpt>
+            <trkpt lat="38.4564882" lon="-28.161941">
+                <ele>11.0</ele>
+                <name>Position 561</name>
+            </trkpt>
+            <trkpt lat="38.4564876" lon="-28.1624153">
+                <ele>8.2</ele>
+                <name>Position 562</name>
+            </trkpt>
+            <trkpt lat="38.4564792" lon="-28.1624233">
+                <ele>8.3</ele>
+                <name>Position 563</name>
+            </trkpt>
+            <trkpt lat="38.4565007" lon="-28.1625201">
+                <ele>7.7</ele>
+                <name>Position 564</name>
+            </trkpt>
+            <trkpt lat="38.4565026" lon="-28.1628476">
+                <ele>7.8</ele>
+                <name>Position 565</name>
+            </trkpt>
+            <trkpt lat="38.4565135" lon="-28.1633179">
+                <ele>7.9</ele>
+                <name>Position 566</name>
+            </trkpt>
+            <trkpt lat="38.4565678" lon="-28.1636253">
+                <ele>8.0</ele>
+                <name>Position 567</name>
+            </trkpt>
+            <trkpt lat="38.4566612" lon="-28.163872">
+                <ele>8.2</ele>
+                <name>Position 568</name>
+            </trkpt>
+            <trkpt lat="38.4566623" lon="-28.164375">
+                <ele>7.8</ele>
+                <name>Position 569</name>
+            </trkpt>
+            <trkpt lat="38.4566445" lon="-28.1646841">
+                <ele>6.7</ele>
+                <name>Position 570</name>
+            </trkpt>
+            <trkpt lat="38.4564733" lon="-28.1651318">
+                <ele>5.7</ele>
+                <name>Position 571</name>
+            </trkpt>
+            <trkpt lat="38.4562661" lon="-28.1656416">
+                <ele>5.7</ele>
+                <name>Position 572</name>
+            </trkpt>
+            <trkpt lat="38.4561751" lon="-28.1662934">
+                <ele>5.8</ele>
+                <name>Position 573</name>
+            </trkpt>
+            <trkpt lat="38.4561327" lon="-28.1663968">
+                <ele>5.9</ele>
+                <name>Position 574</name>
+            </trkpt>
+            <trkpt lat="38.4559549" lon="-28.1664583">
+                <ele>6.4</ele>
+                <name>Position 575</name>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

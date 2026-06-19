@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx creator="https://www.wikiloc.com" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Destinazores - PRC 13 SMI - Água Retorta</name>
+    <link href="https://www.wikiloc.com/hiking-trails/prc-13-smi-agua-retorta-32907645">
+      <text>PRC 13 SMI - Água Retorta on Wikiloc</text>
+    </link>
+    <time>2019-02-08T17:30:39Z</time>
+  </metadata>
+  <wpt lat="37.755290" lon="-25.154320">
+    <ele>.0</ele>
+    <time>2018-04-01T13:41:02Z</time>
+    <name>Cascata</name>
+    <cmt></cmt>
+    <desc>&lt;div style="text-align:center;margin-top:30px;"&gt; &lt;img src="https://www.destinazores.com/wp-content/uploads/gpx/queda-de-agua.jpg" width="215px"/&gt; &lt;/div&gt;</desc>
+  </wpt>
+  <wpt lat="37.760310" lon="-25.163200">
+    <ele>281.3</ele>
+    <time>2019-01-23T12:17:01Z</time>
+    <name>CEMITÉRIO | CEMETERY</name>
+	<desc>&lt;div style="text-align:center;margin-top:30px;"&gt; &lt;img src="https://www.destinazores.com/wp-content/uploads/gpx/agua-retorta-cemiterio.jpg" width="215px"/&gt; &lt;/div&gt;</desc>
+	<cmt></cmt>
+  </wpt>
+  <wpt lat="37.760200" lon="-25.162700">
+    <ele>269.6</ele>
+    <time>2019-01-23T12:17:01Z</time>
+    <name>Fontenário</name>
+    <cmt>Fontenário</cmt>
+    <desc></desc>
+  </wpt>
+  <wpt lat="37.762610" lon="-25.163310">
+    <ele>277.5</ele>
+    <time>2019-01-23T12:17:01Z</time>
+    <name>Fontenário</name>
+    <cmt>Fontenário</cmt>
+    <desc></desc>
+  </wpt>
+	<wpt lat="37.760050" lon="-25.163400">
+	<ele>279.3</ele>
+	<time>2019-01-23T12:17:01Z</time>
+	<name>IGREJA | CHURCH</name>
+	<cmt></cmt>
+	<desc>&lt;div style="text-align:center;margin-top:30px;"&gt; &lt;img src="https://www.destinazores.com/wp-content/uploads/gpx/agua-retorta-igreja.jpg" width="215px"/&gt; &lt;/div&gt;</desc>
+	</wpt>
+  <wpt lat="37.762040" lon="-25.158850">
+    <ele>295.1</ele>
+    <time>2019-01-23T12:17:01Z</time>
+    <name>MERCADO | MARKET</name>
+    <cmt>Mercado</cmt>
+	<desc>&lt;div style="text-align:center;margin-top:30px;"&gt; &lt;a href="https://www.facebook.com/pg/Mini-Mercado-Sra-Penha-de-França-1001631143212870" target="_blank"&gt; &lt;img src="https://www.destinazores.com/wp-content/uploads/gpx/minimercado-penha-franca.jpg" width="215px"/&gt; &lt;/a&gt; &lt;/div&gt;</desc>
+  </wpt>
+	<wpt lat="37.762010" lon="-25.156090">
+	<ele>283.7</ele>
+	<time>2019-01-23T12:17:01Z</time>
+	<name>MOÍNHO DE VENTO | WINDMILL</name>
+	<cmt></cmt>
+	<desc>&lt;div style="text-align:center;margin-top:30px;"&gt; &lt;img src="https://www.destinazores.com/wp-content/uploads/gpx/agua-retorta-moinho.jpg" width="215px"/&gt; &lt;/div&gt;</desc>
+	</wpt>
+  <trk>
+    <name>PRC 13 SMI - Água Retorta</name>
+    <cmt></cmt>
+    <desc></desc>
+    <trkseg>
+      <trkpt lat="37.760520" lon="-25.162960">
+        <ele>280.028</ele>
+        <time>2019-02-08T17:30:39Z</time>
+      </trkpt>
+      <trkpt lat="37.760420" lon="-25.163850">
+        <ele>289.889</ele>
+        <time>2019-02-08T17:31:19Z</time>
+      </trkpt>
+      <trkpt lat="37.759850" lon="-25.164460">
+        <ele>280.017</ele>
+        <time>2019-02-08T17:31:59Z</time>
+      </trkpt>
+      <trkpt lat="37.759600" lon="-25.165390">
+        <ele>293.508</ele>
+        <time>2019-02-08T17:32:39Z</time>
+      </trkpt>
+      <trkpt lat="37.759160" lon="-25.165550">
+        <ele>291.855</ele>
+        <time>2019-02-08T17:33:19Z</time>
+      </trkpt>
+      <trkpt lat="37.758840" lon="-25.165870">
+        <ele>285.684</ele>
+        <time>2019-02-08T17:33:59Z</time>
+      </trkpt>
+      <trkpt lat="37.758720" lon="-25.166660">
+        <ele>289.641</ele>
+        <time>2019-02-08T17:34:39Z</time>
+      </trkpt>
+      <trkpt lat="37.758400" lon="-25.167150">
+        <ele>288.642</ele>
+        <time>2019-02-08T17:35:19Z</time>
+      </trkpt>
+      <trkpt lat="37.758080" lon="-25.166840">
+        <ele>273.479</ele>
+        <time>2019-02-08T17:35:59Z</time>
+      </trkpt>
+      <trkpt lat="37.758080" lon="-25.166680">
+        <ele>269.978</ele>
+        <time>2019-02-08T17:36:39Z</time>
+      </trkpt>
+      <trkpt lat="37.757950" lon="-25.166730">
+        <ele>269.626</ele>
+        <time>2019-02-08T17:37:19Z</time>
+      </trkpt>
+      <trkpt lat="37.757940" lon="-25.166540">
+        <ele>265.737</ele>
+        <time>2019-02-08T17:37:59Z</time>
+      </trkpt>
+      <trkpt lat="37.757230" lon="-25.166510">
+        <ele>265.486</ele>
+        <time>2019-02-08T17:38:39Z</time>
+      </trkpt>
+      <trkpt lat="37.756400" lon="-25.166710">
+        <ele>290.160</ele>
+        <time>2019-02-08T17:39:19Z</time>
+      </trkpt>
+      <trkpt lat="37.756190" lon="-25.164800">
+        <ele>256.826</ele>
+        <time>2019-02-08T17:39:59Z</time>
+      </trkpt>
+      <trkpt lat="37.755910" lon="-25.163900">
+        <ele>236.908</ele>
+        <time>2019-02-08T17:40:39Z</time>
+      </trkpt>
+      <trkpt lat="37.756250" lon="-25.162460">
+        <ele>215.991</ele>
+        <time>2019-02-08T17:41:19Z</time>
+      </trkpt>
+      <trkpt lat="37.755950" lon="-25.162060">
+        <ele>209.690</ele>
+        <time>2019-02-08T17:41:59Z</time>
+      </trkpt>
+      <trkpt lat="37.755200" lon="-25.159400">
+        <ele>174.277</ele>
+        <time>2019-02-08T17:42:39Z</time>
+      </trkpt>
+      <trkpt lat="37.755420" lon="-25.159130">
+        <ele>169.698</ele>
+        <time>2019-02-08T17:43:19Z</time>
+      </trkpt>
+      <trkpt lat="37.755000" lon="-25.158100">
+        <ele>163.545</ele>
+        <time>2019-02-08T17:43:59Z</time>
+      </trkpt>
+      <trkpt lat="37.755230" lon="-25.157770">
+        <ele>158.194</ele>
+        <time>2019-02-08T17:44:39Z</time>
+      </trkpt>
+      <trkpt lat="37.755380" lon="-25.155340">
+        <ele>114.092</ele>
+        <time>2019-02-08T17:45:19Z</time>
+      </trkpt>
+      <trkpt lat="37.754920" lon="-25.155900">
+        <ele>108.223</ele>
+        <time>2019-02-08T17:45:59Z</time>
+      </trkpt>
+      <trkpt lat="37.754660" lon="-25.155990">
+        <ele>92.978</ele>
+        <time>2019-02-08T17:46:39Z</time>
+      </trkpt>
+      <trkpt lat="37.754500" lon="-25.155730">
+        <ele>61.733</ele>
+        <time>2019-02-08T17:47:19Z</time>
+      </trkpt>
+      <trkpt lat="37.754790" lon="-25.155340">
+        <ele>60.726</ele>
+        <time>2019-02-08T17:47:59Z</time>
+      </trkpt>
+      <trkpt lat="37.754890" lon="-25.154680">
+        <ele>28.908</ele>
+        <time>2019-02-08T17:48:39Z</time>
+      </trkpt>
+      <trkpt lat="37.755400" lon="-25.154310">
+        <ele>44.820</ele>
+        <time>2019-02-08T17:49:19Z</time>
+      </trkpt>
+      <trkpt lat="37.755670" lon="-25.154400">
+        <ele>82.519</ele>
+        <time>2019-02-08T17:49:59Z</time>
+      </trkpt>
+      <trkpt lat="37.755820" lon="-25.154180">
+        <ele>82.376</ele>
+        <time>2019-02-08T17:50:39Z</time>
+      </trkpt>
+      <trkpt lat="37.756560" lon="-25.154020">
+        <ele>124.647</ele>
+        <time>2019-02-08T17:51:19Z</time>
+      </trkpt>
+      <trkpt lat="37.757310" lon="-25.153630">
+        <ele>158.144</ele>
+        <time>2019-02-08T17:51:59Z</time>
+      </trkpt>
+      <trkpt lat="37.757890" lon="-25.153660">
+        <ele>178.643</ele>
+        <time>2019-02-08T17:52:39Z</time>
+      </trkpt>
+      <trkpt lat="37.758700" lon="-25.155510">
+        <ele>221.431</ele>
+        <time>2019-02-08T17:53:19Z</time>
+      </trkpt>
+      <trkpt lat="37.759620" lon="-25.154270">
+        <ele>243.762</ele>
+        <time>2019-02-08T17:53:59Z</time>
+      </trkpt>
+      <trkpt lat="37.759860" lon="-25.155230">
+        <ele>260.524</ele>
+        <time>2019-02-08T17:54:39Z</time>
+      </trkpt>
+      <trkpt lat="37.761240" lon="-25.157870">
+        <ele>284.704</ele>
+        <time>2019-02-08T17:55:19Z</time>
+      </trkpt>
+      <trkpt lat="37.762150" lon="-25.157180">
+        <ele>289.114</ele>
+        <time>2019-02-08T17:55:59Z</time>
+      </trkpt>
+      <trkpt lat="37.762510" lon="-25.156490">
+        <ele>286.008</ele>
+        <time>2019-02-08T17:56:39Z</time>
+      </trkpt>
+      <trkpt lat="37.761960" lon="-25.156120">
+        <ele>284.195</ele>
+        <time>2019-02-08T17:57:19Z</time>
+      </trkpt>
+      <trkpt lat="37.762510" lon="-25.156500">
+        <ele>286.054</ele>
+        <time>2019-02-08T17:57:59Z</time>
+      </trkpt>
+      <trkpt lat="37.762210" lon="-25.157100">
+        <ele>288.691</ele>
+        <time>2019-02-08T17:58:39Z</time>
+      </trkpt>
+      <trkpt lat="37.762760" lon="-25.158240">
+        <ele>295.522</ele>
+        <time>2019-02-08T17:59:19Z</time>
+      </trkpt>
+      <trkpt lat="37.762580" lon="-25.158510">
+        <ele>294.919</ele>
+        <time>2019-02-08T17:59:59Z</time>
+      </trkpt>
+      <trkpt lat="37.761770" lon="-25.159050">
+        <ele>293.988</ele>
+        <time>2019-02-08T18:00:39Z</time>
+      </trkpt>
+      <trkpt lat="37.762520" lon="-25.160530">
+        <ele>283.946</ele>
+        <time>2019-02-08T18:01:19Z</time>
+      </trkpt>
+      <trkpt lat="37.763650" lon="-25.162240">
+        <ele>279.447</ele>
+        <time>2019-02-08T18:01:59Z</time>
+      </trkpt>
+      <trkpt lat="37.763640" lon="-25.162580">
+        <ele>279.032</ele>
+        <time>2019-02-08T18:02:39Z</time>
+      </trkpt>
+      <trkpt lat="37.763250" lon="-25.163010">
+        <ele>273.992</ele>
+        <time>2019-02-08T18:03:19Z</time>
+      </trkpt>
+      <trkpt lat="37.763510" lon="-25.163720">
+        <ele>279.311</ele>
+        <time>2019-02-08T18:03:59Z</time>
+      </trkpt>
+      <trkpt lat="37.763380" lon="-25.163760">
+        <ele>281.508</ele>
+        <time>2019-02-08T18:04:39Z</time>
+      </trkpt>
+      <trkpt lat="37.762820" lon="-25.163310">
+        <ele>275.256</ele>
+        <time>2019-02-08T18:05:19Z</time>
+      </trkpt>
+      <trkpt lat="37.761850" lon="-25.163150">
+        <ele>282.285</ele>
+        <time>2019-02-08T18:05:59Z</time>
+      </trkpt>
+      <trkpt lat="37.761410" lon="-25.162800">
+        <ele>282.212</ele>
+        <time>2019-02-08T18:06:39Z</time>
+      </trkpt>
+      <trkpt lat="37.760630" lon="-25.162730">
+        <ele>276.693</ele>
+        <time>2019-02-08T18:07:19Z</time>
+      </trkpt>
+      <trkpt lat="37.760510" lon="-25.162980">
+        <ele>280.330</ele>
+        <time>2019-02-08T18:07:59Z</time>
+      </trkpt>
+    </trkseg>
+  </trk></gpx>

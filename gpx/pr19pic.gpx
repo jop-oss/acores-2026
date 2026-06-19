@@ -1,0 +1,1658 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx xmlns:gpxtpx1="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v2" version="1.1" creator="RouteConverter 3.0">
+    <metadata>
+        <name>LAGOA DA ROSADA to PR19 PIC</name>
+        <link href="http://www.garmin.com">
+            <text>Garmin International</text>
+        </link>
+        <time>2024-04-01T15:05:19.349Z</time>
+        <bounds minlat="38.424852015450597" minlon="-28.302155965939164" maxlat="38.47129194997251" maxlon="-28.104905979707837"/>
+    </metadata>
+    <wpt lat="38.432199" lon="-28.184781">
+        <ele>921.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DA ROSADA</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.45707" lon="-28.251268">
+        <ele>807.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DO CAIADO</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.431668" lon="-28.132412">
+        <ele>717.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DO JOSÉ INÉCIO</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.428152" lon="-28.232062">
+        <ele>784.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DO PAUL</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.430086" lon="-28.104906">
+        <ele>509.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DO PAUL.</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.435175" lon="-28.174247">
+        <ele>883.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA DO PEIXINHO</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.424852" lon="-28.123437">
+        <ele>670.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA NEGRA</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.456157" lon="-28.2454">
+        <ele>796.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>LAGOA SÊCA</name>
+        <sym>Water Source</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.460957" lon="-28.264165">
+        <ele>847.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>PARQUE EOLICO1</name>
+        <cmt>PARQUE ELICO</cmt>
+        <desc>PARQUE ELICO</desc>
+        <sym>Custom 2</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <wpt lat="38.470776" lon="-28.302156">
+        <ele>701.0</ele>
+        <time>2015-11-06T18:30:09.000Z</time>
+        <name>PR19 PIC</name>
+        <sym>Trail Head</sym>
+        <type>user</type>
+        <extensions>
+            <gpxx:WaypointExtension>
+                <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+                <gpxx:Categories>
+                    <gpxx:Category>PR 19 PIC Caminho das Lagoas 2015</gpxx:Category>
+                </gpxx:Categories>
+            </gpxx:WaypointExtension>
+            <wptx1:WaypointExtension xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <wptx1:DisplayMode>SymbolAndName</wptx1:DisplayMode>
+                <wptx1:Categories>
+                    <wptx1:Category>PR 19 PIC Caminho das Lagoas 2015</wptx1:Category>
+        </wptx1:Categories>
+      </wptx1:WaypointExtension>
+            <ctx:CreationTimeExtension xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <ctx:CreationTime>2015-11-06T18:30:09Z</ctx:CreationTime>
+      </ctx:CreationTimeExtension>
+        </extensions>
+    </wpt>
+    <trk>
+        <name>PR 19 PIC - Caminho das Lagoas</name>
+        <extensions>
+            <gpxx:TrackExtension>
+                <gpxx:DisplayColor>Red</gpxx:DisplayColor>
+            </gpxx:TrackExtension>
+        </extensions>
+        <trkseg>
+            <trkpt lat="38.4712919" lon="-28.2999322">
+                <ele>715.0</ele>
+                <time>2013-07-31T08:26:22.000Z</time>
+                <name>Position 1</name>
+            </trkpt>
+            <trkpt lat="38.4712701" lon="-28.3000036">
+                <ele>715.0</ele>
+                <time>2013-07-31T08:26:40.000Z</time>
+                <name>Position 2</name>
+            </trkpt>
+            <trkpt lat="38.4709817" lon="-28.299712">
+                <ele>712.0</ele>
+                <time>2013-07-31T08:26:48.000Z</time>
+                <name>Position 3</name>
+            </trkpt>
+            <trkpt lat="38.4700768" lon="-28.298672">
+                <ele>710.0</ele>
+                <time>2013-07-31T08:27:00.000Z</time>
+                <name>Position 4</name>
+            </trkpt>
+            <trkpt lat="38.4686136" lon="-28.2971103">
+                <ele>705.0</ele>
+                <time>2013-07-31T08:27:19.000Z</time>
+                <name>Position 5</name>
+            </trkpt>
+            <trkpt lat="38.467081" lon="-28.2956924">
+                <ele>691.0</ele>
+                <time>2013-07-31T08:27:36.000Z</time>
+                <name>Position 6</name>
+            </trkpt>
+            <trkpt lat="38.4669029" lon="-28.2955359">
+                <ele>690.0</ele>
+                <time>2013-07-31T08:27:38.000Z</time>
+                <name>Position 7</name>
+            </trkpt>
+            <trkpt lat="38.4666284" lon="-28.2950225">
+                <ele>689.0</ele>
+                <time>2013-07-31T08:27:43.000Z</time>
+                <name>Position 8</name>
+            </trkpt>
+            <trkpt lat="38.4659004" lon="-28.2920738">
+                <ele>707.0</ele>
+                <time>2013-07-31T08:28:06.000Z</time>
+                <name>Position 9</name>
+            </trkpt>
+            <trkpt lat="38.4653909" lon="-28.2899949">
+                <ele>723.0</ele>
+                <time>2013-07-31T08:28:24.000Z</time>
+                <name>Position 10</name>
+            </trkpt>
+            <trkpt lat="38.4651865" lon="-28.2890653">
+                <ele>726.0</ele>
+                <time>2013-07-31T08:28:36.000Z</time>
+                <name>Position 11</name>
+            </trkpt>
+            <trkpt lat="38.4648775" lon="-28.287865">
+                <ele>731.0</ele>
+                <time>2013-07-31T08:28:45.000Z</time>
+                <name>Position 12</name>
+            </trkpt>
+            <trkpt lat="38.4641553" lon="-28.2848561">
+                <ele>748.0</ele>
+                <time>2013-07-31T08:29:09.000Z</time>
+                <name>Position 13</name>
+            </trkpt>
+            <trkpt lat="38.4632533" lon="-28.2808041">
+                <ele>758.0</ele>
+                <time>2013-07-31T08:29:40.000Z</time>
+                <name>Position 14</name>
+            </trkpt>
+            <trkpt lat="38.4625197" lon="-28.2773771">
+                <ele>770.0</ele>
+                <time>2013-07-31T08:30:05.000Z</time>
+                <name>Position 15</name>
+            </trkpt>
+            <trkpt lat="38.4617952" lon="-28.2739397">
+                <ele>780.0</ele>
+                <time>2013-07-31T08:30:30.000Z</time>
+                <name>Position 16</name>
+            </trkpt>
+            <trkpt lat="38.4611269" lon="-28.2708411">
+                <ele>787.0</ele>
+                <time>2013-07-31T08:30:55.000Z</time>
+                <name>Position 17</name>
+            </trkpt>
+            <trkpt lat="38.4608434" lon="-28.2694995">
+                <ele>785.0</ele>
+                <time>2013-07-31T08:31:06.000Z</time>
+                <name>Position 18</name>
+            </trkpt>
+            <trkpt lat="38.460671" lon="-28.2690548">
+                <ele>784.0</ele>
+                <time>2013-07-31T08:31:10.000Z</time>
+                <name>Position 19</name>
+            </trkpt>
+            <trkpt lat="38.4603182" lon="-28.2684294">
+                <ele>784.0</ele>
+                <time>2013-07-31T08:31:19.000Z</time>
+                <name>Position 20</name>
+            </trkpt>
+            <trkpt lat="38.4598382" lon="-28.2676806">
+                <ele>786.0</ele>
+                <time>2013-07-31T08:31:29.000Z</time>
+                <name>Position 21</name>
+            </trkpt>
+            <trkpt lat="38.458828" lon="-28.2666975">
+                <ele>792.0</ele>
+                <time>2013-07-31T08:31:43.000Z</time>
+                <name>Position 22</name>
+            </trkpt>
+            <trkpt lat="38.4583653" lon="-28.2663206">
+                <ele>795.0</ele>
+                <time>2013-07-31T08:31:49.000Z</time>
+                <name>Position 23</name>
+            </trkpt>
+            <trkpt lat="38.4575292" lon="-28.2650075">
+                <ele>796.0</ele>
+                <time>2013-07-31T08:32:03.000Z</time>
+                <name>Position 24</name>
+            </trkpt>
+            <trkpt lat="38.4569215" lon="-28.2637622">
+                <ele>800.0</ele>
+                <time>2013-07-31T08:32:17.000Z</time>
+                <name>Position 25</name>
+            </trkpt>
+            <trkpt lat="38.4566907" lon="-28.2628567">
+                <ele>797.0</ele>
+                <time>2013-07-31T08:32:28.000Z</time>
+                <name>Position 26</name>
+            </trkpt>
+            <trkpt lat="38.4567529" lon="-28.2613695">
+                <ele>800.0</ele>
+                <time>2013-07-31T08:32:41.000Z</time>
+                <name>Position 27</name>
+            </trkpt>
+            <trkpt lat="38.4569899" lon="-28.2596204">
+                <ele>801.0</ele>
+                <time>2013-07-31T08:32:56.000Z</time>
+                <name>Position 28</name>
+            </trkpt>
+            <trkpt lat="38.4569357" lon="-28.2592935">
+                <ele>801.0</ele>
+                <time>2013-07-31T08:33:00.000Z</time>
+                <name>Position 29</name>
+            </trkpt>
+            <trkpt lat="38.4568952" lon="-28.259184">
+                <ele>801.0</ele>
+                <time>2013-07-31T08:33:02.000Z</time>
+                <name>Position 30</name>
+            </trkpt>
+            <trkpt lat="38.4563819" lon="-28.2582383">
+                <ele>803.0</ele>
+                <time>2013-07-31T08:33:13.000Z</time>
+                <name>Position 31</name>
+            </trkpt>
+            <trkpt lat="38.4558749" lon="-28.2567009">
+                <ele>808.0</ele>
+                <time>2013-07-31T08:33:28.000Z</time>
+                <name>Position 32</name>
+            </trkpt>
+            <trkpt lat="38.4551269" lon="-28.2545209">
+                <ele>816.0</ele>
+                <time>2013-07-31T08:33:49.000Z</time>
+                <name>Position 33</name>
+            </trkpt>
+            <trkpt lat="38.454726" lon="-28.2531536">
+                <ele>822.0</ele>
+                <time>2013-07-31T08:34:03.000Z</time>
+                <name>Position 34</name>
+            </trkpt>
+            <trkpt lat="38.4547488" lon="-28.2515226">
+                <ele>830.0</ele>
+                <time>2013-07-31T08:34:18.000Z</time>
+                <name>Position 35</name>
+            </trkpt>
+            <trkpt lat="38.4547597" lon="-28.2507397">
+                <ele>833.0</ele>
+                <time>2013-07-31T08:34:28.000Z</time>
+                <name>Position 36</name>
+            </trkpt>
+            <trkpt lat="38.4545095" lon="-28.2496911">
+                <ele>835.0</ele>
+                <time>2013-07-31T08:34:38.000Z</time>
+                <name>Position 37</name>
+            </trkpt>
+            <trkpt lat="38.4538528" lon="-28.2485943">
+                <ele>830.0</ele>
+                <time>2013-07-31T08:34:51.000Z</time>
+                <name>Position 38</name>
+            </trkpt>
+            <trkpt lat="38.4528628" lon="-28.2470082">
+                <ele>830.0</ele>
+                <time>2013-07-31T08:35:08.000Z</time>
+                <name>Position 39</name>
+            </trkpt>
+            <trkpt lat="38.4518907" lon="-28.2453046">
+                <ele>835.0</ele>
+                <time>2013-07-31T08:35:25.000Z</time>
+                <name>Position 40</name>
+            </trkpt>
+            <trkpt lat="38.4507041" lon="-28.2432066">
+                <ele>846.0</ele>
+                <time>2013-07-31T08:35:46.000Z</time>
+                <name>Position 41</name>
+            </trkpt>
+            <trkpt lat="38.4504068" lon="-28.2428569">
+                <ele>849.0</ele>
+                <time>2013-07-31T08:35:51.000Z</time>
+                <name>Position 42</name>
+            </trkpt>
+            <trkpt lat="38.4503087" lon="-28.2425122">
+                <ele>850.0</ele>
+                <time>2013-07-31T08:35:55.000Z</time>
+                <name>Position 43</name>
+            </trkpt>
+            <trkpt lat="38.4503628" lon="-28.240655">
+                <ele>861.0</ele>
+                <time>2013-07-31T08:36:10.000Z</time>
+                <name>Position 44</name>
+            </trkpt>
+            <trkpt lat="38.4505466" lon="-28.2388735">
+                <ele>866.0</ele>
+                <time>2013-07-31T08:36:24.000Z</time>
+                <name>Position 45</name>
+            </trkpt>
+            <trkpt lat="38.4502519" lon="-28.23699">
+                <ele>876.0</ele>
+                <time>2013-07-31T08:36:40.000Z</time>
+                <name>Position 46</name>
+            </trkpt>
+            <trkpt lat="38.4494961" lon="-28.2354867">
+                <ele>879.0</ele>
+                <time>2013-07-31T08:36:55.000Z</time>
+                <name>Position 47</name>
+            </trkpt>
+            <trkpt lat="38.4483292" lon="-28.2346953">
+                <ele>885.0</ele>
+                <time>2013-07-31T08:37:09.000Z</time>
+                <name>Position 48</name>
+            </trkpt>
+            <trkpt lat="38.4482482" lon="-28.2346255">
+                <ele>884.0</ele>
+                <time>2013-07-31T08:37:10.000Z</time>
+                <name>Position 49</name>
+            </trkpt>
+            <trkpt lat="38.4478267" lon="-28.233976">
+                <ele>878.0</ele>
+                <time>2013-07-31T08:37:19.000Z</time>
+                <name>Position 50</name>
+            </trkpt>
+            <trkpt lat="38.4478204" lon="-28.2338464">
+                <ele>878.0</ele>
+                <time>2013-07-31T08:37:31.000Z</time>
+                <name>Position 51</name>
+            </trkpt>
+            <trkpt lat="38.4478643" lon="-28.2335254">
+                <ele>876.0</ele>
+                <time>2013-07-31T08:37:36.000Z</time>
+                <name>Position 52</name>
+            </trkpt>
+            <trkpt lat="38.447806" lon="-28.2321202">
+                <ele>879.0</ele>
+                <time>2013-07-31T08:37:48.000Z</time>
+                <name>Position 53</name>
+            </trkpt>
+            <trkpt lat="38.4477752" lon="-28.2318747">
+                <ele>880.0</ele>
+                <time>2013-07-31T08:37:50.000Z</time>
+                <name>Position 54</name>
+            </trkpt>
+            <trkpt lat="38.4472841" lon="-28.2305694">
+                <ele>895.0</ele>
+                <time>2013-07-31T08:38:02.000Z</time>
+                <name>Position 55</name>
+            </trkpt>
+            <trkpt lat="38.4471197" lon="-28.2298802">
+                <ele>901.0</ele>
+                <time>2013-07-31T08:38:08.000Z</time>
+                <name>Position 56</name>
+            </trkpt>
+            <trkpt lat="38.447159" lon="-28.2292022">
+                <ele>904.0</ele>
+                <time>2013-07-31T08:38:14.000Z</time>
+                <name>Position 57</name>
+            </trkpt>
+            <trkpt lat="38.447584" lon="-28.2281417">
+                <ele>903.0</ele>
+                <time>2013-07-31T08:38:24.000Z</time>
+                <name>Position 58</name>
+            </trkpt>
+            <trkpt lat="38.4475368" lon="-28.227416">
+                <ele>906.0</ele>
+                <time>2013-07-31T08:38:30.000Z</time>
+                <name>Position 59</name>
+            </trkpt>
+            <trkpt lat="38.4474511" lon="-28.2271816">
+                <ele>906.0</ele>
+                <time>2013-07-31T08:38:32.000Z</time>
+                <name>Position 60</name>
+            </trkpt>
+            <trkpt lat="38.4471801" lon="-28.2268027">
+                <ele>908.0</ele>
+                <time>2013-07-31T08:38:36.000Z</time>
+                <name>Position 61</name>
+            </trkpt>
+            <trkpt lat="38.4468353" lon="-28.2265379">
+                <ele>911.0</ele>
+                <time>2013-07-31T08:38:40.000Z</time>
+                <name>Position 62</name>
+            </trkpt>
+            <trkpt lat="38.4461645" lon="-28.2264752">
+                <ele>915.0</ele>
+                <time>2013-07-31T08:38:47.000Z</time>
+                <name>Position 63</name>
+            </trkpt>
+            <trkpt lat="38.4458977" lon="-28.2265507">
+                <ele>916.0</ele>
+                <time>2013-07-31T08:38:50.000Z</time>
+                <name>Position 64</name>
+            </trkpt>
+            <trkpt lat="38.4454178" lon="-28.2262736">
+                <ele>914.0</ele>
+                <time>2013-07-31T08:38:56.000Z</time>
+                <name>Position 65</name>
+            </trkpt>
+            <trkpt lat="38.4450368" lon="-28.2256883">
+                <ele>918.0</ele>
+                <time>2013-07-31T08:39:02.000Z</time>
+                <name>Position 66</name>
+            </trkpt>
+            <trkpt lat="38.4446526" lon="-28.2254431">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:39:07.000Z</time>
+                <name>Position 67</name>
+            </trkpt>
+            <trkpt lat="38.444318" lon="-28.225418">
+                <ele>928.0</ele>
+                <time>2013-07-31T08:39:11.000Z</time>
+                <name>Position 68</name>
+            </trkpt>
+            <trkpt lat="38.4439366" lon="-28.2256597">
+                <ele>928.0</ele>
+                <time>2013-07-31T08:39:19.000Z</time>
+                <name>Position 69</name>
+            </trkpt>
+            <trkpt lat="38.4437889" lon="-28.2257832">
+                <ele>927.0</ele>
+                <time>2013-07-31T08:39:22.000Z</time>
+                <name>Position 70</name>
+            </trkpt>
+            <trkpt lat="38.4435023" lon="-28.2258832">
+                <ele>928.0</ele>
+                <time>2013-07-31T08:39:26.000Z</time>
+                <name>Position 71</name>
+            </trkpt>
+            <trkpt lat="38.4429288" lon="-28.2259024">
+                <ele>930.0</ele>
+                <time>2013-07-31T08:39:33.000Z</time>
+                <name>Position 72</name>
+            </trkpt>
+            <trkpt lat="38.4426331" lon="-28.2257744">
+                <ele>934.0</ele>
+                <time>2013-07-31T08:39:37.000Z</time>
+                <name>Position 73</name>
+            </trkpt>
+            <trkpt lat="38.4422788" lon="-28.2259328">
+                <ele>929.0</ele>
+                <time>2013-07-31T08:39:42.000Z</time>
+                <name>Position 74</name>
+            </trkpt>
+            <trkpt lat="38.4417219" lon="-28.225846">
+                <ele>931.0</ele>
+                <time>2013-07-31T08:39:49.000Z</time>
+                <name>Position 75</name>
+            </trkpt>
+            <trkpt lat="38.4415761" lon="-28.2257161">
+                <ele>931.0</ele>
+                <time>2013-07-31T08:39:51.000Z</time>
+                <name>Position 76</name>
+            </trkpt>
+            <trkpt lat="38.4410308" lon="-28.2246029">
+                <ele>936.0</ele>
+                <time>2013-07-31T08:40:03.000Z</time>
+                <name>Position 77</name>
+            </trkpt>
+            <trkpt lat="38.4409345" lon="-28.2241921">
+                <ele>939.0</ele>
+                <time>2013-07-31T08:40:07.000Z</time>
+                <name>Position 78</name>
+            </trkpt>
+            <trkpt lat="38.4409671" lon="-28.223129">
+                <ele>942.0</ele>
+                <time>2013-07-31T08:40:16.000Z</time>
+                <name>Position 79</name>
+            </trkpt>
+            <trkpt lat="38.4411879" lon="-28.2225839">
+                <ele>943.0</ele>
+                <time>2013-07-31T08:40:21.000Z</time>
+                <name>Position 80</name>
+            </trkpt>
+            <trkpt lat="38.4413214" lon="-28.2224043">
+                <ele>945.0</ele>
+                <time>2013-07-31T08:40:23.000Z</time>
+                <name>Position 81</name>
+            </trkpt>
+            <trkpt lat="38.4414844" lon="-28.2217184">
+                <ele>944.0</ele>
+                <time>2013-07-31T08:40:30.000Z</time>
+                <name>Position 82</name>
+            </trkpt>
+            <trkpt lat="38.4414572" lon="-28.221621">
+                <ele>943.0</ele>
+                <time>2013-07-31T08:40:31.000Z</time>
+                <name>Position 83</name>
+            </trkpt>
+            <trkpt lat="38.4407435" lon="-28.219576">
+                <ele>955.0</ele>
+                <time>2013-07-31T08:40:51.000Z</time>
+                <name>Position 84</name>
+            </trkpt>
+            <trkpt lat="38.4398047" lon="-28.2181214">
+                <ele>953.0</ele>
+                <time>2013-07-31T08:41:06.000Z</time>
+                <name>Position 85</name>
+            </trkpt>
+            <trkpt lat="38.4385409" lon="-28.2171096">
+                <ele>952.0</ele>
+                <time>2013-07-31T08:41:20.000Z</time>
+                <name>Position 86</name>
+            </trkpt>
+            <trkpt lat="38.4367711" lon="-28.2160096">
+                <ele>948.0</ele>
+                <time>2013-07-31T08:41:38.000Z</time>
+                <name>Position 87</name>
+            </trkpt>
+            <trkpt lat="38.4360273" lon="-28.2154531">
+                <ele>945.0</ele>
+                <time>2013-07-31T08:41:46.000Z</time>
+                <name>Position 88</name>
+            </trkpt>
+            <trkpt lat="38.4359122" lon="-28.2149396">
+                <ele>943.0</ele>
+                <time>2013-07-31T08:41:52.000Z</time>
+                <name>Position 89</name>
+            </trkpt>
+            <trkpt lat="38.4359714" lon="-28.2148636">
+                <ele>943.0</ele>
+                <time>2013-07-31T08:41:53.000Z</time>
+                <name>Position 90</name>
+            </trkpt>
+            <trkpt lat="38.4363011" lon="-28.21443">
+                <ele>944.0</ele>
+                <time>2013-07-31T08:41:58.000Z</time>
+                <name>Position 91</name>
+            </trkpt>
+            <trkpt lat="38.4364565" lon="-28.2135732">
+                <ele>942.0</ele>
+                <time>2013-07-31T08:42:05.000Z</time>
+                <name>Position 92</name>
+            </trkpt>
+            <trkpt lat="38.4362712" lon="-28.2115716">
+                <ele>934.0</ele>
+                <time>2013-07-31T08:42:21.000Z</time>
+                <name>Position 93</name>
+            </trkpt>
+            <trkpt lat="38.4362554" lon="-28.2091792">
+                <ele>938.9</ele>
+                <time>2013-07-31T08:42:39.000Z</time>
+                <name>Position 94</name>
+            </trkpt>
+            <trkpt lat="38.4363605" lon="-28.2080849">
+                <ele>941.0</ele>
+                <time>2013-07-31T08:42:47.000Z</time>
+                <name>Position 95</name>
+            </trkpt>
+            <trkpt lat="38.436354" lon="-28.2075241">
+                <ele>942.0</ele>
+                <time>2013-07-31T08:42:51.000Z</time>
+                <name>Position 96</name>
+            </trkpt>
+            <trkpt lat="38.4358296" lon="-28.2059492">
+                <ele>933.0</ele>
+                <time>2013-07-31T08:43:04.000Z</time>
+                <name>Position 97</name>
+            </trkpt>
+            <trkpt lat="38.4348804" lon="-28.2050323">
+                <ele>924.0</ele>
+                <time>2013-07-31T08:43:15.000Z</time>
+                <name>Position 98</name>
+            </trkpt>
+            <trkpt lat="38.4347349" lon="-28.2044531">
+                <ele>923.0</ele>
+                <time>2013-07-31T08:43:20.000Z</time>
+                <name>Position 99</name>
+            </trkpt>
+            <trkpt lat="38.4344676" lon="-28.2025111">
+                <ele>920.0</ele>
+                <time>2013-07-31T08:43:35.000Z</time>
+                <name>Position 100</name>
+            </trkpt>
+            <trkpt lat="38.4342479" lon="-28.2017687">
+                <ele>917.0</ele>
+                <time>2013-07-31T08:43:41.000Z</time>
+                <name>Position 101</name>
+            </trkpt>
+            <trkpt lat="38.434429" lon="-28.2011881">
+                <ele>921.0</ele>
+                <time>2013-07-31T08:43:47.000Z</time>
+                <name>Position 102</name>
+            </trkpt>
+            <trkpt lat="38.4346023" lon="-28.2011771">
+                <ele>923.0</ele>
+                <time>2013-07-31T08:43:49.000Z</time>
+                <name>Position 103</name>
+            </trkpt>
+            <trkpt lat="38.4353953" lon="-28.2013876">
+                <ele>922.0</ele>
+                <time>2013-07-31T08:43:57.000Z</time>
+                <name>Position 104</name>
+            </trkpt>
+            <trkpt lat="38.4358743" lon="-28.2011878">
+                <ele>924.0</ele>
+                <time>2013-07-31T08:44:03.000Z</time>
+                <name>Position 105</name>
+            </trkpt>
+            <trkpt lat="38.4360776" lon="-28.2005784">
+                <ele>926.0</ele>
+                <time>2013-07-31T08:44:08.000Z</time>
+                <name>Position 106</name>
+            </trkpt>
+            <trkpt lat="38.436141" lon="-28.2001649">
+                <ele>929.0</ele>
+                <time>2013-07-31T08:44:11.000Z</time>
+                <name>Position 107</name>
+            </trkpt>
+            <trkpt lat="38.4363431" lon="-28.1996776">
+                <ele>927.0</ele>
+                <time>2013-07-31T08:44:15.000Z</time>
+                <name>Position 108</name>
+            </trkpt>
+            <trkpt lat="38.4366122" lon="-28.1992453">
+                <ele>924.0</ele>
+                <time>2013-07-31T08:44:19.000Z</time>
+                <name>Position 109</name>
+            </trkpt>
+            <trkpt lat="38.4369382" lon="-28.1979236">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:44:29.000Z</time>
+                <name>Position 110</name>
+            </trkpt>
+            <trkpt lat="38.4368041" lon="-28.1971707">
+                <ele>921.0</ele>
+                <time>2013-07-31T08:44:35.000Z</time>
+                <name>Position 111</name>
+            </trkpt>
+            <trkpt lat="38.4362123" lon="-28.1963396">
+                <ele>917.0</ele>
+                <time>2013-07-31T08:44:44.000Z</time>
+                <name>Position 112</name>
+            </trkpt>
+            <trkpt lat="38.435481" lon="-28.1957234">
+                <ele>912.0</ele>
+                <time>2013-07-31T08:44:52.000Z</time>
+                <name>Position 113</name>
+            </trkpt>
+            <trkpt lat="38.435183" lon="-28.1952003">
+                <ele>911.0</ele>
+                <time>2013-07-31T08:44:57.000Z</time>
+                <name>Position 114</name>
+            </trkpt>
+            <trkpt lat="38.4349761" lon="-28.1934057">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:45:10.000Z</time>
+                <name>Position 115</name>
+            </trkpt>
+            <trkpt lat="38.4350561" lon="-28.1928495">
+                <ele>933.0</ele>
+                <time>2013-07-31T08:45:14.000Z</time>
+                <name>Position 116</name>
+            </trkpt>
+            <trkpt lat="38.435298" lon="-28.192177">
+                <ele>937.0</ele>
+                <time>2013-07-31T08:45:20.000Z</time>
+                <name>Position 117</name>
+            </trkpt>
+            <trkpt lat="38.4353592" lon="-28.191707">
+                <ele>941.0</ele>
+                <time>2013-07-31T08:45:24.000Z</time>
+                <name>Position 118</name>
+            </trkpt>
+            <trkpt lat="38.4352521" lon="-28.1904139">
+                <ele>956.0</ele>
+                <time>2013-07-31T08:45:34.000Z</time>
+                <name>Position 119</name>
+            </trkpt>
+            <trkpt lat="38.4355847" lon="-28.1896997">
+                <ele>960.0</ele>
+                <time>2013-07-31T08:45:41.000Z</time>
+                <name>Position 120</name>
+            </trkpt>
+            <trkpt lat="38.4357678" lon="-28.1895621">
+                <ele>959.0</ele>
+                <time>2013-07-31T08:45:43.000Z</time>
+                <name>Position 121</name>
+            </trkpt>
+            <trkpt lat="38.4360509" lon="-28.18883">
+                <ele>958.0</ele>
+                <time>2013-07-31T08:45:50.000Z</time>
+                <name>Position 122</name>
+            </trkpt>
+            <trkpt lat="38.43604" lon="-28.188713">
+                <ele>959.0</ele>
+                <time>2013-07-31T08:45:51.000Z</time>
+                <name>Position 123</name>
+            </trkpt>
+            <trkpt lat="38.4358942" lon="-28.1879824">
+                <ele>967.0</ele>
+                <time>2013-07-31T08:45:57.000Z</time>
+                <name>Position 124</name>
+            </trkpt>
+            <trkpt lat="38.4353036" lon="-28.1869505">
+                <ele>969.0</ele>
+                <time>2013-07-31T08:46:07.000Z</time>
+                <name>Position 125</name>
+            </trkpt>
+            <trkpt lat="38.4352555" lon="-28.1868628">
+                <ele>968.0</ele>
+                <time>2013-07-31T08:46:08.000Z</time>
+                <name>Position 126</name>
+            </trkpt>
+            <trkpt lat="38.4347588" lon="-28.1854503">
+                <ele>964.0</ele>
+                <time>2013-07-31T08:46:21.000Z</time>
+                <name>Position 127</name>
+            </trkpt>
+            <trkpt lat="38.4338502" lon="-28.1836816">
+                <ele>958.0</ele>
+                <time>2013-07-31T08:46:37.000Z</time>
+                <name>Position 128</name>
+            </trkpt>
+            <trkpt lat="38.4333632" lon="-28.183035">
+                <ele>953.0</ele>
+                <time>2013-07-31T08:46:44.000Z</time>
+                <name>Position 129</name>
+            </trkpt>
+            <trkpt lat="38.4326121" lon="-28.1827107">
+                <ele>946.0</ele>
+                <time>2013-07-31T08:46:52.000Z</time>
+                <name>Position 130</name>
+            </trkpt>
+            <trkpt lat="38.4317036" lon="-28.1826882">
+                <ele>936.0</ele>
+                <time>2013-07-31T08:47:01.000Z</time>
+                <name>Position 131</name>
+            </trkpt>
+            <trkpt lat="38.431157" lon="-28.1821427">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:47:09.000Z</time>
+                <name>Position 132</name>
+            </trkpt>
+            <trkpt lat="38.431153" lon="-28.1818149">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:47:12.000Z</time>
+                <name>Position 133</name>
+            </trkpt>
+            <trkpt lat="38.4312397" lon="-28.1814881">
+                <ele>926.0</ele>
+                <time>2013-07-31T08:47:19.000Z</time>
+                <name>Position 134</name>
+            </trkpt>
+            <trkpt lat="38.4313773" lon="-28.1811879">
+                <ele>925.0</ele>
+                <time>2013-07-31T08:47:27.000Z</time>
+                <name>Position 135</name>
+            </trkpt>
+            <trkpt lat="38.4314934" lon="-28.1808286">
+                <ele>924.0</ele>
+                <time>2013-07-31T08:47:31.000Z</time>
+                <name>Position 136</name>
+            </trkpt>
+            <trkpt lat="38.4316854" lon="-28.18046">
+                <ele>928.0</ele>
+                <time>2013-07-31T08:47:35.000Z</time>
+                <name>Position 137</name>
+            </trkpt>
+            <trkpt lat="38.4323551" lon="-28.1790102">
+                <ele>919.0</ele>
+                <time>2013-07-31T08:47:49.000Z</time>
+                <name>Position 138</name>
+            </trkpt>
+            <trkpt lat="38.4325018" lon="-28.1777888">
+                <ele>916.0</ele>
+                <time>2013-07-31T08:48:01.000Z</time>
+                <name>Position 139</name>
+            </trkpt>
+            <trkpt lat="38.4324174" lon="-28.1772787">
+                <ele>915.0</ele>
+                <time>2013-07-31T08:48:06.000Z</time>
+                <name>Position 140</name>
+            </trkpt>
+            <trkpt lat="38.4323443" lon="-28.177103">
+                <ele>916.0</ele>
+                <time>2013-07-31T08:48:08.000Z</time>
+                <name>Position 141</name>
+            </trkpt>
+            <trkpt lat="38.4319844" lon="-28.1765617">
+                <ele>920.0</ele>
+                <time>2013-07-31T08:48:15.000Z</time>
+                <name>Position 142</name>
+            </trkpt>
+            <trkpt lat="38.4319079" lon="-28.1760168">
+                <ele>919.0</ele>
+                <time>2013-07-31T08:48:21.000Z</time>
+                <name>Position 143</name>
+            </trkpt>
+            <trkpt lat="38.4320901" lon="-28.1745162">
+                <ele>912.0</ele>
+                <time>2013-07-31T08:48:35.000Z</time>
+                <name>Position 144</name>
+            </trkpt>
+            <trkpt lat="38.4320866" lon="-28.173264">
+                <ele>905.0</ele>
+                <time>2013-07-31T08:48:47.000Z</time>
+                <name>Position 145</name>
+            </trkpt>
+            <trkpt lat="38.4319164" lon="-28.1727448">
+                <ele>902.0</ele>
+                <time>2013-07-31T08:48:53.000Z</time>
+                <name>Position 146</name>
+            </trkpt>
+            <trkpt lat="38.4319479" lon="-28.172121">
+                <ele>897.0</ele>
+                <time>2013-07-31T08:48:59.000Z</time>
+                <name>Position 147</name>
+            </trkpt>
+            <trkpt lat="38.4320203" lon="-28.1719263">
+                <ele>895.0</ele>
+                <time>2013-07-31T08:49:01.000Z</time>
+                <name>Position 148</name>
+            </trkpt>
+            <trkpt lat="38.4320796" lon="-28.1713846">
+                <ele>894.0</ele>
+                <time>2013-07-31T08:49:07.000Z</time>
+                <name>Position 149</name>
+            </trkpt>
+            <trkpt lat="38.432017" lon="-28.1709191">
+                <ele>894.0</ele>
+                <time>2013-07-31T08:49:12.000Z</time>
+                <name>Position 150</name>
+            </trkpt>
+            <trkpt lat="38.4321049" lon="-28.1704696">
+                <ele>891.0</ele>
+                <time>2013-07-31T08:49:17.000Z</time>
+                <name>Position 151</name>
+            </trkpt>
+            <trkpt lat="38.4322455" lon="-28.1701653">
+                <ele>888.0</ele>
+                <time>2013-07-31T08:49:25.000Z</time>
+                <name>Position 152</name>
+            </trkpt>
+            <trkpt lat="38.4323661" lon="-28.1699454">
+                <ele>887.0</ele>
+                <time>2013-07-31T08:50:12.000Z</time>
+                <name>Position 153</name>
+            </trkpt>
+            <trkpt lat="38.4327061" lon="-28.1693402">
+                <ele>887.0</ele>
+                <time>2013-07-31T08:50:24.000Z</time>
+                <name>Position 154</name>
+            </trkpt>
+            <trkpt lat="38.4329844" lon="-28.1688417">
+                <ele>893.0</ele>
+                <time>2013-07-31T08:50:31.000Z</time>
+                <name>Position 155</name>
+            </trkpt>
+            <trkpt lat="38.4330483" lon="-28.1685789">
+                <ele>896.0</ele>
+                <time>2013-07-31T08:50:35.000Z</time>
+                <name>Position 156</name>
+            </trkpt>
+            <trkpt lat="38.4330431" lon="-28.1680477">
+                <ele>901.0</ele>
+                <time>2013-07-31T08:50:45.000Z</time>
+                <name>Position 157</name>
+            </trkpt>
+            <trkpt lat="38.4330451" lon="-28.1677921">
+                <ele>902.0</ele>
+                <time>2013-07-31T08:50:48.000Z</time>
+                <name>Position 158</name>
+            </trkpt>
+            <trkpt lat="38.4328665" lon="-28.1673258">
+                <ele>899.0</ele>
+                <time>2013-07-31T08:50:54.000Z</time>
+                <name>Position 159</name>
+            </trkpt>
+            <trkpt lat="38.4324626" lon="-28.1668223">
+                <ele>897.0</ele>
+                <time>2013-07-31T08:51:01.000Z</time>
+                <name>Position 160</name>
+            </trkpt>
+            <trkpt lat="38.4321678" lon="-28.1666247">
+                <ele>895.0</ele>
+                <time>2013-07-31T08:51:05.000Z</time>
+                <name>Position 161</name>
+            </trkpt>
+            <trkpt lat="38.4311353" lon="-28.1659056">
+                <ele>895.0</ele>
+                <time>2013-07-31T08:51:18.000Z</time>
+                <name>Position 162</name>
+            </trkpt>
+            <trkpt lat="38.4306599" lon="-28.1651747">
+                <ele>899.0</ele>
+                <time>2013-07-31T08:51:27.000Z</time>
+                <name>Position 163</name>
+            </trkpt>
+            <trkpt lat="38.4304955" lon="-28.1640952">
+                <ele>895.0</ele>
+                <time>2013-07-31T08:51:38.000Z</time>
+                <name>Position 164</name>
+            </trkpt>
+            <trkpt lat="38.4304531" lon="-28.1630326">
+                <ele>884.0</ele>
+                <time>2013-07-31T08:51:49.000Z</time>
+                <name>Position 165</name>
+            </trkpt>
+            <trkpt lat="38.430492" lon="-28.1628109">
+                <ele>883.0</ele>
+                <time>2013-07-31T08:51:51.000Z</time>
+                <name>Position 166</name>
+            </trkpt>
+            <trkpt lat="38.430706" lon="-28.1623183">
+                <ele>882.0</ele>
+                <time>2013-07-31T08:51:56.000Z</time>
+                <name>Position 167</name>
+            </trkpt>
+            <trkpt lat="38.4313922" lon="-28.1616572">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:52:07.000Z</time>
+                <name>Position 168</name>
+            </trkpt>
+            <trkpt lat="38.4315672" lon="-28.161413">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:52:17.000Z</time>
+                <name>Position 169</name>
+            </trkpt>
+            <trkpt lat="38.4315652" lon="-28.1614167">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:52:28.000Z</time>
+                <name>Position 170</name>
+            </trkpt>
+            <trkpt lat="38.4314931" lon="-28.161526">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:52:44.000Z</time>
+                <name>Position 171</name>
+            </trkpt>
+            <trkpt lat="38.4314951" lon="-28.1615265">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:52:59.000Z</time>
+                <name>Position 172</name>
+            </trkpt>
+            <trkpt lat="38.4319862" lon="-28.1614666">
+                <ele>878.0</ele>
+                <time>2013-07-31T08:53:13.000Z</time>
+                <name>Position 173</name>
+            </trkpt>
+            <trkpt lat="38.4319582" lon="-28.1614571">
+                <ele>878.0</ele>
+                <time>2013-07-31T08:53:20.000Z</time>
+                <name>Position 174</name>
+            </trkpt>
+            <trkpt lat="38.4316928" lon="-28.1614468">
+                <ele>877.0</ele>
+                <time>2013-07-31T08:53:33.000Z</time>
+                <name>Position 175</name>
+            </trkpt>
+            <trkpt lat="38.4317418" lon="-28.1611053">
+                <ele>875.0</ele>
+                <time>2013-07-31T08:53:44.000Z</time>
+                <name>Position 176</name>
+            </trkpt>
+            <trkpt lat="38.4321745" lon="-28.160516">
+                <ele>873.0</ele>
+                <time>2013-07-31T08:53:52.000Z</time>
+                <name>Position 177</name>
+            </trkpt>
+            <trkpt lat="38.4330024" lon="-28.1593827">
+                <ele>871.0</ele>
+                <time>2013-07-31T08:54:06.000Z</time>
+                <name>Position 178</name>
+            </trkpt>
+            <trkpt lat="38.4330599" lon="-28.1593127">
+                <ele>871.0</ele>
+                <time>2013-07-31T08:54:07.000Z</time>
+                <name>Position 179</name>
+            </trkpt>
+            <trkpt lat="38.433249" lon="-28.1589704">
+                <ele>871.0</ele>
+                <time>2013-07-31T08:54:11.000Z</time>
+                <name>Position 180</name>
+            </trkpt>
+            <trkpt lat="38.4337975" lon="-28.1575101">
+                <ele>866.0</ele>
+                <time>2013-07-31T08:54:26.000Z</time>
+                <name>Position 181</name>
+            </trkpt>
+            <trkpt lat="38.4342159" lon="-28.1568688">
+                <ele>854.0</ele>
+                <time>2013-07-31T08:54:35.000Z</time>
+                <name>Position 182</name>
+            </trkpt>
+            <trkpt lat="38.4346542" lon="-28.1558385">
+                <ele>845.0</ele>
+                <time>2013-07-31T08:54:47.000Z</time>
+                <name>Position 183</name>
+            </trkpt>
+            <trkpt lat="38.4349995" lon="-28.1554336">
+                <ele>839.0</ele>
+                <time>2013-07-31T08:54:53.000Z</time>
+                <name>Position 184</name>
+            </trkpt>
+            <trkpt lat="38.4356502" lon="-28.1551333">
+                <ele>837.0</ele>
+                <time>2013-07-31T08:55:01.000Z</time>
+                <name>Position 185</name>
+            </trkpt>
+            <trkpt lat="38.435984" lon="-28.1546902">
+                <ele>830.0</ele>
+                <time>2013-07-31T08:55:08.000Z</time>
+                <name>Position 186</name>
+            </trkpt>
+            <trkpt lat="38.4359113" lon="-28.1539215">
+                <ele>824.0</ele>
+                <time>2013-07-31T08:55:16.000Z</time>
+                <name>Position 187</name>
+            </trkpt>
+            <trkpt lat="38.4355168" lon="-28.1533234">
+                <ele>821.0</ele>
+                <time>2013-07-31T08:55:26.000Z</time>
+                <name>Position 188</name>
+            </trkpt>
+            <trkpt lat="38.4353353" lon="-28.1529604">
+                <ele>821.0</ele>
+                <time>2013-07-31T08:55:36.000Z</time>
+                <name>Position 189</name>
+            </trkpt>
+            <trkpt lat="38.4350375" lon="-28.1521669">
+                <ele>819.0</ele>
+                <time>2013-07-31T08:55:48.000Z</time>
+                <name>Position 190</name>
+            </trkpt>
+            <trkpt lat="38.4348075" lon="-28.1510183">
+                <ele>810.0</ele>
+                <time>2013-07-31T08:56:00.000Z</time>
+                <name>Position 191</name>
+            </trkpt>
+            <trkpt lat="38.4348755" lon="-28.1505035">
+                <ele>807.0</ele>
+                <time>2013-07-31T08:56:05.000Z</time>
+                <name>Position 192</name>
+            </trkpt>
+            <trkpt lat="38.4350114" lon="-28.1502448">
+                <ele>806.0</ele>
+                <time>2013-07-31T08:56:08.000Z</time>
+                <name>Position 193</name>
+            </trkpt>
+            <trkpt lat="38.4350161" lon="-28.1494015">
+                <ele>799.0</ele>
+                <time>2013-07-31T08:56:16.000Z</time>
+                <name>Position 194</name>
+            </trkpt>
+            <trkpt lat="38.4343527" lon="-28.1475229">
+                <ele>783.0</ele>
+                <time>2013-07-31T08:56:33.000Z</time>
+                <name>Position 195</name>
+            </trkpt>
+            <trkpt lat="38.4341001" lon="-28.1467375">
+                <ele>776.0</ele>
+                <time>2013-07-31T08:56:42.000Z</time>
+                <name>Position 196</name>
+            </trkpt>
+            <trkpt lat="38.4342309" lon="-28.1460802">
+                <ele>768.0</ele>
+                <time>2013-07-31T08:56:49.000Z</time>
+                <name>Position 197</name>
+            </trkpt>
+            <trkpt lat="38.4349921" lon="-28.1448732">
+                <ele>752.0</ele>
+                <time>2013-07-31T08:57:01.000Z</time>
+                <name>Position 198</name>
+            </trkpt>
+            <trkpt lat="38.4352" lon="-28.1442714">
+                <ele>744.0</ele>
+                <time>2013-07-31T08:57:06.000Z</time>
+                <name>Position 199</name>
+            </trkpt>
+            <trkpt lat="38.4351968" lon="-28.1436315">
+                <ele>739.0</ele>
+                <time>2013-07-31T08:57:12.000Z</time>
+                <name>Position 200</name>
+            </trkpt>
+            <trkpt lat="38.4349746" lon="-28.1422904">
+                <ele>736.0</ele>
+                <time>2013-07-31T08:57:24.000Z</time>
+                <name>Position 201</name>
+            </trkpt>
+            <trkpt lat="38.4349895" lon="-28.1419241">
+                <ele>736.0</ele>
+                <time>2013-07-31T08:57:27.000Z</time>
+                <name>Position 202</name>
+            </trkpt>
+            <trkpt lat="38.4352182" lon="-28.1415304">
+                <ele>732.0</ele>
+                <time>2013-07-31T08:57:34.000Z</time>
+                <name>Position 203</name>
+            </trkpt>
+            <trkpt lat="38.4353818" lon="-28.1415313">
+                <ele>729.0</ele>
+                <time>2013-07-31T08:57:37.000Z</time>
+                <name>Position 204</name>
+            </trkpt>
+            <trkpt lat="38.43596" lon="-28.1417156">
+                <ele>721.0</ele>
+                <time>2013-07-31T08:57:44.000Z</time>
+                <name>Position 205</name>
+            </trkpt>
+            <trkpt lat="38.4362822" lon="-28.1416494">
+                <ele>715.0</ele>
+                <time>2013-07-31T08:57:48.000Z</time>
+                <name>Position 206</name>
+            </trkpt>
+            <trkpt lat="38.4365229" lon="-28.141515">
+                <ele>710.0</ele>
+                <time>2013-07-31T08:57:51.000Z</time>
+                <name>Position 207</name>
+            </trkpt>
+            <trkpt lat="38.4367217" lon="-28.1410233">
+                <ele>704.0</ele>
+                <time>2013-07-31T08:57:57.000Z</time>
+                <name>Position 208</name>
+            </trkpt>
+            <trkpt lat="38.4366797" lon="-28.1408096">
+                <ele>704.0</ele>
+                <time>2013-07-31T08:57:59.000Z</time>
+                <name>Position 209</name>
+            </trkpt>
+            <trkpt lat="38.4363047" lon="-28.1399042">
+                <ele>701.0</ele>
+                <time>2013-07-31T08:58:10.000Z</time>
+                <name>Position 210</name>
+            </trkpt>
+            <trkpt lat="38.4360933" lon="-28.1394216">
+                <ele>697.0</ele>
+                <time>2013-07-31T08:58:15.000Z</time>
+                <name>Position 211</name>
+            </trkpt>
+            <trkpt lat="38.4359294" lon="-28.1391486">
+                <ele>696.0</ele>
+                <time>2013-07-31T08:58:18.000Z</time>
+                <name>Position 212</name>
+            </trkpt>
+            <trkpt lat="38.4358332" lon="-28.1387652">
+                <ele>693.0</ele>
+                <time>2013-07-31T08:58:22.000Z</time>
+                <name>Position 213</name>
+            </trkpt>
+            <trkpt lat="38.4358011" lon="-28.1379021">
+                <ele>685.0</ele>
+                <time>2013-07-31T08:58:30.000Z</time>
+                <name>Position 214</name>
+            </trkpt>
+            <trkpt lat="38.4356825" lon="-28.1373789">
+                <ele>682.0</ele>
+                <time>2013-07-31T08:58:35.000Z</time>
+                <name>Position 215</name>
+            </trkpt>
+            <trkpt lat="38.4356664" lon="-28.1368621">
+                <ele>678.0</ele>
+                <time>2013-07-31T08:58:40.000Z</time>
+                <name>Position 216</name>
+            </trkpt>
+            <trkpt lat="38.4357896" lon="-28.1360036">
+                <ele>670.0</ele>
+                <time>2013-07-31T08:58:51.000Z</time>
+                <name>Position 217</name>
+            </trkpt>
+            <trkpt lat="38.4358433" lon="-28.1357153">
+                <ele>667.0</ele>
+                <time>2013-07-31T08:59:08.000Z</time>
+                <name>Position 218</name>
+            </trkpt>
+            <trkpt lat="38.4361715" lon="-28.1347469">
+                <ele>655.0</ele>
+                <time>2013-07-31T08:59:18.000Z</time>
+                <name>Position 219</name>
+            </trkpt>
+            <trkpt lat="38.4363494" lon="-28.133996">
+                <ele>645.0</ele>
+                <time>2013-07-31T08:59:24.000Z</time>
+                <name>Position 220</name>
+            </trkpt>
+            <trkpt lat="38.4363618" lon="-28.133494">
+                <ele>640.0</ele>
+                <time>2013-07-31T08:59:29.000Z</time>
+                <name>Position 221</name>
+            </trkpt>
+            <trkpt lat="38.4359519" lon="-28.1324835">
+                <ele>641.0</ele>
+                <time>2013-07-31T08:59:39.000Z</time>
+                <name>Position 222</name>
+            </trkpt>
+            <trkpt lat="38.4355805" lon="-28.1313654">
+                <ele>637.0</ele>
+                <time>2013-07-31T08:59:49.000Z</time>
+                <name>Position 223</name>
+            </trkpt>
+            <trkpt lat="38.4356062" lon="-28.1306761">
+                <ele>628.0</ele>
+                <time>2013-07-31T08:59:56.000Z</time>
+                <name>Position 224</name>
+            </trkpt>
+            <trkpt lat="38.4356762" lon="-28.1299286">
+                <ele>624.0</ele>
+                <time>2013-07-31T09:00:05.000Z</time>
+                <name>Position 225</name>
+            </trkpt>
+            <trkpt lat="38.4358708" lon="-28.1285056">
+                <ele>617.0</ele>
+                <time>2013-07-31T09:00:17.000Z</time>
+                <name>Position 226</name>
+            </trkpt>
+            <trkpt lat="38.435751" lon="-28.1277254">
+                <ele>618.3</ele>
+                <time>2013-07-31T09:00:24.000Z</time>
+                <name>Position 227</name>
+            </trkpt>
+            <trkpt lat="38.4359224" lon="-28.1262689">
+                <ele>613.0</ele>
+                <time>2013-07-31T09:00:36.000Z</time>
+                <name>Position 228</name>
+            </trkpt>
+            <trkpt lat="38.4362079" lon="-28.1252341">
+                <ele>609.6</ele>
+                <time>2013-07-31T09:00:45.000Z</time>
+                <name>Position 229</name>
+            </trkpt>
+            <trkpt lat="38.4363991" lon="-28.1249027">
+                <ele>608.0</ele>
+                <time>2013-07-31T09:00:49.000Z</time>
+                <name>Position 230</name>
+            </trkpt>
+            <trkpt lat="38.4366044" lon="-28.1247287">
+                <ele>605.3</ele>
+                <time>2013-07-31T09:00:53.000Z</time>
+                <name>Position 231</name>
+            </trkpt>
+            <trkpt lat="38.4369178" lon="-28.1245843">
+                <ele>601.0</ele>
+                <time>2013-07-31T09:00:57.000Z</time>
+                <name>Position 232</name>
+            </trkpt>
+            <trkpt lat="38.4373232" lon="-28.1240172">
+                <ele>598.0</ele>
+                <time>2013-07-31T09:01:04.000Z</time>
+                <name>Position 233</name>
+            </trkpt>
+            <trkpt lat="38.4373585" lon="-28.1235454">
+                <ele>598.0</ele>
+                <time>2013-07-31T09:01:08.000Z</time>
+                <name>Position 234</name>
+            </trkpt>
+            <trkpt lat="38.4371397" lon="-28.1219388">
+                <ele>592.0</ele>
+                <time>2013-07-31T09:01:22.000Z</time>
+                <name>Position 235</name>
+            </trkpt>
+            <trkpt lat="38.4370295" lon="-28.1212214">
+                <ele>589.0</ele>
+                <time>2013-07-31T09:01:28.000Z</time>
+                <name>Position 236</name>
+            </trkpt>
+            <trkpt lat="38.4367097" lon="-28.1205596">
+                <ele>589.0</ele>
+                <time>2013-07-31T09:01:35.000Z</time>
+                <name>Position 237</name>
+            </trkpt>
+            <trkpt lat="38.4365924" lon="-28.120151">
+                <ele>590.4</ele>
+                <time>2013-07-31T09:01:39.000Z</time>
+                <name>Position 238</name>
+            </trkpt>
+            <trkpt lat="38.4363211" lon="-28.1188456">
+                <ele>584.0</ele>
+                <time>2013-07-31T09:01:51.000Z</time>
+                <name>Position 239</name>
+            </trkpt>
+            <trkpt lat="38.4355757" lon="-28.1177849">
+                <ele>588.0</ele>
+                <time>2013-07-31T09:02:02.000Z</time>
+                <name>Position 240</name>
+            </trkpt>
+            <trkpt lat="38.4349624" lon="-28.1163574">
+                <ele>582.0</ele>
+                <time>2013-07-31T09:02:15.000Z</time>
+                <name>Position 241</name>
+            </trkpt>
+            <trkpt lat="38.4348855" lon="-28.1161138">
+                <ele>580.0</ele>
+                <time>2013-07-31T09:02:17.000Z</time>
+                <name>Position 242</name>
+            </trkpt>
+            <trkpt lat="38.4348924" lon="-28.1155215">
+                <ele>574.0</ele>
+                <time>2013-07-31T09:02:22.000Z</time>
+                <name>Position 243</name>
+            </trkpt>
+            <trkpt lat="38.4349467" lon="-28.1152973">
+                <ele>571.0</ele>
+                <time>2013-07-31T09:02:24.000Z</time>
+                <name>Position 244</name>
+            </trkpt>
+            <trkpt lat="38.4348131" lon="-28.114725">
+                <ele>564.0</ele>
+                <time>2013-07-31T09:02:30.000Z</time>
+                <name>Position 245</name>
+            </trkpt>
+            <trkpt lat="38.4337573" lon="-28.1137888">
+                <ele>557.0</ele>
+                <time>2013-07-31T09:02:43.000Z</time>
+                <name>Position 246</name>
+            </trkpt>
+            <trkpt lat="38.4330133" lon="-28.1126758">
+                <ele>545.0</ele>
+                <time>2013-07-31T09:02:54.000Z</time>
+                <name>Position 247</name>
+            </trkpt>
+            <trkpt lat="38.4319021" lon="-28.1111682">
+                <ele>530.0</ele>
+                <time>2013-07-31T09:03:10.000Z</time>
+                <name>Position 248</name>
+            </trkpt>
+            <trkpt lat="38.4312995" lon="-28.1104684">
+                <ele>525.0</ele>
+                <time>2013-07-31T09:03:19.000Z</time>
+                <name>Position 249</name>
+            </trkpt>
+            <trkpt lat="38.4313588" lon="-28.1101587">
+                <ele>521.0</ele>
+                <time>2013-07-31T09:03:25.000Z</time>
+                <name>Position 250</name>
+            </trkpt>
+            <trkpt lat="38.4314296" lon="-28.1101347">
+                <ele>520.0</ele>
+                <time>2013-07-31T09:03:26.000Z</time>
+                <name>Position 251</name>
+            </trkpt>
+            <trkpt lat="38.4323951" lon="-28.1100878">
+                <ele>516.0</ele>
+                <time>2013-07-31T09:03:35.000Z</time>
+                <name>Position 252</name>
+            </trkpt>
+            <trkpt lat="38.4345069" lon="-28.1102403">
+                <ele>498.0</ele>
+                <time>2013-07-31T09:03:55.000Z</time>
+                <name>Position 253</name>
+            </trkpt>
+            <trkpt lat="38.4358966" lon="-28.1106302">
+                <ele>484.0</ele>
+                <time>2013-07-31T09:04:09.000Z</time>
+                <name>Position 254</name>
+            </trkpt>
+            <trkpt lat="38.4371204" lon="-28.1108566">
+                <ele>472.0</ele>
+                <time>2013-07-31T09:04:22.000Z</time>
+                <name>Position 255</name>
+            </trkpt>
+            <trkpt lat="38.4379632" lon="-28.1110148">
+                <ele>466.0</ele>
+                <time>2013-07-31T09:04:36.000Z</time>
+                <name>Position 256</name>
+            </trkpt>
+            <trkpt lat="38.4380836" lon="-28.1110667">
+                <ele>466.0</ele>
+                <time>2013-07-31T09:04:45.000Z</time>
+                <name>Position 257</name>
+            </trkpt>
+            <trkpt lat="38.4384205" lon="-28.1112871">
+                <ele>465.0</ele>
+                <time>2013-07-31T09:05:03.000Z</time>
+                <name>Position 258</name>
+            </trkpt>
+            <trkpt lat="38.4385558" lon="-28.1114298">
+                <ele>465.0</ele>
+                <time>2013-07-31T09:05:14.000Z</time>
+                <name>Position 259</name>
+            </trkpt>
+            <trkpt lat="38.4387071" lon="-28.1116268">
+                <ele>466.0</ele>
+                <time>2013-07-31T09:05:24.000Z</time>
+                <name>Position 260</name>
+            </trkpt>
+            <trkpt lat="38.4390261" lon="-28.1119893">
+                <ele>465.0</ele>
+                <time>2013-07-31T09:05:41.000Z</time>
+                <name>Position 261</name>
+            </trkpt>
+            <trkpt lat="38.4392468" lon="-28.1122529">
+                <ele>463.0</ele>
+                <time>2013-07-31T09:05:57.000Z</time>
+                <name>Position 262</name>
+            </trkpt>
+            <trkpt lat="38.4394364" lon="-28.1124988">
+                <ele>462.0</ele>
+                <time>2013-07-31T09:06:14.000Z</time>
+                <name>Position 263</name>
+            </trkpt>
+            <trkpt lat="38.4396523" lon="-28.1127928">
+                <ele>462.0</ele>
+                <time>2013-07-31T09:06:29.000Z</time>
+                <name>Position 264</name>
+            </trkpt>
+            <trkpt lat="38.439887" lon="-28.1130057">
+                <ele>461.1</ele>
+                <time>2013-07-31T09:06:42.000Z</time>
+                <name>Position 265</name>
+            </trkpt>
+            <trkpt lat="38.4400663" lon="-28.113171">
+                <ele>459.0</ele>
+                <time>2013-07-31T09:06:46.000Z</time>
+                <name>Position 266</name>
+            </trkpt>
+            <trkpt lat="38.4404629" lon="-28.1134125">
+                <ele>454.0</ele>
+                <time>2013-07-31T09:06:52.000Z</time>
+                <name>Position 267</name>
+            </trkpt>
+            <trkpt lat="38.4409598" lon="-28.114049">
+                <ele>447.0</ele>
+                <time>2013-07-31T09:07:00.000Z</time>
+                <name>Position 268</name>
+            </trkpt>
+            <trkpt lat="38.44122" lon="-28.1143318">
+                <ele>444.0</ele>
+                <time>2013-07-31T09:07:04.000Z</time>
+                <name>Position 269</name>
+            </trkpt>
+            <trkpt lat="38.4417558" lon="-28.1146051">
+                <ele>435.0</ele>
+                <time>2013-07-31T09:07:10.000Z</time>
+                <name>Position 270</name>
+            </trkpt>
+            <trkpt lat="38.4425879" lon="-28.1154063">
+                <ele>425.0</ele>
+                <time>2013-07-31T09:07:20.000Z</time>
+                <name>Position 271</name>
+            </trkpt>
+            <trkpt lat="38.4430337" lon="-28.1158088">
+                <ele>421.0</ele>
+                <time>2013-07-31T09:07:26.000Z</time>
+                <name>Position 272</name>
+            </trkpt>
+            <trkpt lat="38.4434437" lon="-28.1156514">
+                <ele>414.0</ele>
+                <time>2013-07-31T09:07:32.000Z</time>
+                <name>Position 273</name>
+            </trkpt>
+            <trkpt lat="38.4434814" lon="-28.1155524">
+                <ele>413.0</ele>
+                <time>2013-07-31T09:07:33.000Z</time>
+                <name>Position 274</name>
+            </trkpt>
+            <trkpt lat="38.4435492" lon="-28.1153497">
+                <ele>410.0</ele>
+                <time>2013-07-31T09:07:35.000Z</time>
+                <name>Position 275</name>
+            </trkpt>
+            <trkpt lat="38.4439828" lon="-28.115067">
+                <ele>401.0</ele>
+                <time>2013-07-31T09:07:41.000Z</time>
+                <name>Position 276</name>
+            </trkpt>
+            <trkpt lat="38.4441462" lon="-28.1151185">
+                <ele>399.0</ele>
+                <time>2013-07-31T09:07:43.000Z</time>
+                <name>Position 277</name>
+            </trkpt>
+            <trkpt lat="38.4443518" lon="-28.115192">
+                <ele>396.0</ele>
+                <time>2013-07-31T09:07:50.000Z</time>
+                <name>Position 278</name>
+            </trkpt>
+            <trkpt lat="38.4443443" lon="-28.1151857">
+                <ele>396.0</ele>
+                <time>2013-07-31T09:07:52.000Z</time>
+                <name>Position 279</name>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>
