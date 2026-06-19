@@ -922,27 +922,26 @@ function renderExcContingut() {
 }
 
 /* ── CETACIS ── */
-/* Espècies de cetacis observables */
 const EXC_CETACIS_ESPECIES = [
-  { nom: "Rorqual comú",     detall: "El segon cetaci més gran del món. Freqüent a les Açores." },
-  { nom: "Balena blava",     detall: "El major animal que ha existit. Ocasional a l'hivern." },
-  { nom: "Cachalot",         detall: "Resident permanent, especialment a Pico. Busseig profund." },
-  { nom: "Dofí mular",       detall: "El més comú i sociable. Present tot l'any." },
-  { nom: "Dofí comú",        detall: "S'observa en grups de centenars d'individus." },
-  { nom: "Dofí estenella",   detall: "Presenta una banda lateral daurada molt característica." },
-  { nom: "Orca",             detall: "Ocasional. Transita en ruta migratòria." },
+  { nom: "Rorqual comú",   detall: "El segon cetaci més gran del món. Freqüent a les Açores." },
+  { nom: "Balena blava",   detall: "El major animal que ha existit. Ocasional a l'hivern." },
+  { nom: "Cachalot",       detall: "Resident permanent, especialment a Pico. Busseig profund." },
+  { nom: "Dofí mular",     detall: "El més comú i sociable. Present tot l'any." },
+  { nom: "Dofí comú",      detall: "S'observa en grups de centenars d'individus." },
+  { nom: "Dofí estenella", detall: "Presenta una banda lateral daurada molt característica." },
+  { nom: "Orca",           detall: "Ocasional. Transita en ruta migratòria." },
 ];
 
 function renderCetacis() {
-  const cetExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "cetacis");
   const byIlla = {};
-  cetExcs.forEach(([key, e]) => {
+  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+    if (e.sub !== "cetacis") return;
     if (!byIlla[e.illa]) byIlla[e.illa] = {};
     if (!byIlla[e.illa][e.zona]) byIlla[e.illa][e.zona] = [];
     byIlla[e.illa][e.zona].push(e);
   });
 
-  const especiesHtml = EXC_CETACIS_ESPECIES.map((e) =>
+  const especies = EXC_CETACIS_ESPECIES.map((e) =>
     `<div class="exc-especie">
       <span class="exc-especie-nom">${escHtml(e.nom)}</span>
       <span class="exc-especie-det">${escHtml(e.detall)}</span>
@@ -952,95 +951,134 @@ function renderCetacis() {
     <div class="exc-illa-bloc">
       <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
       <div class="exc-llocs-grid">
-        ${Object.entries(zones).map(([zona, excs]) => `
-          <div class="exc-lloc-card">
+        ${Object.entries(zones).map(([zona, excs]) => {
+          const linksHtml = excs.filter((e) => e.empresa).slice(0, 5).map((e) => {
+            const parts = [e.info, e.sortides, e.durada, e.preu && e.preu !== "n/d" ? e.preu + "€" : null].filter(Boolean);
+            return `<a class="exc-link-btn" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">${escHtml(parts.join(" · "))}</a>`;
+          }).join("");
+          return `<div class="exc-lloc-card">
             <div class="exc-lloc-nom">📍 ${escHtml(zona)}</div>
-            <div class="exc-lloc-links">
-              ${excs.filter((e) => e.empresa).slice(0, 4).map((e) => {
-                const preuStr = e.preu && e.preu !== "n/d" ? ` · ${e.preu}€` : "";
-                const durStr = e.durada ? ` · ${e.durada}` : "";
-                const infoStr = e.info ? `<span class="exc-lloc-badge">${escHtml(e.info)}</span>` : "";
-                return `<a class="exc-lloc-link" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">
-                  ${infoStr} ${escHtml(e.sortides || "")}${durStr}${preuStr}
-                </a>`;
-              }).join("")}
-            </div>
-          </div>`).join("")}
-      </div>
-    </div>`).join("");
-
-  return `
-    <div class="exc-seccio">
-      <div class="exc-intro">
-        <p>Les Açores s'han convertit en un dels millors destins del món per a l'avistament de cetacis. La seva posició estratègica a l'Atlàntic, la profunditat dels seus fons i les seves aigues riques en nutrients atreuen una gran varietat d'espècies.</p>
-        <div class="exc-especies-grid">${especiesHtml}</div>
-      </div>
-      ${llocsHtml}
-    </div>`;
-}
-
-/* ── BARCO ── */
-function renderBarco() {
-  const barcoExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "barco");
-  const byZona = {};
-  barcoExcs.forEach(([, e]) => {
-    if (!byZona[e.zona]) byZona[e.zona] = [];
-    byZona[e.zona].push(e);
-  });
-
-  const zonesHtml = Object.entries(byZona).map(([zona, excs]) => `
-    <div class="exc-barco-zona">
-      <h3 class="exc-barco-titol">📍 ${escHtml(zona)}</h3>
-      <div class="exc-barco-grid">
-        ${excs.map((e) => {
-          const preuStr = e.preu && e.preu !== "n/d" ? `${e.preu}€` : "";
-          return `<div class="exc-barco-card${e.destacat ? " exc-barco-destacat" : ""}">
-            <div class="exc-barco-nom">${escHtml(e.nom)}</div>
-            ${e.info ? `<span class="exc-barco-tipus">${escHtml(e.info)}</span>` : ""}
-            ${e.durada ? `<span class="exc-barco-dur">⏱️ ${escHtml(e.durada)}</span>` : ""}
-            ${e.sortides ? `<div class="exc-barco-sort">🕐 ${escHtml(e.sortides)}</div>` : ""}
-            ${preuStr ? `<div class="exc-barco-preu">💶 ${preuStr}</div>` : ""}
-            ${e.empresa ? `<a class="exc-barco-link" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">Reservar</a>` : ""}
+            <p class="exc-lloc-desc">${excs.length} opció${excs.length > 1 ? "ns" : ""} de sortida</p>
+            ${linksHtml ? `<div class="exc-lloc-links">${linksHtml}</div>` : ""}
           </div>`;
         }).join("")}
       </div>
     </div>`).join("");
 
   return `
-    <div class="exc-seccio">
-      <p class="exc-intro-text">Els passejos amb barco permeten descobrir la costa des del mar, explorar coves marines inaccessibles per terra i gaudir de postes de sol atlàntiques. La majoria de sortides es fan en zodiac.</p>
-      ${zonesHtml}
-    </div>`;
+  <div class="exc-hero exc-hero-cetacis">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">🐋 Avistament de Cetacis</h2>
+      <p class="exc-hero-sub">Un dels millors llocs del món per observar balenes i dofins en llibertat</p>
+    </div>
+  </div>
+  <div class="exc-cos">
+    <div class="exc-intro-grid">
+      <div class="exc-intro-text">
+        <p>Les Açores s'han convertit en un dels millors destins del món per a l'avistament de cetacis. La seva posició estratègica a l'Atlàntic, la profunditat dels seus fons i les seves aigues riques en nutrients atreuen una gran varietat d'espècies.</p>
+      </div>
+      <div class="exc-especies-wrap">
+        <div class="exc-especies-titol">🐠 Espècies habituals</div>
+        ${especies}
+      </div>
+    </div>
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">📍 On fer-ho · per porta d'embarcament</h3></div>
+    ${llocsHtml}
+  </div>`;
+}
+
+/* ── BARCO ── */
+function renderBarco() {
+  const byZona = {};
+  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+    if (e.sub !== "barco") return;
+    if (!byZona[e.zona]) byZona[e.zona] = [];
+    byZona[e.zona].push(e);
+  });
+
+  const zonesHtml = Object.entries(byZona).map(([zona, excs]) => `
+    <div class="exc-seccio-sep" style="margin-top:28px">
+      <h3 class="exc-seccio-titol">📍 ${escHtml(zona)}</h3>
+    </div>
+    <div class="exc-act-grid">
+      ${excs.map((a, i) => {
+        const href = a.empresa ? escHtml(a.empresa) : "#";
+        return `<a class="exc-act-card${a.destacat ? " exc-act-destacada" : ""}" href="${href}" target="_blank" rel="noopener"
+           style="animation-delay:${i * 40}ms">
+          <div class="exc-act-top">
+            ${a.info ? `<span class="exc-act-font">${escHtml(a.info)}</span>` : ""}
+            ${a.durada ? `<span class="exc-act-durada">⏱ ${escHtml(a.durada)}</span>` : ""}
+          </div>
+          <div class="exc-act-nom">${escHtml(a.nom)}</div>
+          ${a.sortides ? `<div class="exc-act-empresa">🕐 ${escHtml(a.sortides)}</div>` : ""}
+          ${a.preu && a.preu !== "n/d" ? `<div class="exc-act-empresa">💶 ${a.preu}€</div>` : ""}
+        </a>`;
+      }).join("")}
+    </div>`).join("");
+
+  return `
+  <div class="exc-hero exc-hero-barco">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">⛵ Passeig amb Barco</h2>
+      <p class="exc-hero-sub">Explora les costes volcàniques des del mar · São Miguel</p>
+    </div>
+  </div>
+  <div class="exc-cos">
+    ${zonesHtml}
+  </div>`;
 }
 
 /* ── ESTRELLES ── */
 function renderEstrelles() {
-  const estExcs = Object.entries(EXCURSIONS || {}).filter(([, e]) => e.sub === "estrelles");
   const byIlla = {};
-  estExcs.forEach(([, e]) => {
+  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+    if (e.sub !== "estrelles") return;
     if (!byIlla[e.illa]) byIlla[e.illa] = [];
     byIlla[e.illa].push(e);
   });
 
   const llocsHtml = Object.entries(byIlla).map(([illa, excs]) => `
-    <div class="exc-est-illa">
-      <h3 class="exc-est-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
-      <div class="exc-est-grid">
-        ${excs.map((e) => `
-          <div class="exc-est-card${e.destacat ? " exc-est-destacat" : ""}">
-            <div class="exc-est-nom">✨ ${escHtml(e.nom)}</div>
-            ${e.zona && e.zona !== e.nom ? `<div class="exc-est-zona">📍 ${escHtml(e.zona)}</div>` : ""}
-            ${e.info ? `<p class="exc-est-info">${escHtml(e.info)}</p>` : ""}
+    <div class="exc-illa-bloc">
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
+      <div class="exc-llocs-grid exc-llocs-grid-estrelles">
+        ${excs.map((e, i) => `
+          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i * 60}ms">
+            <div class="exc-lloc-ico">✨</div>
+            <div class="exc-lloc-nom">${escHtml(e.nom)}</div>
+            <p class="exc-lloc-desc">${escHtml(e.info || "")}</p>
           </div>`).join("")}
       </div>
     </div>`).join("");
 
   return `
-    <div class="exc-seccio">
-      <p class="exc-intro-text">Les Açores gaudeixen d'una de les cels nocturns més netes d'Europa. Allunyades de la contaminació lluminosa continental, les illes ofereixen condicions excepcionals per a l'observació astronòmica. Les zones d'alta muntanya, per sobre de la capa de boira baixa, permeten veure la Via Làctia a simple vista. Consell: comproveu primer la previsió de boira per a l'altitud!</p>
-      ${llocsHtml}
-    </div>`;
+  <div class="exc-hero exc-hero-estrelles">
+    <div class="exc-hero-overlay"></div>
+    <div class="exc-hero-content">
+      <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
+      <h2 class="exc-hero-titol">🔭 Observació d'Estrelles</h2>
+      <p class="exc-hero-sub">Cel fosc, poca contaminació lumínica · els millors punts per illa</p>
+    </div>
+  </div>
+  <div class="exc-cos">
+    ${llocsHtml}
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">💡 Consells</h3></div>
+    <div class="exc-consells">
+      <div class="exc-consell exc-consell-nit">
+        <span class="exc-consell-ico">🌙</span>
+        <span>Comproveu la previsió de boira per a l'altitud. Les zones de muntanya solen estar per sobre del núvol baix.</span>
+      </div>
+      <div class="exc-consell exc-consell-nit">
+        <span class="exc-consell-ico">🚗</span>
+        <span>Conduïu amb llums curtes a les zones d'observació. Doneu temps als ulls per adaptar-se a la foscor (uns 20 minuts).</span>
+      </div>
+    </div>
+  </div>`;
 }
+
 
 /* ══════════════════════════════════════════════
    SECCIÓ: GASTRONOMIA
