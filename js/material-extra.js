@@ -874,7 +874,7 @@ let _excInit = false;
 
 const EXC_TABS = [
   { id: "cetacis", emoji: "🐋", label: "Avistament de Cetacis" },
-  { id: "barco", emoji: "⛵", label: "Passeig amb Barco" },
+  { id: "barco", emoji: "⛵", label: "Passeig amb vaixell/llanxa" },
   { id: "estrelles", emoji: "🔭", label: "Observació d'Estrelles" },
 ];
 const EXC_ILLA_EMOJI = {
@@ -923,47 +923,115 @@ function renderExcContingut() {
 
 /* ── CETACIS ── */
 const EXC_CETACIS_ESPECIES = [
-  { nom: "Rorqual comú",   detall: "El segon cetaci més gran del món. Freqüent a les Açores." },
-  { nom: "Balena blava",   detall: "El major animal que ha existit. Ocasional a l'hivern." },
-  { nom: "Cachalot",       detall: "Resident permanent, especialment a Pico. Busseig profund." },
-  { nom: "Dofí mular",     detall: "El més comú i sociable. Present tot l'any." },
-  { nom: "Dofí comú",      detall: "S'observa en grups de centenars d'individus." },
-  { nom: "Dofí estenella", detall: "Presenta una banda lateral daurada molt característica." },
-  { nom: "Orca",           detall: "Ocasional. Transita en ruta migratòria." },
+  { nom: "Catxalot",                detall: "Resident tot l'any · emblema de les Açores" },
+  { nom: "Balena blava",            detall: "Present a la primavera · fins a 30 m de longitud" },
+  { nom: "Balena geperuda",         detall: "Més freqüent a primavera i estiu" },
+  { nom: "Dofí mular",              detall: "El més popular · present tot l'any" },
+  { nom: "Dofins tacats de l'Atlàntic", detall: "Molt abundants a l'estiu · s'acosten a les embarcacions" },
+  { nom: "Dofí llistat i comú",     detall: "Habituals en diferents èpoques de l'any" },
 ];
 
+const EXC_CET_DESC = {
+  "Ponta Delgada":        "La capital és el punt de partida més popular. La particularitat és la figura del guaita a terra: observadors des de la costa avisen per ràdio les embarcacions. Catxalots, balenes d'aleta, dofins i de vegades balenes blaves. Les excursions duren 2-3 hores.",
+  "Vila Franca do Campo": "Inclou visita a l'illot de Vila Franca, un cràter volcànic que forma una piscina natural circular perfecta per al bany. Els guies es centren en els dofins, abundants en aquesta zona.",
+  "Rabo de Peixe":        "Combina el contacte amb la fauna marina amb el pols d'un autèntic poble de pescadors. Veure els vaixells locals sortir a pescar mentre uns altres busquen cetacis explica com tradició i turisme conviuen.",
+  "Mosteiros":            "A l'extrem nord-occidental de São Miguel, Mosteiros és un dels racons menys turístics de l'illa. Les aigues del voltant, riques en nutrients gràcies als corrents atlàntics, concentren abundància de vida marina. Una opció excel·lent per gaudir de l'experiència amb menys massificació.",
+  "Lajes do Pico":        "Pico és sinònim de balenes. Lajes va ser durant segles un port balener i avui és el cor de la conservació. La probabilitat de veure catxalots és especialment alta. La silueta del Montanha do Pico (2.351 m) converteix cada travessia en una postal inoblidable.",
+  "Madalena":             "Port principal de Pico, amb diverses empreses que ofereixen excursions als canals entre illes, una de les zones de biodiversitat marina més riques de l'Atlàntic nord.",
+  "Horta":                "Horta és sinònim de navegació. Des del port ple de murals pintats per mariners que creuen l'Atlàntic surten excursions al canal Faial-Pico, un dels corredors marins més actius. No és estrany veure diverses espècies en una mateixa sortida.",
+};
+
+const EXC_CET_NOM = {
+  "futurismo.pt":              "Futurismo",
+  "mobydick-tours.com":        "Mobydick Tours",
+  "picosdeaventura.com":       "Picos de Aventura",
+  "azoreswhalewatch.com":      "Azores Whale Watch",
+  "oceaneyeazores.pt":         "Ocean Eye Azores",
+  "terradopico.com":           "Terra do Pico",
+  "aquaacores.pt":             "Aqua Açores",
+  "espacotalassa.com":         "Espacio Talassa",
+  "pico-island-adventures.com":"Pico Island Adventures",
+  "cwazores.com":              "CW Azores",
+  "naturalist.pt":             "Naturalist",
+  "norbertodiver.pt":          "Norberto Diver",
+  "azoresexperiences.com":     "Azores Experiences",
+  "diveazores.net":            "Dive Azores",
+  "petercafesport.com":        "Peter Café Sport",
+};
+
+function excEmpresaNom(url) {
+  try {
+    const h = new URL(url).hostname.replace(/^www\./, "");
+    return EXC_CET_NOM[h] || h.split(".")[0].replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  } catch (e) { return "Empresa"; }
+}
+
+const EXC_CET_FAV = new Set(["ex-cet-pic-01", "ex-cet-pic-03"]); /* Futurismo + Espacio Talassa Lajes do Pico */
+
 function renderCetacis() {
-  const byIlla = {};
-  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+  const byIllaZona = {};
+  Object.entries(EXCURSIONS || {}).forEach(([key, e]) => {
     if (e.sub !== "cetacis") return;
-    if (!byIlla[e.illa]) byIlla[e.illa] = {};
-    if (!byIlla[e.illa][e.zona]) byIlla[e.illa][e.zona] = [];
-    byIlla[e.illa][e.zona].push(e);
+    const illa = e.illa || "Altres";
+    const zona = e.zona || "Altres";
+    if (!byIllaZona[illa]) byIllaZona[illa] = {};
+    if (!byIllaZona[illa][zona]) byIllaZona[illa][zona] = [];
+    byIllaZona[illa][zona].push({ ...e, key });
   });
 
-  const especies = EXC_CETACIS_ESPECIES.map((e) =>
-    `<div class="exc-especie">
-      <span class="exc-especie-nom">${escHtml(e.nom)}</span>
-      <span class="exc-especie-det">${escHtml(e.detall)}</span>
+  function compCard(e) {
+    const dest = EXC_CET_FAV.has(e.key);
+    const nom = excEmpresaNom(e.empresa || "");
+    const preuStr = e.preu && e.preu !== "n/d" ? `a partir de ${e.preu}€` : "";
+    const goldSt = dest ? `border-color:#c89a2a;background:rgba(200,154,42,0.10);` : "";
+    const infoParens = e.info ? ` (${escHtml(e.info)})` : "";
+    const topBadge = dest
+      ? `<span class="exc-act-font" style="background:#c89a2a22;color:#c89a2a;border-color:#c89a2a44;">⭐ Recomanat${infoParens}</span>`
+      : (e.info ? `<span class="exc-act-font">${escHtml(e.info)}</span>` : "");
+    return `<a class="exc-act-card" href="${escHtml(e.empresa||"#")}" target="_blank" rel="noopener"
+      style="${goldSt}">
+      <div class="exc-act-top">
+        ${topBadge}
+        ${e.durada ? `<span class="exc-act-durada">⏱ ${escHtml(e.durada)}</span>` : ""}
+      </div>
+      <div class="exc-act-nom">${escHtml(nom)}</div>
+      ${e.sortides ? `<div class="exc-act-empresa">🕐 ${escHtml(e.sortides)}</div>` : ""}
+      ${preuStr ? `<div class="exc-act-empresa">💶 ${escHtml(preuStr)}</div>` : ""}
+    </a>`;
+  }
+
+  const llocsHtml = Object.entries(byIllaZona).map(([illa, zones], ii) => `
+    <div class="exc-illa-bloc" style="${ii > 0 ? "margin-top:48px;" : ""}">
+      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
+      ${Object.entries(zones).map(([zona, excs], zi) => {
+        const desc = EXC_CET_DESC[zona] || "";
+        return `<div class="exc-lloc-bloc" style="${zi > 0 ? "margin-top:40px;" : ""}">
+          <div class="exc-lloc-header" style="margin-bottom:16px;">
+            <div class="exc-lloc-nom" style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">📍 ${escHtml(zona)}</div>
+            ${desc ? `<p class="exc-lloc-desc" style="margin:0 0 12px;">${escHtml(desc)}</p>` : ""}
+          </div>
+          <div class="exc-act-grid">${excs.map(compCard).join("")}</div>
+        </div>`;
+      }).join("")}
     </div>`).join("");
 
-  const llocsHtml = Object.entries(byIlla).map(([illa, zones]) => `
-    <div class="exc-illa-bloc">
-      <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
-      <div class="exc-llocs-grid">
-        ${Object.entries(zones).map(([zona, excs]) => {
-          const linksHtml = excs.filter((e) => e.empresa).slice(0, 5).map((e) => {
-            const parts = [e.info, e.sortides, e.durada, e.preu && e.preu !== "n/d" ? e.preu + "€" : null].filter(Boolean);
-            return `<a class="exc-link-btn" href="${escHtml(e.empresa)}" target="_blank" rel="noopener">${escHtml(parts.join(" · "))}</a>`;
-          }).join("");
-          return `<div class="exc-lloc-card">
-            <div class="exc-lloc-nom">📍 ${escHtml(zona)}</div>
-            <p class="exc-lloc-desc">${excs.length} opció${excs.length > 1 ? "ns" : ""} de sortida</p>
-            ${linksHtml ? `<div class="exc-lloc-links">${linksHtml}</div>` : ""}
-          </div>`;
-        }).join("")}
-      </div>
-    </div>`).join("");
+  const especiesHtml = EXC_CETACIS_ESPECIES.map((e) =>
+    `<div class="exc-especie"><span class="exc-especie-nom">${escHtml(e.nom)}</span><span class="exc-especie-det">${escHtml(e.detall)}</span></div>`
+  ).join("");
+
+  const consells = [
+    { ico: "🏢", text: "Tria empreses responsables. Evita les que garanteixen albiraments concrets — allò natural no es programa." },
+    { ico: "🧥", text: "Porta jaqueta i protecció solar. L'Atlàntic és imprevisible encara que sigui estiu." },
+    { ico: "🌊", text: "No et frustris si veus poques espècies. Hi ha jornades espectaculars i d'altres de tranquil·les. Forma part de l'autenticitat." },
+    { ico: "📷", text: "Gaudeix més enllà de la càmera. Fes fotos, però dedica temps a observar només amb els ulls." },
+    { ico: "📅", text: "Reserva amb antelació. En temporada alta les places volen, sobretot a São Miguel i Pico." },
+  ].map((c) => `<div class="exc-consell"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`).join("");
+
+  const links = [
+    "https://viveportugalweb.com/donde-ver-ballenas-en-azores-de-forma-responsable/",
+    "https://randomtrip.es/avistamiento-cetaceos-ballenas-delfines-sao-miguel-azores/",
+    "https://www.azoreschoice.com/blog/whale-watching-in-the-azores/",
+  ].map((lk) => `<a class="me-link-item" href="${escHtml(lk)}" target="_blank" rel="noopener"><span class="me-link-url">${escHtml(lk)}</span></a>`).join("");
 
   return `
   <div class="exc-hero exc-hero-cetacis">
@@ -977,25 +1045,34 @@ function renderCetacis() {
   <div class="exc-cos">
     <div class="exc-intro-grid">
       <div class="exc-intro-text">
-        <p>Les Açores s'han convertit en un dels millors destins del món per a l'avistament de cetacis. La seva posició estratègica a l'Atlàntic, la profunditat dels seus fons i les seves aigues riques en nutrients atreuen una gran varietat d'espècies.</p>
+        <p>Parlar de les Açores és parlar de naturalesa en estat pur. L'oceà que envolta l'arxipèlag guarda un tresor sorprenent: fins a 24 espècies de cetacis, equivalent a un terç de les existents al planeta. L'arxipèlag s'ha consolidat com un dels millors llocs del món per observar balenes i dofins en llibertat.</p>
+        <p>El contrast històric és colpidor: durant dècades les Açores van ser un centre de caça de balenes. Avui s'han reinventat com un referent mundial en observació responsable. Cada sortida és diferent: de vegades en minuts es veuen diverses espècies, d'altres la trobada és més tímida. Aquesta incertesa forma part de l'encant.</p>
       </div>
       <div class="exc-especies-wrap">
         <div class="exc-especies-titol">🐠 Espècies habituals</div>
-        ${especies}
+        ${especiesHtml}
       </div>
     </div>
     <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">📍 On fer-ho · per porta d'embarcament</h3></div>
     ${llocsHtml}
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">💡 Consells</h3></div>
+    <div class="exc-consells">${consells}</div>
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🔗 Més informació</h3></div>
+    <div class="me-links-grid">${links}</div>
   </div>`;
 }
 
 /* ── BARCO ── */
+const EXC_BARCO_FAV = new Set(["ex-vai-smi-03", "ex-vai-smi-04", "ex-vai-smi-05"]);
+
 function renderBarco() {
   const byZona = {};
-  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+  Object.entries(EXCURSIONS || {}).forEach(([key, e]) => {
     if (e.sub !== "barco") return;
-    if (!byZona[e.zona]) byZona[e.zona] = [];
-    byZona[e.zona].push(e);
+    const zona = e.zona || "Altres";
+    if (!byZona[zona]) byZona[zona] = [];
+    const dest = EXC_BARCO_FAV.has(key) || e.destacat;
+    byZona[zona].push({ ...e, key, dest });
   });
 
   const zonesHtml = Object.entries(byZona).map(([zona, excs]) => `
@@ -1004,11 +1081,13 @@ function renderBarco() {
     </div>
     <div class="exc-act-grid">
       ${excs.map((a, i) => {
-        const href = a.empresa ? escHtml(a.empresa) : "#";
-        return `<a class="exc-act-card${a.destacat ? " exc-act-destacada" : ""}" href="${href}" target="_blank" rel="noopener"
-           style="animation-delay:${i * 40}ms">
+        const st = a.dest ? `style="border-color:#c89a2a;background:rgba(200,154,42,0.10);"` : "";
+        const infoP = a.info ? ` (${escHtml(a.info)})` : "";
+        const destBadge = a.dest ? `<span class="exc-act-font" style="background:#c89a2a22;color:#c89a2a;border-color:#c89a2a44;">⭐ Recomanat${infoP}</span>` : `<span class="exc-act-font">${escHtml(a.info || "")}</span>`;
+        return `<a class="exc-act-card" href="${a.empresa ? escHtml(a.empresa) : "#"}" target="_blank" rel="noopener"
+           style="animation-delay:${i * 40}ms;${a.dest ? "border-color:#c89a2a;background:rgba(200,154,42,0.10);" : ""}">
           <div class="exc-act-top">
-            ${a.info ? `<span class="exc-act-font">${escHtml(a.info)}</span>` : ""}
+            ${destBadge}
             ${a.durada ? `<span class="exc-act-durada">⏱ ${escHtml(a.durada)}</span>` : ""}
           </div>
           <div class="exc-act-nom">${escHtml(a.nom)}</div>
@@ -1023,36 +1102,67 @@ function renderBarco() {
     <div class="exc-hero-overlay"></div>
     <div class="exc-hero-content">
       <div class="exc-hero-eyebrow">Açores 2026 · Excursions</div>
-      <h2 class="exc-hero-titol">⛵ Passeig amb Barco</h2>
+      <h2 class="exc-hero-titol">⛵ Passeig amb vaixell/llanxa</h2>
       <p class="exc-hero-sub">Explora les costes volcàniques des del mar · São Miguel</p>
     </div>
   </div>
-  <div class="exc-cos">
-    ${zonesHtml}
-  </div>`;
+  <div class="exc-cos">${zonesHtml}</div>`;
 }
 
 /* ── ESTRELLES ── */
+const EXC_EST_FAV = new Set(["ex-est-smi-01", "ex-est-pic-02"]);
+const EXC_EST_EMO = {
+  "ex-est-smi-01": "🏔️",
+  "ex-est-smi-02": "🌌",
+  "ex-est-smi-03": "🌠",
+  "ex-est-pic-01": "⛰️",
+  "ex-est-pic-02": "🌊",
+  "ex-est-fai-01": "🌋",
+  "ex-est-fai-02": "🪐",
+};
+const EXC_EST_DESC_EXTRA = {
+  "ex-est-smi-01": "A 800 m d'altitud, per sobre de la capa de boira baixa habitual. Des del mirador de Pico Barrosa s'obté una perspectiva de 360° de tota l'illa. Un dels indrets amb major transparència atmosfèrica de São Miguel.",
+  "ex-est-smi-02": "Punta nord-est de São Miguel, molt allunyada de les zones urbanes. Poca contaminació lumínica i horitzó lliure en totes direccions. Excel·lent per observar la Via Làctia.",
+  "ex-est-smi-03": "Mirador de 360 graus al costat de la Lagoa de Sete Cidades. Molt poc il·luminat a la nit. Perfecte per observar tota la volta celest amb els llacs com a marc.",
+  "ex-est-pic-01": "A 1.200 m d'altitud, al peu de la Montanha do Pico. Les vistes del cel per sobre dels núvols és un espectacle inoblidable. Punt de referència dels guies d'astronomia locals.",
+  "ex-est-pic-02": "Al Planalto Central de Pico, entorn molt fosc i allunyat de qualsevol nucli urbà. La Via Làctia es reflecteix sobre l'aigua de la Lagoa do Capitão en nits sense lluna — un espectacle únic.",
+  "ex-est-fai-01": "A uns 900 m d'altitud. L'interior de la Caldeira do Faial ofereix un microclima peculiar i un entorn molt fosc, protegit del vent. Accés per carretera fins al cim.",
+  "ex-est-fai-02": "L'extrem occidental de Faial, el punt més fosc de l'illa. El paisatge lunar volcànic del Capelinhos, format el 1957, afegeix misteri i singularitat a l'observació nocturna.",
+};
+
 function renderEstrelles() {
   const byIlla = {};
-  Object.entries(EXCURSIONS || {}).forEach(([, e]) => {
+  Object.entries(EXCURSIONS || {}).forEach(([key, e]) => {
     if (e.sub !== "estrelles") return;
     if (!byIlla[e.illa]) byIlla[e.illa] = [];
-    byIlla[e.illa].push(e);
+    const dest = EXC_EST_FAV.has(key);
+    byIlla[e.illa].push({ ...e, key, dest });
   });
 
   const llocsHtml = Object.entries(byIlla).map(([illa, excs]) => `
     <div class="exc-illa-bloc">
       <h3 class="exc-illa-titol">${EXC_ILLA_EMOJI[illa] || "🏝️"} ${EXC_ILLA_LBL[illa] || illa}</h3>
       <div class="exc-llocs-grid exc-llocs-grid-estrelles">
-        ${excs.map((e, i) => `
-          <div class="exc-lloc-card exc-lloc-card-estrelles" style="animation-delay:${i * 60}ms">
-            <div class="exc-lloc-ico">✨</div>
-            <div class="exc-lloc-nom">${escHtml(e.nom)}</div>
-            <p class="exc-lloc-desc">${escHtml(e.info || "")}</p>
-          </div>`).join("")}
+        ${excs.map((e, i) => {
+          const emo = EXC_EST_EMO[e.key] || "✨";
+          const desc = EXC_EST_DESC_EXTRA[e.key] || e.info || "";
+          const titol = e.nom.replace(/^Estrelles\s*-\s*/i, "");
+          const st = e.dest ? `style="border-color:#c89a2a;background:rgba(200,154,42,0.08);animation-delay:${i*60}ms"` : `style="animation-delay:${i*60}ms"`;
+          return `<div class="exc-lloc-card exc-lloc-card-estrelles${e.dest ? " exc-lloc-card-dest" : ""}" ${st}>
+            ${e.dest ? `<div class="exc-dest-badge" style="color:#c89a2a;font-size:.75rem;font-weight:700;margin-bottom:4px;">⭐ Lloc recomanat</div>` : ""}
+            <div class="exc-lloc-ico">${emo}</div>
+            <div class="exc-lloc-nom">${escHtml(titol)}</div>
+            <p class="exc-lloc-desc">${escHtml(desc)}</p>
+          </div>`;
+        }).join("")}
       </div>
     </div>`).join("");
+
+  const consells = [
+    { ico: "🌙", text: "Comproveu la previsió de boira per a l'altitud. Les zones de muntanya solen estar per sobre del núvol baix, però no sempre." },
+    { ico: "🚗", text: "Conduïu amb llums curtes a les zones d'observació. Doneu temps als ulls per adaptar-se a la foscor (uns 20 minuts)." },
+    { ico: "🐄", text: "Atenció a la fauna: a les carreteres interiors de Pico i São Miguel és molt habitual trobar vaques soles o en grup enmig de la calçada a la nit. Condueix a velocitat moderada." },
+  ].map((c) => `<div class="exc-consell exc-consell-nit"><span class="exc-consell-ico">${c.ico}</span><span>${escHtml(c.text)}</span></div>`).join("");
 
   return `
   <div class="exc-hero exc-hero-estrelles">
@@ -1065,17 +1175,8 @@ function renderEstrelles() {
   </div>
   <div class="exc-cos">
     ${llocsHtml}
-    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">💡 Consells</h3></div>
-    <div class="exc-consells">
-      <div class="exc-consell exc-consell-nit">
-        <span class="exc-consell-ico">🌙</span>
-        <span>Comproveu la previsió de boira per a l'altitud. Les zones de muntanya solen estar per sobre del núvol baix.</span>
-      </div>
-      <div class="exc-consell exc-consell-nit">
-        <span class="exc-consell-ico">🚗</span>
-        <span>Conduïu amb llums curtes a les zones d'observació. Doneu temps als ulls per adaptar-se a la foscor (uns 20 minuts).</span>
-      </div>
-    </div>
+    <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🚗 Consells de conducció nocturna</h3></div>
+    <div class="exc-consells">${consells}</div>
   </div>`;
 }
 
