@@ -1465,11 +1465,13 @@ function initMaleta() {
    ══════════════════════════════════════════════ */
 let _infoInit = false;
 let _infoTab = "general";
+let _carretIlla = "Sao Miguel";
 
 const INFO_TABS = [
-  { id: "general", emoji: "🌍", label: "Informació general" },
-  { id: "consells", emoji: "💡", label: "Consells pràctics" },
-  { id: "reserves", emoji: "📋", label: "Reserves i restriccions" },
+  { id: "general",    emoji: "🌍", label: "Informació general" },
+  { id: "consells",   emoji: "💡", label: "Consells pràctics" },
+  { id: "carreteres", emoji: "🚗", label: "Carreteres" },
+  { id: "reserves",   emoji: "📋", label: "Reserves i restriccions" },
 ];
 
 const INFO_ILLES_VISITA = new Set(["Faial", "Pico", "São Jorge", "São Miguel"]);
@@ -1666,11 +1668,10 @@ function renderInfoContingut() {
   const wrap = document.getElementById("infoContingut");
   if (!wrap) return;
   wrap.innerHTML =
-    _infoTab === "general"
-      ? renderInfoGeneral()
-      : _infoTab === "consells"
-        ? renderInfoConsells()
-        : renderInfoReserves();
+    _infoTab === "general"    ? renderInfoGeneral()    :
+    _infoTab === "consells"   ? renderInfoConsells()   :
+    _infoTab === "carreteres" ? renderInfoCarreteres() :
+                                renderInfoReserves();
 }
 
 /* ── INFORMACIÓ GENERAL ── */
@@ -1816,6 +1817,14 @@ function renderInfoConsells() {
   <div class="info-sub"><span class="info-sub-emoji">🗺️</span><h3 class="info-sub-titol">Descarregar mapes per poder-los consultar off-line</h3></div>
   <p>Tot i que les illes tenen una bona infraestructura, la seva orografia volcànica, els cràters i les valls tancades fan que la cobertura mòbil s'anul·li o sigui molt inestable en molts dels punts naturals.</p>
   <p>Per aquest motiu és recomanable descarregar al mòbil els mapes de <strong>Google Maps</strong> o <strong>Mappy</strong> i de <strong>Wikiloc</strong> de les illes que visitarem i així poder-los consultar quan no tinguem cobertura.</p>
+
+  <div class="info-sub"><span class="info-sub-emoji">🚗</span><h3 class="info-sub-titol">Conducció a les illes</h3></div>
+  <p>Conduir per les Açores és un plaer, però requereix alguns hàbits específics que a casa nostra no acostumem a practicar:</p>
+  <div class="exc-consells" style="margin-top:12px;">
+    <div class="exc-consell"><span class="exc-consell-ico">⚙️</span><span><strong>Fre de motor a les baixades llargues.</strong> A São Jorge i Pico faràs baixades contínues de molts quilòmetres des de la carena central fins al mar. Amb cotxe manual, no baixis frenant tota estona en quarta o cinquena marxa: els frens s'escalfen i perden frenada (fenomen <em>fading</em>). Posa segona o tercera marxa i deixa que el motor retingui el pes del vehicle.</span></div>
+    <div class="exc-consell"><span class="exc-consell-ico">🐄</span><span><strong>Les vaques tenen prioritat absoluta.</strong> En qualsevol carretera de muntanya és molt habitual trobar-se un ramat bloquejant la calçada al sortir d'una corba. Posa els intermitents d'emergència, atura el cotxe per complet i espera que el pagès les aparti. No els agrada que se'ls toqui el clàxon!</span></div>
+    <div class="exc-consell"><span class="exc-consell-ico">🌫️</span><span><strong>La boira ho canvia tot.</strong> Una carretera còmoda amb sol pot ser perillosa amb boira espessa. A les illes és un fenomen molt freqüent, especialment a les zones d'altitud. Si la boira és densa, evita les carreteres de carena o pistes de terra i consulta l'apartat <em>🚗 Carreteres</em> d'aquesta mateixa secció.</span></div>
+  </div>
 
   </div>`;
 }
@@ -2069,6 +2078,240 @@ function itinFocusMarker(mapId, idx) {
 }
 
 /* ── RESERVES I RESTRICCIONS ── */
+
+/* ── CARRETERES ── */
+
+const CARR_ILLES = [
+  { id: "Sao Miguel", emoji: "🌋", label: "São Miguel", color: "#6abf70" },
+  { id: "Pico",       emoji: "⛰️", label: "Pico",       color: "#a8a8a8" },
+  { id: "Sao Jorge",  emoji: "🐉", label: "São Jorge",  color: "#c4895a" },
+  { id: "Faial",      emoji: "💙", label: "Faial",       color: "#5fa8e8" },
+];
+
+const CARR_DATA = {
+  "Sao Miguel": {
+    esceniques: [
+      {
+        nom: "Costa Est: Nordeste → Povoação (antiga EN1-1A)",
+        badge: "⭐ La millor de l'illa",
+        com: "Un trencacolls constant de corbes molt tancades, pujades i baixades pronunciades vorejant els penya-segats de l'extrem est de l'illa. S'ha de fer a 40–50 km/h, sense presses. Impecablement asfaltada.",
+        per: "Té els miradors més idíl·lics de les Açores:\n• Miradouro da Vista dos Barcos — panoràmica del Farol do Arnel. ⚠️ No baixis amb cotxe al far: la rampa té un 35% de desnivell!\n• Miradouro da Ponta do Sossego — jardins de flors exòtiques suspesos sobre l'Atlàntic.\n• Miradouro da Ponta da Madrugada — famós per veure sortir el sol directament de l'oceà.",
+        consell: null,
+      },
+      {
+        nom: "Pujada al Miradouro do Pico do Ferro (des de Furnas)",
+        badge: null,
+        com: "Carretera molt estreta, revirada i amb pendent asfixiant des de la Lagoa de Furnas fins al mirador. Si et trobes un cotxe de cara, hauràs de maniobrar en pujada.",
+        per: "Completament envoltada de vegetació tropical, flors i falgueres gegants. Conduir per allà sembla entrar a Jurassic Park. A dalt, la millor vista aèria del cràter i les fumaroles de Furnas.",
+        consell: "Fes-la en primera o segona marxa. Si no et veus amb prou confiança, pots arribar al mateix mirador per la carretera general exterior (EN1-1A).",
+      },
+      {
+        nom: "Costa Oest: Ginetes → Mosteiros (ER1-1A)",
+        badge: null,
+        com: "Voreja els penya-segats de l'extrem oest. Té corbes tancades i baixades pronunciades cap al nivell del mar.",
+        per: "Passa pel Miradouro da Ponta do Escalvado, un dels balcons més espectaculars de l'Atlàntic: banyes de lava negra de 100 metres que cauen al mar i panoràmica dels illots de Mosteiros.",
+        consell: "Fes-la a l'hora de la posta de sol. És el punt de l'illa on el sol s'amaga directament darrere de l'oceà.",
+      },
+      {
+        nom: "Baixada a la Ponta da Ferraria",
+        badge: null,
+        com: "Carreró d'accés des de Ginetes fins a les piscines termals marítimes. Desnivell inclinat en ziga-zaga tancada sobre el penya-segat.",
+        per: "La perspectiva mentre baixes cap a la fajã (plataforma de lava guanyada al mar) és impressionant. Totalment asfaltada.",
+        consell: "Utilitza el fre de motor (marxes curtes) durant la baixada. Puja decidit en primera a la tornada.",
+      },
+    ],
+    perilloses: [
+      {
+        nom: "Serra da Tronqueira (Nordeste)",
+        on: "Pista forestal interior entre Nordeste i Povoação creuant el cor de la serra.",
+        com: "~20 km de terra, grava i fang. Pendents pronunciats sense tanques de protecció.",
+        per: "Amb boira i cotxe normal: el fang fa patinar les rodes en pujada i la visibilitat reduïda fa impossible esquivar els sots. Utilitza sempre la carretera general EN1-1A.",
+      },
+      {
+        nom: "Camí de terra del cràter de Sete Cidades",
+        on: "Pista des del Miradouro Vista do Rei que recorre la carena superior del cràter.",
+        com: "Camí estret de terra batuda ple de pedres soltes. Cotxes locals de vegades hi passen.",
+        per: "Amb boira condueixes a la vora de la carena del cràter sense visibilitat. Per baixar, utilitza exclusivament la carretera asfaltada EN9-1A.",
+      },
+      {
+        nom: "Baixada a la Platja de Viola (Moinhos)",
+        on: "Camí d'accés a la Praia de Viola, a prop de Lomba da Maia.",
+        com: "Pista de llambordes i ciment amb desnivell brutalment inclinat.",
+        per: "Molts turistes hi baixen i després no poden pujar: les rodes davanteres patinen sobre les llambordes humides. Deixa el cotxe a l'aparcament superior i baixa caminant.",
+      },
+      {
+        nom: "Accés al Pico da Vara",
+        on: "Pista forestal que puja des d'Achada de Marques cap al punt més alt de l'illa.",
+        com: "Terra, molta pedra solta i xaragalls provocats per la pluja.",
+        per: "Completament desaconsellada per a turismes. Amb boira densa no tindràs cap vista panoràmica.",
+      },
+    ],
+  },
+  "Pico": {
+    esceniques: [
+      {
+        nom: "Estrada Transversal (antiga EN3) — Madalena a l'est",
+        badge: null,
+        com: "Línia recta de muntanya infinita, completament flanquejada per parets d'hortènsies i pastures verdes, passant literalment per sota del con perfecte del volcà.",
+        per: "Et donarà accés directe a la Lagoa do Capitão. Conduir per aquí és una experiència única a les Açores.",
+        consell: null,
+      },
+      {
+        nom: "Carretera de la Costa Nord (EN1): São Roque → Lajido",
+        badge: null,
+        com: "Ressegueix el mar a nivell de l'aigua entre camps de lava solidificada i llogarets de pedra negra amb finestres vermelles.",
+        per: "Una de les conduccions costaneres més fotogèniques de les Açores, amb la silueta del volcà sempre de fons.",
+        consell: null,
+      },
+    ],
+    perilloses: [
+      {
+        nom: "Pista de terra de les Llacunes de l'Est",
+        on: "Des del final de l'asfalt de l'Estrada Transversal, cap a llacunes interiors com la Lagoa do Caiado o la Lagoa do Paul.",
+        com: "Pistes d'ús agrícola plenes de fang i pedres. Google Maps pot intentar guiar-t'hi.",
+        per: "Un cotxe normal pot tocar fàcilment a baix. Queda't sempre on s'acabi l'asfalt.",
+      },
+      {
+        nom: "Baixada a la Ponta da Ilha (Far de Manhenha)",
+        on: "Extrem est de l'illa, pels camins secundaris entre els currais (murs de vinyes).",
+        com: "Camins de terra extremadament estrets entre parets de pedra.",
+        per: "Si et creues amb un tractor hauràs de fer marxa enrere durant centenars de metres. Utilitza exclusivament la via principal indicada.",
+      },
+    ],
+  },
+  "Sao Jorge": {
+    esceniques: [
+      {
+        nom: "Carretera de la Carena Central (EN1)",
+        badge: "⭐ Imprescindible",
+        com: "Recorre la línia de cims de l'illa. Conduir per aquí és com anar volant sobre l'oceà.",
+        per: "A l'esquerra, la costa nord salvatge; a la dreta, la costa sud amb l'illa de Pico al fons. Les vistes són colossals.",
+        consell: null,
+      },
+      {
+        nom: "Baixada a la Fajã dos Cubres",
+        badge: null,
+        com: "Completament asfaltada i ben protegida, però amb vistes de vertigen sobre la llacuna de la Fajã de Santo Cristo.",
+        per: "Una de les conduccions més fotogèniques de les Açores, amb els penya-segats del nord com a teló de fons.",
+        consell: null,
+      },
+    ],
+    perilloses: [
+      {
+        nom: "Baixada a la Fajã de São João (Costa Sud)",
+        on: "Carretera asfaltada d'accés a la Fajã de São João per la costa sud.",
+        com: "Desnivell del 20–25% amb corbes de ferradura tancadíssimes. Una de les vies més extremes per a un turisme normal.",
+        per: "Amb poc potència de motor, pujar obliga a anar en primera tot el trajecte. De baixada els frens patiran moltíssim. Fes-la només si tens molta seguretat al volant.",
+      },
+      {
+        nom: "Accés al Far de Ponta dos Rosais (Extrem Oest)",
+        on: "Tram final per arribar a les ruïnes del far abandonat de l'extrem oest.",
+        com: "Pista de terra i grava molt deteriorada pels temporals, plena de xaragalls profunds.",
+        per: "No hi arribis amb el cotxe normal. Deixa'l on s'acaba l'asfalt (al costat del parc forestal) i camina els últims 15 minuts.",
+      },
+    ],
+  },
+  "Faial": {
+    esceniques: [
+      {
+        nom: "Carretera d'accés a la Caldeira (EN2)",
+        badge: null,
+        com: "Surt prop d'Horta i puja fins al cràter central. En perfecte estat.",
+        per: "La transició del paisatge (de prats de costa a un bosc de laurisilva ple d'hortènsies) és preciosa fins a la vista brutal de l'interior del cràter.",
+        consell: null,
+      },
+      {
+        nom: "Eix de l'Oest cap a Capelinhos",
+        badge: null,
+        com: "La carretera cap al volcà de Capelinhos canvia radicalment el paisatge.",
+        per: "Passes de l'illa verda a un paisatge lunar de cendra grisa i negra absolutament colpidor. Una de les transicions paisatgístiques més espectaculars de les Açores.",
+        consell: null,
+      },
+    ],
+    perilloses: [
+      {
+        nom: "Camí perimetral de la Caldeira (pista de terra)",
+        on: "Des de l'aparcament del mirador de la Caldeira, les pistes que fan la volta a la carena superior.",
+        com: "Pistes prohibides per a cotxes de lloguer no 4×4.",
+        per: "La boira a dalt apareix en segons i pot deixar-te a zero visibilitat a la vora del buit.",
+      },
+      {
+        nom: "Camins agrícoles de Capelinhos",
+        on: "Camins de terra als voltants del Centre d'Interpretació del volcà.",
+        com: "Cendra volcànica molt fina, com sorra de platja.",
+        per: "El cotxe normal pot quedar completament encallat i patinar. Segueix exclusivament l'asfalt que porta al Centre d'Interpretació (sota el far).",
+      },
+    ],
+  },
+};
+
+function carretSetIlla(id) {
+  _carretIlla = id;
+  renderInfoContingut();
+}
+
+function renderInfoCarreteres() {
+  const ill = CARR_ILLES.find((i) => i.id === _carretIlla) || CARR_ILLES[0];
+  const color = ill.color;
+  const data = CARR_DATA[_carretIlla] || { esceniques: [], perilloses: [] };
+
+  const pillsHtml = CARR_ILLES.map((i) => {
+    const actiu = i.id === _carretIlla;
+    return `<button class="send-pill send-pill-illa${actiu ? " actiu" : ""}"
+      style="${actiu ? `--pill-c:${i.color}` : ""}"
+      onclick="carretSetIlla('${i.id}')">
+      ${i.emoji} ${i.label}
+    </button>`;
+  }).join("");
+
+  function escCard(r) {
+    const badge = r.badge ? `<span class="exc-act-font" style="background:${color}22;color:${color};border-color:${color}44;margin-bottom:8px;display:inline-block;">${r.badge}</span><br>` : "";
+    const per = r.per.replace(/\n•/g, "<br>•");
+    const consell = r.consell ? `<div class="exc-consell" style="margin-top:12px;"><span class="exc-consell-ico">💡</span><span>${escHtml(r.consell)}</span></div>` : "";
+    return `<div class="exc-lloc-card" style="border-left:3px solid ${color};padding:16px 18px;margin-bottom:16px;">
+      ${badge}
+      <div class="exc-lloc-nom" style="color:${color};margin-bottom:8px;">🛣️ ${escHtml(r.nom)}</div>
+      <div style="font-size:.82rem;opacity:.75;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">Com és la conducció</div>
+      <p class="exc-lloc-desc" style="margin-bottom:10px;">${escHtml(r.com)}</p>
+      <div style="font-size:.82rem;opacity:.75;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">Per què val la pena</div>
+      <p class="exc-lloc-desc" style="margin-bottom:0;">${per}</p>
+      ${consell}
+    </div>`;
+  }
+
+  function perillCard(r) {
+    return `<div class="exc-lloc-card" style="border-left:3px solid #e07040;padding:16px 18px;margin-bottom:16px;">
+      <div class="exc-lloc-nom" style="color:#e07040;margin-bottom:8px;">⚠️ ${escHtml(r.nom)}</div>
+      <div style="font-size:.82rem;opacity:.75;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">On és</div>
+      <p class="exc-lloc-desc" style="margin-bottom:10px;">${escHtml(r.on)}</p>
+      <div style="font-size:.82rem;opacity:.75;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">Per què evitar-la</div>
+      <p class="exc-lloc-desc" style="margin-bottom:0;">${escHtml(r.per)}</p>
+    </div>`;
+  }
+
+  return `
+  <div class="send-filtres-wrap" style="margin-bottom:24px;">
+    <div class="send-filtres-inner">
+      <div class="send-filtres-illes">${pillsHtml}</div>
+    </div>
+  </div>
+
+  <div style="max-width:780px;margin:0 auto;padding:0 16px 40px;">
+
+    <div class="exc-seccio-sep" style="margin-bottom:20px;">
+      <h3 class="exc-seccio-titol" style="color:${color};">🟢 Carreteres escèniques recomanades</h3>
+    </div>
+    ${data.esceniques.map(escCard).join("")}
+
+    <div class="exc-seccio-sep" style="margin-top:36px;margin-bottom:20px;">
+      <h3 class="exc-seccio-titol" style="color:#e07040;">🔴 Millor evitar-les (o fer-les amb molta precaució)</h3>
+    </div>
+    ${data.perilloses.map(perillCard).join("")}
+
+  </div>`;
+}
+
+
 function renderInfoReserves() {
   const ILLA_COLOR = {
     "Sao Miguel": "#6abf70",
