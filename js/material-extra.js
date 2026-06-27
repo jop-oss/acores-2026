@@ -101,12 +101,15 @@ function getSendList() {
   if (!_sendList) {
     const poiMap = {};
     (typeof POI_DATA !== "undefined" ? POI_DATA : []).forEach((p) => { poiMap[p.id] = p; });
+    const toArr = (v) => !v ? [] : Array.isArray(v) ? v : String(v).split(/;|\n/).map(s => s.trim()).filter(Boolean);
     _sendList = Object.entries(SENDERISME || {}).map(([key, r]) => {
       const poi = poiMap[key];
       return { ...r, id: key, key,
         coords_inici: poi ? [poi.lat, poi.lng] : null,
         start:        poi ? [poi.lat, poi.lng] : null,
-        temps: r.temps_cam, temps_total: r.temps_tot };
+        temps: r.temps_cam, temps_total: r.temps_tot,
+        consells: toArr(r.consells),
+        fonts:    toArr(r.fonts) };
     });
   }
   return _sendList;

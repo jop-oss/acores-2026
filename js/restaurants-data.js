@@ -6608,5 +6608,572 @@ const RESTAURANTS = {
     "ressenyes": null,
     "top10": false,
     "editor": null
-  }
+  },
+  "res-smi-58": {
+    "nom": "Black Whale Restaurant",
+    "illa": "Sao Miguel",
+    "num": 58,
+    "cuina": "Marisc, Europea",
+    "preu_g": "€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.6,
+    "res_g": 432,
+    "punt_ta": 4.8,
+    "res_ta": 184,
+    "punt_p": 4.7,
+    "horari": "Dt.-Dg.: 12:00-15:00 / 18:00-22:00\nDll.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "Rua Teófilo Braga 15, 9680-179 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 582 232",
+    "web": "https://www.blackwhale.pt/",
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJeUeFKHInXQsRPajg7EoHy74",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d27191763-Reviews-Black_Whale_Restaurant-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kmxVPx_ef9QD1SuCLisTyOShxyF_BwqIvAkb8Ps1_ffr52fWnmeXf7hcVnVdFd8XnmxvaFufea-JtIucr5A9GqF79_O4Rdvg2D1YrSsTjgGorbNFOvsEQpUs6qurtQDAIqAzMqCBoA3nK1S79vCKaJPa5ejPRg5v2iG3D885w8trctVgFK3kTolDZ2ju4OHGKq_mDz0ifeEmz11YHc8nIVKpSxEwssy6rfSXR7gFgVVkaKSsufJDbuahVI9TUSUgBLaVoICejGYuyqyD9Agoj7RpmJpm2-GDLtOrL4aNnrL7d0XJL7C6XHiOhEHYoRJ2WrA1VHByFe_b8_RxJts8fWGT7kazCiOWQLCzSNwMfR77STBGgeDuhGN3XlK5l9AzquycjFYnzuSkllZebgfrfg6EINik64CfK0POq_1qQjuBRHOd9Bd_IPm7-rk82N&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3nmJyhslZ-Yz-dsDbk8GzBJPhly0Xp5bFRFBZIsmsZLFQjHnuwWXYjHGsV72qlsJniveqHU3STPbPNabVE6XYvzcHqpfAQqIGzwTMYEHUupGgdMz-ym1CPvfkk8zgUS5lct2sm_1Uj7gBGIC5XLOZGv9atambWoBJLa8lM8_QGch3xWSv_JBo2QLxtvKW9om2kG1OxmsCdKFUMxyzi0FWLGaimac-MREU84qvtyEgiJeOJV-xiqO84iTVfchkAkOodA4M1ByP0wsG9DfMUOvrVrHHaB56q7uTzJnwuAka5DYfmWkcLH_UJWqGZclIcrSrFy3P3H6uyjl9qYmPolye7cOuvuSCnv7ueowUNnOtzEmDwBRHNNNG55pbdT57G5V9eNVcD3_iUFNczeuMvws1tlTtd8CrwUYCRoKat8bw5ANmKNRclc1jEAgASCfw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kLy0FM-8gWLC-Yiy_9e7pLz1YKi0M5iN0oNf6wozwKc-TGCYljnhT8Jov21M1MYBM3NrthaeX6HcMk4GogjDy-e4hxVLIw42JBluj46djbraqjf2nkiHh9dGZI88zQs5cl7RjLUxucDx9gJck4JDzAl-wwaSAzGIMMqbix9gKl_RlmIOH5Tt4Mjc2cKDfFdGmbTTTXk5_RqBe0F1V0HIlboTDt-EgeZ0YKuCdkwigP7mEADmVUa99jigJUGcu-ceqzO5bMabKZEwBaqV08WaRwpAj0PuoPtaBQQDezXdzuPSQI2gv660frJ0gCsUN5jPIiN8MSkuKUZALlNlMLIe98bs0lTGstBDjZnuZQyjkdP-n5-pbATbPYRCzuWKOYZkJ0Gj5UK97ckZofvwJrNb2F2p70p5EeghmcjOs_rtJ1IzayKMMFbjEht_n-Dg&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kj9Q7RzDaL-5fBbtVoU7hTMrDduUOMqp_oKUnwDAVbCvwSczXs7n9-SJCn2prs2jiWMrUVlAUhUc_1ttFhcGhYjULLdtyPD9_QWIfKPnw_4BugeZxYgcMnAYl8GpD83zsEZr93yrkji2mufRGhAinupbriNuypAq5N7kNEZ4GOgIaILYbdBUEtVOPWgb9DVLOmeTpp0-AJDTo6Fnp8HMf_TBh-zcq8Tqz6z3p3a6HqJimGoErBIc8S1PwDGP9y9QDGxN5Ag-xBzCAirAC42RNcOIP8n8wtK8NM0xXJ76HhvM7uVsaHj41B7DnCw0i0ig0mTWFTXWSR94u4zjyAXK-lWcP2lb9lmI_T8fS7us2ykOcaXUupHR2mx6KXIu6cfBDARpJ1hDgG_BIhChBiesdX2QikD5U4R9-kvl_-4-ghEz5Zsr77FooTl_3-lD_H&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mGoUH3N-PP0s_O0bkGUDByFV_DGKPwyHW4j7PLMMjyg3DXLqsJN7TZOGdYeGM9nWcLfJShnaQpPXP-sayzUwonHe4vPot2fxfMUjJVykLcdR-2p_TKM1dgwoxvvvCbUpoVKkcj6lmq4GDvDnupi_7N7srAu784AS_dZ2HMEjmc91geePc29WeRWRAfdfvR-1KVihlMRiAG4ktsfedvg6Rtukqw2Zm5regOJkp4CSWSb92A66IjzNykuzXnFVCMwkCWiqPDOZ9bMK8S-3DdpD4GHGgst0tOM5Q77sgX2m0i3z102l64NKhyMOiU2XbVecCAHsDluY40PHbvV7TMoPNVCX411sU6E4Go0nRmQUIOBGqTSpCF3_hb3NDsmnYd-bzaElBRBtpMQAtTMvz5ssVtE3clvPl3XHln-HLIVTBJZipt7L8f6o2dF2llyMMV&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/33/38/e3/39/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/ae/54/0f/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/31/ae/54/0e/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/f7/00/a8/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/a8/80/5e/caption.jpg?w=1400&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Menjar molt bo, bon servei i ràpid. Recomanem les bruchetas de bacallà, el pop a la teula i el pastís de mongetes."
+        },
+        {
+            "data": "Juny 2025",
+            "punt": 5,
+            "text": "Ha estat una gran experiència gastronomica! El pop estava de 10 (que ja es dificil) i el que ens ha enamorat ha estat la tonyina! Dels millors plats que qualitat-preu hem probat. Veniem recomenats i ho recomanem molt! Ens hem deixat una mica de menjar ja que els plats eren grans, ens ho han posat per emportar sense cap problema. També veiem recomenats per probar la \"morcilla \" amb pinya i tot i els dubtes a l'hora de demanar-ho, també un gran encert. Tot i això, com hem dit, l'estrella, la tonyina! Tornarem!"
+        },
+        {
+            "data": "Desembre 2023",
+            "punt": 5,
+            "text": "Vam menjar unes cloïsses, filet de tonyina i costelles de xai. Tot boníssim! Deixeu un lloc a l'estòmac per la mousse d'oreos, espectacular!"
+        },
+        {
+            "data": "Octubre 2024",
+            "punt": 4,
+            "text": "Restaurant petit que es menja de 10. Personal molt atent. El pop a brasa i el bacallà al forn estan boníssims."
+        },
+        {
+            "data": "Setembre 2024",
+            "punt": 5,
+            "text": "Un dinar molt agradable. Cambrers molt amables i menjar molt bo a un preu adequat. El pa d'all i el xai han estat excel·lents. Totalment recomanable!"
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-59": {
+    "nom": "Atlântico Azorean Restaurant",
+    "illa": "Sao Miguel",
+    "num": 59,
+    "cuina": "Mediterrània, Carn",
+    "preu_g": "€€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.6,
+    "res_g": 1335,
+    "punt_ta": 4.3,
+    "res_ta": 555,
+    "punt_p": 4.5,
+    "horari": "Dt.-Dg.: 12:00-14:30 / 18:30-22:00\nDll.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "R. Vasco da Silveira 10, 9680-185 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 965 094",
+    "web": "http://www.atlanticoazorean.com/",
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJceGXNGcmXQsRKRvuaoaSl7k",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d1877709-Reviews-Atlantico_Azorean_Restaurant-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mOoLQ-QqLaR6e97ls0LAI137ei4Cdv7lGOpooxTXVq9CgLsd7Ot76q_2B4FtEQ3f_xq_GhpiT7hHAAiM53Z4XV1x7vdKRR7FbTjZ5LIirNSSRZsGbXfgHJ0h3oVy-IJ85FKVD4ox6JgXovhOQIRf1SfbDe6nJ0SuYr8lkzKWwJe6PLc7hgCQykLbZxYugobWEydUDB5fl3j4Q6MKDd0EAY___cR4Gjy8kNNsVHSXC62DnnUZm7vK8xcUYpjOKfSxwD1ofUU57CT_Ti-kgVQ3ymJkne-TJuBZ9jUy3e4Q130ikDwL8g0-4alpU9FJtwBUO76LRk9CwYp2nH0ZcYRv_aoQmZjvXKGiGCXfhZyxK4tYsxWqY4PWpVEJtV31ZSlXHCxOD0WQx7wkzP8NyKGFCUDQmVeJ2F6jBeJamf9u8&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kDYnGoddaF49cth6dxKQoSc4f08FS7Okjs-LyMDDosNfjRWFWEMUjL6OivjkowROwUNvFgGIm0vLOU6V880w0JpXsUBed_njoT8ckg9LF68SfH3_cPTiGIkleZPRDSFFVF9ArUatHvwHvNcrBgg7_Njcs7fW911W_6t3JBp4Kt5XFWAdf_WBgklwMen-BB_X8z-JMH482kFKUCJg6cIbBOwu7uCLQ4gwwUJ3JaeMzspdNKRdaQKiqQsbtEwt27dtHpL3-g8am35ZYNAfVYpsnm1yA2KDj2Yz4JjU0JGQd1tfJUfgOMoXSSuQt3wQj125SZK3sKm935Ac9RmWyBAU-I3LHs-8ZVMR4GgFzXtCDYws8tPVbBIkg3cp4iZX87XJHqkDeMd2kztwXco7ea5VNXTwgHHyUuPfTE9ERySPrkKIfCD26GGaj4OWdjc3jK&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mQBfhl-gXbNHuBSYfU9BpiF40dIJnwn8HrOAV9jOyaMizD8T9ezOKmPNmwjIJ7gee9lXBuCyD7Eu3L16SjbkEeHpKlCEDRov_sf_hZGkPwi9v4UMCrhU-7CLjMsOase-_JG35Ob_q7dMOwqJbeoIpJsy7aAvcq4Q9a2xPUpE-mWLHJ92S1-Utsj9AIV0Yc7jVJGQoXDLDHsppyhhxTkMPFREP1GDMTt2mY7Q9atC9_jD4MNyRMBFyFwQj8fvbOb5IfO7PgnmAnQ-Hz8c8AjHnabkcjjhcbhcFXGTrhU3mpA8qE-sfiQhLndmCDhu3KUM23yLS-1gZop65w0l20Qlbl50saB7H2621SK0E8yPdekBlx1RPd3Gp8e4Lja_Y_TqV7xX5Dbj2_LmQWrUbKorPd2J0H95oFc4YckhOtZptOJk-t&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3l2eyd0UxqxHHaNLbxxhcNh3_n1LTR-kAppFofP1G8G8k7X90GkTqGRdsvCEXgutXUe5sx0WOwHuyDEzL2rc81bmTvLsQwmPaeeqLnSgGKdO33zVsBGPq1JivsoyRMR0NASxZSI48MjHgZJYanYbwUbNWO6_YQv9LCZq6UgVcC97P2xVGNK65sThi96TRmPvwkyoJnY8IZ_TxxD33ztYhoa1pRNK0obgspstiKfTbamPIWvZp90771uGhnmDyLbfPXhfS81NtI5gPqNyfHCG7lQc5pr7uBJbAVw36uUcjLys7UlKZvARnCHbM6OLTk3HoGc2KGLZGy9q8WfnZ3HBBRqk12W6rg0kFtG5VfzNIwRyQsCyySLpAqYPqjLjHagJTrMxieh8nMXqMdeA-gOw5QViKWUjxFYYM2LurWNf-ASqJDqJvLNXlRqrJuoQw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3lD9-iJaOFQGoI7n_-GCj7Vc4OvGYgi7ZrqS8vzHja1UM8cs5sKDxUU4Q3sYFI-CwuMMzHXPsKCyfhVF7oOS_R6lhECrq12tPbkcltQ6mlPNqoblbPkllVkOmFnFYH_jN-CSx-qzWX7vL4TfVZUtd52xDH5OqKj9as0y_T2jJBZUU1XeO5Hoh64QPkznvk4DnWCSXz_o7J_eGz2Iy-tfp7bBBp7mVuK7rmzRlVTto52fKvnRUYxCNye5mVEfIdAYyAF0EJLTlLiFoaB1_-y9VV6B6mVV8N5syKAGtFfGTpN1w5aWR-dWLDA2_3mAmGhHshn1r8r5WROyrOaaJE16fu63KMZz2Sg6iKOemD9yaqSiyaAStUEJbN7mix7HNUmiRWVRxDKZ9C5YsN-W4Oph6LN4aHNSI49-JpbZ9Wt9q_Nn83XmWjRhiL2quFOQhzb&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/45/c6/2c/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/26/02/6c/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/26/02/69/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/74/e6/e0/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/70/aa/5f/caption.jpg?w=1100&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Setembre 2024",
+            "punt": 5,
+            "text": "Preu adequat al producte però t.hss de rascar la butxaca,servei excel.lent.Uns bona experiència,el millor restaurant que vam trobar en el nostre recent viatge a les Açores."
+        },
+        {
+            "data": "Juny 2022",
+            "punt": 4,
+            "text": "Tot bonissim les lapes ,el pop 👍👍👍"
+        },
+        {
+            "data": "Agost 2024",
+            "punt": 5,
+            "text": "Espectacular. Hem dinat molt bé, per un preu raonable i l'ambient és molt acollidor i agradable"
+        },
+        {
+            "data": "Gener 2020",
+            "punt": 3,
+            "text": "Bé"
+        },
+        {
+            "data": "Juliol 2019",
+            "punt": 4,
+            "text": "Molt bona"
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-60": {
+    "nom": "Mercado da Vila",
+    "illa": "Sao Miguel",
+    "num": 60,
+    "cuina": "Italiana, Mexicana",
+    "preu_g": "€€ - €€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.1,
+    "res_g": 925,
+    "punt_ta": 3.3,
+    "res_ta": 107,
+    "punt_p": 4.0,
+    "horari": "Dt.-Dg.: 12:00-22:00\nDll.; tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "R. Vasco da Silveira 36, 9680-185 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 102 057",
+    "web": "https://mercadodavila.pt/menu",
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJxXM_u94nXQsRzNIS2O-TFxE",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d25198543-Reviews-Mercado_Da_Vila-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mtMjdoG3GPUJaJwTekEftx1RUAzCROlo5LPOcZUQvAeduL374f2_NN8cNgHgDFo_131N_SRBJJx7lie1WK11mW_EVei5d-lUm_B5XiqXJkslWrsh5nvt7dNfYn0vLoMB9zYzBcBKZwZQfS-5xN7Wea28yzChuz0ZfX1UKU0YLDPMdwDO36t_nffLZFiM6zyln_7UjjPSkRb3wkrSXK9l5Whz4852AFoIA_QusIqj6wvbC1rqXmHN2SgEJKHxcuxKyXe1shWVJ5AsLm_zADyIgm5CK9rthEzYaTbeJ5dQqdDGiq2A_n4rveEwC7rGVse8LkhZHJn3nN5buDg04rb1ev44UZseI9kQWDZu6relKPmz4Vt_Wv0WyZat9pIUwQMrNDC9zs8gIikPvLBlnbq3NgQFhKZgnLeVbXijOsbXSgBGYx&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mRBhFgNINgiiJN1wkmBd4FYvA_dBwXu1Ng8Ei9TRfQEr7-RrYdMBqNYIqstofC3yt__HPyOTXHGtK9JAscEd2Cj2GM3tpB_Urkbh2B9GpVNXtTdg43cl-rl1X1o1sIuNL-66GeR4OCYxznADILMpYz9Y_rQAACGYTg0Yg14t2SK59_gZ44ZXFaQ1ShmufZOEBTYRBGoXppHlFjcvbxWhnz9AWSHlppvfenuCScyX5ostWAguH4rpO93dpx8Hdr9_XXT68yLfCkZ00KFa_dD7o_CXlOgc2D_0iiAXBFcWhQjdZlkRlNX_wagUooMjQE0KZQ9qimLu17BgWMYNhpC2K0pwpdX2LVLLH3vsj0A8ZOrRwfDW0BM8_xDDGn0ZH_rC6tANlzWxyxd5jcCCt09hKOzSHybJ_2PXEn8-DzRuIV5Hu4&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kXSNl570EwecztAO8tu_RilGUhxt2zPmNkcNWPWA2dRVvWEX-jQr3I0WJ4R3LvjNzuNhinzybexgoJF1B0wiDfNalwWwXD5VkfMyxNP11SfENHo8pu5zKoWLcU9SOYNkaY2KcMIDGs6PNwKrfu1aHAYlT6vEJNIJcLtcgR9ip5kmNFzsOqng_B1yPuy5eH8YItIiPiykroyxbOlebyTVVM4tr6eDtzs0vWdLhBa0CpEj3cSQawkXwacAF3waIYYisTnwCnlII6HTr3GYhI0Soo61bDofNiKtTVFEDxyXmUq0EtmJym83aq-2vc3t-f7aXovLbByZIxmuX3KhkFDWp3aNJAD2lWW5Hil0jQwdiuyfMOL5rTjcFzeEJqbG-mGveW_uZ19DaZPpNVYh_KwujezwI1ZiEivvfgPxUrQi2lbqktQZVb3V3wsyB05g&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3m62yXrOm1SzqJzKBpghDAhW9IfvH50MT3Nluycpkys8k1g3ftwD5XLkGmB4ScdRjw2Mwrv5ccNoVs_jIaCC7-r2U9Hd22A0fgfqrrjAue_rQ7xLrXX1ZLMx75VWbGc4BbTkVHbeV2PnXdNx45ITGgbPtMVW4g6mj9zo6PyWvx6jGE9uySecz8UNK2hvgbyJrd-TUl2GL_PzOJ3WV5fF-rjau4dZCSrl2KqDovB_pZMvVrtjztVX3x4pbuP8KXF1nMc1uqpT9Xy5U5e1hvR0-bzHLOBqcTbgNtTQXX1AUjLJIJugxnuncPrwZ-NWQbJh8SO3I6a8_ac0-n38CN3p3r1BoG2ppq7truc-0LJXH6TAouhUB5wnCr_5-RzCsOdV6KRd6XJo0hL2CuEbjgjzXzSHUsVXTzM8TqPC1D_wNfLhNl9Si3oWb9AGhYQtg&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3k8lsT5DblHgurJq-367i998q5VDbJRY82IzDKHVaeJcC82MsteDLZHI3oiH-_Wew0nal3AbgCWFu9_BFCWCyesmcN3t723tM0MmtIpDTW3hhojk7HLEmvlMRTjOA-Tf9TKeiBprng5fz2WSD4RGeFYG778VglaRja9Bfaub0ZxyXgxLKfVplKMz6R4VVh8fbStEuYJgcIeylAX2oiuSNbIYnmaLOBM4RPk0Tv3XpUj1qsVyIZ_VBQzx0YytmsRqIwz7FW75ej0Qfok4xfPzZkd6YRvwtLRtzNTrBF38xrvmIBLYRW1886FcgS4kwd1AG2lZiR0yXH7HL0aml-bY6t2detd_v-clrVmZ32PvTNBnIpVoZHDdjlYeLxrpHExK9v3bSNG-iqiSe3WGgh_Skpq8nGd20QZ0b_Bt4WM7VwkMT4yav7a056DSQ5rvw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/35/68/27/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/d6/f2/ed/mercado-da-vila-rua-vasco.jpg?w=800&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/c2/51/e3/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/27/6d/e4/21/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/29/f3/e9/caption.jpg?w=1100&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Agost 2024",
+            "punt": 5,
+            "text": "Lloc fantàstic on sopar per a una ocasió especial. Local bonic, amb una oferta gastronòmica àmplia (cuina portuguesa, japonesa i italiana) i el producte de qualitat. La focaccia i el pop ens van encantar, molt recomanables! Tot i que el preu pot semblar una mica elevat, la qualitat del que menges és excepcional. Sens dubte, si tornéssim a l’illa, repetiríem l’experiència!"
+        },
+        {
+            "data": "Setembre 2023",
+            "punt": 5,
+            "text": "Un regal per els sentits. Es un luxe poder triar  alhora plats de cuina Azoriana, Oriental, Italiana i reposteria Portuguesa. Quatre chefs de alt nivell que et permeten confeccionar un menú multicultural. Una autèntica passada!!! Felicitats per el projecte!!!"
+        },
+        {
+            "data": "Setembre 2024",
+            "punt": 5,
+            "text": "Un xic car però l'experiència s'ho val. Totalment recomanable"
+        },
+        {
+            "data": "Abril 2025",
+            "punt": 3,
+            "text": "És clar! Aquí tens una ressenya neutra i educada:  La qualitat del menjar és correcta, amb plats ben presentats i ingredients frescos. Tot i això, trobo que el preu és una mica elevat per l'experiència general que ofereix el restaurant. El servei ha estat correcte, però no destaca especialment. En general, una opció acceptable, però amb una relació qualitat-preu millorable.  Vols que la faci més breu, més contundent o adaptada a alguna plataforma específica com Google Maps o TripAdvisor?"
+        },
+        {
+            "data": "Juliol 2025",
+            "punt": 5,
+            "text": "Cuina de diferents nacionalitats, a part de la açoriana. Bastant car, però està molt bé. Mai havia vist desodorant pels clients en els lavabos."
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-61": {
+    "nom": "Sabores da Vizinha",
+    "illa": "Sao Miguel",
+    "num": 61,
+    "cuina": "Europea, Portuguesa",
+    "preu_g": "€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.2,
+    "res_g": 871,
+    "punt_ta": 4.0,
+    "res_ta": 96,
+    "punt_p": 4.2,
+    "horari": "Dll.-Ds.: 12:00-22:00\nDg.; tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "R. do Visc. da Palmeira n°4, 9680-189 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 912 021 734",
+    "web": "https://www.facebook.com/saboresdavizinha/",
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJ_RCI-A0nXQsRmXKkRolGxDo",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d15203135-Reviews-Sabores_da_Vizinha-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kmNtvXqHV70ADmwvmMjC_8S-t4hOmjMmfb_RAHzYv5EGHPSG1lGOTMybBrfSXVUX3rZ_GcwEzyRDEwfA2c1YHWbn3SvLKK5ROnkzupIR5y5lDJJjT-ZF7WB01qd3LEpoAPXmJgDIgSUlxcKieA2d5tcNkiHnw6ionK5BBJV2KNYTTg_R82vChn0N9w1pb9VEx6sLBoJQbIvfz5xWF6-vnT14u_U12l_6DuhWnEd6h74Dk7HDrozGScIAJrRRXl1Q0bCdort8Z4rMRJ5QPqUDWdAJONGtOeZYrvaz1QhaD0-rc2lA8n8Mn5e1sITdRHoUe3oka-ICajfqshP-rToOsfPYQcxDRAxRCwU7X1aXimPeQT9r6L9-fQMeDQ6T71Ilu1PYzCF808uBDfY4CWLrT-mCm2sAuklrh13dgpL0JgmWI&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kwzUeTKMuCHUC5q8m6itzCxP_aTGXrJ19wycSe1IM_5h7lCJVYvcTslCJEVvdkIunwI3W0oFVzvD4V6PRYC8qafUoR0L4XqmbWvC1tMTiUmx4h4TEib15vxW3_hNkQVrCOpJI4m9VVoyLdpP9rpI_cghF8s1-qRyJUuggL1Ffk_q9DIksBcRr6SweLOn2KfxF4VHfQV89yTTSxrVo83CFaCmwCS9YbU2Pn3H__gVnoys8aCKlzrIKgDqlxTfF12u4W6WCynhd0lh3W1lYpRPmr4Q7juTmGARHZY3RxwV0gDCGHdhd8wX9-cKj94NBqMGAdM6pTLhastrKUXoM6JNVaW8lUpN1brw504qfQKECTrIzsSbORIKd71D-PDAXrqzqjevArQ5Hhf3SLn9G6-BcuBcQW50xCX4e1dWSvDwx81w&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3nXDw3MqMu3GXgApxSGhHk-kHtv7Pig_sBP9gCaPUnxfhAsDEIQmvWDDH4hDgjTKXCRaOJ7lJyDk_fb0oe42DEEbg0Gt-8DvyAj3r8GVY7ZqFz5o8Jx-1S8CluMkpQyZAyN5IwCnn9F1gYombL7WjSzSbYaKgsyWxavtrpKvTm4_Y_JNaMyjIdosQ5uOnh3Ej92NQrCB-Kv07YGB3TGCJbkondZm1zx43yDSEZQCLuBWv9VYXgOikrJHBv2Wi8gmeEwoJWuuFWb0PVqHd7utf_pFWRZW2AZ2dfhn3kpznfxHXemNVud8kZxiQ9L5luIfdE2SkV1XoLpRFme3Jh3NQSp7WHShvDRlIr9-mCERpBMzKQnB_PuwIvEkXWBeo-JMUKg4mMiNTcGfUIKODWInY2tDXow5hkoGQFaiSkKv0Yf5UJU9EW4azrFH47ea6qx&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kNb5XzjnTOvArK6eagoIe-5zPn-w2CtuHaqQfkXmUEEwbxKlPSalIeiIKXMLjeXaO7Vbt1pQWbq0fEeisaGcbCgCX1ZhqI4T4o9uw4Mek0oe4ZTkqEf6nK-fbgWhvpoP0nQFqL7qKcX7QqLgO-hM3fvDel6dhX7T4O5xGeOzvkDl1VCtPv0r-OvWgDKmyAkMNWj_fv7TgfblNqefUkid9pnAGjQ0zc43dBUrzOWBHaD5xu2SvLMV1dE4AEcmXuU7gs1Zlzi8yiXAfnW3f2YgZM8FjFlM-Wf4pr_TA5LYt2L9qG2aAXnAV9UkjB8cGX613tzSrSSRVlcjzz11xwk_gm1MlrLB9n7czjirWfyz6VoIAIj6sq9pyb5M-8r6JIQhiF8DVvEYgcHK9GHPtt4coHawSQpWHOzAk_12KUincKtwWq&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3lHMwoThKuPj3iYH2ZybFHzwEEq-dKYg38vwzMUHebRnhJqD8rlaX_55eL1m_TdcR9gW5HqSM9Z4ubpk769PsKTRAID8XhN7wnlVSUJZsHdUJzZKC-9MVP6ETtP5SYvd1KAjZ2lYepB6U_7z8sfFfLBM87uM_topIhKCWd8rApbqsI0v_ha0-VotEmqVckV2WfGh338_yCUz5i2TvPC1-Hp8mBcsKLNofYv0_pRjz1f37bA0MFxr8sBaCJ-kwUgbdZp_6eIdvu4oz3ccTMNMjNgeEQ1s7pF0EDKP63lB9n3_i8xqyCtJhRorpEWxsicxtOwVj8GfGYGBx8KpNw_nWBYTi6FBBqYoV-wBGmvn-vnqjL8c5ksOBS8NyUw6BcDVP0jEiHtXf6E0tdsFtbTCmR-9tCvnU1HnsBbt0_TM9bAu3RjGsjdSx-lxqz6X63f&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/32/ea/f8/fe/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/95/9f/ad/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/ac/23/67/caption.jpg?w=1000&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/24/30/23/5a/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/11/8e/e7/photo0jpg.jpg?w=1400&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Gener 2026",
+            "punt": 5,
+            "text": "Un menjar exel•lent i de qualitat. Servei amable i adequat. Segurament quant tornem a les Azores vindrem aquí a dinar. Recomanable si vens de els tours de balenes."
+        },
+        {
+            "data": "Juliol 2025",
+            "punt": 4,
+            "text": "Restaurant amb vistes privilegiades on vem sopar tranquilament.  Vem menjar varis plats de peix, calamarcets i peix espasa, tot boníssim.  La morcilla amb pinya extraordinària!  Nosaltres vem arribar d'hora i no ens vem haver d'esperar gaire però la gent que va arribar més tard es va haver d'esperar molt.  No vem poder menjar el que volíem, dos dels plats principals no estaven disponibles, aleshores vem demanar consell al cambrer però no va ser gaire atent amb les explicacions ni semblava que li importés gaire...  Acabat de menjar vem tenir els plats buits a taula una bona estona i mai ningú ens va demanar si volíem postres, que òbviament no vem prendre.  Tot i així, alhora de pagar el cambre ens va regalar un somriure.  Malgrat tot, val la pena anar-hi!"
+        },
+        {
+            "data": "Agost 2024",
+            "punt": 4,
+            "text": "Restaurant local, amb menjar bò i abundant. El pop és simplement espectacular. Vistes espectaculars. Servei absolutament pèssim i els cambrers van desbordats... Taules buides i cua per dinar perquè els cambrers no donen a basto. Recomanable anar-hi 12-12:30h... Més tard sol haver-hi cua. Ojo, a moltes de les taules els hi pega el sol, les sombrilles no donen a basto."
+        },
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Rsstaurant amb terrassa sobre l'Ilheu, sense luxes, molt popular. Cuina senzilla i tradicional. Un pop i uns calamars per recordar per sempre: insuperables i excel·lents! El servei lent i desorganitzat, altres taules darrera teu, a aven millor. Poca atenció i empatia. Peró vés-hi, no te'l perdis! I molt bon preu!"
+        },
+        {
+            "data": "Octubre 2023",
+            "punt": 5,
+            "text": "El lloc magnífic,personal amable i menjar molt bó."
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-62": {
+    "nom": "O Jaime - Jardim do Roberto",
+    "illa": "Sao Miguel",
+    "num": 62,
+    "cuina": "Marisc, Mediterrània",
+    "preu_g": "€-€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 3.8,
+    "res_g": 232,
+    "punt_ta": 3.3,
+    "res_ta": 199,
+    "punt_p": 3.6,
+    "horari": "Dt., Dc., Ds. i Dg.:12:00-22:30\nDll., Dj., i Dv.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "Rua Teófilo Braga 84, Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 582 649",
+    "web": null,
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJd-YSDV0mXQsRGkeZ3izl_R4",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d4928140-Reviews-Restaurante_Jaime-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mE75thh0fNCTb49eJh1k24aBc-G3jWr5X5EKaWk9sNrAxDPr4qH7mzl6UEZLPPACYU0x2I963ReM3e42IxDXgwDdbHgWRGneiffgYlMvnyOUP9jJs2DNt7-J3__WRFe8KeZypvWnafyimbWXXabaftEHYSDowXDlvaesn99iJ8TSzti5Ziz3UGkZbyX7FzuUepLpO5HEzJwfp31qQo6mpVH2ORSoMrCVtLbjZz5Aszq_YakUpLUTUkT47bkjpvLB5kbOLAdIQI1g2aTQGAuLrSdVExBc3DQiz--sMA62CAHRRlhK-piHrZ1MrzePzEFJWvFvONtDtCe_yZfAFyVIbu3fAqJvHuFxbBdIVaHzBH3I-oKJWK8xpshuxlQM0hxeACurejAkOcPdD2Z0Y0hf1xAmY7sruBmB513bWr3mtCAg&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mw2igjTzCQPesqRoZ24wtgZNesAb7jRZt52o9ANsQPj87j8b2s_V67BVsNCbc9V9Hsvy8_9e59fvOEIrtwIGDUM8KdcoIxLpMrU7005WXfmaXOYR1RB555nAkOFZhQN_DcD0MUfk0dBw0GTfoOG_neOdRUN-BSLlS_-PgTbYKXCE9uB4ukG15PRkLtciYUYrkMQAG8K_e8A6kwGS_8bSz-8cvjvzHkt4jHGU_kC0aXC9WUaK6IwyLxQC5ehmoKJ-ojWku4lKK7NlTEE9ce7SQJOfXm_wxTTxony5zw1pik4hKMZ_BHQHwu2k9EdweKvl9Kdo-evaw-eTtdzuzirZSfL890hJUg7CRqF5kREGa90nShpofNWLud46hXdta6tR2oFocZ_APvmsz7QpXf9INVK88jybFRHU-uCL3C_S7rjFzB&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3li-1f4Hl_vq6sC43VXip56g_NwI5LAURzqvvkji-PFJ4F-AsSX7f9UkZ_4SgeecH-T4IAht7ykupUuMq7QDM99TCaE1vfRspDvb_anAqm3WrIcvbRHKVvkET-ddx52FJkWP9qzuqaiQU1LSgzd6lvXyk_3GEPNZDoVo6jcKT729zf-Gx5Yw0wHqzBN3d5gkGGJ9DyS5mUD6KtbdzYx168O9Rol1d8OM4zyrovfNtfOvbFiM_kots2tnxj1SGfVp0pYoUSFpi9Bqju8PwEe7cKB5-a_Do0gcckof2C0WgR0zhTMNQ2y69iMZToCUqEtNdOIEIQ91b8H8LWgguNf6JirZSIYMSZn_X0jp2f5sWlX-kwL07__OjmwYVV5MrVemtOpjU9mYZsqqzthNAd22bQCbyJuVnTNIq5u-p8Ru_NwGg&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3khBi70lZd70ACtPZzuvkBKAJ5lJYrNWjKjaBZW0fZarLsEWnEb8eQzIfZeWqsTRyPPzSVQnJnzkroNAoSvsof4vfwQLaHRf8lQpPTzehgKyeHGWkGsEDASH1H0e4taKtU7hrTzH7QsGg6NornDJP9OpmvkrPRZUMkrRGZWoG09Tej7PXhXGZUFhckhRENnb9hmDj3ZDOlc50h9nN2XHO1feJivX1Irpig_3dv9lzVTRKI_PcGpjv3rLgndLmYrAgFYAlg-_X_k697Azr1cWqxlLAbNm0Es-qStb_OIsEiBO3KWQe7iyvxoTkBUwQS2k-Ap4RY5Ab2jZX-xyzGumDdVRnUQ1UZj7NrqqLGKROanAAJqokpS6qE-9_KhT3VhB6ME6xr_WLeCjKSp9xgY14K0Hh_GT1AkUCmVLMKNuronHB67ciaO-n0Xyn5QFQ&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3ngFsyHCW2xnsOM67Tgo6zrD3ouDQQEXqG97LTCySvdr102icX2NKbfJYie54O3EwRWyVRubdhY0yaeXKMPtU2vu6tbujNPEwctEfjNpPaHKwgl06uHynXaLcj2Po95ezeSvQPf0HkO-jKJ7cOuR2JCyOkSgCF_hysV7UcXj_GrSSFasKNWOCVZOgGlgVRSKAdGTVnJtn7Zzp2lcBlASFdFn77agUAXT85Cnztn7_4OgBV-5iahG_xoeB_XEzc9BMaNvO7B0bDbojdRU4R6LtK6KWdLzt9UtQsUbKOzfv2QL5ivsCPxCxL4eJ5C3imtDOjYn2PJh14xtRtSjkfFOwaHrgAUrDzT7DzX8ma1xHUx9sh4U0eQrX8WW3LlWyThrJiyZ88uSIIZQjiHCkEdrHcmBeiNnTa1OT-t0ScbHgNWIQ&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/00/d7/59/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/82/ea/dc/caldeira-de-polvo.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/bd/df/ab/chicharros-grelhados.jpg?w=2000&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/8b/83/af/restaurante-jaime.jpg?w=1600&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/82/ea/68/bistec-ternera.jpg?w=1400&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Restaurant excel·lent, servei impecable, peix molt bo i racions súper generoses, el recomano molt!!"
+        },
+        {
+            "data": "Octubre 2019",
+            "punt": 5,
+            "text": "Plats deliciosos, vins locals de les Açores i un servei amable. Vam tenir una barreja de peix fregit i pop. Ambdós plats eren suficients per als famolencs, però tan bons que em vaig penedir del que quedava i no vaig poder acabar-lo."
+        },
+        {
+            "data": "Agost 2018",
+            "punt": 4,
+            "text": "Restaurant encantador. No acostuma a ser fan dels restaurants que atenen turistes, però aquest és molt bo. L'home que ens va atendre va ser útil. Vam menjar fora sota un tendal. Tot i que hi havia una gran festa darrere nostre, el nostre menjar estava ben servit i ens vam sentir cuidats pel cambrer. Només vaig veure 2 membres del personal, el cambrer i el cuiner. La feina increïble feta per ells va demanar pop i una costella, tots dos estaven deliciosos."
+        },
+        {
+            "data": "Febrer 2018",
+            "punt": 2,
+            "text": "Lapas horríveis cheias de sujidade, peixe +/- (tenho dúvidas quanto à frescura do peixe servido!), Polvo excelente. Atendimento normal. Espaço nada de especial. Conta... Caro! Não é um espaço que pense em voltar."
+        },
+        {
+            "data": "Abril 2017",
+            "punt": 5,
+            "text": "Ambient familiar. El menjar molt ben fet. Molt bones carns i mariscs. Menjar regional deliciós. El menjar és d'excel·lent qualitat a un preu raonable. Terrassa i saló interior. (Não entendo o comentário da avaliação anterior. A comida é d'excel·lent qualitat!)"
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-63": {
+    "nom": "Estrela do Mar",
+    "illa": "Sao Miguel",
+    "num": 63,
+    "cuina": "Marisc, Mediterrània",
+    "preu_g": "€-€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.0,
+    "res_g": 816,
+    "punt_ta": 3.6,
+    "res_ta": 291,
+    "punt_p": 3.9,
+    "horari": "Dj.-Dt.: 8:30-22:00\nDc.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "R. do Baixio 4, 9680-138 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 912 667 534",
+    "web": null,
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJT5htyWAmXQsRU0Ebm3XeqOs",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d4572668-Reviews-Estrela_do_Mar-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mOJGcycSqNTaM3waD06A5ouY0RDuj7LzUL_0VbszwUYF_ON-1fnYJp1vBD_7YVNv3P2R3h0_A9AO20KKXxNzNCGoWUo3izlF6bwaXSTaBJ1UZ56Xl8Yssx50a699wxJXj7SIlijZjLzhcdmdQ87dwvAZL6LQdTZ5YPV_d_TwJbk1yu3P4jjoRjiTjXmquC7BId45X9jo_s3YCOZ0C1RmbXZgQXqJcKjzIMKpVWWJdzQrlDW7hkdqRPzZo0mWqeyQW2f8uItFoPGDKq_-M8HDIB5pcUxBv5Uio-NNB4SrH_-X7sYviVbCTE_a9slBHbU7fdgohcOdNkLmIPuoZq9OGcwihIXLpTx1ZaL0NoKGq5O4KVEcWy94JBs3dwFdj68deNXsg851m--7B0UajFtUrlQdB-BpkZw8jMHwyhUjTaXao7&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3k1QUxpJTYlOBp_WZo3vANm-PUzryDyz7qhk5vMTVB6ZRuhoDaTtQkH9urKq-VLadp8F3Ltk4dsIyLhTfq7nMzS7IY1-PyaWjeC-HQgO-3z7rqfv0CA06nvx3nvhRcET-3W09omQM24COqjPsOfpTr0FY4OheEiogOnBP7yFS1wDep5hQS7pN-QcTYXoZ3zQzJ47cNQWykTlnZ3wvVt5X8runDQ2_CRD7Dpjp8D450touj59xU2Ym9c-9hMFgpMBEgVIJ6_voXC0OgnX8pVlHhsaUTRmNJgo6ZAtE50SIIZGovPksYIvueLyXy3oPlJgcZZ1rGZeaa9T8mmJHxtFbHUuNXrdncGM3KelsRkanQGjPKf7PHjYwrq8UHcFM8EEhFMSfqq1fEI3HJTSOX3xsoy_hCVeClNwcvqAg-dB3cwjS5Z&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3l1ywXjrSd2BSYw8oPO2NqTuuRWN-EXgOySjDXBR9F0bF1golXrDc9Bbll30ycFJYIql0Ukf1zwzroTo1h4S3X-kc5_6ll2V71dh02R5ysd7-6mp1vg7LkdcMfuUmtSwWPJEWXBvJHCMo-Vz5FaacWJtRO4idpw3xwEW6_Xu8EMor57wAkGkOoLjhRS-TJe7VJ_pQ6wRm9OTlTtC0oQyMhLBbrX0RNGvvkaO2tZv8LtPtiNI13NROiO_3BgwpuGcmwgJOuLwnr6KD8qWkRVGBvmP-YJwGMVpOfQGYwsIkxUg1EHoCY50OJZ2_CF-iBH0I_KpJ7Gdbu3UF-yPNi1uXUDYAqNMuc_fu1RJ9FtW248HHNOtV432BNSaUw8hFTuVKGlU1v52Mh_gzt7oDOzwGlzRzjWnIJtXxNxoO4LrGEZl8sI522Q94ON2JLMOkcm&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3ned5Nhu4z4sOosj1Se8ivW6JedwfPX_ItqiR4twW0F6Cu0xyhtqd70FHXx9jNCg8LGvnU2YSk5K_IWKNNXbAACFPDCQ6QoCYiHFGTM4J8Qb3W_3BTIKx-ZaFonv_yHVD8peA2efS5tyLKO8IKfMihLPARRJjiWjQO7hlwICW4e6nyTlzK8x-2TwOuk8yMDwHwAWZiyLfU3Qj403azrGqaJRDc8CtoFsFWWq8svP3xaTsRgt7O9lMdDUxOLq7tzbJjYIRN0Rk3JKRsM1wNayYgXxFtlsc46BgJV_gqQr4CI9iP41Em4GS5PcIZ-ky6okmDatPRk-eiYbUC5VYoPjah9hzNNVOsPTwlTZHPmvqSjzBeOwAR7DWSVq13Dg_S6k0qYjiGnp1nxxKsVba_tFJ-t08L0XflJh-SwldvCMtOhm9m1RweAaHc-zfgKgoH-&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kr65dXw7bMCUsktEPBuENemtFhasKi8u0lHTIUkWgiWeT-lNQ5SvrshXFaOsO9XX4bdHFzXY0bVPRwV_oFTcTZuWzzJF4p6qxXdommQKGU4ieXRKzqsy_yQYORhJogNlymAD8Oz4Bhc-0wHNVnbk0H1-_uaLxCC_reRTtl0rvwxDZ71NF1PKMAxqQuMPRnl-Rg64fha_ro_WEk7V3ojxiOJDEE44fxDz2QAa_tWqrxJdUJ6mS_ntV46oymaXnproreSpFn15-wzGHVsYDDX1aAHqsf_iEyJ8F7xwjAtoxOWX6DWHrsUylemb2NHVCZ25pksy68kPrRPPuUNNrJCjvrAKFZGM0Z722rTOZ86cacwqg5j_rVQpeGTMstaIcUjOPKW-Rb-NdisdYv3y2WxFmhkRcVarj6tWkMOhiaIvmXsDJja6-B0vAGONUcXfGm&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/7f/3e/65/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/05/2a/65/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/54/52/ac/20190715-160944-largejpg.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/b0/17/7f/photo2jpg.jpg?w=2000&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/28/8c/5b/caption.jpg?w=1400&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Juliol 2024",
+            "punt": 5,
+            "text": "El lloc ens ha sorprès gratament, de fet hi hem anat a dinar i a sopar. Al dinar hem arribat justos, sense reserva. Ens han atès al cap de res i ens han ensenyat els diferents tipus de peix del dia. ESPECTACULAR com estava de bo. Els cambrers molt amables i un preu correctíssim. A sopar hem volgut anar amb més temps i tot i que ens han fet esperar una estona llarga, ha valgut la pena. Un lloc per tornar-hi sense cap dubte."
+        },
+        {
+            "data": "Gener 2024",
+            "punt": 2,
+            "text": "Escric amb catala per cualsevol catala que vingui a las açores, no se quina gastromia tenen aqui pero he menjat millor a un bareto, menjan un bollo de pernil dolç i formatge o unes aletes de pollastre que gastam 15 euros per un peix ple d'espines que tufege ...amb patates bullides i noms de peix que et fan semblar que demanes algo mes bo, per exemple el peix espassa ,es un peix que no te res a veure amb el espasa i al espasa li diuen espadinyo i et diuen que no en tenen. A la carta surten varis peixos pero et porten un paper on nomes en pots triar quatre. Et cobren lo que et porten que no has demanat apart formatge fresc, pa. Dos peixos un vi i dos cerveses 53 euros en fi.....no os recomano pas...l' unic bo es el cafe..que el podem pendre a qualsevol lloc🤔"
+        },
+        {
+            "data": "Agost 2023",
+            "punt": 1,
+            "text": "El servei al límit de la ineptitud. Hi havia taules buides quan hem arribat i han trigat 2 hores a asseure'ns i servir-nos el dinar. No ens han donat explicacions ni tampoc cap beguda per passar l'espera. El peix es fresc i estava bo, però tanta espera et treu la gana."
+        },
+        {
+            "data": "Agost 2023",
+            "punt": 2,
+            "text": "Vam haver d'esperar més d'una hora, havent-hi taules lliures semblava que ens tocava en breu però res. Et tenen a la cua sense dir-te res quan et podrien asseure i que almenys poguessis prendre algo. Després seus i tornen a trigar en atendre't i no t'avisen si hi ha peixos de la carta que no tenen fins que finalment venen a prendre nota... Ens van fer perdre la tarda. Tot i això després són amables i el peix estava  bo, no obstant el que vam demanar estava sec. Per això el 2."
+        },
+        {
+            "data": "Setembre 2024",
+            "punt": 5,
+            "text": "Tot i que vàrem haver d'esperar una bona estona, un lloc perfecte per (en el nostre cas) sopar. Cal dir que no és barat. Tracte i servei perfecte, i bon producte."
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-64": {
+    "nom": "Pizzaria Lua do Sul",
+    "illa": "Sao Miguel",
+    "num": 64,
+    "cuina": "Italiana, Pizza",
+    "preu_g": "€",
+    "preu_ta": "€",
+    "punt_g": 4.5,
+    "res_g": 594,
+    "punt_ta": 4.5,
+    "res_ta": 81,
+    "punt_p": 4.5,
+    "horari": "Dt.-Dg-: 9:00-21:30\nDll.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "Av. dos Combatentes do Ultramar, 9680-162 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 581 156",
+    "web": "https://www.facebook.com/pg/PizzaPizzaLuadoSul",
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJc_pq10MmXQsRbZKWFrDtSj8",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d13839166-Reviews-Pizzaria_Lua_do_Sul-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3ntEblMbPy5BhWbixlt8cd0zXp17lq2mbAGdrGP-6vwBpBAaJKxTRI4HJYBNffApENMxR7CcMQlULQ3d4kmsRABG3e1SBWHXChT-6pnEv8FJK4Ijrk75LSXdn-nMw361rjiA9twnmBuD7SbJWIasdJx1tepMmoqqydgC4a_hjbHmUC-HWDzNcZWdh_v_mVc_5MR2iecE23S1Vl5Zv9E2eplpNO_N8tktrlZap1sLQ5uNBiEIGBH1K8RX5_3MRo5mSGwIEHCLk81pieIDDx1H5p8TCS7AL9SSdLVMr2-5sZT3oTHEPSwFdkzUSRYwopYnP7XYK4jOBoTqxSfuqdzCr-HbLTmj8SM4O0OohpB71jMKWtGdERR-rAIOuSHCpIguTzZ6VpA3WSIvP8Mpmw9GBVAVX0RuHC90k1GLf39pgCbDRmo&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3l1Qwl2JT6duzOxAjrRfiOsMsJLQblAOZde_uIcs4z-VZfUYsPbUfrGSLnviGxwZvNXx6FyoV4vw28RX8LdRciE_-7j3UftRZ9HwVldLKJWivf0Zxq6txigPJQsp8JcPgWtYHcaTlTRdm2VFBiA4DZzJsLtC4W_8w-Z9C-Fo3N-_qZPnI4p0OM8ePYeUbFftfy1-o4ONUgYqSM3qYLnukH8DArOzgYCF9Vm0685OGgxQ1hC6IA5PNKkW-YLk1rwEBcRX6GbB9rXd7KmFWeIHh4V-U4h7zhEOfp77ThZHK4p9uA4LLCP00ISZMY8-QWGclC_UdKHQz0kVi8UHkQNITbbxqn6ygi8-8yWBmhQX3zT-VNHTGJbNy-VXDamgjeN_YO5iSkIVell1UpeGzbyCnnAfEdJxrjXQsYNZxezCpqA3C8&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3n6bgmnoSQErwf4BKyBO1ngwgBUu5i9PIqpuAp7qof6npPaGt_SNoQrAK9Jrgd3cQcP8AYLbUnhk2pqTLzeuxM4jEj3WCNFG8RWqCNup7qjJ54R-BujGdg8-dmbVWdT6lX6MIUcySPEU3EtHC_qAHgLeRA1l2sBqwG2RQCjI3fuawhQuJGke-et6wlBU1_qbWo98cuYb9pNdeZOW0so2a4yCM2O0IbpGbCizjNzhYI0TQlqgb5I-jYNUj9FyUx_7zH14dPBM1Gq3ffSqJ7wWcqYJLYfjvAabkIP_HhzCNUkzO4kiL9ruyrdqMusPsaqodkB8iccsLOl8RzUGgrtL_7SFlfwrv9ovCaRCCeUpOx2rOOyIo9RfpmlY-WOHpxHRgBMI-brkmZl_fhyCbvj7pNrvNDRPoXNCRFzD61Kdi-cjNopTEyRdtJxm2ROAA&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3lkVJ8FYU3cLQtaQW42zeB5JryuClG8Ykb-O7oH-p164eUXZoBPZbA6JdE6nxVmmt2BfdbouBhtcYJ7ePVL5doczezAtq9pT55cAMIoL9o8FFQXyLVGb2wIovc0nHeodXaBtxpKUAYKucHWmBW2X_VEeAKfL2djAL-B4VtkKkDc2OZzN7Hb6_A24MBi48NW8DDnVNAsYUjqJXmx1eFiwBYAVW2PQpLILKEpd0tsRCcgSYYsyy6IYP515GVeFBIDPGP3jR98-rEckQTSWVcpeT-qxC0ZDoY__dqrYanKth7sGsAai-xxFBKV2I86HJNPu-fHrI21DQ6hIp6bPZ2QWLQVo49a8HZS9FYua9vKM6JGgtnil5ZicGBtmnftE0LTFVPZHepLF6JZVB9Iruyj3IRq6CIGIvXgEwrJXIid_-FhsyCC9C_IEGoyKScH5g&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3nAF9_48mOQn0L9-x-wD11YtzzGwX1wYiKm2F0EqYh7tizPw-c7RqxC7hmvybwZ4sQBeT8eARxtVIKtuuYecmI8Vebx8ZU_BPNrmLZns1RZOHtdFJx0wnQFkjeZzRygX3jYRX4L6WYoNQyb29x-JLGDQ3H62oSYHWdf9__mWimaf_IB_izr2TrrVIUZCMnuJB7F_VTbV0ZQ8nfpr7qpgf8sMTOhDY1FFla3kRadNRaCd5czE3Al2oPklhhg20zyBRZ2-VK2jTzWIpYEd8t2nK5CcpG6RP9ixv0AL_Wv_TXOrop7GOdWN5fiJmMIp_RvVymC_weGqudrcxqdBpNyou7-_kmgRjNn3ixeeBUVSk20-7F1v41SoVltPaekRCiYaKbety8LFLJvCAU2fPfQiASQkE-irztkDGQFrpHo4F0&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/20/3f/20/pizzaria-lua-do-sul.jpg?w=800&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/04/fe/ed/20190108-163044-largejpg.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2f/86/37/77/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/89/b0/ce/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/bd/9c/e2/photo1jpg.jpg?w=1100&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Pizza gegant acabada de fer on pots triar els ingredients que vulguis al mateix preu! Vam demanar la promoció 1 pizza gegant + 1 petita + 1 litre de Coca Cola a 19€ + 1 pizza gegant i pà d’all (1 barra de 1/4 rústica farcida de mozzarella amb toc d’all cruixent i deliciós  2 pizzes gegants amb begudes tot per 40€ i ens va sobrar 1/2 pizza gran. El servei molt proper i amigable, ambient molt familiar."
+        },
+        {
+            "data": "Juny 2023",
+            "punt": 5,
+            "text": "Pizzes fetes per ells (massa inclosa) molt bones, ben condimentades i a molt bon preu. Pizza gran 12€. Servei excelent; molt ràpid! Tot perfecte!!! Familia molt simpàtica i agradable."
+        },
+        {
+            "data": "Juny 2026",
+            "punt": 4,
+            "text": "Un dinar fantàstic de pizzes amb els ingredients que pots triar! Preu decent, servei amable i bon menjar."
+        },
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Els fills adolescents són uns grans fans de les pizzes amb una base generosa (amb una massa gruixuda)! Ens allotjàvem a Ponta Delgada, però simplement havíem de tornar a menjar aquí. Podeu triar entre una pizza de 28 cm o una de 41 cm. Marqueu les caselles dels ingredients que trieu i, tant si trieu només un com tots, el preu es manté igual. Les pizzes tenen una base generosa i són delicioses! I el que no us acabeu, us ho podeu emportar a casa. Molt recomanable!"
+        },
+        {
+            "data": "Octubre 2023",
+            "punt": 5,
+            "text": "La pizza estava boníssima!!! Dues mides, gran i petita. Una persona no es pot menjar la gran sencera! Aquesta és una oferta molt única: tries la mida de la pizza i els ingredients que vulguis, i això no afecta el preu. Jo vaig triar tots els ingredients excepte la pinya i la salsitxa fumada, i estaven boníssims!! La noia de la caixa va ser amable, m'ho va explicar tot i va ser molt educada. Recomano aquesta pizzeria! És deliciosa i econòmica, i pots personalitzar la teva pizza per adaptar-la a qualsevol gust. L'únic problema és que no porten pollastre ni blat de moro als ingredients, però la resta em va anar bé!"
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-65": {
+    "nom": "Bar Vinha d’Areia",
+    "illa": "Sao Miguel",
+    "num": 65,
+    "cuina": "Bar, Europea",
+    "preu_g": "€-€€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.1,
+    "res_g": 230,
+    "punt_ta": 4.1,
+    "res_ta": 17,
+    "punt_p": 4.1,
+    "horari": "Dll.-Dg.: 10:00-23:00",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "R. Eng. Martins Mota, 9680-019 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 296 582 242",
+    "web": null,
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJG9z-dQsnXQsRnRcMhG4UlXg",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d23502706-Reviews-Bar_Vinha_d_Areia-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mpj66gSjqseEtoaA20NMR4xtaIvxLGU-DS69jqzqejlwObU-UDbhL-8ofYgmwcvKa8JkewKWi5kRGk1XGWrtGRRuzPLcNMUooi9yqpBKtXTmgmcOF_vmA4BkN-U40HixtA6oDOnn7Wws0fmAeJi9ByaBIQMmA6HHYCbbyOB7FAvq6Ol3uaFhS-PG9qXczTPIwnSYuadqgDPz54XQQNt_iT71nuXTz68wPcLzpqY0FGasbMqg7TxspEw7hE6uZw5_anx2S0aKf1SczpUv1k-QDWhxfCFHrOOqKnmYGxy-w63SjDSxPwjeRu5kq5iFAhR1V33FkYQaqPbCFrG2oT-HgHytWHZFMdS5Dmt7GGbDYH5gZhu2WanGlpKLbKVtCzzYTkMDpfDBjY7ZPu3yW2x05YkW-0A3m8cuGi1jt9VvA&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mxyMQv7k2zrTyikgC6RyPUoQajVH5DrFzMVI_hPp4OYPW8qKUvwzRGJrj1Gv-EiScqvGqYbs8Tgzyg5OxZqHumlrvDOR6q-X_bq6BrmtRbiMjKa-hz_P0qj8Gp36_C9gDn-wU-DF4ukYaJh9DgHgWcmwoMxuRITTxCZ7W8QQSE6Bh846OUqoqlysi9sArKbgQBfCSwmy03G7SQdanpNDp4Kt34cFy4sDz9c5zzNeV45HkS2Cht8w5u3PmjSwQFaTE-I3WikFbbUumLho314Wkq1UO4_P3C_BB0WPrw4Ckbpnl8JwkPd5fUnb_AVmbW2FLOojkskn7P3TGbNLjWH3gnjhaNJ5ZNGhMEGwLj7X--psLASdfh4KTu5XGwoI69uWH4HRFzfXYMGr99w3gfQIupaQ3l_8Qod5R8asi_qdQS8LGr&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kUBDQ11UNLLly6G5e19uDXlPBWTz1_jVe4s016ktujlamQEtqzBf8148UETcGjIZaLDCP0bFA0XwJj6SkT5I0C_nVFaK-zm3JYuFEvlLpk1qHnjrVHqgoZmdZeKWmRxYOhCe0-pTZfvJhTlP9L0nrOUfRatYOj1Du8G3Nq9hMQ1itFGfdSoaNETGzl13DQ6BlsdENn0iVIxTFoyEBDIpJIz6deV0dNtt0Fdq_72UA1ExoTK_kjzrGK5jNGaAnpLY5F1tPzqjxgcOHkCSRyuALf8iQP2YGkCj6aQBVRuriMcmGTPpwcBi00GUcZYlizea7YmppHCYuWd8dU72XThvHHTHbg-t8j-o_I4tcAOKndNQHTupPXspoY3UULXGHgSsdttygyxvOMWLpcEcZtpfVzXlINpIYt3afdPRxzLe1yfMCf6-An6E9n_XrK1Q&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kDBXKetfirMx1snEnGgxnX7YX3nGzZ648sf3B1ImrLMmMzsQF1U0p7WEtX8iobs19XRV5197sGfXLJ98nEXicGCQghKgfX8Vf26f9_pjZy9-xACg8aa3C3FWsVgtAxtYw8ZjatE40z3fGJXnFivYhZgCwLvCJn4npDjOTnAPrNIrt5BnpUwARrxYoWT-Cnct3u5eNrxwbS-a_13TBeG2lycD5td_aWy9-pM4Iq6tgl5TINRjw4GU_zyK4paoPy1iIRdclvmFDkCmTS4te4cHOS4R43FsTTdIWqtjqsBzaeguR9eMXRmffRhKUm-ceEl1ItPFtsSL4_Tb3Oc0RC573dcdTtzylCSWj3f1BCADrgbbk3fVXzRjdOwb0OSNzxyfe1kGwmTIJQ8b-AMDwpjw52c5JA3IjWoEEtnMNmDPw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3kJHbErkBBo6wucQ8iLvNnuPiL4CAL5WgHT_wGGLWHFhooW3LWwsjp9kX9j26uwOZ1gUyKjGwYHwrOpws04jmVhg3VE-ujsi6l6mkZL05ns0RRhZ7YAx_hedLPeZCRi190fHjfHvc1KwJu8-DSgH9EN3bgsTJCjv2rNexg4Q0rxdndRAK8T4eBEYpTFyNUfbe4SOoAeKDYmG0Z3Xu7GlIxcfnBJSQqX3idoyumy5sdgR51Zej6zkyq1VuUCLSdQgKHGhgMQSeb91GEoFV3mlPoOSsDcT3er9pXBDVLFnRGgNBBxBhAErpOYa6-KPSEJkDOi0fXGkUPyY3wL4nX5sc67dm03fdSO49DP4YVu8m8jAknjB4j-iazIlkJsZivi6hi5h3iDEUjbA5yldT43IETZXWl8k_U-kJcgi8dXhhA-Pg&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/45/cd/65/come-here-and-have-a.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/45/cd/69/come-here-and-have-a.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/45/cd/63/come-here-and-have-a.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/a3/76/cc/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/26/ab/2d/caption.jpg?w=1100&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Agost 2025",
+            "punt": 5,
+            "text": "Este local tem uma vista fantástica. As pessoas que lá trabalham estão sempre com um sorriso na cara ao atender os clientes. A comida é maravilhosa. Recomendo vivamente!"
+        },
+        {
+            "data": "Maig 2025",
+            "punt": 5,
+            "text": "Excelentes profissionais, boa comida, espaço muito agradável e boa vista. Bom atendimento ao cliente, muito simpáticos, organizado e limpo. Recomendo!👌🏼"
+        },
+        {
+            "data": "Setembre 2025",
+            "punt": 4,
+            "text": "Un gran bar de berenar just al costat d'una platja de sorra negra excel·lent! L'oferta de menjar són més aviat entrepans i aperitius. Preus raonables, bon servei, bones vistes i fàcil accés a la platja si voleu més begudes mentre sou a la platja."
+        },
+        {
+            "data": "Agost 2024",
+            "punt": 5,
+            "text": "Excelente comida, tendo já provado por várias vezes, desde o gosto único das lapas, o excelente ponto do bife de frango, a Hambúrguer há vinha que é uma mais valia 🤌 O Atendimento é fenomenal seja no balcão seja no atendimento há mesa todos com um sorriso na cara 😄 e super atenciosos , concerteza voltarei ☺️ Tudo limpo e impecável ☺️ Existem imensas variedades de comida e bebidas... Entre elas o Michael Porsche 🍹 Excelente para passar umas boas horas com um grupo de amigos/as e ainda com uma excelente vista para o mar 🌊🏖️"
+        },
+        {
+            "data": "Febrer 2022",
+            "punt": 4,
+            "text": "Fomos apenas beber umas cervejinha. Em todo o caso a vista é muito agradável 🌄🌅 (ao lado da praia 🏖️) como podem ver nas fotos. Como também começou a ficar frio, fomos para a zona interna (tenda), tendo esta é zona uma boa surpresa -> televisão 📺 (bom para quem gosta de ver jogos de futebol no café (como eu 😅)). De resto apenas provamos tremoços e mistura de amendoim e milho frito (que estavam bons). Faltou provar pratos principais, pelo que será numa próxima visita 👍"
+        }
+    ],
+    "top10": false,
+    "editor": null
+},
+  "res-smi-66": {
+    "nom": "Scorpion Café",
+    "illa": "Sao Miguel",
+    "num": 66,
+    "cuina": "Europea, Portuguesa",
+    "preu_g": "€",
+    "preu_ta": "€€ - €€€",
+    "punt_g": 4.8,
+    "res_g": 388,
+    "punt_ta": 4.7,
+    "res_ta": 70,
+    "punt_p": 4.8,
+    "horari": "Dt.-Ds.:7:00-15:00 / 18:00-22:00\nDll. i Dg.: tancat",
+    "localitat": "Vila Franca do Campo",
+    "adreca": "EN3-2A 78, 9680-433 Vila Franca Do Campo, Portugal",
+    "tel": "(+351) 914 757 719",
+    "web": null,
+    "gmaps": "https://www.google.com/maps/place/?q=place_id:ChIJQ8r0ia0mXQsRJysFpwXCUQc",
+    "ta": "https://www.tripadvisor.es/Restaurant_Review-g1190889-d10280907-Reviews-Scorpion_Cafe-Vila_Franca_do_Campo_Sao_Miguel_Azores.html",
+    "fotos_g": [
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mVjCpcoZ4Jjom-_QAPuc51KgBicpnWUKhqc2J6Ow1WouToSdFXA78Sr2cUqw0nLe0iDb84GjbszMOkvKz-NPkwkQTX9Q0DlA0uHrY2y_fHW5PAJqZ0qFCK4_x6NweDR_ZOphoSzMxXPZ1s0stAgeLexyoKG0ym6xaeJ9I9ucN7JmMpPkoDuL7U_d0wkQa5mtrp1VHMHyaufhKUDd-Kgy22MQl8BwHZf6LzHApM1hnssj60XSoHXzKgyJbPEziTJjrrBti_lKqnPEXo88_RreO8c8GpyLgFifMZN4DOracP_WTeyiinK-1CqyESsrHvNe-LF5gXxoBA21z0pSPWDKUvMVQtRla5GdjY2AFJhYv_Zso_dSUEEZNxIChJOmRexO51Qh6F9fTbMtrwsIlUV3fv4dxX0fdtOCexAZBUbSPfPw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3l95SjYmIkxDEp48JlOYET-aIyzfQL1uGjnXdoeOUvL9OydvuYi7v4bj9rAOnlH1Y9DWpT3Q9BM4je1M_ctfgyXa4dpO1E3vkUaFUsBt8Hdk2WCwfjYii-4lRQuG4COT6pSZlOf4GOeDvrWfuR5xn02nfFd-rEB-yvU_qieXI3rU-ejld1hMyY9j_Bhi8EeeRgVdCzJkDzaEs9ZmF5iZJTt8vkkuw9TlNYjGTHopqcPBwEaepL-dcm_youRybt2fu6v0T18an3yennBM_VvklsaC1_rz5dsxwF6U06FtwXjYnZVFxKGTJ6SkLc7mjAAavwb1LHwakgbsMxx5RQrWLu-0Sff_GJBi5MoTjYGuenq92lfOMYsOKqQut6ZbZ8PNxCReJkWxtoVVUTVEjrDdDsK58EU47YDNwXn_R1avkbVfZFKvozR96qH30dAc6Nc&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3nwh_NTT72k1LL89AgTvmFTL0CwLCuvA7rHLJuCgyEDYiQdY6S9GCvPGF7vPsHFGNEAaJNrcLUwKDRhRxazYV1hQMeupWW1fuMTJrqYGmFoT5y8OvLCdajkb66065XiOiRhy8e8GzjOJG_6489F97_3FS_pd3mFjw5z0ae1TNOqWg8G4zGGaytmi4aWrjnmq0wF8vx2ySssykUNuKDu7vbrgATMPMmKMq99oucXi-gtztQRnZbMrXNKwDUQ04cYcVVVlxKCU3795VoHY8_nifFAjMj06Qyqsap6a6ZSjnjE6MvoFW1zLZhAyv7VlqynzNIXliCtKbjifsBdNk5PhsxkIkw6AdOHDZbqcHca7crR62Oc2wLJP-siMrPKImAJU2PQ1nPkY1_AoICvNqxZzHfaI0CmM4Cz-56N4JKSVjajKCMZWrEdprQJ_KkJ_Ow8&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3mBS-Xysw5wqwMU3vFaLE-IYm_uRw6AZF7xNYGHBEtbYS9As1xzxMJI_isqe7lUv11dfni1McHruCmIPopvSvzowNtc-bXKVuG3zx_1rzYp4CyY2rqkdwqkAkMr8kDQcyguChF4qu0trMuYmoWTI-YjDO5zmLG_HDCXdvGta1J51TfITR8ys56G2SMfVrUJbRVMe-eKACx23pBIOCqcbpA0UJwkQicGPrjxzi9IU5w4ACi-IVwIhdshG967Srdk9cMfAEEFn-7aEN5okNhGFbxu5q7UkUxKJHYuUucKsmpJqOFZp5y98JYTWxhZjRJ6N5ixeAGRBCxfz6tIC_hMPyiTXAA2qY0TCXdJQIjaenRP7t_YbNa_i86vjwrnxqU57I8KtRP4TU-WglWp8DdfzPpbRGeTxYdzMkv7Jp__Y1Hilw&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU",
+        "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=AaVGc3nk94J9AarzS9QxVK21lF7rd7Gu8zWGcokcH7vHu1gLcwkVmA8AavRdxW8fQ7PPRJCxsyLUrCrxo998s5tVHJf1g5ed-C5mPN5fw1BEFA7Jn_7i_CxqIJIEK6G8rdcQlZv2sdGfcGJ0DxnyQyW-8atyo1MTJ2V4FBj_zFJNAKuQ6lDbJFg2JqlwBbBEanWikQyVn2dKth5fVtjhelmTxr0_A2niUU6npV_EJy9MVw9Bnlj0X-qu0l0k2qwszp9RCgcOt5t4yrlS9_KlVoWXtE8zyFwYpWb3wSaL-EyJ64HiZT3sRdQaqplfmCgqQLq4vudsk3V3kmBRXx41mOS0jagoUYy4WqytX4ohTXXxKj8S3Vm44pn0X9AonucL54y7-MkPWCNoEPn6iqm6his3H25wF6dvchvNA-q7Y2j1LaCRopTcwrDuN7eo81vNS4VB&key=AIzaSyDGnYkv42MV7TOFKFglB7A5wba2ovB9oMU"
+    ],
+    "fotos_ta": [
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/0e/9e/e1/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/61/6e/a9/caption.jpg?w=1100&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/cb/0e/74/caption.jpg?w=1200&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/c9/eb/b7/caption.jpg?w=1400&h=-1&s=1",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/91/27/f0/salmao.jpg?w=1100&h=-1&s=1"
+    ],
+    "ressenyes": [
+        {
+            "data": "Juny 2025",
+            "punt": 5,
+            "text": "Menjar increïble i servei encara més:)"
+        },
+        {
+            "data": "Abril 2026",
+            "punt": 5,
+            "text": "Sempre és un plaer menjar aquí. Menjar local increïble. Gran gust, sabor i racions. Amb un preu encara millor."
+        },
+        {
+            "data": "Gener 2026",
+            "punt": 4,
+            "text": "Bem, que grandw achado este restaurante. Boa comida, bom atendimento, ótimo preço, não se pode pedir mais nada. As doces são enormes. Para duas pessoas ficou em 27€. Dispõem de multibanco, WiFi e estacionamento"
+        },
+        {
+            "data": "Maig 2025",
+            "punt": 5,
+            "text": "El millor menjar casolà de l'illa. M'agradaria que no ho sabés tanta gent per no haver de fer una reserva lol. Però bé, val la pena esperar. Grans porcions gegants i també poden obtenir mitges porcions de la mida d'un àpat gegant als estats. He dinat aquí 6 vegades i mai he menjat malament. És el meu lloc per anar cada vegada que visito l'illa"
+        },
+        {
+            "data": "Setembre 2025",
+            "punt": 5,
+            "text": "Àpat excel·lent. Racions generoses i menjar deliciós. Molt recomanable, bona relació qualitat-preu i servei impecable."
+        }
+    ],
+    "top10": false,
+    "editor": null
+}
 };
