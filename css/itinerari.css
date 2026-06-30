@@ -1641,3 +1641,60 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
   .vol-airport-right { text-align: center; }
   .itin-info-row { grid-template-columns: 120px 1fr; }
 }
+
+/* ── ACTIVITAT RESERVADA — grid 2 col: mapa + foto ──────── */
+.itin-reserva-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 16px 0;
+  align-items: start;
+}
+.itin-reserva-map-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.itin-reserva-map {
+  height: 320px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+.itin-reserva-map-label {
+  font-size: 0.72rem;
+  color: var(--col-text-dim);
+  text-align: center;
+}
+.itin-reserva-foto {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--col-border);
+}
+.itin-reserva-foto img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+/* Variant alta per imatges panoràmiques de rutes */
+.itin-reserva-foto-tall img {
+  height: 320px;
+  object-fit: contain;
+  background: #0a1628;
+}
+@media (max-width: 640px) {
+  .itin-reserva-grid { grid-template-columns: 1fr; }
+  .itin-reserva-map { height: 220px; }
+  .itin-reserva-foto img { height: 220px; }
+}
+
+/* ── PRC37 MAP BOX ───────────────────────────────────────── */
+.map-prc37-box {
+  height: 280px;
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  background: #0d1c2e;
+  overflow: hidden;
+}
