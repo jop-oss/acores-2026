@@ -551,15 +551,6 @@
   background: #0d2b15;
   color: var(--col-sm);
 }
-.tl-stop.meal .tl-circle {
-  border-color: rgba(251,191,36,0.5);
-  color: #fbbf24;
-  background: #1a1500;
-}
-.tl-stop.transport .tl-circle {
-  border-color: rgba(96,165,250,0.4);
-  color: #60a5fa;
-}
 
 .tl-body {
   flex: 1;
@@ -1480,6 +1471,70 @@
   padding: 8px 12px; margin-top: 10px; line-height: 1.5;
 }
 
+/* ── GRID BEIX/MARRÓ — opcions oficials de senderisme ────── */
+.send-grid-trek {
+  background: rgba(243,230,217,0.06);
+  border: 1px solid rgba(243,230,217,0.2);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.send-grid-trek .send-card {
+  background: rgba(243,230,217,0.05);
+  border: 1px solid rgba(243,230,217,0.18);
+}
+.send-grid-trek .send-card-header {
+  background: rgba(243,230,217,0.08);
+  border-bottom: 1px solid rgba(243,230,217,0.18);
+}
+.send-grid-trek .send-card-codi { color: #c9a47a; }
+.send-grid-trek .send-card-nom { color: #f3e6d9; }
+.send-grid-trek .send-card-stat { color: #d8bb9c; }
+.send-grid-trek .send-card-desc { color: #e8d4bc; }
+.send-grid-trek .itin-acc-link {
+  border-color: rgba(243,230,217,0.25);
+  color: #d8bb9c;
+}
+.send-grid-trek .itin-acc-link:hover { background: rgba(243,230,217,0.12); color: #f3e6d9; }
+.send-grid-trek .send-map-box { border: 1px solid rgba(243,230,217,0.2); }
+
+/* ── GRID VERD — itinerari real que farem ────────────────── */
+.send-real-wrap {
+  background: rgba(106,191,112,0.06);
+  border: 1px solid rgba(106,191,112,0.22);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 16px 0;
+}
+.send-real-stats {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 12px; font-size: 0.82rem; color: var(--col-green-pale);
+}
+.send-real-stats strong { color: var(--col-sm); }
+
+.send-real-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+.send-real-head {
+  font-size: 0.85rem;
+  color: var(--col-green-pale);
+  padding-bottom: 4px;
+}
+.send-real-head .send-real-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  display: block;
+  margin-bottom: 3px;
+}
+.send-real-map {
+  height: 200px !important;
+  min-height: 200px !important;
+}
+@media (max-width: 640px) {
+  .send-real-grid { grid-template-columns: 1fr; }
+}
+
 /* ── ELEVATION PROFILE CHART ─────────────────────────────── */
 .send-elev-wrap {
   margin-top: 14px;
@@ -1514,8 +1569,17 @@
 
 /* ── POI MAP FILTERS ─────────────────────────────────────── */
 .poi-filter-bar {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 12px;
+}
+.poi-filter-row {
   display: flex; gap: 8px;
-  flex-wrap: wrap; margin-bottom: 12px; align-items: center;
+  flex-wrap: wrap; align-items: center;
+}
+.poi-filter-row-sub {
+  padding-left: 18px;
+  border-left: 2px solid rgba(106,171,122,0.2);
+  margin-left: 4px;
 }
 .poi-filter-pill {
   border: 1px solid var(--col-border);
@@ -1524,13 +1588,28 @@
   font-size: 0.8rem; cursor: pointer;
   font-family: 'Segoe UI', sans-serif; transition: all 0.2s;
 }
+.poi-filter-pill.sub { font-size: 0.74rem; padding: 4px 11px; opacity: 0.85; }
 .poi-filter-pill:hover { border-color: var(--col-green-mid); color: var(--col-green-pale); }
 .poi-filter-pill.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green); }
+.poi-filter-pill.partial {
+  background: rgba(106,171,122,0.18);
+  border-color: var(--col-green-mid);
+  color: var(--col-green-pale);
+}
+.poi-filter-actions { margin-top: 2px; }
+.poi-filter-all {
+  border-color: rgba(106,171,122,0.5); color: #6aab7a;
+}
 .poi-filter-clear {
   border-color: rgba(239,68,68,0.35); color: #f87171;
-  margin-left: auto;
 }
 .poi-filter-clear:hover { background: rgba(239,68,68,0.15); border-color: #f87171; color: #fff; }
+.poi-filter-favs {
+  border-color: rgba(251,191,36,0.45); color: #fbbf24;
+  margin-left: auto;
+}
+.poi-filter-favs:hover { background: rgba(251,191,36,0.12); border-color: #fbbf24; }
+.poi-filter-favs.active { background: #fbbf24; color: #0a1628; border-color: #fbbf24; font-weight: 700; }
 
 /* ── LIGHT MODE ──────────────────────────────────────────── */
 body.light .itin-day-nav { background: #f0f4f0; border-color: #6aab7a; }
