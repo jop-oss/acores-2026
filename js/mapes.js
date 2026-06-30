@@ -65,28 +65,34 @@ const AVENT_LAYER_TO_SUB = {
   avent_moto:         'Moto aqu\u00e0tica',
 };
 
+/* Bandes de puntuacio global (punt_p) per als filtres de Restaurants */
+const REST_BAND_FILTERS = {
+  rest_45:   { min: 4.5,        max: Infinity },
+  rest_40:   { min: 4.0,        max: 4.4999   },
+  rest_lt40: { min: -Infinity,  max: 3.9999   },
+};
+
 /* ══════════════════════════════════════════════════════════════
    3. CONFIGURACIO DE CAPES
 ══════════════════════════════════════════════════════════════ */
 const LAYER_CFG = [
   { grup:'Essencials', open:true, items:[
-    { id:'imprescindibles', label:'Imprescindibles',      emoji:'🏆', n:24,  on:true },
-    { id:'restaurants',     label:'Restaurants',          emoji:'🍽️', n:118 },
-    { id:'allotjaments',    label:'Allotjaments',         emoji:'🏠', n:4,   on:true },
+    { id:'imprescindibles', label:'Imprescindibles', emoji:'🏆', n:24, on:true },
+    { id:'allotjaments',    label:'Allotjaments',     emoji:'🏠', n:4,  on:true },
   ]},
-  { grup:"Llocs d'interes", open:false, items:[
+  { grup:"Llocs d'interès", open:false, items:[
     { id:'miradors',    label:'Miradors',            emoji:'🔭', n:92 },
     { id:'bany',        label:'Zones de bany',       emoji:'🏊', n:65,  type:'parent', children:['bany_pis','bany_pla','bany_ter'] },
     { id:'bany_pis',    label:'— Piscines naturals', emoji:'🏊', n:39,  indent:true },
     { id:'bany_pla',    label:'— Platges',           emoji:'🏖️', n:21,  indent:true },
-    { id:'bany_ter',    label:'— Aigues Termals',    emoji:'♨️', n:5,   indent:true },
+    { id:'bany_ter',    label:'— Aigües termals',    emoji:'♨️', n:5,   indent:true },
     { id:'naturalesa',  label:'Naturalesa',          emoji:'🌿', n:103, type:'parent', children:['nat_pai','nat_lla','nat_geo','nat_sal','nat_cov','nat_jar'] },
-    { id:'nat_pai',     label:"— Paisatge",          emoji:'⛰️', n:49,  indent:true },
+    { id:'nat_pai',     label:'— Paisatge',          emoji:'⛰️', n:49,  indent:true },
     { id:'nat_lla',     label:'— Llacs',             emoji:'🏞️', n:19,  indent:true },
     { id:'nat_geo',     label:'— Geologia',          emoji:'🌋', n:14,  indent:true },
     { id:'nat_sal',     label:"— Salts d'aigua",     emoji:'💦', n:9,   indent:true },
     { id:'nat_cov',     label:'— Coves',             emoji:'🕳️', n:3,   indent:true },
-    { id:'nat_jar',     label:'— Jardins Botanics',  emoji:'🌺', n:9,   indent:true },
+    { id:'nat_jar',     label:'— Jardí botànic',     emoji:'🌺', n:9,   indent:true },
     { id:'pobles',      label:'Pobles i ciutats',    emoji:'🏘️', n:31 },
     { id:'varis',       label:'Varis',               emoji:'📍', n:25,  type:'parent', children:['varis_far','varis_pla','varis_cur','varis_mol','varis_alt'] },
     { id:'varis_far',   label:'— Fars',              emoji:'🔦', n:7,   indent:true },
@@ -94,6 +100,13 @@ const LAYER_CFG = [
     { id:'varis_cur',   label:'— Curiositats',       emoji:'🤔', n:5,   indent:true },
     { id:'varis_mol',   label:'— Molins',            emoji:'⚙️', n:3,   indent:true },
     { id:'varis_alt',   label:'— Altres',            emoji:'🌀', n:6,   indent:true },
+  ]},
+  { grup:'Excursions', open:false, items:[
+    { id:'exc_cetacis',   label:'Avistament de cetacis',     emoji:'🐋' },
+    { id:'exc_barco',     label:'Passeig amb vaixell/llanxa', emoji:'⛵' },
+    { id:'exc_estrelles', label:"Observació d'estrelles",     emoji:'✨' },
+    /* Senderisme: item especial amb radio buttons inici/track */
+    { id:'senderisme', label:'Senderisme', emoji:'🥾', n:32, type:'senderisme' },
   ]},
   { grup:'Aventura', open:false, items:[
     { id:'avent_barranquisme', label:'Barranquisme',        emoji:'🦘' },
@@ -107,19 +120,25 @@ const LAYER_CFG = [
     { id:'avent_surf',         label:'Surf',                emoji:'🏄' },
     { id:'avent_moto',         label:'Moto aqu\u00e0tica',  emoji:'🚤' },
   ]},
-  { grup:'Excursions', open:false, items:[
-    { id:'exc_cetacis',   label:'Avistament Cetacis',   emoji:'🐋' },
-    { id:'exc_barco',     label:'Passeig amb Barco',    emoji:'⛵' },
-    { id:'exc_estrelles', label:'Observacio Estrelles', emoji:'✨' },
-  ]},
-  /* Senderisme: grup especial amb radio buttons de mode */
-  { grup:'Senderisme', open:false, type:'senderisme', items:[
-    { id:'senderisme', label:'Senderisme', emoji:'🥾', n:32 },
+  { grup:'Restaurants', open:false, items:[
+    { id:'rest_45',   label:'4,5 o més',    emoji:'🍽️', n:56 },
+    { id:'rest_40',   label:'4,0 – 4,4',    emoji:'🍽️', n:61 },
+    { id:'rest_lt40', label:'Menys de 4,0', emoji:'🍽️', n:10 },
   ]},
 ];
 
 const ALL_LAYER_ITEMS = LAYER_CFG.flatMap(function(g) { return g.items; });
 function layerItem(id) { return ALL_LAYER_ITEMS.find(function(i) { return i.id === id; }) || {}; }
+
+/* Identificadors de capa real (Leaflet layer) per a cada grup principal —
+   exclou els items de tipus 'parent', que nomes son metadades de UI */
+function grupLeafIds(grup) {
+  return grup.items.filter(function(it) { return it.type !== 'parent'; }).map(function(it) { return it.id; });
+}
+const LEAF_TO_GRUPIDX = {};
+LAYER_CFG.forEach(function(grup, gi) {
+  grupLeafIds(grup).forEach(function(id) { LEAF_TO_GRUPIDX[id] = gi; });
+});
 
 /* ══════════════════════════════════════════════════════════════
    4. POI_DATA LOOKUP
@@ -218,10 +237,13 @@ function buildLayer(id) {
     return;
   }
 
-  /* Restaurants */
-  if (id === 'restaurants') {
+  /* Restaurants — per bandes de puntuacio global (punt_p) */
+  if (REST_BAND_FILTERS[id]) {
+    var band = REST_BAND_FILTERS[id];
+    var restItem = layerItem(id);
     Object.entries(RESTAURANTS || {}).forEach(function(entry) {
       var key = entry[0], r = entry[1];
+      if (r.punt_p == null || r.punt_p < band.min || r.punt_p > band.max) return;
       var poi = MP_POI[key];
       if (!poi) return;
       var illa = normalIlla(r.illa);
@@ -232,8 +254,9 @@ function buildLayer(id) {
       ].filter(Boolean);
       var dest = r.top10 === true || r.editor != null || poi.d === true;
       addMkr(id, [poi.lat, poi.lng], illa, '🍽️', {
-        title: r.nom, sub: (r.localitat || '') + (r.preu_g ? ' · ' + r.preu_g : ''),
-        capa:'Restaurants', capaEmoji:'🍽️', illa: illa,
+        title: r.nom, sub: (r.localitat || '') + (r.punt_p ? ' · ⭐ ' + r.punt_p : ''),
+        capa: restItem.label ? ('Restaurants \u00b7 ' + restItem.label) : 'Restaurants',
+        capaEmoji:'🍽️', illa: illa,
         desc: (r.cuina || '') + (r.horari ? '\n' + r.horari : ''),
         links: links, url:'restaurants.html'
       }, 22, false, dest);
@@ -524,7 +547,7 @@ function mpToggleFavorits() {
   var btn = document.getElementById('mp-btn-favorits');
   if (btn) {
     btn.classList.toggle('active', mpFavoritsOnly);
-    btn.textContent = mpFavoritsOnly ? '★ Favorits' : 'Favorits';
+    btn.textContent = mpFavoritsOnly ? '⭐ Nomes favorits ✓' : '⭐ Nomes favorits';
     btn.title = mpFavoritsOnly ? 'Mostrant nomes favorits — clic per desactivar' : 'Mostrar nomes favorits';
   }
   mpActive.forEach(function(id) { mpRefreshLayer(id); });
@@ -539,12 +562,13 @@ function mpShowAll() {
       mpToggleLayer(it.id, true);
     }
   });
-  /* Actualitzar parents */
+  /* Actualitzar parents i grups */
   LAYER_CFG.forEach(function(g) {
     g.items.forEach(function(it) {
       if (it.type === 'parent') mpUpdateParent(it.id);
     });
   });
+  mpUpdateAllGroupCheckboxes();
 }
 
 function mpClearAll() {
@@ -561,6 +585,7 @@ function mpClearAll() {
       if (it.type === 'parent') mpUpdateParent(it.id);
     });
   });
+  mpUpdateAllGroupCheckboxes();
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -614,34 +639,21 @@ function buildPanel() {
   if (!body) return;
   var html = '';
 
-  /* Botons globals: Favorits / Mostra tot / Treu tot */
+  /* Botons globals: Nomes favorits / Mostrar tot / Netejar filtres */
   html += '<div class="mp-panel-btns">' +
-    '<button id="mp-btn-favorits"  class="mp-global-btn" onclick="mpToggleFavorits()" title="Mostrar nomes favorits">Favorits</button>' +
-    '<button id="mp-btn-showall"   class="mp-global-btn" onclick="mpShowAll()"        title="Activa totes les capes">Mostrar tot</button>' +
-    '<button id="mp-btn-clearall"  class="mp-global-btn" onclick="mpClearAll()"       title="Desactiva totes les capes">Treure tot</button>' +
+    '<button id="mp-btn-favorits"  class="mp-global-btn" onclick="mpToggleFavorits()" title="Mostrar nomes els llocs destacats">⭐ Nomes favorits</button>' +
+    '<button id="mp-btn-showall"   class="mp-global-btn" onclick="mpShowAll()"        title="Activa totes les capes">☑ Mostrar tot</button>' +
+    '<button id="mp-btn-clearall"  class="mp-global-btn" onclick="mpClearAll()"       title="Desactiva totes les capes">✕ Netejar filtres</button>' +
     '</div>';
 
-  LAYER_CFG.forEach(function(grup) {
+  LAYER_CFG.forEach(function(grup, gi) {
     var openClass = grup.open ? 'open' : '';
     html += '<div class="mp-grup ' + openClass + '">';
-    html += '<button class="mp-grup-title mp-grup-toggle"><span class="mp-grup-lbl">' + grup.grup + '</span><span class="mp-grup-arrow">▼</span></button>';
+    html += '<div class="mp-grup-title">' +
+      '<input type="checkbox" class="mp-grup-cb" id="cb-grup-' + gi + '" onchange="mpToggleGroup(' + gi + ', this.checked)" title="Marcar/desmarcar tota la categoria">' +
+      '<button class="mp-grup-toggle-btn mp-grup-toggle"><span class="mp-grup-lbl">' + grup.grup + '</span><span class="mp-grup-arrow">▼</span></button>' +
+      '</div>';
     html += '<div class="mp-grup-items"' + (grup.open ? '' : ' style="display:none"') + '>';
-
-    /* Grup especial Senderisme */
-    if (grup.type === 'senderisme') {
-      html += '<label class="mp-layer-item">' +
-        '<input type="checkbox" id="cb-senderisme" data-id="senderisme" onchange="mpOnLayerChange(this)">' +
-        '<span class="mp-layer-emo">🥾</span>' +
-        '<span class="mp-layer-nom">Senderisme</span>' +
-        '<span class="mp-layer-n">32</span>' +
-        '</label>' +
-        '<div class="mp-send-modes">' +
-        '<label class="mp-radio-lbl"><input type="radio" id="send-mode-inici" name="send-mode" value="inici" checked onchange="mpSetSendMode(\'inici\')"> Inici rutes</label>' +
-        '<label class="mp-radio-lbl"><input type="radio" id="send-mode-track" name="send-mode" value="track"       onchange="mpSetSendMode(\'track\')"> Track rutes</label>' +
-        '</div>';
-      html += '</div></div>';
-      return;
-    }
 
     grup.items.forEach(function(it) {
       if (it.type === 'parent') {
@@ -653,6 +665,7 @@ function buildPanel() {
           '</label>';
         return;
       }
+
       var indent = it.indent ? 'mp-layer-indent' : '';
       html += '<label class="mp-layer-item ' + indent + '">' +
         '<input type="checkbox" id="cb-' + it.id + '" data-id="' + it.id + '"' + (it.on ? ' checked' : '') + ' onchange="mpOnLayerChange(this)">' +
@@ -660,6 +673,14 @@ function buildPanel() {
         '<span class="mp-layer-nom">' + it.label + '</span>' +
         (it.n ? '<span class="mp-layer-n">' + it.n + '</span>' : '') +
         '</label>';
+
+      /* Senderisme: item especial amb radio buttons inici/track, just sota la seva fila */
+      if (it.type === 'senderisme') {
+        html += '<div class="mp-send-modes">' +
+          '<label class="mp-radio-lbl"><input type="radio" id="send-mode-inici" name="send-mode" value="inici" checked onchange="mpSetSendMode(\'inici\')"> Inici rutes</label>' +
+          '<label class="mp-radio-lbl"><input type="radio" id="send-mode-track" name="send-mode" value="track"       onchange="mpSetSendMode(\'track\')"> Track rutes</label>' +
+          '</div>';
+      }
     });
 
     html += '</div></div>';
@@ -682,6 +703,8 @@ function mpOnParentChange(cb) {
     var child = document.getElementById('cb-' + cid);
     if (child) { child.checked = cb.checked; mpToggleLayer(cid, cb.checked); }
   });
+  var gi = LEAF_TO_GRUPIDX[cb.dataset.children.split(',')[0]];
+  if (gi != null) mpUpdateGroupCheckbox(gi);
 }
 
 function mpUpdateParent(parentId) {
@@ -701,6 +724,40 @@ function mpOnLayerChange(cb) {
   mpToggleLayer(id, cb.checked);
   var parent = document.querySelector('input[data-children*="' + id + '"]');
   if (parent) mpUpdateParent(parent.dataset.parentId);
+  var gi = LEAF_TO_GRUPIDX[id];
+  if (gi != null) mpUpdateGroupCheckbox(gi);
+}
+
+/* ── Checkbox mestre per categoria principal (Essencials, Llocs d'interes...) ── */
+function mpToggleGroup(grupIdx, checked) {
+  var grup = LAYER_CFG[grupIdx];
+  if (!grup) return;
+  grupLeafIds(grup).forEach(function(id) {
+    var cb = document.getElementById('cb-' + id);
+    if (cb) cb.checked = checked;
+    mpToggleLayer(id, checked);
+  });
+  /* Actualitzar els checkboxes de subgrup (bany/naturalesa/varis) dins d'aquest grup */
+  grup.items.forEach(function(it) {
+    if (it.type === 'parent') mpUpdateParent(it.id);
+  });
+  mpUpdateGroupCheckbox(grupIdx);
+}
+
+function mpUpdateGroupCheckbox(grupIdx) {
+  var grup = LAYER_CFG[grupIdx];
+  if (!grup) return;
+  var cb = document.getElementById('cb-grup-' + grupIdx);
+  if (!cb) return;
+  var leafIds = grupLeafIds(grup);
+  if (!leafIds.length) return;
+  var checkedCount = leafIds.filter(function(id) { return mpActive.has(id); }).length;
+  cb.indeterminate = checkedCount > 0 && checkedCount < leafIds.length;
+  cb.checked = checkedCount === leafIds.length;
+}
+
+function mpUpdateAllGroupCheckboxes() {
+  LAYER_CFG.forEach(function(grup, gi) { mpUpdateGroupCheckbox(gi); });
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -756,7 +813,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var s = document.createElement('style');
   s.textContent = [
     '.mp-panel-btns{display:flex;gap:4px;padding:6px 8px 6px;border-bottom:1px solid rgba(106,171,122,.2);flex-wrap:wrap;}',
-    '.mp-global-btn{flex:1;min-width:0;padding:4px 6px;font-size:.72rem;font-weight:600;border:1px solid rgba(106,171,122,.35);border-radius:5px;background:rgba(45,90,61,.45);color:#a8d8b0;cursor:pointer;letter-spacing:.01em;transition:background .15s,border-color .15s;white-space:nowrap;}',
+    '.mp-global-btn{flex:1 1 auto;min-width:74px;padding:4px 5px;font-size:.68rem;font-weight:600;border:1px solid rgba(106,171,122,.35);border-radius:5px;background:rgba(45,90,61,.45);color:#a8d8b0;cursor:pointer;letter-spacing:.01em;transition:background .15s,border-color .15s;white-space:nowrap;text-align:center;}',
     '.mp-global-btn:hover{background:rgba(45,90,61,.75);border-color:rgba(106,171,122,.6);}',
     '.mp-global-btn.active{background:#2d5a3d;border-color:#6aab7a;color:#d4f0dc;}',
     '.mp-send-modes{display:flex;gap:12px;padding:4px 10px 6px 28px;font-size:.78rem;color:#a8d8b0;}',
@@ -783,6 +840,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (it.on) mpToggleLayer(it.id, true);
     });
   });
+  mpUpdateAllGroupCheckboxes();
 
   /* Filtre d'illes */
   document.querySelectorAll('.mp-illa-btn').forEach(function(btn) {

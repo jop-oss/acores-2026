@@ -174,15 +174,29 @@
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 7px 14px;
+  gap: 6px;
+}
+.mp-grup-cb {
+  width: 14px;
+  height: 14px;
+  accent-color: #6aab7a;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mp-grup-toggle-btn {
+  display: flex;
+  align-items: center;
+  flex: 1;
   background: none;
   border: none;
-  padding: 7px 14px;
+  padding: 0;
   cursor: pointer;
   text-align: left;
   gap: 6px;
   transition: background 0.15s;
 }
-.mp-grup-title:hover { background: rgba(106,171,122,0.06); }
+.mp-grup-title:hover .mp-grup-toggle-btn { background: rgba(106,171,122,0.06); }
 .mp-grup-lbl {
   font-size: 0.74rem;
   font-weight: 700;
