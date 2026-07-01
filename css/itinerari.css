@@ -1776,3 +1776,33 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
 .d4-route-tab.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green-mid); }
 .d4-route-panel { display: none; }
 .d4-route-panel.active { display: block; }
+
+/* ── DIA 5 — ANIMACIONS PLUJA + MAPA RUTA EST ───────────── */
+@keyframes nauseaFall {
+  0%   { transform: translateY(-10%) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.18; }
+  90%  { opacity: 0.18; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes nauseaSway {
+  0%   { transform: rotate(-15deg) scale(0.9); }
+  100% { transform: rotate(15deg) scale(1.1); }
+}
+.nausea-mkr { cursor: pointer; }
+
+.itin-ruta-est-map {
+  height: 420px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(245,158,11,0.35);
+  background: #0d1c2e;
+  overflow: hidden;
+  position: relative;
+}
+.nausea-rain-layer { pointer-events: none; }
+
+/* Tabs PRC09 (reutilitzen les classes d4) */
+.prc09-tab  { flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--col-border); background: var(--col-card); color: var(--col-text-dim); font-size: 0.82rem; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; }
+.prc09-tab:hover { color: var(--col-green-pale); border-color: var(--col-green-mid); }
+.prc09-tab.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green-mid); }
+.prc09-panel { display: none; }
+.prc09-panel.active { display: block; }
