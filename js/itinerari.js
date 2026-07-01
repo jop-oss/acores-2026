@@ -269,6 +269,12 @@ const POI = {
   },
 
   /* ── POIS DIA 5 ─────────────────────────────────────────── */
+  'mir-smi-04': {
+    nom: 'Miradouro da Boca da Ribeira', emoji: '🔭', cat: 'miradors',
+    coords: [37.84163, -25.14903],
+    desc: 'Mirador sobre la Boca da Ribeira a Nordeste. Impressionants vistes de la costa (no baixar a la piscina en cotxe).',
+    maps: 'https://maps.google.com/?q=37.84163,-25.14903',
+  },
   'nat-sal-smi-01': {
     nom: 'Cascata do Moinho do Félix (TM06)', emoji: '💦', cat: 'naturalesa',
     coords: [37.85200, -25.31617],
@@ -2073,7 +2079,6 @@ function initMapD5RutaEst() {
   });
 
   /* Marcadors de revolts pronunciats (nàusea) */
-  const nauseaEmojis = ['🥴','😵‍💫','🌀','🥴','😵‍💫','🌀','🥴'];
   const nauseaQuips = [
     'Revolt #1 de 47… anirem bé!',
     'Queda poc… mentida.',
@@ -2084,13 +2089,12 @@ function initMapD5RutaEst() {
     'Final del revolt… ara ve el següent!',
   ];
   RUTA_EST_BENDS.forEach((coords, i) => {
-    const emoji = nauseaEmojis[i % nauseaEmojis.length];
     const icon = L.divIcon({
-      html: `<div class="nausea-mkr" style="font-size:1.4rem;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.7));animation:nauseaSway ${1.8+i*0.3}s ease-in-out infinite alternate">${emoji}</div>`,
+      html: `<div class="nausea-mkr" style="font-size:1.5rem;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.7));animation:nauseaSway ${0.4+i*0.1}s ease-in-out infinite alternate">😵‍💫</div>`,
       iconSize: [28, 28], iconAnchor: [14, 14], className: ''
     });
     L.marker(coords, { icon, zIndexOffset: 50 }).addTo(map)
-      .bindPopup(`<b>${emoji} Revolt perillós!</b><br><small style="color:#fbbf24">${nauseaQuips[i]}</small>`);
+      .bindPopup(`<b>😵‍💫 Revolt perillós!</b><br><small style="color:#fbbf24">${nauseaQuips[i]}</small>`);
   });
 
   /* Llegenda */
@@ -2099,8 +2103,7 @@ function initMapD5RutaEst() {
     const div = L.DomUtil.create('div');
     div.style.cssText = 'background:rgba(10,22,40,0.9);border:1px solid rgba(106,171,122,0.3);border-radius:8px;padding:8px 12px;font-size:10px;color:#a8d8b0;line-height:1.9';
     div.innerHTML = `<div><span style="color:#f59e0b;font-weight:700">━━</span> Ruta panoràmica est (23 km)</div>
-<div>🔭 <span style="color:#a78bfa">⬤</span> Miradors destacats &nbsp; 🔭 <span style="color:#94a3b8">⬤</span> Altres miradors</div>
-<div>🥴 Revolts de màxim mareig</div>`;
+<div>🔭 <span style="color:#a78bfa">⬤</span> Miradors destacats &nbsp; 🔭 <span style="color:#94a3b8">⬤</span> Altres miradors</div>`;
     return div;
   };
   legend.addTo(map);
@@ -2158,9 +2161,11 @@ function initMapPOID5() {
   _poiMarkerData5=[]; _poiLeafCounts5={};
 
   function isSM(i){return i==='São Miguel'||i==='Sao Miguel'||i==='sm';}
-  // Zona est (exclou la zona del dia 4 i la de Ponta Delgada/Lagoa)
+  // Dos rectangles de la zona dia 5 (Nordeste/TM06 i Faial da Terra/Povoacào)
   function isD5Zone(lat, lng){
-    return lat > 37.73 && lat < 37.90 && lng > -25.35 && lng < -25.10;
+    const rect1 = lat > 37.79 && lat < 37.87 && lng > -25.37 && lng < -25.12;
+    const rect2 = lat > 37.70 && lat < 37.79 && lng > -25.30 && lng < -25.12;
+    return rect1 || rect2;
   }
   function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
 
@@ -2240,15 +2245,20 @@ function initMapRutaD5() {
   leafletTiles(map);
 
   L.marker(CHERIMOYA_D5_START, { icon: startIcon(), zIndexOffset: 200 })
-    .addTo(map).bindPopup('<b>▶️ Inici</b><br>Casa Cherimoya – Ribeira das Tainhas');
+    .addTo(map).bindPopup('<b>▶️ Inici i final</b><br>Casa Cherimoya – Ribeira das Tainhas');
 
   DIA5_WAYPOINTS.forEach((wp, i) => {
     L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
       .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}</b>`);
   });
 
-  L.marker(POVOACIO_D5_END, { icon: finishIcon(), zIndexOffset: 200 })
-    .addTo(map).bindPopup('<b>🏁 Povoação</b><br>Sopar i tornada');
+  // Sopar a Povoació com a parada numerada
+  L.marker(POVOACIO_D5_END, { icon: numberIcon(DIA5_WAYPOINTS.length + 1, COL_SM), zIndexOffset: 100 })
+    .addTo(map).bindPopup(`<b>${DIA5_WAYPOINTS.length + 1}. Sopar a Povoació</b>`);
+
+  // Finish a Cherimoya (zIndexOffset < start per no solapar el popup de start)
+  L.marker(CHERIMOYA_D5_START, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup('<b>🏁 Tornada a Casa Cherimoya</b>');
 
   const all = [CHERIMOYA_D5_START, ...DIA5_WAYPOINTS.map(w => w.coords), POVOACIO_D5_END];
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });

@@ -1785,8 +1785,8 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 @keyframes nauseaSway {
-  0%   { transform: rotate(-15deg) scale(0.9); }
-  100% { transform: rotate(15deg) scale(1.1); }
+  0%   { transform: rotate(-20deg) scale(0.85); }
+  100% { transform: rotate(20deg) scale(1.15); }
 }
 .nausea-mkr { cursor: pointer; }
 
@@ -1806,3 +1806,28 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
 .prc09-tab.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green-mid); }
 .prc09-panel { display: none; }
 .prc09-panel.active { display: block; }
+
+/* ── BIRTHDAY BANNER ──────────────────────────────────────── */
+.itin-birthday-banner {
+  background: linear-gradient(135deg, #1a0533 0%, #2d1050 40%, #3b0f6b 100%);
+  border: 2px solid rgba(251,191,36,0.6);
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 28px rgba(251,191,36,0.15);
+}
+.itin-birthday-banner::before {
+  content: '🎉 🎊 🎉 🎊 🎉 🎊 🎉 🎊 🎉 🎊';
+  position: absolute; top: 6px; left: 0; right: 0;
+  font-size: 0.8rem; opacity: 0.25; letter-spacing: 4px;
+}
+.itin-birthday-text {
+  font-size: 1rem;
+  color: #fde68a;
+  font-style: italic;
+  line-height: 1.6;
+  position: relative; z-index: 1;
+}
+.itin-birthday-text strong { color: #fbbf24; font-style: normal; }
