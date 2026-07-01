@@ -1698,3 +1698,81 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
   background: #0d1c2e;
   overflow: hidden;
 }
+
+/* ── RESTRICCIO MAP ──────────────────────────────────────── */
+.itin-restriccio-map {
+  height: 300px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(239,68,68,0.35);
+  background: #0d1c2e;
+  overflow: hidden;
+}
+
+/* ── AVIS RESTRICCIO (vermell) ───────────────────────────── */
+.itin-avis-restrict {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-left: 4px solid #ef4444;
+  color: #fca5a5;
+}
+.itin-avis-restrict .itin-avis-text strong { color: #fecaca; display: block; margin-bottom: 4px; }
+
+/* ── SPLIT GROUP GRID ────────────────────────────────────── */
+.itin-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 8px 0;
+}
+.itin-split-option {
+  border-radius: var(--radius);
+  border: 1px solid var(--col-border);
+  overflow: hidden;
+}
+.itin-split-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.itin-split-emoji { font-size: 1.4rem; }
+.itin-split-title { flex: 1; }
+.itin-split-body {
+  padding: 14px 16px;
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+.itin-split-body p { margin: 0; }
+
+.itin-split-brave {
+  border-color: rgba(245,158,11,0.35);
+}
+.itin-split-brave .itin-split-header {
+  background: rgba(245,158,11,0.08);
+  border-bottom: 1px solid rgba(245,158,11,0.2);
+  color: #fbbf24;
+}
+.itin-split-brave .itin-split-body { color: #e8d5a8; }
+
+.itin-split-relax {
+  border-color: rgba(106,171,122,0.3);
+}
+.itin-split-relax .itin-split-header {
+  background: rgba(106,171,122,0.08);
+  border-bottom: 1px solid rgba(106,171,122,0.2);
+  color: #6aab7a;
+}
+.itin-split-relax .itin-split-body { color: #b0cebb; }
+
+@media (max-width: 640px) {
+  .itin-split-grid { grid-template-columns: 1fr; }
+}
+
+/* ── D4 ROUTE TAB CSS reuse (same as itin-route-tab) ─────── */
+.d4-route-tab { flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--col-border); background: var(--col-card); color: var(--col-text-dim); font-size: 0.82rem; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; }
+.d4-route-tab:hover { color: var(--col-green-pale); border-color: var(--col-green-mid); }
+.d4-route-tab.active { background: var(--col-green); color: var(--col-green-pale); border-color: var(--col-green-mid); }
+.d4-route-panel { display: none; }
+.d4-route-panel.active { display: block; }
