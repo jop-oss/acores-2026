@@ -403,6 +403,134 @@ const POI = {
     desc: 'El primer assentament dels colonitzadors portuguesos a São Miguel (s. XV). Restaurants de bona relació qualitat-preu.',
     maps: 'https://maps.google.com/?q=37.74790,-25.24530',
   },
+
+  /* ── DIA 7 · SÃO JORGE ──────────────────────────────────── */
+  'imp-sjo-01': {
+    nom: 'Fajã da Caldeira de Santo Cristo', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.6251287, -27.9287591],
+    desc: 'La fajã més famosa i salvatge de São Jorge. Només accessible a peu (2h) o amb quad; l\'única llacuna dels Açores on es cultiven cloïsses.',
+    maps: 'https://maps.google.com/?q=38.6251287,-27.9287591',
+  },
+  'imp-sjo-02': {
+    nom: 'Fajã do Ouvidor i Poça do Simão Dias', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.6786507, -28.0500872],
+    desc: 'Piscina natural encaixonada entre columnes de basalt negre, considerada una de les més espectaculars dels Açores.',
+    maps: 'https://maps.google.com/?q=38.6786507,-28.0500872',
+  },
+  'imp-sjo-03': {
+    nom: 'Parque Florestal Sete Fontes', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.7384423, -28.2621519],
+    desc: 'Boscos frondosos amb basses, falgueres gegants, canaris salvatges i cérvols. Passeig tranquil a la fresca de la tarda.',
+    maps: 'https://maps.google.com/?q=38.7384423,-28.2621519',
+  },
+  'mir-sjo-01': {
+    nom: 'Miradouro Entre Morros', emoji: '🔭', cat: 'miradors',
+    coords: [38.6876737, -28.219042],
+    desc: 'Mirador a l\'entrada de Velas amb vistes sobre la capital de l\'illa i el Pico al fons.',
+    maps: 'https://maps.google.com/?q=38.6876737,-28.219042',
+  },
+  'mir-sjo-03': {
+    nom: 'Miradouro da Fajã dos Cubres', emoji: '🔭', cat: 'miradors',
+    coords: [38.6477209, -27.9883935],
+    desc: 'Des d\'aquí es contemplen alhora la Fajã dos Cubres i, al fons, la famosa Fajã do Santo Cristo.',
+    maps: 'https://maps.google.com/?q=38.6477209,-27.9883935',
+  },
+  'mir-sjo-08': {
+    nom: 'Miradouro do Canavial', emoji: '🔭', cat: 'miradors',
+    coords: [38.6888991, -28.2137742],
+    desc: 'Mirador proper a Velas amb bones vistes de la costa sud de l\'illa.',
+    maps: 'https://maps.google.com/?q=38.6888991,-28.2137742',
+  },
+  'mir-sjo-14': {
+    nom: 'Miradouro do Topo', emoji: '🔭', cat: 'miradors',
+    coords: [38.5462151, -27.7721096],
+    desc: 'Mirador sobre l\'extrem oriental de l\'illa, el port històric de Topo i el seu illot.',
+    maps: 'https://maps.google.com/?q=38.5462151,-27.7721096',
+  },
+  'mir-sjo-16': {
+    nom: 'Miradouro Ferrã Afonso', emoji: '🔭', cat: 'miradors',
+    coords: [38.741033, -28.2637165],
+    desc: 'Si el dia està clar, es pot observar el seguit de turons de la part alta de l\'illa que recorden la silueta d\'un drac.',
+    maps: 'https://maps.google.com/?q=38.741033,-28.2637165',
+  },
+  'mir-sjo-17': {
+    nom: 'Miradouro Serra do Topo', emoji: '🔭', cat: 'miradors',
+    coords: [38.59735, -27.9266931],
+    desc: 'Un dels miradors del retorn des de Topo, a uns 20 km de l\'extrem est de l\'illa.',
+    maps: 'https://maps.google.com/?q=38.59735,-27.9266931',
+  },
+  'mir-sjo-18': {
+    nom: 'Vigia da Baleia', emoji: '🔭', cat: 'miradors',
+    coords: [38.7523542, -28.3088036],
+    desc: 'Penya-segats verticals de 200m tallats a ganivet sobre l\'Atlàntic, amb Faial i Pico a l\'horitzó. Accés final només a peu.',
+    maps: 'https://maps.google.com/?q=38.7523542,-28.3088036',
+  },
+  'nat-geo-sjo-02': {
+    nom: 'Arco Natural de Velas', emoji: '🌋', cat: 'naturalesa',
+    coords: [38.6794811, -28.2108337],
+    desc: 'Curiós arc de roca volcànica a tocar del centre de Velas.',
+    maps: 'https://maps.google.com/?q=38.6794811,-28.2108337',
+  },
+  'nat-pai-sjo-01': {
+    nom: 'Fajã da Caldeira de Santo Cristo', emoji: '🌿', cat: 'naturalesa',
+    coords: [38.6255581, -27.9279106],
+    desc: 'Vista des del mirador de la Fajã dos Cubres; només s\'hi arriba caminant o amb quad.',
+    maps: 'https://maps.google.com/?q=38.6255581,-27.9279106',
+  },
+  'nat-pai-sjo-05': {
+    nom: 'Fajã do Ouvidor', emoji: '🌿', cat: 'naturalesa',
+    coords: [38.6775835, -28.0517791],
+    desc: 'Petit nucli costaner d\'on surt el camí cap a la Poça do Simão Dias.',
+    maps: 'https://maps.google.com/?q=38.6775835,-28.0517791',
+  },
+  'nat-pai-sjo-07': {
+    nom: 'Fajã dos Cubres', emoji: '🌿', cat: 'naturalesa',
+    coords: [38.6423232, -27.9658869],
+    desc: 'Plataforma de lava arran de mar amb llacuna costanera, poble minúscul i vistes cap a Santo Cristo.',
+    maps: 'https://maps.google.com/?q=38.6423232,-27.9658869',
+  },
+  'nat-pai-sjo-09': {
+    nom: 'Farol do Topo', emoji: '🔦', cat: 'naturalesa',
+    coords: [38.5491377, -27.7547801],
+    desc: 'Far a l\'extrem més oriental de São Jorge, vora l\'illot amb vaques pasturant a 100m de la costa.',
+    maps: 'https://maps.google.com/?q=38.5491377,-27.7547801',
+  },
+  'nat-pai-sjo-10': {
+    nom: 'Farol dos Rosais', emoji: '🔦', cat: 'naturalesa',
+    coords: [38.753523, -28.3114368],
+    desc: 'Far abandonat a la Ponta dos Rosais. Accés amb cotxe normal desaconsellat i zona amb esllavissades constants.',
+    maps: 'https://maps.google.com/?q=38.753523,-28.3114368',
+  },
+  'nat-pai-sjo-11': {
+    nom: 'Ilhéu do Topo', emoji: '🐄', cat: 'naturalesa',
+    coords: [38.5504922, -27.746525],
+    desc: 'Illot a només 100m de la costa de Topo, curiosament amb vaques que hi pasturen.',
+    maps: 'https://maps.google.com/?q=38.5504922,-27.746525',
+  },
+  'nat-pai-sjo-12': {
+    nom: 'Morro das Velas', emoji: '🔭', cat: 'naturalesa',
+    coords: [38.6824949, -28.2178312],
+    desc: 'Punt elevat sobre la capital, un dels miradors finals abans de tornar els cotxes.',
+    maps: 'https://maps.google.com/?q=38.6824949,-28.2178312',
+  },
+  'nat-pai-sjo-13': {
+    nom: 'Parque Florestal das Sete Fontes', emoji: '🌲', cat: 'naturalesa',
+    coords: [38.7355285, -28.2623583],
+    desc: 'Parc de bosc frondós amb basses, falgueres gegants, canaris salvatges i cérvols.',
+    maps: 'https://maps.google.com/?q=38.7355285,-28.2623583',
+  },
+  'nat-pai-sjo-15': {
+    nom: 'Ponta dos Rosais', emoji: '🌋', cat: 'naturalesa',
+    coords: [38.7554597, -28.3167432],
+    desc: 'Extrem nord-oest de l\'illa. Penya-segats espectaculars i pista de terra fins al far abandonat.',
+    maps: 'https://maps.google.com/?q=38.7554597,-28.3167432',
+  },
+  'ban-pis-sjo-05': {
+    nom: 'Poça do Simão Dias', emoji: '🏊', cat: 'bany',
+    coords: [38.6794637, -28.0533887],
+    desc: 'La piscina natural més espectacular de les Açores, encaixonada entre columnes de basalt negre. Cal escarpins.',
+    maps: 'https://maps.google.com/?q=38.6794637,-28.0533887',
+  },
 };
 
 /* ── RESTAURANTS DATA ────────────────────────────────────── */
@@ -605,6 +733,41 @@ const RESTS_CALOURA = [
     foto: null,
   },
 ];
+
+/* Restaurants ràpids a Velas (dia 7) — no tenen fitxa a restaurants-data.js,
+   es mostren només amb la puntuació de Google i una descripció curta, sense enllaços */
+const RESTS_VELAS_RAPID = [
+  {
+    nom: 'Cachorrinhos do Beto', punt: 4.8, rec: true,
+    desc: 'Foodtruck de kebabs, hot dogs i frankfurts, a tocar de l\'Arco Natural de Velas.',
+  },
+  {
+    nom: 'EsKema', punt: 4.8, rec: true,
+    desc: 'Molt a prop del centre i del port, obert tot el dia. Ambient modern i informal: hamburgueses de vedella local, pregos, entrepans i tapes ràpides.',
+  },
+  {
+    nom: 'Snack Bar O 30', punt: 4.4, rec: false,
+    desc: 'Obert de forma ininterrompuda. Típic snack-bar local per a una parada exprés: truites, hamburgueses, biquinis o racions ràpides a la planxa.',
+  },
+  {
+    nom: 'Café Mesquita', punt: 4.6, rec: false,
+    desc: 'Cafè clàssic molt proper al centre. Sandvitxos calents, entrepans clàssics i cafès a qualsevol hora.',
+  },
+];
+
+/* ── RENDER LLISTA DE RESTAURANTS SIMPLE (sense enllaços, per punts sense fitxa) ── */
+function renderRestListSimple(containerSelector, data) {
+  const el = document.querySelector(containerSelector);
+  if (!el) return;
+  el.innerHTML = data.map(r => {
+    const star = r.rec ? ' ⭐' : '';
+    return `<div class="rest-list-item">
+      <span class="rest-list-nom">${r.nom}${star}</span>
+      <span class="rest-list-rating">${starsTextAmber(r.punt)}</span>
+      <div class="rest-list-desc-simple">${r.desc}</div>
+    </div>`;
+  }).join('');
+}
 
 const PDL_COORDS = [37.74239, -25.67375];
 
@@ -1361,7 +1524,7 @@ function setupAccordions() {
 }
 
 /* ── DAY SWITCHING ───────────────────────────────────────── */
-let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false };
+let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false };
 
 function showDia(n) {
   document.querySelectorAll('.itin-dia').forEach(el => el.classList.remove('active'));
@@ -1376,6 +1539,19 @@ function showDia(n) {
   if (badge) badge.textContent = `Dia ${n} de 12`;
 
   // Lazy map init
+  if (n === 7 && !mapsInitDia[7]) {
+    mapsInitDia[7] = true;
+    setTimeout(() => {
+      initMapRetornCotxesSMI();
+      initMapLloguerCotxesSJO();
+      initMapRetornCotxesSJO();
+      initMapLloguerCotxesPIC();
+      initMapAllotjament3();
+      initMapRutaD7();
+      initMapPOID7();
+      renderRestListSimple('#rests-velas-rapid', RESTS_VELAS_RAPID);
+    }, 100);
+  }
   if (n === 1 && !mapsInitDia[1]) {
     mapsInitDia[1] = true;
     setTimeout(() => { initMapCotxes(); initMapAllotjament1(); }, 100);
@@ -2504,6 +2680,177 @@ function poiToggleMainD6(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filte
 function poiShowAllD6(){_poiActiveLeafs6=new Set(Object.keys(_poiLeafCounts6));document.querySelectorAll('#poi-filter-bar-d6 .poi-filter-pill[data-leaf-d6],#poi-filter-bar-d6 .poi-filter-pill[data-main-d6]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters6();}
 function poiClearD6(){_poiActiveLeafs6=new Set();document.querySelectorAll('#poi-filter-bar-d6 .poi-filter-pill[data-leaf-d6],#poi-filter-bar-d6 .poi-filter-pill[data-main-d6]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters6();}
 function poiToggleFavsD6(){_poiFavOnly6=!_poiFavOnly6;const btn=document.getElementById('poi-favs-btn-d6');if(btn)btn.classList.toggle('active',_poiFavOnly6);_applyPOIFilters6();}
+
+
+/* ══════════════════════════════════════════════════════════
+   DIA 7 · SÃO JORGE → PICO
+   ══════════════════════════════════════════════════════════ */
+
+/* Coordenades punts logístics */
+const D7_RETORN_COTXES_SMI = [37.749585685919435, -25.71000906540439]; // Ilha Verde, aeroport PDL (mateix punt que dia 1)
+const D7_LLOGUER_COTXES_SJO = [38.66449504208563, -28.168458630228876]; // Azores Motor Rent, aeroport SJZ
+const D7_RETORN_COTXES_SJO = [38.67971865147596, -28.204869775698672]; // Port de Velas
+const D7_LLOGUER_COTXES_PIC = [38.5269265, -28.3189243]; // Cais do Pico / São Roque do Pico (aprox.)
+const D7_ALLOTJAMENT_PIC = [38.4607967, -28.1920405]; // Prainha Apartments
+const D7_TABERNA_PACO = [38.6423232, -27.9658869]; // aprox. Fajã dos Cubres
+
+function initMapRetornCotxesSMI() {
+  const el = document.getElementById('map-retorn-cotxes-smi');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D7_RETORN_COTXES_SMI, 15);
+  L.marker(D7_RETORN_COTXES_SMI, {
+    icon: L.divIcon({ html: `<div style="background:#2980b9;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Ilha Verde</b><br>Aeroporto João Paulo II').openPopup();
+}
+
+function initMapLloguerCotxesSJO() {
+  const el = document.getElementById('map-lloguer-cotxes-sjo');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D7_LLOGUER_COTXES_SJO, 15);
+  L.marker(D7_LLOGUER_COTXES_SJO, {
+    icon: L.divIcon({ html: `<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Azores Motor Rent</b><br>Aeroporto da Ilha de São Jorge').openPopup();
+}
+
+function initMapRetornCotxesSJO() {
+  const el = document.getElementById('map-retorn-cotxes-sjo');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D7_RETORN_COTXES_SJO, 15);
+  L.marker(D7_RETORN_COTXES_SJO, {
+    icon: L.divIcon({ html: `<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Azores Motor Rent</b><br>Port de Velas').openPopup();
+}
+
+function initMapLloguerCotxesPIC() {
+  const el = document.getElementById('map-lloguer-cotxes-pic');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D7_LLOGUER_COTXES_PIC, 14);
+  L.marker(D7_LLOGUER_COTXES_PIC, {
+    icon: L.divIcon({ html: `<div style="background:#8e44ad;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Oasis Rent a Car</b><br>Port de São Roque do Pico').openPopup();
+}
+
+function initMapAllotjament3() {
+  const el = document.getElementById('map-allotjament3');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D7_ALLOTJAMENT_PIC, 15);
+  L.marker(D7_ALLOTJAMENT_PIC, {
+    icon: L.divIcon({ html: `<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Prainha Apartments</b><br>Canto da Areia').openPopup();
+}
+
+/* Waypoints de l'itinerari de São Jorge (ordre real de la ruta) */
+const DIA7_WAYPOINTS = [
+  { nom: 'Topo — port, far i illot', coords: [38.5462151, -27.7721096], icon: '🔭' },
+  { nom: 'Miradors de la ER-2 (Serra do Topo)', coords: [38.59735, -27.9266931], icon: '🔭' },
+  { nom: 'Mirador i Fajã dos Cubres — dinar', coords: [38.6477209, -27.9883935], icon: '🍽️' },
+  { nom: 'Fajã do Ouvidor + Poça do Simão Dias', coords: [38.6786507, -28.0500872], icon: '🏊' },
+  { nom: 'Sete Fontes + Miradors + Ponta dos Rosais', coords: [38.7523542, -28.3088036], icon: '🌲' },
+  { nom: 'Miradors de Velas', coords: [38.6876737, -28.219042], icon: '🔭' },
+  { nom: 'Velas + Arco Natural + sopar ràpid', coords: [38.6794811, -28.2108337], icon: '🍽️' },
+];
+
+function initMapRutaD7() {
+  const el = document.getElementById('map-ruta-d7');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  leafletTiles(map);
+
+  const start = D7_LLOGUER_COTXES_SJO;
+  L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
+    .addTo(map).bindPopup('<b>▶️ Inici</b><br>Aeroport de São Jorge');
+
+  DIA7_WAYPOINTS.forEach((wp, i) => {
+    L.marker(wp.coords, { icon: numberIcon(i + 1, '#996633') , zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}</b>`);
+  });
+
+  L.marker(D7_RETORN_COTXES_SJO, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup('<b>🏁 Retorn cotxes</b><br>Port de Velas');
+
+  const all = [start, ...DIA7_WAYPOINTS.map(w => w.coords), D7_RETORN_COTXES_SJO];
+  map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
+}
+
+/* POI mapa dia 7 — tota l'illa de São Jorge (inclosos o no a l'itinerari) */
+let _poiMap7=null, _poiMarkerData7=[], _poiLeafCounts7={};
+let _poiActiveLeafs7=new Set(), _poiFavOnly7=false;
+
+function initMapPOID7() {
+  const el = document.getElementById('map-poi-d7');
+  if (!el || el._leaflet_id) return;
+  if (typeof POI_DATA === 'undefined') { el.innerHTML='<div style="padding:30px;text-align:center;color:#f87171">⚠️ Falta poi-data.js</div>'; return; }
+  _poiMap7 = L.map(el, { zoomControl: false, scrollWheelZoom: true });
+  L.control.zoom({ position: 'topright' }).addTo(_poiMap7);
+  leafletTiles(_poiMap7);
+  _poiMarkerData7=[]; _poiLeafCounts7={};
+
+  function isSJ(i){return i==='São Jorge'||i==='Sao Jorge'||i==='sjo';}
+  function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
+
+  function addM7(leaf,coords,nom,desc,url,fav){
+    const def=POI_LEAF_DEFS[leaf];
+    const col=def?def.color:'#94a3b8', emoji=def?def.emoji:'📌';
+    const popup=`<b style="color:${col}">${fav?'⭐ ':''}${nom}</b>`+(desc?`<br><small style="color:#6aab7a">${String(desc).slice(0,90)}</small>`:'')+( url?`<br><a href="${url}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Maps</a>`:'');
+    const m=L.marker(coords,{icon:L.divIcon({html:`<span style="font-size:1.1rem;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))">${emoji}</span>`,iconSize:[22,22],iconAnchor:[11,11],className:''})}).bindPopup(popup);
+    m.addTo(_poiMap7);
+    _poiMarkerData7.push({marker:m,leaf,parent:def?def.parent:'altres',fav:!!fav});
+    _poiLeafCounts7[leaf]=(_poiLeafCounts7[leaf]||0)+1;
+  }
+
+  const impObj=(typeof IMPRESCINDIBLES!=='undefined')?IMPRESCINDIBLES:{};
+  POI_DATA.forEach(p=>{
+    if(!isSJ(p.illa)) return;
+    if(typeof p.lat!=='number'||typeof p.lng!=='number') return;
+    const leaf=meLeaf(p.cat,p.sub);
+    if(!leaf) return;
+    let desc=p.zona||'';
+    if(leaf==='imprescindibles'){const d=impObj[p.id];if(d)desc=d.zona||desc;}
+    addM7(leaf,[p.lat,p.lng],p.nom,desc,mapsUrl(p.lat,p.lng),p.d===true);
+  });
+
+  _poiActiveLeafs7=new Set(Object.keys(_poiLeafCounts7));
+  if(_poiMarkerData7.length)_poiMap7.fitBounds(L.featureGroup(_poiMarkerData7.map(d=>d.marker)).getBounds(),{padding:[30,30]});
+  _renderPOIBar7(); _applyPOIFilters7();
+}
+
+function _renderPOIBar7(){
+  const bar=document.getElementById('poi-filter-bar-d7');
+  if(!bar)return;
+  const mc={};
+  Object.entries(_poiLeafCounts7).forEach(([leaf,n])=>{const p=POI_LEAF_DEFS[leaf]?.parent;if(p)mc[p]=(mc[p]||0)+n;});
+  let html='<div class="poi-filter-row poi-filter-row-main">';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{const n=mc[mainId]||0;if(!n)return;html+=`<button class="poi-filter-pill active" data-main-d7="${mainId}" onclick="poiToggleMainD7('${mainId}')">${def.emoji} ${def.label} <span style="opacity:0.55;font-size:0.68em">(${n})</span></button>`;});
+  html+='</div>';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{
+    if(!def.hasSubs)return;
+    const leafs=Object.entries(POI_LEAF_DEFS).filter(([leaf,ld])=>ld.parent===mainId&&_poiLeafCounts7[leaf]);
+    if(!leafs.length)return;
+    html+=`<div class="poi-filter-row poi-filter-row-sub" data-parent-d7="${mainId}">`;
+    leafs.forEach(([leaf,ld])=>{html+=`<button class="poi-filter-pill sub active" data-leaf-d7="${leaf}" data-main-d7="${mainId}" onclick="poiToggleLeafD7('${leaf}')">${ld.emoji} ${ld.label} <span style="opacity:0.55;font-size:0.68em">(${_poiLeafCounts7[leaf]})</span></button>`;});
+    html+='</div>';
+  });
+  html+=`<div class="poi-filter-row poi-filter-actions"><button class="poi-filter-pill poi-filter-all" onclick="poiShowAllD7()">☑ Mostrar tot</button><button class="poi-filter-pill poi-filter-clear" onclick="poiClearD7()">✕ Netejar filtres</button><button class="poi-filter-pill poi-filter-favs" id="poi-favs-btn-d7" onclick="poiToggleFavsD7()">⭐ Només favorits</button></div>`;
+  bar.innerHTML=html;
+}
+function _updMainD7(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts7[l]).map(([l])=>l);if(!leafs.length)return;const ac=leafs.filter(l=>_poiActiveLeafs7.has(l)).length;const btn=document.querySelector(`.poi-filter-pill[data-main-d7="${mainId}"]:not(.sub)`);if(!btn)return;btn.classList.remove('active','partial');if(ac===leafs.length)btn.classList.add('active');else if(ac>0)btn.classList.add('partial');}
+function _applyPOIFilters7(){_poiMarkerData7.forEach(d=>{const show=_poiActiveLeafs7.has(d.leaf)&&(!_poiFavOnly7||d.fav);if(show){if(!_poiMap7.hasLayer(d.marker))d.marker.addTo(_poiMap7);}else{if(_poiMap7.hasLayer(d.marker))d.marker.remove();}});}
+function poiToggleLeafD7(leaf){const btn=document.querySelector(`.poi-filter-pill.sub[data-leaf-d7="${leaf}"]`);if(!btn)return;if(_poiActiveLeafs7.has(leaf)){_poiActiveLeafs7.delete(leaf);btn.classList.remove('active');}else{_poiActiveLeafs7.add(leaf);btn.classList.add('active');}const parent=POI_LEAF_DEFS[leaf]?.parent;if(parent)_updMainD7(parent);_applyPOIFilters7();}
+function poiToggleMainD7(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts7[l]).map(([l])=>l);if(!leafs.length)return;const turnOn=leafs.filter(l=>_poiActiveLeafs7.has(l)).length<leafs.length;leafs.forEach(leaf=>{if(turnOn)_poiActiveLeafs7.add(leaf);else _poiActiveLeafs7.delete(leaf);const sb=document.querySelector(`.poi-filter-pill.sub[data-leaf-d7="${leaf}"]`);if(sb)sb.classList.toggle('active',turnOn);});_updMainD7(mainId);_applyPOIFilters7();}
+function poiShowAllD7(){_poiActiveLeafs7=new Set(Object.keys(_poiLeafCounts7));document.querySelectorAll('#poi-filter-bar-d7 .poi-filter-pill[data-leaf-d7],#poi-filter-bar-d7 .poi-filter-pill[data-main-d7]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters7();}
+function poiClearD7(){_poiActiveLeafs7=new Set();document.querySelectorAll('#poi-filter-bar-d7 .poi-filter-pill[data-leaf-d7],#poi-filter-bar-d7 .poi-filter-pill[data-main-d7]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters7();}
+function poiToggleFavsD7(){_poiFavOnly7=!_poiFavOnly7;const btn=document.getElementById('poi-favs-btn-d7');if(btn)btn.classList.toggle('active',_poiFavOnly7);_applyPOIFilters7();}
 
 
 /* ── INIT ────────────────────────────────────────────────── */

@@ -1367,6 +1367,14 @@
   border-color: #fca5a5;
   opacity: 0.85;
 }
+.rest-list-desc-simple {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: #92400e;
+  font-style: italic;
+  line-height: 1.4;
+  padding-top: 2px;
+}
 .rest-list-avoid {
   font-size: 0.74rem;
   font-style: italic;
