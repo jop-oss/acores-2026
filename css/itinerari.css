@@ -435,6 +435,24 @@
 }
 .itin-avis-shop .itin-avis-text strong { color: #ecdff5; }
 
+/* ── AVÍS BRANCA "SI HEM FET..." (turquesa) ──────────────── */
+.itin-avis-branch-a {
+  background: rgba(45,212,191,0.10);
+  border: 1px solid rgba(45,212,191,0.28);
+  border-left: 4px solid #2dd4bf;
+  color: #99f6e4;
+}
+.itin-avis-branch-a .itin-avis-text strong { color: #ccfbf1; display: block; margin-bottom: 4px; }
+
+/* ── AVÍS BRANCA "SI NO HEM FET..." (lila) ───────────────── */
+.itin-avis-branch-b {
+  background: rgba(196,148,240,0.10);
+  border: 1px solid rgba(196,148,240,0.28);
+  border-left: 4px solid #c494f0;
+  color: #e6d2fa;
+}
+.itin-avis-branch-b .itin-avis-text strong { color: #f1e3fb; display: block; margin-bottom: 4px; }
+
 /* ── AVÍS VESPRE (oliva/groc) — "Durant el dia" ──────────── */
 .itin-avis-evening {
   background: rgba(204,204,0,0.10);

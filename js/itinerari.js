@@ -537,6 +537,98 @@ const POI = {
     desc: 'Capital de São Jorge. Port, Arco Natural i vistes sobre l\'illa de Pico.',
     maps: 'https://maps.google.com/?q=38.679418,-28.2052953',
   },
+
+  /* ── DIA 11 · FAIAL ──────────────────────────────────────── */
+  'imp-fai-01': {
+    nom: 'Caldeira do Faial', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.5842527, -28.7167169],
+    desc: 'Enorme cràter volcànic de 400m de profunditat i 1,5 km de diàmetre, amb un jardí natural a l\'interior.',
+    maps: 'https://maps.google.com/?q=38.5842527,-28.7167169',
+  },
+  'imp-fai-02': {
+    nom: 'Capelinhos', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.602013, -28.8316941],
+    desc: 'Paisatge lunar creat per l\'erupció del 1957-58. El far mig sepultat és el símbol de l\'illa.',
+    maps: 'https://maps.google.com/?q=38.602013,-28.8316941',
+  },
+  'mir-fai-01': {
+    nom: 'Mirador de Ribeira das Cabras', emoji: '🔭', cat: 'miradors',
+    coords: [38.6082867, -28.7497358],
+    desc: 'Mirador amb àrea de pícnic sobre la costa nord de l\'illa.',
+    maps: 'https://maps.google.com/?q=38.6082867,-28.7497358',
+  },
+  'mir-fai-03': {
+    nom: 'Miradouro Cabouco', emoji: '🔭', cat: 'miradors',
+    coords: [38.583215, -28.7005465],
+    desc: 'Mirador molt a prop del de la Caldeira do Cabeço Gordo.',
+    maps: 'https://maps.google.com/?q=38.583215,-28.7005465',
+  },
+  'mir-fai-04': {
+    nom: 'Miradouro da Caldeira do Cabeço Gordo', emoji: '🔭', cat: 'miradors',
+    coords: [38.5806084, -28.7063981],
+    desc: 'Punt de partida del PRC04 FAI. Vistes sobre l\'interior del cràter i l\'oceà Atlàntic.',
+    maps: 'https://maps.google.com/?q=38.5806084,-28.7063981',
+  },
+  'mir-fai-06': {
+    nom: 'Miradouro da Ribeira Funda', emoji: '🔭', cat: 'miradors',
+    coords: [38.6167972, -28.7319118],
+    desc: 'Mirador a la part nord de l\'illa, al final d\'una carretera plena de corbes.',
+    maps: 'https://maps.google.com/?q=38.6167972,-28.7319118',
+  },
+  'mir-fai-11': {
+    nom: 'Miradouro Varaduro Comprido', emoji: '🔭', cat: 'miradors',
+    coords: [38.5659952, -28.7826297],
+    desc: 'Mirador proper a les piscines naturals de Varadouro.',
+    maps: 'https://maps.google.com/?q=38.5659952,-28.7826297',
+  },
+  'mir-fai-12': {
+    nom: 'Vista del Morro de Castelo Branco', emoji: '🔭', cat: 'miradors',
+    coords: [38.5253528, -28.7469161],
+    desc: 'Mirador sobre l\'antic con volcànic; accés a peu al morro totalment prohibit.',
+    maps: 'https://maps.google.com/?q=38.5253528,-28.7469161',
+  },
+  'nat-pai-fai-02': {
+    nom: 'Morro de Castelo Branco', emoji: '🌋', cat: 'naturalesa',
+    coords: [38.5253557, -28.7469163],
+    desc: 'Antic con volcànic aïllat sobre la costa. Zona protegida per la nidificació d\'aus marítimes; accés a peu prohibit.',
+    maps: 'https://maps.google.com/?q=38.5253557,-28.7469163',
+  },
+  'nat-pai-fai-04': {
+    nom: 'Porto do Comprido', emoji: '🌿', cat: 'naturalesa',
+    coords: [38.5927093, -28.8270589],
+    desc: 'Petit port natural a tocar del volcà de Capelinhos.',
+    maps: 'https://maps.google.com/?q=38.5927093,-28.8270589',
+  },
+  'nat-pai-fai-08': {
+    nom: 'Reserva Florestal Natural do Parque do Capelo', emoji: '🌲', cat: 'naturalesa',
+    coords: [38.5838149, -28.7836663],
+    desc: 'Zona de bosc i pícnic vora Capelinhos.',
+    maps: 'https://maps.google.com/?q=38.5838149,-28.7836663',
+  },
+  'ban-pis-fai-02': {
+    nom: 'Piscinas Naturais do Varadouro', emoji: '🏊', cat: 'bany',
+    coords: [38.5647511, -28.7743981],
+    desc: 'Piscines naturals de roca volcànica a Varadouro, ideals per relaxar-se.',
+    maps: 'https://maps.google.com/?q=38.5647511,-28.7743981',
+  },
+  'var-far-fai-02': {
+    nom: 'Farol da Ponta dos Capelinhos', emoji: '🔦', cat: 'varis',
+    coords: [38.5968236, -28.8261719],
+    desc: 'Far mig enterrat per la lava del 1957-58, símbol de Faial.',
+    maps: 'https://maps.google.com/?q=38.5968236,-28.8261719',
+  },
+  'snd-fai-01': {
+    nom: 'Cabeço do Canto PRC01 FAI', emoji: '🥾', cat: 'senderisme',
+    coords: [38.593521, -28.8015601],
+    desc: 'Ruta de 2,6 km i 2h a prop de Capelinhos.',
+    maps: 'https://maps.google.com/?q=38.593521,-28.8015601',
+  },
+  'snd-fai-02': {
+    nom: 'PRC04 FAI — Caldeira do Faial', emoji: '🥾', cat: 'senderisme',
+    coords: [38.5804246, -28.7063256],
+    desc: 'Volta completa al cràter, 6,8 km i 2h30 amb parades.',
+    maps: 'https://maps.google.com/?q=38.5804246,-28.7063256',
+  },
 };
 
 /* ── RESTAURANTS DATA ────────────────────────────────────── */
@@ -737,6 +829,46 @@ const RESTS_CALOURA = [
     ta: null,
     gm: 'https://www.google.com/maps/place/?q=place_id:ChIJH2xCYFcoXQsRg_S3FJPWy5Q',
     foto: null,
+  },
+];
+
+/* ── RESTAURANTS DIA 11 · FAIAL (dades reals de restaurants-data.js) ── */
+const RESTS_D11_DINAR_CALDEIRA = [
+  {
+    nom: 'Restaurante Rumar', preu: '€€', punt: 4.4, rec: false,
+    lat: 38.5994114, lon: -28.7612159,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g2578919-d12703035-Reviews-Rumar-Praia_do_Norte_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJqSNc3FMJOAsRgWQ32ahmQJU', foto: null,
+  },
+  {
+    nom: 'Snack-bar Pizzaria Fajã', preu: '€', punt: 4.6, rec: true,
+    lat: 38.6099528, lon: -28.7614611,
+    ta: null,
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJwykOzUsJOAsRkbc9VWmrb9c', foto: null,
+  },
+];
+
+const RESTS_D11_DINAR_CAPELO = [
+  {
+    nom: 'Restaurante Bela Vista', preu: '€€', punt: 4.1, rec: true,
+    lat: 38.5749654, lon: -28.7731184,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g2578921-d6874710-Reviews-Bela_Vista-Capelo_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJZz5brZ0OOAsRC9kXQ5REXj0', foto: null,
+  },
+];
+
+const RESTS_D11_SOPAR = [
+  {
+    nom: 'Restaurant Petisca Aki', preu: '€€', punt: 4.1, rec: true,
+    lat: 38.5237774, lon: -28.724577,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d12267900-Reviews-Petiska_Aki-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJ4X8Rd2F1OAsRrMl-zLD4OmY', foto: null,
+  },
+  {
+    nom: 'Campo dos Sabores', preu: '€€', punt: 4.4, rec: false,
+    lat: 38.5368083, lon: -28.7097988,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d13987934-Reviews-Campo_dos_Sabores-Horta_Faial_Island_Azores.html',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJG2nLtNEKOAsRhu1X48be00M', foto: null,
   },
 ];
 
@@ -1530,7 +1662,7 @@ function setupAccordions() {
 }
 
 /* ── DAY SWITCHING ───────────────────────────────────────── */
-let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false };
+let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 11: false, 12: false };
 
 function showDia(n) {
   document.querySelectorAll('.itin-dia').forEach(el => el.classList.remove('active'));
@@ -1545,6 +1677,25 @@ function showDia(n) {
   if (badge) badge.textContent = `Dia ${n} de 12`;
 
   // Lazy map init
+  if (n === 11 && !mapsInitDia[11]) {
+    mapsInitDia[11] = true;
+    setTimeout(() => {
+      initMapPRC04();
+      initMapPRC01();
+      initMapMareigD11();
+      initMapRutaD11();
+      initMapPOID11();
+      renderRestList('#rests-d11-caldeira', RESTS_D11_DINAR_CALDEIRA);
+      renderRestList('#rests-d11-capelo', RESTS_D11_DINAR_CAPELO);
+      renderRestList('#rests-d11-sopar', RESTS_D11_SOPAR);
+    }, 100);
+  }
+  if (n === 12 && !mapsInitDia[12]) {
+    mapsInitDia[12] = true;
+    setTimeout(() => {
+      initMapRetornCotxesFAI();
+    }, 100);
+  }
   if (n === 7 && !mapsInitDia[7]) {
     mapsInitDia[7] = true;
     setTimeout(() => {
@@ -2689,6 +2840,24 @@ function poiClearD6(){_poiActiveLeafs6=new Set();document.querySelectorAll('#poi
 function poiToggleFavsD6(){_poiFavOnly6=!_poiFavOnly6;const btn=document.getElementById('poi-favs-btn-d6');if(btn)btn.classList.toggle('active',_poiFavOnly6);_applyPOIFilters6();}
 
 
+const TRACK_D11_PRC04=[[38.58041,-28.70647],[38.58044,-28.70663],[38.58027,-28.70689],[38.58008,-28.70718],[38.57990,-28.70745],[38.57968,-28.70784],[38.57955,-28.70816],[38.57943,-28.70848],[38.57933,-28.70881],[38.57919,-28.70927],[38.57910,-28.70960],[38.57904,-28.70995],[38.57894,-28.71029],[38.57884,-28.71061],[38.57862,-28.71101],[38.57841,-28.71127],[38.57820,-28.71149],[38.57794,-28.71161],[38.57758,-28.71168],[38.57731,-28.71174],[38.57699,-28.71178],[38.57672,-28.71188],[38.57657,-28.71218],[38.57643,-28.71261],[38.57640,-28.71297],[38.57632,-28.71331],[38.57614,-28.71356],[38.57597,-28.71397],[38.57596,-28.71431],[38.57589,-28.71466],[38.57578,-28.71501],[38.57574,-28.71537],[38.57584,-28.71583],[38.57596,-28.71617],[38.57610,-28.71649],[38.57625,-28.71684],[38.57641,-28.71728],[38.57650,-28.71763],[38.57659,-28.71797],[38.57668,-28.71831],[38.57682,-28.71877],[38.57690,-28.71912],[38.57702,-28.71945],[38.57718,-28.71978],[38.57735,-28.72007],[38.57755,-28.72049],[38.57770,-28.72079],[38.57786,-28.72109],[38.57803,-28.72138],[38.57827,-28.72180],[38.57843,-28.72212],[38.57859,-28.72243],[38.57877,-28.72274],[38.57893,-28.72306],[38.57917,-28.72344],[38.57938,-28.72371],[38.57957,-28.72399],[38.57975,-28.72428],[38.58000,-28.72462],[38.58024,-28.72485],[38.58045,-28.72509],[38.58067,-28.72533],[38.58092,-28.72553],[38.58128,-28.72571],[38.58154,-28.72583],[38.58180,-28.72597],[38.58209,-28.72600],[38.58247,-28.72605],[38.58276,-28.72604],[38.58306,-28.72606],[38.58334,-28.72611],[38.58362,-28.72610],[38.58399,-28.72599],[38.58427,-28.72590],[38.58455,-28.72582],[38.58477,-28.72562],[38.58505,-28.72535],[38.58531,-28.72522],[38.58557,-28.72535],[38.58584,-28.72547],[38.58621,-28.72552],[38.58650,-28.72546],[38.58676,-28.72555],[38.58701,-28.72572],[38.58728,-28.72583],[38.58767,-28.72578],[38.58795,-28.72571],[38.58823,-28.72562],[38.58851,-28.72554],[38.58889,-28.72557],[38.58918,-28.72551],[38.58946,-28.72545],[38.58973,-28.72530],[38.58999,-28.72517],[38.59030,-28.72490],[38.59053,-28.72469],[38.59071,-28.72443],[38.59090,-28.72416],[38.59121,-28.72389],[38.59141,-28.72364],[38.59164,-28.72342],[38.59190,-28.72325],[38.59209,-28.72299],[38.59235,-28.72267],[38.59254,-28.72241],[38.59275,-28.72215],[38.59296,-28.72189],[38.59320,-28.72153],[38.59330,-28.72119],[38.59348,-28.72093],[38.59365,-28.72066],[38.59383,-28.72038],[38.59400,-28.71997],[38.59417,-28.71971],[38.59433,-28.71942],[38.59440,-28.71909],[38.59454,-28.71869],[38.59473,-28.71842],[38.59482,-28.71808],[38.59485,-28.71771],[38.59487,-28.71722],[38.59490,-28.71687],[38.59489,-28.71651],[38.59490,-28.71614],[38.59487,-28.71578],[38.59492,-28.71530],[38.59497,-28.71495],[38.59495,-28.71459],[38.59488,-28.71424],[38.59478,-28.71377],[38.59471,-28.71341],[38.59461,-28.71308],[38.59454,-28.71273],[38.59447,-28.71238],[38.59416,-28.71179],[38.59400,-28.71147],[38.59399,-28.71110],[38.59390,-28.71076],[38.59373,-28.71035],[38.59361,-28.71001],[38.59344,-28.70972],[38.59328,-28.70942],[38.59315,-28.70909],[38.59292,-28.70871],[38.59270,-28.70850],[38.59254,-28.70819],[38.59240,-28.70788],[38.59222,-28.70746],[38.59204,-28.70718],[38.59182,-28.70696],[38.59166,-28.70668],[38.59143,-28.70646],[38.59113,-28.70615],[38.59090,-28.70595],[38.59064,-28.70578],[38.59047,-28.70550],[38.59016,-28.70506],[38.58996,-28.70478],[38.58975,-28.70456],[38.58955,-28.70433],[38.58927,-28.70399],[38.58903,-28.70382],[38.58883,-28.70356],[38.58862,-28.70329],[38.58842,-28.70306],[38.58825,-28.70264],[38.58823,-28.70280],[38.58810,-28.70247],[38.58793,-28.70218],[38.58766,-28.70183],[38.58744,-28.70162],[38.58722,-28.70137],[38.58699,-28.70117],[38.58677,-28.70093],[38.58645,-28.70070],[38.58617,-28.70078],[38.58594,-28.70097],[38.58576,-28.70124],[38.58546,-28.70152],[38.58525,-28.70176],[38.58501,-28.70191],[38.58480,-28.70214],[38.58471,-28.70247],[38.58438,-28.70271],[38.58415,-28.70292],[38.58392,-28.70314],[38.58368,-28.70334],[38.58337,-28.70364],[38.58315,-28.70387],[38.58289,-28.70405],[38.58265,-28.70424],[38.58241,-28.70441],[38.58206,-28.70459],[38.58180,-28.70471],[38.58156,-28.70491],[38.58137,-28.70517],[38.58112,-28.70555],[38.58096,-28.70583],[38.58078,-28.70611],[38.58060,-28.70641],[38.58041,-28.70666]];
+const PROFILE_D11_PRC04=[[0.000,893],[0.042,890],[0.084,891],[0.125,895],[0.179,893],[0.221,895],[0.261,900],[0.314,911],[0.355,912],[0.398,915],[0.449,924],[0.493,933],[0.534,949],[0.575,967],[0.626,990],[0.673,1008],[0.714,1024],[0.766,1030],[0.807,1031],[0.850,1032],[0.902,1031],[0.943,1024],[0.987,1021],[1.029,1018],[1.082,1016],[1.125,1009],[1.169,1004],[1.223,1003],[1.266,1007],[1.307,1013],[1.361,1014],[1.403,1014],[1.446,1013],[1.489,1015],[1.541,1014],[1.585,1009],[1.627,1006],[1.682,1006],[1.727,998],[1.771,991],[1.825,990],[1.868,988],[1.912,987],[1.954,988],[2.007,988],[2.049,985],[2.093,984],[2.147,986],[2.189,989],[2.231,990],[2.285,992],[2.327,993],[2.371,994],[2.413,995],[2.466,996],[2.509,995],[2.551,990],[2.602,975],[2.644,970],[2.686,972],[2.738,963],[2.781,952],[2.822,946],[2.865,940],[2.920,927],[2.962,917],[3.005,910],[3.058,908],[3.102,907],[3.145,910],[3.198,915],[3.240,908],[3.281,908],[3.324,906],[3.376,897],[3.418,900],[3.461,889],[3.514,880],[3.556,878],[3.599,863],[3.653,863],[3.694,865],[3.735,865],[3.776,859],[3.827,864],[3.867,867],[3.909,863],[3.961,863],[4.004,869],[4.045,869],[4.100,866],[4.141,864],[4.184,857],[4.226,848],[4.279,853],[4.320,852],[4.363,846],[4.417,844],[4.459,845],[4.501,849],[4.568,861],[4.617,863],[4.660,862],[4.701,858],[4.753,858],[4.796,860],[4.838,861],[4.891,855],[4.932,857],[4.975,861],[5.027,854],[5.069,852],[5.110,860],[5.153,864],[5.206,867],[5.248,877],[5.290,872],[5.353,884],[5.396,887],[5.436,887],[5.489,898],[5.531,896],[5.574,900],[5.616,900],[5.669,902],[5.711,900],[5.753,896],[5.806,901],[5.848,896],[5.891,889],[5.944,890],[5.987,890],[6.028,888],[6.070,884],[6.122,895],[6.163,908],[6.205,907],[6.257,908],[6.299,908],[6.342,902],[6.396,899],[6.438,899],[6.481,905],[6.523,909],[6.575,910],[6.617,916],[6.659,912],[6.712,903],[6.755,903],[6.797,896],[6.839,892]];
+// prc04fai: dist=6.84km gain=402m loss=403m npts_orig=645
+const TRACK_D11_PRC01=[[38.59348,-28.80156],[38.59368,-28.80163],[38.59372,-28.80166],[38.59378,-28.80170],[38.59382,-28.80171],[38.59391,-28.80184],[38.59394,-28.80193],[38.59395,-28.80200],[38.59395,-28.80207],[38.59398,-28.80220],[38.59401,-28.80226],[38.59409,-28.80241],[38.59415,-28.80253],[38.59443,-28.80259],[38.59475,-28.80262],[38.59498,-28.80276],[38.59511,-28.80297],[38.59527,-28.80348],[38.59529,-28.80373],[38.59527,-28.80400],[38.59521,-28.80423],[38.59517,-28.80437],[38.59508,-28.80464],[38.59494,-28.80483],[38.59488,-28.80489],[38.59487,-28.80498],[38.59485,-28.80510],[38.59488,-28.80522],[38.59491,-28.80530],[38.59495,-28.80542],[38.59499,-28.80556],[38.59511,-28.80560],[38.59515,-28.80570],[38.59521,-28.80572],[38.59530,-28.80572],[38.59536,-28.80577],[38.59547,-28.80590],[38.59556,-28.80602],[38.59575,-28.80616],[38.59592,-28.80632],[38.59598,-28.80639],[38.59607,-28.80649],[38.59614,-28.80657],[38.59619,-28.80663],[38.59622,-28.80673],[38.59632,-28.80695],[38.59644,-28.80707],[38.59649,-28.80707],[38.59654,-28.80708],[38.59664,-28.80722],[38.59673,-28.80734],[38.59680,-28.80746],[38.59686,-28.80754],[38.59692,-28.80764],[38.59699,-28.80779],[38.59702,-28.80784],[38.59705,-28.80796],[38.59705,-28.80800],[38.59709,-28.80814],[38.59713,-28.80819],[38.59724,-28.80825],[38.59732,-28.80829],[38.59737,-28.80832],[38.59745,-28.80838],[38.59749,-28.80843],[38.59754,-28.80855],[38.59748,-28.80868],[38.59746,-28.80883],[38.59746,-28.80896],[38.59748,-28.80902],[38.59750,-28.80916],[38.59752,-28.80921],[38.59756,-28.80931],[38.59756,-28.80940],[38.59756,-28.80949],[38.59758,-28.80952],[38.59763,-28.80953],[38.59765,-28.80958],[38.59765,-28.80963],[38.59762,-28.80971],[38.59759,-28.80982],[38.59759,-28.80984],[38.59764,-28.80992],[38.59772,-28.80996],[38.59775,-28.81003],[38.59777,-28.81007],[38.59764,-28.81019],[38.59756,-28.81029],[38.59748,-28.81049],[38.59742,-28.81068],[38.59741,-28.81092],[38.59742,-28.81101],[38.59743,-28.81112],[38.59745,-28.81119],[38.59746,-28.81123],[38.59758,-28.81133],[38.59776,-28.81154],[38.59796,-28.81162],[38.59804,-28.81163],[38.59838,-28.81153],[38.59851,-28.81150],[38.59854,-28.81138],[38.59863,-28.81112],[38.59872,-28.81094],[38.59872,-28.81063],[38.59859,-28.81027],[38.59846,-28.81017],[38.59835,-28.81011],[38.59812,-28.80998],[38.59803,-28.80996],[38.59796,-28.81001],[38.59777,-28.81008],[38.59775,-28.81002],[38.59771,-28.80994],[38.59764,-28.80992],[38.59759,-28.80984],[38.59759,-28.80982],[38.59762,-28.80970],[38.59765,-28.80962],[38.59765,-28.80957],[38.59759,-28.80951],[38.59757,-28.80952],[38.59756,-28.80947],[38.59756,-28.80936],[38.59755,-28.80928],[38.59751,-28.80918],[38.59750,-28.80914],[38.59747,-28.80900],[38.59746,-28.80891],[38.59747,-28.80876],[38.59750,-28.80862],[38.59754,-28.80854],[38.59749,-28.80840],[38.59739,-28.80834],[38.59733,-28.80830],[38.59726,-28.80826],[38.59713,-28.80819],[38.59710,-28.80815],[38.59706,-28.80803],[38.59705,-28.80796],[38.59703,-28.80787],[38.59700,-28.80781],[38.59695,-28.80770],[38.59685,-28.80753],[38.59680,-28.80746],[38.59670,-28.80730],[38.59664,-28.80722],[38.59654,-28.80708],[38.59649,-28.80707],[38.59644,-28.80707],[38.59632,-28.80695],[38.59622,-28.80673],[38.59619,-28.80663],[38.59614,-28.80657],[38.59607,-28.80649],[38.59598,-28.80639],[38.59592,-28.80632],[38.59575,-28.80616],[38.59556,-28.80602],[38.59546,-28.80589],[38.59536,-28.80577],[38.59528,-28.80570],[38.59521,-28.80572],[38.59515,-28.80570],[38.59511,-28.80560],[38.59499,-28.80556],[38.59495,-28.80542],[38.59491,-28.80530],[38.59486,-28.80520],[38.59485,-28.80510],[38.59488,-28.80494],[38.59488,-28.80489],[38.59474,-28.80489],[38.59462,-28.80482],[38.59450,-28.80467],[38.59441,-28.80461],[38.59430,-28.80454],[38.59419,-28.80446],[38.59408,-28.80434],[38.59405,-28.80429],[38.59400,-28.80420],[38.59394,-28.80404],[38.59394,-28.80390],[38.59399,-28.80385],[38.59398,-28.80386],[38.59394,-28.80389],[38.59391,-28.80371],[38.59393,-28.80323],[38.59414,-28.80255],[38.59410,-28.80244],[38.59401,-28.80227],[38.59399,-28.80222],[38.59395,-28.80208],[38.59395,-28.80201],[38.59394,-28.80193],[38.59391,-28.80184],[38.59382,-28.80171],[38.59378,-28.80170],[38.59372,-28.80166],[38.59368,-28.80163],[38.59348,-28.80156]];
+const PROFILE_D11_PRC01=[[0.000,402],[0.025,396],[0.035,394],[0.040,393],[0.058,389],[0.068,387],[0.077,387],[0.091,385],[0.108,383],[0.123,382],[0.176,364],[0.214,351],[0.245,340],[0.302,324],[0.326,318],[0.360,313],[0.378,310],[0.413,309],[0.431,308],[0.439,307],[0.456,303],[0.468,300],[0.484,296],[0.502,292],[0.517,287],[0.529,284],[0.540,280],[0.560,273],[0.580,267],[0.615,260],[0.632,258],[0.647,256],[0.662,255],[0.675,255],[0.700,256],[0.720,256],[0.726,256],[0.746,258],[0.765,259],[0.779,261],[0.799,263],[0.809,264],[0.822,265],[0.830,266],[0.843,268],[0.858,270],[0.871,272],[0.879,274],[0.892,277],[0.909,281],[0.925,284],[0.943,289],[0.956,293],[0.963,295],[0.975,299],[0.987,303],[0.994,305],[1.001,306],[1.008,308],[1.018,311],[1.029,314],[1.035,316],[1.047,318],[1.058,320],[1.063,321],[1.089,323],[1.113,326],[1.138,328],[1.159,329],[1.170,329],[1.178,329],[1.186,330],[1.225,328],[1.250,328],[1.277,328],[1.311,323],[1.327,321],[1.360,319],[1.393,317],[1.432,316],[1.455,320],[1.487,319],[1.502,319],[1.526,320],[1.537,320],[1.547,317],[1.561,315],[1.564,314],[1.578,310],[1.588,307],[1.598,305],[1.603,304],[1.614,300],[1.622,298],[1.631,295],[1.647,291],[1.656,288],[1.672,284],[1.690,280],[1.705,276],[1.721,273],[1.732,271],[1.750,268],[1.757,267],[1.770,266],[1.781,264],[1.790,263],[1.813,261],[1.825,260],[1.845,258],[1.866,257],[1.874,256],[1.891,256],[1.912,255],[1.931,255],[1.943,256],[1.957,257],[1.972,259],[2.009,266],[2.029,272],[2.051,279],[2.066,284],[2.075,286],[2.088,290],[2.109,296],[2.122,299],[2.136,302],[2.150,305],[2.161,307],[2.182,310],[2.201,314],[2.225,319],[2.241,322],[2.257,326],[2.274,328],[2.287,330],[2.308,337],[2.323,341],[2.335,341],[2.341,340],[2.377,353],[2.464,381],[2.478,383],[2.497,385],[2.511,387],[2.518,387],[2.531,389],[2.548,393],[2.553,394],[2.564,396],[2.588,402]];
+// prc01fai: dist=2.59km gain=234m loss=234m npts_orig=1112
+const TRACK_D11_MAREIG=[[38.58321,-28.70052],[38.58322,-28.70054],[38.58326,-28.70062],[38.58566,-28.69885],[38.58589,-28.69871],[38.58728,-28.69807],[38.58753,-28.69796],[38.58846,-28.69795],[38.58855,-28.69791],[38.58857,-28.69778],[38.58772,-28.69653],[38.58768,-28.69643],[38.58768,-28.69626],[38.58774,-28.69619],[38.58790,-28.69619],[38.58944,-28.69674],[38.58955,-28.69672],[38.58961,-28.69653],[38.58940,-28.69608],[38.58904,-28.69528],[38.58908,-28.69521],[38.58927,-28.69518],[38.59063,-28.69550],[38.59074,-28.69545],[38.59078,-28.69528],[38.59043,-28.69445],[38.59040,-28.69427],[38.59046,-28.69416],[38.59120,-28.69439],[38.59158,-28.69453],[38.59176,-28.69453],[38.59179,-28.69436],[38.59138,-28.69354],[38.59108,-28.69288],[38.59112,-28.69280],[38.59123,-28.69277],[38.59176,-28.69318],[38.59246,-28.69376],[38.59262,-28.69375],[38.59265,-28.69368],[38.59262,-28.69352],[38.59215,-28.69258],[38.59181,-28.69184],[38.59183,-28.69176],[38.59189,-28.69169],[38.59254,-28.69187],[38.59314,-28.69207],[38.59324,-28.69201],[38.59327,-28.69187],[38.59270,-28.69058],[38.59270,-28.69042],[38.59278,-28.69033],[38.59319,-28.69038],[38.59429,-28.69064],[38.59467,-28.69071],[38.59475,-28.69064],[38.59475,-28.69044],[38.59411,-28.68893],[38.59370,-28.68794],[38.59377,-28.68769],[38.59385,-28.68766],[38.59520,-28.68804],[38.59530,-28.68800],[38.59539,-28.68765],[38.59549,-28.68706],[38.59609,-28.68590],[38.59633,-28.68537],[38.59710,-28.68248],[38.59742,-28.68142],[38.59772,-28.68089],[38.59843,-28.68112],[38.59860,-28.68116],[38.59879,-28.68111],[38.59909,-28.68061],[38.59954,-28.67977],[38.59978,-28.67965],[38.59995,-28.67965],[38.60020,-28.67979],[38.60083,-28.68085],[38.60204,-28.68297],[38.60223,-28.68306],[38.60247,-28.68301],[38.60325,-28.68282],[38.60339,-28.68287],[38.60425,-28.68407],[38.60539,-28.68495],[38.60587,-28.68533],[38.60600,-28.68555],[38.60625,-28.68639],[38.60640,-28.68663],[38.60713,-28.68723],[38.60816,-28.68769],[38.60833,-28.68778],[38.60841,-28.68788],[38.60923,-28.68923],[38.60988,-28.68984],[38.61016,-28.69016],[38.61021,-28.69041],[38.61030,-28.69106],[38.61037,-28.69118],[38.61087,-28.69158],[38.61096,-28.69171],[38.61111,-28.69215],[38.61141,-28.69309],[38.61153,-28.69324],[38.61199,-28.69376],[38.61205,-28.69455],[38.61240,-28.69540],[38.61260,-28.69583],[38.61262,-28.69600],[38.61243,-28.69710],[38.61242,-28.69728],[38.61251,-28.69760],[38.61279,-28.69773],[38.61317,-28.69827],[38.61322,-28.69839],[38.61323,-28.69864],[38.61295,-28.69967],[38.61266,-28.70012],[38.61262,-28.70030],[38.61270,-28.70048],[38.61290,-28.70057],[38.61331,-28.70039],[38.61363,-28.70029],[38.61394,-28.70045],[38.61419,-28.70080],[38.61465,-28.70187],[38.61470,-28.70216],[38.61458,-28.70267],[38.61454,-28.70302],[38.61460,-28.70321],[38.61526,-28.70442],[38.61543,-28.70525],[38.61556,-28.70553],[38.61587,-28.70580],[38.61637,-28.70658],[38.61686,-28.70731],[38.61735,-28.70811],[38.61793,-28.70900],[38.61839,-28.70946],[38.61888,-28.70986],[38.61912,-28.70990],[38.62006,-28.70961],[38.62024,-28.70967],[38.62043,-28.70985],[38.62111,-28.71064],[38.62121,-28.71077],[38.62133,-28.71133],[38.62140,-28.71148],[38.62160,-28.71161],[38.62280,-28.71181],[38.62344,-28.71192],[38.62361,-28.71203],[38.62366,-28.71213],[38.62367,-28.71235],[38.62359,-28.71251],[38.62318,-28.71271],[38.62301,-28.71282],[38.62294,-28.71293],[38.62287,-28.71327],[38.62289,-28.71340],[38.62307,-28.71369],[38.62349,-28.71416],[38.62365,-28.71595],[38.62372,-28.71694],[38.62378,-28.71766],[38.62409,-28.71869],[38.62417,-28.71902],[38.62423,-28.72008],[38.62429,-28.72087],[38.62418,-28.72194],[38.62414,-28.72229],[38.62371,-28.72286],[38.62318,-28.72351],[38.62302,-28.72374],[38.62259,-28.72464],[38.62227,-28.72516],[38.62211,-28.72581],[38.62190,-28.72614],[38.62154,-28.72661],[38.62124,-28.72688],[38.62089,-28.72729],[38.62057,-28.72765],[38.62018,-28.72790],[38.61970,-28.72828],[38.61928,-28.72838],[38.61897,-28.72834],[38.61847,-28.72839],[38.61809,-28.72864],[38.61750,-28.72896],[38.61740,-28.72899],[38.61702,-28.72929],[38.61693,-28.72960],[38.61688,-28.73009],[38.61699,-28.73042],[38.61698,-28.73053],[38.61689,-28.73057],[38.61613,-28.73045],[38.61588,-28.73050],[38.61649,-28.73138],[38.61684,-28.73187]];
+// Faial-mareig: dist=11.14km gain=112m loss=673m npts_orig=486
+
+/* Revolts pronunciats detectats a la ruta de corbes (Faial-mareig.gpx) */
+const D11_MAREIG_BENDS = [
+  [38.591146, -28.692785],
+  [38.599779, -28.679650],
+  [38.612704, -28.700480],
+  [38.623675, -28.712209],
+  [38.615876, -28.730499],
+];
+
 /* ══════════════════════════════════════════════════════════
    DIA 7 · SÃO JORGE → PICO
    ══════════════════════════════════════════════════════════ */
@@ -3036,6 +3205,199 @@ function poiToggleMainD7(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filte
 function poiShowAllD7(){_poiActiveLeafs7=new Set(Object.keys(_poiLeafCounts7));document.querySelectorAll('#poi-filter-bar-d7 .poi-filter-pill[data-leaf-d7],#poi-filter-bar-d7 .poi-filter-pill[data-main-d7]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters7();}
 function poiClearD7(){_poiActiveLeafs7=new Set();document.querySelectorAll('#poi-filter-bar-d7 .poi-filter-pill[data-leaf-d7],#poi-filter-bar-d7 .poi-filter-pill[data-main-d7]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters7();}
 function poiToggleFavsD7(){_poiFavOnly7=!_poiFavOnly7;const btn=document.getElementById('poi-favs-btn-d7');if(btn)btn.classList.toggle('active',_poiFavOnly7);_applyPOIFilters7();}
+
+
+/* ══════════════════════════════════════════════════════════
+   DIA 11 · FAIAL
+   ══════════════════════════════════════════════════════════ */
+
+function initMapPRC04() {
+  initMapSenderisme('map-prc04', [
+    { track: TRACK_D11_PRC04, color: '#6abf70', label: 'PRC04 FAI · Caldeira do Faial (6,8 km)' },
+  ]);
+  const elevEl = document.getElementById('elev-prc04');
+  if (elevEl) elevEl.innerHTML = buildElevSvgStatic(PROFILE_D11_PRC04, '#6abf70');
+}
+
+function initMapPRC01() {
+  initMapSenderisme('map-prc01', [
+    { track: TRACK_D11_PRC01, color: '#f59e0b', label: 'PRC01 FAI · Cabeço do Canto (2,6 km)' },
+  ]);
+  const elevEl = document.getElementById('elev-prc01');
+  if (elevEl) elevEl.innerHTML = buildElevSvgStatic(PROFILE_D11_PRC01, '#f59e0b');
+}
+
+/* Mapa de la ruta de corbes (a l'estil del dia 5): línia + revolts + pluja d'emojis */
+function initMapMareigD11() {
+  const el = document.getElementById('map-d11-mareig');
+  if (!el || el._leaflet_id) return;
+
+  const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  leafletTiles(map);
+
+  L.polyline(TRACK_D11_MAREIG, { color: '#f59e0b', weight: 5, opacity: 0.85 })
+    .addTo(map).bindTooltip('Ruta de corbes cap al nord — 11 km', { sticky: true });
+
+  const EXTREMS = [
+    { nom: 'Miradouro Cabouco', coords: [38.583215, -28.7005465] },
+    { nom: 'Miradouro da Ribeira Funda', coords: [38.6167972, -28.7319118] },
+  ];
+  EXTREMS.forEach(m => {
+    L.marker(m.coords, {
+      icon: L.divIcon({ html: `<div style="background:#94a3b8;border:2px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [18,18], iconAnchor: [9,9], className: '' })
+    }).addTo(map).bindPopup(`<b>${m.nom}</b>`);
+  });
+
+  const nauseaQuips = [
+    'Corba #1… ja hi som acostumats.',
+    'La carretera no s\'acaba mai.',
+    'Algú porta caramels de menta?',
+    'Falta poc… segur.',
+    'Última corba, promès!',
+  ];
+  D11_MAREIG_BENDS.forEach((coords, i) => {
+    const icon = L.divIcon({
+      html: `<div class="nausea-mkr" style="font-size:1.5rem;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.7));animation:nauseaSway ${0.4+i*0.1}s ease-in-out infinite alternate">😵‍💫</div>`,
+      iconSize: [28, 28], iconAnchor: [14, 14], className: ''
+    });
+    L.marker(coords, { icon, zIndexOffset: 50 }).addTo(map)
+      .bindPopup(`<b>😵‍💫 Revolt perillós!</b><br><small style="color:#fbbf24">${nauseaQuips[i]}</small>`);
+  });
+
+  map.fitBounds(L.latLngBounds(TRACK_D11_MAREIG), { padding: [30, 30] });
+  setTimeout(() => map.invalidateSize(), 50);
+  _startNauseaRain(el);
+}
+
+/* Waypoints de l'itinerari proposat de Faial */
+const DIA11_WAYPOINTS = [
+  { nom: 'Miradouro da Caldeira do Cabeço Gordo', coords: [38.5806084, -28.7063981], icon: '🔭', star: true },
+  { nom: 'Miradouro Cabouco', coords: [38.583215, -28.7005465], icon: '🔭' },
+  { nom: 'Miradouro da Ribeira Funda', coords: [38.6167972, -28.7319118], icon: '🔭' },
+  { nom: 'Mirador de Ribeira das Cabras', coords: [38.6082867, -28.7497358], icon: '🔭', star: true },
+  { nom: 'Volcà de Capelinhos', coords: [38.602013, -28.8316941], icon: '🌋', star: true },
+  { nom: 'Miradouro Varaduro Comprido + Piscines', coords: [38.5659952, -28.7826297], icon: '🏊' },
+  { nom: 'Morro do Castelo Branco', coords: [38.5253528, -28.7469161], icon: '🔭' },
+];
+
+function initMapRutaD11() {
+  const el = document.getElementById('map-ruta-d11');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  leafletTiles(map);
+
+  const start = D11_ALLOTJAMENT;
+  L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
+    .addTo(map).bindPopup('<b>▶️ Inici i final</b><br>Allotjament');
+
+  DIA11_WAYPOINTS.forEach((wp, i) => {
+    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
+  });
+
+  L.marker(start, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup('<b>🏁 Tornada a l\'allotjament</b>');
+
+  const all = [start, ...DIA11_WAYPOINTS.map(w => w.coords)];
+  map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
+}
+
+/* Coordenades aproximades de l'allotjament a Faial (Refúgio) per tancar la ruta del dia 11 */
+const D11_ALLOTJAMENT = [38.5249234, -28.68057];
+
+/* POI mapa dia 11 — tota l'illa de Faial */
+let _poiMap11=null, _poiMarkerData11=[], _poiLeafCounts11={};
+let _poiActiveLeafs11=new Set(), _poiFavOnly11=false;
+
+function initMapPOID11() {
+  const el = document.getElementById('map-poi-d11');
+  if (!el || el._leaflet_id) return;
+  if (typeof POI_DATA === 'undefined') { el.innerHTML='<div style="padding:30px;text-align:center;color:#f87171">⚠️ Falta poi-data.js</div>'; return; }
+  _poiMap11 = L.map(el, { zoomControl: false, scrollWheelZoom: true });
+  L.control.zoom({ position: 'topright' }).addTo(_poiMap11);
+  leafletTiles(_poiMap11);
+  _poiMarkerData11=[]; _poiLeafCounts11={};
+
+  function isFAI(i){return i==='Faial'||i==='fai';}
+  function isD11Zone(lat, lng){
+    // Només la part occidental de l'illa (Cedros/Capelo/Castelo Branco), excloent Horta/Ribeirinha/Salão
+    return lng < -28.66;
+  }
+  function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
+
+  function addM11(leaf,coords,nom,desc,url,fav){
+    const def=POI_LEAF_DEFS[leaf];
+    const col=def?def.color:'#94a3b8', emoji=def?def.emoji:'📌';
+    const popup=`<b style="color:${col}">${fav?'⭐ ':''}${nom}</b>`+(desc?`<br><small style="color:#6aab7a">${String(desc).slice(0,90)}</small>`:'')+( url?`<br><a href="${url}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Maps</a>`:'');
+    const m=L.marker(coords,{icon:L.divIcon({html:`<span style="font-size:1.1rem;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))">${emoji}</span>`,iconSize:[22,22],iconAnchor:[11,11],className:''})}).bindPopup(popup);
+    m.addTo(_poiMap11);
+    _poiMarkerData11.push({marker:m,leaf,parent:def?def.parent:'altres',fav:!!fav});
+    _poiLeafCounts11[leaf]=(_poiLeafCounts11[leaf]||0)+1;
+  }
+
+  const impObj=(typeof IMPRESCINDIBLES!=='undefined')?IMPRESCINDIBLES:{};
+  POI_DATA.forEach(p=>{
+    if(!isFAI(p.illa)) return;
+    if(typeof p.lat!=='number'||typeof p.lng!=='number') return;
+    if(!isD11Zone(p.lat,p.lng)) return;
+    const leaf=meLeaf(p.cat,p.sub);
+    if(!leaf) return;
+    let desc=p.zona||'';
+    if(leaf==='imprescindibles'){const d=impObj[p.id];if(d)desc=d.zona||desc;}
+    addM11(leaf,[p.lat,p.lng],p.nom,desc,mapsUrl(p.lat,p.lng),p.d===true);
+  });
+
+  _poiActiveLeafs11=new Set(Object.keys(_poiLeafCounts11));
+  if(_poiMarkerData11.length)_poiMap11.fitBounds(L.featureGroup(_poiMarkerData11.map(d=>d.marker)).getBounds(),{padding:[30,30]});
+  _renderPOIBar11(); _applyPOIFilters11();
+}
+
+function _renderPOIBar11(){
+  const bar=document.getElementById('poi-filter-bar-d11');
+  if(!bar)return;
+  const mc={};
+  Object.entries(_poiLeafCounts11).forEach(([leaf,n])=>{const p=POI_LEAF_DEFS[leaf]?.parent;if(p)mc[p]=(mc[p]||0)+n;});
+  let html='<div class="poi-filter-row poi-filter-row-main">';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{const n=mc[mainId]||0;if(!n)return;html+=`<button class="poi-filter-pill active" data-main-d11="${mainId}" onclick="poiToggleMainD11('${mainId}')">${def.emoji} ${def.label} <span style="opacity:0.55;font-size:0.68em">(${n})</span></button>`;});
+  html+='</div>';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{
+    if(!def.hasSubs)return;
+    const leafs=Object.entries(POI_LEAF_DEFS).filter(([leaf,ld])=>ld.parent===mainId&&_poiLeafCounts11[leaf]);
+    if(!leafs.length)return;
+    html+=`<div class="poi-filter-row poi-filter-row-sub" data-parent-d11="${mainId}">`;
+    leafs.forEach(([leaf,ld])=>{html+=`<button class="poi-filter-pill sub active" data-leaf-d11="${leaf}" data-main-d11="${mainId}" onclick="poiToggleLeafD11('${leaf}')">${ld.emoji} ${ld.label} <span style="opacity:0.55;font-size:0.68em">(${_poiLeafCounts11[leaf]})</span></button>`;});
+    html+='</div>';
+  });
+  html+=`<div class="poi-filter-row poi-filter-actions"><button class="poi-filter-pill poi-filter-all" onclick="poiShowAllD11()">☑ Mostrar tot</button><button class="poi-filter-pill poi-filter-clear" onclick="poiClearD11()">✕ Netejar filtres</button><button class="poi-filter-pill poi-filter-favs" id="poi-favs-btn-d11" onclick="poiToggleFavsD11()">⭐ Només favorits</button></div>`;
+  bar.innerHTML=html;
+}
+function _updMainD11(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts11[l]).map(([l])=>l);if(!leafs.length)return;const ac=leafs.filter(l=>_poiActiveLeafs11.has(l)).length;const btn=document.querySelector(`.poi-filter-pill[data-main-d11="${mainId}"]:not(.sub)`);if(!btn)return;btn.classList.remove('active','partial');if(ac===leafs.length)btn.classList.add('active');else if(ac>0)btn.classList.add('partial');}
+function _applyPOIFilters11(){_poiMarkerData11.forEach(d=>{const show=_poiActiveLeafs11.has(d.leaf)&&(!_poiFavOnly11||d.fav);if(show){if(!_poiMap11.hasLayer(d.marker))d.marker.addTo(_poiMap11);}else{if(_poiMap11.hasLayer(d.marker))d.marker.remove();}});}
+function poiToggleLeafD11(leaf){const btn=document.querySelector(`.poi-filter-pill.sub[data-leaf-d11="${leaf}"]`);if(!btn)return;if(_poiActiveLeafs11.has(leaf)){_poiActiveLeafs11.delete(leaf);btn.classList.remove('active');}else{_poiActiveLeafs11.add(leaf);btn.classList.add('active');}const parent=POI_LEAF_DEFS[leaf]?.parent;if(parent)_updMainD11(parent);_applyPOIFilters11();}
+function poiToggleMainD11(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts11[l]).map(([l])=>l);if(!leafs.length)return;const turnOn=leafs.filter(l=>_poiActiveLeafs11.has(l)).length<leafs.length;leafs.forEach(leaf=>{if(turnOn)_poiActiveLeafs11.add(leaf);else _poiActiveLeafs11.delete(leaf);const sb=document.querySelector(`.poi-filter-pill.sub[data-leaf-d11="${leaf}"]`);if(sb)sb.classList.toggle('active',turnOn);});_updMainD11(mainId);_applyPOIFilters11();}
+function poiShowAllD11(){_poiActiveLeafs11=new Set(Object.keys(_poiLeafCounts11));document.querySelectorAll('#poi-filter-bar-d11 .poi-filter-pill[data-leaf-d11],#poi-filter-bar-d11 .poi-filter-pill[data-main-d11]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters11();}
+function poiClearD11(){_poiActiveLeafs11=new Set();document.querySelectorAll('#poi-filter-bar-d11 .poi-filter-pill[data-leaf-d11],#poi-filter-bar-d11 .poi-filter-pill[data-main-d11]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters11();}
+function poiToggleFavsD11(){_poiFavOnly11=!_poiFavOnly11;const btn=document.getElementById('poi-favs-btn-d11');if(btn)btn.classList.toggle('active',_poiFavOnly11);_applyPOIFilters11();}
+
+
+/* ══════════════════════════════════════════════════════════
+   DIA 12 · TORNADA A CASA
+   ══════════════════════════════════════════════════════════ */
+
+const D12_RETORN_COTXES_FAI = [38.52135985204799, -28.714324522134152]; // Autatlantis, Aeroport de Faial
+
+function initMapRetornCotxesFAI() {
+  const el = document.getElementById('map-retorn-cotxes-fai');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D12_RETORN_COTXES_FAI, 15);
+  L.marker(D12_RETORN_COTXES_FAI, {
+    icon: L.divIcon({ html: `<div style="background:#2980b9;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Autatlantis</b><br>Horta Airport').openPopup();
+}
 
 
 /* ── INIT ────────────────────────────────────────────────── */
