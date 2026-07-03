@@ -2554,40 +2554,6 @@ function initMapD5RutaEst() {
 
   map.fitBounds(L.latLngBounds(TRACK_D5_RUTA_EST), { padding: [30, 30] });
   setTimeout(() => map.invalidateSize(), 50);
-
-  /* Activa la pluja d'emojis */
-  _startNauseaRain(el);
-}
-
-/* Pluja subtil d'emojis de mareig */
-function _startNauseaRain(mapEl) {
-  const container = mapEl.parentElement;
-  if (!container || container.querySelector('.nausea-rain-layer')) return;
-
-  const layer = document.createElement('div');
-  layer.className = 'nausea-rain-layer';
-  layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:450';
-  container.style.position = 'relative';
-  container.appendChild(layer);
-
-  const emojis = ['🥴','😵‍💫','🌀','🌀','🥴'];
-  const N = 12;
-  for (let i = 0; i < N; i++) {
-    const span = document.createElement('span');
-    const left = 5 + Math.random() * 90;
-    const delay = Math.random() * 6;
-    const dur   = 5 + Math.random() * 5;
-    const size  = 0.8 + Math.random() * 0.7;
-    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-    span.textContent = emoji;
-    span.style.cssText = `
-      position:absolute; left:${left}%; top:-10%;
-      font-size:${size}rem; opacity:0.18;
-      animation: nauseaFall ${dur}s ${delay}s linear infinite;
-      pointer-events:none;
-    `;
-    layer.appendChild(span);
-  }
 }
 
 /* POI mapa dia 5 */
@@ -3267,7 +3233,6 @@ function initMapMareigD11() {
 
   map.fitBounds(L.latLngBounds(TRACK_D11_MAREIG), { padding: [30, 30] });
   setTimeout(() => map.invalidateSize(), 50);
-  _startNauseaRain(el);
 }
 
 /* Waypoints de l'itinerari proposat de Faial */
