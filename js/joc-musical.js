@@ -41,20 +41,20 @@ function jmRenderInici() {
         <span class="joc-titol-text">Joc Musical</span>
       </div>
 
-      <p class="jm-subtitol">150 cançons de rock català · Endevina-les!</p>
+      <p class="jm-subtitol">${JM_CANCONS.length} cançons de rock català · Endevina-les!</p>
 
       <div class="jm-modes-grid">
         <button class="jm-mode-btn" onclick="jmSeleccionarMode('${JM_MODE_INTRO}')">
           <span class="jm-mode-emoji">🎵</span>
           <span class="jm-mode-nom">Per la intro</span>
           <span class="jm-mode-desc">Escolta els primers segons<br>i endevina la cançó</span>
-          <span class="jm-mode-badge">150 cançons</span>
+          <span class="jm-mode-badge">${JM_CANCONS.length} cançons</span>
         </button>
         <button class="jm-mode-btn" onclick="jmSeleccionarMode('${JM_MODE_LLETRA}')">
           <span class="jm-mode-emoji">📝</span>
           <span class="jm-mode-nom">Per la lletra</span>
           <span class="jm-mode-desc">Apareix estrofa a estrofa<br>fins que l'endevinis</span>
-          <span class="jm-mode-badge">50 cançons</span>
+          <span class="jm-mode-badge">${JM_AMB_LLETRA.length} cançons</span>
         </button>
       </div>
     </div>
