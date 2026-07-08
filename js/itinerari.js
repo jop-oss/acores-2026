@@ -3259,8 +3259,11 @@ function initMapPOID9() {
 
   function isPIC(i){return i==='Pico'||i==='pic';}
   function isD9Zone(lat, lng){
-    // Sud i est de l'illa: Lajes do Pico, Calheta de Nesquim, Manhenha, Santo Amaro, Prainha — exclou Madalena/oest
-    return lng > -28.30;
+    // Rectangle 1: banda nord (São Roque - Terra Alta - Chafariz de Santo Amaro)
+    const rect1 = lat>=38.43 && lat<=38.52 && lng>=-28.32 && lng<=-28.08;
+    // Rectangle 2: banda sud (Lajes do Pico - Calheta de Nesquim - Manhenha)
+    const rect2 = lat>=38.38 && lat<=38.43 && lng>=-28.28 && lng<=-28.02;
+    return rect1 || rect2;
   }
   function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
 
@@ -3281,6 +3284,8 @@ function initMapPOID9() {
     if(!isD9Zone(p.lat,p.lng)) return;
     const leaf=meLeaf(p.cat,p.sub);
     if(!leaf) return;
+    if(leaf==='nat-llacs') return; // les llacunes del Planalto ja surten al dia 8
+    if(p.id==='imp-pic-03') return; // Lagoa do Caiado (idem)
     let desc=p.zona||'';
     if(leaf==='imprescindibles'){const d=impObj[p.id];if(d)desc=d.zona||desc;}
     addM9(leaf,[p.lat,p.lng],p.nom,desc,mapsUrl(p.lat,p.lng),p.d===true);
