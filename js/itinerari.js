@@ -770,6 +770,110 @@ const POI = {
     maps: 'https://maps.google.com/?q=38.4029502,-28.0795463',
   },
 
+  /* ── DIA 10 · PICO I FAIAL ───────────────────────────────── */
+  'mir-pic-13': {
+    nom: 'Miradouro Prainha', emoji: '🔭', cat: 'miradors',
+    coords: [38.4911435, -28.2487393],
+    desc: 'Mirador a la costa nord, a 5,3 km de l\'allotjament.',
+    maps: 'https://maps.google.com/?q=38.4911435,-28.2487393',
+  },
+  'mir-pic-14': {
+    nom: 'Miradouro São Miguel Arcanjo', emoji: '🔭', cat: 'miradors',
+    coords: [38.5030629, -28.2857278],
+    desc: 'Mirador de la costa nord, 3,7 km més enllà del de Prainha.',
+    maps: 'https://maps.google.com/?q=38.5030629,-28.2857278',
+  },
+  'var-mol-pic-03': {
+    nom: 'Moinho da Ponta Rasa', emoji: '𖣘', cat: 'varis',
+    coords: [38.5310, -28.2840],
+    desc: 'Singular molí de vent vermell entre São Roque do Pico i Cais do Pico.',
+    maps: 'https://maps.google.com/?q=38.5310,-28.2840',
+  },
+  'nat-pai-pic-06': {
+    nom: 'Praia do Guindaste', emoji: '🏖️', cat: 'naturalesa',
+    coords: [38.5325, -28.2820],
+    desc: 'Petita cala d\'aigües turqueses vora Ponta Rasa.',
+    maps: 'https://maps.google.com/?q=38.5325,-28.2820',
+  },
+  'ban-pis-pic-01': {
+    nom: 'Furna de Santo António', emoji: '🏊', cat: 'bany',
+    coords: [38.5352179, -28.3358018],
+    desc: 'Boniques piscines naturals molt freqüentades pels locals.',
+    maps: 'https://maps.google.com/?q=38.5352179,-28.3358018',
+  },
+  'pob-pic-04': {
+    nom: 'Lajido', emoji: '🏘️', cat: 'pobles',
+    coords: [38.5578009, -28.4276397],
+    desc: 'Poble d\'arquitectura tradicional lligada al cultiu de la vinya, cases de pedra de lava amb portes de colors vius.',
+    maps: 'https://maps.google.com/?q=38.5578009,-28.4276397',
+  },
+  'imp-pic-04': {
+    nom: 'Piscines Naturals dos Arcos / Zona balnear dos Arcos', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.560373, -28.4089708],
+    desc: 'Arcs volcànics sobre el mar, entre Santa Luzia i Lajido.',
+    maps: 'https://maps.google.com/?q=38.560373,-28.4089708',
+  },
+  'ban-pis-pic-17': {
+    nom: 'Zona Balnear do Cachorro', emoji: '🏊', cat: 'bany',
+    coords: [38.5559573, -28.4470898],
+    desc: 'Magnífiques piscines naturals a tocar de l\'aeroport, ideal per fer-hi una bona estona (i per snorkel, si es té material).',
+    maps: 'https://maps.google.com/?q=38.5559573,-28.4470898',
+  },
+  'nat-geo-pic-01': {
+    nom: 'Arcos do Cachorro', emoji: '🌋', cat: 'naturalesa',
+    coords: [38.5569428, -28.4555276],
+    desc: 'Curioses formacions de roca volcànica, una amb forma de gos 🐶.',
+    maps: 'https://maps.google.com/?q=38.5569428,-28.4555276',
+  },
+  'imp-fai-03': {
+    nom: 'Marina da Horta', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.5313466, -28.625342],
+    desc: 'Port esportiu ple de murals pintats per les tripulacions que hi han passat travessant l\'Atlàntic.',
+    maps: 'https://maps.google.com/?q=38.5313466,-28.625342',
+  },
+  'var-cur-fai-01': {
+    nom: 'Peter Café Sport', emoji: '🍺', cat: 'varis',
+    coords: [38.5295625, -28.6267825],
+    desc: 'Punt de trobada històric dels navegants que travessen l\'Atlàntic.',
+    maps: 'https://maps.google.com/?q=38.5295625,-28.6267825',
+  },
+  'mir-fai-07': {
+    nom: 'Miradouro de Nossa Senhora da Conceição', emoji: '🔭', cat: 'miradors',
+    coords: [38.5478777, -28.6162394],
+    desc: 'Mirador proper a l\'allotjament de Feteira.',
+    maps: 'https://maps.google.com/?q=38.5478777,-28.6162394',
+  },
+  'mir-fai-08': {
+    nom: 'Miradouro do Monte Carneiro', emoji: '🔭', cat: 'miradors',
+    coords: [38.5405314, -28.644061],
+    desc: 'Mirador proper a l\'allotjament de Feteira.',
+    maps: 'https://maps.google.com/?q=38.5405314,-28.644061',
+  },
+  'imp-fai-04': {
+    nom: 'Monte da Guia', emoji: '⭐', cat: 'imprescindibles',
+    coords: [38.5211887, -28.628917],
+    desc: 'Antic con volcànic que emmarca la badia de Porto Pim, amb el mirador i les Caldeirinhas.',
+    maps: 'https://maps.google.com/?q=38.5211887,-28.628917',
+  },
+  'ban-pla-fai-04': {
+    nom: 'Praia do Porto Pim', emoji: '🏖️', cat: 'bany',
+    coords: [38.5248331, -28.6257226],
+    desc: 'Platja urbana d\'Horta, punt final de la ruta PRC08 FAI.',
+    maps: 'https://maps.google.com/?q=38.5248331,-28.6257226',
+  },
+  'ban-pla-fai-03': {
+    nom: 'Praia do Almoxarife', emoji: '🏖️', cat: 'bany',
+    coords: [38.5541927, -28.6093403],
+    desc: 'Platja de la zona de Conceição, alternativa a la de Porto Pim.',
+    maps: 'https://maps.google.com/?q=38.5541927,-28.6093403',
+  },
+  'snd-fai-03': {
+    nom: 'Entre Montes (PRC08 FAI)', emoji: '🥾', cat: 'senderisme',
+    coords: [38.5233143, -28.6246433],
+    desc: 'Ruta circular urbana i costanera de 3,3 km i 1h30 que envolta el Monte da Guia i el Monte Queimado.',
+    maps: 'https://maps.google.com/?q=38.5233143,-28.6246433',
+  },
+
   /* ── DIA 11 · FAIAL ──────────────────────────────────────── */
   'imp-fai-01': {
     nom: 'Caldeira do Faial', emoji: '⭐', cat: 'imprescindibles',
@@ -1099,6 +1203,26 @@ const RESTS_D8_SAO_ROQUE = [
   { nom: 'Bar Clube Naval de São Roque do Pico', preu: '€', punt: 4.1, rec: false, lat: 38.5299883, lon: -28.3218346,
     ta: 'https://www.tripadvisor.es/Restaurant_Review-g735545-d7591564-Reviews-Bar_Clube_Naval-Sao_Roque_do_Pico_Pico_Azores.html?m=66827',
     gm: 'https://www.google.com/maps/place/?q=place_id:ChIJDTUthTiWRwsRlZL3vBHxo0M', foto: null },
+];
+
+/* ── RESTAURANTS DIA 10 · HORTA (dades reals de restaurants-data.js) ── */
+/* Madalena reutilitza RESTS_D8_MADALENA (mateixos restaurants que el dia 8) */
+const RESTS_D10_HORTA = [
+  { nom: 'Gastro bar Príncipe', preu: '€€', punt: 4.6, rec: true, lat: 38.5285333, lon: -28.6281466,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d12866600-Reviews-Principe_Gastro_bar-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJj282MYqLRwsRRTMKpkuqlQQ', foto: null },
+  { nom: 'Restaurant Atletico', preu: '€€', punt: 4.3, rec: true, lat: 38.5279357, lon: -28.6287796,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d3898079-Reviews-Restaurant_Atletico-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJXeACm-GKRwsRPY-zRGN08DY', foto: null },
+  { nom: 'Canto da Doca', preu: '€€', punt: 4.2, rec: true, lat: 38.5278456, lon: -28.6264401,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d1522950-Reviews-Canto_da_Doca-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJsU6rCOKKRwsRPDfxKG1Lh_k', foto: null },
+  { nom: 'Peter Café Sport', preu: '€€', punt: 4.1, rec: false, lat: 38.5295513, lon: -28.6267818,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d2234520-Reviews-Peter_s_Cafe_Sport-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJvXfR8q4yGQ0R-9q1JA5PIf8', foto: null },
+  { nom: 'Cantinho das Provas', preu: '€€', punt: 4.8, rec: false, lat: 38.5349975, lon: -28.6270571,
+    ta: 'https://www.tripadvisor.es/Restaurant_Review-g189126-d21410173-Reviews-Cantinho_Das_Provas-Horta_Faial_Island_Azores.html?m=66827',
+    gm: 'https://www.google.com/maps/place/?q=place_id:ChIJZ-m4VRKLRwsRqRialqnKYPE', foto: null },
 ];
 
 /* ── RESTAURANTS DIA 9 · PICO (dades reals de restaurants-data.js) ── */
@@ -1974,7 +2098,7 @@ function setupAccordions() {
 }
 
 /* ── DAY SWITCHING ───────────────────────────────────────── */
-let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 11: false, 12: false };
+let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false, 11: false, 12: false };
 
 function showDia(n) {
   document.querySelectorAll('.itin-dia').forEach(el => el.classList.remove('active'));
@@ -1989,6 +2113,21 @@ function showDia(n) {
   if (badge) badge.textContent = `Dia ${n} de 12`;
 
   // Lazy map init
+  if (n === 10 && !mapsInitDia[10]) {
+    mapsInitDia[10] = true;
+    setTimeout(() => {
+      initMapRetornCotxesPicD10();
+      initMapLloguerCotxesFaiD10();
+      initMapAllotjamentFaiD10();
+      initMapPRC08FAID10();
+      initMapRutaD10Pic();
+      initMapRutaD10Fai();
+      initMapPOID10Pic();
+      initMapPOID10Fai();
+      renderRestList('#rests-d10-madalena', RESTS_D8_MADALENA);
+      renderRestList('#rests-d10-horta', RESTS_D10_HORTA);
+    }, 100);
+  }
   if (n === 9 && !mapsInitDia[9]) {
     mapsInitDia[9] = true;
     setTimeout(() => {
@@ -3179,6 +3318,275 @@ const TRACK_D9_PR03=[[38.43893,-28.05672],[38.43913,-28.05708],[38.43922,-28.057
 // pr03pic: dist=6.00km gain=122m loss=124m npts_orig=1026
 const TRACK_D9_PRC11=[[38.40273,-28.07967],[38.40252,-28.08022],[38.40170,-28.08026],[38.40126,-28.08081],[38.40086,-28.08135],[38.40058,-28.08192],[38.40064,-28.08280],[38.40073,-28.08298],[38.40112,-28.08310],[38.40127,-28.08323],[38.40129,-28.08326],[38.40133,-28.08331],[38.40133,-28.08333],[38.40133,-28.08335],[38.40133,-28.08335],[38.40134,-28.08338],[38.40134,-28.08339],[38.40136,-28.08344],[38.40136,-28.08344],[38.40136,-28.08344],[38.40136,-28.08350],[38.40136,-28.08350],[38.40131,-28.08371],[38.40150,-28.08429],[38.40156,-28.08508],[38.40155,-28.08562],[38.40127,-28.08620],[38.40111,-28.08660],[38.40080,-28.08714],[38.40072,-28.08750],[38.40072,-28.08750],[38.40072,-28.08750],[38.40067,-28.08774],[38.40067,-28.08774],[38.40067,-28.08775],[38.40063,-28.08791],[38.40063,-28.08792],[38.40061,-28.08814],[38.40061,-28.08815],[38.40054,-28.08836],[38.40138,-28.08873],[38.40148,-28.08953],[38.40205,-28.08992],[38.40243,-28.09012],[38.40288,-28.09016],[38.40315,-28.09029],[38.40339,-28.09027],[38.40351,-28.09049],[38.40344,-28.09112],[38.40358,-28.09140],[38.40354,-28.09189],[38.40368,-28.09243],[38.40367,-28.09275],[38.40388,-28.09291],[38.40429,-28.09286],[38.40485,-28.09288],[38.40541,-28.09328],[38.40570,-28.09358],[38.40616,-28.09363],[38.40665,-28.09402],[38.40686,-28.09407],[38.40688,-28.09413],[38.40688,-28.09414],[38.40688,-28.09414],[38.40689,-28.09416],[38.40689,-28.09417],[38.40690,-28.09418],[38.40693,-28.09423],[38.40719,-28.09437],[38.40719,-28.09436],[38.40730,-28.09444],[38.40700,-28.09631],[38.40716,-28.09755],[38.40747,-28.09710],[38.40824,-28.09642],[38.40856,-28.09525],[38.40896,-28.09430],[38.40935,-28.09366],[38.40955,-28.09334],[38.40965,-28.09295],[38.40999,-28.09257],[38.41033,-28.09243],[38.41086,-28.09218],[38.41095,-28.09181],[38.41095,-28.09180],[38.41095,-28.09179],[38.41096,-28.09174],[38.41096,-28.09173],[38.41096,-28.09172],[38.41097,-28.09171],[38.41097,-28.09169],[38.41097,-28.09169],[38.41097,-28.09165],[38.41097,-28.09165],[38.41113,-28.09116],[38.41205,-28.09089],[38.41308,-28.09035],[38.41405,-28.08968],[38.41451,-28.08919],[38.41489,-28.08854],[38.41529,-28.08770],[38.41561,-28.08714],[38.41572,-28.08575],[38.41651,-28.08448],[38.41703,-28.08379],[38.41750,-28.08329],[38.41819,-28.08173],[38.41832,-28.08068],[38.41742,-28.08023],[38.41623,-28.07977],[38.41531,-28.07930],[38.41480,-28.07904],[38.41342,-28.07810],[38.41234,-28.07741],[38.41288,-28.07604],[38.41291,-28.07564],[38.41293,-28.07536],[38.41297,-28.07507],[38.41301,-28.07465],[38.41301,-28.07419],[38.41255,-28.07367],[38.41117,-28.07354],[38.41058,-28.07451],[38.40975,-28.07441],[38.40954,-28.07408],[38.40936,-28.07380],[38.40970,-28.07354],[38.41030,-28.07312],[38.41114,-28.07311],[38.41198,-28.07136],[38.41129,-28.07133],[38.41049,-28.07079],[38.40970,-28.07043],[38.40885,-28.07018],[38.40825,-28.07036],[38.40730,-28.07041],[38.40704,-28.07043],[38.40689,-28.07036],[38.40689,-28.07036],[38.40683,-28.07034],[38.40683,-28.07034],[38.40682,-28.07033],[38.40680,-28.07032],[38.40674,-28.07029],[38.40652,-28.07011],[38.40632,-28.06985],[38.40602,-28.06954],[38.40578,-28.06940],[38.40538,-28.06937],[38.40497,-28.06930],[38.40460,-28.06929],[38.40405,-28.06932],[38.40401,-28.06932],[38.40399,-28.06932],[38.40397,-28.06932],[38.40397,-28.06932],[38.40397,-28.06932],[38.40396,-28.06932],[38.40396,-28.06932],[38.40395,-28.06932],[38.40392,-28.06931],[38.40372,-28.06932],[38.40295,-28.06978],[38.40292,-28.07017],[38.40292,-28.07018],[38.40292,-28.07018],[38.40292,-28.07019],[38.40292,-28.07020],[38.40292,-28.07023],[38.40292,-28.07025],[38.40292,-28.07026],[38.40301,-28.07054],[38.40375,-28.07070],[38.40403,-28.07099],[38.40408,-28.07119],[38.40409,-28.07124],[38.40415,-28.07150],[38.40417,-28.07156],[38.40421,-28.07174],[38.40423,-28.07184],[38.40423,-28.07184],[38.40440,-28.07221],[38.40455,-28.07274],[38.40476,-28.07319],[38.40482,-28.07349],[38.40491,-28.07421],[38.40537,-28.07444],[38.40551,-28.07466],[38.40540,-28.07494],[38.40536,-28.07553],[38.40537,-28.07589],[38.40510,-28.07637],[38.40501,-28.07671],[38.40486,-28.07722],[38.40456,-28.07758],[38.40418,-28.07818],[38.40379,-28.07854],[38.40356,-28.07877],[38.40349,-28.07930],[38.40314,-28.07978],[38.40273,-28.07967]];
 // prc11pic-451776: dist=9.13km gain=519m loss=519m npts_orig=3136
+
+const TRACK_D10_PRC08FAI=[[38.52328,-28.62462],[38.52326,-28.62471],[38.52315,-28.62478],[38.52299,-28.62475],[38.52287,-28.62496],[38.52286,-28.62510],[38.52287,-28.62536],[38.52290,-28.62562],[38.52290,-28.62571],[38.52289,-28.62586],[38.52287,-28.62611],[38.52285,-28.62624],[38.52284,-28.62636],[38.52281,-28.62654],[38.52279,-28.62665],[38.52275,-28.62676],[38.52268,-28.62678],[38.52259,-28.62690],[38.52251,-28.62690],[38.52241,-28.62693],[38.52231,-28.62717],[38.52224,-28.62726],[38.52215,-28.62733],[38.52208,-28.62729],[38.52207,-28.62717],[38.52209,-28.62707],[38.52211,-28.62701],[38.52224,-28.62702],[38.52229,-28.62713],[38.52229,-28.62735],[38.52226,-28.62755],[38.52225,-28.62781],[38.52222,-28.62795],[38.52216,-28.62816],[38.52212,-28.62841],[38.52208,-28.62845],[38.52207,-28.62846],[38.52193,-28.62841],[38.52188,-28.62836],[38.52183,-28.62836],[38.52166,-28.62832],[38.52161,-28.62830],[38.52148,-28.62822],[38.52141,-28.62819],[38.52133,-28.62817],[38.52123,-28.62814],[38.52110,-28.62810],[38.52103,-28.62802],[38.52099,-28.62801],[38.52093,-28.62814],[38.52081,-28.62829],[38.52057,-28.62816],[38.52049,-28.62806],[38.52049,-28.62815],[38.52060,-28.62828],[38.52056,-28.62831],[38.52048,-28.62846],[38.52046,-28.62853],[38.52040,-28.62869],[38.52035,-28.62878],[38.52025,-28.62896],[38.52019,-28.62907],[38.52008,-28.62920],[38.52003,-28.62926],[38.51987,-28.62922],[38.51981,-28.62935],[38.51970,-28.62954],[38.51966,-28.62970],[38.51953,-28.62989],[38.51946,-28.63001],[38.51926,-28.63023],[38.51921,-28.63030],[38.51901,-28.63044],[38.51890,-28.63057],[38.51873,-28.63067],[38.51863,-28.63076],[38.51860,-28.63081],[38.51842,-28.63093],[38.51844,-28.63096],[38.51848,-28.63107],[38.51847,-28.63111],[38.51848,-28.63118],[38.51857,-28.63127],[38.51856,-28.63132],[38.51859,-28.63144],[38.51861,-28.63158],[38.51862,-28.63177],[38.51860,-28.63197],[38.51863,-28.63202],[38.51875,-28.63197],[38.51909,-28.63180],[38.51935,-28.63158],[38.51952,-28.63143],[38.51954,-28.63133],[38.51955,-28.63116],[38.51957,-28.63108],[38.51966,-28.63103],[38.51980,-28.63099],[38.51989,-28.63090],[38.52004,-28.63083],[38.52008,-28.63077],[38.52010,-28.63080],[38.52010,-28.63080],[38.52011,-28.63077],[38.52025,-28.63078],[38.52040,-28.63068],[38.52063,-28.63052],[38.52087,-28.63033],[38.52088,-28.63014],[38.52114,-28.63001],[38.52123,-28.62996],[38.52153,-28.62978],[38.52160,-28.62970],[38.52184,-28.62952],[38.52205,-28.62930],[38.52224,-28.62910],[38.52240,-28.62893],[38.52248,-28.62860],[38.52251,-28.62851],[38.52253,-28.62839],[38.52267,-28.62833],[38.52277,-28.62824],[38.52283,-28.62812],[38.52290,-28.62780],[38.52295,-28.62746],[38.52301,-28.62704],[38.52304,-28.62675],[38.52311,-28.62660],[38.52317,-28.62647],[38.52322,-28.62627],[38.52325,-28.62611],[38.52326,-28.62597],[38.52325,-28.62582],[38.52325,-28.62570],[38.52323,-28.62554],[38.52328,-28.62559],[38.52341,-28.62555],[38.52359,-28.62554],[38.52384,-28.62558],[38.52398,-28.62560],[38.52413,-28.62562],[38.52429,-28.62566],[38.52459,-28.62571],[38.52483,-28.62579],[38.52520,-28.62589],[38.52546,-28.62600],[38.52562,-28.62611],[38.52580,-28.62634],[38.52589,-28.62647],[38.52602,-28.62667],[38.52612,-28.62687],[38.52619,-28.62706],[38.52616,-28.62689],[38.52635,-28.62680],[38.52662,-28.62669],[38.52680,-28.62662],[38.52691,-28.62657],[38.52719,-28.62640],[38.52740,-28.62627],[38.52760,-28.62612],[38.52748,-28.62593],[38.52731,-28.62595],[38.52719,-28.62596],[38.52701,-28.62598],[38.52670,-28.62600],[38.52681,-28.62585],[38.52690,-28.62565],[38.52691,-28.62540],[38.52686,-28.62526],[38.52682,-28.62517],[38.52680,-28.62507],[38.52675,-28.62484],[38.52667,-28.62482],[38.52655,-28.62491],[38.52638,-28.62512],[38.52617,-28.62520],[38.52611,-28.62519],[38.52597,-28.62488],[38.52574,-28.62480],[38.52556,-28.62471],[38.52544,-28.62452],[38.52535,-28.62457],[38.52525,-28.62462],[38.52522,-28.62467],[38.52515,-28.62472],[38.52504,-28.62466],[38.52503,-28.62466],[38.52491,-28.62459],[38.52483,-28.62458],[38.52475,-28.62446],[38.52470,-28.62450],[38.52451,-28.62447],[38.52443,-28.62445],[38.52439,-28.62442],[38.52420,-28.62426],[38.52406,-28.62431],[38.52391,-28.62430],[38.52376,-28.62439],[38.52367,-28.62446],[38.52356,-28.62454],[38.52328,-28.62462]];
+const PROFILE_D10_PRC08FAI=[[0.000,10],[0.015,12],[0.041,18],[0.066,23],[0.088,24],[0.118,24],[0.132,25],[0.148,25],[0.173,24],[0.189,23],[0.209,23],[0.224,23],[0.235,27],[0.250,30],[0.266,36],[0.294,40],[0.311,44],[0.325,50],[0.336,52],[0.350,53],[0.360,48],[0.379,41],[0.411,40],[0.424,38],[0.452,35],[0.475,35],[0.497,33],[0.501,33],[0.517,40],[0.525,44],[0.549,53],[0.559,57],[0.579,65],[0.588,68],[0.609,76],[0.624,81],[0.634,82],[0.657,85],[0.686,83],[0.709,79],[0.722,80],[0.737,82],[0.756,80],[0.763,80],[0.784,81],[0.807,83],[0.823,86],[0.844,88],[0.863,85],[0.891,78],[0.902,77],[0.933,76],[0.962,76],[0.983,74],[1.010,70],[1.037,66],[1.051,65],[1.067,65],[1.090,62],[1.098,60],[1.108,56],[1.116,54],[1.133,49],[1.147,45],[1.166,37],[1.190,29],[1.200,26],[1.231,30],[1.276,32],[1.314,32],[1.327,36],[1.343,43],[1.357,42],[1.373,39],[1.388,38],[1.411,37],[1.414,36],[1.418,37],[1.435,32],[1.474,30],[1.509,30],[1.531,35],[1.567,25],[1.593,18],[1.622,15],[1.667,16],[1.708,12],[1.734,10],[1.764,14],[1.777,16],[1.804,15],[1.827,13],[1.859,13],[1.889,13],[1.937,13],[1.963,11],[1.981,9],[2.004,9],[2.020,10],[2.039,13],[2.052,12],[2.067,12],[2.086,9],[2.107,8],[2.142,6],[2.167,4],[2.202,5],[2.247,4],[2.289,10],[2.333,17],[2.361,17],[2.384,14],[2.412,11],[2.443,10],[2.460,11],[2.490,15],[2.527,20],[2.548,20],[2.582,20],[2.620,18],[2.658,20],[2.682,25],[2.709,31],[2.744,39],[2.776,40],[2.802,40],[2.823,46],[2.840,50],[2.857,51],[2.873,54],[2.896,59],[2.929,55],[2.948,55],[2.979,60],[3.018,55],[3.056,49],[3.072,46],[3.082,45],[3.092,43],[3.106,41],[3.119,38],[3.132,35],[3.148,33],[3.172,26],[3.183,23],[3.203,19],[3.217,15],[3.248,13],[3.267,12],[3.286,11],[3.329,10]];
+// prc08fai: dist=3.33km gain=238m loss=238m npts_orig=460
+
+/* ══════════════════════════════════════════════════════════
+   DIA 10 · PICO I FAIAL
+   ══════════════════════════════════════════════════════════ */
+
+const D10_RETORN_COTXES_PIC = [38.53422855104805, -28.528775722830957]; // Oasis Rent a Car, Madalena
+const D10_LLOGUER_COTXES_FAI = [38.5408309864228, -28.62005132279645]; // Autatlantis, Port d'Horta
+const D10_ALLOTJAMENT_FAI = [38.5249233992718, -28.6805700305922]; // Refúgio, Feteira
+
+function initMapRetornCotxesPicD10() {
+  const el = document.getElementById('map-retorn-cotxes-pic-d10');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D10_RETORN_COTXES_PIC, 15);
+  L.marker(D10_RETORN_COTXES_PIC, {
+    icon: L.divIcon({ html: `<div style="background:#2980b9;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Oasis Rent a Car</b><br>Madalena').openPopup();
+}
+
+function initMapLloguerCotxesFaiD10() {
+  const el = document.getElementById('map-lloguer-cotxes-fai-d10');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D10_LLOGUER_COTXES_FAI, 15);
+  L.marker(D10_LLOGUER_COTXES_FAI, {
+    icon: L.divIcon({ html: `<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Autatlantis</b><br>Terminal Marítimo de Passageiros, Horta').openPopup();
+}
+
+function initMapAllotjamentFaiD10() {
+  const el = document.getElementById('map-allotjament-fai-d10');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+  leafletTiles(map);
+  map.setView(D10_ALLOTJAMENT_FAI, 15);
+  L.marker(D10_ALLOTJAMENT_FAI, {
+    icon: L.divIcon({ html: `<div style="background:#e74c3c;border:2px solid #fff;border-radius:50%;width:16px;height:16px;box-shadow:0 2px 8px rgba(0,0,0,0.5)"></div>`, iconSize: [16, 16], iconAnchor: [8, 8], className: '' })
+  }).addTo(map).bindPopup('<b>Refúgio</b><br>Feteira').openPopup();
+}
+
+/* Mapa + perfil PRC08 FAI - Entre Montes */
+function initMapPRC08FAID10() {
+  initMapSenderisme('map-prc08fai-d10', [
+    { track: TRACK_D10_PRC08FAI, color: '#6abf70', label: 'PRC08 FAI · Entre Montes (3,3 km)' },
+  ]);
+  const elevEl = document.getElementById('elev-prc08fai-d10');
+  if (elevEl) elevEl.innerHTML = buildElevSvgStatic(PROFILE_D10_PRC08FAI, '#6abf70');
+}
+
+/* Waypoints Pico (matí) */
+const DIA10_WAYPOINTS_PIC = [
+  { nom: 'Miradors de Prainha i São Miguel Arcanjo', coords: [38.4911435, -28.2487393], icon: '🔭' },
+  { nom: 'Ponta Rasa (moinho + Praia do Guindaste)', coords: [38.531, -28.284], icon: '🌊' },
+  { nom: 'Furna de Santo António', coords: [38.5352179, -28.3358018], icon: '🏊' },
+  { nom: 'Santa Luzia · Zona balnear dos Arcos · Lajido', coords: [38.560373, -28.4089708], icon: '🏘️' },
+  { nom: 'Zona Balnear do Cachorro + Arcos', coords: [38.5559573, -28.4470898], icon: '🌋', star: true },
+  { nom: 'Cella Bar', coords: [38.5430992, -28.5204954], icon: '📷' },
+  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
+];
+
+function initMapRutaD10Pic() {
+  const el = document.getElementById('map-ruta-d10-pic');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  leafletTiles(map);
+
+  const start = [38.4607967, -28.1920405]; // Prainha Apartments
+  L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
+    .addTo(map).bindPopup('<b>▶️ Inici</b><br>Allotjament a Prainha');
+
+  DIA10_WAYPOINTS_PIC.forEach((wp, i) => {
+    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
+  });
+
+  L.marker(D10_RETORN_COTXES_PIC, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup('<b>🏁 Retorn cotxes + Ferri</b><br>Madalena');
+
+  const all = [start, ...DIA10_WAYPOINTS_PIC.map(w => w.coords), D10_RETORN_COTXES_PIC];
+  map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
+}
+
+/* Waypoints Faial (tarda) */
+const DIA10_WAYPOINTS_FAI = [
+  { nom: 'Miradouro Nossa Senhora da Conceição', coords: [38.5478777, -28.6162394], icon: '🔭', star: true },
+  { nom: 'Miradouro do Monte Carneiro', coords: [38.5405314, -28.644061], icon: '🔭', star: true },
+  { nom: 'Allotjament — Piscina / PRC08 FAI', coords: [38.5249233992718, -28.6805700305922], icon: '🏊' },
+  { nom: 'Horta — centre i marina', coords: [38.5313466, -28.625342], icon: '🏘️' },
+  { nom: 'Peter Café Sport — sopar', coords: [38.5295625, -28.6267825], icon: '🍽️' },
+];
+
+function initMapRutaD10Fai() {
+  const el = document.getElementById('map-ruta-d10-fai');
+  if (!el || el._leaflet_id) return;
+  const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
+  L.control.zoom({ position: 'topright' }).addTo(map);
+  leafletTiles(map);
+
+  const start = D10_LLOGUER_COTXES_FAI;
+  L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
+    .addTo(map).bindPopup('<b>▶️ Arribada</b><br>Port d\'Horta');
+
+  DIA10_WAYPOINTS_FAI.forEach((wp, i) => {
+    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
+  });
+
+  L.marker(D10_ALLOTJAMENT_FAI, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup('<b>🏠 Refúgio</b><br>Feteira');
+
+  const all = [start, ...DIA10_WAYPOINTS_FAI.map(w => w.coords)];
+  map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
+}
+
+/* POI mapa dia 10 — nord de Pico */
+let _poiMap10p=null, _poiMarkerData10p=[], _poiLeafCounts10p={};
+let _poiActiveLeafs10p=new Set(), _poiFavOnly10p=false;
+
+function initMapPOID10Pic() {
+  const el = document.getElementById('map-poi-d10-pic');
+  if (!el || el._leaflet_id) return;
+  if (typeof POI_DATA === 'undefined') { el.innerHTML='<div style="padding:30px;text-align:center;color:#f87171">⚠️ Falta poi-data.js</div>'; return; }
+  _poiMap10p = L.map(el, { zoomControl: false, scrollWheelZoom: true });
+  L.control.zoom({ position: 'topright' }).addTo(_poiMap10p);
+  leafletTiles(_poiMap10p);
+  _poiMarkerData10p=[]; _poiLeafCounts10p={};
+
+  function isPIC(i){return i==='Pico'||i==='pic';}
+  function isD10PicZone(lat, lng){
+    // Costa nord de Pico: de Prainha a Madalena
+    return lat>=38.51 && lat<=38.58;
+  }
+  function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
+
+  function addM(leaf,coords,nom,desc,url,fav){
+    const def=POI_LEAF_DEFS[leaf];
+    const col=def?def.color:'#94a3b8', emoji=def?def.emoji:'📌';
+    const popup=`<b style="color:${col}">${fav?'⭐ ':''}${nom}</b>`+(desc?`<br><small style="color:#6aab7a">${String(desc).slice(0,90)}</small>`:'')+( url?`<br><a href="${url}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Maps</a>`:'');
+    const m=L.marker(coords,{icon:L.divIcon({html:`<span style="font-size:1.1rem;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))">${emoji}</span>`,iconSize:[22,22],iconAnchor:[11,11],className:''})}).bindPopup(popup);
+    m.addTo(_poiMap10p);
+    _poiMarkerData10p.push({marker:m,leaf,parent:def?def.parent:'altres',fav:!!fav});
+    _poiLeafCounts10p[leaf]=(_poiLeafCounts10p[leaf]||0)+1;
+  }
+
+  const impObj=(typeof IMPRESCINDIBLES!=='undefined')?IMPRESCINDIBLES:{};
+  POI_DATA.forEach(p=>{
+    if(!isPIC(p.illa)) return;
+    if(typeof p.lat!=='number'||typeof p.lng!=='number') return;
+    if(!isD10PicZone(p.lat,p.lng)) return;
+    const leaf=meLeaf(p.cat,p.sub);
+    if(!leaf) return;
+    let desc=p.zona||'';
+    if(leaf==='imprescindibles'){const d=impObj[p.id];if(d)desc=d.zona||desc;}
+    addM(leaf,[p.lat,p.lng],p.nom,desc,mapsUrl(p.lat,p.lng),p.d===true);
+  });
+
+  _poiActiveLeafs10p=new Set(Object.keys(_poiLeafCounts10p));
+  if(_poiMarkerData10p.length)_poiMap10p.fitBounds(L.featureGroup(_poiMarkerData10p.map(d=>d.marker)).getBounds(),{padding:[30,30]});
+  _renderPOIBar10p(); _applyPOIFilters10p();
+}
+
+function _renderPOIBar10p(){
+  const bar=document.getElementById('poi-filter-bar-d10-pic');
+  if(!bar)return;
+  const mc={};
+  Object.entries(_poiLeafCounts10p).forEach(([leaf,n])=>{const p=POI_LEAF_DEFS[leaf]?.parent;if(p)mc[p]=(mc[p]||0)+n;});
+  let html='<div class="poi-filter-row poi-filter-row-main">';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{const n=mc[mainId]||0;if(!n)return;html+=`<button class="poi-filter-pill active" data-main-d10p="${mainId}" onclick="poiToggleMainD10p('${mainId}')">${def.emoji} ${def.label} <span style="opacity:0.55;font-size:0.68em">(${n})</span></button>`;});
+  html+='</div>';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{
+    if(!def.hasSubs)return;
+    const leafs=Object.entries(POI_LEAF_DEFS).filter(([leaf,ld])=>ld.parent===mainId&&_poiLeafCounts10p[leaf]);
+    if(!leafs.length)return;
+    html+=`<div class="poi-filter-row poi-filter-row-sub" data-parent-d10p="${mainId}">`;
+    leafs.forEach(([leaf,ld])=>{html+=`<button class="poi-filter-pill sub active" data-leaf-d10p="${leaf}" data-main-d10p="${mainId}" onclick="poiToggleLeafD10p('${leaf}')">${ld.emoji} ${ld.label} <span style="opacity:0.55;font-size:0.68em">(${_poiLeafCounts10p[leaf]})</span></button>`;});
+    html+='</div>';
+  });
+  html+=`<div class="poi-filter-row poi-filter-actions"><button class="poi-filter-pill poi-filter-all" onclick="poiShowAllD10p()">☑ Mostrar tot</button><button class="poi-filter-pill poi-filter-clear" onclick="poiClearD10p()">✕ Netejar filtres</button><button class="poi-filter-pill poi-filter-favs" id="poi-favs-btn-d10p" onclick="poiToggleFavsD10p()">⭐ Només favorits</button></div>`;
+  bar.innerHTML=html;
+}
+function _updMainD10p(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts10p[l]).map(([l])=>l);if(!leafs.length)return;const ac=leafs.filter(l=>_poiActiveLeafs10p.has(l)).length;const btn=document.querySelector(`.poi-filter-pill[data-main-d10p="${mainId}"]:not(.sub)`);if(!btn)return;btn.classList.remove('active','partial');if(ac===leafs.length)btn.classList.add('active');else if(ac>0)btn.classList.add('partial');}
+function _applyPOIFilters10p(){_poiMarkerData10p.forEach(d=>{const show=_poiActiveLeafs10p.has(d.leaf)&&(!_poiFavOnly10p||d.fav);if(show){if(!_poiMap10p.hasLayer(d.marker))d.marker.addTo(_poiMap10p);}else{if(_poiMap10p.hasLayer(d.marker))d.marker.remove();}});}
+function poiToggleLeafD10p(leaf){const btn=document.querySelector(`.poi-filter-pill.sub[data-leaf-d10p="${leaf}"]`);if(!btn)return;if(_poiActiveLeafs10p.has(leaf)){_poiActiveLeafs10p.delete(leaf);btn.classList.remove('active');}else{_poiActiveLeafs10p.add(leaf);btn.classList.add('active');}const parent=POI_LEAF_DEFS[leaf]?.parent;if(parent)_updMainD10p(parent);_applyPOIFilters10p();}
+function poiToggleMainD10p(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts10p[l]).map(([l])=>l);if(!leafs.length)return;const turnOn=leafs.filter(l=>_poiActiveLeafs10p.has(l)).length<leafs.length;leafs.forEach(leaf=>{if(turnOn)_poiActiveLeafs10p.add(leaf);else _poiActiveLeafs10p.delete(leaf);const sb=document.querySelector(`.poi-filter-pill.sub[data-leaf-d10p="${leaf}"]`);if(sb)sb.classList.toggle('active',turnOn);});_updMainD10p(mainId);_applyPOIFilters10p();}
+function poiShowAllD10p(){_poiActiveLeafs10p=new Set(Object.keys(_poiLeafCounts10p));document.querySelectorAll('#poi-filter-bar-d10-pic .poi-filter-pill[data-leaf-d10p],#poi-filter-bar-d10-pic .poi-filter-pill[data-main-d10p]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters10p();}
+function poiClearD10p(){_poiActiveLeafs10p=new Set();document.querySelectorAll('#poi-filter-bar-d10-pic .poi-filter-pill[data-leaf-d10p],#poi-filter-bar-d10-pic .poi-filter-pill[data-main-d10p]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters10p();}
+function poiToggleFavsD10p(){_poiFavOnly10p=!_poiFavOnly10p;const btn=document.getElementById('poi-favs-btn-d10p');if(btn)btn.classList.toggle('active',_poiFavOnly10p);_applyPOIFilters10p();}
+
+/* POI mapa dia 10 — Faial (Horta / Feteira) */
+let _poiMap10f=null, _poiMarkerData10f=[], _poiLeafCounts10f={};
+let _poiActiveLeafs10f=new Set(), _poiFavOnly10f=false;
+
+function initMapPOID10Fai() {
+  const el = document.getElementById('map-poi-d10-fai');
+  if (!el || el._leaflet_id) return;
+  if (typeof POI_DATA === 'undefined') { el.innerHTML='<div style="padding:30px;text-align:center;color:#f87171">⚠️ Falta poi-data.js</div>'; return; }
+  _poiMap10f = L.map(el, { zoomControl: false, scrollWheelZoom: true });
+  L.control.zoom({ position: 'topright' }).addTo(_poiMap10f);
+  leafletTiles(_poiMap10f);
+  _poiMarkerData10f=[]; _poiLeafCounts10f={};
+
+  function isFAI(i){return i==='Faial'||i==='fai';}
+  function isD10FaiZone(lat, lng){
+    // Sud-oest de Faial: Horta, Feteira, Monte da Guia, Conceição
+    return lng < -28.60;
+  }
+  function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
+
+  function addM(leaf,coords,nom,desc,url,fav){
+    const def=POI_LEAF_DEFS[leaf];
+    const col=def?def.color:'#94a3b8', emoji=def?def.emoji:'📌';
+    const popup=`<b style="color:${col}">${fav?'⭐ ':''}${nom}</b>`+(desc?`<br><small style="color:#6aab7a">${String(desc).slice(0,90)}</small>`:'')+( url?`<br><a href="${url}" target="_blank" style="color:#6abf70;font-size:0.75rem">📍 Maps</a>`:'');
+    const m=L.marker(coords,{icon:L.divIcon({html:`<span style="font-size:1.1rem;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))">${emoji}</span>`,iconSize:[22,22],iconAnchor:[11,11],className:''})}).bindPopup(popup);
+    m.addTo(_poiMap10f);
+    _poiMarkerData10f.push({marker:m,leaf,parent:def?def.parent:'altres',fav:!!fav});
+    _poiLeafCounts10f[leaf]=(_poiLeafCounts10f[leaf]||0)+1;
+  }
+
+  const impObj=(typeof IMPRESCINDIBLES!=='undefined')?IMPRESCINDIBLES:{};
+  POI_DATA.forEach(p=>{
+    if(!isFAI(p.illa)) return;
+    if(typeof p.lat!=='number'||typeof p.lng!=='number') return;
+    if(!isD10FaiZone(p.lat,p.lng)) return;
+    const leaf=meLeaf(p.cat,p.sub);
+    if(!leaf) return;
+    let desc=p.zona||'';
+    if(leaf==='imprescindibles'){const d=impObj[p.id];if(d)desc=d.zona||desc;}
+    addM(leaf,[p.lat,p.lng],p.nom,desc,mapsUrl(p.lat,p.lng),p.d===true);
+  });
+
+  _poiActiveLeafs10f=new Set(Object.keys(_poiLeafCounts10f));
+  if(_poiMarkerData10f.length)_poiMap10f.fitBounds(L.featureGroup(_poiMarkerData10f.map(d=>d.marker)).getBounds(),{padding:[30,30]});
+  _renderPOIBar10f(); _applyPOIFilters10f();
+}
+
+function _renderPOIBar10f(){
+  const bar=document.getElementById('poi-filter-bar-d10-fai');
+  if(!bar)return;
+  const mc={};
+  Object.entries(_poiLeafCounts10f).forEach(([leaf,n])=>{const p=POI_LEAF_DEFS[leaf]?.parent;if(p)mc[p]=(mc[p]||0)+n;});
+  let html='<div class="poi-filter-row poi-filter-row-main">';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{const n=mc[mainId]||0;if(!n)return;html+=`<button class="poi-filter-pill active" data-main-d10f="${mainId}" onclick="poiToggleMainD10f('${mainId}')">${def.emoji} ${def.label} <span style="opacity:0.55;font-size:0.68em">(${n})</span></button>`;});
+  html+='</div>';
+  Object.entries(POI_MAIN_DEFS).forEach(([mainId,def])=>{
+    if(!def.hasSubs)return;
+    const leafs=Object.entries(POI_LEAF_DEFS).filter(([leaf,ld])=>ld.parent===mainId&&_poiLeafCounts10f[leaf]);
+    if(!leafs.length)return;
+    html+=`<div class="poi-filter-row poi-filter-row-sub" data-parent-d10f="${mainId}">`;
+    leafs.forEach(([leaf,ld])=>{html+=`<button class="poi-filter-pill sub active" data-leaf-d10f="${leaf}" data-main-d10f="${mainId}" onclick="poiToggleLeafD10f('${leaf}')">${ld.emoji} ${ld.label} <span style="opacity:0.55;font-size:0.68em">(${_poiLeafCounts10f[leaf]})</span></button>`;});
+    html+='</div>';
+  });
+  html+=`<div class="poi-filter-row poi-filter-actions"><button class="poi-filter-pill poi-filter-all" onclick="poiShowAllD10f()">☑ Mostrar tot</button><button class="poi-filter-pill poi-filter-clear" onclick="poiClearD10f()">✕ Netejar filtres</button><button class="poi-filter-pill poi-filter-favs" id="poi-favs-btn-d10f" onclick="poiToggleFavsD10f()">⭐ Només favorits</button></div>`;
+  bar.innerHTML=html;
+}
+function _updMainD10f(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts10f[l]).map(([l])=>l);if(!leafs.length)return;const ac=leafs.filter(l=>_poiActiveLeafs10f.has(l)).length;const btn=document.querySelector(`.poi-filter-pill[data-main-d10f="${mainId}"]:not(.sub)`);if(!btn)return;btn.classList.remove('active','partial');if(ac===leafs.length)btn.classList.add('active');else if(ac>0)btn.classList.add('partial');}
+function _applyPOIFilters10f(){_poiMarkerData10f.forEach(d=>{const show=_poiActiveLeafs10f.has(d.leaf)&&(!_poiFavOnly10f||d.fav);if(show){if(!_poiMap10f.hasLayer(d.marker))d.marker.addTo(_poiMap10f);}else{if(_poiMap10f.hasLayer(d.marker))d.marker.remove();}});}
+function poiToggleLeafD10f(leaf){const btn=document.querySelector(`.poi-filter-pill.sub[data-leaf-d10f="${leaf}"]`);if(!btn)return;if(_poiActiveLeafs10f.has(leaf)){_poiActiveLeafs10f.delete(leaf);btn.classList.remove('active');}else{_poiActiveLeafs10f.add(leaf);btn.classList.add('active');}const parent=POI_LEAF_DEFS[leaf]?.parent;if(parent)_updMainD10f(parent);_applyPOIFilters10f();}
+function poiToggleMainD10f(mainId){const leafs=Object.entries(POI_LEAF_DEFS).filter(([l,ld])=>ld.parent===mainId&&_poiLeafCounts10f[l]).map(([l])=>l);if(!leafs.length)return;const turnOn=leafs.filter(l=>_poiActiveLeafs10f.has(l)).length<leafs.length;leafs.forEach(leaf=>{if(turnOn)_poiActiveLeafs10f.add(leaf);else _poiActiveLeafs10f.delete(leaf);const sb=document.querySelector(`.poi-filter-pill.sub[data-leaf-d10f="${leaf}"]`);if(sb)sb.classList.toggle('active',turnOn);});_updMainD10f(mainId);_applyPOIFilters10f();}
+function poiShowAllD10f(){_poiActiveLeafs10f=new Set(Object.keys(_poiLeafCounts10f));document.querySelectorAll('#poi-filter-bar-d10-fai .poi-filter-pill[data-leaf-d10f],#poi-filter-bar-d10-fai .poi-filter-pill[data-main-d10f]').forEach(b=>{b.classList.remove('partial');b.classList.add('active');});_applyPOIFilters10f();}
+function poiClearD10f(){_poiActiveLeafs10f=new Set();document.querySelectorAll('#poi-filter-bar-d10-fai .poi-filter-pill[data-leaf-d10f],#poi-filter-bar-d10-fai .poi-filter-pill[data-main-d10f]').forEach(b=>b.classList.remove('active','partial'));_applyPOIFilters10f();}
+function poiToggleFavsD10f(){_poiFavOnly10f=!_poiFavOnly10f;const btn=document.getElementById('poi-favs-btn-d10f');if(btn)btn.classList.toggle('active',_poiFavOnly10f);_applyPOIFilters10f();}
+
 
 /* ══════════════════════════════════════════════════════════
    DIA 9 · SUD I EST DE PICO
