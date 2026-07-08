@@ -2121,7 +2121,7 @@ function showDia(n) {
       initMapAllotjamentFaiD10();
       initMapPRC08FAID10();
       initMapRutaD10Pic();
-      initMapRutaD10Fai();
+      showRutaTabD10Fai('op1');
       initMapPOID10Pic();
       initMapPOID10Fai();
       renderRestList('#rests-d10-madalena', RESTS_D8_MADALENA);
@@ -3407,17 +3407,45 @@ function initMapRutaD10Pic() {
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
 }
 
-/* Waypoints Faial (tarda) */
-const DIA10_WAYPOINTS_FAI = [
+/* Waypoints Faial (tarda) — dues opcions */
+const DIA10_WAYPOINTS_FAI_OP1 = [
   { nom: 'Miradouro Nossa Senhora da Conceição', coords: [38.5478777, -28.6162394], icon: '🔭', star: true },
   { nom: 'Miradouro do Monte Carneiro', coords: [38.5405314, -28.644061], icon: '🔭', star: true },
-  { nom: 'Allotjament — Piscina / PRC08 FAI', coords: [38.5249233992718, -28.6805700305922], icon: '🏊' },
+  { nom: 'Allotjament — Piscina privada', coords: [38.5249233992718, -28.6805700305922], icon: '🏊' },
   { nom: 'Horta — centre i marina', coords: [38.5313466, -28.625342], icon: '🏘️' },
   { nom: 'Peter Café Sport — sopar', coords: [38.5295625, -28.6267825], icon: '🍽️' },
 ];
 
-function initMapRutaD10Fai() {
-  const el = document.getElementById('map-ruta-d10-fai');
+const DIA10_WAYPOINTS_FAI_OP2 = [
+  { nom: 'Miradouro Nossa Senhora da Conceição', coords: [38.5478777, -28.6162394], icon: '🔭', star: true },
+  { nom: 'Miradouro do Monte Carneiro', coords: [38.5405314, -28.644061], icon: '🔭', star: true },
+  { nom: 'Allotjament — inici PRC08 FAI', coords: [38.5249233992718, -28.6805700305922], icon: '🥾' },
+  { nom: 'Platja de Porto Pim', coords: [38.5248331, -28.6257226], icon: '🏖️' },
+  { nom: 'Horta — centre i marina', coords: [38.5313466, -28.625342], icon: '🏘️' },
+  { nom: 'Peter Café Sport — sopar', coords: [38.5295625, -28.6267825], icon: '🍽️' },
+];
+
+const rutaTabsD10FaiInit = { op1: false, op2: false };
+
+function showRutaTabD10Fai(tab) {
+  document.querySelectorAll('.d10fai-route-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.d10fai-route-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`.d10fai-route-tab[data-tab="${tab}"]`);
+  const panel = document.getElementById(`d10fai-ruta-panel-${tab}`);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  if (tab === 'op1' && !rutaTabsD10FaiInit.op1) {
+    rutaTabsD10FaiInit.op1 = true;
+    setTimeout(() => initMapRutaD10Fai('map-ruta-d10-fai-op1', DIA10_WAYPOINTS_FAI_OP1), 80);
+  }
+  if (tab === 'op2' && !rutaTabsD10FaiInit.op2) {
+    rutaTabsD10FaiInit.op2 = true;
+    setTimeout(() => initMapRutaD10Fai('map-ruta-d10-fai-op2', DIA10_WAYPOINTS_FAI_OP2), 80);
+  }
+}
+
+function initMapRutaD10Fai(elId, waypoints) {
+  const el = document.getElementById(elId);
   if (!el || el._leaflet_id) return;
   const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
   L.control.zoom({ position: 'topright' }).addTo(map);
@@ -3427,7 +3455,7 @@ function initMapRutaD10Fai() {
   L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>▶️ Arribada</b><br>Port d\'Horta');
 
-  DIA10_WAYPOINTS_FAI.forEach((wp, i) => {
+  waypoints.forEach((wp, i) => {
     L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
       .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
   });
@@ -3435,7 +3463,7 @@ function initMapRutaD10Fai() {
   L.marker(D10_ALLOTJAMENT_FAI, { icon: finishIcon(), zIndexOffset: 190 })
     .addTo(map).bindPopup('<b>🏠 Refúgio</b><br>Feteira');
 
-  const all = [start, ...DIA10_WAYPOINTS_FAI.map(w => w.coords)];
+  const all = [start, ...waypoints.map(w => w.coords)];
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
 }
 
@@ -3528,8 +3556,8 @@ function initMapPOID10Fai() {
 
   function isFAI(i){return i==='Faial'||i==='fai';}
   function isD10FaiZone(lat, lng){
-    // Sud-oest de Faial: Horta, Feteira, Monte da Guia, Conceição
-    return lng < -28.60;
+    // Sud-est de Faial: Horta, Feteira, Flamengos, Monte da Guia
+    return lat>=38.50 && lat<=38.555 && lng>=-28.70 && lng<=-28.60;
   }
   function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
 

@@ -453,6 +453,13 @@
   border-left: 4px solid var(--col-warn-border);
   color: #fde68a;
 }
+.itin-avis-neutral {
+  background: rgba(148,163,184,0.07);
+  border: 1px solid rgba(148,163,184,0.22);
+  border-left: 4px solid #f59e0b;
+  color: #cbd5e1;
+}
+.itin-avis-neutral .itin-avis-text strong { color: #f1f5f9; display: block; margin-bottom: 4px; }
 .itin-avis-danger {
   background: var(--col-danger-bg);
   border: 1px solid rgba(220,38,38,0.3);
