@@ -1841,7 +1841,7 @@ function showDia(n) {
     setTimeout(() => {
       initMapAltD8();
       initMapPR05D8();
-      initMapRutaD8();
+      showRutaTabD8('principal');
       initMapPOID8();
       renderRestList('#rests-d8-madalena', RESTS_D8_MADALENA);
       renderRestList('#rests-d8-sao-roque', RESTS_D8_SAO_ROQUE);
@@ -3030,20 +3030,52 @@ function initMapPR05D8() {
 }
 
 /* Waypoints de l'itinerari proposat (Centre i Oest de Pico) */
-const DIA8_WAYPOINTS = [
+const DIA8_WAYPOINTS_PRINCIPAL = [
   { nom: 'Parque Florestal da Prainha', coords: [38.4862056, -28.2425003], icon: '🌲' },
   { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭' },
-  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️' },
-  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗' },
+  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true },
+  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true },
   { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️' },
   { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
-  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾', star: true },
+  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾' },
   { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true },
   { nom: 'São Roque do Pico — sopar', coords: [38.5181646, -28.3098427], icon: '🍽️' },
 ];
 
-function initMapRutaD8() {
-  const el = document.getElementById('map-ruta-d8');
+const DIA8_WAYPOINTS_ALT = [
+  { nom: 'Parque Florestal da Prainha', coords: [38.4862056, -28.2425003], icon: '🌲' },
+  { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true },
+  { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️' },
+  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾' },
+  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
+  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true },
+  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true },
+  { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭' },
+  { nom: 'São Roque do Pico — sopar', coords: [38.5181646, -28.3098427], icon: '🍽️' },
+];
+
+const D11_ALLOTJAMENT_PIC_D8 = [38.4607967, -28.1920405]; // Prainha Apartments
+const rutaTabsD8Init = { principal: false, alt: false };
+
+function showRutaTabD8(tab) {
+  document.querySelectorAll('.d8-route-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.d8-route-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`.d8-route-tab[data-tab="${tab}"]`);
+  const panel = document.getElementById(`d8-ruta-panel-${tab}`);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  if (tab === 'principal' && !rutaTabsD8Init.principal) {
+    rutaTabsD8Init.principal = true;
+    setTimeout(() => initMapRutaD8('map-ruta-d8', DIA8_WAYPOINTS_PRINCIPAL), 80);
+  }
+  if (tab === 'alt' && !rutaTabsD8Init.alt) {
+    rutaTabsD8Init.alt = true;
+    setTimeout(() => initMapRutaD8('map-ruta-d8-alt', DIA8_WAYPOINTS_ALT), 80);
+  }
+}
+
+function initMapRutaD8(elId, waypoints) {
+  const el = document.getElementById(elId);
   if (!el || el._leaflet_id) return;
   const map = L.map(el, { zoomControl: false, scrollWheelZoom: false });
   L.control.zoom({ position: 'topright' }).addTo(map);
@@ -3053,18 +3085,21 @@ function initMapRutaD8() {
   L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>▶️ Inici</b><br>Allotjament a Prainha');
 
-  DIA8_WAYPOINTS.forEach((wp, i) => {
+  const stops = waypoints.slice(0, -1);
+  const finish = waypoints[waypoints.length - 1];
+  stops.forEach((wp, i) => {
     L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
       .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
   });
+  L.marker(finish.coords, { icon: numberIcon(stops.length + 1, COL_SM), zIndexOffset: 100 })
+    .addTo(map).bindPopup(`<b>${stops.length + 1}. ${finish.nom}</b>`);
 
   L.marker([38.5181646, -28.3098427], { icon: finishIcon(), zIndexOffset: 190 })
     .addTo(map).bindPopup('<b>🏁 São Roque do Pico</b>');
 
-  const all = [start, ...DIA8_WAYPOINTS.map(w => w.coords)];
+  const all = [start, ...waypoints.map(w => w.coords)];
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
 }
-const D11_ALLOTJAMENT_PIC_D8 = [38.4607967, -28.1920405]; // Prainha Apartments
 
 /* POI mapa dia 8 — centre i oest de Pico */
 let _poiMap8=null, _poiMarkerData8=[], _poiLeafCounts8={};
@@ -3081,8 +3116,11 @@ function initMapPOID8() {
 
   function isPIC(i){return i==='Pico'||i==='pic';}
   function isD8Zone(lat, lng){
-    // Centre i oest de l'illa: Madalena, Planalto da Achada, São Roque do Pico, Prainha — exclou Lajes/Calheta de Nesquim (est/sud)
-    return lng < -28.15;
+    // Rectangle 1: Madalena + costa sud-oest
+    const rect1 = lat>=38.48 && lat<=38.545 && lng>=-28.565 && lng<=-28.49;
+    // Rectangle 2: Planalto da Achada + São Roque do Pico
+    const rect2 = lat>=38.44 && lat<=38.545 && lng>=-28.49 && lng<=-28.27;
+    return rect1 || rect2;
   }
   function mapsUrl(lat,lng){return `https://maps.google.com/?q=${lat},${lng}`;}
 
