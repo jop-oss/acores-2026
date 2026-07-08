@@ -19,12 +19,13 @@ document.querySelectorAll(".island-btn").forEach((btn) => {
   });
 });
 
-// Refresc automàtic cada 30 segons
+// Refresc automàtic cada 3 minuts (30s era excessiu i sobrecarregava el servidor de SpotAzores)
 function refreshCams() {
   document.querySelectorAll(".webcam-img").forEach((img) => {
     const card = img.closest(".webcam-card");
     card.classList.add("refreshing");
     const newImg = new Image();
+    newImg.referrerPolicy = "no-referrer";
     const base = img.src.split("?")[0];
     newImg.onload = () => {
       img.src = newImg.src;
@@ -35,7 +36,7 @@ function refreshCams() {
   });
 }
 
-setInterval(refreshCams, 30000);
+setInterval(refreshCams, 180000);
 
 // Clic a la card obre SpotAzores en una nova pestanya
 document.querySelectorAll(".webcam-card").forEach((card) => {
@@ -114,7 +115,7 @@ async function loadWebcamMap() {
         marker.bindPopup(`
           <div style="min-width:200px;text-align:center;">
             <strong style="display:block;margin-bottom:6px;font-size:0.85rem;">${title}</strong>
-            ${imgUrl ? `<img src="${imgUrl}" style="width:100%;border-radius:6px;margin-bottom:8px;">` : ""}
+            ${imgUrl ? `<img src="${imgUrl}" referrerpolicy="no-referrer" style="width:100%;border-radius:6px;margin-bottom:8px;">` : ""}
             ${
               playerUrl
                 ? `<a href="${playerUrl}" target="_blank"
@@ -452,7 +453,7 @@ function buildLeafletMap() {
           `
           <div style="text-align:center;min-width:220px;">
             <strong style="display:block;margin-bottom:8px;font-size:0.9rem;">${c.name}</strong>
-            <img id="popup-img-${c.cam}" src="${imgUrl()}"
+            <img id="popup-img-${c.cam}" src="${imgUrl()}" referrerpolicy="no-referrer"
                  style="width:100%;border-radius:6px;margin-bottom:8px;">
             <div style="font-size:0.75rem;color:#888;margin-bottom:6px;">S'actualitza cada 5 min</div>
             <a href="${c.url}" target="_blank"

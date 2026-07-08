@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prova · Webcams Windy Açores</title>
+<style>
+  body {
+    background: #0a1628;
+    color: #e8f4f8;
+    font-family: system-ui, sans-serif;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  h1 { color: #a8d8b0; font-size: 1.5rem; }
+  .subtitle { color: #6aab7a; font-size: 0.9rem; margin-bottom: 24px; }
+  .status {
+    background: #0f2318;
+    border: 1px solid #2d5a3d;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+  }
+  .status.error { border-color: #ef4444; color: #fca5a5; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .cam-card {
+    background: #0f2318;
+    border: 1px solid #2d5a3d;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .cam-img-wrap {
+    aspect-ratio: 4/3;
+    background: #0a1628;
+    overflow: hidden;
+  }
+  .cam-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cam-info { padding: 10px 14px; }
+  .cam-title { color: #a8d8b0; font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .cam-loc { color: #6aab7a; font-size: 0.75rem; }
+  .cam-noimg {
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; color: #6aab7a; font-size: 0.8rem; text-align: center; padding: 12px;
+  }
+  pre {
+    background: #0f2318; border: 1px solid #2d5a3d; border-radius: 10px;
+    padding: 14px; overflow-x: auto; font-size: 0.75rem; color: #a8d8b0;
+  }
+</style>
+</head>
+<body>
+
+<h1>🌬️ Prova: Webcams de Windy per a les Açores</h1>
+<p class="subtitle">Aquesta pàgina és només una prova aïllada — no toca res del web real. Obre-la directament al navegador (fent doble clic al fitxer, o arrossegant-la a una pestanya).</p>
+
+<div id="status" class="status">Consultant l'API de Windy...</div>
+<div id="grid" class="grid"></div>
+
+<script>
+const WINDY_KEY = "RFX87wOopVv0oQ8HlifoUNlSYukIAkhy";
+// bbox: sud, oest, nord, est (mateix que ja feu servir al codi actual)
+const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location,player,images&apiKey=${WINDY_KEY}`;
+
+const statusEl = document.getElementById("status");
+const gridEl = document.getElementById("grid");
+
+fetch(url)
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    return res.json();
+  })
+  .then(data => {
+    const cams = data.webcams || [];
+    if (cams.length === 0) {
+      statusEl.textContent = "L'API ha respost correctament, però no ha retornat cap webcam per a aquesta zona (bbox).";
+      statusEl.classList.add("error");
+      return;
+    }
+    statusEl.textContent = `✅ L'API ha retornat ${cams.length} webcams a la zona de les Açores.`;
+
+    cams.forEach(cam => {
+      const imgUrl = cam.images?.current?.preview || cam.images?.current?.thumbnail || "";
+      const title = cam.title || "Sense nom";
+      const loc = cam.location
+        ? [cam.location.city, cam.location.region, cam.location.country].filter(Boolean).join(", ")
+        : "Ubicació desconeguda";
+
+      const card = document.createElement("div");
+      card.className = "cam-card";
+      card.innerHTML = `
+        <div class="cam-img-wrap">
+          ${imgUrl
+            ? `<img src="${imgUrl}" alt="${title}" loading="lazy">`
+            : `<div class="cam-noimg">Sense imatge de previsualització</div>`}
+        </div>
+        <div class="cam-info">
+          <div class="cam-title">${title}</div>
+          <div class="cam-loc">${loc}</div>
+        </div>
+      `;
+      gridEl.appendChild(card);
+    });
+  })
+  .catch(err => {
+    statusEl.textContent = `❌ Error consultant l'API de Windy: ${err.message}`;
+    statusEl.classList.add("error");
+  });
+</script>
+
+</body>
+</html>
