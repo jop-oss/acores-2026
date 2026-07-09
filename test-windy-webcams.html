@@ -66,26 +66,60 @@
 
 <script>
 const WINDY_KEY = "RFX87wOopVv0oQ8HlifoUNlSYukIAkhy";
-// bbox: sud, oest, nord, est (mateix que ja feu servir al codi actual)
-const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location,player,images`;
+
+const variants = [
+  { label: "bbox + location,player,images (original)",
+    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location,player,images` },
+  { label: "bbox + només location",
+    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location` },
+  { label: "sense bbox, filtrant per countries=PT",
+    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&countries=PT&include=location` },
+  { label: "bbox en ordre invers (nord,oest,sud,est)",
+    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&bbox=40.5,-24.5,36.5,-31.5&include=location` },
+  { label: "sense cap paràmetre extra (només limit)",
+    url: `https://api.windy.com/webcams/api/v3/webcams?limit=5` },
+];
 
 const statusEl = document.getElementById("status");
 const gridEl = document.getElementById("grid");
+statusEl.textContent = "Provant diverses variants...";
 
-fetch(url, {
-  headers: {
-    "x-windy-api-key": WINDY_KEY,
-  },
-})
-  .then(async res => {
+async function tryVariant(v) {
+  const div = document.createElement("div");
+  div.className = "status";
+  div.style.marginBottom = "10px";
+  div.textContent = `⏳ ${v.label}...`;
+  statusEl.after(div);
+  try {
+    const res = await fetch(v.url, { headers: { "x-windy-api-key": WINDY_KEY } });
     const bodyText = await res.text();
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText} — Resposta: ${bodyText}`);
+      div.textContent = `❌ ${v.label} → HTTP ${res.status}: ${bodyText.slice(0, 200)}`;
+      div.classList.add("error");
+      return null;
     }
-    return JSON.parse(bodyText);
-  })
-  .then(data => {
-    const cams = data.webcams || [];
+    const data = JSON.parse(bodyText);
+    const n = data.webcams ? data.webcams.length : (data.result?.webcams?.length ?? "?");
+    div.textContent = `✅ ${v.label} → ${n} webcams`;
+    return data;
+  } catch (e) {
+    div.textContent = `❌ ${v.label} → ${e.message}`;
+    div.classList.add("error");
+    return null;
+  }
+}
+
+(async () => {
+  let firstGood = null;
+  for (const v of variants) {
+    const data = await tryVariant(v);
+    if (data && !firstGood) firstGood = data;
+  }
+  statusEl.textContent = firstGood
+    ? "Almenys una variant ha funcionat — mostrant els seus resultats a sota:"
+    : "Cap variant ha funcionat. Mira els detalls de cada intent a sobre.";
+
+  const cams = firstGood?.webcams || firstGood?.result?.webcams || [];
     if (cams.length === 0) {
       statusEl.textContent = "L'API ha respost correctament, però no ha retornat cap webcam per a aquesta zona (bbox).";
       statusEl.classList.add("error");
@@ -115,11 +149,7 @@ fetch(url, {
       `;
       gridEl.appendChild(card);
     });
-  })
-  .catch(err => {
-    statusEl.textContent = `❌ Error consultant l'API de Windy: ${err.message}`;
-    statusEl.classList.add("error");
-  });
+})();
 </script>
 
 </body>
