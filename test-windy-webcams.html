@@ -66,53 +66,51 @@
 
 <script>
 const WINDY_KEY = "RFX87wOopVv0oQ8HlifoUNlSYukIAkhy";
-
-const variants = [
-  { label: "countries=PT, limit=50, include=location,player,images",
-    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&countries=PT&include=location,player,images` },
-];
+const PAGE_SIZE = 50;
 
 const statusEl = document.getElementById("status");
 const gridEl = document.getElementById("grid");
-statusEl.textContent = "Provant...";
+statusEl.textContent = "Recorrent totes les pàgines de webcams de Portugal...";
 
-async function tryVariant(v) {
-  const div = document.createElement("div");
-  div.className = "status";
-  div.style.marginBottom = "10px";
-  div.textContent = `⏳ ${v.label}...`;
-  statusEl.after(div);
-  try {
-    const res = await fetch(v.url, { headers: { "x-windy-api-key": WINDY_KEY } });
-    const bodyText = await res.text();
-    if (!res.ok) {
-      div.textContent = `❌ ${v.label} → HTTP ${res.status}: ${bodyText.slice(0, 200)}`;
-      div.classList.add("error");
-      return null;
-    }
-    const data = JSON.parse(bodyText);
-    const n = data.webcams ? data.webcams.length : (data.result?.webcams?.length ?? "?");
-    div.textContent = `✅ ${v.label} → ${n} webcams`;
-    return data;
-  } catch (e) {
-    div.textContent = `❌ ${v.label} → ${e.message}`;
-    div.classList.add("error");
-    return null;
-  }
+async function fetchPage(offset) {
+  const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=${PAGE_SIZE}&offset=${offset}&countries=PT&include=location,player,images`;
+  const res = await fetch(url, { headers: { "x-windy-api-key": WINDY_KEY } });
+  const bodyText = await res.text();
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${bodyText.slice(0, 200)}`);
+  return JSON.parse(bodyText);
 }
 
 (async () => {
-  let firstGood = null;
-  for (const v of variants) {
-    const data = await tryVariant(v);
-    if (data && !firstGood) firstGood = data;
-  }
-  statusEl.textContent = firstGood
-    ? "Resultats (fixa't especialment en els que siguin de les Açores):"
-    : "Cap variant ha funcionat. Mira els detalls de cada intent a sobre.";
+  let allCams = [];
+  let offset = 0;
+  let total = null;
+  const progressDiv = document.createElement("div");
+  progressDiv.className = "status";
+  statusEl.after(progressDiv);
 
-  const cams = firstGood?.webcams || firstGood?.result?.webcams || [];
+  try {
+    while (true) {
+      const data = await fetchPage(offset);
+      const cams = data.webcams || data.result?.webcams || [];
+      if (total === null) total = data.total ?? data.result?.total ?? null;
+      allCams = allCams.concat(cams);
+      progressDiv.textContent = `⏳ Pàgina offset=${offset}: +${cams.length} webcams (acumulat: ${allCams.length}${total !== null ? ` de ${total}` : ""})`;
+      if (cams.length < PAGE_SIZE) break; // última pàgina
+      offset += PAGE_SIZE;
+      if (offset >= 500) break; // límit de seguretat
+    }
+    progressDiv.textContent = `✅ Total recorregut: ${allCams.length} webcams de Portugal${total !== null ? ` (l'API en reporta ${total} en total)` : ""}`;
+  } catch (e) {
+    progressDiv.textContent = `❌ Error a la pàgina offset=${offset}: ${e.message}`;
+    progressDiv.classList.add("error");
+  }
+
   const isAzoresCam = c => /az?ores/i.test(c.location?.region || "") || /az?ores/i.test(c.title || "");
+  const azoresCams = allCams.filter(isAzoresCam);
+
+  statusEl.textContent = `De ${allCams.length} webcams portugueses, ${azoresCams.length} són de les Açores:`;
+
+  const cams = azoresCams.length > 0 ? azoresCams : allCams;
   cams.sort((a, b) => (isAzoresCam(b) ? 1 : 0) - (isAzoresCam(a) ? 1 : 0));
     if (cams.length === 0) {
       statusEl.textContent = "L'API ha respost correctament, però no ha retornat cap webcam per a aquesta zona (bbox).";
