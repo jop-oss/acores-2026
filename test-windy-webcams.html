@@ -112,6 +112,8 @@ async function tryVariant(v) {
     : "Cap variant ha funcionat. Mira els detalls de cada intent a sobre.";
 
   const cams = firstGood?.webcams || firstGood?.result?.webcams || [];
+  const isAzoresCam = c => /az?ores/i.test(c.location?.region || "") || /az?ores/i.test(c.title || "");
+  cams.sort((a, b) => (isAzoresCam(b) ? 1 : 0) - (isAzoresCam(a) ? 1 : 0));
     if (cams.length === 0) {
       statusEl.textContent = "L'API ha respost correctament, però no ha retornat cap webcam per a aquesta zona (bbox).";
       statusEl.classList.add("error");
@@ -126,7 +128,7 @@ async function tryVariant(v) {
       const loc = cam.location
         ? [cam.location.city, cam.location.region, cam.location.country].filter(Boolean).join(", ")
         : "Ubicació desconeguda";
-      const isAzores = /a[cç]ores/i.test(region) || /a[cç]ores/i.test(title);
+      const isAzores = isAzoresCam(cam);
 
       const card = document.createElement("div");
       card.className = "cam-card";
