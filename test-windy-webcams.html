@@ -22,6 +22,8 @@
     padding: 14px 18px;
     margin-bottom: 24px;
     font-size: 0.9rem;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
   .status.error { border-color: #ef4444; color: #fca5a5; }
   .grid {
@@ -75,9 +77,12 @@ fetch(url, {
     "x-windy-api-key": WINDY_KEY,
   },
 })
-  .then(res => {
-    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    return res.json();
+  .then(async res => {
+    const bodyText = await res.text();
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} ${res.statusText} — Resposta: ${bodyText}`);
+    }
+    return JSON.parse(bodyText);
   })
   .then(data => {
     const cams = data.webcams || [];
