@@ -68,21 +68,13 @@
 const WINDY_KEY = "RFX87wOopVv0oQ8HlifoUNlSYukIAkhy";
 
 const variants = [
-  { label: "bbox + location,player,images (original)",
-    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location,player,images` },
-  { label: "bbox + només location",
-    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location` },
-  { label: "sense bbox, filtrant per countries=PT",
-    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&countries=PT&include=location` },
-  { label: "bbox en ordre invers (nord,oest,sud,est)",
-    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&bbox=40.5,-24.5,36.5,-31.5&include=location` },
-  { label: "sense cap paràmetre extra (només limit)",
-    url: `https://api.windy.com/webcams/api/v3/webcams?limit=5` },
+  { label: "countries=PT, limit=50, include=location,player,images",
+    url: `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&countries=PT&include=location,player,images` },
 ];
 
 const statusEl = document.getElementById("status");
 const gridEl = document.getElementById("grid");
-statusEl.textContent = "Provant diverses variants...";
+statusEl.textContent = "Provant...";
 
 async function tryVariant(v) {
   const div = document.createElement("div");
@@ -116,7 +108,7 @@ async function tryVariant(v) {
     if (data && !firstGood) firstGood = data;
   }
   statusEl.textContent = firstGood
-    ? "Almenys una variant ha funcionat — mostrant els seus resultats a sota:"
+    ? "Resultats (fixa't especialment en els que siguin de les Açores):"
     : "Cap variant ha funcionat. Mira els detalls de cada intent a sobre.";
 
   const cams = firstGood?.webcams || firstGood?.result?.webcams || [];
@@ -130,12 +122,15 @@ async function tryVariant(v) {
     cams.forEach(cam => {
       const imgUrl = cam.images?.current?.preview || cam.images?.current?.thumbnail || "";
       const title = cam.title || "Sense nom";
+      const region = cam.location?.region || "";
       const loc = cam.location
         ? [cam.location.city, cam.location.region, cam.location.country].filter(Boolean).join(", ")
         : "Ubicació desconeguda";
+      const isAzores = /a[cç]ores/i.test(region) || /a[cç]ores/i.test(title);
 
       const card = document.createElement("div");
       card.className = "cam-card";
+      if (isAzores) card.style.borderColor = "#fbbf24";
       card.innerHTML = `
         <div class="cam-img-wrap">
           ${imgUrl
@@ -143,7 +138,7 @@ async function tryVariant(v) {
             : `<div class="cam-noimg">Sense imatge de previsualització</div>`}
         </div>
         <div class="cam-info">
-          <div class="cam-title">${title}</div>
+          <div class="cam-title">${isAzores ? "🌟 " : ""}${title}</div>
           <div class="cam-loc">${loc}</div>
         </div>
       `;
