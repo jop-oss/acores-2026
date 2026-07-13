@@ -157,6 +157,20 @@
     .admin-ruleta-info span { font-size: .9rem; color: var(--text2); }
     .admin-ruleta-info strong { color: var(--text); }
 
+    /* Mini marcador (Trivial / Scrabble) */
+    .admin-mini-scores {
+      display: flex; flex-wrap: wrap; gap: .4rem;
+      margin: 0 0 .25rem;
+    }
+    .admin-mini-score {
+      font-size: .78rem; color: var(--text2);
+      background: rgba(106,171,122,.08);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: .2rem .65rem;
+    }
+    .admin-mini-score strong { color: var(--verd2); }
+    .admin-mini-score-membres { color: var(--text2); opacity: .7; font-size: .72rem; }
+
     /* Toast */
     .toast {
       position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -300,14 +314,16 @@
     <div class="admin-seccio-header">
       <div class="admin-seccio-title">🎓 Trivial Açores</div>
     </div>
-    <div class="admin-ruleta-info" style="margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+    <div class="admin-ruleta-info" style="margin-bottom:.35rem;flex-wrap:wrap;gap:.5rem">
       <span>Individual: <strong id="trivial-estat-ind">—</strong></span>
       <button class="btn-reset-tot" onclick="resetTrivial('individual')">Reiniciar Individual</button>
     </div>
-    <div class="admin-ruleta-info" style="flex-wrap:wrap;gap:.5rem">
+    <div class="admin-mini-scores" id="trivial-scores-ind"></div>
+    <div class="admin-ruleta-info" style="margin-top:.75rem;margin-bottom:.35rem;flex-wrap:wrap;gap:.5rem">
       <span>Equips: <strong id="trivial-estat-eq">—</strong></span>
       <button class="btn-reset-tot" onclick="resetTrivial('equips')">Reiniciar Equips</button>
     </div>
+    <div class="admin-mini-scores" id="trivial-scores-eq"></div>
   </div>
 
 
@@ -501,14 +517,16 @@
     <div class="admin-seccio-header">
       <div class="admin-seccio-title">⌛ Scrabble Açores</div>
     </div>
-    <div class="admin-ruleta-info" style="margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+    <div class="admin-ruleta-info" style="margin-bottom:.35rem;flex-wrap:wrap;gap:.5rem">
       <span>Individual: <strong id="scrabble-estat-ind">—</strong></span>
       <button class="btn-reset-tot" onclick="resetScrabble('individual')">Reiniciar Individual</button>
     </div>
-    <div class="admin-ruleta-info" style="flex-wrap:wrap;gap:.5rem">
+    <div class="admin-mini-scores" id="scrabble-scores-ind"></div>
+    <div class="admin-ruleta-info" style="margin-top:.75rem;margin-bottom:.35rem;flex-wrap:wrap;gap:.5rem">
       <span>Equips: <strong id="scrabble-estat-eq">—</strong></span>
       <button class="btn-reset-tot" onclick="resetScrabble('equips')">Reiniciar Equips</button>
     </div>
+    <div class="admin-mini-scores" id="scrabble-scores-eq"></div>
   </div>
 
   <!-- BUSCA LES DIFERÈNCIES -->
@@ -889,24 +907,35 @@
   }
 
   // ── TRIVIAL ────────────────────────────────────────────────
+  function adminScoresHtml(p) {
+    if (!p || !p.jugadors || !p.jugadors.length) return '';
+    const ordenats = [...p.jugadors].sort((a, b) => (b.punts || 0) - (a.punts || 0));
+    return ordenats.map(j => {
+      const membres = j.membres && j.membres.length ? ` <span class="admin-mini-score-membres">(${j.membres.join(', ')})</span>` : '';
+      return `<span class="admin-mini-score">${j.nom}${membres}: <strong>${j.punts || 0}</strong></span>`;
+    }).join('');
+  }
+
   function renderTrivial() {
-    const renderEstat = (snap, elId) => {
+    const renderEstat = (snap, elId, scoresId) => {
       const el = document.getElementById(elId);
-      if (!snap.exists) { el.textContent = 'Sense partida'; return; }
+      const scoresEl = document.getElementById(scoresId);
+      if (!snap.exists) { el.textContent = 'Sense partida'; if (scoresEl) scoresEl.innerHTML = ''; return; }
       const p = snap.data();
-      if (!p.activa) { el.textContent = 'Sense partida'; return; }
+      if (!p.activa) { el.textContent = 'Sense partida'; if (scoresEl) scoresEl.innerHTML = ''; return; }
       const torn = p.ordre?.[p.tornIdx % (p.ordre?.length || 1)] || '—';
       const ronda = p.ronda || 1;
       const guanyador = p.guanyador ? `🏆 Guanyador: ${p.guanyador}` : '';
       el.textContent = `Ronda ${ronda} · Torn de ${torn} ${guanyador}`;
+      if (scoresEl) scoresEl.innerHTML = adminScoresHtml(p);
     };
 
     Promise.all([
       getDb().collection('trivial_partides').doc('individual').get(),
       getDb().collection('trivial_partides').doc('equips').get(),
     ]).then(([snapInd, snapEq]) => {
-      renderEstat(snapInd, 'trivial-estat-ind');
-      renderEstat(snapEq,  'trivial-estat-eq');
+      renderEstat(snapInd, 'trivial-estat-ind', 'trivial-scores-ind');
+      renderEstat(snapEq,  'trivial-estat-eq',  'trivial-scores-eq');
     }).catch(e => console.error(e));
   }
 
@@ -1240,28 +1269,31 @@
   }
 
   function renderScrabble() {
-    const renderEstat = (snap, elId) => {
+    const renderEstat = (snap, elId, scoresId) => {
       const el = document.getElementById(elId);
-      if (!snap.exists) { el.textContent = 'Sense partida'; return; }
+      const scoresEl = document.getElementById(scoresId);
+      if (!snap.exists) { el.textContent = 'Sense partida'; if (scoresEl) scoresEl.innerHTML = ''; return; }
       const p = snap.data();
-      if (!p.activa) { el.textContent = 'Sense partida'; return; }
+      if (!p.activa) { el.textContent = 'Sense partida'; if (scoresEl) scoresEl.innerHTML = ''; return; }
       if (p.acabada) {
         const ordenats = [...(p.jugadors || [])].sort((a, b) => (b.punts || 0) - (a.punts || 0));
         const guanyador = ordenats[0];
         el.textContent = guanyador ? `Acabada · Guanyador: ${guanyador.nom} (${guanyador.punts || 0} pts)` : 'Acabada';
+        if (scoresEl) scoresEl.innerHTML = adminScoresHtml(p);
         return;
       }
       const torn = (p.ordre && p.ordre.length) ? p.ordre[p.tornIdx % p.ordre.length] : '—';
       const ronda = p.ronda || 1;
       el.textContent = `Ronda ${ronda} · Torn de ${torn}`;
+      if (scoresEl) scoresEl.innerHTML = adminScoresHtml(p);
     };
 
     Promise.all([
       getDb().collection('scrabble_partides').doc('individual').get(),
       getDb().collection('scrabble_partides').doc('equips').get(),
     ]).then(([snapInd, snapEq]) => {
-      renderEstat(snapInd, 'scrabble-estat-ind');
-      renderEstat(snapEq,  'scrabble-estat-eq');
+      renderEstat(snapInd, 'scrabble-estat-ind', 'scrabble-scores-ind');
+      renderEstat(snapEq,  'scrabble-estat-eq',  'scrabble-scores-eq');
     }).catch(e => console.error(e));
   }
 
