@@ -192,25 +192,31 @@ async function appSeleccionarJugador(nom) {
   } else {
     // Primer cop que algú s'identifica com aquesta persona: cal el PIN
     // inicial (el que ha repartit en Jordi) i triar-ne un de propi.
+    // Si qui hi entra és en Jordi amb el PIN mestre (per exemple per
+    // comprovar coses), no volem fixar-li cap PIN a la persona real
+    // sense que ella hi participi — es queda igual, sense definir.
     const inicial = prompt(`Primera vegada que t'identifiques com a ${nom}.\nIntrodueix el PIN inicial que et van donar:`);
     if (inicial === null) return;
-    if (inicial !== INITIAL_PINS_APP[nom] && inicial !== ADMIN_MASTER_PIN) {
+    const ambMestre = inicial === ADMIN_MASTER_PIN;
+    if (inicial !== INITIAL_PINS_APP[nom] && !ambMestre) {
       alert('PIN incorrecte.');
       return;
     }
-    let nouPin = null;
-    for (;;) {
-      nouPin = prompt('Defineix ara un PIN personal de 4 xifres (el faràs servir a partir d\'ara per identificar-te):');
-      if (nouPin === null) return;
-      if (!/^\d{4}$/.test(nouPin)) { alert('Ha de ser de 4 xifres.'); continue; }
-      const confirmacio = prompt('Torna a escriure\'l per confirmar-lo:');
-      if (confirmacio === nouPin) break;
-      alert('Els dos PIN no coincideixen, torna-ho a provar.');
-    }
-    const desat = await appDesarPinPersonal(nom, nouPin);
-    if (!desat) {
-      alert('No s\'ha pogut desar el PIN (sense connexió). Torna-ho a provar.');
-      return;
+    if (!ambMestre) {
+      let nouPin = null;
+      for (;;) {
+        nouPin = prompt('Defineix ara un PIN personal de 4 xifres (el faràs servir a partir d\'ara per identificar-te):');
+        if (nouPin === null) return;
+        if (!/^\d{4}$/.test(nouPin)) { alert('Ha de ser de 4 xifres.'); continue; }
+        const confirmacio = prompt('Torna a escriure\'l per confirmar-lo:');
+        if (confirmacio === nouPin) break;
+        alert('Els dos PIN no coincideixen, torna-ho a provar.');
+      }
+      const desat = await appDesarPinPersonal(nom, nouPin);
+      if (!desat) {
+        alert('No s\'ha pogut desar el PIN (sense connexió). Torna-ho a provar.');
+        return;
+      }
     }
   }
 
