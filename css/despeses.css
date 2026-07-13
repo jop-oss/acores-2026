@@ -510,3 +510,17 @@ body.light .desp-field select { background: #f4f7f4; color: #1a3a2a; }
   .desp-item-accions { display: none; }
   .desp-field-row { grid-template-columns: 1fr; }
 }
+
+/* ── AVÍS: Firebase no disponible ──────────────────────────── */
+.desp-firebase-warning {
+  background: rgba(248,113,113,0.12);
+  border: 1px solid var(--d-red);
+  color: #ffb4b4;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 10px 16px;
+  margin: 0 auto;
+  max-width: 900px;
+}
+.desp-firebase-warning.hidden { display: none; }

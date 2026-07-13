@@ -1476,17 +1476,17 @@ function updateHoresToggleButtons() {
 
 function toggleHoresTimeline() {
   if (!_itinHoresPermes) return;
-  const show = !document.body.classList.contains('itin-mostra-hores');
-  document.body.classList.toggle('itin-mostra-hores', show);
-  localStorage.setItem('itin_mostra_hores', show ? '1' : '0');
+  document.body.classList.toggle('itin-mostra-hores');
   updateHoresToggleButtons();
 }
 
 function aplicaPermisHores(jugador, permesos) {
   _itinHoresPermes = jugador === 'Jordi' || (permesos && permesos[jugador] === true);
 
-  const override = localStorage.getItem('itin_mostra_hores');
-  const show = _itinHoresPermes && (override !== null ? override === '1' : jugador === 'Jordi');
+  // Per defecte només en Jordi les veu de bon principi; qualsevol altra
+  // persona (encara que tingui permís) ha de prémer el botó cada vegada
+  // que entra — no es recorda entre visites.
+  const show = jugador === 'Jordi';
   document.body.classList.toggle('itin-mostra-hores', show);
   updateHoresToggleButtons();
 }

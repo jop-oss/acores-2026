@@ -83,8 +83,20 @@ let filtreActiu = 'totes';
 let editantId    = null;
 let editantPagId = null;
 
+/* Mateix projecte Firebase que fa servir admin.html */
+const DESP_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBp7lMa2opgXrljNMLykfjxAJl2Y8f5oa8",
+  authDomain: "acores-2026.firebaseapp.com",
+  projectId: "acores-2026",
+  storageBucket: "acores-2026.firebasestorage.app",
+  messagingSenderId: "749343671546",
+  appId: "1:749343671546:web:aa2e3d6043de9b8c89f543"
+};
+
 function initFirebase() {
   try {
+    if (typeof firebase === 'undefined') throw new Error('SDK de Firebase no carregat');
+    if (!firebase.apps.length) firebase.initializeApp(DESP_FIREBASE_CONFIG);
     db = firebase.firestore();
     db.collection('despeses').orderBy('ts', 'asc').onSnapshot(snap => {
       despesesDinamiques = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -95,7 +107,9 @@ function initFirebase() {
       render();
     });
   } catch (e) {
-    console.warn('Firebase no disponible, mode local');
+    console.warn('Firebase no disponible, mode local (les despeses NO es desaran de forma permanent)', e);
+    const warn = document.getElementById('despFirebaseWarning');
+    if (warn) warn.classList.remove('hidden');
     render();
   }
 }
