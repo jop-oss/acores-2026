@@ -2380,7 +2380,24 @@ function renderInfoCarreteres() {
 }
 
 
-function renderInfoReserves() {
+let _resSubTab = "general";
+const RES_SUBTABS = [
+  { id: "general", emoji: "📋", label: "Informació general" },
+  { id: "excursions", emoji: "🎟️", label: "Excursions i visites previstes/reservades" },
+];
+
+function resSetSubTab(id) {
+  _resSubTab = id;
+  document.querySelectorAll(".res-subtab-btn").forEach((b) =>
+    b.classList.toggle("actiu", b.dataset.subtab === id),
+  );
+  const wrap = document.getElementById("resSubTabContent");
+  if (!wrap) return;
+  wrap.innerHTML = _resSubTab === "general" ? renderResGeneral() : renderResExcursions();
+  if (_resSubTab === "excursions") initResExcursionsMaps();
+}
+
+function renderResGeneral() {
   const ILLA_COLOR = {
     "Sao Miguel": "#6abf70",
     Pico: "#888888",
@@ -2446,6 +2463,96 @@ function renderInfoReserves() {
     </div>`;
   }).join("");
 
+  return `<p class="info-intro">Llocs on cal reservar amb antelació o que tenen restriccions d'accés.</p>
+    <div class="res-grid">${cards}</div>`;
+}
+
+/* ── Excursions i visites reservades (cards + mapes) ── */
+function renderResExcursions() {
+  const ILLA_COLOR = { "Sao Miguel": "#6abf70", Pico: "#888888" };
+  const ILLA_LBL = { "Sao Miguel": "São Miguel", Pico: "Pico" };
+
+  const cards = ME_EXCURSIONS_RESERVADES.map((r) => {
+    const color = ILLA_COLOR[r.illa] || "#6aab7a";
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${r.coords[0]},${r.coords[1]}`;
+    const estatHtml = r.estat
+      .map(
+        (e) =>
+          `<span class="excres-estat-item${r.estatUrgent ? " urgent" : ""}">${r.estatUrgent ? "⚠️" : "✅"} ${escHtml(e)}</span>`,
+      )
+      .join("");
+
+    return `<div class="excres-card" style="--excres-color:${color}">
+      <div class="excres-card-header">
+        <span class="excres-dia-badge">${escHtml(r.dia)} · ${escHtml(r.hora)}</span>
+        <h4 class="excres-nom">${escHtml(r.nom)}</h4>
+      </div>
+      <div class="excres-body">
+        <div class="excres-row"><span class="excres-label">📍 Zona</span><span>${escHtml(r.zona)} (${escHtml(ILLA_LBL[r.illa] || r.illa)})</span></div>
+        <div class="excres-row"><span class="excres-label">🏢 Empresa</span><span>${escHtml(r.empresa)}</span></div>
+        <div class="excres-row"><span class="excres-label">🏠 Adreça</span><span>${escHtml(r.adreca)}</span></div>
+        <div class="excres-row"><span class="excres-label">💶 Preu</span><span>${escHtml(r.preu)}</span></div>
+        <div class="excres-row"><span class="excres-label">📝 Notes</span><span>${escHtml(r.notes)}</span></div>
+      </div>
+      <div class="excres-estat">${estatHtml}</div>
+      <a class="exc-link-btn" href="${mapsUrl}" target="_blank" rel="noopener">🗺️ Obrir ubicació a Google Maps</a>
+    </div>`;
+  }).join("");
+
+  return `<p class="info-intro">Excursions i visites amb reserva ja confirmada o pendent de confirmar.</p>
+    <div class="excres-grid">${cards}</div>
+    <div class="excres-mapes">
+      <div class="excres-mapa-bloc">
+        <h4 class="excres-mapa-titol">🌋 São Miguel</h4>
+        <div class="excres-mapa" id="excresMapaSaoMiguel"></div>
+      </div>
+      <div class="excres-mapa-bloc">
+        <h4 class="excres-mapa-titol">⛰️ Pico</h4>
+        <div class="excres-mapa" id="excresMapaPico"></div>
+      </div>
+    </div>`;
+}
+
+function initResExcursionsMaps() {
+  const smPoints = ME_EXCURSIONS_RESERVADES.filter((r) => r.illa === "Sao Miguel");
+  const picoPoints = ME_EXCURSIONS_RESERVADES.filter((r) => r.illa === "Pico");
+  initResMap("excresMapaSaoMiguel", smPoints, "#6abf70");
+  initResMap("excresMapaPico", picoPoints, "#888888");
+}
+
+function initResMap(mapId, points, color) {
+  const el = document.getElementById(mapId);
+  if (!el || !points.length) return;
+
+  const map = L.map(mapId, { zoomControl: true, scrollWheelZoom: false });
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    { attribution: "© CartoDB", maxZoom: 18 },
+  ).addTo(map);
+
+  const bounds = [];
+  points.forEach((p) => {
+    const [lat, lng] = p.coords;
+    bounds.push([lat, lng]);
+    const icon = L.divIcon({
+      html: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+        <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
+        <circle cx="14" cy="14" r="5" fill="white"/>
+      </svg>`,
+      className: "",
+      iconSize: [28, 36],
+      iconAnchor: [14, 36],
+      popupAnchor: [0, -36],
+    });
+    L.marker([lat, lng], { icon })
+      .addTo(map)
+      .bindTooltip(p.nom, { permanent: false, direction: "top", className: "itin-tooltip" });
+  });
+
+  map.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+}
+
+function renderInfoReserves() {
   const guiesRows = (typeof ME_GUIES_PICO !== "undefined" ? ME_GUIES_PICO : [])
     .map(
       (g) =>
@@ -2457,9 +2564,16 @@ function renderInfoReserves() {
     )
     .join("");
 
+  const subtabsHtml = RES_SUBTABS.map(
+    (t) =>
+      `<button class="res-subtab-btn${_resSubTab === t.id ? " actiu" : ""}" data-subtab="${t.id}" onclick="resSetSubTab('${t.id}')">${t.emoji} ${t.label}</button>`,
+  ).join("");
+
+  const contentHtml = _resSubTab === "general" ? renderResGeneral() : renderResExcursions();
+
   return `<div class="info-article">
-    <p class="info-intro">Llocs on cal reservar amb antelació o que tenen restriccions d'accés.</p>
-    <div class="res-grid">${cards}</div>
+    <div class="res-subtabs">${subtabsHtml}</div>
+    <div id="resSubTabContent">${contentHtml}</div>
   </div>
   <div class="res-modal-bg" id="resGuiesModal" onclick="resHideGuies(event)">
     <div class="res-modal">

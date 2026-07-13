@@ -2137,6 +2137,139 @@ body.light .itin-card-titol { color: #1a3a2a; }
   gap: 16px;
   margin-top: 8px;
 }
+
+/* ── Sub-pestanyes dins Reserves i restriccions ── */
+.res-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.res-subtab-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: rgba(106,171,122,0.06);
+  border: 1px solid rgba(106,171,122,0.2);
+  border-radius: 20px;
+  color: var(--me-muted);
+  font-family: 'Lora', serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.res-subtab-btn:hover { border-color: rgba(106,171,122,0.5); color: var(--me-green3); }
+.res-subtab-btn.actiu {
+  background: rgba(106,171,122,0.18);
+  border-color: var(--me-green2);
+  color: var(--me-green3);
+  font-weight: 600;
+}
+
+/* ── Excursions i visites reservades ── */
+.excres-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.excres-card {
+  background: var(--me-surface);
+  border: 1px solid color-mix(in srgb, var(--excres-color) 20%, transparent);
+  border-left: 4px solid var(--excres-color);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.excres-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.excres-dia-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--excres-color) 18%, transparent);
+  color: var(--excres-color);
+  border: 1px solid color-mix(in srgb, var(--excres-color) 35%, transparent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.excres-nom {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--me-text);
+  margin: 0;
+  flex: 1;
+}
+.excres-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.excres-row {
+  display: flex;
+  gap: 8px;
+  font-family: 'Lora', serif;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(232,240,236,0.85);
+}
+.excres-label {
+  flex-shrink: 0;
+  min-width: 90px;
+  color: var(--me-muted);
+  font-weight: 600;
+}
+.excres-estat {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.excres-estat-item {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(106,171,122,0.15);
+  color: #6aab7a;
+  border: 1px solid rgba(106,171,122,0.3);
+}
+.excres-estat-item.urgent {
+  background: rgba(230,0,126,0.15);
+  color: #ff6ec7;
+  border-color: rgba(230,0,126,0.4);
+}
+
+.excres-mapes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 22px;
+}
+.excres-mapa-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--me-text);
+  margin: 0 0 8px;
+}
+.excres-mapa {
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(106,171,122,0.2);
+}
+
+body.light .excres-card { background: #fff; }
+body.light .excres-nom { color: #1a3a2a; }
+body.light .excres-row { color: #2a3a2a; }
+body.light .excres-mapa-titol { color: #1a3a2a; }
+
 .res-card {
   position: relative;
   background: var(--me-surface);
