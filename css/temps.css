@@ -216,6 +216,27 @@
 }
 
 /* MAREES */
+.tide-locality-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 14px;
+  font-size: 0.85rem;
+  color: #6aab7a;
+}
+.tide-locality-wrap.hidden {
+  display: none;
+}
+.tide-locality-wrap select {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  color: #a8d8b0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
 .tide-day-selector {
   display: flex;
   align-items: center;
@@ -343,6 +364,7 @@ body.light .stat-value { color: #1a3a2a; }
 body.light .hour-temp { color: #1a3a2a; }
 body.light .daily-day { color: #1a3a2a; }
 body.light .tide-time { color: #1a3a2a; }
+body.light .tide-locality-wrap select { background: #f0f4f0; color: #1a3a2a; }
 
 
 .hour-divider {

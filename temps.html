@@ -130,7 +130,11 @@
 
   <!-- BLOC 3: MAREES -->
   <section class="temps-section">
-  <h2 id="tide-section-title">🌊 Marees (São Miguel) · Juliol–Agost 2026</h2>
+  <h2 id="tide-section-title">🌊 Marees · Juliol–Agost 2026</h2>
+  <div class="tide-locality-wrap" id="tide-locality-wrap">
+    <label for="tide-locality-select">📍 Localitat:</label>
+    <select id="tide-locality-select"></select>
+  </div>
   <div class="view-toggle">
     <button class="view-btn active" data-view="tide-chart-view">Gràfic</button>
     <button class="view-btn" data-view="tide-table-view">Taula</button>
@@ -139,7 +143,7 @@
   <div id="tide-chart-view" class="view-content active">
     <div class="tide-day-selector">
       <button class="tide-prev">←</button>
-      <span id="tide-day-label">16 jul de 2026</span>
+      <span id="tide-day-label">22 jul de 2026</span>
       <button class="tide-next">→</button>
     </div>
     <canvas id="tide-chart" height="180"></canvas>
@@ -151,7 +155,7 @@
       <table class="sun-table">
         <thead>
           <tr>
-            <th>Dia</th><th>Marea alta 1</th><th>Marea baixa 1</th><th>Marea alta 2</th><th>Marea baixa 2</th>
+            <th>Dia</th><th>Marea 1</th><th>Marea 2</th><th>Marea 3</th><th>Marea 4</th>
           </tr>
         </thead>
         <tbody id="tide-tbody"></tbody>
@@ -178,6 +182,7 @@
   <p class="footer-sub">Copyright © JPH · Tots els drets reservats</p>
 </footer>
 
+<script src="js/marees-data.js"></script>
 <script src="js/temps.js"></script>
 <script src="js/app.js"></script>
 </body>

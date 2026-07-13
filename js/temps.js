@@ -64,6 +64,7 @@ let currentStatsMonth = "juliol";
 let currentSunDay = 0;
 let currentTideDay = 0;
 let sunAnimation = null;
+let sunRenderGen = 0; // invalida bucles d'animació "fantasma" de renders anteriors
 let tideAnimation = null;
 
 // ── NOMS ──────────────────────────────────────────────────────────────────────
@@ -193,12 +194,6 @@ async function loadWeather() {
 // ── SOL ───────────────────────────────────────────────────────────────────────
 const SUN_DATA = {
   "sao-miguel": [
-    ["16", "Jul", "Dijous", "06:30", "20:52"],
-    ["17", "Jul", "Divendres", "06:31", "20:51"],
-    ["18", "Jul", "Dissabte", "06:32", "20:50"],
-    ["19", "Jul", "Diumenge", "06:33", "20:49"],
-    ["20", "Jul", "Dilluns", "06:34", "20:48"],
-    ["21", "Jul", "Dimarts", "06:35", "20:47"],
     ["22", "Jul", "Dimecres", "06:36", "20:46"],
     ["23", "Jul", "Dijous", "06:37", "20:44"],
     ["24", "Jul", "Divendres", "06:38", "20:43"],
@@ -211,16 +206,8 @@ const SUN_DATA = {
     ["31", "Jul", "Divendres", "06:45", "20:34"],
     ["01", "Ago", "Dissabte", "06:46", "20:33"],
     ["02", "Ago", "Diumenge", "06:47", "20:31"],
-    ["03", "Ago", "Dilluns", "06:48", "20:30"],
-    ["04", "Ago", "Dimarts", "06:49", "20:28"],
   ],
   central: [
-    ["16", "Jul", "Dijous", "06:26", "20:56"],
-    ["17", "Jul", "Divendres", "06:27", "20:55"],
-    ["18", "Jul", "Dissabte", "06:28", "20:54"],
-    ["19", "Jul", "Diumenge", "06:29", "20:53"],
-    ["20", "Jul", "Dilluns", "06:30", "20:52"],
-    ["21", "Jul", "Dimarts", "06:31", "20:51"],
     ["22", "Jul", "Dimecres", "06:32", "20:50"],
     ["23", "Jul", "Dijous", "06:33", "20:48"],
     ["24", "Jul", "Divendres", "06:34", "20:47"],
@@ -233,8 +220,6 @@ const SUN_DATA = {
     ["31", "Jul", "Divendres", "06:41", "20:38"],
     ["01", "Ago", "Dissabte", "06:42", "20:37"],
     ["02", "Ago", "Diumenge", "06:43", "20:35"],
-    ["03", "Ago", "Dilluns", "06:44", "20:34"],
-    ["04", "Ago", "Dimarts", "06:45", "20:32"],
   ],
 };
 
@@ -434,11 +419,14 @@ function renderSunDayChart(dayIndex) {
     cancelAnimationFrame(sunAnimation);
     sunAnimation = null;
   }
+  sunRenderGen++;
+  const myGen = sunRenderGen;
 
   // Objecte d'estat per evitar problemes de closures amb startTime
   const anim = { progress: 0, isPaused: false, startTime: null, phase: "main" };
 
   function runMain(ts) {
+    if (myGen !== sunRenderGen) return;
     if (anim.isPaused) {
       sunAnimation = null;
       return;
@@ -453,6 +441,7 @@ function renderSunDayChart(dayIndex) {
       anim.phase = "stopped";
       if (stopProgress >= 1.0) {
         setTimeout(() => {
+          if (myGen !== sunRenderGen) return;
           if (anim.phase !== "stopped") return;
           anim.progress = 0;
           anim.startTime = null;
@@ -464,6 +453,7 @@ function renderSunDayChart(dayIndex) {
   }
 
   function runComplete(ts) {
+    if (myGen !== sunRenderGen) return;
     if (anim.isPaused) {
       sunAnimation = null;
       return;
@@ -479,6 +469,7 @@ function renderSunDayChart(dayIndex) {
     } else {
       anim.phase = "loop";
       setTimeout(() => {
+        if (myGen !== sunRenderGen) return;
         anim.progress = 0;
         anim.startTime = null;
         anim.phase = "main";
@@ -494,6 +485,7 @@ function renderSunDayChart(dayIndex) {
     );
     let start = null;
     function step(ts) {
+      if (myGen !== sunRenderGen) return;
       if (anim.isPaused) {
         sunAnimation = null;
         return;
@@ -534,6 +526,7 @@ function renderSunDayChart(dayIndex) {
             anim.phase = "stopped";
             if (stopProgress >= 1.0) {
               setTimeout(() => {
+                if (myGen !== sunRenderGen) return;
                 anim.progress = 0;
                 anim.startTime = null;
                 anim.phase = "main";
@@ -565,105 +558,71 @@ function renderSunTableRows(data) {
   });
 }
 
-// ── MAREES ────────────────────────────────────────────────────────────────────
-function generateTides(offsetBase) {
-  const data = [];
-  for (let d = 0; d < 20; d++) {
-    const offset = ((d + 15 + offsetBase) * 48) % 745;
-    const h1 = Math.floor(offset / 60);
-    const m1 = offset % 60;
-    const addMin = (h, m, mins) => {
-      const total = h * 60 + m + mins;
-      return [Math.floor(total / 60) % 24, total % 60];
-    };
-    const [h2, m2] = addMin(h1, m1, 186);
-    const [h3, m3] = addMin(h1, m1, 372);
-    const [h4, m4] = addMin(h1, m1, 558);
-    const fmt = (h, m) =>
-      `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
-    data.push([
-      {
-        time: fmt(h1, m1),
-        height: (1.4 + Math.sin(d * 0.3) * 0.3).toFixed(2),
-        type: "H",
-      },
-      {
-        time: fmt(h2, m2),
-        height: (0.4 + Math.sin(d * 0.3) * 0.1).toFixed(2),
-        type: "L",
-      },
-      {
-        time: fmt(h3, m3),
-        height: (1.3 + Math.sin(d * 0.3) * 0.3).toFixed(2),
-        type: "H",
-      },
-      {
-        time: fmt(h4 % 24, m4),
-        height: (0.5 + Math.sin(d * 0.3) * 0.1).toFixed(2),
-        type: "L",
-      },
-    ]);
+// ── MAREES (dades reals per localitat, vegeu js/marees-data.js) ────────────────
+let currentTideLocality = null;
+let tideRenderGen = 0; // invalida bucles d'animació "fantasma" de renders anteriors
+
+function defaultLocality(islandKey) {
+  const list = TIDE_LOCATIONS[islandKey] || [];
+  return list.length ? list[0].id : null;
+}
+
+function localityName(localityId) {
+  for (const illa in TIDE_LOCATIONS) {
+    const found = TIDE_LOCATIONS[illa].find((l) => l.id === localityId);
+    if (found) return found.nom;
   }
-  return data;
+  return "";
 }
 
-const TIDE_DATA = {
-  "sao-miguel": generateTides(0),
-  central: generateTides(2),
-};
+function renderTideLocalitySelect(islandKey) {
+  const wrap = document.getElementById("tide-locality-wrap");
+  const select = document.getElementById("tide-locality-select");
+  if (!wrap || !select) return;
+  const list = TIDE_LOCATIONS[islandKey] || [];
 
-const TIDE_LABELS = [
-  "16 jul",
-  "17 jul",
-  "18 jul",
-  "19 jul",
-  "20 jul",
-  "21 jul",
-  "22 jul",
-  "23 jul",
-  "24 jul",
-  "25 jul",
-  "26 jul",
-  "27 jul",
-  "28 jul",
-  "29 jul",
-  "30 jul",
-  "31 jul",
-  "1 ago",
-  "2 ago",
-  "3 ago",
-  "4 ago",
-];
+  if (!currentTideLocality || !list.some((l) => l.id === currentTideLocality)) {
+    currentTideLocality = defaultLocality(islandKey);
+  }
 
-// Dates reals de cada índex (16 jul – 4 ago 2026)
+  select.innerHTML = list
+    .map((l) => `<option value="${l.id}"${l.id === currentTideLocality ? " selected" : ""}>${l.nom}</option>`)
+    .join("");
+
+  // Amb una sola localitat no cal mostrar el selector
+  wrap.classList.toggle("hidden", list.length <= 1);
+}
+
+// Dates reals de cada índex (22 jul – 2 ago 2026)
 function getTideRealDate(idx) {
-  return idx < 16
-    ? new Date(Date.UTC(2026, 6, 16 + idx)) // juliol
-    : new Date(Date.UTC(2026, 7, idx - 15)); // agost
+  const [y, m, d] = TIDE_DATES[idx].split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
 }
 
-function getTideKey(islandKey) {
-  return islandKey === "sao-miguel" ? "sao-miguel" : "central";
+function tideDayLabel(idx) {
+  const dt = getTideRealDate(idx);
+  const mesos = ["gen", "feb", "mar", "abr", "mai", "jun", "jul", "ago", "set", "oct", "nov", "des"];
+  return `${dt.getUTCDate()} ${mesos[dt.getUTCMonth()]}`;
 }
 
 function updateTideDay(delta, islandKey) {
-  const key = getTideKey(islandKey || currentIslandKey);
   const ik = islandKey || currentIslandKey;
-  currentTideDay = Math.max(0, Math.min(19, currentTideDay + delta));
-  const label = TIDE_LABELS[currentTideDay] + " de 2026";
+  renderTideLocalitySelect(ik);
+  const maxIdx = TIDE_DATES.length - 1;
+  currentTideDay = Math.max(0, Math.min(maxIdx, currentTideDay + delta));
+  const label = tideDayLabel(currentTideDay) + " de 2026";
   document.getElementById("tide-section-title").textContent =
-    `🌊 Marees (${SUN_ZONE_NAME[ik]}) · Juliol–Agost 2026`;
+    `🌊 Marees (${localityName(currentTideLocality)}) · Juliol–Agost 2026`;
   document.getElementById("tide-day-label").textContent = label;
   const labelT = document.getElementById("tide-day-label-t");
   if (labelT) labelT.textContent = label;
   document.querySelector(".tide-prev").disabled = currentTideDay === 0;
-  document.querySelector(".tide-next").disabled = currentTideDay === 19;
-  renderTideChart(currentTideDay, key);
-  renderTideTable(currentTideDay, key);
+  document.querySelector(".tide-next").disabled = currentTideDay === maxIdx;
+  renderTideChart(currentTideDay);
+  renderTideTable(currentTideDay);
 }
 
-function renderTideChart(dayIndex, key) {
-  key = key || getTideKey(currentIslandKey);
+function renderTideChart(dayIndex) {
   const canvas = document.getElementById("tide-chart");
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
@@ -673,7 +632,7 @@ function renderTideChart(dayIndex, key) {
   const W = canvas.offsetWidth;
   const H = 180;
 
-  const tides = TIDE_DATA[key][dayIndex];
+  const tides = TIDE_DATA[currentTideLocality][dayIndex];
   const points = [];
   tides.forEach((t) => {
     const [h, m] = t.time.split(":").map(Number);
@@ -842,10 +801,13 @@ function renderTideChart(dayIndex, key) {
     cancelAnimationFrame(tideAnimation);
     tideAnimation = null;
   }
+  tideRenderGen++;
+  const myGen = tideRenderGen;
 
   const anim = { progress: 0, isPaused: false, startTime: null, phase: "main" };
 
   function runMain(ts) {
+    if (myGen !== tideRenderGen) return; // hi ha un render més nou: aquest bucle mor aquí
     if (anim.isPaused) {
       tideAnimation = null;
       return;
@@ -860,6 +822,7 @@ function renderTideChart(dayIndex, key) {
       anim.phase = "stopped";
       if (stopProgress >= 1.0) {
         setTimeout(() => {
+          if (myGen !== tideRenderGen) return;
           if (anim.phase !== "stopped") return;
           anim.progress = 0;
           anim.startTime = null;
@@ -871,6 +834,7 @@ function renderTideChart(dayIndex, key) {
   }
 
   function runComplete(ts) {
+    if (myGen !== tideRenderGen) return;
     if (anim.isPaused) {
       tideAnimation = null;
       return;
@@ -886,6 +850,7 @@ function renderTideChart(dayIndex, key) {
     } else {
       anim.phase = "loop";
       setTimeout(() => {
+        if (myGen !== tideRenderGen) return;
         anim.progress = 0;
         anim.startTime = null;
         anim.phase = "main";
@@ -901,6 +866,7 @@ function renderTideChart(dayIndex, key) {
     );
     let start = null;
     function step(ts) {
+      if (myGen !== tideRenderGen) return;
       if (anim.isPaused) {
         tideAnimation = null;
         return;
@@ -922,6 +888,7 @@ function renderTideChart(dayIndex, key) {
   }
 
   canvas.onclick = () => {
+    if (myGen !== tideRenderGen) return;
     if (anim.phase === "stopped" && stopProgress < 1.0) {
       anim.phase = "complete";
       anim.isPaused = false;
@@ -937,6 +904,7 @@ function renderTideChart(dayIndex, key) {
           anim.phase = "stopped";
           if (stopProgress >= 1.0) {
             setTimeout(() => {
+              if (myGen !== tideRenderGen) return;
               anim.progress = 0;
               anim.startTime = null;
               anim.phase = "main";
@@ -951,9 +919,8 @@ function renderTideChart(dayIndex, key) {
   tideAnimation = requestAnimationFrame(runMain);
 }
 
-function renderTideTable(dayIndex, key) {
-  key = key || getTideKey(currentIslandKey);
-  document.getElementById("tide-table").innerHTML = TIDE_DATA[key][dayIndex]
+function renderTideTable(dayIndex) {
+  document.getElementById("tide-table").innerHTML = TIDE_DATA[currentTideLocality][dayIndex]
     .map(
       (t) => `
       <div class="tide-entry">
@@ -967,16 +934,21 @@ function renderTideTable(dayIndex, key) {
 }
 
 function renderTideFullTable(islandKey) {
-  const key = getTideKey(islandKey || currentIslandKey);
+  renderTideLocalitySelect(islandKey || currentIslandKey);
   const tbody = document.getElementById("tide-tbody");
   if (!tbody) return;
   tbody.innerHTML = "";
-  TIDE_DATA[key].forEach((tides, i) => {
+  TIDE_DATA[currentTideLocality].forEach((tides, i) => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${TIDE_LABELS[i]}</td>
-      ${tides.map((t) => `<td>${t.time} <span style="color:#6aab7a;font-size:0.8rem">${t.height}m</span></td>`).join("")}
-    `;
+    const cels = [0, 1, 2, 3]
+      .map((idx) => {
+        const t = tides[idx];
+        if (!t) return "<td>—</td>";
+        const icona = t.type === "H" ? "🔼" : "🔽";
+        return `<td>${icona} ${t.time} <span style="color:#6aab7a;font-size:0.8rem">${t.height}m</span></td>`;
+      })
+      .join("");
+    tr.innerHTML = `<td>${tideDayLabel(i)}</td>${cels}`;
     tbody.appendChild(tr);
   });
 }
@@ -1165,6 +1137,15 @@ document
 document
   .querySelector(".tide-next")
   .addEventListener("click", () => updateTideDay(1));
+
+const tideLocalitySelect = document.getElementById("tide-locality-select");
+if (tideLocalitySelect) {
+  tideLocalitySelect.addEventListener("change", (e) => {
+    currentTideLocality = e.target.value;
+    updateTideDay(0);
+    renderTideFullTable(currentIslandKey);
+  });
+}
 
 document.querySelector(".sun-prev").addEventListener("click", () => {
   currentSunDay = Math.max(0, currentSunDay - 1);
