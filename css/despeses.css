@@ -131,10 +131,17 @@
 }
 .desp-section-header .desp-section-title { margin-bottom: 0; }
 
-/* ── Grid saldos ── */
+/* ── Saldos: 6 cards (2 files x 3) + card Total a la dreta ── */
+.desp-saldos-outer {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
 .desp-saldos-grid {
+  flex: 1 1 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
   gap: 10px;
 }
 .desp-saldo-card {
@@ -143,6 +150,9 @@
   border: 1px solid;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .desp-saldo-card::before {
   content: '';
@@ -152,7 +162,7 @@
 .desp-saldo-nom {
   font-family: 'Inter', sans-serif;
   font-size: 0.78rem; font-weight: 600;
-  color: var(--d-text); margin-bottom: 6px;
+  color: var(--d-text); margin-bottom: 8px;
   display: flex; align-items: center; gap: 6px;
 }
 .desp-saldo-avatar {
@@ -162,23 +172,63 @@
   font-size: 0.6rem; font-weight: 700; color: #fff;
   flex-shrink: 0;
 }
-.desp-saldo-pagat {
-  font-size: 0.68rem; color: var(--d-muted);
-  font-family: 'Inter', sans-serif; margin-bottom: 8px;
-}
 .desp-saldo-resultat {
   font-family: 'Inter', sans-serif;
-  font-size: 1.05rem; font-weight: 700;
+  font-size: 1.3rem; font-weight: 800;
+  color: var(--d-text);
 }
-.desp-saldo-resultat.positiu { color: var(--d-green); }
-.desp-saldo-resultat.negatiu { color: var(--d-red); }
-.desp-saldo-resultat.zero    { color: var(--d-muted); }
-.desp-saldo-sublbl {
-  font-size: 0.6rem; color: var(--d-muted);
-  font-family: 'Inter', sans-serif; margin-top: 2px;
+.desp-saldo-pct {
+  font-size: 0.72rem; font-weight: 500;
+  color: var(--d-muted);
 }
 .desp-saldo-card.no-grup {
   opacity: 0.55;
+}
+
+/* ── Card Total (blanca) ── */
+.desp-saldo-total-card {
+  flex: 0 0 220px;
+  background: #f4f7f4;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.desp-saldo-total-titol {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: #1a3a2a; margin-bottom: 2px;
+}
+.desp-saldo-total-cats {
+  display: flex; flex-direction: column; gap: 7px;
+  flex: 1;
+}
+.desp-saldo-total-cat {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  font-family: 'Inter', sans-serif; font-size: 0.74rem;
+}
+.desp-saldo-total-cat-lbl { color: #3a5a4a; white-space: nowrap; }
+.desp-saldo-total-cat-import { color: #1a3a2a; font-weight: 700; white-space: nowrap; }
+.desp-saldo-total-cat-pct { font-weight: 500; color: #6a8a7a; font-size: 0.68rem; }
+.desp-saldo-total-grand {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(45,90,61,0.2);
+  padding-top: 8px; margin-top: 2px;
+  font-family: 'Inter', sans-serif; font-size: 0.8rem;
+  color: #1a3a2a;
+}
+.desp-saldo-total-grand strong {
+  font-size: 1.05rem; color: #1a3a2a;
+}
+
+@media (max-width: 700px) {
+  .desp-saldos-outer { flex-direction: column; }
+  .desp-saldos-grid { grid-template-columns: repeat(2, 1fr); }
+  .desp-saldo-total-card { flex-basis: auto; }
+}
+@media (max-width: 420px) {
+  .desp-saldos-grid { grid-template-columns: 1fr; }
 }
 
 /* ── Liquidació ── */
@@ -191,6 +241,11 @@
   border: 1px solid var(--d-border);
   border-radius: 10px; padding: 12px 16px;
   font-family: 'Inter', sans-serif; font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+.desp-liq-data {
+  font-size: 0.7rem; color: var(--d-muted);
+  min-width: 76px;
 }
 .desp-liq-de   { font-weight: 600; }
 .desp-liq-arrow { color: var(--d-muted); font-size: 1rem; }
@@ -200,10 +255,21 @@
   font-weight: 700; font-size: 1rem;
   color: var(--d-gold);
 }
+.desp-liq-accions {
+  display: flex; gap: 4px;
+}
 .desp-liquidacio-ok {
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem; color: var(--d-green);
+  font-size: 0.85rem; color: var(--d-muted);
   text-align: center; padding: 12px;
+}
+
+.desp-pagaments-header {
+  display: flex; justify-content: flex-end;
+  margin-bottom: 12px;
+}
+.desp-btn-add-sm {
+  font-size: 0.74rem; padding: 6px 14px;
 }
 
 /* ── Filtres ── */
@@ -440,7 +506,6 @@ body.light .desp-field select { background: #f4f7f4; color: #1a3a2a; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  .desp-saldos-grid { grid-template-columns: repeat(3, 1fr); }
   .desp-item { grid-template-columns: auto 1fr auto; }
   .desp-item-accions { display: none; }
   .desp-field-row { grid-template-columns: 1fr; }

@@ -24,13 +24,22 @@ const CAT_EMOJI = {
   altres:      '📦',
 };
 
+const CAT_LABELS = {
+  transport:   'Transport',
+  allotjament: 'Allotjament',
+  menjar:      'Menjar',
+  activitat:   'Activitats',
+  altres:      'Altres',
+};
+
 /* ──────────────────────────────────────────────────────────
    DESPESES PRE-CARREGADES
    ────────────────────────────────────────────────────────── */
 const DESPESES_INICIALS = [
   // VOLS
-  { id: 'pre_v1', desc: 'Vols SATA (OPO–TER–PDL · PDL–SJZ · HOR–LIS) + part Ryanair', import: 1600.00, pagador: 'Mons', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
-  { id: 'pre_v2', desc: 'Vols Ryanair (BCN–OPO, resta) + TAP (LIS–BCN)', import: 874.86, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_v1', desc: 'Vols SATA (OPO–TER–PDL · PDL–SJZ · HOR–LIS)', import: 1574.64, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_v2', desc: 'Vols Ryanair (BCN–OPO)', import: 557.46, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_v3', desc: 'Vol TAP (LIS–BCN)', import: 342.76, pagador: 'Jordi', cat: 'transport', data: '2026-01-15', illa: '', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   // FERRIS
   { id: 'pre_f1', desc: 'Ferri Velas → Pico (Atlanticoline)', import: 98.60, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'São Jorge', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   { id: 'pre_f2', desc: 'Ferri Madalena → Horta (Atlanticoline)', import: 46.75, pagador: 'Jordi', cat: 'transport', data: '2026-07-31', illa: 'Pico', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
@@ -41,9 +50,25 @@ const DESPESES_INICIALS = [
   { id: 'pre_a4', desc: 'Allotjament Refúgio (Faial)', import: 470.00, pagador: 'Jordi', cat: 'allotjament', data: '2026-04-22', illa: 'Faial', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   // COTXES
   { id: 'pre_c1', desc: 'Cotxes São Miguel #1+#2 (Ilha Verde)', import: 614.18, pagador: 'Jordi', cat: 'transport', data: '2026-07-22', illa: 'São Miguel', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
-  { id: 'pre_c2', desc: 'Cotxes São Jorge #1+#2 (Azores Moto Rent)', import: 178.00, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'São Jorge', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
-  { id: 'pre_c3', desc: 'Cotxes Pico #1+#2 (Oàsis Car Rental)', import: 478.00, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'Pico', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_c2', desc: 'Cotxes São Jorge #1+#2 (Azores Moto Rent) - 151€ es paguen a la recollida', import: 27.00, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'São Jorge', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_c3', desc: 'Cotxes Pico #1+#2 (Oásis Car Rental) - 478€ es paguen a la recollida', import: 0.00, pagador: 'Jordi', cat: 'transport', data: '2026-07-28', illa: 'Pico', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
   { id: 'pre_c4', desc: 'Cotxes Faial #1+#2 (Autatlantis)', import: 312.10, pagador: 'Jordi', cat: 'transport', data: '2026-07-31', illa: 'Faial', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  // ACTIVITATS
+  { id: 'pre_act1', desc: 'Excursió amb llanxa ràpida des de Rabo de Peixe', import: 419.40, pagador: 'Jordi', cat: 'activitat', data: '2026-07-24', illa: 'São Miguel', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_act2', desc: 'Visita a Gruta do Carvão', import: 63.50, pagador: 'Jordi', cat: 'activitat', data: '2026-07-24', illa: 'São Miguel', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_act3', desc: 'Visita a Caldeira Velha', import: 61.00, pagador: 'Jordi', cat: 'activitat', data: '2026-07-25', illa: 'São Miguel', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_act4', desc: 'Visita al Parc Terra Nostra', import: 99.50, pagador: 'Jordi', cat: 'activitat', data: '2026-07-27', illa: 'São Miguel', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+  { id: 'pre_act5', desc: 'Excursió d\'avistament de balenes i dofins', import: 390.00, pagador: 'Jordi', cat: 'activitat', data: '2026-07-30', illa: 'Pico', participants: ['Jordi','Joa','Mons','Xu'], pre: true },
+];
+
+/* ──────────────────────────────────────────────────────────
+   PAGAMENTS ENTRE MEMBRES (liquidacions ja fetes)
+   ────────────────────────────────────────────────────────── */
+const PAGAMENTS_INICIALS = [
+  { id: 'pre_p1', de: 'Mons', a: 'Jordi', import: 805.00, data: '2026-04-15', pre: true },
+  { id: 'pre_p2', de: 'Mons', a: 'Jordi', import: 805.00, data: '2026-05-15', pre: true },
+  { id: 'pre_p3', de: 'Mons', a: 'Jordi', import: 805.00, data: '2026-06-15', pre: true },
+  { id: 'pre_p4', de: 'Mons', a: 'Jordi', import: 805.00, data: '2026-07-15', pre: true },
 ];
 
 function toggleCollapse(id) {
@@ -53,14 +78,20 @@ function toggleCollapse(id) {
 
 let db;
 let despesesDinamiques = []; // Les de Firebase
+let pagamentsDinamiques = []; // Liquidacions de Firebase
 let filtreActiu = 'totes';
 let editantId    = null;
+let editantPagId = null;
 
 function initFirebase() {
   try {
     db = firebase.firestore();
     db.collection('despeses').orderBy('ts', 'asc').onSnapshot(snap => {
       despesesDinamiques = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      render();
+    });
+    db.collection('pagaments').orderBy('ts', 'asc').onSnapshot(snap => {
+      pagamentsDinamiques = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       render();
     });
   } catch (e) {
@@ -76,108 +107,133 @@ function totesDespeses() {
   return [...DESPESES_INICIALS, ...despesesDinamiques];
 }
 
-function calcSaldos() {
-  // pagat[persona] = total que ha pagat
-  // deu[persona]   = total que deu (suma de import/nParticipants per cada despesa on participa)
-  const pagat = {}, deu = {};
-  TOTS.forEach(p => { pagat[p] = 0; deu[p] = 0; });
-
-  totesDespeses().forEach(d => {
-    const parts = d.participants || GRUP_PAGADOR;
-    const quota = d.import / parts.length;
-    pagat[d.pagador] = (pagat[d.pagador] || 0) + d.import;
-    parts.forEach(p => { deu[p] = (deu[p] || 0) + quota; });
-  });
-
-  // saldo = pagat - deu  (positiu → li deuen diners; negatiu → deu diners)
-  const saldos = {};
-  TOTS.forEach(p => { saldos[p] = +(( pagat[p] || 0) - (deu[p] || 0)).toFixed(2); });
-  return { saldos, pagat, deu };
+function totsPagaments() {
+  return [...PAGAMENTS_INICIALS, ...pagamentsDinamiques];
 }
 
-// Algorisme de liquidació: minimitza el nombre de transferències
-function calcLiquidacio(saldos) {
-  // Separa creditors (se'ls deu) i deutors (deuen)
-  const cred = [], deut = [];
-  Object.entries(saldos).forEach(([p, s]) => {
-    if (s > 0.01) cred.push({ nom: p, val: s });
-    if (s < -0.01) deut.push({ nom: p, val: -s });
+// Pagat efectiu per persona: el que ha posat de la seva butxaca per a
+// despeses del viatge, ajustat pels traspassos/liquidacions ja fets
+// entre membres (secció "Pagaments"). La suma total sempre coincideix
+// amb el total de despeses, ja que els traspassos només el redistribueixen.
+function calcPagatEfectiu() {
+  const pagat = {};
+  TOTS.forEach(p => { pagat[p] = 0; });
+
+  totesDespeses().forEach(d => {
+    pagat[d.pagador] = (pagat[d.pagador] || 0) + d.import;
   });
 
-  // Ordena de major a menor
-  cred.sort((a, b) => b.val - a.val);
-  deut.sort((a, b) => b.val - a.val);
+  totsPagaments().forEach(pg => {
+    pagat[pg.de] = (pagat[pg.de] || 0) + pg.import;
+    pagat[pg.a]  = (pagat[pg.a]  || 0) - pg.import;
+  });
 
-  const transf = [];
-  let i = 0, j = 0;
-  while (i < deut.length && j < cred.length) {
-    const paga  = deut[i];
-    const cobra = cred[j];
-    const import_ = Math.min(paga.val, cobra.val);
-    transf.push({ de: paga.nom, a: cobra.nom, import: +import_.toFixed(2) });
-    paga.val  -= import_;
-    cobra.val -= import_;
-    if (paga.val  < 0.01) i++;
-    if (cobra.val < 0.01) j++;
-  }
-  return transf;
+  TOTS.forEach(p => { pagat[p] = +pagat[p].toFixed(2); });
+  return pagat;
+}
+
+// Totals per categoria (per a la card "Total")
+function calcCatTotals() {
+  const totals = {};
+  Object.keys(CAT_EMOJI).forEach(c => { totals[c] = 0; });
+  let granTotal = 0;
+
+  totesDespeses().forEach(d => {
+    totals[d.cat] = (totals[d.cat] || 0) + d.import;
+    granTotal += d.import;
+  });
+
+  Object.keys(totals).forEach(c => { totals[c] = +totals[c].toFixed(2); });
+  return { totals, granTotal: +granTotal.toFixed(2) };
 }
 
 /* ──────────────────────────────────────────────────────────
    RENDER SALDOS
    ────────────────────────────────────────────────────────── */
 function renderSaldos() {
-  const { saldos, pagat, deu } = calcSaldos();
+  const pagat = calcPagatEfectiu();
+  const { totals: catTotals, granTotal } = calcCatTotals();
   const wrap = document.getElementById('despSaldos');
   wrap.innerHTML = '';
 
+  const grid = document.createElement('div');
+  grid.className = 'desp-saldos-grid';
+  grid.id = 'despSaldosGrid';
+
   TOTS.forEach(p => {
-    const s = saldos[p];
+    const import_ = pagat[p] || 0;
+    const pct = granTotal > 0.01 ? (import_ / granTotal) * 100 : 0;
     const esGrup = GRUP_PAGADOR.includes(p);
     const card = document.createElement('div');
     card.className = `desp-saldo-card border-${p} top-${p}${esGrup ? '' : ' no-grup'}`;
-
-    const signe = s > 0.01 ? '+' : '';
-    const cls   = s > 0.01 ? 'positiu' : s < -0.01 ? 'negatiu' : 'zero';
-    const sublbl = s > 0.01 ? 'li han de tornar' : s < -0.01 ? 'ha de pagar' : 'compensat';
 
     card.innerHTML = `
       <div class="desp-saldo-nom">
         <span class="desp-saldo-avatar color-${p}">${p[0]}</span>
         ${p}
       </div>
-      <div class="desp-saldo-pagat">Pagat: <strong>${fmt(pagat[p] || 0)} €</strong></div>
-      <div class="desp-saldo-resultat ${cls}">${signe}${fmt(Math.abs(s))} €</div>
-      <div class="desp-saldo-sublbl">${sublbl}</div>
+      <div class="desp-saldo-resultat">${fmt(import_)} € <span class="desp-saldo-pct">(${fmt(pct)}%)</span></div>
     `;
-    wrap.appendChild(card);
+    grid.appendChild(card);
   });
+
+  wrap.appendChild(grid);
+
+  // Card "Total" (blanca), amb el desglossament per categoria
+  const catRows = Object.entries(CAT_EMOJI).map(([cat, emoji]) => {
+    const import_ = catTotals[cat] || 0;
+    const pct = granTotal > 0.01 ? (import_ / granTotal) * 100 : 0;
+    const lbl = CAT_LABELS[cat] || cat;
+    return `
+      <div class="desp-saldo-total-cat">
+        <span class="desp-saldo-total-cat-lbl">${emoji} ${lbl}</span>
+        <span class="desp-saldo-total-cat-import">${fmt(import_)} € <span class="desp-saldo-total-cat-pct">(${fmt(pct)}%)</span></span>
+      </div>`;
+  }).join('');
+
+  const totalCard = document.createElement('div');
+  totalCard.className = 'desp-saldo-total-card';
+  totalCard.innerHTML = `
+    <div class="desp-saldo-total-titol">Total</div>
+    <div class="desp-saldo-total-cats">${catRows}</div>
+    <div class="desp-saldo-total-grand">
+      <span>Total general</span>
+      <strong>${fmt(granTotal)} €</strong>
+    </div>
+  `;
+  wrap.appendChild(totalCard);
 }
 
 /* ──────────────────────────────────────────────────────────
-   RENDER LIQUIDACIÓ
+   RENDER PAGAMENTS (traspassos entre membres)
    ────────────────────────────────────────────────────────── */
-function renderLiquidacio() {
-  const { saldos } = calcSaldos();
-  const transf = calcLiquidacio(saldos);
-  const wrap = document.getElementById('despLiquidacio');
+function renderPagaments() {
+  const wrap = document.getElementById('despPagaments');
   wrap.innerHTML = '';
 
-  if (transf.length === 0) {
-    wrap.innerHTML = '<div class="desp-liquidacio-ok">✅ Tots els saldos estan compensats!</div>';
+  const pagaments = [...totsPagaments()].sort((a, b) => (a.data || '').localeCompare(b.data || ''));
+
+  if (pagaments.length === 0) {
+    wrap.innerHTML = '<div class="desp-liquidacio-ok">Encara no s\'ha registrat cap pagament.</div>';
     return;
   }
 
-  transf.forEach(t => {
+  pagaments.forEach(pg => {
+    const dataFmt = pg.data ? new Date(pg.data + 'T12:00:00').toLocaleDateString('ca-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
     const el = document.createElement('div');
     el.className = 'desp-liquidacio-item';
     el.innerHTML = `
-      <span class="desp-saldo-avatar color-${t.de}" style="width:24px;height:24px;font-size:0.65rem">${t.de[0]}</span>
-      <span class="desp-liq-de">${t.de}</span>
+      <span class="desp-liq-data">${dataFmt}</span>
+      <span class="desp-saldo-avatar color-${pg.de}" style="width:24px;height:24px;font-size:0.65rem">${pg.de[0]}</span>
+      <span class="desp-liq-de">${pg.de}</span>
       <span class="desp-liq-arrow">→</span>
-      <span class="desp-saldo-avatar color-${t.a}" style="width:24px;height:24px;font-size:0.65rem">${t.a[0]}</span>
-      <span class="desp-liq-a">${t.a}</span>
-      <span class="desp-liq-import">${fmt(t.import)} €</span>
+      <span class="desp-saldo-avatar color-${pg.a}" style="width:24px;height:24px;font-size:0.65rem">${pg.a[0]}</span>
+      <span class="desp-liq-a">${pg.a}</span>
+      <span class="desp-liq-import">${fmt(pg.import)} €</span>
+      <span class="desp-liq-accions">
+        <button class="desp-item-btn" onclick="editaPagament('${pg.id}')">✏️</button>
+        <button class="desp-item-btn del" onclick="eliminaPagament('${pg.id}')">🗑</button>
+      </span>
     `;
     wrap.appendChild(el);
   });
@@ -245,7 +301,7 @@ function renderLlista() {
 
 function render() {
   renderSaldos();
-  renderLiquidacio();
+  renderPagaments();
   renderLlista();
 }
 
@@ -343,6 +399,82 @@ function eliminaDespesa(id) {
 }
 
 /* ──────────────────────────────────────────────────────────
+   MODAL PAGAMENTS
+   ────────────────────────────────────────────────────────── */
+function obreModalPagament(dades) {
+  editantPagId = dades?.id || null;
+  document.getElementById('pagModalTitol').textContent = editantPagId ? 'Editar pagament' : 'Nou pagament';
+  document.getElementById('pgId').value   = editantPagId || '';
+  document.getElementById('pgDe').value   = dades?.de || 'Mons';
+  document.getElementById('pgA').value    = dades?.a || 'Jordi';
+  document.getElementById('pgImport').value = dades?.import || '';
+  document.getElementById('pgData').value = dades?.data || new Date().toISOString().split('T')[0];
+
+  document.getElementById('pagModal').classList.add('open');
+  document.getElementById('pagModalOverlay').classList.add('open');
+  document.getElementById('pgImport').focus();
+}
+
+function tancaModalPagament() {
+  document.getElementById('pagModal').classList.remove('open');
+  document.getElementById('pagModalOverlay').classList.remove('open');
+  editantPagId = null;
+}
+
+function guardaPagament() {
+  const de     = document.getElementById('pgDe').value;
+  const a      = document.getElementById('pgA').value;
+  const import_ = parseFloat(document.getElementById('pgImport').value);
+  const data   = document.getElementById('pgData').value;
+
+  if (de === a || isNaN(import_) || import_ <= 0 || !data) {
+    alert('Omple tots els camps: qui paga i qui rep han de ser diferents, i l\'import ha de ser positiu.');
+    return;
+  }
+
+  const dades = { de, a, import: import_, data, ts: Date.now() };
+  const esPre = PAGAMENTS_INICIALS.some(p => p.id === editantPagId);
+
+  if (db) {
+    if (editantPagId && !esPre) {
+      db.collection('pagaments').doc(editantPagId).update(dades);
+    } else if (editantPagId && esPre) {
+      db.collection('pagaments').doc(editantPagId).set(dades);
+    } else {
+      db.collection('pagaments').add(dades);
+    }
+  } else {
+    if (editantPagId) {
+      const idx = pagamentsDinamiques.findIndex(p => p.id === editantPagId);
+      if (idx >= 0) {
+        pagamentsDinamiques[idx] = { id: editantPagId, ...dades };
+      } else {
+        pagamentsDinamiques.push({ id: editantPagId, ...dades });
+      }
+    } else {
+      pagamentsDinamiques.push({ id: 'localpag_' + Date.now(), ...dades });
+    }
+    render();
+  }
+  tancaModalPagament();
+}
+
+function editaPagament(id) {
+  const p = pagamentsDinamiques.find(x => x.id === id) || PAGAMENTS_INICIALS.find(x => x.id === id);
+  if (p) obreModalPagament(p);
+}
+
+function eliminaPagament(id) {
+  if (!confirm('Segur que vols eliminar aquest pagament?')) return;
+  if (db) {
+    db.collection('pagaments').doc(id).delete();
+  } else {
+    pagamentsDinamiques = pagamentsDinamiques.filter(p => p.id !== id);
+    render();
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
    HELPERS
    ────────────────────────────────────────────────────────── */
 function fmt(n) {
@@ -364,6 +496,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Guardar
   document.getElementById('despBtnSave').addEventListener('click', guardaDespesa);
+
+  // Botó afegir pagament
+  document.getElementById('btnAfegirPagament').addEventListener('click', () => obreModalPagament());
+
+  // Tancar modal pagament
+  document.getElementById('pagModalClose').addEventListener('click', tancaModalPagament);
+  document.getElementById('pagBtnCancel').addEventListener('click', tancaModalPagament);
+  document.getElementById('pagModalOverlay').addEventListener('click', tancaModalPagament);
+
+  // Guardar pagament
+  document.getElementById('pagBtnSave').addEventListener('click', guardaPagament);
 
   // Filtres
   document.getElementById('despFiltres').addEventListener('click', e => {
@@ -393,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Escape tanca modal
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') tancaModal();
+    if (e.key === 'Escape') { tancaModal(); tancaModalPagament(); }
   });
 
   // Inicia Firebase
