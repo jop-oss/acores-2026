@@ -212,6 +212,24 @@
     <a href="index.html" class="admin-back">← Tornar a l'app</a>
   </div>
 
+  <!-- REPTES: sincronitzar amb reptes-data.js -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🎯 Reptes — sincronitzar llista</div>
+    </div>
+    <div class="admin-ruleta-info" style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">
+      La partida de Reptes ja creada a Firestore no s'actualitza sola quan es canvia
+      <code>reptes-data.js</code> (ni text editat, ni reptes nous afegits al final).
+      Aquest botó ho sincronitza: afegeix els reptes nous i actualitza el text dels que hagin canviat,
+      sense tocar mai els marcatges de ningú. Els reptes eliminats de la llista es deixen tal qual
+      (no s'esborren sols, per seguretat).
+    </div>
+    <div class="admin-ruleta-info" style="flex-wrap:wrap;gap:.5rem">
+      <span>Estat: <strong id="reptes-migracio-estat">—</strong></span>
+      <button class="btn-reset-tot" onclick="sincronitzarReptes()">Sincronitzar</button>
+    </div>
+  </div>
+
   <!-- ITINERARI -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -685,6 +703,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="js/reptes-data.js"></script>
 <script>
   const PIN = '2468';
   const JUGADORS = ['Jordi','Anna','Laia','Mons','Xu','Joa'];
@@ -817,6 +836,50 @@
     _db = firebase.firestore();
     return _db;
   }
+
+  // ── REPTES: sincronitzar amb REPTES_INICIALS (reptes-data.js) ──
+  // Afegeix reptes nous i actualitza el text dels editats, per id.
+  // Mai esborra ni toca "marcatges".
+  async function sincronitzarReptes() {
+    const estat = document.getElementById('reptes-migracio-estat');
+    try {
+      const nous = REPTES_INICIALS.map((text, i) => ({ id: i + 1, text }));
+      const ref = getDb().collection(REPTES_COL).doc(REPTES_DOC);
+      const snap = await ref.get();
+
+      if (!snap.exists) {
+        const marcatges = {};
+        JUGADORS.forEach(nom => { marcatges[nom] = []; });
+        await ref.set({ reptes: nous, marcatges });
+        estat.textContent = `Creat — ${nous.length} reptes inicialitzats`;
+        mostrarToast('Partida de reptes creada');
+        return;
+      }
+
+      const dades = snap.data();
+      const actualsPerId = {};
+      (dades.reptes || []).forEach(r => { actualsPerId[r.id] = r; });
+
+      let afegits = 0, actualitzats = 0;
+      nous.forEach(r => {
+        const actual = actualsPerId[r.id];
+        if (!actual) afegits++;
+        else if (actual.text !== r.text) actualitzats++;
+      });
+
+      // Manté qualsevol repte que ja no sigui a la llista (no s'esborra sol)
+      const idsNous = new Set(nous.map(r => r.id));
+      const conservats = (dades.reptes || []).filter(r => !idsNous.has(r.id));
+      const reptesFinals = [...nous, ...conservats];
+
+      await ref.update({ reptes: reptesFinals });
+      estat.textContent = `Fet — ${afegits} afegit${afegits === 1 ? '' : 's'}, ${actualitzats} actualitzat${actualitzats === 1 ? '' : 's'}`;
+      mostrarToast('Reptes sincronitzats');
+    } catch (e) {
+      estat.textContent = 'Error: ' + e.message;
+    }
+  }
+
 
   // ── ITINERARI: hores de la timeline ──────────────────────────
   function renderItinHoresTothom() {

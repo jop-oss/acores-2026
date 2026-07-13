@@ -270,7 +270,10 @@ function reptesRenderTaula() {
   const tbody = document.getElementById('reptes-tbody');
   tbody.innerHTML = reptes.map(repte => `
     <tr class="reptes-fila">
-      <td class="reptes-td reptes-td-text">${repte.text}</td>
+      <td class="reptes-td reptes-td-text">
+        <span class="reptes-td-text-label">${repte.text}</span>
+        <button class="reptes-btn-eliminar" title="Eliminar repte" onclick="reptesEliminarRepte(${repte.id})">🗑️</button>
+      </td>
       ${jugadors.map(nom => {
         const fet = (marcatges[nom] || []).includes(repte.id);
         const esActiu = nom === jugadorActiu;
@@ -319,6 +322,32 @@ async function reptesAfegirRepte() {
       .update({ reptes: [...reptes, { id: nouId, text: text.trim() }] });
   } catch(e) {
     console.error('Error afegint repte:', e);
+    alert('Error de connexió.');
+  }
+}
+
+// ── ELIMINAR REPTE ────────────────────────────────────────────
+async function reptesEliminarRepte(idRepte) {
+  const pin = prompt("PIN d'administrador:");
+  if (pin !== REPTES_PIN) {
+    if (pin !== null) alert('PIN incorrecte.');
+    return;
+  }
+  const repte = (reptesData.reptes || []).find(r => r.id === idRepte);
+  if (!repte) return;
+  if (!confirm(`Segur que vols eliminar el repte "${repte.text}"?\n\nAixò l'esborrarà per a tothom i traurà les marques de qui ja l'hagués fet. No es pot desfer.`)) return;
+
+  try {
+    const db = reptesGetDb();
+    const reptesNous = (reptesData.reptes || []).filter(r => r.id !== idRepte);
+    const marcatgesNous = {};
+    JUGADORS_VALIDS.forEach(nom => {
+      marcatgesNous[nom] = (reptesData.marcatges[nom] || []).filter(id => id !== idRepte);
+    });
+    await db.collection(REPTES_COL).doc(REPTES_DOC)
+      .update({ reptes: reptesNous, marcatges: marcatgesNous });
+  } catch(e) {
+    console.error('Error eliminant repte:', e);
     alert('Error de connexió.');
   }
 }
