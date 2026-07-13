@@ -1236,15 +1236,58 @@
     }).join('');
   }
 
+  const SC_COL = 'scrabble_partides';
+  const SC_IND_DOC = 'individual';
+  const SC_EQ_DOC = 'equips';
+
+  async function scGetPuntsGlobals() {
+    const pts = {};
+    JUGADORS.forEach(nom => { pts[nom] = 0; });
+    try {
+      const [snapInd, snapEq] = await Promise.all([
+        getDb().collection(SC_COL).doc(SC_IND_DOC).get(),
+        getDb().collection(SC_COL).doc(SC_EQ_DOC).get(),
+      ]);
+      const sumarHistorial = (snap) => {
+        if (!snap.exists) return;
+        const d = snap.data();
+        (d.historialPunts || []).forEach(entrada => {
+          if (pts[entrada.nom] !== undefined) pts[entrada.nom] += entrada.punts;
+        });
+        (d.jugadors || []).forEach(j => {
+          const noms = j.membres || [j.nom];
+          noms.forEach(nom => {
+            if (pts[nom] !== undefined) pts[nom] += j.punts || 0;
+          });
+        });
+      };
+      sumarHistorial(snapInd);
+      sumarHistorial(snapEq);
+    } catch (e) {}
+    return pts;
+  }
+
   async function renderScrabble() {
     const tbody = document.getElementById('taula-scrabble');
     if (!tbody) return;
-    // Scrabble uses Firebase - show note
-    tbody.innerHTML = JUGADORS.map(nom => `<tr>
-      <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-      <td><span class="pts-badge">Firebase</span></td>
-      <td><button class="btn-reset-jugador" onclick="resetScrabbleJugador('${nom}')">Reiniciar</button></td>
-    </tr>`).join('');
+    tbody.innerHTML = JUGADORS.map(nom =>
+      `<tr>
+        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+        <td><span class="pts-badge">…</span></td>
+        <td><button class="btn-reset-jugador" onclick="resetScrabbleJugador('${nom}')">Reiniciar</button></td>
+      </tr>`
+    ).join('');
+
+    const pts = await scGetPuntsGlobals();
+    JUGADORS.forEach(nom => {
+      const cel = tbody.querySelector(`.jugador-cel img[alt="${nom}"]`);
+      const badge = cel?.closest('tr')?.querySelector('.pts-badge');
+      if (badge) {
+        const p = pts[nom] || 0;
+        badge.textContent = `${p} pts`;
+        badge.classList.toggle('zero', p === 0);
+      }
+    });
   }
 
   async function resetTotJocScrabble() {

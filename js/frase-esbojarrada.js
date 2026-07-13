@@ -41,17 +41,30 @@ let feUnsubscribes = []; // listeners actius
 let feTornEnCurs = {};
 
 // ── FIREBASE ──────────────────────────────────────────────────
+/* Mateix projecte Firebase que fan servir la resta de pàgines */
+const FE_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBp7lMa2opgXrljNMLykfjxAJl2Y8f5oa8",
+  authDomain: "acores-2026.firebaseapp.com",
+  projectId: "acores-2026",
+  storageBucket: "acores-2026.firebasestorage.app",
+  messagingSenderId: "749343671546",
+  appId: "1:749343671546:web:aa2e3d6043de9b8c89f543"
+};
+
 function feGetDb() {
   if (feDb) return feDb;
   try {
     if (typeof getFirebaseDb === 'function') {
       feDb = getFirebaseDb();
-    } else if (typeof firebase !== 'undefined' && firebase.apps.length) {
+    }
+    if (!feDb && typeof firebase !== 'undefined') {
+      if (!firebase.apps.length) firebase.initializeApp(FE_FIREBASE_CONFIG);
       feDb = firebase.firestore();
     }
   } catch(e) {}
   return feDb;
 }
+
 
 // ── HORA ACTIVA (només afecta el comptador, no el joc) ────────
 // De 8h a 22h: el comptador de 2h corra normalment.
