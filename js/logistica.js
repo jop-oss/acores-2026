@@ -92,9 +92,14 @@ function formatDiaCurt(str) {
   return `${d.getDate()} ${MESOS_CA[d.getMonth()].toUpperCase()}`;
 }
 
+const CAT_FLAG_SVG = '<svg class="iata-flag-svg" viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Catalunya"><rect width="3" height="2" fill="#FCDD09"/><rect y="0.2222" width="3" height="0.2222" fill="#DA121A"/><rect y="0.6667" width="3" height="0.2222" fill="#DA121A"/><rect y="1.1111" width="3" height="0.2222" fill="#DA121A"/><rect y="1.5556" width="3" height="0.2222" fill="#DA121A"/></svg>';
+const PT_FLAG_SVG = '<svg class="iata-flag-svg" viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portugal"><rect width="3" height="2" fill="#FF0000"/><rect width="1.2" height="2" fill="#046A38"/></svg>';
+
 function iataFlag(code) {
-  const flags = { BCN:'🇪🇸', OPO:'🇵🇹', TER:'🇵🇹', PDL:'🇵🇹', SJZ:'🇵🇹', HOR:'🇵🇹', LIS:'🇵🇹' };
-  return flags[code] || '🏝';
+  if (code === 'BCN') return `${CAT_FLAG_SVG}<span class="iata-flag-lbl">CAT</span>`;
+  const pt = new Set(['OPO', 'TER', 'PDL', 'SJZ', 'HOR', 'LIS']);
+  if (pt.has(code)) return `${PT_FLAG_SVG}<span class="iata-flag-lbl">PT</span>`;
+  return '🏝';
 }
 
 /* ──────────────────────────────────────────────────────────

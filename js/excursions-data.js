@@ -38,6 +38,7 @@ const EXCURSIONS = {
     "sortides": "9:30-14",
     "durada": "3h",
     "preu": 69.9,
+    "reservat": "Reservat 24 de juliol",
     "empresa": "https://azoreanseascape.pt/es/libro/?re-product-id=334185"
   },
   "ex-vai-smi-04": {
@@ -363,6 +364,7 @@ const EXCURSIONS = {
     "sortides": "9h i 14h",
     "durada": "3h",
     "preu": 75.0,
+    "reservat": "Reservat 30 de juliol",
     "empresa": "https://espacotalassa.com/en/whale-watching/"
   },
   "ex-cet-pic-04": {

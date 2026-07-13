@@ -2909,6 +2909,7 @@ const ME_RESERVES = [
     illa: "Sao Miguel",
     nom: "Gruta do Carvão",
     desc: "Només és possible visitar la secció Paim de Gruta do Carvão des del Centre de Visitants de Ponta Prima. És obligatori portar un guia local. Tingueu en compte que és millor reservar la visita amb antelació. Hi ha dos tipus de visites: curta (200 m, 30-40 min, fins 15 persones) i llarga (800 m, 2h, fins 5 persones, requereix bona condició física). Portar calçat còmode, roba d'abric (15ºC a l'interior). Visita guiada en anglès o portuguès.",
+    reservat: "Reservat 24 de juliol",
     links: [
       "https://www.futurismo.pt/es/blog/gruta-do-carvao-el-mundo-subterraneo-bajo-ponta-delgada/",
       "https://grutadocarvao.pt/pt/reservations",
@@ -2929,6 +2930,7 @@ const ME_RESERVES = [
     illa: "Sao Miguel",
     nom: "Caldeira Velha",
     desc: "L'accés als gorgs termals de Caldeira Velha està estrictament regulat per preservar l'ecosistema. El temps màxim de bany està limitat a 2 hores i hi ha un aforament màxim de 125 persones al parc i 50 persones a les piscines. S'aconsella reservar l'entrada amb antelació.",
+    reservat: "Reservat 25 de juliol",
     links: [
       "https://www.futurismo.pt/es/blog/caldeira-velha-el-monumento-natural-que-hay-que-visitar-en-las-azores/",
       "https://parquesnaturais.azores.gov.pt/bilheteira/caldeiravelha/",
@@ -2949,6 +2951,7 @@ const ME_RESERVES = [
     illa: "Sao Miguel",
     nom: "Parque Terra Nostra",
     desc: "Un dels llocs més visitats de les Açores, conegut per les seves aigües termals i vegetació exuberant. Es pot comprar l'entrada per internet triant dia i hora d'entrada. Un cop dins, no hi ha límit de temps fins al tancament (16:30h). També és possible comprar l'entrada a la taquilla (màxim 15 dies d'antelació).",
+    reservat: "Reservat 27 de juliol",
     links: [
       "https://www.saomiguelguide.com/parque-terra-nostra",
       "https://www.parqueterranostra.com/pt/bilhetica/comprar/?token=d481496b159ca2b3602cf714a4dacb30",
@@ -2959,6 +2962,7 @@ const ME_RESERVES = [
     illa: "Sao Miguel",
     nom: "Ilhéu de Vila Franca do Campo",
     desc: "Les visites es realitzen de juny a octubre, amb sortides diàries amb vaixell des de la Marina de Vila Franca do Campo. L'accés està limitat a 400 persones al dia. Es recomana comprar el bitllet amb antelació (màxim 15 dies, mínim 24h abans). Si els bitllets estan esgotats en línia, es poden comprar el mateix dia a la taquilla.",
+    reservat: "Reservat 27 de juliol",
     links: [
       "https://byacores.com/es/islote-de-vila-franca-do-campo/",
       "https://bilheteira.cnvfc.net/",

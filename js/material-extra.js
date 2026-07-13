@@ -93,7 +93,8 @@ function buildActivitats() {
   });
   return Object.entries(cats).map(([subKey, subCfg]) => {
     const typusName = subCfg.label.includes("/") ? subCfg.label.split("/")[1] : subCfg.label;
-    return { tipus: typusName, emoji: subCfg.emoji, img: subKey, llocs: byTypus[typusName] || [] };
+    const displayName = typusName === "Coasteering" ? "Coasteering/Scrambling" : typusName;
+    return { tipus: displayName, emoji: subCfg.emoji, img: subKey, llocs: byTypus[typusName] || [] };
   }).filter((a) => a.llocs.length > 0);
 }
 let _sendList = null;
@@ -991,10 +992,15 @@ function renderCetacis() {
     const topBadge = dest
       ? `<span class="exc-act-font" style="background:#c89a2a22;color:#c89a2a;border-color:#c89a2a44;">⭐ Recomanat${infoParens}</span>`
       : (e.info ? `<span class="exc-act-font">${escHtml(e.info)}</span>` : "");
+    const reservatChip = e.reservat
+      ? `<span class="exc-reservat-chip">📅 ${escHtml(e.reservat)}</span>`
+      : "";
+
     return `<a class="exc-act-card" href="${escHtml(e.empresa||"#")}" target="_blank" rel="noopener"
       style="${goldSt}">
       <div class="exc-act-top">
         ${topBadge}
+        ${reservatChip}
         ${e.durada ? `<span class="exc-act-durada">⏱ ${escHtml(e.durada)}</span>` : ""}
       </div>
       <div class="exc-act-nom">${escHtml(nom)}</div>
@@ -1087,10 +1093,14 @@ function renderBarco() {
         const st = a.dest ? `style="border-color:#c89a2a;background:rgba(200,154,42,0.10);"` : "";
         const infoP = a.info ? ` (${escHtml(a.info)})` : "";
         const destBadge = a.dest ? `<span class="exc-act-font" style="background:#c89a2a22;color:#c89a2a;border-color:#c89a2a44;">⭐ Recomanat${infoP}</span>` : `<span class="exc-act-font">${escHtml(a.info || "")}</span>`;
+        const reservatChip = a.reservat
+          ? `<span class="exc-reservat-chip">📅 ${escHtml(a.reservat)}</span>`
+          : "";
         return `<a class="exc-act-card" href="${a.empresa ? escHtml(a.empresa) : "#"}" target="_blank" rel="noopener"
            style="animation-delay:${i * 40}ms;${a.dest ? "border-color:#c89a2a;background:rgba(200,154,42,0.10);" : ""}">
           <div class="exc-act-top">
             ${destBadge}
+            ${reservatChip}
             ${a.durada ? `<span class="exc-act-durada">⏱ ${escHtml(a.durada)}</span>` : ""}
           </div>
           <div class="exc-act-nom">${escHtml(a.nom)}</div>
@@ -1177,6 +1187,10 @@ function renderEstrelles() {
     </div>
   </div>
   <div class="exc-cos">
+    <div class="info-alerta" style="margin-bottom:24px;">
+      <div class="info-alerta-titol">🌕 Fase lunar durant el viatge</div>
+      <p class="info-alerta-text">Malauradament les dades del viatge no són les més idònies per dur a terme aquesta activitat ja que la lluna es mourà entre quart creixent i lluna plena.</p>
+    </div>
     ${llocsHtml}
     <div class="exc-seccio-sep"><h3 class="exc-seccio-titol">🚗 Consells de conducció nocturna</h3></div>
     <div class="exc-consells">${consells}</div>
@@ -1422,6 +1436,20 @@ function initMaleta() {
   wrap.innerHTML = `<div class="mal-article">
 
   <p class="mal-intro">Per viatjar a les Açores, fes les maletes pensant que <em>"viuràs les quatre estacions en un sol dia"</em>. És possible despertar amb molta boira —que en realitat amaga el sol i el cel blau— i acabar el dia amb molta pluja i vent. La temperatura a l'agost va dels 19 als 25 graus. En ser un lloc amb humitat constant i molt de vent, podries sentir més fred o calor del que indica el termòmetre.</p>
+
+  <div class="info-sub"><span class="info-sub-emoji">🧳</span><h3 class="info-sub-titol">Mida i pes de l'equipatge de cabina permès</h3></div>
+  <div class="info-taula-wrap">
+    <div class="info-taula-scroll">
+      <table class="info-taula">
+        <thead><tr><th>Equipatge</th><th>Ryanair</th><th>SATA</th><th>TAP</th><th>Opció més restrictiva</th></tr></thead>
+        <tbody>
+          <tr><td>Bossa de mà</td><td>40x30x20</td><td>40x30x15</td><td>40x30x15</td><td class="info-taula-restrictiu">40x30x15</td></tr>
+          <tr><td>Maleta</td><td>55x40x20</td><td>55x40x20</td><td>55x40x25</td><td class="info-taula-restrictiu">55x40x20</td></tr>
+          <tr><td>Pes (entre els 2)</td><td>10 kg</td><td>8 kg</td><td>10 kg</td><td class="info-taula-restrictiu">8 kg</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <section class="mal-seccio">
     <h3 class="mal-titol">👟 Roba i calçat tècnic</h3>
@@ -1785,6 +1813,31 @@ function renderInfoGeneral() {
     <p class="info-taula-font">Font: estimació de població el 2025 a partir de les dades del cens de 2021 · <a class="gast-link" href="https://www.geo-ref.net/sp/xaz.htm" target="_blank" rel="noopener">geo-ref.net</a></p>
   </div>
 
+  <div class="info-sub"><span class="info-sub-emoji">📏</span><h3 class="info-sub-titol">Com de grans són les illes de les Açores?</h3></div>
+  <p>Veient el mapa de les illes enmig de l'immens oceà, hom es pot endur una idea equivocada sobre les seves dimensions. Per posar-ho en perspectiva, l'illa més gran, São Miguel, és tan sols un 6% més gran que Menorca i una cinquena part de Mallorca. Totes les altres illes són molt més petites, fins i tot més que Eivissa.</p>
+
+  <div class="info-taula-wrap">
+    <div class="info-taula-titol">Superfície comparada amb les illes balears</div>
+    <div class="info-taula-scroll">
+      <table class="info-taula">
+        <thead><tr><th>Illa</th><th>Km²</th><th>Menorca (702 km²)</th><th>Mallorca (3.640 km²)</th><th>Eivissa (572 km²)</th></tr></thead>
+        <tbody>
+          <tr><td>Faial</td><td>173</td><td>25%</td><td>5%</td><td>30%</td></tr>
+          <tr><td>Pico</td><td>445</td><td>63%</td><td>12%</td><td>78%</td></tr>
+          <tr><td>São Jorge</td><td>244</td><td>35%</td><td>7%</td><td>43%</td></tr>
+          <tr><td>São Miguel</td><td>745</td><td>106%</td><td>20%</td><td>130%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mida-illes-grid">
+    <div class="mida-illes-item"><img class="mida-illes-img" src="img/mida-illes/faial-vs-menorca.webp" alt="Comparació de mida: Faial vs Menorca" loading="lazy"><p class="mida-illes-cap">Faial vs Menorca</p></div>
+    <div class="mida-illes-item"><img class="mida-illes-img" src="img/mida-illes/pico-vs-menorca.webp" alt="Comparació de mida: Pico vs Menorca" loading="lazy"><p class="mida-illes-cap">Pico vs Menorca</p></div>
+    <div class="mida-illes-item"><img class="mida-illes-img" src="img/mida-illes/sao-jorgue-vs-menorca.webp" alt="Comparació de mida: São Jorge vs Menorca" loading="lazy"><p class="mida-illes-cap">São Jorge vs Menorca</p></div>
+    <div class="mida-illes-item"><img class="mida-illes-img" src="img/mida-illes/sao-miguel-vs-menorca.webp" alt="Comparació de mida: São Miguel vs Menorca" loading="lazy"><p class="mida-illes-cap">São Miguel vs Menorca</p></div>
+  </div>
+
   </div>`;
 }
 
@@ -1828,6 +1881,9 @@ function renderInfoConsells() {
     <div class="exc-consell"><span class="exc-consell-ico">🐄</span><span><strong>Les vaques tenen prioritat absoluta.</strong> En qualsevol carretera de muntanya és molt habitual trobar-se un ramat bloquejant la calçada al sortir d'una corba. Posa els intermitents d'emergència, atura el cotxe per complet i espera que el pagès les aparti. No els agrada que se'ls toqui el clàxon!</span></div>
     <div class="exc-consell"><span class="exc-consell-ico">🌫️</span><span><strong>La boira ho canvia tot.</strong> Una carretera còmoda amb sol pot ser perillosa amb boira espessa. A les illes és un fenomen molt freqüent, especialment a les zones d'altitud. Si la boira és densa, evita les carreteres de carena o pistes de terra i consulta l'apartat <em>🚗 Carreteres</em> d'aquesta mateixa secció.</span></div>
   </div>
+
+  <div class="info-sub"><span class="info-sub-emoji">♨️</span><h3 class="info-sub-titol">Bany a aigües termals</h3></div>
+  <p>Les aigües termals de les Açores es caracteritzen per ser riques en ferro. Per això es recomana utilitzar banyadors de color fosc o vells, ja que les aigües de color marró ataronjat poden tenyir les peces de color clar. També per aquest motiu, s'aconsella no mullar-se els cabells en elles, especialment si són rossos, perquè l'aigua ferruginosa els podria decolorar.</p>
 
   </div>`;
 }
@@ -2365,7 +2421,12 @@ function renderInfoReserves() {
         o la <button class="res-guies-btn" onclick="resShowGuies()">llista oficial de guies de muntanya autoritzats</button>.</p>`;
     }
 
+    const reservatChip = r.reservat
+      ? `<span class="res-reservat-chip">📅 ${escHtml(r.reservat)}</span>`
+      : "";
+
     return `<div class="res-card" id="${escHtml(r.anchor)}" style="--res-color:${color}">
+      ${reservatChip}
       <div class="res-card-header">
         <span class="res-illa-badge" style="background:${color}22;color:${color};border-color:${color}55">${emoji} ${lbl}</span>
         <h4 class="res-card-nom">${escHtml(r.nom)}</h4>

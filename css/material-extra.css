@@ -1342,6 +1342,14 @@ body.light .av-card { background: #fff; }
 }
 .exc-act-font-manawa    { background: rgba(255,140,0,0.15);  color: #ff9a40; border: 1px solid rgba(255,140,0,0.25); }
 .exc-act-font-tripadvisor{ background: rgba(0,160,80,0.15);  color: #40c080; border: 1px solid rgba(0,160,80,0.25); }
+.exc-reservat-chip {
+  font-family: 'Lora', serif;
+  font-size: 0.66rem; font-weight: 700;
+  background: #e6007e; color: #fff;
+  padding: 3px 10px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(230,0,126,0.4);
+  white-space: nowrap;
+}
 .exc-act-durada { font-family:'Lora',serif; font-size: 0.72rem; color: var(--me-muted); margin-left: auto; }
 .exc-act-nom { font-family:'Lora',serif; font-size: 0.82rem; color: var(--me-text); line-height: 1.4; margin-bottom: 6px; }
 .exc-act-empresa { font-size: 0.7rem; color: var(--me-muted); font-family:'Lora',serif; }
@@ -1838,6 +1846,44 @@ body.light .mal-llista li { background: #fff; border-color: rgba(45,90,61,0.12);
   font-size: 0.72rem; color: var(--me-muted); margin-top: 8px; padding-left: 2px;
 }
 
+/* Columna "opció més restrictiva" (maleta) */
+.info-taula-restrictiu {
+  color: #4fd17a !important;
+  font-weight: 700;
+}
+.info-taula tbody tr:hover td.info-taula-restrictiu { color: #4fd17a !important; }
+
+/* Comparativa de mida d'illes (2 columnes) */
+.mida-illes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 20px 0 8px;
+}
+.mida-illes-item {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(106,171,122,0.18);
+  background: rgba(255,255,255,0.03);
+}
+.mida-illes-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mida-illes-cap {
+  margin: 0;
+  padding: 8px 12px;
+  font-family: 'Lora', serif;
+  font-size: 0.78rem;
+  text-align: center;
+  color: var(--me-muted);
+}
+@media (max-width: 480px) {
+  .mida-illes-grid { gap: 10px; }
+  .mida-illes-cap { font-size: 0.72rem; padding: 6px 8px; }
+}
+
 /* Mode clar */
 body.light .info-nav-wrap  { background: rgba(244,247,244,0.97); }
 body.light .info-intro     { color: #3a5a4a; }
@@ -2092,6 +2138,7 @@ body.light .itin-card-titol { color: #1a3a2a; }
   margin-top: 8px;
 }
 .res-card {
+  position: relative;
   background: var(--me-surface);
   border: 1px solid color-mix(in srgb, var(--res-color) 20%, transparent);
   border-left: 4px solid var(--res-color);
@@ -2099,6 +2146,21 @@ body.light .itin-card-titol { color: #1a3a2a; }
   padding: 16px 18px;
   scroll-margin-top: calc(52px + 49px + 50px);
   transition: box-shadow 0.2s, border-color 0.2s;
+}
+.res-reservat-chip {
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  background: #e6007e;
+  color: #fff;
+  font-family: 'Lora', serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(230,0,126,0.45);
+  white-space: nowrap;
+  z-index: 2;
 }
 .res-card:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);

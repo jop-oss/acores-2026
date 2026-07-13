@@ -215,6 +215,24 @@
   font-weight: 700;
   flex: 1;
 }
+.iata-flag-svg {
+  width: 1.05em;
+  height: 0.7em;
+  vertical-align: middle;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15);
+  margin-right: 2px;
+}
+.iata-flag-lbl {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--log-muted, rgba(232,240,236,0.65));
+  vertical-align: middle;
+  margin-right: 1px;
+}
+body.light .iata-flag-lbl { color: #5a6a5a; }
 .log-card-companyia {
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
