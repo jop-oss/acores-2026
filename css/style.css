@@ -104,6 +104,26 @@ body {
 }
 
 /* BOTÓ TEMA */
+.admin-access-btn {
+  background: #2d5a3d;
+  border: 1px solid #6aab7a;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-access-btn:hover {
+  background: #6aab7a;
+  transform: scale(1.1);
+}
+
 .theme-toggle {
   background: none;
   border: 1px solid #2d5a3d;

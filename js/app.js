@@ -66,6 +66,13 @@ function appActualitzarBotoNav() {
   const wrap = document.getElementById('nav-id-wrap');
   const btn = document.getElementById('nav-id-btn');
   if (!btn) return;
+
+  // Botó d'accés a l'administració (només index.html, i només per en Jordi)
+  const adminBtn = document.getElementById('adminAccessBtn');
+  if (adminBtn) {
+    adminBtn.style.display = appJugadorActiu === 'Jordi' ? 'flex' : 'none';
+  }
+
   // Pàgines amb identificació obligatòria mostren l'avís
   const ambAvis = document.body.hasAttribute('data-requereix-id');
   if (appJugadorActiu) {
