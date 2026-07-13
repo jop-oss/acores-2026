@@ -230,6 +230,25 @@
     </div>
   </div>
 
+  <!-- IDENTIFICACIÓ -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🔑 Identificació</div>
+    </div>
+    <div class="admin-ruleta-info" style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">
+      Cada persona defineix el seu propi PIN la primera vegada que s'identifica (després d'introduir el PIN
+      inicial que els vas donar). Si algú l'oblida, reinicia'l aquí: la propera vegada que s'identifiqui li
+      tornarà a demanar el PIN inicial i n'haurà de triar un de nou. Recorda que el PIN mestre (<code>2468</code>)
+      sempre funciona per identificar-se com qualsevol.
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Persona</th><th>PIN personal</th><th></th></tr>
+      </thead>
+      <tbody id="taula-identificacio"></tbody>
+    </table>
+  </div>
+
   <!-- ITINERARI -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -729,6 +748,7 @@
 
   // ── CARREGAR DADES ─────────────────────────────────────────
   function carregarDades() {
+    renderIdentificacio();
     renderItinHoresTothom();
     renderQuiz();
     renderMapa();
@@ -877,6 +897,37 @@
       mostrarToast('Reptes sincronitzats');
     } catch (e) {
       estat.textContent = 'Error: ' + e.message;
+    }
+  }
+
+
+  // ── IDENTIFICACIÓ: PINs personals ────────────────────────────
+  function renderIdentificacio() {
+    getDb().collection('identitats').doc('pins').get().then(snap => {
+      const pins = snap.exists ? (snap.data() || {}) : {};
+      const tbody = document.getElementById('taula-identificacio');
+      tbody.innerHTML = JUGADORS.map(nom => {
+        const definit = !!pins[nom];
+        return `<tr>
+          <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+          <td>${definit ? '✅ Definit' : '⛔ Sense definir (PIN inicial)'}</td>
+          <td>${definit ? `<button class="btn-reset-jugador" onclick="resetPinPersonal('${nom}')">Reiniciar PIN</button>` : '—'}</td>
+        </tr>`;
+      }).join('');
+    }).catch(() => {
+      document.getElementById('taula-identificacio').innerHTML =
+        '<tr><td colspan="3">Error carregant els PINs</td></tr>';
+    });
+  }
+
+  async function resetPinPersonal(nom) {
+    if (!confirm(`Reiniciar el PIN de ${nom}? La propera vegada que s'identifiqui li tornarà a demanar el PIN inicial.`)) return;
+    try {
+      await getDb().collection('identitats').doc('pins').set({ [nom]: null }, { merge: true });
+      renderIdentificacio();
+      mostrarToast(`PIN de ${nom} reiniciat`);
+    } catch (e) {
+      alert('Error: ' + e.message);
     }
   }
 

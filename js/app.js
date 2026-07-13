@@ -127,7 +127,93 @@ function appDesidentificar() {
   document.dispatchEvent(new CustomEvent('app:jugador-canviat', { detail: { nom: null } }));
 }
 
-function appSeleccionarJugador(nom) {
+// ── PINS D'IDENTIFICACIÓ (evitar que algú s'identifiqui com un altre) ──
+// Mateix projecte Firebase que la resta de l'app
+const APP_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBp7lMa2opgXrljNMLykfjxAJl2Y8f5oa8",
+  authDomain: "acores-2026.firebaseapp.com",
+  projectId: "acores-2026",
+  storageBucket: "acores-2026.firebasestorage.app",
+  messagingSenderId: "749343671546",
+  appId: "1:749343671546:web:aa2e3d6043de9b8c89f543",
+};
+const ADMIN_MASTER_PIN = '2468'; // permet a en Jordi identificar-se com qualsevol
+const INITIAL_PINS_APP = { Anna: '1111', Jordi: '2222', Mons: '3333', Xu: '4444', Laia: '5555', Joa: '6666' };
+
+function appGetDb() {
+  if (typeof firebase === 'undefined') return null;
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(APP_FIREBASE_CONFIG);
+    return firebase.firestore();
+  } catch (e) { return null; }
+}
+
+async function appGetPinsDoc() {
+  const db = appGetDb();
+  if (!db) return null;
+  try {
+    const snap = await db.collection('identitats').doc('pins').get();
+    return snap.exists ? (snap.data() || {}) : {};
+  } catch (e) { return null; }
+}
+
+async function appDesarPinPersonal(nom, pin) {
+  const db = appGetDb();
+  if (!db) return false;
+  try {
+    await db.collection('identitats').doc('pins').set({ [nom]: pin }, { merge: true });
+    return true;
+  } catch (e) { return false; }
+}
+
+async function appSeleccionarJugador(nom) {
+  // Ja ets tu: no cal tornar a demanar res
+  if (nom === appJugadorActiu) {
+    document.getElementById('nav-id-menu')?.classList.remove('visible');
+    return;
+  }
+
+  const pins = await appGetPinsDoc();
+  if (pins === null) {
+    alert('No es pot verificar el PIN ara mateix (sense connexió). Torna-ho a provar.');
+    return;
+  }
+
+  const pinDesat = pins[nom];
+
+  if (pinDesat) {
+    // Ja té un PIN personal definit
+    const intent = prompt(`PIN de ${nom}:`);
+    if (intent === null) return;
+    if (intent !== pinDesat && intent !== ADMIN_MASTER_PIN) {
+      alert('PIN incorrecte.');
+      return;
+    }
+  } else {
+    // Primer cop que algú s'identifica com aquesta persona: cal el PIN
+    // inicial (el que ha repartit en Jordi) i triar-ne un de propi.
+    const inicial = prompt(`Primera vegada que t'identifiques com a ${nom}.\nIntrodueix el PIN inicial que et van donar:`);
+    if (inicial === null) return;
+    if (inicial !== INITIAL_PINS_APP[nom] && inicial !== ADMIN_MASTER_PIN) {
+      alert('PIN incorrecte.');
+      return;
+    }
+    let nouPin = null;
+    for (;;) {
+      nouPin = prompt('Defineix ara un PIN personal de 4 xifres (el faràs servir a partir d\'ara per identificar-te):');
+      if (nouPin === null) return;
+      if (!/^\d{4}$/.test(nouPin)) { alert('Ha de ser de 4 xifres.'); continue; }
+      const confirmacio = prompt('Torna a escriure\'l per confirmar-lo:');
+      if (confirmacio === nouPin) break;
+      alert('Els dos PIN no coincideixen, torna-ho a provar.');
+    }
+    const desat = await appDesarPinPersonal(nom, nouPin);
+    if (!desat) {
+      alert('No s\'ha pogut desar el PIN (sense connexió). Torna-ho a provar.');
+      return;
+    }
+  }
+
   appJugadorActiu = nom;
   localStorage.setItem('app_jugador', nom);
   localStorage.setItem('trivial_jugador_actiu', nom);
