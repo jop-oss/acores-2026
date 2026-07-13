@@ -42,7 +42,7 @@
 
   <div class="webcams-header">
     <h1>📷 Webcams en directe</h1>
-    <p class="webcams-subtitle">Imatges en temps real de les Açores · S'actualitzen cada 30 segons</p>
+    <p class="webcams-subtitle">Imatges en directe de les Açores · Es carreguen en entrar a la pàgina</p>
     <div class="island-selector">
       <button class="island-btn active" data-island="sao-miguel">São Miguel</button>
       <button class="island-btn" data-island="sao-jorge">São Jorge</button>
@@ -50,17 +50,46 @@
       <button class="island-btn" data-island="faial">Faial</button>
       <button class="island-btn" data-island="mapa">🗺️ Mapa</button>
     </div>
+    <button class="webcams-refresh-btn" id="webcamsRefreshBtn" onclick="refreshCams()">🔄 Actualitzar imatges</button>
   </div>
 
   <!-- SÃO MIGUEL -->
   <div class="webcams-grid" id="grid-sao-miguel">
 
+    <div class="webcam-card" data-cam="SMGMOS01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGMOS01&type=QXGA"
+             alt="Mosteiros" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/mosteiros-praia/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Mosteiros</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGMOS02">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGMOS02&type=QXGA"
+             alt="Mosteiros – Poças" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/mosteiros-pocas/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Mosteiros – Poças</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
     <div class="webcam-card" data-cam="SMGSCD01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGSCD01/VGAcurrent.jpg"
-             alt="Sete Cidades Cumeeiras" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGSCD01&type=QXGA"
+             alt="Sete Cidades – Cumeeiras" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/sete-cidades-cumeeiras/"
+        <a href="https://spotazores.com/webcam/sao-miguel/sete-cidades-cumeeiras/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -71,10 +100,10 @@
 
     <div class="webcam-card" data-cam="SMGSCD02">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGSCD02/VGAcurrent.jpg"
-             alt="Sete Cidades Lagoa" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGSCD02&type=QXGA"
+             alt="Sete Cidades – Lagoa" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/sete-cidades-lagoa/"
+        <a href="https://spotazores.com/webcam/sao-miguel/sete-cidades-lagoa/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -83,40 +112,12 @@
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGBAR01">
-      <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGBAR01/VGAcurrent.jpg"
-             alt="Ribeira Grande Lagoa do Fogo" class="webcam-img" referrerpolicy="no-referrer">
-        <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/lagoa-do-fogo/"
-           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
-      </div>
-      <div class="webcam-info">
-        <span class="webcam-name">Ribeira Grande – Lagoa do Fogo</span>
-        <span class="webcam-island">São Miguel</span>
-      </div>
-    </div>
-
-    <div class="webcam-card" data-cam="SMGMOS01">
-      <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGMOS01/VGAcurrent.jpg"
-             alt="Mosteiros Praia" class="webcam-img" referrerpolicy="no-referrer">
-        <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/mosteiros-praia/"
-           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
-      </div>
-      <div class="webcam-info">
-        <span class="webcam-name">Mosteiros – Praia</span>
-        <span class="webcam-island">São Miguel</span>
-      </div>
-    </div>
-
     <div class="webcam-card" data-cam="SMGPDL01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGPDL01/VGAcurrent.jpg"
-             alt="Ponta Delgada Marina" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPDL01&type=QXGA"
+             alt="Ponta Delgada – Marina" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/ponta-delgada-marina/"
+        <a href="https://spotazores.com/webcam/sao-miguel/ponta-delgada-marina/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -125,96 +126,180 @@
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGRBG01">
+    <div class="webcam-card" data-cam="SMGPDL02">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGRBG01/VGAcurrent.jpg"
-             alt="Ribeira Grande Praia de Santa Bárbara" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPDL02&type=QXGA"
+             alt="Zona Balnear Forno da Cal" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-de-santa-barbara/"
+        <a href="https://spotazores.com/webcam/sao-miguel/zona-balnear-forno-da-cal/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Ribeira Grande – Praia de Santa Bárbara</span>
+        <span class="webcam-name">Zona Balnear Forno da Cal</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGCAL01">
+    <div class="webcam-card" data-cam="SMGSRQ01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGCAL01/VGAcurrent.jpg"
-             alt="Caloura Lagoa" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGSRQ01&type=QXGA"
+             alt="Praia de São Roque" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/caloura/"
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-de-sao-roque/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Caloura – Lagoa</span>
+        <span class="webcam-name">Praia de São Roque</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="SMGPPL01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGPPL01/VGAcurrent.jpg"
-             alt="Ponta Delgada Praia das Milícias" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPPL01&type=QXGA"
+             alt="Praia das Milícias" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-das-milicias/"
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-das-milicias/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Ponta Delgada – Praia das Milícias</span>
+        <span class="webcam-name">Praia das Milícias</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGCAP01">
+    <div class="webcam-card" data-cam="SMGPPL02">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGCAP01/VGAcurrent.jpg"
-             alt="Ponta Delgada Poços de Capelas e São Vicente" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPPL02&type=QXGA"
+             alt="Praia do Pópulo" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/pocos-de-capelas-e-sao-vicente/"
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-do-populo/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Ponta Delgada – Poços de Capelas e São Vicente</span>
+        <span class="webcam-name">Praia do Pópulo</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGNOR01">
+    <div class="webcam-card" data-cam="SMGLAG01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGNOR01/VGAcurrent.jpg"
-             alt="Nordeste" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGLAG01&type=QXGA"
+             alt="Piscinas da Lagoa" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/nordeste/nordeste/"
+        <a href="https://spotazores.com/webcam/sao-miguel/piscinas-da-lagoa/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Nordeste</span>
+        <span class="webcam-name">Piscinas da Lagoa</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGBAR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGBAR01&type=QXGA"
+             alt="Lagoa do Fogo" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/lagoa-do-fogo/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Lagoa do Fogo</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGCAL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGCAL01&type=QXGA"
+             alt="Caloura" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/caloura/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Caloura</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGADL01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGADL01&type=QXGA"
+             alt="Praia de Água d’Alto" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/vila-franca-do-campo/praia-de-agua-dalto/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Praia de Água d’Alto</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGVFC01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGVFC01&type=QXGA"
+             alt="Praia Vinha d’Areia" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/vila-franca-do-campo/praia-vinha-dareia/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Praia Vinha d’Areia</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGFUR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGFUR01&type=QXGA"
+             alt="Furnas" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/furnas/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Furnas</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="SMGRBQ01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGRBQ01/VGAcurrent.jpg"
-             alt="Povoação Praia da Ribeira Quente" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGRBQ01&type=QXGA"
+             alt="Praia da Ribeira Quente" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-da-ribeira-quente/"
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-da-ribeira-quente/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Povoação – Praia da Ribeira Quente</span>
+        <span class="webcam-name">Praia da Ribeira Quente</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGPOV02">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPOV02&type=QXGA"
+             alt="Piscinas dos Pelames" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/piscinas-dos-pelames/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Piscinas dos Pelames</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="SMGPOV01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGPOV01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPOV01&type=QXGA"
              alt="Povoação" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/povoacao/povoacao/"
+        <a href="https://spotazores.com/webcam/sao-miguel/povoacao/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -225,42 +310,98 @@
 
     <div class="webcam-card" data-cam="SMGFAY01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGFAY01/VGAcurrent.jpg"
-             alt="Povoação Faial da Terra" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGFAY01&type=QXGA"
+             alt="Faial da Terra" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/faial-da-terra/"
+        <a href="https://spotazores.com/webcam/sao-miguel/faial-da-terra/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Povoação – Faial da Terra</span>
+        <span class="webcam-name">Faial da Terra</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGNOR01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGNOR01&type=QXGA"
+             alt="Nordeste" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/nordeste/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Nordeste</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="SMGPFR01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGPFR01/VGAcurrent.jpg"
-             alt="Ribeira Grande Praia dos Moinhos" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGPFR01&type=VGA"
+             alt="Praia dos Moinhos" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-dos-moinhos/"
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-dos-moinhos/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Ribeira Grande – Praia dos Moinhos</span>
+        <span class="webcam-name">Praia dos Moinhos</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
 
-    <div class="webcam-card" data-cam="SMGVFC01">
+    <div class="webcam-card" data-cam="SMGRBG02">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SMGVFC01/VGAcurrent.jpg"
-             alt="Vila Franca do Campo Praia Vinha d’Areia" class="webcam-img" referrerpolicy="no-referrer">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGRBG02&type=QXGA"
+             alt="Ribeira Grande" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-miguel/praia-vinha-dareia/"
+        <a href="https://spotazores.com/webcam/sao-miguel/ribeira-grande/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Vila Franca do Campo – Praia Vinha d’Areia</span>
+        <span class="webcam-name">Ribeira Grande</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGRBG03">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGRBG03&type=QXGA"
+             alt="Piscinas da Ribeira Grande" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/piscinas-da-ribeira-grande/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Piscinas da Ribeira Grande</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGRBG01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGRBG01&type=QXGA"
+             alt="Praia de Santa Bárbara" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/praia-de-santa-barbara/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Praia de Santa Bárbara</span>
+        <span class="webcam-island">São Miguel</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SMGCAP01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SMGCAP01&type=QXGA"
+             alt="Poços de Capelas e São Vicente" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-miguel/pocos-de-capelas-e-sao-vicente/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Poços de Capelas e São Vicente</span>
         <span class="webcam-island">São Miguel</span>
       </div>
     </div>
@@ -272,42 +413,42 @@
 
     <div class="webcam-card" data-cam="SJZVEL01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SJZVEL01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SJZVEL01&type=QXGA"
              alt="Velas" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-jorge/velas/"
+        <a href="https://spotazores.com/webcam/sao-jorge/velas/velas/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Velas – Port</span>
-        <span class="webcam-island">São Jorge</span>
-      </div>
-    </div>
-
-    <div class="webcam-card" data-cam="SJZFOV01">
-      <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SJZFJC01/VGAcurrent.jpg"
-             alt="Fajã do Ouvidor" class="webcam-img" referrerpolicy="no-referrer">
-        <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-jorge/velas/faja-do-ouvidor/"
-           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
-      </div>
-      <div class="webcam-info">
-        <span class="webcam-name">Fajã do Ouvidor</span>
+        <span class="webcam-name">Velas</span>
         <span class="webcam-island">São Jorge</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="SJZCAL01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/SJZCAL01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SJZCAL01&type=QXGA"
              alt="Calheta" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/sao-jorge/calheta/calheta/"
+        <a href="https://spotazores.com/webcam/sao-jorge/calheta/calheta/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
         <span class="webcam-name">Calheta</span>
+        <span class="webcam-island">São Jorge</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="SJZFJC01">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=SJZFJC01&type=QXGA"
+             alt="Fajã do Ouvidor" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/sao-jorge/velas/faja-do-ouvidor/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Fajã do Ouvidor</span>
         <span class="webcam-island">São Jorge</span>
       </div>
     </div>
@@ -317,26 +458,12 @@
   <!-- PICO -->
   <div class="webcams-grid hidden" id="grid-pico">
 
-    <div class="webcam-card" data-cam="PIXSRQ02">
-      <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/PIXSRQ02/VGAcurrent.jpg"
-             alt="Montanha do Pico" class="webcam-img" referrerpolicy="no-referrer">
-        <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/pico/sao-roque-do-pico/montanha/"
-           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
-      </div>
-      <div class="webcam-info">
-        <span class="webcam-name">Montanha do Pico</span>
-        <span class="webcam-island">Pico</span>
-      </div>
-    </div>
-
     <div class="webcam-card" data-cam="PIXMAD01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/PIXMAD01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=PIXMAD01&type=QXGA"
              alt="Porto da Madalena" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/pico/madalena/porto-da-madalena/"
+        <a href="https://spotazores.com/webcam/pico/madalena/porto-da-madalena/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -347,10 +474,10 @@
 
     <div class="webcam-card" data-cam="PIXLAJ01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/PIXLAJ01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=PIXLAJ01&type=QXGA"
              alt="Lajes do Pico" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/pico/lajes-do-pico/lajes/"
+        <a href="https://spotazores.com/webcam/pico/lajes-do-pico/lajes/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
@@ -361,14 +488,28 @@
 
     <div class="webcam-card" data-cam="PIXSRQ01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/PIXSRQ01/VGAcurrent.jpg?"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=PIXSRQ01&type=QXGA"
              alt="São Roque do Pico" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/pico/porto-de-sao-roque/"
+        <a href="https://spotazores.com/webcam/pico/sao-roque-do-pico/porto-de-sao-roque/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
         <span class="webcam-name">São Roque do Pico</span>
+        <span class="webcam-island">Pico</span>
+      </div>
+    </div>
+
+    <div class="webcam-card" data-cam="PIXSRQ02">
+      <div class="webcam-img-wrap">
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=PIXSRQ02&type=QXGA"
+             alt="Montanha do Pico" class="webcam-img" referrerpolicy="no-referrer">
+        <div class="webcam-loading">Carregant...</div>
+        <a href="https://spotazores.com/webcam/pico/sao-roque-do-pico/montanha/"
+           target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
+      </div>
+      <div class="webcam-info">
+        <span class="webcam-name">Montanha do Pico</span>
         <span class="webcam-island">Pico</span>
       </div>
     </div>
@@ -380,28 +521,28 @@
 
     <div class="webcam-card" data-cam="FAYHOR01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/FAYHOR01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=FAYHOR01&type=QXGA"
              alt="Horta" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/faial/horta/"
+        <a href="https://spotazores.com/webcam/faial/horta/horta/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Horta – Port i Marina</span>
+        <span class="webcam-name">Horta</span>
         <span class="webcam-island">Faial</span>
       </div>
     </div>
 
     <div class="webcam-card" data-cam="FAYCBG01">
       <div class="webcam-img-wrap">
-        <img src="https://www.spotazores.com/camaras/FAYCBG01/VGAcurrent.jpg"
+        <img src="https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=FAYCBG01&type=QXGA"
              alt="Cabeço Gordo" class="webcam-img" referrerpolicy="no-referrer">
         <div class="webcam-loading">Carregant...</div>
-        <a href="https://spotazores.com/en/webcam/faial/cabeco-gordo/"
+        <a href="https://spotazores.com/webcam/faial/horta/cabeco-gordo/"
            target="_blank" class="webcam-fullscreen" title="Veure a SpotAzores">⛶</a>
       </div>
       <div class="webcam-info">
-        <span class="webcam-name">Cabeço Gordo – Caldeira</span>
+        <span class="webcam-name">Cabeço Gordo</span>
         <span class="webcam-island">Faial</span>
       </div>
     </div>
@@ -440,7 +581,7 @@
   </div>
 </div>
 
-  <p class="webcams-note">Font: <a href="https://spotazores.com" target="_blank">SpotAzores</a> · Imatges actualitzades cada 30 segons automàticament</p>
+  <p class="webcams-note">Font: <a href="https://www.azoren-online.info/es/azoren-archipel/aktuell/wetter-auf-den-azoren/" target="_blank">Azoren-Online</a> · Les imatges es carreguen en entrar a la pàgina; prem "🔄 Actualitzar imatges" per demanar-ne una de més recent</p>
 
 </main>
 

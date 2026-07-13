@@ -21,6 +21,22 @@
   margin-bottom: 20px;
 }
 
+.webcams-refresh-btn {
+  margin-top: 16px;
+  padding: 9px 20px;
+  background: rgba(106,171,122,0.12);
+  border: 1px solid #2d5a3d;
+  border-radius: 20px;
+  color: #a8d8b0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.webcams-refresh-btn:hover { background: #2d5a3d; }
+.webcams-refresh-btn:disabled { opacity: 0.6; cursor: default; }
+body.light .webcams-refresh-btn { color: #1a3a2a; }
+
 .webcams-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -19,24 +19,38 @@ document.querySelectorAll(".island-btn").forEach((btn) => {
   });
 });
 
-// Refresc automàtic cada 3 minuts (30s era excessiu i sobrecarregava el servidor de SpotAzores)
+// Refresc manual (botó "🔄 Actualitzar imatges"). Ja no hi ha interval
+// automàtic: amb la nova font (un proxy no oficial) és més prudent no
+// fer-hi peticions periòdiques de fons i deixar que l'usuari decideixi
+// quan vol demanar una imatge més recent.
 function refreshCams() {
-  document.querySelectorAll(".webcam-img").forEach((img) => {
+  const btn = document.getElementById("webcamsRefreshBtn");
+  if (btn) { btn.disabled = true; btn.textContent = "🔄 Actualitzant..."; }
+  const imgs = document.querySelectorAll(".webcam-img");
+  let pending = imgs.length;
+  const done = () => {
+    pending--;
+    if (pending <= 0 && btn) { btn.disabled = false; btn.textContent = "🔄 Actualitzar imatges"; }
+  };
+  imgs.forEach((img) => {
     const card = img.closest(".webcam-card");
     card.classList.add("refreshing");
     const newImg = new Image();
     newImg.referrerPolicy = "no-referrer";
-    const base = img.src.split("?")[0];
+    // Fem servir URL() en lloc de tallar per "?" perquè algunes fonts
+    // (com la nova de azoren-online.info) ja porten paràmetres propis
+    // (?cam=...&type=...) que no es poden perdre en refrescar.
+    const url = new URL(img.src, window.location.href);
+    url.searchParams.set("t", Date.now());
     newImg.onload = () => {
       img.src = newImg.src;
       card.classList.remove("refreshing");
+      done();
     };
-    newImg.onerror = () => card.classList.remove("refreshing");
-    newImg.src = base + "?t=" + Date.now();
+    newImg.onerror = () => { card.classList.remove("refreshing"); done(); };
+    newImg.src = url.toString();
   });
 }
-
-setInterval(refreshCams, 180000);
 
 // Clic a la card obre SpotAzores en una nova pestanya
 document.querySelectorAll(".webcam-card").forEach((card) => {
@@ -173,7 +187,7 @@ const pinPositions = {
   SMGPFR01: { x: 58.8, y: 38.2 },
   SMGVFC01: { x: 59.8, y: 94.0 },
   SJZVEL01: { x: 19.0, y: 38.5 },
-  SJZFOV01: { x: 37.3, y: 41.8 },
+  SJZFJC01: { x: 37.3, y: 41.8 },
   SJZCAL01: { x: 64.3, y: 64.3 },
   PIXSRQ02: { x: 29.4, y: 46.0 },
   PIXMAD01: { x: 5.6, y: 21.6 },
@@ -210,7 +224,8 @@ function addMinimaps() {
     }
 
     minimap.innerHTML = `
-      <img src="img/minimaps/${cam}.png" alt="Ubicació" loading="lazy">
+      <img src="img/minimaps/${cam}.png" alt="Ubicació" loading="lazy"
+           onerror="this.closest('.webcam-minimap').style.display='none'">
       ${pinHtml}
     `;
     wrap.appendChild(minimap);
@@ -264,172 +279,242 @@ function buildLeafletMap() {
 
   const cams = [
     {
+      cam: "SMGMOS01",
+      name: "Mosteiros",
+      lat: 37.765,
+      lon: -25.824,
+      url: "https://spotazores.com/webcam/sao-miguel/mosteiros-praia/",
+    },
+    {
+      cam: "SMGMOS02",
+      name: "Mosteiros – Poças",
+      lat: 37.766,
+      lon: -25.826,
+      url: "https://spotazores.com/webcam/sao-miguel/mosteiros-pocas/",
+    },
+    {
       cam: "SMGSCD01",
       name: "Sete Cidades – Cumeeiras",
       lat: 37.787,
       lon: -25.786,
-      url: "https://spotazores.com/en/webcam/sao-miguel/sete-cidades-cumeeiras/",
+      url: "https://spotazores.com/webcam/sao-miguel/sete-cidades-cumeeiras/",
     },
     {
       cam: "SMGSCD02",
       name: "Sete Cidades – Lagoa",
       lat: 37.789,
       lon: -25.788,
-      url: "https://spotazores.com/en/webcam/sao-miguel/sete-cidades-lagoa/",
-    },
-    {
-      cam: "SMGBAR01",
-      name: "Ribeira Grande – Lagoa do Fogo",
-      lat: 37.756,
-      lon: -25.468,
-      url: "https://spotazores.com/en/webcam/sao-miguel/lagoa-do-fogo/",
-    },
-    {
-      cam: "SMGMOS01",
-      name: "Mosteiros – Praia",
-      lat: 37.765,
-      lon: -25.824,
-      url: "https://spotazores.com/en/webcam/sao-miguel/mosteiros-praia/",
+      url: "https://spotazores.com/webcam/sao-miguel/sete-cidades-lagoa/",
     },
     {
       cam: "SMGPDL01",
       name: "Ponta Delgada – Marina",
       lat: 37.737,
       lon: -25.666,
-      url: "https://spotazores.com/en/webcam/sao-miguel/ponta-delgada-marina/",
+      url: "https://spotazores.com/webcam/sao-miguel/ponta-delgada-marina/",
     },
     {
-      cam: "SMGRBG01",
-      name: "Ribeira Grande – Sta. Bárbara",
-      lat: 37.83,
-      lon: -25.514,
-      url: "https://spotazores.com/en/webcam/sao-miguel/praia-de-santa-barbara/",
+      cam: "SMGPDL02",
+      name: "Zona Balnear Forno da Cal",
+      lat: 37.74456,
+      lon: -25.64004,
+      url: "https://spotazores.com/webcam/sao-miguel/zona-balnear-forno-da-cal/",
     },
     {
-      cam: "SMGCAL01",
-      name: "Caloura – Lagoa",
-      lat: 37.696,
-      lon: -25.522,
-      url: "https://spotazores.com/en/webcam/sao-miguel/caloura/",
+      cam: "SMGSRQ01",
+      name: "Praia de São Roque",
+      lat: 37.741,
+      lon: -25.629,
+      url: "https://spotazores.com/webcam/sao-miguel/praia-de-sao-roque/",
     },
     {
       cam: "SMGPPL01",
-      name: "Ponta Delgada – Milícias",
+      name: "Praia das Milícias",
       lat: 37.744,
       lon: -25.637,
-      url: "https://spotazores.com/en/webcam/sao-miguel/praia-das-milicias/",
+      url: "https://spotazores.com/webcam/sao-miguel/praia-das-milicias/",
     },
     {
-      cam: "SMGCAP01",
-      name: "Ponta Delgada – Capelas",
-      lat: 37.768,
-      lon: -25.732,
-      url: "https://spotazores.com/en/webcam/sao-miguel/pocos-de-capelas-e-sao-vicente/",
+      cam: "SMGPPL02",
+      name: "Praia do Pópulo",
+      lat: 37.74,
+      lon: -25.632,
+      url: "https://spotazores.com/webcam/sao-miguel/praia-do-populo/",
     },
     {
-      cam: "SMGNOR01",
-      name: "Nordeste",
-      lat: 37.789,
-      lon: -25.157,
-      url: "https://spotazores.com/en/webcam/sao-miguel/nordeste/nordeste/",
+      cam: "SMGLAG01",
+      name: "Piscinas da Lagoa",
+      lat: 37.744,
+      lon: -25.573,
+      url: "https://spotazores.com/webcam/sao-miguel/piscinas-da-lagoa/",
+    },
+    {
+      cam: "SMGBAR01",
+      name: "Lagoa do Fogo",
+      lat: 37.756,
+      lon: -25.468,
+      url: "https://spotazores.com/webcam/sao-miguel/lagoa-do-fogo/",
+    },
+    {
+      cam: "SMGCAL01",
+      name: "Caloura",
+      lat: 37.696,
+      lon: -25.522,
+      url: "https://spotazores.com/webcam/sao-miguel/caloura/",
+    },
+    {
+      cam: "SMGADL01",
+      name: "Praia de Água d’Alto",
+      lat: 37.718,
+      lon: -25.402,
+      url: "https://spotazores.com/webcam/sao-miguel/vila-franca-do-campo/praia-de-agua-dalto/",
+    },
+    {
+      cam: "SMGVFC01",
+      name: "Praia Vinha d’Areia",
+      lat: 37.716,
+      lon: -25.434,
+      url: "https://spotazores.com/webcam/sao-miguel/vila-franca-do-campo/praia-vinha-dareia/",
+    },
+    {
+      cam: "SMGFUR01",
+      name: "Furnas",
+      lat: 37.766,
+      lon: -25.321,
+      url: "https://spotazores.com/webcam/sao-miguel/furnas/",
     },
     {
       cam: "SMGRBQ01",
-      name: "Povoação – Ribeira Quente",
+      name: "Praia da Ribeira Quente",
       lat: 37.69,
       lon: -25.3,
-      url: "https://spotazores.com/en/webcam/sao-miguel/praia-da-ribeira-quente/",
+      url: "https://spotazores.com/webcam/sao-miguel/praia-da-ribeira-quente/",
+    },
+    {
+      cam: "SMGPOV02",
+      name: "Piscinas dos Pelames",
+      lat: 37.752,
+      lon: -25.24,
+      url: "https://spotazores.com/webcam/sao-miguel/piscinas-dos-pelames/",
     },
     {
       cam: "SMGPOV01",
       name: "Povoação",
       lat: 37.756,
       lon: -25.237,
-      url: "https://spotazores.com/en/webcam/sao-miguel/povoacao/povoacao/",
+      url: "https://spotazores.com/webcam/sao-miguel/povoacao/",
     },
     {
       cam: "SMGFAY01",
-      name: "Povoação – Faial da Terra",
+      name: "Faial da Terra",
       lat: 37.72,
       lon: -25.225,
-      url: "https://spotazores.com/en/webcam/sao-miguel/faial-da-terra/",
+      url: "https://spotazores.com/webcam/sao-miguel/faial-da-terra/",
+    },
+    {
+      cam: "SMGNOR01",
+      name: "Nordeste",
+      lat: 37.789,
+      lon: -25.157,
+      url: "https://spotazores.com/webcam/sao-miguel/nordeste/",
     },
     {
       cam: "SMGPFR01",
-      name: "Ribeira Grande – Moinhos",
+      name: "Praia dos Moinhos",
       lat: 37.826,
       lon: -25.537,
-      url: "https://spotazores.com/en/webcam/sao-miguel/praia-dos-moinhos/",
+      url: "https://spotazores.com/webcam/sao-miguel/praia-dos-moinhos/",
     },
     {
-      cam: "SMGVFC01",
-      name: "Vila Franca – Vinha d'Areia",
-      lat: 37.716,
-      lon: -25.434,
-      url: "https://spotazores.com/en/webcam/sao-miguel/praia-vinha-dareia/",
+      cam: "SMGRBG02",
+      name: "Ribeira Grande",
+      lat: 37.817,
+      lon: -25.531,
+      url: "https://spotazores.com/webcam/sao-miguel/ribeira-grande/",
+    },
+    {
+      cam: "SMGRBG03",
+      name: "Piscinas da Ribeira Grande",
+      lat: 37.818,
+      lon: -25.529,
+      url: "https://spotazores.com/webcam/sao-miguel/piscinas-da-ribeira-grande/",
+    },
+    {
+      cam: "SMGRBG01",
+      name: "Praia de Santa Bárbara",
+      lat: 37.83,
+      lon: -25.514,
+      url: "https://spotazores.com/webcam/sao-miguel/praia-de-santa-barbara/",
+    },
+    {
+      cam: "SMGCAP01",
+      name: "Poços de Capelas e São Vicente",
+      lat: 37.768,
+      lon: -25.732,
+      url: "https://spotazores.com/webcam/sao-miguel/pocos-de-capelas-e-sao-vicente/",
     },
     {
       cam: "SJZVEL01",
-      name: "Velas – Port",
+      name: "Velas",
       lat: 38.68,
       lon: -28.201,
-      url: "https://spotazores.com/en/webcam/sao-jorge/velas/velas/",
-    },
-    {
-      cam: "SJZFJC01",
-      name: "Fajã do Ouvidor",
-      lat: 38.652,
-      lon: -28.094,
-      url: "https://spotazores.com/en/webcam/sao-jorge/velas/faja-do-ouvidor/",
+      url: "https://spotazores.com/webcam/sao-jorge/velas/velas/",
     },
     {
       cam: "SJZCAL01",
       name: "Calheta",
       lat: 38.588,
       lon: -28.016,
-      url: "https://spotazores.com/en/webcam/sao-jorge/calheta/calheta/",
+      url: "https://spotazores.com/webcam/sao-jorge/calheta/calheta/",
     },
     {
-      cam: "PIXSRQ02",
-      name: "Montanha do Pico",
-      lat: 38.471,
-      lon: -28.4,
-      url: "https://spotazores.com/en/webcam/pico/sao-roque-do-pico/montanha/",
+      cam: "SJZFJC01",
+      name: "Fajã do Ouvidor",
+      lat: 38.652,
+      lon: -28.094,
+      url: "https://spotazores.com/webcam/sao-jorge/velas/faja-do-ouvidor/",
     },
     {
       cam: "PIXMAD01",
       name: "Porto da Madalena",
       lat: 38.532,
       lon: -28.527,
-      url: "https://spotazores.com/en/webcam/pico/madalena/porto-da-madalena/",
+      url: "https://spotazores.com/webcam/pico/madalena/porto-da-madalena/",
     },
     {
       cam: "PIXLAJ01",
       name: "Lajes do Pico",
       lat: 38.397,
       lon: -28.251,
-      url: "https://spotazores.com/en/webcam/pico/lajes-do-pico/lajes/",
+      url: "https://spotazores.com/webcam/pico/lajes-do-pico/lajes/",
     },
     {
       cam: "PIXSRQ01",
       name: "São Roque do Pico",
       lat: 38.517,
       lon: -28.319,
-      url: "https://spotazores.com/en/webcam/pico/sao-roque-do-pico/porto-de-sao-roque/",
+      url: "https://spotazores.com/webcam/pico/sao-roque-do-pico/porto-de-sao-roque/",
+    },
+    {
+      cam: "PIXSRQ02",
+      name: "Montanha do Pico",
+      lat: 38.471,
+      lon: -28.4,
+      url: "https://spotazores.com/webcam/pico/sao-roque-do-pico/montanha/",
     },
     {
       cam: "FAYHOR01",
-      name: "Horta – Port i Marina",
+      name: "Horta",
       lat: 38.532,
       lon: -28.633,
-      url: "https://spotazores.com/en/webcam/faial/horta/horta/",
+      url: "https://spotazores.com/webcam/faial/horta/horta/",
     },
     {
       cam: "FAYCBG01",
-      name: "Cabeço Gordo – Caldeira",
+      name: "Cabeço Gordo",
       lat: 38.578,
       lon: -28.7,
-      url: "https://spotazores.com/en/webcam/faial/horta/cabeco-gordo/",
+      url: "https://spotazores.com/webcam/faial/horta/cabeco-gordo/",
     },
   ];
 
