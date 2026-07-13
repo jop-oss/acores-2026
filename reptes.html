@@ -101,7 +101,7 @@
         <a id="ball-dia-link" href="#" target="_blank" class="ball-dia-link" style="display:none">▶ Veure ball</a>
       </div>
       <div id="ball-viatge-wrap" class="ball-viatge-wrap" style="display:none">
-        <div class="ball-viatge-label">🎬 Ball del viatge</div>
+        <div class="ball-viatge-label">🎬 Ball del viatge: <span id="ball-viatge-nom"></span></div>
         <a id="ball-viatge-link" href="#" target="_blank" class="ball-dia-link ball-viatge-link">▶ Veure referència</a>
       </div>
       <button class="diari-admin-btn" onclick="ballDiaAdmin()">✏️ Gestionar balls</button>
@@ -419,6 +419,7 @@ function diariRenderBall() {
   const linkEl     = document.getElementById('ball-dia-link');
   const viatgeWrap = document.getElementById('ball-viatge-wrap');
   const viatgeLink = document.getElementById('ball-viatge-link');
+  const viatgeNom  = document.getElementById('ball-viatge-nom');
   if (!nomEl) return;
   const ball = diariData.ballActiu;
   if (ball && ball.nom) {
@@ -430,9 +431,14 @@ function diariRenderBall() {
     linkEl.style.display = 'none';
   }
   const viatge = diariData.ballViatge;
-  if (viatge && viatgeWrap && viatgeLink) {
+  // Compatibilitat: abans "ballViatge" era una URL en text pla; ara és
+  // { nom, link } com qualsevol altre ball de la llista.
+  const viatgeUrl = viatge && (typeof viatge === 'object' ? viatge.link : viatge);
+  const viatgeTitol = viatge && typeof viatge === 'object' ? viatge.nom : '';
+  if (viatgeUrl && viatgeWrap && viatgeLink) {
     viatgeWrap.style.display = 'block';
-    viatgeLink.href = viatge;
+    viatgeLink.href = viatgeUrl;
+    if (viatgeNom) viatgeNom.textContent = viatgeTitol;
   } else if (viatgeWrap) {
     viatgeWrap.style.display = 'none';
   }
@@ -441,7 +447,6 @@ function diariRenderBall() {
 function ballDiaAdmin() {
   const pin = prompt("PIN d'administrador:");
   if (pin !== DIARI_PIN) { if (pin !== null) alert('PIN incorrecte.'); return; }
-  document.getElementById('ball-viatge-input').value = diariData.ballViatge || '';
   ballRenderLlistaAdmin();
   document.getElementById('modal-ball-admin').classList.add('visible');
 }
@@ -449,10 +454,17 @@ function ballDiaAdmin() {
 function ballRenderLlistaAdmin() {
   const balls    = diariData.balls || [];
   const actiu    = (diariData.ballActiu && diariData.ballActiu.nom) || '';
-  const select   = document.getElementById('ball-actiu-select');
+  const viatgeData = diariData.ballViatge;
+  const viatgeActiu = (viatgeData && typeof viatgeData === 'object') ? viatgeData.nom : '';
+  const selectActiu   = document.getElementById('ball-actiu-select');
+  const selectViatge  = document.getElementById('ball-viatge-select');
   const llistaEl = document.getElementById('ball-llista-admin');
-  select.innerHTML = '<option value="">-- Cap ball actiu --</option>' +
-    balls.map(function(b) { return '<option value="' + b.nom + '"' + (b.nom===actiu?' selected':'') + '>' + b.nom + '</option>'; }).join('');
+  const opcions = function(seleccionat) {
+    return '<option value="">-- Cap --</option>' +
+      balls.map(function(b) { return '<option value="' + b.nom + '"' + (b.nom===seleccionat?' selected':'') + '>' + b.nom + '</option>'; }).join('');
+  };
+  selectActiu.innerHTML  = opcions(actiu);
+  selectViatge.innerHTML = opcions(viatgeActiu);
   llistaEl.innerHTML = balls.length === 0
     ? '<div style="color:var(--text2);font-size:.82rem;padding:.5rem 0">Cap ball afegit encara</div>'
     : balls.map(function(b, i) {
@@ -488,7 +500,8 @@ async function ballEsborrar(idx) {
 async function ballDiaGuardar() {
   const nomActiu   = document.getElementById('ball-actiu-select').value;
   const ballActiu  = (diariData.balls || []).find(function(b) { return b.nom === nomActiu; }) || null;
-  const ballViatge = document.getElementById('ball-viatge-input').value.trim() || null;
+  const nomViatge  = document.getElementById('ball-viatge-select').value;
+  const ballViatge = (diariData.balls || []).find(function(b) { return b.nom === nomViatge; }) || null;
   try {
     await reptesGetDb().collection(DIARI_COL).doc(DIARI_DOC).update({ ballActiu: ballActiu, ballViatge: ballViatge });
     document.getElementById('modal-ball-admin').classList.remove('visible');
@@ -522,8 +535,8 @@ async function ballDiaGuardar() {
       <select id="ball-actiu-select" class="ball-admin-select"></select>
     </div>
     <div class="ball-admin-seccio">
-      <div class="ball-admin-label">Ball del viatge (link fix)</div>
-      <input type="text" id="ball-viatge-input" class="ball-admin-input" placeholder="https://www.tiktok.com/...">
+      <div class="ball-admin-label">Ball del viatge (de la llista de balls guardats)</div>
+      <select id="ball-viatge-select" class="ball-admin-select"></select>
     </div>
     <div class="ball-admin-seccio">
       <div class="ball-admin-label">Afegir nou ball</div>
