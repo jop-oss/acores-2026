@@ -1901,6 +1901,7 @@ const ITIN_ILLES = [
   { id: "Pico", emoji: "⛰️", label: "Pico", color: "#a8a8a8" },
   { id: "Sao Jorge", emoji: "🐉", label: "São Jorge", color: "#c4895a" },
   { id: "Faial", emoji: "💙", label: "Faial", color: "#5fa8e8" },
+  { id: "Ruta Iris i Ion", emoji: "🧭", label: "Ruta Iris i Ion", color: "#a97fd4" },
 ];
 
 function initItineraris() {
@@ -1995,8 +1996,11 @@ function renderItinContingut() {
       const llocsList = it.llocs
         .map((l, i) => {
           const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g, "_");
+          const numHtml = it.senseNumeros
+            ? ""
+            : `<span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i + 1}</span>`;
           return `<li class="itin-lloc-item" onclick="itinFocusMarker('${mapId}',${i})">
-        <span class="itin-lloc-num" style="background:${illaColor}22;color:${illaColor};border-color:${illaColor}44">${i + 1}</span>
+        ${numHtml}
         <span class="itin-lloc-nom">${escHtml(l.nom)}</span>
       </li>`;
         })
@@ -2025,11 +2029,11 @@ function renderItinContingut() {
   // Inicialitzar maps lazy
   itins.forEach((it, idx) => {
     const mapId = `itin-map-${_itinIlla}-${idx}`.replace(/\s/g, "_");
-    initItinMapLazy(mapId, it.llocs, illaColor);
+    initItinMapLazy(mapId, it.llocs, illaColor, it.senseNumeros);
   });
 }
 
-function initItinMapLazy(mapId, llocs, color) {
+function initItinMapLazy(mapId, llocs, color, senseNumeros) {
   const el = document.getElementById(mapId);
   if (!el) return;
 
@@ -2037,7 +2041,7 @@ function initItinMapLazy(mapId, llocs, color) {
     (entries) => {
       if (entries[0].isIntersecting) {
         observer.disconnect();
-        initItinMap(mapId, llocs, color);
+        initItinMap(mapId, llocs, color, senseNumeros);
       }
     },
     { threshold: 0.1 },
@@ -2045,7 +2049,7 @@ function initItinMapLazy(mapId, llocs, color) {
   observer.observe(el);
 }
 
-function initItinMap(mapId, llocs, color) {
+function initItinMap(mapId, llocs, color, senseNumeros) {
   if (_itinMaps[mapId]) return;
   const el = document.getElementById(mapId);
   if (!el) return;
@@ -2079,7 +2083,12 @@ function initItinMap(mapId, llocs, color) {
     const svgNormal = (
       sz,
       fs,
-    ) => `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz * 1.29)}" viewBox="0 0 28 36">
+    ) => senseNumeros
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz * 1.29)}" viewBox="0 0 28 36">
+      <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
+      <circle cx="14" cy="14" r="5" fill="white"/>
+    </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz * 1.29)}" viewBox="0 0 28 36">
       <path d="M14 0C6.27 0 0 6.27 0 14c0 9.33 14 22 14 22s14-12.67 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
       <circle cx="14" cy="14" r="9" fill="rgba(0,0,0,0.3)"/>
       <text x="14" y="19" text-anchor="middle" font-family="sans-serif" font-size="${fs}" font-weight="700" fill="white">${i + 1}</text>
@@ -2096,7 +2105,7 @@ function initItinMap(mapId, llocs, color) {
 
     const marker = L.marker([lat, lng], { icon: makeIcon(28) })
       .addTo(map)
-      .bindTooltip(`<strong>${i + 1}.</strong> ${l.nom}`, {
+      .bindTooltip(senseNumeros ? l.nom : `<strong>${i + 1}.</strong> ${l.nom}`, {
         permanent: false,
         direction: "top",
         className: "itin-tooltip",
