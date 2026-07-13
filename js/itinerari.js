@@ -1491,20 +1491,38 @@ function aplicaPermisHores(jugador, permesos) {
   updateHoresToggleButtons();
 }
 
+/* Mateix projecte Firebase que fa servir admin.html (settings/itinerari) */
+const ITIN_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBp7lMa2opgXrljNMLykfjxAJl2Y8f5oa8",
+  authDomain: "acores-2026.firebaseapp.com",
+  projectId: "acores-2026",
+  storageBucket: "acores-2026.firebasestorage.app",
+  messagingSenderId: "749343671546",
+  appId: "1:749343671546:web:aa2e3d6043de9b8c89f543"
+};
+
+function getItinDb() {
+  if (typeof firebase === 'undefined') return null;
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(ITIN_FIREBASE_CONFIG);
+    return firebase.firestore();
+  } catch (e) {
+    return null;
+  }
+}
+
 function initHoresTimeline() {
   const jugador = localStorage.getItem('app_jugador');
 
   // Estat immediat (sense esperar Firebase): només en Jordi hi té accés d'entrada.
   aplicaPermisHores(jugador, null);
 
-  if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
-    try {
-      firebase.firestore().collection('settings').doc('itinerari').get().then(snap => {
-        const permesos = snap.exists ? (snap.data().permesos || {}) : {};
-        aplicaPermisHores(localStorage.getItem('app_jugador'), permesos);
-      }).catch(() => {});
-    } catch (e) { /* Firebase no disponible: es queda amb el valor per defecte */ }
-  }
+  const db = getItinDb();
+  if (!db) return;
+  db.collection('settings').doc('itinerari').get().then(snap => {
+    const permesos = snap.exists ? (snap.data().permesos || {}) : {};
+    aplicaPermisHores(localStorage.getItem('app_jugador'), permesos);
+  }).catch(() => {});
 }
 
 document.addEventListener('app:jugador-canviat', initHoresTimeline);
