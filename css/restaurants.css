@@ -163,6 +163,119 @@
 
 .filter-clear-btn:hover { color: #a8d8b0; }
 
+/* ── Favorits + medalles ── */
+.quick-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.fav-btn {
+  padding: 5px 14px;
+  border-radius: 16px;
+  border: 1px solid #2d5a3d;
+  background: none;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.fav-btn.active {
+  background: #f0b429;
+  border-color: #f0b429;
+  color: #1a3a2a;
+  font-weight: 600;
+}
+.medalla-select {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  color: #a8d8b0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.medalla-select.hidden { display: none; }
+
+/* ── Cercador ── */
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.search-wrap input {
+  background: #0a1628;
+  border: 1px solid #2d5a3d;
+  color: #a8d8b0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  width: 180px;
+}
+
+/* ── Toggle "segueix el mapa" ── */
+.viewport-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #6aab7a;
+  margin-top: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.viewport-toggle input {
+  accent-color: #6aab7a;
+  cursor: pointer;
+}
+
+/* ── Botó "marca un punt al mapa" ── */
+.map-pick-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#btn-map-pick.active {
+  background: #f0b429;
+  border-color: #f0b429;
+  color: #1a3a2a;
+  font-weight: 600;
+}
+#rest-map.picking-point {
+  cursor: crosshair;
+}
+
+/* ── Eliminar tots els filtres ── */
+.clear-all-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.clear-all-btn {
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(248,113,113,0.35);
+  background: none;
+  color: #f87171;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.clear-all-btn:hover {
+  background: rgba(248,113,113,0.12);
+  border-color: #f87171;
+}
+
+
+/* ── Highlight per enllaç directe des d'Itinerari ── */
+@keyframes rest-deeplink-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240,180,41,0); }
+  50%      { box-shadow: 0 0 0 6px rgba(240,180,41,0.35); }
+}
+.rest-card.deeplinked {
+  animation: rest-deeplink-pulse 0.6s ease 3;
+}
+
 /* Etiquetes cuines actives */
 .cuines-actives {
   display: flex;
@@ -706,4 +819,6 @@ body.light .rest-card,
 body.light .rest-map-wrap .map-legend { background: #fff; border-color: #6aab7a; }
 body.light .rest-nom { color: #1a3a2a; }
 body.light .filter-group select,
-body.light .pos-input-wrap input { background: #f5f5f5; color: #1a3a2a; }
+body.light .pos-input-wrap input,
+body.light .search-wrap input,
+body.light .medalla-select { background: #f5f5f5; color: #1a3a2a; }

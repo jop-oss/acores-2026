@@ -144,6 +144,7 @@
 .itin-hero-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 12px;
 }
@@ -154,6 +155,19 @@
   border: 1px solid var(--col-border);
   border-radius: 20px;
   padding: 3px 12px;
+}
+.itin-hero-chip-link {
+  cursor: pointer;
+  text-decoration: none;
+  background: rgba(106,171,122,0.18);
+  border-color: var(--col-green-mid);
+  color: var(--col-green-pale);
+  font-weight: 600;
+  transition: background 0.15s, transform 0.15s;
+}
+.itin-hero-chip-link:hover {
+  background: rgba(106,171,122,0.32);
+  transform: translateY(-1px);
 }
 /* Hero gradient only (no image, for Dia 1) */
 .itin-hero-gradient {
@@ -634,6 +648,49 @@
   margin-bottom: 3px;
   font-family: monospace;
   letter-spacing: 0.05em;
+  display: none;
+}
+body.itin-mostra-hores .tl-time {
+  display: block;
+}
+
+.itin-hores-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--col-border);
+  background: transparent;
+  color: var(--col-text-dim);
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+  vertical-align: middle;
+  opacity: 0.6;
+  transition: all 0.15s;
+}
+.itin-hores-toggle:hover {
+  opacity: 1;
+  border-color: var(--col-green-mid);
+}
+.itin-hores-toggle.actiu {
+  opacity: 1;
+  background: rgba(106,171,122,0.25);
+  border-color: var(--col-sm);
+  color: var(--col-green-pale);
+}
+.itin-hores-toggle:disabled,
+.itin-hores-toggle.deshabilitat {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+.itin-hores-toggle:disabled:hover,
+.itin-hores-toggle.deshabilitat:hover {
+  opacity: 0.25;
+  border-color: var(--col-border);
 }
 .tl-nom {
   font-size: 0.95rem;
@@ -1904,3 +1961,37 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
   position: relative; z-index: 1;
 }
 .itin-birthday-text strong { color: #fbbf24; font-style: normal; }
+
+/* ── DISCLAIMER: proposta oberta a canvis ──────────────────── */
+.itin-disclaimer-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  padding: 24px;
+}
+.itin-disclaimer-overlay.show {
+  opacity: 1;
+}
+.itin-disclaimer-box {
+  background: rgba(38, 30, 6, 0.97);
+  border: 1px solid #f0b429;
+  border-radius: 14px;
+  padding: 20px 26px;
+  max-width: 440px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(240,180,41,0.15);
+  text-align: center;
+}
+.itin-disclaimer-box p {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #ffd97a;
+  margin: 0;
+}

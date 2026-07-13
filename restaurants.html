@@ -58,7 +58,27 @@
       <button class="island-btn" data-island="faial">Faial</button>
     </div>
 
+    <!-- Favorits + medalles -->
+    <div class="quick-filters">
+      <button class="fav-btn" id="btn-favorits" title="Només els marcats com a Top10">⭐ Favorits</button>
+      <select id="filter-medalla" class="medalla-select hidden">
+        <option value="">Totes les medalles</option>
+        <option value="1">🥇 Or</option>
+        <option value="2">🥈 Plata</option>
+        <option value="3">🥉 Bronze</option>
+      </select>
+    </div>
+
     <div class="rest-filters-row">
+
+      <!-- Cercador -->
+      <div class="filter-group">
+        <label>Cerca</label>
+        <div class="search-wrap">
+          <input type="text" id="filter-search" placeholder="Nom del restaurant..." autocomplete="off">
+          <button class="filter-clear-btn hidden" id="clear-search" title="Eliminar cerca">✕</button>
+        </div>
+      </div>
 
       <!-- Filtre cuina -->
       <div class="filter-group">
@@ -97,6 +117,10 @@
         <label>Des de</label>
         <div class="pos-wrap">
           <button class="pos-btn" id="btn-gps" title="Usar GPS">📍 Posició actual</button>
+          <div class="map-pick-row">
+            <button class="pos-btn" id="btn-map-pick" title="Marca un punt clicant al mapa">📍 Marca un punt al mapa</button>
+            <button class="filter-clear-btn hidden" id="clear-map-point" title="Eliminar el punt marcat">✕</button>
+          </div>
           <div class="pos-input-wrap">
             <input type="text" id="pos-text" placeholder="Poble o adreça...">
             <button class="pos-btn-small" id="btn-pos-text">→</button>
@@ -123,6 +147,10 @@
     <!-- Filtre cuines actiu (etiquetes) -->
     <div id="cuines-actives" class="cuines-actives hidden"></div>
 
+    <div class="clear-all-wrap">
+      <button class="clear-all-btn" id="btn-clear-all">🗑️ Eliminar tots els filtres</button>
+    </div>
+
   </div>
 
   <!-- CONTINGUT: llista + mapa -->
@@ -134,6 +162,10 @@
 
     <div class="rest-map-wrap">
       <div id="rest-map"></div>
+      <label class="viewport-toggle">
+        <input type="checkbox" id="toggle-viewport" checked>
+        Actualitza la llista amb el que es veu al mapa
+      </label>
       <div class="map-style-selector">
         <button class="map-style-btn active" data-style="Voyager" onclick="setMapStyle('Voyager')">Voyager</button>
         <button class="map-style-btn" data-style="Clar" onclick="setMapStyle('Clar')">Clar</button>

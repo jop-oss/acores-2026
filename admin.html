@@ -198,6 +198,24 @@
     <a href="index.html" class="admin-back">← Tornar a l'app</a>
   </div>
 
+  <!-- ITINERARI -->
+  <div class="admin-seccio">
+    <div class="admin-seccio-header">
+      <div class="admin-seccio-title">🗺️ Itinerari</div>
+    </div>
+    <div class="admin-ruleta-info" style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">
+      Hores de la timeline del mapa de l'itinerari: per defecte només en Jordi les veu.
+      Activa aquí qui més les pot veure/amagar (un cop activat, la persona ja pot fer-ho
+      ella mateixa amb el botó 🕐 de la pàgina).
+    </div>
+    <table class="admin-taula">
+      <thead>
+        <tr><th>Persona</th><th>Hores itinerari</th><th></th></tr>
+      </thead>
+      <tbody id="taula-itin-hores"></tbody>
+    </table>
+  </div>
+
   <!-- QUIZ -->
   <div class="admin-seccio">
     <div class="admin-seccio-header">
@@ -671,6 +689,7 @@
 
   // ── CARREGAR DADES ─────────────────────────────────────────
   function carregarDades() {
+    renderItinHoresTothom();
     renderQuiz();
     renderMapa();
     renderParaula();
@@ -776,6 +795,31 @@
     if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
     _db = firebase.firestore();
     return _db;
+  }
+
+  // ── ITINERARI: hores de la timeline ──────────────────────────
+  function renderItinHoresTothom() {
+    getDb().collection('settings').doc('itinerari').get().then(snap => {
+      const permesos = snap.exists ? (snap.data().permesos || {}) : {};
+      const tbody = document.getElementById('taula-itin-hores');
+      tbody.innerHTML = JUGADORS.filter(nom => nom !== 'Jordi').map(nom => {
+        const actiu = permesos[nom] === true;
+        return `<tr>
+          <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
+          <td>${actiu ? '✅ Activat' : '⛔ Desactivat'}</td>
+          <td><button class="btn-reset-jugador" onclick="toggleItinHoresPermis('${nom}', ${!actiu})">${actiu ? 'Desactivar' : 'Activar'}</button></td>
+        </tr>`;
+      }).join('');
+    }).catch(() => {
+      document.getElementById('taula-itin-hores').innerHTML =
+        '<tr><td colspan="3">Error carregant la configuració</td></tr>';
+    });
+  }
+
+  function toggleItinHoresPermis(nom, nouValor) {
+    getDb().collection('settings').doc('itinerari')
+      .set({ permesos: { [nom]: nouValor } }, { merge: true })
+      .then(renderItinHoresTothom);
   }
 
   function renderBingo() {

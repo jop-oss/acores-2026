@@ -1438,9 +1438,89 @@ function starsTextAmber(punt) {
 function slugify(nom) {
   return nom.toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/["'«»()]/g, '').replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/[\u0027\u0022\u2018\u2019\u201C\u201D\u00B4\u0060\u00AB\u00BB()]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
     .trim().replace(/\s+/g, '-').replace(/-+/g, '-');
 }
+
+/* Scroll suau a una secció "Mapa de l'itinerari proposat" dins del mateix dia */
+function veureRuta(ev, id) {
+  if (ev) ev.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  return false;
+}
+
+/* ══════════════════════════════════════════════
+   HORES A LES TIMELINES (mostrar/amagar)
+   Amagades per defecte per a tothom excepte en Jordi. El botó 🕐
+   surt sempre, però per a la resta de gent està DESHABILITAT fins
+   que en Jordi li activa el permís individualment des de l'admin
+   (Firestore settings/itinerari.permesos.<Nom>). Un cop té permís,
+   pot mostrar/amagar les hores quan vulgui (es recorda al seu
+   dispositiu).
+   ══════════════════════════════════════════════ */
+let _itinHoresPermes = false; // calculat a initHoresTimeline()
+
+function updateHoresToggleButtons() {
+  const show = document.body.classList.contains('itin-mostra-hores');
+  document.querySelectorAll('.itin-hores-toggle').forEach(b => {
+    b.classList.toggle('actiu', show);
+    b.disabled = !_itinHoresPermes;
+    b.classList.toggle('deshabilitat', !_itinHoresPermes);
+    b.title = !_itinHoresPermes
+      ? "Demana-ho a en Jordi si vols poder veure les hores"
+      : (show ? 'Amaga les hores' : 'Mostra les hores');
+  });
+}
+
+function toggleHoresTimeline() {
+  if (!_itinHoresPermes) return;
+  const show = !document.body.classList.contains('itin-mostra-hores');
+  document.body.classList.toggle('itin-mostra-hores', show);
+  localStorage.setItem('itin_mostra_hores', show ? '1' : '0');
+  updateHoresToggleButtons();
+}
+
+function aplicaPermisHores(jugador, permesos) {
+  _itinHoresPermes = jugador === 'Jordi' || (permesos && permesos[jugador] === true);
+
+  const override = localStorage.getItem('itin_mostra_hores');
+  const show = _itinHoresPermes && (override !== null ? override === '1' : jugador === 'Jordi');
+  document.body.classList.toggle('itin-mostra-hores', show);
+  updateHoresToggleButtons();
+}
+
+function initHoresTimeline() {
+  const jugador = localStorage.getItem('app_jugador');
+
+  // Estat immediat (sense esperar Firebase): només en Jordi hi té accés d'entrada.
+  aplicaPermisHores(jugador, null);
+
+  if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
+    try {
+      firebase.firestore().collection('settings').doc('itinerari').get().then(snap => {
+        const permesos = snap.exists ? (snap.data().permesos || {}) : {};
+        aplicaPermisHores(localStorage.getItem('app_jugador'), permesos);
+      }).catch(() => {});
+    } catch (e) { /* Firebase no disponible: es queda amb el valor per defecte */ }
+  }
+}
+
+document.addEventListener('app:jugador-canviat', initHoresTimeline);
+
+document.addEventListener('DOMContentLoaded', initHoresTimeline);
+
+/* ── DISCLAIMER: proposta oberta a canvis ──────────────────── */
+function initDisclaimer() {
+  const jugador = localStorage.getItem('app_jugador');
+  if (jugador === 'Jordi') return; // en Jordi ja sap que ho pot canviar tot
+  const el = document.getElementById('itinDisclaimer');
+  if (!el) return;
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+document.addEventListener('DOMContentLoaded', initDisclaimer);
 
 function startIcon() {
   return L.divIcon({

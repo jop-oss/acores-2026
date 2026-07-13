@@ -14,6 +14,13 @@
 </head>
 <body>
 
+<!-- ── DISCLAIMER: proposta oberta a canvis ─────────────────── -->
+<div class="itin-disclaimer-overlay" id="itinDisclaimer">
+  <div class="itin-disclaimer-box">
+    <p>El que aquí es presenta és només una proposta, oberta a possibles canvis i millores en tot moment (excepte les activitats en què tenim reserva, que hauríem de mirar de respectar).</p>
+  </div>
+</div>
+
 <!-- ── NAV ────────────────────────────────────────────────── -->
 <nav class="main-nav">
   <a href="index.html" class="nav-home" title="Inici">🏠</a>
@@ -389,6 +396,7 @@
         <span class="itin-hero-chip">🕗 Sortida ~8h</span>
         <span class="itin-hero-chip">📍 8 parades</span>
         <span class="itin-hero-chip">🚗 ~88 km</span>
+        <a href="#mapa-ruta-d2" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d2')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -841,7 +849,7 @@
     <div class="rest-list" id="rests-ponta-delgada"></div>
 
     <!-- RESUM DE LA RUTA: TABS (principal / alternatiu) -->
-    <div class="itin-vol-title"><em>Resum de la ruta</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d2"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
 
     <div class="itin-route-tabs">
       <button class="itin-route-tab active" data-tab="principal" onclick="showRutaTab('principal')">
@@ -1071,6 +1079,7 @@
         <span class="itin-hero-chip">🕗 Sortida ~8:30h</span>
         <span class="itin-hero-chip">📍 6 parades</span>
         <span class="itin-hero-chip">🚗 ~81 km</span>
+        <a href="#mapa-ruta-d3" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d3')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -1320,7 +1329,7 @@
     <div class="rest-list" id="rests-vfc"></div>
 
     <!-- TIMELINE + MAPA DE RUTA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d3"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -1430,6 +1439,7 @@
         <span class="itin-hero-chip">🕗 Sortida ~8:00h</span>
         <span class="itin-hero-chip">📍 11 parades</span>
         <span class="itin-hero-chip">🚗 ~92 km</span>
+        <a href="#mapa-ruta-d4" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d4')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -1932,7 +1942,7 @@
     <div class="rest-list" id="rests-caloura"></div>
 
     <!-- TIMELINE + MAPA: TABS -->
-    <div class="itin-vol-title"><em>Resum de la ruta</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d4"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-route-tabs">
       <button class="itin-route-tab d4-route-tab active" data-tab="principal" onclick="showRutaTabD4('principal')">
         🌙 Si la Lagoa do Fogo la deixem per la tarda (sentit horari)
@@ -2191,6 +2201,7 @@
         <span class="itin-hero-chip">🕗 Sortida ~8:00h</span>
         <span class="itin-hero-chip">📍 8 parades</span>
         <span class="itin-hero-chip">🚗 ~112 km</span>
+        <a href="#mapa-ruta-d5" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d5')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -2616,7 +2627,7 @@
     <div class="rest-list" id="rests-povoacio"></div>
 
     <!-- TIMELINE + MAPA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d5"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -2736,6 +2747,7 @@
         <span class="itin-hero-chip">🕗 Sortida ~8:45h</span>
         <span class="itin-hero-chip">📍 8 parades</span>
         <span class="itin-hero-chip">🚗 ~57 km</span>
+        <a href="#mapa-ruta-d6" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d6')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -3032,7 +3044,7 @@
     </div>
 
     <!-- TIMELINE + MAPA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d6"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -3150,6 +3162,7 @@
         <span class="itin-hero-chip">✈️ Vol PDL–SJZ · ⛴️ Ferri a Pico</span>
         <span class="itin-hero-chip">🚗 3 lloguers de cotxe · 10h a l'illa</span>
         <span class="itin-hero-chip">🚗 32 km SM · 137 km SJ · 15 km PIC</span>
+        <a href="#mapa-ruta-d7" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d7')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -3738,7 +3751,7 @@
     </div>
 
     <!-- TIMELINE + MAPA DE RUTA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d7"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -3967,6 +3980,7 @@
         <span class="itin-hero-chip">🥾 PR05 Vinhas da Criação Velha</span>
         <span class="itin-hero-chip">🏞️ Llacunes del Planalto</span>
         <span class="itin-hero-chip">🚗 ~114 km</span>
+        <a href="#mapa-ruta-d8" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d8')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -4445,7 +4459,7 @@
     <div class="rest-list" id="rests-d8-sao-roque"></div>
 
     <!-- TIMELINE + MAPA -->
-    <div class="itin-vol-title"><em>Resum de la ruta</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d8"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-route-tabs">
       <button class="itin-route-tab d8-route-tab active" data-tab="principal" onclick="showRutaTabD8('principal')">
         🕗 Itinerari proposat (sentit horari)
@@ -4649,6 +4663,7 @@
         <span class="itin-hero-chip">📍 8 parades</span>
         <span class="itin-hero-chip">🐬 Excursió amb llanxa</span>
         <span class="itin-hero-chip">🚗 ~75 km</span>
+        <a href="#mapa-ruta-d9" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d9')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -5056,7 +5071,7 @@
     <div class="rest-list" id="rests-d9-prainha"></div>
 
     <!-- TIMELINE + MAPA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d9"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -5158,6 +5173,8 @@
         <span class="itin-hero-chip">📍 11 parades</span>
         <span class="itin-hero-chip">⛴️ Ferri Madalena–Horta</span>
         <span class="itin-hero-chip">🚗 ~37 km Pico · ~24 km Faial</span>
+        <a href="#mapa-ruta-d10-pico" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d10-pico')">🗺️ Veure ruta Pico</a>
+        <a href="#mapa-ruta-d10-faial" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d10-faial')">🗺️ Veure ruta Faial</a>
       </div>
     </div>
   </div>
@@ -5406,7 +5423,7 @@
     </div>
 
     <!-- TIMELINE + MAPA PICO -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat (matí a Pico)</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d10-pico"><em>Mapa de l'itinerari proposat (matí a Pico)</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -5749,7 +5766,7 @@
     <div class="rest-list" id="rests-d10-horta"></div>
 
     <!-- TIMELINE + MAPA FAIAL -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat (tarda a Faial)</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d10-faial"><em>Mapa de l'itinerari proposat (tarda a Faial)</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-route-tabs">
       <button class="itin-route-tab d10fai-route-tab active" data-tab="op1" onclick="showRutaTabD10Fai('op1')">
         🏊 Opció 1 — Piscina
@@ -5880,6 +5897,7 @@
         <span class="itin-hero-chip">📍 7 parades</span>
         <span class="itin-hero-chip">🥾 2 rutes opcionals</span>
         <span class="itin-hero-chip">🚗 Volta completa a l'illa · ~67 km</span>
+        <a href="#mapa-ruta-d11" class="itin-hero-chip itin-hero-chip-link" onclick="return veureRuta(event,'mapa-ruta-d11')">🗺️ Veure ruta</a>
       </div>
     </div>
   </div>
@@ -6152,7 +6170,7 @@
     </div>
 
     <!-- TIMELINE + MAPA DE RUTA -->
-    <div class="itin-vol-title"><em>Mapa de l'itinerari proposat</em></div>
+    <div class="itin-vol-title" id="mapa-ruta-d11"><em>Mapa de l'itinerari proposat</em> <button class="itin-hores-toggle" onclick="toggleHoresTimeline()" title="Mostra/amaga les hores">🕐</button></div>
     <div class="itin-ruta-grid">
       <div class="itin-timeline">
         <div class="tl-stop highlight">
@@ -6393,6 +6411,8 @@
 
 <!-- SCRIPTS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script src="js/config.js"></script>
 <script src="js/poi-data.js"></script>
 <script src="js/imprescindibles-data.js"></script>

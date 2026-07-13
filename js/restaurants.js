@@ -48,6 +48,15 @@ function restCuines(r) {
   return r.cuina.split(",").map(c => c.trim()).filter(Boolean);
 }
 
+// ── SLUGIFY (per a l'enllaç des d'Itinerari #rest-...) ─────────────────
+function slugify(nom) {
+  return nom.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[\u0027\u0022\u2018\u2019\u201C\u201D\u00B4\u0060\u00AB\u00BB()]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .trim().replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+
 // ── ESTAT ──────────────────────────────────────────────────────────────
 let state = {
   illa:      "totes",
@@ -60,10 +69,19 @@ let state = {
   userLabel: null,
   usingCap:  true,
   distances: {},
+  search:    "",
+  favorits:  false,
+  medalla:   "",
+  viewportFilter: true,
+  mapBounds: null,
+  pickingPoint: false,
 };
 
 let map        = null;
 let markers    = {};
+let userPointMarker = null;
+let suppressFitBounds = false;
+let programmaticMapMove = false;
 let filteredIds = [];
 
 // ── INIT ───────────────────────────────────────────────────────────────
@@ -76,6 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".map-style-btn").forEach(btn => {
     btn.addEventListener("click", () => setMapStyle(btn.dataset.style));
   });
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
 });
 
 // ── DISTÀNCIES A CAPITALS ─────────────────────────────────────────────
@@ -168,6 +188,17 @@ function resetToCapitalDist() {
   document.getElementById("pos-status").textContent = "";
   document.getElementById("pos-text").value = "";
   document.getElementById("btn-gps").classList.remove("active");
+  if (userPointMarker) { map.removeLayer(userPointMarker); userPointMarker = null; }
+  document.getElementById("clear-map-point").classList.add("hidden");
+  setPickingMode(false);
+  // El filtre de distància màxima és relatiu al punt de referència ("Des de").
+  // Com que aquest punt acaba de canviar (torna a ser la capital de cada illa),
+  // un llindar en km calculat abans ja no té el mateix significat: el netegem
+  // per evitar que amagui restaurants sense que l'usuari ho esperi.
+  state.distMax = 0;
+  document.getElementById("filter-dist").value = 0;
+  document.getElementById("dist-label").textContent = "— km";
+  document.getElementById("clear-dist").classList.add("hidden");
   renderAll();
 }
 
@@ -190,6 +221,30 @@ function initMap() {
     maxZoom: 19,
   }).addTo(map);
   setTimeout(() => map.invalidateSize(), 100);
+
+  map.on("moveend", () => {
+    if (programmaticMapMove) {
+      programmaticMapMove = false;
+      // El mapa s'ha reenquadrat sol (per un canvi de filtre): els límits
+      // guardats ja no es corresponen amb cap moviment manual de l'usuari,
+      // així que invalidem el filtre de "segueix el mapa" fins que torni
+      // a moure'l ell mateix, per no filtrar la llista contra una vista
+      // que ja no és la que es veu.
+      state.mapBounds = null;
+      return;
+    }
+    if (!state.viewportFilter) return;
+    state.mapBounds = map.getBounds();
+    suppressFitBounds = true;
+    renderAll();
+    suppressFitBounds = false;
+  });
+
+  map.on("click", e => {
+    if (!state.pickingPoint) return;
+    setUserPoint(e.latlng.lat, e.latlng.lng, "punt marcat al mapa");
+    setPickingMode(false);
+  });
 }
 
 function setMapStyle(style) {
@@ -201,6 +256,40 @@ function setMapStyle(style) {
   currentTileLayer = L.tileLayer(MAP_TILES[style], opts).addTo(map);
   document.querySelectorAll(".map-style-btn")
     .forEach(b => b.classList.toggle("active", b.dataset.style === style));
+}
+
+// ── PUNT MANUAL AL MAPA (per calcular distàncies) ───────────────────────
+function setPickingMode(on) {
+  state.pickingPoint = on;
+  const btn = document.getElementById("btn-map-pick");
+  const mapEl = document.getElementById("rest-map");
+  if (btn) btn.classList.toggle("active", on);
+  if (mapEl) mapEl.classList.toggle("picking-point", on);
+  const status = document.getElementById("pos-status");
+  if (status && on) status.textContent = "🖊️ Clica al mapa per marcar el punt...";
+}
+
+function setUserPoint(lat, lon, label) {
+  state.userLat   = lat;
+  state.userLon   = lon;
+  state.userLabel = label;
+  state.usingCap  = false;
+
+  if (userPointMarker) map.removeLayer(userPointMarker);
+  userPointMarker = L.marker([lat, lon], {
+    icon: L.divIcon({
+      html: `<div style="font-size:1.6rem;line-height:1;filter:drop-shadow(0 1px 4px rgba(0,0,0,0.7))">📍</div>`,
+      iconSize: [28, 28], iconAnchor: [14, 26], className: "",
+    }),
+  }).addTo(map);
+
+  const status = document.getElementById("pos-status");
+  if (status) status.textContent = `📍 ${label}`;
+  document.getElementById("btn-gps").classList.remove("active");
+  document.getElementById("clear-map-point").classList.remove("hidden");
+
+  state.distances = {};
+  calcDistances(filtered().map(r => r.id));
 }
 
 function pinColor(r) {
@@ -273,7 +362,10 @@ function renderMarkers() {
     bounds.push([coords.lat, coords.lon]);
   });
 
-  if (bounds.length) map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+  if (bounds.length && !suppressFitBounds) {
+    programmaticMapMove = true;
+    map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+  }
 }
 
 // ── FILTRE I ORDENACIÓ ─────────────────────────────────────────────────
@@ -283,6 +375,16 @@ function filtered() {
   if (state.illa !== "totes") {
     const illaVal = ILLA_MAP[state.illa];
     list = list.filter(r => r.illa === illaVal);
+  }
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    list = list.filter(r => (r.nom || "").toLowerCase().includes(q));
+  }
+  if (state.favorits) {
+    list = list.filter(r => r.top10);
+  }
+  if (state.medalla) {
+    list = list.filter(r => String(r.editor) === state.medalla);
   }
   if (state.cuines.length > 0) {
     list = list.filter(r =>
@@ -301,6 +403,13 @@ function filtered() {
     list = list.filter(r => {
       const d = state.distances[r.id];
       return !d || d.distKm <= state.distMax;
+    });
+  }
+  if (state.viewportFilter && state.mapBounds) {
+    list = list.filter(r => {
+      const c = restCoords(r.id);
+      if (!c) return true; // sense coordenades: no l'amaguem
+      return state.mapBounds.contains([c.lat, c.lon]);
     });
   }
 
@@ -452,6 +561,48 @@ function toggleDetail(id) {
   } else {
     openDetail(id);
   }
+}
+
+// ── ENLLAÇ DIRECTE A UNA FITXA (#rest-slug, des d'Itinerari) ────────────
+function openFromHash() {
+  const hash = location.hash;
+  if (!hash || !hash.startsWith("#rest-")) return;
+  const slug = hash.slice("#rest-".length);
+  const entry = Object.entries(RESTAURANTS).find(([, r]) => slugify(r.nom) === slug);
+  if (!entry) return;
+  const [id] = entry;
+
+  // Neteja els filtres que podrien amagar la fitxa
+  state.illa = "totes";
+  document.querySelectorAll(".island-btn").forEach(b => b.classList.toggle("active", b.dataset.island === "totes"));
+  state.cuines = [];
+  state.preu = "";
+  document.querySelectorAll(".preu-btn").forEach(b => b.classList.toggle("active", b.dataset.preu === ""));
+  state.distMax = 0;
+  document.getElementById("filter-dist").value = 0;
+  document.getElementById("dist-label").textContent = "— km";
+  document.getElementById("clear-dist").classList.add("hidden");
+  state.favorits = false;
+  document.getElementById("btn-favorits").classList.remove("active");
+  state.medalla = "";
+  document.getElementById("filter-medalla").value = "";
+  document.getElementById("filter-medalla").classList.add("hidden");
+  state.search = "";
+  document.getElementById("filter-search").value = "";
+  document.getElementById("clear-search").classList.add("hidden");
+  state.viewportFilter = false;
+  document.getElementById("toggle-viewport").checked = false;
+
+  renderAll();
+
+  setTimeout(() => {
+    const card = document.querySelector(`.rest-card[data-id="${id}"]`);
+    if (!card) return;
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.add("highlighted", "deeplinked");
+    openDetail(id);
+    setTimeout(() => card.classList.remove("deeplinked"), 2600);
+  }, 120);
 }
 
 function openDetail(id) {
@@ -683,6 +834,9 @@ function bindEvents() {
     const status = document.getElementById("pos-status");
     if (!navigator.geolocation) { status.textContent = "⚠️ GPS no disponible"; return; }
     status.textContent = "🔄 Obtenint posició...";
+    setPickingMode(false);
+    if (userPointMarker) { map.removeLayer(userPointMarker); userPointMarker = null; }
+    document.getElementById("clear-map-point").classList.add("hidden");
     navigator.geolocation.getCurrentPosition(
       pos => {
         state.userLat   = pos.coords.latitude;
@@ -708,6 +862,9 @@ function bindEvents() {
     if (!text) return;
     const status = document.getElementById("pos-status");
     status.textContent = "🔄 Cercant...";
+    setPickingMode(false);
+    if (userPointMarker) { map.removeLayer(userPointMarker); userPointMarker = null; }
+    document.getElementById("clear-map-point").classList.add("hidden");
     const result = await geocodeText(text);
     if (result) {
       state.userLat   = result.lat;
@@ -729,4 +886,91 @@ function bindEvents() {
     state.sortBy = e.target.value;
     renderAll();
   });
+
+  // Cercador per nom
+  document.getElementById("filter-search").addEventListener("input", e => {
+    state.search = e.target.value.trim();
+    document.getElementById("clear-search").classList.toggle("hidden", !state.search);
+    renderAll();
+  });
+  document.getElementById("clear-search").addEventListener("click", () => {
+    state.search = "";
+    document.getElementById("filter-search").value = "";
+    document.getElementById("clear-search").classList.add("hidden");
+    renderAll();
+  });
+
+  // Favorits (Top10) + medalles
+  document.getElementById("btn-favorits").addEventListener("click", () => {
+    state.favorits = !state.favorits;
+    document.getElementById("btn-favorits").classList.toggle("active", state.favorits);
+    const medallaSel = document.getElementById("filter-medalla");
+    medallaSel.classList.toggle("hidden", !state.favorits);
+    if (!state.favorits) {
+      state.medalla = "";
+      medallaSel.value = "";
+    }
+    renderAll();
+  });
+  document.getElementById("filter-medalla").addEventListener("change", e => {
+    state.medalla = e.target.value;
+    renderAll();
+  });
+
+  // Marcar un punt al mapa per calcular-hi distàncies
+  document.getElementById("btn-map-pick").addEventListener("click", () => {
+    setPickingMode(!state.pickingPoint);
+    if (!state.pickingPoint) document.getElementById("pos-status").textContent = "";
+  });
+  document.getElementById("clear-map-point").addEventListener("click", resetToCapitalDist);
+
+  // Actualitza la llista amb el que es veu al mapa
+  document.getElementById("toggle-viewport").addEventListener("change", e => {
+    state.viewportFilter = e.target.checked;
+    if (state.viewportFilter) state.mapBounds = map.getBounds();
+    suppressFitBounds = true;
+    renderAll();
+    suppressFitBounds = false;
+  });
+
+  // Eliminar tots els filtres
+  document.getElementById("btn-clear-all").addEventListener("click", clearAllFilters);
+}
+
+function clearAllFilters() {
+  state.illa = "totes";
+  document.querySelectorAll(".island-btn").forEach(b => b.classList.toggle("active", b.dataset.island === "totes"));
+
+  state.search = "";
+  document.getElementById("filter-search").value = "";
+  document.getElementById("clear-search").classList.add("hidden");
+
+  state.favorits = false;
+  document.getElementById("btn-favorits").classList.remove("active");
+  state.medalla = "";
+  document.getElementById("filter-medalla").value = "";
+  document.getElementById("filter-medalla").classList.add("hidden");
+
+  state.cuines = [];
+  document.getElementById("filter-cuina").value = "";
+
+  state.preu = "";
+  document.querySelectorAll(".preu-btn").forEach(b => b.classList.toggle("active", b.dataset.preu === ""));
+
+  state.distMax = 0;
+  document.getElementById("filter-dist").value = 0;
+  document.getElementById("dist-label").textContent = "— km";
+  document.getElementById("clear-dist").classList.add("hidden");
+
+  state.sortBy = "puntuacio";
+  document.getElementById("sort-by").value = "puntuacio";
+
+  state.viewportFilter = true;
+  document.getElementById("toggle-viewport").checked = true;
+  state.mapBounds = null;
+
+  // Neteja posició/punt manual i torna a les distàncies des de capitals
+  // (resetToCapitalDist ja crida renderAll() amb el mapa sense suprimir el fitBounds,
+  // així el mapa torna a mostrar-ho tot)
+  resetToCapitalDist();
 }
