@@ -84,9 +84,15 @@ body.light .webcams-refresh-btn { color: #1a3a2a; }
   color: #6aab7a;
   font-size: 0.85rem;
   background: #0a1628;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s;
   pointer-events: none;
+}
+
+.webcam-img-wrap.loaded .webcam-loading { opacity: 0; }
+.webcam-img-wrap.load-error .webcam-loading {
+  opacity: 1;
+  color: #e08a8a;
 }
 
 .webcam-card.refreshing .webcam-loading { opacity: 1; }
@@ -172,6 +178,43 @@ body.light .webcams-refresh-btn { color: #1a3a2a; }
   background: #2d5a3d;
   color: #a8d8b0;
 }
+
+.webcams-grid.sm-wrapper {
+  display: block;
+}
+
+.smzone-selector {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed rgba(106,171,122,0.25);
+}
+
+.smzone-btn {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(106,171,122,0.3);
+  background: transparent;
+  color: #6aab7a;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: all 0.2s;
+}
+
+.smzone-btn:hover,
+.smzone-btn.active {
+  background: rgba(106,171,122,0.18);
+  border-color: #6aab7a;
+  color: #a8d8b0;
+  font-weight: 600;
+}
+
+body.light .smzone-btn { color: #2d5a3d; }
+body.light .smzone-btn:hover,
+body.light .smzone-btn.active { color: #1a3a2a; }
 
 .radar-note {
   display: flex;

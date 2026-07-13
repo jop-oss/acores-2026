@@ -5,9 +5,10 @@ document.querySelectorAll(".island-btn").forEach((btn) => {
       .querySelectorAll(".island-btn")
       .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-    // Oculta TOTS els grids i el mapa
+    // Oculta TOTS els grids d'illa (nomès els directes de .webcams-main,
+    // per no afectar les sub-graelles de zona de São Miguel) i el mapa
     document
-      .querySelectorAll(".webcams-grid")
+      .querySelectorAll(".webcams-main > .webcams-grid")
       .forEach((g) => g.classList.add("hidden"));
     document.getElementById("grid-mapa").classList.add("hidden");
     // Mostra el correcte
@@ -16,6 +17,28 @@ document.querySelectorAll(".island-btn").forEach((btn) => {
         ? "grid-mapa"
         : "grid-" + btn.dataset.island;
     document.getElementById(id).classList.remove("hidden");
+
+    // A "Mapa" no hi ha imatges a actualitzar
+    const refreshBtn = document.getElementById("webcamsRefreshBtn");
+    if (refreshBtn) {
+      refreshBtn.style.display = btn.dataset.island === "mapa" ? "none" : "";
+    }
+  });
+});
+
+// Selector de zona (només São Miguel, que en té moltes)
+document.querySelectorAll(".smzone-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".smzone-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    document
+      .querySelectorAll(".sm-zone-grid")
+      .forEach((g) => g.classList.add("hidden"));
+    document
+      .getElementById("smzone-" + btn.dataset.zone)
+      .classList.remove("hidden");
   });
 });
 
@@ -26,15 +49,27 @@ document.querySelectorAll(".island-btn").forEach((btn) => {
 function refreshCams() {
   const btn = document.getElementById("webcamsRefreshBtn");
   if (btn) { btn.disabled = true; btn.textContent = "🔄 Actualitzant..."; }
-  const imgs = document.querySelectorAll(".webcam-img");
+  // Només les imatges que es veuen ara (respecta la illa i, a São Miguel,
+  // la zona activa) — evitem tornar a disparar-les totes de cop.
+  const imgs = Array.from(document.querySelectorAll(".webcam-img")).filter(
+    (img) => img.offsetParent !== null,
+  );
   let pending = imgs.length;
+  if (pending === 0) {
+    if (btn) { btn.disabled = false; btn.textContent = "🔄 Actualitzar imatges"; }
+    return;
+  }
   const done = () => {
     pending--;
     if (pending <= 0 && btn) { btn.disabled = false; btn.textContent = "🔄 Actualitzar imatges"; }
   };
   imgs.forEach((img) => {
     const card = img.closest(".webcam-card");
+    const wrap = img.closest(".webcam-img-wrap");
+    const loadingEl = wrap ? wrap.querySelector(".webcam-loading") : null;
     card.classList.add("refreshing");
+    if (wrap) wrap.classList.remove("load-error");
+    if (loadingEl) loadingEl.textContent = "Carregant...";
     const newImg = new Image();
     newImg.referrerPolicy = "no-referrer";
     // Fem servir URL() en lloc de tallar per "?" perquè algunes fonts
@@ -45,9 +80,15 @@ function refreshCams() {
     newImg.onload = () => {
       img.src = newImg.src;
       card.classList.remove("refreshing");
+      if (wrap) wrap.classList.add("loaded");
       done();
     };
-    newImg.onerror = () => { card.classList.remove("refreshing"); done(); };
+    newImg.onerror = () => {
+      card.classList.remove("refreshing");
+      if (wrap) wrap.classList.add("load-error");
+      if (loadingEl) loadingEl.textContent = "No s'ha pogut carregar";
+      done();
+    };
     newImg.src = url.toString();
   });
 }
@@ -61,111 +102,41 @@ document.querySelectorAll(".webcam-card").forEach((card) => {
   });
 });
 
-// Mapa de webcams via Windy API
-const WINDY_KEY = "RFX87wOopVv0oQ8HlifoUNlSYukIAkhy";
+// Mapa de webcams via Windy: l'API de Windy no es pot cridar des del
+// navegador (bloqueig CORS confirmat, i a més només cobreix ~6 webcams
+// a totes les Açores) — ja es va descartar com a alternativa real.
+// Mostrem directament l'enllaç extern en lloc de fer una crida que
+// sempre fallarà.
 let webcamMapLoaded = false;
 
-async function loadWebcamMap() {
+function loadWebcamMap() {
   if (webcamMapLoaded) return;
   webcamMapLoaded = true;
 
-  // Obtenim webcams de les Açores via API
-  const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=50&offset=0&bbox=36.5,-31.5,40.5,-24.5&include=location,player,images&apiKey=${WINDY_KEY}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    const cams = data.webcams || [];
-
-    const container = document.getElementById("webcam-map-container");
-    document.getElementById("webcam-map-loading").remove();
-
-    // Creem el mapa amb Leaflet
-    container.innerHTML =
-      '<div id="leaflet-map" style="width:100%;height:100%;"></div>';
-
-    // Carreguem Leaflet
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-    document.head.appendChild(link);
-
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-    document.head.appendChild(script);
-
-    script.onload = () => {
-      const map = L.map("leaflet-map", {
-        center: [38.5, -27.8],
-        zoom: 8,
-        zoomControl: true,
-      });
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap",
-      }).addTo(map);
-
-      // Icona càmera
-      const camIcon = L.divIcon({
-        html: `<div style="background:#2d5a3d;border:2px solid #a8d8b0;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;">📷</div>`,
-        className: "",
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
-        popupAnchor: [0, -16],
-      });
-
-      cams.forEach((cam) => {
-        if (!cam.location) return;
-        const { latitude, longitude } = cam.location;
-        const marker = L.marker([latitude, longitude], { icon: camIcon }).addTo(
-          map,
-        );
-
-        // Popup amb imatge en hover/clic
-        const imgUrl = cam.images?.current?.preview || "";
-        const playerUrl = cam.player?.day?.url || cam.player?.month?.url || "";
-        const title = cam.title || "Webcam";
-
-        marker.bindPopup(`
-          <div style="min-width:200px;text-align:center;">
-            <strong style="display:block;margin-bottom:6px;font-size:0.85rem;">${title}</strong>
-            ${imgUrl ? `<img src="${imgUrl}" referrerpolicy="no-referrer" style="width:100%;border-radius:6px;margin-bottom:8px;">` : ""}
-            ${
-              playerUrl
-                ? `<a href="${playerUrl}" target="_blank"
-              style="display:inline-block;padding:4px 12px;background:#2d5a3d;color:#a8d8b0;border-radius:10px;text-decoration:none;font-size:0.75rem;">
-              ▶ Veure darreres 24h
-            </a>`
-                : ""
-            }
-          </div>
-        `);
-
-        marker.on("mouseover", () => marker.openPopup());
-      });
-    };
-  } catch (e) {
-    const container = document.getElementById("webcam-map-container");
-    container.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:20px;">
-        <div style="font-size:3rem;">🗺️</div>
-        <p style="color:#a8d8b0;font-size:1.1rem;font-weight:600;text-align:center;">Mapa interactiu de webcams</p>
-        <p style="color:#6aab7a;font-size:0.85rem;text-align:center;max-width:360px;">
-          Passa el ratolí per una càmera per veure la imatge · Clic per veure les darreres 24h
-        </p>
-        <a href="https://www.windy.com/ca/-Mapa-exterior-topoMap?38.5,-27.8,8,p:cams" target="_blank"
-           style="padding:12px 28px;background:#2d5a3d;color:#a8d8b0;border-radius:20px;text-decoration:none;font-size:1rem;">
-          Obrir mapa a Windy ↗
-        </a>
-      </div>
-    `;
-  }
+  const container = document.getElementById("webcam-map-container");
+  container.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;padding:20px;">
+      <div style="font-size:3rem;">🗺️</div>
+      <p style="color:#a8d8b0;font-size:1.1rem;font-weight:600;text-align:center;">Mapa interactiu de webcams</p>
+      <p style="color:#6aab7a;font-size:0.85rem;text-align:center;max-width:360px;">
+        Windy no permet incrustar el seu mapa de webcams aquí — obre'l directament a la seva web.
+      </p>
+      <a href="https://www.windy.com/ca/-Mapa-exterior-topoMap?38.5,-27.8,8,p:cams" target="_blank"
+         style="padding:12px 28px;background:#2d5a3d;color:#a8d8b0;border-radius:20px;text-decoration:none;font-size:1rem;">
+        Obrir mapa a Windy ↗
+      </a>
+    </div>
+  `;
 }
 
-// Activa la càrrega quan es selecciona "Mapa"
+// Activa la càrrega quan es selecciona "Mapa". La sub-pestanya per
+// defecte és "SpotAzores" (ja surt marcada com a activa a l'HTML), així
+// que carreguem el seu mapa directament — si esperéssim que l'usuari
+// tornés a clicar "SpotAzores" (que ja sembla seleccionada), semblaria
+// que no fa res.
 document.querySelectorAll(".island-btn").forEach((btn) => {
   if (btn.dataset.island === "mapa") {
-    btn.addEventListener("click", loadWebcamMap);
+    btn.addEventListener("click", () => setTimeout(initLeafletWebcamMap, 100));
   }
 });
 
@@ -195,6 +166,16 @@ const pinPositions = {
   PIXSRQ01: { x: 46.9, y: 23.9 },
   FAYHOR01: { x: 80.0, y: 83.0 },
   FAYCBG01: { x: 47.9, y: 49.3 },
+  SMGMOS02: { x: 7.2, y: 15.8 },
+  SMGPDL02: { x: 30.8, y: 84.1 },
+  SMGSRQ01: { x: 32.1, y: 81.8 },
+  SMGPPL02: { x: 33.8, y: 81.7 },
+  SMGLAG01: { x: 39.5, y: 85.1 },
+  SMGADL01: { x: 52.5, y: 94.8 },
+  SMGFUR01: { x: 71.0, y: 78.4 },
+  SMGPOV02: { x: 81.7, y: 83.4 },
+  SMGRBG02: { x: 47.1, y: 53.3 },
+  SMGRBG03: { x: 46.3, y: 52.3 },
 };
 
 function addMinimaps() {
@@ -233,6 +214,32 @@ function addMinimaps() {
 }
 
 addMinimaps();
+
+// Mostra "Carregant..." fins que la imatge arriba de veritat (la font
+// externa pot trigar molt), i "No s'ha pogut carregar" si falla.
+function initWebcamLoadStates() {
+  document.querySelectorAll(".webcam-img").forEach((img) => {
+    const wrap = img.closest(".webcam-img-wrap");
+    if (!wrap) return;
+    const loadingEl = wrap.querySelector(".webcam-loading");
+    const markLoaded = () => {
+      wrap.classList.remove("load-error");
+      wrap.classList.add("loaded");
+    };
+    const markError = () => {
+      wrap.classList.remove("loaded");
+      wrap.classList.add("load-error");
+      if (loadingEl) loadingEl.textContent = "No s'ha pogut carregar";
+    };
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded();
+    } else {
+      img.addEventListener("load", markLoaded);
+      img.addEventListener("error", markError);
+    }
+  });
+}
+initWebcamLoadStates();
 
 document.querySelectorAll(".mapa-tab").forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -527,20 +534,19 @@ function buildLeafletMap() {
   });
 
   cams.forEach((c) => {
-    const imgUrl = () =>
-      `https://www.spotazores.com/camaras/${c.cam}/VGAcurrent.jpg?t=${Date.now()}`;
+    const imgUrl =
+      `https://www.azoren-online.info/es/wp-content/plugins/individual_php/webcam-proxy.php?cam=${c.cam}&type=QXGA&t=${Date.now()}`;
     const marker = L.marker([c.lat, c.lon], { icon: camIcon }).addTo(map);
 
     marker.on("click", () => {
-      const popup = L.popup({ maxWidth: 260 })
+      L.popup({ maxWidth: 260 })
         .setLatLng([c.lat, c.lon])
         .setContent(
           `
           <div style="text-align:center;min-width:220px;">
             <strong style="display:block;margin-bottom:8px;font-size:0.9rem;">${c.name}</strong>
-            <img id="popup-img-${c.cam}" src="${imgUrl()}" referrerpolicy="no-referrer"
+            <img id="popup-img-${c.cam}" src="${imgUrl}" referrerpolicy="no-referrer"
                  style="width:100%;border-radius:6px;margin-bottom:8px;">
-            <div style="font-size:0.75rem;color:#888;margin-bottom:6px;">S'actualitza cada 5 min</div>
             <a href="${c.url}" target="_blank"
                 style="display:inline-block;padding:4px 12px;background:#2d5a3d;color:#a8d8b0;border-radius:10px;text-decoration:none;font-size:0.8rem;">
                 Veure a SpotAzores ↗
@@ -549,24 +555,6 @@ function buildLeafletMap() {
         `,
         )
         .openOn(map);
-
-      const interval = setInterval(
-        () => {
-          const img = document.getElementById(`popup-img-${c.cam}`);
-          if (img) img.src = imgUrl();
-          else clearInterval(interval);
-        },
-        5 * 60 * 1000,
-      );
-
-      map.on("popupclose", () => clearInterval(interval));
     });
   });
 }
-
-// Inicialitza el mapa quan es clica la pestanya SpotAzores
-document.querySelectorAll(".mapa-tab").forEach((tab) => {
-  if (tab.dataset.mapa === "spotazores") {
-    tab.addEventListener("click", () => setTimeout(initLeafletWebcamMap, 100));
-  }
-});
