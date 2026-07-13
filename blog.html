@@ -97,6 +97,21 @@
     </div>
 
     <div class="blog-field">
+      <label>Nota de veu <span class="blog-label-hint">(opcional · màx. 60 segons)</span></label>
+      <div class="blog-audio-area" id="blogAudioArea">
+        <button type="button" class="blog-audio-record-btn" id="blogAudioBtn" onclick="blogToggleGravacio()">
+          <span id="blogAudioBtnIcon">🎙️</span>
+          <span id="blogAudioBtnText">Toca per gravar</span>
+        </button>
+        <span class="blog-audio-timer" id="blogAudioTimer" style="display:none">0:00</span>
+      </div>
+      <div id="blogAudioPreviewWrap" class="blog-audio-preview" style="display:none">
+        <audio id="blogAudioPlayer" controls></audio>
+        <button type="button" class="blog-audio-remove" onclick="blogEliminaAudio()" title="Eliminar gravació">✕</button>
+      </div>
+    </div>
+
+    <div class="blog-field">
       <label>Foto <span class="blog-label-hint">(opcional · màx. 5 MB)</span></label>
       <div class="blog-foto-area" id="blogFotoArea">
         <input type="file" id="bFoto" accept="image/*" style="display:none" onchange="blogPreviewFoto(this)">

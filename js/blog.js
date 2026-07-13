@@ -33,6 +33,15 @@ let blogFiltreDia   = null;        // null = tots els dies (clau 'dd/mm/yyyy')
 let blogEditantId   = null;        // id doc en edició
 let blogFotoBase64  = null;        // foto seleccionada (base64 per preview)
 let blogFotoFile    = null;        // File object per pujar
+let blogAudioBase64   = null;      // nota de veu gravada (base64 per preview/guardar)
+let blogMediaRecorder = null;
+let blogAudioChunks   = [];
+let blogAudioStream   = null;
+let blogAudioGravant  = false;
+let blogAudioTimerId  = null;
+let blogAudioAutoStopId = null;
+let blogAudioSegons   = 0;
+const BLOG_AUDIO_MAX_SEGONS = 60;
 let blogUnsubscribe  = null;
 let blogPinCallback  = null;        // funció a cridar un cop PIN correcte
 let blogPinHashCache = null;        // hash calculat del PIN d'admin
@@ -322,6 +331,9 @@ function blogRenderLlista() {
           <div class="blog-entrada-accions">${accions}</div>
         </div>
         ${entrada.text ? `<div class="blog-entrada-cos">${blogEscapeHtml(entrada.text)}</div>` : ''}
+        ${entrada.audioB64 ? `
+          <audio class="blog-entrada-audio" src="${entrada.audioB64}" controls preload="none"></audio>
+        ` : ''}
         ${entrada.fotoB64 ? `
           <img class="blog-entrada-foto" src="${entrada.fotoB64}" alt="Foto de ${entrada.autor}"
                loading="lazy" onclick="blogVeureFoto('${entrada.fotoB64}')">
@@ -345,6 +357,8 @@ function blogObreModal(dades) {
   blogEditantId  = dades?.id || null;
   blogFotoBase64 = null;
   blogFotoFile   = null;
+  blogAudioBase64 = null;
+  blogAudioChunks = [];
 
   // Títol
   document.getElementById('blogModalTitol').textContent =
@@ -369,6 +383,15 @@ function blogObreModal(dades) {
     preview.onclick = () => document.getElementById('bFoto').click();
   }
 
+  // Preview nota de veu
+  document.getElementById('blogAudioArea').style.display = 'flex';
+  document.getElementById('blogAudioPreviewWrap').style.display = 'none';
+  document.getElementById('blogAudioPlayer').src = '';
+  if (dades?.audioB64) {
+    blogAudioBase64 = dades.audioB64;
+    blogMostraPreviewAudio(dades.audioB64);
+  }
+
   // Obre
   document.getElementById('blogModal').classList.add('open');
   document.getElementById('blogModalOverlay').classList.add('open');
@@ -378,10 +401,16 @@ function blogObreModal(dades) {
 function blogTancaModal() {
   document.getElementById('blogModal').classList.remove('open');
   document.getElementById('blogModalOverlay').classList.remove('open');
+  if (blogAudioGravant) blogAturaGravacio();
   blogEditantId  = null;
   blogFotoBase64 = null;
   blogFotoFile   = null;
+  blogAudioBase64 = null;
+  blogAudioChunks = [];
   document.getElementById('bFoto').value = '';
+  document.getElementById('blogAudioArea').style.display = 'flex';
+  document.getElementById('blogAudioPreviewWrap').style.display = 'none';
+  document.getElementById('blogAudioPlayer').src = '';
 }
 
 /* Preview foto seleccionada */
@@ -420,6 +449,124 @@ function blogEliminaFotoPreview() {
   preview.onclick = () => document.getElementById('bFoto').click();
 }
 
+/* ──────────────────────────────────────────────────────────
+   NOTA DE VEU
+   ────────────────────────────────────────────────────────── */
+function blogFormatTemporitzador(segons) {
+  const m = Math.floor(segons / 60);
+  const s = segons % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function blogTriaTipusMime() {
+  const candidats = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg;codecs=opus'];
+  if (!window.MediaRecorder || !MediaRecorder.isTypeSupported) return '';
+  for (const c of candidats) {
+    if (MediaRecorder.isTypeSupported(c)) return c;
+  }
+  return '';
+}
+
+function blogToggleGravacio() {
+  if (blogAudioGravant) blogAturaGravacio();
+  else blogIniciaGravacio();
+}
+
+async function blogIniciaGravacio() {
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    alert('El teu navegador no permet gravar àudio.');
+    return;
+  }
+  try {
+    blogAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    alert("No s'ha pogut accedir al micròfon. Comprova els permisos.");
+    return;
+  }
+
+  const mimeType = blogTriaTipusMime();
+  blogAudioChunks = [];
+  try {
+    blogMediaRecorder = new MediaRecorder(blogAudioStream, {
+      ...(mimeType ? { mimeType } : {}),
+      audioBitsPerSecond: 32000,
+    });
+  } catch (e) {
+    blogMediaRecorder = new MediaRecorder(blogAudioStream);
+  }
+
+  blogMediaRecorder.ondataavailable = (e) => {
+    if (e.data && e.data.size > 0) blogAudioChunks.push(e.data);
+  };
+  blogMediaRecorder.onstop = blogProcessaGravacio;
+
+  blogMediaRecorder.start();
+  blogAudioGravant = true;
+  blogAudioSegons  = 0;
+
+  const btn = document.getElementById('blogAudioBtn');
+  btn.classList.add('gravant');
+  document.getElementById('blogAudioBtnIcon').textContent = '⏹️';
+  document.getElementById('blogAudioBtnText').textContent = 'Atura la gravació';
+  const timerEl = document.getElementById('blogAudioTimer');
+  timerEl.style.display = 'inline';
+  timerEl.textContent = blogFormatTemporitzador(0);
+
+  blogAudioTimerId = setInterval(() => {
+    blogAudioSegons++;
+    timerEl.textContent = blogFormatTemporitzador(blogAudioSegons);
+  }, 1000);
+
+  blogAudioAutoStopId = setTimeout(() => {
+    if (blogAudioGravant) blogAturaGravacio();
+  }, BLOG_AUDIO_MAX_SEGONS * 1000);
+}
+
+function blogAturaGravacio() {
+  if (!blogAudioGravant || !blogMediaRecorder) return;
+  blogAudioGravant = false;
+  clearInterval(blogAudioTimerId);
+  clearTimeout(blogAudioAutoStopId);
+  try { blogMediaRecorder.stop(); } catch (e) {}
+  if (blogAudioStream) {
+    blogAudioStream.getTracks().forEach((t) => t.stop());
+    blogAudioStream = null;
+  }
+
+  const btn = document.getElementById('blogAudioBtn');
+  btn.classList.remove('gravant');
+  document.getElementById('blogAudioBtnIcon').textContent = '🎙️';
+  document.getElementById('blogAudioBtnText').textContent = 'Toca per gravar';
+  document.getElementById('blogAudioTimer').style.display = 'none';
+}
+
+function blogProcessaGravacio() {
+  if (blogAudioChunks.length === 0) return;
+  const blob = new Blob(blogAudioChunks, { type: blogMediaRecorder.mimeType || 'audio/webm' });
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    blogAudioBase64 = e.target.result;
+    blogMostraPreviewAudio(blogAudioBase64);
+  };
+  reader.readAsDataURL(blob);
+}
+
+function blogMostraPreviewAudio(base64) {
+  document.getElementById('blogAudioArea').style.display = 'none';
+  const wrap = document.getElementById('blogAudioPreviewWrap');
+  wrap.style.display = 'flex';
+  document.getElementById('blogAudioPlayer').src = base64;
+}
+
+function blogEliminaAudio() {
+  blogAudioBase64 = null;
+  blogAudioChunks = [];
+  if (blogAudioGravant) blogAturaGravacio();
+  document.getElementById('blogAudioPlayer').src = '';
+  document.getElementById('blogAudioPreviewWrap').style.display = 'none';
+  document.getElementById('blogAudioArea').style.display = 'flex';
+}
+
 /* Comptador caràcters */
 document.addEventListener('DOMContentLoaded', () => {
   const textarea = document.getElementById('bText');
@@ -437,8 +584,8 @@ async function blogGuarda() {
   const text   = (document.getElementById('bText').value || '').trim();
   const autor  = document.getElementById('bAutor').value;
 
-  if (!text && !blogFotoBase64 && !blogEditantId) {
-    alert('Escriu alguna cosa o afegeix una foto.');
+  if (!text && !blogFotoBase64 && !blogAudioBase64 && !blogEditantId) {
+    alert('Escriu alguna cosa, afegeix una foto o grava una nota de veu.');
     return;
   }
   if (!autor) {
@@ -467,10 +614,22 @@ async function blogGuarda() {
       fotoB64 = teFotoPreview ? (entradaActual?.fotoB64 || null) : null;
     }
 
+    // Determina la nota de veu a guardar
+    let audioB64 = null;
+    if (blogAudioBase64) {
+      audioB64 = blogAudioBase64;
+    } else if (blogEditantId) {
+      // Edició: manté l'àudio existent tret que s'hagi eliminat el preview
+      const entradaActual = blogEntrades.find(e => e.id === blogEditantId);
+      const teAudioPreview = document.getElementById('blogAudioPreviewWrap').style.display !== 'none';
+      audioB64 = teAudioPreview ? (entradaActual?.audioB64 || null) : null;
+    }
+
     const dades = {
       autor,
       text,
       fotoB64,
+      audioB64,
       tsMs: Date.now(),
       ts:   firebase.firestore.FieldValue.serverTimestamp(),
     };
