@@ -233,7 +233,7 @@ function buildCotxeCard(c) {
       <div class="log-info-row">
         <span class="log-info-chip">📍 Recollida: <strong>${c.llocRecollida}</strong></span>
         <span class="log-info-chip">📍 Devolució: <strong>${c.llocDevolucio}</strong></span>
-        <a href="${c.url}" target="_blank" class="log-info-chip" style="color:var(--log-green);text-decoration:none">🔗 Reserva</a>
+        <a href="${c.url}" target="_blank" class="log-info-chip" style="color:var(--log-green);text-decoration:none">🔗 Web</a>
       </div>
     </div>`;
 }
