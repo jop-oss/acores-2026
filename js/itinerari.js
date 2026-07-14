@@ -2203,6 +2203,7 @@ function setupAccordions() {
 let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false, 11: false, 12: false };
 
 function showDia(n) {
+  window.scrollTo(0, 0);
   document.querySelectorAll('.itin-dia').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.itin-day-pill').forEach(el => el.classList.remove('active'));
   const dia = document.getElementById(`dia-${n}`);
@@ -3213,11 +3214,14 @@ function poiToggleFavsD5(){_poiFavOnly5=!_poiFavOnly5;const btn=document.getElem
 
 
 const DIA5_WAYPOINTS = [
-  { nom: 'TM06 – Moinho do Félix',            coords: [37.85200, -25.31617], icon: '💦' },
-  { nom: 'Poço Azul',                          coords: [37.85880, -25.29047], icon: '💧' },
-  { nom: 'Parque Ribeira dos Caldeirões',      coords: [37.84282, -25.26759], icon: '🌿' },
-  { nom: 'Ruta panoràmica costa est (Nordeste)',coords: [37.83333, -25.17130], icon: '🌊' },
-  { nom: 'PRC09 – Salto do Prego (Faial da Terra)', coords: [37.74716, -25.20146], icon: '🥾' },
+  { nom: 'TM06 – Moinho do Félix',            coords: [37.85200, -25.31617], icon: '💦', num: 1 },
+  { nom: 'Miradors Salto da Farinha i Pedra dos Estornhinos', coords: [37.85371, -25.29768], icon: '🔭', num: 2 },
+  { nom: 'Poço Azul',                          coords: [37.85880, -25.29047], icon: '💧', num: 3 },
+  { nom: 'Parque Ribeira dos Caldeirões',      coords: [37.84282, -25.26759], icon: '🌿', num: 4 },
+  { nom: 'Nordeste',                           coords: [37.83215, -25.14587], icon: '🏘️', num: 5 },
+  { nom: 'Mirador Boca da Ribeira',            coords: [37.84163, -25.14903], icon: '🔭', num: 5 },
+  { nom: 'Ruta panoràmica costa est (Nordeste)',coords: [37.83333, -25.17130], icon: '🌊', num: 6 },
+  { nom: 'PRC09 – Salto do Prego (Faial da Terra)', coords: [37.74716, -25.20146], icon: '🥾', num: 7 },
 ];
 const CHERIMOYA_D5_START = [37.71835, -25.40934];
 const POVOACIO_D5_END    = [37.74790, -25.24530];
@@ -3233,13 +3237,14 @@ function initMapRutaD5() {
     .addTo(map).bindPopup('<b>▶️ Inici i final</b><br>Casa Cherimoya – Ribeira das Tainhas');
 
   DIA5_WAYPOINTS.forEach((wp, i) => {
-    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
-      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}</b>`);
+    const num = wp.num != null ? wp.num : i + 1;
+    L.marker(wp.coords, { icon: numberIcon(num, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${num}. ${wp.nom}</b>`);
   });
 
-  // Sopar a Povoació com a parada numerada
-  L.marker(POVOACIO_D5_END, { icon: numberIcon(DIA5_WAYPOINTS.length + 1, COL_SM), zIndexOffset: 100 })
-    .addTo(map).bindPopup(`<b>${DIA5_WAYPOINTS.length + 1}. Sopar a Povoació</b>`);
+  // Sopar a Povoació com a parada numerada (número 8, després de l'última aturada)
+  L.marker(POVOACIO_D5_END, { icon: numberIcon(8, COL_SM), zIndexOffset: 100 })
+    .addTo(map).bindPopup('<b>8. Sopar a Povoació</b>');
 
   // Finish a Cherimoya (zIndexOffset < start per no solapar el popup de start)
   L.marker(CHERIMOYA_D5_START, { icon: finishIcon(), zIndexOffset: 190 })
@@ -3476,14 +3481,15 @@ function initMapPRC08FAID10() {
 }
 
 /* Waypoints Pico (matí) */
+const DIA10_PIC_START_EXTRA = { nom: 'Miradors de Prainha i São Miguel Arcanjo', coords: [38.4911435, -28.2487393], icon: '🔭' };
+
 const DIA10_WAYPOINTS_PIC = [
-  { nom: 'Miradors de Prainha i São Miguel Arcanjo', coords: [38.4911435, -28.2487393], icon: '🔭' },
-  { nom: 'Ponta Rasa (moinho + Praia do Guindaste)', coords: [38.531, -28.284], icon: '🌊' },
-  { nom: 'Furna de Santo António', coords: [38.5352179, -28.3358018], icon: '🏊' },
-  { nom: 'Santa Luzia · Zona balnear dos Arcos · Lajido', coords: [38.560373, -28.4089708], icon: '🏘️' },
-  { nom: 'Zona Balnear do Cachorro + Arcos', coords: [38.5559573, -28.4470898], icon: '🌋', star: true },
-  { nom: 'Cella Bar', coords: [38.5430992, -28.5204954], icon: '📷' },
-  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
+  { nom: 'Ponta Rasa (moinho + Praia do Guindaste)', coords: [38.531, -28.284], icon: '🌊', num: 1 },
+  { nom: 'Furna de Santo António', coords: [38.5352179, -28.3358018], icon: '🏊', num: 2 },
+  { nom: 'Santa Luzia · Zona balnear dos Arcos · Lajido', coords: [38.560373, -28.4089708], icon: '🏘️', num: 3 },
+  { nom: 'Zona Balnear do Cachorro + Arcos', coords: [38.5559573, -28.4470898], icon: '🌋', star: true, num: 4 },
+  { nom: 'Cella Bar', coords: [38.5430992, -28.5204954], icon: '📷', num: 5 },
+  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true, num: 6 },
 ];
 
 function initMapRutaD10Pic() {
@@ -3497,15 +3503,20 @@ function initMapRutaD10Pic() {
   L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>▶️ Inici</b><br>Allotjament a Prainha');
 
+  // La línia de temps tracta aquest mirador com a part de la sortida
+  L.marker(DIA10_PIC_START_EXTRA.coords, { icon: numberIcon('🔭', COL_SM), zIndexOffset: 150 })
+    .addTo(map).bindPopup(`<b>${DIA10_PIC_START_EXTRA.nom}</b>`);
+
   DIA10_WAYPOINTS_PIC.forEach((wp, i) => {
-    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
-      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
+    const num = wp.num != null ? wp.num : i + 1;
+    L.marker(wp.coords, { icon: numberIcon(num, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${num}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
   });
 
   L.marker(D10_RETORN_COTXES_PIC, { icon: finishIcon(), zIndexOffset: 190 })
     .addTo(map).bindPopup('<b>🏁 Retorn cotxes + Ferri</b><br>Madalena');
 
-  const all = [start, ...DIA10_WAYPOINTS_PIC.map(w => w.coords), D10_RETORN_COTXES_PIC];
+  const all = [start, DIA10_PIC_START_EXTRA.coords, ...DIA10_WAYPOINTS_PIC.map(w => w.coords), D10_RETORN_COTXES_PIC];
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
 }
 
@@ -3557,10 +3568,20 @@ function initMapRutaD10Fai(elId, waypoints) {
   L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>▶️ Arribada</b><br>Port d\'Horta');
 
-  waypoints.forEach((wp, i) => {
+  // L'última parada ("Peter Café Sport — sopar") la línia de temps la
+  // tracta com a final sense número, no com una parada numerada més
+  const stops = waypoints.slice(0, -1);
+  const sopar = waypoints[waypoints.length - 1];
+
+  stops.forEach((wp, i) => {
     L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
       .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
   });
+
+  if (sopar) {
+    L.marker(sopar.coords, { icon: numberIcon('🍽️', COL_SM), zIndexOffset: 150 })
+      .addTo(map).bindPopup(`<b>${sopar.nom}</b>`);
+  }
 
   L.marker(D10_ALLOTJAMENT_FAI, { icon: finishIcon(), zIndexOffset: 190 })
     .addTo(map).bindPopup('<b>🏠 Refúgio</b><br>Feteira');
@@ -3885,28 +3906,27 @@ function initMapPR05D8() {
 }
 
 /* Waypoints de l'itinerari proposat (Centre i Oest de Pico) */
+const DIA8_START_EXTRA = { nom: 'Parque Florestal da Prainha', coords: [38.4862056, -28.2425003], icon: '🌲' };
+const DIA8_FINISH_PLACE = { nom: 'São Roque do Pico — sopar', coords: [38.5181646, -28.3098427] };
+
 const DIA8_WAYPOINTS_PRINCIPAL = [
-  { nom: 'Parque Florestal da Prainha', coords: [38.4862056, -28.2425003], icon: '🌲' },
-  { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭' },
-  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true },
-  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true },
-  { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️' },
-  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
-  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾' },
-  { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true },
-  { nom: 'São Roque do Pico — sopar', coords: [38.5181646, -28.3098427], icon: '🍽️' },
+  { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭', num: 1 },
+  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true, num: 2 },
+  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true, num: 3 },
+  { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️', num: 4 },
+  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true, num: 5 },
+  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾', num: 6 },
+  { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true, num: 7 },
 ];
 
 const DIA8_WAYPOINTS_ALT = [
-  { nom: 'Parque Florestal da Prainha', coords: [38.4862056, -28.2425003], icon: '🌲' },
-  { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true },
-  { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️' },
-  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾' },
-  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true },
-  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true },
-  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true },
-  { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭' },
-  { nom: 'São Roque do Pico — sopar', coords: [38.5181646, -28.3098427], icon: '🍽️' },
+  { nom: 'Lagoa do Capitão', coords: [38.4879795, -28.3191533], icon: '🏞️', star: true, num: 1 },
+  { nom: 'Furna do Frei Matias', coords: [38.4948535, -28.448117], icon: '🕳️', num: 2 },
+  { nom: 'PR05 · Vinhas da Criação Velha', coords: [38.4865733, -28.5385556], icon: '🥾', num: 3 },
+  { nom: 'Madalena — dinar', coords: [38.5346472, -28.5281671], icon: '🍽️', star: true, num: 4 },
+  { nom: 'Estrada longitudinal (EN3)', coords: [38.4992466, -28.4628001], icon: '🚗', star: true, num: 5 },
+  { nom: 'Estrada das Lagoas + Transversal', coords: [38.4509748, -28.2437556], icon: '🏞️', star: true, num: 6 },
+  { nom: 'Estrada de Meia Encosta', coords: [38.445529, -28.1989754], icon: '🔭', num: 7 },
 ];
 
 const D11_ALLOTJAMENT_PIC_D8 = [38.4607967, -28.1920405]; // Prainha Apartments
@@ -3940,19 +3960,21 @@ function initMapRutaD8(elId, waypoints) {
   L.marker(start, { icon: startIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>▶️ Inici</b><br>Allotjament a Prainha');
 
-  const stops = waypoints.slice(0, -1);
-  const finish = waypoints[waypoints.length - 1];
-  stops.forEach((wp, i) => {
-    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
-      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
+  // Parc Florestal da Prainha: la línia de temps el tracta com a part de
+  // la sortida (sense número), no com una parada més
+  L.marker(DIA8_START_EXTRA.coords, { icon: numberIcon('🌲', COL_SM), zIndexOffset: 150 })
+    .addTo(map).bindPopup(`<b>${DIA8_START_EXTRA.nom}</b>`);
+
+  waypoints.forEach((wp, i) => {
+    const num = wp.num != null ? wp.num : i + 1;
+    L.marker(wp.coords, { icon: numberIcon(num, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${num}. ${wp.nom}${wp.star ? ' ⭐' : ''}</b>`);
   });
-  L.marker(finish.coords, { icon: numberIcon(stops.length + 1, COL_SM), zIndexOffset: 100 })
-    .addTo(map).bindPopup(`<b>${stops.length + 1}. ${finish.nom}</b>`);
 
-  L.marker([38.5181646, -28.3098427], { icon: finishIcon(), zIndexOffset: 190 })
-    .addTo(map).bindPopup('<b>🏁 São Roque do Pico</b>');
+  L.marker(DIA8_FINISH_PLACE.coords, { icon: finishIcon(), zIndexOffset: 190 })
+    .addTo(map).bindPopup(`<b>🏁 ${DIA8_FINISH_PLACE.nom}</b>`);
 
-  const all = [start, ...waypoints.map(w => w.coords)];
+  const all = [start, DIA8_START_EXTRA.coords, ...waypoints.map(w => w.coords), DIA8_FINISH_PLACE.coords];
   map.fitBounds(L.latLngBounds(all), { padding: [30, 30] });
 }
 
