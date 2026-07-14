@@ -1134,7 +1134,10 @@ document.head.appendChild(cfStyle);
 //  QUI / QUÈ SÓC?
 // ══════════════════════════════════════════════════════════════
 
-const QQS_API_KEY = CONFIG.ANTHROPIC_API_KEY;
+// La clau d'Anthropic ja no viatja mai al navegador: la crida passa per
+// un Cloudflare Worker que l'afegeix al servidor. Substitueix per la URL
+// real un cop desplegat el Worker (mateix que a portugues.js).
+const QQS_PROXY_URL = 'https://acores-anthropic-proxy.jordipotrony.workers.dev';
 
 const QQS_CATEGORIES = [
   { id: "familiars", emoji: "👨‍👩‍👧‍👦", nom: "Familiars i amics", ia: false },
@@ -1282,13 +1285,10 @@ Respon ÚNICAMENT amb un JSON vàlid, sense cap text addicional ni marques de co
 
 Les pistes han de ser creatives i indirectes. No han de contenir la paraula ni parts d'ella.`;
 
-  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+  const resp = await fetch(QQS_PROXY_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": QQS_API_KEY,
-      "anthropic-version": "2023-06-01",
-      "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
       model: "claude-haiku-4-5-20251001",

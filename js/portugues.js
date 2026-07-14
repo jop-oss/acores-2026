@@ -320,17 +320,14 @@ async function tradueixFoto() {
   btn.querySelector('.pt-trad-btn-text').textContent = 'Analitzant...';
 
   try {
-    const apiKey = typeof CONFIG !== 'undefined' ? CONFIG.ANTHROPIC_API_KEY : null;
-    if (!apiKey) throw new Error('Clau API no disponible');
+    // La clau d'Anthropic ja no viatja mai al navegador: la crida passa
+    // per un Cloudflare Worker que l'afegeix al servidor.
+    // Substitueix PROXY_URL per la URL real un cop desplegat el Worker.
+    const PROXY_URL = 'https://acores-anthropic-proxy.jordipotrony.workers.dev';
 
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch(PROXY_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,
