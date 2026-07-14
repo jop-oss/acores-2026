@@ -1347,15 +1347,15 @@ const PDL_COORDS = [37.74239, -25.67375];
 
 /* ── ROUTE WAYPOINTS DIA 2 — ITINERARI PRINCIPAL (sentit horari) ── */
 const DIA2_WAYPOINTS = [
-  { nom: 'Mirador Pico do Carvão', coords: [37.81916, -25.75109], icon: '🔭' },
-  { nom: 'Muro das Nove Janelas', coords: [37.83389, -25.75191], icon: '🧱' },
-  { nom: 'Boca do Inferno (caminada)', coords: [37.84285, -25.76362], icon: '🔭', offroad: true },
-  { nom: 'Vista do Rei', coords: [37.83929, -25.79493], icon: '🔭' },
-  { nom: 'Sete Cidades', coords: [37.85574, -25.78630], icon: '🏘️' },
-  { nom: 'Ponta da Ferraria', coords: [37.85859, -25.85236], icon: '♨️' },
-  { nom: 'Ponta do Escalvado', coords: [37.87123, -25.84134], icon: '🔭' },
-  { nom: 'Mosteiros', coords: [37.88846, -25.82408], icon: '🏖️' },
-  { nom: 'Pedras Negras (Capelas)', coords: [37.83552, -25.67246], icon: '🔭' },
+  { nom: 'Mirador Pico do Carvão', coords: [37.81916, -25.75109], icon: '🔭', num: 1 },
+  { nom: 'Muro das Nove Janelas', coords: [37.83389, -25.75191], icon: '🧱', num: 2 },
+  { nom: 'Boca do Inferno (caminada)', coords: [37.84285, -25.76362], icon: '🔭', offroad: true, num: 2 },
+  { nom: 'Vista do Rei', coords: [37.83929, -25.79493], icon: '🔭', num: 3 },
+  { nom: 'Sete Cidades', coords: [37.85574, -25.78630], icon: '🏘️', num: 4 },
+  { nom: 'Ponta da Ferraria', coords: [37.85859, -25.85236], icon: '♨️', num: 5 },
+  { nom: 'Ponta do Escalvado', coords: [37.87123, -25.84134], icon: '🔭', num: 6 },
+  { nom: 'Mosteiros', coords: [37.88846, -25.82408], icon: '🏖️', num: 7 },
+  { nom: 'Pedras Negras (Capelas)', coords: [37.83552, -25.67246], icon: '🔭', num: 8 },
 ];
 
 // ORS routing: start + only road-accessible waypoints + end
@@ -1370,15 +1370,15 @@ const DIA2_MAPS_LINK = 'https://maps.app.goo.gl/CN2sMsKLS2Fp76vN7';
 /* ── ROUTE WAYPOINTS DIA 2 — ITINERARI ALTERNATIU (sentit antihorari) ── */
 /* Per fer-lo si Sete Cidades surt clar de bon matí: comencem per la costa nord */
 const DIA2_ALT_WAYPOINTS = [
-  { nom: 'Pedras Negras (Capelas)', coords: [37.83552, -25.67246], icon: '🔭' },
-  { nom: 'Mosteiros', coords: [37.88846, -25.82408], icon: '🏖️' },
-  { nom: 'Ponta do Escalvado', coords: [37.87123, -25.84134], icon: '🔭' },
-  { nom: 'Ponta da Ferraria', coords: [37.85859, -25.85236], icon: '♨️' },
-  { nom: 'Sete Cidades', coords: [37.85574, -25.78630], icon: '🏘️' },
-  { nom: 'Vista do Rei', coords: [37.83929, -25.79493], icon: '🔭' },
-  { nom: 'Boca do Inferno (caminada)', coords: [37.84285, -25.76362], icon: '🔭', offroad: true },
-  { nom: 'Muro das Nove Janelas', coords: [37.83389, -25.75191], icon: '🧱' },
-  { nom: 'Mirador Pico do Carvão', coords: [37.81916, -25.75109], icon: '🔭' },
+  { nom: 'Pedras Negras (Capelas)', coords: [37.83552, -25.67246], icon: '🔭', num: 1 },
+  { nom: 'Mosteiros', coords: [37.88846, -25.82408], icon: '🏖️', num: 2 },
+  { nom: 'Ponta do Escalvado', coords: [37.87123, -25.84134], icon: '🔭', num: 3 },
+  { nom: 'Ponta da Ferraria', coords: [37.85859, -25.85236], icon: '♨️', num: 4 },
+  { nom: 'Sete Cidades', coords: [37.85574, -25.78630], icon: '🏘️', num: 5 },
+  { nom: 'Vista do Rei', coords: [37.83929, -25.79493], icon: '🔭', num: 6 },
+  { nom: 'Boca do Inferno (caminada)', coords: [37.84285, -25.76362], icon: '🔭', offroad: true, num: 7 },
+  { nom: 'Muro das Nove Janelas', coords: [37.83389, -25.75191], icon: '🧱', num: 7 },
+  { nom: 'Mirador Pico do Carvão', coords: [37.81916, -25.75109], icon: '🔭', num: 8 },
 ];
 
 const DIA2_ALT_ORS_COORDS = [
@@ -1634,10 +1634,14 @@ function initMapRuta(elId, waypoints) {
   L.marker([PDL_COORDS[0] - 0.002, PDL_COORDS[1]], { icon: finishIcon(), zIndexOffset: 200 })
     .addTo(map).bindPopup('<b>🏁 Final</b><br>Ponta Delgada');
 
-  // Numbered waypoints
+  // Numbered waypoints (algunes parades del timeline inclouen més d'un
+  // punt al mapa — p. ex. "Ruta de senderisme" — per això es pot fixar
+  // el número a mostrar amb wp.num; si no se n'indica cap, es fa servir
+  // la posició a la llista)
   waypoints.forEach((wp, i) => {
-    L.marker(wp.coords, { icon: numberIcon(i + 1, COL_SM), zIndexOffset: 100 })
-      .addTo(map).bindPopup(`<b>${i + 1}. ${wp.nom}</b>`);
+    const num = wp.num != null ? wp.num : i + 1;
+    L.marker(wp.coords, { icon: numberIcon(num, COL_SM), zIndexOffset: 100 })
+      .addTo(map).bindPopup(`<b>${num}. ${wp.nom}</b>`);
   });
 
   const allCoords = [PDL_COORDS, ...waypoints.map(w => w.coords)];
