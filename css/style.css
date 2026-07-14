@@ -292,6 +292,22 @@ body {
   .photo-grid {
     grid-template-columns: 1fr;
   }
+  .photo-card {
+    height: 300px;
+  }
+  .photo-card-back {
+    padding: 20px;
+    gap: 8px;
+  }
+  .photo-card-back .place-name {
+    font-size: 1.05rem;
+  }
+  .photo-card-back .place-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    max-height: 100%;
+  }
 }
 
 /* Noms personatges */
