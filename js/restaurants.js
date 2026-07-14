@@ -479,7 +479,7 @@ function cardHtml(r) {
   const fotosHtml = fotos.length
     ? fotos.slice(0, 8).map((f, i) => `
         <div class="rest-foto-wrap${i === 0 ? " active" : ""}">
-          <img class="rest-foto" src="${f.url}" loading="lazy" alt=""
+          <img class="rest-foto" ${i === 0 ? `src="${f.url}"` : `data-src="${f.url}"`} loading="lazy" alt=""
                onerror="this.closest('.rest-foto-wrap').style.display='none'">
           <span class="foto-font">${f.font}</span>
         </div>`
@@ -641,6 +641,15 @@ function openDetail(id) {
 }
 
 // ── CARRUSEL ───────────────────────────────────────────────────────────
+function activaFoto(wrap) {
+  // Carrega la imatge de debò (des de data-src) només quan realment es mostra
+  const img = wrap.querySelector(".rest-foto[data-src]");
+  if (img) {
+    img.src = img.dataset.src;
+    img.removeAttribute("data-src");
+  }
+}
+
 function initCarrusel(card) {
   const fotos = card.querySelectorAll(".rest-foto-wrap");
   const dots  = card.querySelectorAll(".foto-dot");
@@ -650,6 +659,7 @@ function initCarrusel(card) {
     fotos[current].classList.remove("active");
     dots[current]?.classList.remove("active");
     current = (current + 1) % fotos.length;
+    activaFoto(fotos[current]);
     fotos[current].classList.add("active");
     dots[current]?.classList.add("active");
   }, 3000);
@@ -659,6 +669,7 @@ function initCarrusel(card) {
       fotos[current].classList.remove("active");
       dots[current]?.classList.remove("active");
       current = parseInt(dot.dataset.idx);
+      activaFoto(fotos[current]);
       fotos[current].classList.add("active");
       dots[current]?.classList.add("active");
     });
