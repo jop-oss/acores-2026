@@ -315,6 +315,33 @@
   }
 }
 
+/* ── Responsive general ── */
+@media (max-width: 640px) {
+  .temps-main { padding: 24px 12px; }
+  .temps-section { padding: 16px; }
+
+  /* La fila de previsió diària no cap en una sola línia a mòbil:
+     es reorganitza en graella de 2 files (dia/icona/pluja + barra sencera) */
+  .daily-card {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas:
+      "day icon rain"
+      "bar bar bar";
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 6px;
+    padding: 12px 0;
+  }
+  .daily-day { grid-area: day; min-width: 0; font-size: 0.82rem; }
+  .daily-icon { grid-area: icon; }
+  .daily-desc { display: none; } /* redundant amb la icona quan no hi ha espai */
+  .daily-rain-pill { grid-area: rain; min-width: 0; text-align: right; }
+  .daily-temp-bar-wrap { grid-area: bar; min-width: 0; width: 100%; }
+
+  .tide-day-selector, .sun-day-selector { gap: 10px; }
+}
+
 .stat-card {
   background: #0a1628;
   border: 1px solid #2d5a3d;

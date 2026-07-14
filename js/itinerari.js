@@ -2158,15 +2158,50 @@ function setupTooltips() {
   document.body.appendChild(tip);
 
   let active = false;
+  let tocActiu = null; // span actiu en mode tàctil (toggle)
 
+  function contingutTooltip(span) {
+    const key = span.dataset.poi;
+    const p = POI[key];
+    if (!p) return false;
+    const desc = p.desc.length > 100 ? p.desc.slice(0, 100) + '…' : p.desc;
+    tip.innerHTML = `<div class="tt-nom">${p.emoji} ${p.nom}</div><div class="tt-desc">${desc}</div>`;
+    return true;
+  }
+
+  function posicionaVoraCursor(x, y) {
+    let tx = x + 16;
+    let ty = y - 10;
+    if (tx + 280 > window.innerWidth) tx = x - 280;
+    if (ty + 80 > window.innerHeight) ty = y - 80;
+    tip.style.left = tx + 'px';
+    tip.style.top = ty + 'px';
+  }
+
+  function posicionaVoraElement(span) {
+    const r = span.getBoundingClientRect();
+    let tx = r.left;
+    let ty = r.bottom + 8;
+    const maxW = 280; // amplada del tooltip + marge
+    if (tx + maxW > window.innerWidth) tx = window.innerWidth - maxW - 8;
+    if (tx < 8) tx = 8;
+    if (ty + 90 > window.innerHeight) ty = r.top - 90; // si no hi cap a sota, mostra a sobre
+    if (ty < 8) ty = 8;
+    tip.style.left = tx + 'px';
+    tip.style.top = ty + 'px';
+  }
+
+  function amaga() {
+    tip.classList.remove('visible');
+    active = false;
+    tocActiu = null;
+  }
+
+  // Escriptori: hover amb ratolí
   document.addEventListener('mouseover', e => {
     const span = e.target.closest('.poi-link');
     if (!span) return;
-    const key = span.dataset.poi;
-    const p = POI[key];
-    if (!p) return;
-    const desc = p.desc.length > 100 ? p.desc.slice(0, 100) + '…' : p.desc;
-    tip.innerHTML = `<div class="tt-nom">${p.emoji} ${p.nom}</div><div class="tt-desc">${desc}</div>`;
+    if (!contingutTooltip(span)) return;
     tip.classList.add('visible');
     active = true;
   });
@@ -2174,18 +2209,29 @@ function setupTooltips() {
   document.addEventListener('mouseout', e => {
     const span = e.target.closest('.poi-link');
     if (!span) return;
-    tip.classList.remove('visible');
-    active = false;
+    amaga();
   });
 
   document.addEventListener('mousemove', e => {
     if (!active) return;
-    let x = e.clientX + 16;
-    let y = e.clientY - 10;
-    if (x + 280 > window.innerWidth) x = e.clientX - 280;
-    if (y + 80 > window.innerHeight) y = e.clientY - 80;
-    tip.style.left = x + 'px';
-    tip.style.top = y + 'px';
+    posicionaVoraCursor(e.clientX, e.clientY);
+  });
+
+  // Mòbil/tàctil (i clic en general): toca per mostrar/amagar
+  document.addEventListener('click', e => {
+    const span = e.target.closest('.poi-link');
+    if (!span) {
+      amaga();
+      return;
+    }
+    if (tocActiu === span && tip.classList.contains('visible')) {
+      amaga();
+      return;
+    }
+    if (!contingutTooltip(span)) return;
+    posicionaVoraElement(span);
+    tip.classList.add('visible');
+    tocActiu = span;
   });
 }
 

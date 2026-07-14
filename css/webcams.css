@@ -117,6 +117,12 @@ body.light .webcams-refresh-btn { color: #1a3a2a; }
 }
 
 .webcam-card:hover .webcam-fullscreen { opacity: 1; }
+@media (hover: none) {
+  /* Als dispositius tàctils no hi ha hover: mostrem sempre la icona
+     perquè es vegi que la targeta és clicable (el tap ja obre la
+     webcam en una pestanya nova des de tota la targeta). */
+  .webcam-fullscreen { opacity: 1; }
+}
 
 .webcam-info {
   display: flex;

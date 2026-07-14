@@ -540,11 +540,11 @@
 .itin-narrativa p { margin-bottom: 1.1em; }
 .itin-narrativa p:last-child { margin-bottom: 0; }
 
-/* POI link (hover tooltip) */
+/* POI link (hover a escriptori, tap a mòbil) */
 .poi-link {
   color: var(--col-green-mid);
   border-bottom: 1px dashed var(--col-green-mid);
-  cursor: default;
+  cursor: pointer;
   font-style: normal;
   transition: color 0.15s, border-color 0.15s;
 }

@@ -52,7 +52,8 @@
 /* ── Map wrap ── */
 .mp-wrap {
   position: relative;
-  height: calc(100vh - 52px - 44px);
+  height: calc(100vh - 52px - 44px); /* fallback per a navegadors sense dvh */
+  height: calc(100dvh - 52px - 44px); /* alçada real visible (evita tall per la barra d'adreces a Android) */
   overflow: hidden;
 }
 
