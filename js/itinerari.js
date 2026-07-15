@@ -227,9 +227,9 @@ const POI = {
   },
   'ban-pla-smi-01': {
     nom: 'Praia dos Moinhos', emoji: '🏖️', cat: 'bany',
-    coords: [37.87082, -25.67137],
+    coords: [37.82341, -25.44506],
     desc: 'Platja de sorra negra a la costa nord. Al costat hi ha la Cascata do Limbo, una bonica cascada que cau directament al mar.',
-    maps: 'https://maps.google.com/?q=37.87082,-25.67137',
+    maps: 'https://maps.google.com/?q=37.82341,-25.44506',
   },
   'ban-pla-smi-15': {
     nom: 'Praia do Areal de Santa Bárbara', emoji: '🏖️', cat: 'bany',
@@ -251,9 +251,9 @@ const POI = {
   },
   'nat-sal-smi-04': {
     nom: 'Cascata do Limbo', emoji: '💦', cat: 'naturalesa',
-    coords: [37.86956, -25.67419],
+    coords: [37.82008, -25.44471],
     desc: 'Cascada que cau sobre roques negres de lava fins al mar, prop de la Praia dos Moinhos.',
-    maps: 'https://maps.google.com/?q=37.86956,-25.67419',
+    maps: 'https://maps.google.com/?q=37.82008,-25.44471',
   },
   'mir-lagoa-fogo': {
     nom: 'Miradouro da Lagoa do Fogo', emoji: '🔭', cat: 'miradors',
@@ -2856,7 +2856,7 @@ const DIA4_WAYPOINTS_PRINCIPAL = [
   { nom: 'PRC28 SMI – Chá Gorreana', coords: [37.81779, -25.40246], icon: '🥾' },
   { nom: 'Mirador do Frade', coords: [37.83181, -25.45249], icon: '🔭' },
   { nom: 'Porto Formoso – Mirador do Porto', coords: [37.82175, -25.48070], icon: '🔭' },
-  { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.87082, -25.67137], icon: '🏖️' },
+  { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.82341, -25.44506], icon: '🏖️' },
   { nom: 'Mirador de Santa Iria', coords: [37.84064, -25.56565], icon: '🔭' },
   { nom: 'Farol do Cintrão', coords: [37.84278, -25.48857], icon: '🔦' },
   { nom: 'Praia do Areal de Santa Bárbara', coords: [37.81593, -25.54735], icon: '🏖️' },
@@ -2870,7 +2870,7 @@ const DIA4_WAYPOINTS_ALTHERNATIU = [
   { nom: 'PRC28 SMI – Chá Gorreana', coords: [37.81779, -25.40246], icon: '🥾' },
   { nom: 'Mirador do Frade', coords: [37.83181, -25.45249], icon: '🔭' },
   { nom: 'Porto Formoso – Mirador do Porto', coords: [37.82175, -25.48070], icon: '🔭' },
-  { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.87082, -25.67137], icon: '🏖️' },
+  { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.82341, -25.44506], icon: '🏖️' },
   { nom: 'Praia del Areal de Santa Bárbara', coords: [37.81593, -25.54735], icon: '🏖️' },
   { nom: 'Ribeira Grande / Salto do Cabrito', coords: [37.82295, -25.51960], icon: '💦' },
   { nom: 'Caldeira Velha', coords: [37.78485, -25.50135], icon: '♨️', reserva: true },
