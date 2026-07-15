@@ -1,9 +1,23 @@
 {
   "name": "Açores 2026",
   "short_name": "Açores",
-  "start_url": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0a1628",
   "theme_color": "#2d5a3d",
-  "icons": []
+  "icons": [
+    {
+      "src": "img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "img/favicon.png",
+      "sizes": "2559x2559",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
