@@ -209,9 +209,9 @@ const POI = {
   },
   'mir-smi-51': {
     nom: 'Mirador de Santa Iria', emoji: '🔭', cat: 'miradors',
-    coords: [37.84064, -25.56565],
+    coords: [37.82383, -25.46235],
     desc: 'Mirador sobre la costa nord amb vistes sobre el mar i els penya-segats volcànics.',
-    maps: 'https://maps.google.com/?q=37.84064,-25.56565',
+    maps: 'https://maps.google.com/?q=37.82383,-25.46235',
   },
   'mir-smi-53': {
     nom: 'Mirador do Porto – Porto Formoso', emoji: '🔭', cat: 'miradors',
@@ -221,9 +221,9 @@ const POI = {
   },
   'mir-smi-56': {
     nom: 'Mirador do Frade – Maia', emoji: '🔭', cat: 'miradors',
-    coords: [37.83181, -25.45249],
+    coords: [37.83472, -25.39294],
     desc: 'Mirador a la localitat de Maia amb vistes privilegiades sobre la costa nord i el mar.',
-    maps: 'https://maps.google.com/?q=37.83181,-25.45249',
+    maps: 'https://maps.google.com/?q=37.83472,-25.39294',
   },
   'ban-pla-smi-01': {
     nom: 'Praia dos Moinhos', emoji: '🏖️', cat: 'bany',
@@ -245,9 +245,9 @@ const POI = {
   },
   'nat-sal-smi-03': {
     nom: 'Salto do Cabrito', emoji: '💦', cat: 'naturalesa',
-    coords: [37.77016, -25.50804],
+    coords: [37.79605, -25.49461],
     desc: 'Bella cascada de 20m accessible a peu des del pàrquing superior. Molt fresqueta.',
-    maps: 'https://maps.google.com/?q=37.77016,-25.50804',
+    maps: 'https://maps.google.com/?q=37.79605,-25.49461',
   },
   'nat-sal-smi-04': {
     nom: 'Cascata do Limbo', emoji: '💦', cat: 'naturalesa',
@@ -279,9 +279,9 @@ const POI = {
   /* ── POIS DIA 6 ─────────────────────────────────────────── */
   'nat-lac-smi-02': {
     nom: 'Lagoa das Furnas', emoji: '🏞️', cat: 'naturalesa',
-    coords: [37.75720, -25.33300],
+    coords: [37.77363, -25.31611],
     desc: 'Gran llac volcànic a la caldera de Furnas. Rodejat de vegetació subtropical i calderes geotèrmiques al marge.',
-    maps: 'https://maps.google.com/?q=37.75720,-25.33300',
+    maps: 'https://maps.google.com/?q=37.77363,-25.31611',
   },
   'nat-jar-smi-06': {
     nom: 'Mata Jardim José do Canto', emoji: '🌺', cat: 'naturalesa',
@@ -2854,27 +2854,27 @@ const SEND_TRACKS_D4_LOMBADAS = [
 /* Waypoints per als dos itineraris del dia 4 */
 const DIA4_WAYPOINTS_PRINCIPAL = [
   { nom: 'PRC28 SMI – Chá Gorreana', coords: [37.81779, -25.40246], icon: '🥾' },
-  { nom: 'Mirador do Frade', coords: [37.83181, -25.45249], icon: '🔭' },
+  { nom: 'Mirador do Frade', coords: [37.83472, -25.39294], icon: '🔭' },
   { nom: 'Porto Formoso – Mirador do Porto', coords: [37.82175, -25.48070], icon: '🔭' },
   { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.82341, -25.44506], icon: '🏖️' },
-  { nom: 'Mirador de Santa Iria', coords: [37.84064, -25.56565], icon: '🔭' },
+  { nom: 'Mirador de Santa Iria', coords: [37.82383, -25.46235], icon: '🔭' },
   { nom: 'Farol do Cintrão', coords: [37.84278, -25.48857], icon: '🔦' },
   { nom: 'Praia do Areal de Santa Bárbara', coords: [37.81593, -25.54735], icon: '🏖️' },
   { nom: 'Ribeira Grande / Cascata das Lombadas', coords: [37.82295, -25.51960], icon: '💧' },
   { nom: 'Caldeira Velha', coords: [37.78485, -25.50135], icon: '♨️', reserva: true },
-  { nom: 'Salto do Cabrito', coords: [37.77016, -25.50804], icon: '💦' },
+  { nom: 'Salto do Cabrito', coords: [37.79605, -25.49461], icon: '💦' },
   { nom: 'Lagoa do Fogo (miradors)', coords: [37.75418, -25.46100], icon: '🏔️' },
 ];
 const DIA4_WAYPOINTS_ALTHERNATIU = [
   { nom: 'Lagoa do Fogo (Miradouro de Bela Vista, Lagoa do Fogo, Pico da Barrosa)', coords: [37.75418, -25.46100], icon: '🏔️' },
   { nom: 'PRC28 SMI – Chá Gorreana', coords: [37.81779, -25.40246], icon: '🥾' },
-  { nom: 'Mirador do Frade', coords: [37.83181, -25.45249], icon: '🔭' },
+  { nom: 'Mirador do Frade', coords: [37.83472, -25.39294], icon: '🔭' },
   { nom: 'Porto Formoso – Mirador do Porto', coords: [37.82175, -25.48070], icon: '🔭' },
   { nom: 'Praia dos Moinhos i Cascata do Limbo', coords: [37.82341, -25.44506], icon: '🏖️' },
   { nom: 'Praia del Areal de Santa Bárbara', coords: [37.81593, -25.54735], icon: '🏖️' },
   { nom: 'Ribeira Grande / Salto do Cabrito', coords: [37.82295, -25.51960], icon: '💦' },
   { nom: 'Caldeira Velha', coords: [37.78485, -25.50135], icon: '♨️', reserva: true },
-  { nom: 'Mirador de Santa Iria', coords: [37.84064, -25.56565], icon: '🔭' },
+  { nom: 'Mirador de Santa Iria', coords: [37.82383, -25.46235], icon: '🔭' },
   { nom: 'Farol do Cintrão', coords: [37.84278, -25.48857], icon: '🔦' },
 ];
 const CHERIMOYA_COORDS = [37.71835, -25.40934];
@@ -3331,7 +3331,7 @@ const SEND_TRACKS_D6_TM16 = [
 
 const DIA6_WAYPOINTS = [
   { nom: 'Illot de Vila Franca do Campo', coords: [37.71460, -25.41720] },
-  { nom: 'Lagoa das Furnas',              coords: [37.75720, -25.32490] },
+  { nom: 'Lagoa das Furnas',              coords: [37.77363, -25.31611] },
   { nom: 'Mata Jardim José do Canto + TM16', coords: [37.75032, -25.33220] },
   { nom: 'Furnas – Dinar',                coords: [37.77780, -25.31930] },
   { nom: 'Parc Terra Nostra',             coords: [37.77260, -25.31560] },
