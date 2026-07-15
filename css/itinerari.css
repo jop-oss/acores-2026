@@ -1999,3 +1999,94 @@ body.light #poi-tooltip .tt-nom { color: #1a3a2a; }
   color: #ffd97a;
   margin: 0;
 }
+
+/* ── RESUM · MAPA DE METRO ───────────────────────────────── */
+.itin-day-pill-resum {
+  border-color: rgba(106,171,122,0.4) !important;
+}
+.metro-resum-titol {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.metro-resum-titol h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--col-green-pale);
+  margin-bottom: 4px;
+}
+.metro-resum-titol p {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--col-green-mid);
+  font-size: 0.95rem;
+}
+.metro-dia-fila {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 0 20px;
+  border-bottom: 1px solid rgba(106,171,122,0.08);
+}
+.metro-dia-label {
+  flex: 0 0 170px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.15s;
+  margin-top: 55px;
+}
+.metro-dia-label:hover { background: rgba(106,171,122,0.1); }
+.metro-dia-num {
+  font-size: 0.65rem;
+  color: var(--col-green-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'Segoe UI', sans-serif;
+}
+.metro-dia-data-km {
+  font-size: 0.68rem;
+  color: var(--col-text-dim);
+  margin-top: 1px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.metro-dia-titol {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--col-text);
+  margin-top: 3px;
+}
+.metro-linia-scroll {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(106,171,122,0.3) transparent;
+}
+.metro-linia-scroll::-webkit-scrollbar { height: 4px; }
+.metro-linia-scroll::-webkit-scrollbar-thumb { background: rgba(106,171,122,0.3); border-radius: 2px; }
+.metro-linia-scroll svg { display: block; }
+.metro-parada text {
+  font-size: 10.5px;
+  fill: var(--col-text-dim);
+  font-family: 'Segoe UI', sans-serif;
+}
+.metro-parada circle { transition: r 0.15s; }
+.metro-parada:hover circle { r: 7; }
+.metro-vert-wrap { position: relative; }
+.metro-etiqueta-vert {
+  position: absolute;
+  font-size: 0.74rem;
+  color: var(--col-text-dim);
+  font-family: 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .metro-dia-fila { flex-direction: column; padding: 16px 0; }
+  .metro-dia-label { flex: none; margin-bottom: 8px; margin-top: 0; }
+  .metro-linia-scroll { overflow-x: visible; width: 100%; padding-top: 0; }
+  .metro-resum-titol h1 { font-size: 1.4rem; }
+}

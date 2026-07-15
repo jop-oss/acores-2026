@@ -53,6 +53,9 @@
 <div class="itin-day-nav">
   <div class="itin-progress-badge" id="progress-badge">Dia 1 de 12</div>
   <div class="itin-day-pills">
+    <button class="itin-day-pill itin-day-pill-resum" data-dia="resum">
+      <span class="pill-num">🗺️</span>Resum
+    </button>
     <button class="itin-day-pill active" data-dia="1">
       <span class="pill-num">22 jul</span>Comença l'aventura
     </button>
@@ -91,6 +94,19 @@
     </button>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!--  RESUM — MAPA VISUAL DE TOT L'ITINERARI                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section class="itin-dia" id="dia-resum">
+  <div class="itin-content" style="max-width:1200px; margin:0 auto; padding-top:32px">
+    <div class="metro-resum-titol">
+      <h1>🗺️ Resum de l'itinerari</h1>
+      <p>Cada dia, una línia — els trams de vol o ferri es marquen discontinus</p>
+    </div>
+    <div id="metro-resum-container"></div>
+  </div>
+</section>
 
 <!-- ════════════════════════════════════════════════════════ -->
 <!--  DIA 1 — DIMECRES 22 DE JULIOL · VIATGE D'ANADA        -->

@@ -2262,6 +2262,136 @@ function setupAccordions() {
   });
 }
 
+/* ── RESUM · MAPA DE METRO DE TOT L'ITINERARI ───────────────── */
+const METRO_DIES = [
+  { n: 1, data: "22-jul", titol: "Comença l'aventura", km: 2700,
+    parades: ["Barcelona","Porto","Terceira","Ponta Delgada"],
+    color: "#b8bcc4", dashed: [0,1,2] },
+  { n: 2, data: "23-jul", titol: "Sete Cidades", km: 88,
+    parades: ["Ponta Delgada","Serra Devassa","Sete Cidades","Ponta da Ferraria","Ponta do Escalvado","Mosteiros","Pedras Negras","Ponta Delgada"],
+    color: "#5dcaa5", dashed: [] },
+  { n: 3, data: "24-jul", titol: "Nord i Sud", km: 81,
+    parades: ["Ponta Delgada","Rabo de Peixe","Buraco de São Pedro","Pinhal da Paz","Gruta do Carvão","Vila Franca do Campo","Ribeira das Tainhas"],
+    color: "#e24b4a", dashed: [] },
+  { n: 4, data: "25-jul", titol: "Lagoa do Fogo", km: 92,
+    parades: ["Ribeira das Tainhas","Chá Gorreana","Maia","Porto Formoso","Moinhos","Santa Iria","Ponta do Cintrão","Ribeira Grande","Caldeira Velha","Salto do Cabrito","Lagoa do Fogo","Caloura","Ribeira das Tainhas"],
+    color: "#378add", dashed: [] },
+  { n: 5, data: "26-jul", titol: "Est de São Miguel", km: 112,
+    parades: ["Ribeira das Tainhas","Poço Azul","Ribeira dos Caldeirões","Nordeste","Ruta costa est","Salto do Prego","Povoação","Ribeira das Tainhas"],
+    color: "#ef9f27", dashed: [] },
+  { n: 6, data: "27-jul", titol: "VFC + Furnas", km: 57,
+    parades: ["Ribeira das Tainhas","Vila Franca do Campo","Lagoa das Furnas","Salto do Rosal","Terra Nostra","Furnas","Salto do Cavalo","Pico do Ferro","Ribeira das Tainhas"],
+    color: "#7f77dd", dashed: [] },
+  { n: 7, data: "28-jul", titol: "São Jorge", km: 412,
+    parades: ["Ribeira das Tainhas","Ponta Delgada","Santo Amaro","Topo","Fajã dos Cubres","Fajã do Ouvidor","Sete Fontes","Ponta do Rosais","Velas","Cais do Pico","Prainha"],
+    color: "#1d9e75", dashed: [1,8] },
+  { n: 8, data: "29-jul", titol: "Centre i oest de Pico", km: 114,
+    parades: ["Prainha","Altiplà central","Estrada longitudinal","Furna Frei Matias","Madalena","Criação Velha","Lagoa do Capitão","São Roque do Pico","Prainha"],
+    color: "#d4537e", dashed: [] },
+  { n: 9, data: "30-jul", titol: "Sud i est de Pico", km: 75,
+    parades: ["Prainha","Lajes do Pico","Poça das Mujas","Manhenha","Terra Alta","Praia do Canto da Areia","Prainha"],
+    color: "#97c459", dashed: [] },
+  { n: 10, data: "31-jul", titol: "Pico i Faial", km: 70,
+    parades: ["Prainha","Furna de Santo António","Santa Luzia","Cachorro","Madalena","Horta","Monte da Guia","Porto Prim","Marina d'Horta","Feteira"],
+    color: "#185fa5", dashed: [4] },
+  { n: 11, data: "1-ago", titol: "El millor de Faial", km: 67,
+    parades: ["Feteira","Caldeira do Faial","Ribeira das Cabras","Capelinhos","Varadouro","Castelo Branco","Feteira"],
+    color: "#d85a30", dashed: [] },
+  { n: 12, data: "2-ago", titol: "Tornada a casa", km: 2700,
+    parades: ["Faial","Lisboa","Barcelona"],
+    color: "#b8bcc4", dashed: [0,1] },
+];
+
+function metroWrapLabel(text, maxChars) {
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  words.forEach(w => {
+    const tentativa = (current + ' ' + w).trim();
+    if (tentativa.length > maxChars && current) {
+      lines.push(current);
+      current = w;
+    } else {
+      current = tentativa;
+    }
+  });
+  if (current) lines.push(current);
+  return lines;
+}
+
+function metroSvgHoritzontal(dia) {
+  const stepX = 78, padX = 14, padRight = 110, y = 96;
+  const W = Math.max(600, padX + padRight + (dia.parades.length - 1) * stepX);
+  const H = 150;
+  let segs = '';
+  let dots = '';
+  dia.parades.forEach((nom, i) => {
+    const x = padX + i * stepX;
+    if (i < dia.parades.length - 1) {
+      const x2 = padX + (i + 1) * stepX;
+      const dashed = dia.dashed.includes(i);
+      segs += `<line x1="${x}" y1="${y}" x2="${x2}" y2="${y}" stroke="${dia.color}" stroke-width="3"
+        stroke-linecap="round" ${dashed ? 'stroke-dasharray="2,7"' : ''}/>`;
+    }
+    const linies = metroWrapLabel(nom, 13);
+    const tspans = linies.map((l, li) =>
+      `<tspan x="${x + 14}" dy="${li === 0 ? 0 : '1.15em'}">${l}</tspan>`).join('');
+    dots += `<g class="metro-parada">
+      <circle cx="${x}" cy="${y}" r="5" fill="${dia.color}" stroke="var(--col-bg)" stroke-width="2"/>
+      <text x="${x + 14}" y="${y - 14}" transform="rotate(-40 ${x + 14} ${y - 14})">${tspans}</text>
+    </g>`;
+  });
+  return `<div class="metro-linia-scroll"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${segs}${dots}</svg></div>`;
+}
+
+function metroSvgVertical(dia) {
+  const rowH = 32, padY = 8, x = 18, W = 30;
+  const n = dia.parades.length;
+  const H = padY * 2 + Math.max(n - 1, 0) * rowH + 6;
+  let segs = '';
+  let dots = '';
+  let labels = '';
+  dia.parades.forEach((nom, i) => {
+    const y = padY + i * rowH;
+    if (i < n - 1) {
+      const y2 = padY + (i + 1) * rowH;
+      const dashed = dia.dashed.includes(i);
+      segs += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y2}" stroke="${dia.color}" stroke-width="3"
+        stroke-linecap="round" ${dashed ? 'stroke-dasharray="2,7"' : ''}/>`;
+    }
+    dots += `<circle class="metro-parada" cx="${x}" cy="${y}" r="5" fill="${dia.color}" stroke="var(--col-bg)" stroke-width="2"/>`;
+    labels += `<div class="metro-etiqueta-vert" style="left:${x + 16}px; top:${y - 8}px">${nom}</div>`;
+  });
+  if (n === 0) return '<div style="height:30px"></div>';
+  return `<div class="metro-vert-wrap">
+    <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${segs}${dots}</svg>
+    ${labels}
+  </div>`;
+}
+
+function renderMetroResum() {
+  const container = document.getElementById('metro-resum-container');
+  if (!container) return;
+  const vertical = window.innerWidth <= 600;
+  container.innerHTML = METRO_DIES.map(dia => {
+    const label = `
+      <div class="metro-dia-label" onclick="showDia(${dia.n})">
+        <span class="metro-dia-num">Dia ${dia.n} de 12</span>
+        <span class="metro-dia-data-km">${dia.data} · ~${dia.km} km</span>
+        <span class="metro-dia-titol">${dia.titol}</span>
+      </div>`;
+    const linia = vertical ? metroSvgVertical(dia) : metroSvgHoritzontal(dia);
+    return `<div class="metro-dia-fila">${label}${linia}</div>`;
+  }).join('');
+}
+
+let metroResizeTimer = null;
+window.addEventListener('resize', () => {
+  if (!mapsInitDia['resum']) return;
+  clearTimeout(metroResizeTimer);
+  metroResizeTimer = setTimeout(renderMetroResum, 200);
+});
+
 /* ── DAY SWITCHING ───────────────────────────────────────── */
 let mapsInitDia = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false, 11: false, 12: false };
 
@@ -2276,7 +2406,13 @@ function showDia(n) {
 
   // Progress badge
   const badge = document.getElementById('progress-badge');
-  if (badge) badge.textContent = `Dia ${n} de 12`;
+  if (badge) badge.textContent = n === 'resum' ? 'Resum del viatge' : `Dia ${n} de 12`;
+
+  // Resum: renderitzat mandrós (només el primer cop que s'hi entra)
+  if (n === 'resum' && !mapsInitDia['resum']) {
+    mapsInitDia['resum'] = true;
+    renderMetroResum();
+  }
 
   // Lazy map init
   if (n === 10 && !mapsInitDia[10]) {
@@ -4665,7 +4801,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Day pills
   document.querySelectorAll('.itin-day-pill').forEach(btn => {
     btn.addEventListener('click', () => {
-      const n = parseInt(btn.dataset.dia);
+      const raw = btn.dataset.dia;
+      if (raw === 'resum') { showDia('resum'); return; }
+      const n = parseInt(raw);
       if (!isNaN(n)) showDia(n);
     });
   });
