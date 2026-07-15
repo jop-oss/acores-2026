@@ -1,3 +1,13 @@
+// Service worker — caché de l'app shell perquè la web carregui
+// ràpid i funcioni sense connexió per al que ja s'hagi visitat
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch((err) => {
+      console.warn('No s\'ha pogut registrar el service worker:', err);
+    });
+  });
+}
+
 // Popup personatges — clic sobre el nom o la zona
 document.querySelectorAll(".person").forEach((person) => {
   person.addEventListener("click", (e) => {
