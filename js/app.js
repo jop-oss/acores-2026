@@ -49,6 +49,7 @@ let appJugadorActiu = localStorage.getItem('app_jugador') || null;
 
 function appInicialitzarNav() {
   appInicialitzarTema();
+  appCentrarNavActiu();
   const btn = document.getElementById('nav-id-btn');
   if (!btn) return;
   appActualitzarBotoNav();
@@ -60,6 +61,14 @@ function appInicialitzarNav() {
       menu.classList.remove('visible');
     }
   });
+}
+
+// Desplaça el menú horitzontal superior perquè la pàgina activa quedi
+// centrada (i es vegin les seccions veïnes), en lloc de mostrar sempre
+// des del principi.
+function appCentrarNavActiu() {
+  const actiu = document.querySelector('.nav-links .nav-item.active');
+  if (actiu) actiu.scrollIntoView({ inline: 'center', block: 'nearest' });
 }
 
 function appActualitzarBotoNav() {

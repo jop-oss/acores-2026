@@ -367,6 +367,11 @@ body.light .iata-flag-lbl { color: #5a6a5a; }
 }
 @media (max-width: 500px) {
   .log-cotxes-parella { grid-template-columns: 1fr; }
+  .log-card-ruta {
+    order: 3;
+    flex-basis: 100%;
+    font-size: 0.92rem;
+  }
 }
 .log-cotxe-unitat {
   border-radius: 10px;

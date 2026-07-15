@@ -616,4 +616,6 @@
   .tl-line { min-width: 12px; flex-shrink: 0; }
   .foto-prev { left: -10px; }
   .foto-next { right: -10px; }
+  .allot-info-item--amenitats { grid-column: 1 / -1; }
+  .amenitats-row { flex-wrap: wrap; row-gap: 10px; }
 }

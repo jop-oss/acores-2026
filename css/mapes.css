@@ -516,7 +516,7 @@ body.light .mp-loading-text { color: #1a3a2a; }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
-  .mp-panel { width: calc(100vw - 20px); max-height: 65vh; top: 10px; left: 10px; }
+  .mp-panel { width: calc(100vw - 70px); max-height: 65vh; top: 10px; left: 10px; }
   .mp-info { width: calc(100vw - 20px); right: 10px; top: auto; bottom: 10px;
     max-height: 50vh; transform: translateY(60vh); }
   .mp-info.open { transform: translateY(0); }

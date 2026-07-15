@@ -255,7 +255,7 @@ function renderSunDayChart(dayIndex) {
   const ctx = canvas.getContext("2d");
   const dpr = window.devicePixelRatio || 1;
   const W = canvas.parentElement.offsetWidth - 32;
-  const H = 400;
+  const H = Math.max(220, Math.min(400, Math.round(W * 0.5)));
   canvas.width = W * dpr;
   canvas.height = H * dpr;
   canvas.style.width = W + "px";

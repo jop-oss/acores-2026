@@ -4,7 +4,7 @@ const ME_CATS = [
   { id: "Miradors",   emoji: "🔭", label: "Miradors",       llocCat: "Miradors",     hasSubs: false },
   { id: "Bany",       emoji: "🏊", label: "Zones de bany",  llocCat: "Zona de bany", hasSubs: true  },
   { id: "Naturalesa", emoji: "🌿", label: "Naturalesa",      llocCat: "Naturalesa",   hasSubs: true  },
-  { id: "Pobles",     emoji: "\U0001f3d8\ufe0f", label: "Pobles",    llocCat: "Poble/Ciutat", hasSubs: false },
+  { id: "Pobles",     emoji: "🏘️", label: "Pobles",    llocCat: "Poble/Ciutat", hasSubs: false },
   { id: "Varis",      emoji: "📍", label: "Varis",           llocCat: "Varis",        hasSubs: true  },
 ];
 const ME_SUBCATS = {
@@ -70,7 +70,7 @@ function meCatPlaceholder(cat, sub) {
     if (sub === "Jard\u00ed bot\u00e0nic")   return "🌺";
     return "🌿";
   }
-  if (cat === "Poble/Ciutat") return "\U0001f3d8\ufe0f";
+  if (cat === "Poble/Ciutat") return "🏘️";
   if (cat === "Varis") {
     const m = { Fars:"🔦", Plantacions:"🌳", Curiositats:"🤔", Molins:"⚙️" };
     return m[sub] || "📍";

@@ -2971,3 +2971,25 @@ body.light .send-ordre-sel    { background: #f4f7f4; color: #1a3a2a; border-colo
   .send-senyals-fila { gap: 4px; }
   .send-senyal-svg { width: 46px; height: 63px; }
 }
+
+/* ── Barres de filtres/submenú: al mòbil no es queden fixes en fer scroll ──
+   (a escriptori es mantenen sticky com fins ara) */
+@media (max-width: 700px) {
+  .me-filtres-wrap,
+  .me-sec-nav-wrap,
+  .exc-nav-wrap,
+  .gast-filtres-wrap,
+  .info-nav-wrap,
+  .itin-filtres-wrap,
+  .send-subnav-wrap,
+  .send-filtres-wrap {
+    position: static;
+  }
+  /* justify-content:center + overflow-x:auto fa que el primer tab quedi
+     tallat i inabastable en desbordar-se; al mòbil s'alineen a l'esquerra */
+  .exc-nav,
+  .info-nav,
+  .send-subnav {
+    justify-content: flex-start;
+  }
+}

@@ -1855,14 +1855,31 @@ function initMapSenderisme(elId, tracks) {
     allCoords.push(...t.track);
   });
 
-  // Llegenda
+  // Llegenda (plegable — per defecte tancada al mòbil perquè no tapi el mapa)
   const legend = L.control({ position: 'bottomleft' });
   legend.onAdd = () => {
     const div = L.DomUtil.create('div');
-    div.style.cssText = 'background:rgba(10,22,40,0.9);border:1px solid #2d5a3d;border-radius:8px;padding:8px 12px;font-size:11px;color:#a8d8b0;line-height:1.9';
-    div.innerHTML = tracks.map(t =>
+    const collapsed = window.innerWidth < 580;
+    div.style.cssText = 'background:rgba(10,22,40,0.9);border:1px solid #2d5a3d;border-radius:8px;font-size:11px;color:#a8d8b0;line-height:1.9;overflow:hidden';
+    const itemsHtml = tracks.map(t =>
       `<div><span style="color:${t.color};font-weight:700;font-size:14px">—</span> ${t.label}</div>`
     ).join('');
+    div.innerHTML = `
+      <div class="map-legend-toggle" style="padding:6px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:700;user-select:none">
+        <span>🗺️ Llegenda</span>
+        <span class="map-legend-arrow" style="margin-left:auto;transition:transform 0.2s;transform:rotate(${collapsed ? '0' : '180'}deg)">▾</span>
+      </div>
+      <div class="map-legend-items" style="padding:${collapsed ? '0' : '0 12px 8px'};max-height:${collapsed ? '0' : '200px'};transition:max-height 0.2s,padding 0.2s">${itemsHtml}</div>`;
+    L.DomEvent.disableClickPropagation(div);
+    const toggle = div.querySelector('.map-legend-toggle');
+    const items = div.querySelector('.map-legend-items');
+    const arrow = div.querySelector('.map-legend-arrow');
+    toggle.addEventListener('click', () => {
+      const isOpen = items.style.maxHeight !== '0px';
+      items.style.maxHeight = isOpen ? '0' : '200px';
+      items.style.padding = isOpen ? '0' : '0 12px 8px';
+      arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    });
     return div;
   };
   legend.addTo(map);

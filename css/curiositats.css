@@ -215,8 +215,13 @@
   background: var(--cur-surface);
   border: 1px solid var(--cur-border);
   justify-content: space-between;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(106,171,122,0.3) transparent;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
+.cur-card-front::-webkit-scrollbar { width: 4px; }
+.cur-card-front::-webkit-scrollbar-thumb { background: rgba(106,171,122,0.3); border-radius: 2px; }
 .cur-card-wrap:hover .cur-card-front {
   border-color: rgba(106,171,122,0.35);
   box-shadow: 0 6px 28px rgba(0,0,0,0.35);
@@ -342,11 +347,11 @@ body.light .cur-card-wrap.sabies .cur-card-front {
 /* ── Responsive ── */
 @media (max-width: 600px) {
   .cur-grid { grid-template-columns: 1fr 1fr; }
-  .cur-card-wrap { height: 185px; }
+  .cur-card-wrap { height: 250px; }
   .cur-card-titol { font-size: 0.9rem; }
   .cur-hero-title { font-size: 2rem; }
 }
 @media (max-width: 380px) {
   .cur-grid { grid-template-columns: 1fr; }
-  .cur-card-wrap { height: 160px; }
+  .cur-card-wrap { height: 210px; }
 }
