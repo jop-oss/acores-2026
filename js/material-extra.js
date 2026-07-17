@@ -2383,7 +2383,7 @@ function renderInfoCarreteres() {
 let _resSubTab = "general";
 const RES_SUBTABS = [
   { id: "general", emoji: "📋", label: "Informació general" },
-  { id: "excursions", emoji: "🎟️", label: "Excursions i visites previstes/reservades" },
+  { id: "excursions", emoji: "🎟️", label: "Excursions i visites reservades" },
 ];
 
 function resSetSubTab(id) {

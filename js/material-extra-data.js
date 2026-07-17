@@ -3071,9 +3071,8 @@ const ME_EXCURSIONS_RESERVADES = [
     empresa: "Clube Naval de Vila Franca do Campo",
     adreca: "R. da Marina, 9680-187 Vila Franca Do Campo",
     coords: [37.713734, -25.430514],
-    preu: "100,38€",
-    estat: ["Reservar el dia 17 a les 2h", "No es pot cancel·lar"],
-    estatUrgent: true,
+    preu: "106,80€",
+    estat: ["Pagat", "No es pot cancel·lar"],
     notes: "Ser-hi molt abans de les 10h per assegurar-nos el primer viatge",
   },
   {
