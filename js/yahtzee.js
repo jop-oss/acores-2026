@@ -18,7 +18,6 @@ const YH_COL   = 'yahtzee_partides';
 const YH_DOC_A = 'partida_a';
 const YH_DOC_B = 'partida_b';
 const YH_ORDRE = ['Anna', 'Jordi', 'Mons', 'Xu', 'Laia', 'Joa'];
-const YH_LS_KEY = 'yahtzee_punts_';
 
 // ── CATEGORIES ────────────────────────────────────────────────
 const YH_CATS_SUP = [
@@ -160,7 +159,7 @@ function yhRenderRankingMini(p, docId) {
 async function yhRenderRankingGlobal() {
   const el = document.getElementById('yh-ranking-global-list');
   if (!el) return;
-  const pts = yhGetPuntsGlobals();
+  const pts = await yhGetPuntsGlobals();
   const llista = YH_ORDRE.map(nom => ({ nom, mitjana: pts[nom] || 0 }))
     .sort((a, b) => b.mitjana - a.mitjana);
   const maxPts = llista[0]?.mitjana || 1;
@@ -857,28 +856,24 @@ function yhMostrarRegles() {
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
 }
 
-// ── PERSISTÈNCIA LOCAL (per rànquing global) ──────────────────
+// ── PERSISTÈNCIA (per rànquing global) ─────────────────────────
+const YH_PUNTS_COL = 'yahtzee_punts';
+
 function yhGuardarPuntsLocals(jugadors) {
   jugadors.forEach(j => {
-    try {
-      const raw = localStorage.getItem(YH_LS_KEY + j.nom);
-      const estat = raw ? JSON.parse(raw) : { partides: 0, puntsTotals: 0 };
-      estat.partides++;
-      estat.puntsTotals += yhTotalMarcador(j);
-      localStorage.setItem(YH_LS_KEY + j.nom, JSON.stringify(estat));
-    } catch(e) {}
+    const estat = jocFsCacheGet(YH_PUNTS_COL, j.nom) || { partides: 0, puntsTotals: 0 };
+    estat.partides++;
+    estat.puntsTotals += yhTotalMarcador(j);
+    jocFsDesar(YH_PUNTS_COL, j.nom, estat);
   });
 }
 
-function yhGetPuntsGlobals() {
+async function yhGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(YH_PUNTS_COL, YH_ORDRE);
   const pts = {};
   YH_ORDRE.forEach(nom => {
-    try {
-      const raw = localStorage.getItem(YH_LS_KEY + nom);
-      if (!raw) { pts[nom] = 0; return; }
-      const estat = JSON.parse(raw);
-      pts[nom] = estat.partides > 0 ? Math.round(estat.puntsTotals / estat.partides) : 0;
-    } catch(e) { pts[nom] = 0; }
+    const estat = dades[nom];
+    pts[nom] = (estat && estat.partides > 0) ? Math.round(estat.puntsTotals / estat.partides) : 0;
   });
   return pts;
 }

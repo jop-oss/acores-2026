@@ -58,8 +58,10 @@ let skTouchInici = null;
 let skAnim = null; // { jugadorInici, jugadorFi, caixaInici, caixaFi, progres }
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarSokoban() {
+async function iniciarSokoban() {
   mostraScreen('sokoban-inici');
+  document.getElementById('sokoban-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(SK_COL, JUGADORS_VALIDS);
   skRenderInici();
 }
 
@@ -638,23 +640,23 @@ function skRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ─────────────────────────────────────────────
+const SK_COL = 'sokoban_punts';
+
 function skGetProgres(nom) {
-  try {
-    const raw = localStorage.getItem(SK_STORAGE_KEY + nom);
-    if (!raw) return { completats: 0, totalMoviments: 0, nivells: [] };
-    return JSON.parse(raw);
-  } catch (e) { return { completats: 0, totalMoviments: 0, nivells: [] }; }
+  const d = jocFsCacheGet(SK_COL, nom);
+  return d || { completats: 0, totalMoviments: 0, nivells: [] };
 }
 
 function skGuardarProgres(nom, progres) {
-  localStorage.setItem(SK_STORAGE_KEY + nom, JSON.stringify(progres));
+  jocFsDesar(SK_COL, nom, progres);
 }
 
 // Funció global per al rànquing de jocs.js
-function sokobanGetPuntsGlobals() {
+async function sokobanGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(SK_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    pts[nom] = skGetProgres(nom).completats;
+    pts[nom] = (dades[nom] && dades[nom].completats) || 0;
   });
   return pts;
 }

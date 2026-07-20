@@ -6,7 +6,6 @@
 //  localStorage: batallanaval_estat_Nom
 // ══════════════════════════════════════════════════════════════
 
-const BN_STORAGE_KEY = 'batallanaval_estat_';
 const BN_MIDA = 10;
 
 // ── VAIXELLS ─────────────────────────────────────────────────
@@ -48,10 +47,12 @@ let bnActiu         = false;
 let bnPreview       = [];       // cel·les en preview al hover
 
 // ── PUNT D'ENTRADA ───────────────────────────────────────────
-function iniciarBatallaNaval() {
+async function iniciarBatallaNaval() {
   bnFase = 'inici';
   bnActiu = false;
   mostraScreen('batallanaval-inici');
+  document.getElementById('batallanaval-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(BN_COL, JUGADORS_VALIDS);
   bnRenderInici();
 }
 
@@ -824,14 +825,11 @@ function bnPctVictories(estat) {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const BN_COL = 'batallanaval_punts';
+
 function bnGetEstat(nom) {
-  try {
-    const raw = localStorage.getItem(BN_STORAGE_KEY + nom);
-    if (!raw) return { partides: 0, victòries: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
-    return JSON.parse(raw);
-  } catch(e) {
-    return { partides: 0, victòries: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
-  }
+  const d = jocFsCacheGet(BN_COL, nom);
+  return d || { partides: 0, victòries: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
 }
 
 function bnGuardarPartida(nom, dif, guanyat, punts) {
@@ -842,15 +840,15 @@ function bnGuardarPartida(nom, dif, guanyat, punts) {
   if (!estat.difs[dif]) estat.difs[dif] = { partides: 0, victòries: 0 };
   estat.difs[dif].partides++;
   if (guanyat) estat.difs[dif].victòries = (estat.difs[dif].victòries || 0) + 1;
-  localStorage.setItem(BN_STORAGE_KEY + nom, JSON.stringify(estat));
+  jocFsDesar(BN_COL, nom, estat);
 }
 
 // Funció global per al rànquing de jocs.js (usa % victòries)
-function batallaNavalGetPuntsGlobals() {
+async function batallaNavalGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(BN_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    const e = bnGetEstat(nom);
-    pts[nom] = bnPctVictories(e);
+    pts[nom] = bnPctVictories(dades[nom]);
   });
   return pts;
 }

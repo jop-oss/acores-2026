@@ -3,7 +3,6 @@
 // ══════════════════════════════════════════════════════════════
 
 // ── CONSTANTS ─────────────────────────────────────────────────
-const PM_STORAGE_KEY = 'pescamines_estat_';
 
 const PM_CONFIG = {
   facil:  { files: 9,  cols: 9,  mines: 10, puntsBase: 200, label: 'Fàcil',  emoji: '🐟' },
@@ -30,8 +29,10 @@ let pmSegons = 0;
 let pmPunts = 0;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarPescamines() {
+async function iniciarPescamines() {
   mostraScreen('pescamines-inici');
+  document.getElementById('pescamines-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(PM_COL, JUGADORS_VALIDS);
   pmRenderInici();
 }
 
@@ -466,12 +467,11 @@ function pmMillorTotal(millors) {
 }
 
 // ── PERSISTÈNCIA ─────────────────────────────────────────────
+const PM_COL = 'pescamines_punts';
+
 function pmGetMillorsJugador(nom) {
-  try {
-    const raw = localStorage.getItem(PM_STORAGE_KEY + nom);
-    if (!raw) return { facil: null, mitja: null, dificil: null };
-    return JSON.parse(raw);
-  } catch (e) { return { facil: null, mitja: null, dificil: null }; }
+  const d = jocFsCacheGet(PM_COL, nom);
+  return d || { facil: null, mitja: null, dificil: null };
 }
 
 function pmGuardarEstat(nom, dif, punts, temps) {
@@ -479,14 +479,15 @@ function pmGuardarEstat(nom, dif, punts, temps) {
   if (!millors[dif] || punts > millors[dif].punts) {
     millors[dif] = { punts, temps };
   }
-  localStorage.setItem(PM_STORAGE_KEY + nom, JSON.stringify(millors));
+  jocFsDesar(PM_COL, nom, millors);
 }
 
 // Funció global per al rànquing de jocs.js
-function pescaminesGetPuntsGlobals() {
+async function pescaminesGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(PM_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    pts[nom] = pmMillorTotal(pmGetMillorsJugador(nom));
+    pts[nom] = pmMillorTotal(dades[nom] || { facil: null, mitja: null, dificil: null });
   });
   return pts;
 }

@@ -2,7 +2,6 @@
 //  ASTEROID SHOOTER — Açores 2026
 // ══════════════════════════════════════════════════════════════
 
-const AST_STORAGE_KEY = 'asteroid_estat_';
 
 // ── DIMENSIONS LÒGIQUES ───────────────────────────────────────
 const AST_LW = 400, AST_LH = 400;
@@ -51,8 +50,10 @@ let astJoyVec = { x: 0, y: 0 };
 let astJoyOrigin = null, astJoyId = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarAsteroid() {
+async function iniciarAsteroid() {
   mostraScreen('asteroid-inici');
+  document.getElementById('asteroid-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(AST_COL, JUGADORS_VALIDS);
   astRenderInici();
 }
 
@@ -749,22 +750,23 @@ function astRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const AST_COL = 'asteroid_punts';
+
 function astGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => astGetMillor(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => astGetMillor(n)));
 }
 
 function astGetMillor(nom) {
-  try {
-    const raw = localStorage.getItem(AST_STORAGE_KEY + nom);
-    return raw ? (JSON.parse(raw).millor || 0) : 0;
-  } catch(e) { return 0; }
+  const d = jocFsCacheGet(AST_COL, nom);
+  return (d && d.millor) || 0;
 }
 function astGuardarEstat(nom, punts) {
   const millor = Math.max(astGetMillor(nom), punts);
-  localStorage.setItem(AST_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(AST_COL, nom, { millor });
 }
-function asteroidGetPuntsGlobals() {
+async function asteroidGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(AST_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = astGetMillor(nom); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].millor) || 0; });
   return pts;
 }

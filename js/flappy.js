@@ -2,7 +2,6 @@
 //  FLAPPY AÇORES — Açores 2026
 // ══════════════════════════════════════════════════════════════
 
-const FLAPPY_STORAGE_KEY = 'flappy_estat_';
 
 // ── DIMENSIONS LÒGIQUES ───────────────────────────────────────
 const FL_LW = 320, FL_LH = 480;
@@ -34,8 +33,10 @@ let flParticules;
 let flColVel;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarFlappy() {
+async function iniciarFlappy() {
   mostraScreen('flappy-inici');
+  document.getElementById('flappy-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(FLAPPY_COL, JUGADORS_VALIDS);
   flRenderInici();
 }
 
@@ -568,22 +569,23 @@ function flRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const FLAPPY_COL = 'flappy_punts';
+
 function flGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => flGetMillor(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => flGetMillor(n)));
 }
 
 function flGetMillor(nom) {
-  try {
-    const raw = localStorage.getItem(FLAPPY_STORAGE_KEY + nom);
-    return raw ? (JSON.parse(raw).millor || 0) : 0;
-  } catch(e) { return 0; }
+  const d = jocFsCacheGet(FLAPPY_COL, nom);
+  return (d && d.millor) || 0;
 }
 function flGuardarEstat(nom, punts) {
   const millor = Math.max(flGetMillor(nom), punts);
-  localStorage.setItem(FLAPPY_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(FLAPPY_COL, nom, { millor });
 }
-function flappyGetPuntsGlobals() {
+async function flappyGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(FLAPPY_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = flGetMillor(nom); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].millor) || 0; });
   return pts;
 }

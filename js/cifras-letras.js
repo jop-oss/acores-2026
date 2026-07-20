@@ -37,25 +37,21 @@ let clPissarra = []; // [{tipus:'num'|'op'|'par', val, id}]
 let clResultat = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarCifrasLetras() {
+async function iniciarCifrasLetras() {
   if (!jugadorActiu) {
     mostraScreen("joc-selector");
     return;
   }
-  const clau = `cl_estat_${jugadorActiu}`;
-  const raw = localStorage.getItem(clau);
-  if (raw) {
-    clPartida = JSON.parse(raw);
-    // Si la partida guardada és antiga (sense ordre), regenera
-    if (!clPartida.ordre) {
-      clPartida = clGenerarPartida();
-      clGuardarPartida();
-    }
+  mostraScreen("cl-inici");
+  const contInicial = document.getElementById("cl-inici-cont");
+  if (contInicial) contInicial.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  const dades = await jocFsCarregar(CL_COL, jugadorActiu);
+  if (dades && dades.ordre) {
+    clPartida = dades;
   } else {
     clPartida = clGenerarPartida();
     clGuardarPartida();
   }
-  mostraScreen("cl-inici");
   clRenderInici();
 }
 
@@ -679,16 +675,18 @@ function clAturarTimer() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const CL_COL = 'cifresletres_punts';
+
 function clGuardarPartida() {
-  localStorage.setItem(`cl_estat_${jugadorActiu}`, JSON.stringify(clPartida));
+  jocFsDesar(CL_COL, jugadorActiu, clPartida);
 }
 
 // ── PUNTS GLOBALS (per al rànquing) ───────────────────────────
-function clGetPuntsGlobals() {
+async function clGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(CL_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach((nom) => {
-    const raw = localStorage.getItem(`cl_estat_${nom}`);
-    pts[nom] = raw ? JSON.parse(raw).punts || 0 : 0;
+    pts[nom] = (dades[nom] && dades[nom].punts) || 0;
   });
   return pts;
 }

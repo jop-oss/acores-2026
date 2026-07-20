@@ -2,7 +2,6 @@
 //  CORRE PER LES AÇORES — Açores 2026
 // ══════════════════════════════════════════════════════════════
 
-const CORRE_STORAGE_KEY = 'corre_estat_';
 
 // ── DIMENSIONS LÒGIQUES ───────────────────────────────────────
 const CR_LW = 480, CR_LH = 260;
@@ -215,8 +214,10 @@ let crParpadeja, crParpadejaTmr;
 let crNextObsTimer;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarCorre() {
+async function iniciarCorre() {
   mostraScreen('corre-inici');
+  document.getElementById('corre-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(CORRE_COL, JUGADORS_VALIDS);
   crRenderInici();
 }
 
@@ -705,22 +706,23 @@ function crRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const CORRE_COL = 'corre_punts';
+
 function crGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => crGetMillor(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => crGetMillor(n)));
 }
 
 function crGetMillor(nom) {
-  try {
-    const raw = localStorage.getItem(CORRE_STORAGE_KEY + nom);
-    return raw ? (JSON.parse(raw).millor || 0) : 0;
-  } catch(e) { return 0; }
+  const d = jocFsCacheGet(CORRE_COL, nom);
+  return (d && d.millor) || 0;
 }
 function crGuardarEstat(nom, metres) {
   const millor = Math.max(crGetMillor(nom), metres);
-  localStorage.setItem(CORRE_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(CORRE_COL, nom, { millor });
 }
-function correGetPuntsGlobals() {
+async function correGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(CORRE_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = crGetMillor(nom); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].millor) || 0; });
   return pts;
 }

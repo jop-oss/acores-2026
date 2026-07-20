@@ -3,7 +3,6 @@
 //  Llança bombes 💣 contra animals marins amb trajectòria
 // ══════════════════════════════════════════════════════════════
 
-const LB_STORAGE_KEY = 'llancabombes_estat_';
 
 // ── CONSTANTS ─────────────────────────────────────────────────
 const LB_GRAVETAT   = 0.35;   // px/frame²
@@ -69,8 +68,10 @@ let lbPosLlancament = null;   // { x, y } — base de llançament
 let lbObjectiuId = 0;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarLlancaBombes() {
+async function iniciarLlancaBombes() {
   mostraScreen('llancabombes-inici');
+  document.getElementById('llancabombes-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(LB_COL, JUGADORS_VALIDS);
   lbRenderInici();
 }
 
@@ -863,25 +864,25 @@ function lbRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ─────────────────────────────────────────────
+const LB_COL = 'llancabombes_punts';
+
 function lbGetMillors(nom) {
-  try {
-    const raw = localStorage.getItem(LB_STORAGE_KEY + nom);
-    if (!raw) return { punts: 0, nivell: 1 };
-    return JSON.parse(raw);
-  } catch (e) { return { punts: 0, nivell: 1 }; }
+  const d = jocFsCacheGet(LB_COL, nom);
+  return d || { punts: 0, nivell: 1 };
 }
 
 function lbGuardarEstat(nom, punts, nivell) {
   const actual = lbGetMillors(nom);
-  localStorage.setItem(LB_STORAGE_KEY + nom, JSON.stringify({
+  jocFsDesar(LB_COL, nom, {
     punts:  Math.max(actual.punts, punts),
     nivell: Math.max(actual.nivell, nivell),
-  }));
+  });
 }
 
 // Funció global per al rànquing de jocs.js
-function llancabombesGetPuntsGlobals() {
+async function llancabombesGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(LB_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = lbGetMillors(nom).punts; });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].punts) || 0; });
   return pts;
 }

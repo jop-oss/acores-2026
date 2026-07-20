@@ -7,7 +7,6 @@
 // ══════════════════════════════════════════════════════════════
 
 // ── CONSTANTS ─────────────────────────────────────────────────
-const GR_STORAGE_KEY = 'ginrummy_estat_';
 
 const GR_PALS = ['oros', 'copes', 'espases', 'bastos'];
 const GR_PAL_SIMBOL = { oros: '🟡', copes: '🔴', espases: '🔵', bastos: '🟢' };
@@ -66,8 +65,10 @@ function grRenderCartaMini(carta) {
 }
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarGinRummy() {
+async function iniciarGinRummy() {
   mostraScreen('ginrummy-inici');
+  document.getElementById('ginrummy-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(GR_COL, JUGADORS_VALIDS);
   grRenderInici();
 }
 
@@ -678,14 +679,11 @@ function grMitjana(estat) {
 }
 
 // ── PERSISTENCIA ─────────────────────────────────────────────
+const GR_COL = 'ginrummy_punts';
+
 function grGetEstat(nom) {
-  try {
-    const raw = localStorage.getItem(GR_STORAGE_KEY + nom);
-    if (!raw) return { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
-    return JSON.parse(raw);
-  } catch(e) {
-    return { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
-  }
+  const d = jocFsCacheGet(GR_COL, nom);
+  return d || { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
 }
 
 function grGuardarPartida(nom, dif, punts, guanyat) {
@@ -696,12 +694,13 @@ function grGuardarPartida(nom, dif, punts, guanyat) {
   estat.difs[dif].partides++;
   estat.difs[dif].puntsTotals += punts;
   if (punts > estat.difs[dif].millor) estat.difs[dif].millor = punts;
-  localStorage.setItem(GR_STORAGE_KEY + nom, JSON.stringify(estat));
+  jocFsDesar(GR_COL, nom, estat);
 }
 
 // Funcio global per al ranquing de jocs.js (usa la mitjana)
-function ginRummyGetPuntsGlobals() {
+async function ginRummyGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(GR_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = grMitjana(grGetEstat(nom)); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = grMitjana(dades[nom]); });
   return pts;
 }

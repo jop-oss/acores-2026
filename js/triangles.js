@@ -8,7 +8,6 @@
 //  localStorage: triangles_estat_Nom
 // ══════════════════════════════════════════════════════════════
 
-const TR_STORAGE_KEY = 'triangles_estat_';
 const TR_NPUNTS = 20; // nombre de punts (cardgames.io usa ~20)
 
 const TR_CONFIG = {
@@ -34,9 +33,12 @@ let trPuntInici  = null;
 let trPuntHover  = -1;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarTriangles() {
+async function iniciarTriangles() {
   trActiu = false;
   mostraScreen('triangles-inici');
+  const c = document.getElementById('triangles-inici-cont');
+  if (c) c.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(TR_COL, JUGADORS_VALIDS);
   trRenderInici();
 }
 
@@ -589,12 +591,11 @@ function trPctVictories(estat) {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const TR_COL = 'triangles_punts';
+
 function trGetEstat(nom) {
-  try {
-    const raw = localStorage.getItem(TR_STORAGE_KEY+nom);
-    if (!raw) return {partides:0,victòries:0,puntsTotals:0,difs:{facil:null,mitja:null,dificil:null}};
-    return JSON.parse(raw);
-  } catch(e) { return {partides:0,victòries:0,puntsTotals:0,difs:{facil:null,mitja:null,dificil:null}}; }
+  const d = jocFsCacheGet(TR_COL, nom);
+  return d || {partides:0,victòries:0,puntsTotals:0,difs:{facil:null,mitja:null,dificil:null}};
 }
 
 function trGuardarPartida(nom, dif, guanyat, punts) {
@@ -605,11 +606,12 @@ function trGuardarPartida(nom, dif, guanyat, punts) {
   if (!estat.difs[dif]) estat.difs[dif]={partides:0,victòries:0};
   estat.difs[dif].partides++;
   if (guanyat) estat.difs[dif].victòries=(estat.difs[dif].victòries||0)+1;
-  localStorage.setItem(TR_STORAGE_KEY+nom, JSON.stringify(estat));
+  jocFsDesar(TR_COL, nom, estat);
 }
 
-function trianglesGetPuntsGlobals() {
+async function trianglesGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(TR_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = trPctVictories(trGetEstat(nom)); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = trPctVictories(dades[nom]); });
   return pts;
 }

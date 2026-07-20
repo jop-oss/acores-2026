@@ -57,20 +57,15 @@ const CF_COLORS = [
 let cfEstat = null; // estat persistent (localStorage)
 let cfJoc = null; // estat de la partida actual
 
-// ── LOCALSTORAGE ──────────────────────────────────────────────
-function cfCarregarEstat(nom) {
-  try {
-    const raw = localStorage.getItem(`colorfill_estat_${nom}`);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+// ── FIRESTORE ─────────────────────────────────────────────────
+const CF_COL = 'colorfill_punts';
+
+function cfCarregarEstatCache(nom) {
+  return jocFsCacheGet(CF_COL, nom);
 }
 
 function cfGuardarEstat(nom, estat) {
-  try {
-    localStorage.setItem(`colorfill_estat_${nom}`, JSON.stringify(estat));
-  } catch (e) {}
+  jocFsDesar(CF_COL, nom, estat);
 }
 
 function cfEstatBuit() {
@@ -82,12 +77,12 @@ function cfEstatBuit() {
 }
 
 // ── PUNTS GLOBALS (per rànquing) ──────────────────────────────
-function colorfillGetPuntsGlobals() {
+async function colorfillGetPuntsGlobals() {
+  const noms = window.JUGADORS_VALIDS || ["Jordi", "Anna", "Laia", "Mons", "Xu", "Joa"];
+  const dades = await jocFsCarregarTots(CF_COL, noms);
   const res = {};
-  (
-    window.JUGADORS_VALIDS || ["Jordi", "Anna", "Laia", "Mons", "Xu", "Joa"]
-  ).forEach((nom) => {
-    res[nom] = cfCalcularPuntsTotal(cfCarregarEstat(nom));
+  noms.forEach((nom) => {
+    res[nom] = cfCalcularPuntsTotal(dades[nom]);
   });
   return res;
 }
@@ -107,11 +102,14 @@ function cfCalcularPuntsTotal(estat) {
 }
 
 // ── INICIAR JOC ───────────────────────────────────────────────
-function iniciarColorFill() {
+async function iniciarColorFill() {
   if (!jugadorActiu) return;
-  cfEstat = cfCarregarEstat(jugadorActiu) || cfEstatBuit();
-  cfJoc = null;
   mostraScreen("colorfill-selector");
+  const c = document.getElementById("colorfill-selector-cont");
+  if (c) c.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  const dades = await jocFsCarregar(CF_COL, jugadorActiu);
+  cfEstat = dades || cfEstatBuit();
+  cfJoc = null;
   cfRenderSelector();
 }
 
@@ -414,7 +412,7 @@ function cfFerMoviment(nouColor) {
 // ── GUARDAR RESULTAT ──────────────────────────────────────────
 function cfGuardarResultat(guanyat, pts) {
   if (!jugadorActiu) return;
-  const estat = cfCarregarEstat(jugadorActiu) || cfEstatBuit();
+  const estat = cfCarregarEstatCache(jugadorActiu) || cfEstatBuit();
   const key = cfJoc.nivellKey;
   if (!estat[key]) estat[key] = { partides: [] };
   estat[key].partides.push({
@@ -516,14 +514,12 @@ function llançarConfetti() {
 }
 
 // ── ADMIN: REINICI ────────────────────────────────────────────
-function cfAdminReset(nom) {
-  localStorage.removeItem(`colorfill_estat_${nom}`);
+async function cfAdminReset(nom) {
+  await jocFsDb().collection(CF_COL).doc(nom).delete();
+  delete (_jocFsCache[CF_COL] || {})[nom];
 }
 
-function cfAdminResetTot() {
-  (
-    window.JUGADORS_VALIDS || ["Jordi", "Anna", "Laia", "Mons", "Xu", "Joa"]
-  ).forEach((nom) => {
-    localStorage.removeItem(`colorfill_estat_${nom}`);
-  });
+async function cfAdminResetTot() {
+  const noms = window.JUGADORS_VALIDS || ["Jordi", "Anna", "Laia", "Mons", "Xu", "Joa"];
+  await Promise.all(noms.map((nom) => cfAdminReset(nom)));
 }

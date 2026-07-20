@@ -34,9 +34,12 @@ let jfZoomY      = 50;   // % vertical del focus
 //  ENTRADA
 // ══════════════════════════════════════════════════════════════
 
-function iniciarJocFotos() {
-  jfCarregarEstat();
+async function iniciarJocFotos() {
   mostraScreen('jocfotos-joc');
+  const c = document.getElementById('jocfotos-joc-cont');
+  if (c) c.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(JF_COL, JUGADORS_VALIDS);
+  jfCarregarEstat();
   jfIniciarPartida();
 }
 
@@ -44,12 +47,11 @@ function iniciarJocFotos() {
 //  PERSISTÈNCIA
 // ══════════════════════════════════════════════════════════════
 
-function jfClauEstat(nom) { return `jocfotos_estat_${nom || jugadorActiu}`; }
+const JF_COL = 'jocfotos_punts';
 
 function jfCarregarEstat() {
-  // Carreguem l'ordre de les fotos per a aquest jugador (persistent entre sessions)
-  const raw = localStorage.getItem(jfClauEstat());
-  const estat = raw ? JSON.parse(raw) : null;
+  // La caché ja s'ha precarregat per a tots els jugadors a iniciarJocFotos()
+  const estat = jocFsCacheGet(JF_COL, jugadorActiu);
 
   if (estat && estat.ordre && estat.ordre.length === JF_FOTOS.length) {
     // Restaurar ordre i progrés
@@ -71,15 +73,22 @@ function jfCarregarEstat() {
 
 function jfGuardarEstat() {
   const ordre = jfLlista.map(fo => JF_FOTOS.indexOf(fo));
-  localStorage.setItem(jfClauEstat(), JSON.stringify({
+  jocFsDesar(JF_COL, jugadorActiu, {
     ordre, index: jfIndex, ptsTotal: jfPtsTotal, fotoRespostes: jfFotoRespostes
-  }));
+  });
 }
 
 function jfGetPuntsTotals(nom) {
-  const raw = localStorage.getItem(jfClauEstat(nom));
-  if (!raw) return 0;
-  try { return JSON.parse(raw).ptsTotal || 0; } catch { return 0; }
+  const d = jocFsCacheGet(JF_COL, nom);
+  return (d && d.ptsTotal) || 0;
+}
+
+// Funció global per al rànquing de jocs.js
+async function jfGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(JF_COL, JUGADORS_VALIDS);
+  const pts = {};
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].ptsTotal) || 0; });
+  return pts;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -102,8 +111,7 @@ function jfIniciarPartida() {
 
 function jfRenderRankingHtml() {
   const dades = JUGADORS_VALIDS.map(nom => {
-    const raw = localStorage.getItem(`jocfotos_estat_${nom}`);
-    const estat = raw ? JSON.parse(raw) : {};
+    const estat = jocFsCacheGet(JF_COL, nom) || {};
     return { nom, pts: estat.ptsTotal || 0, vistes: estat.index || 0 };
   }).sort((a, b) => b.pts - a.pts);
 

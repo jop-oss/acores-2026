@@ -2,7 +2,6 @@
 //  BREAKOUT — Açores 2026
 // ══════════════════════════════════════════════════════════════
 
-const BREAKOUT_STORAGE_KEY = 'breakout_estat_';
 
 // ── NIVELLS (patrons de blocs) ────────────────────────────────
 // Cada nivell: matriu de files. Cada valor = color (0 = buit).
@@ -98,8 +97,10 @@ const BK_BLOC_COLS = 10, BK_BLOC_H = 18, BK_BLOC_GAP = 3;
 const BK_BLOC_TOP = 50;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarBreakout() {
+async function iniciarBreakout() {
   mostraScreen('breakout-inici');
+  document.getElementById('breakout-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(BREAKOUT_COL, JUGADORS_VALIDS);
   bkRenderInici();
 }
 
@@ -763,25 +764,26 @@ function bkRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const BREAKOUT_COL = 'breakout_punts';
+
 function bkGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => bkGetMillor(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => bkGetMillor(n)));
 }
 
 function bkGetMillor(nom) {
-  try {
-    const raw = localStorage.getItem(BREAKOUT_STORAGE_KEY + nom);
-    return raw ? (JSON.parse(raw).millor || 0) : 0;
-  } catch (e) { return 0; }
+  const d = jocFsCacheGet(BREAKOUT_COL, nom);
+  return (d && d.millor) || 0;
 }
 
 function bkGuardarEstat(nom, punts) {
   const millor = Math.max(bkGetMillor(nom), punts);
-  localStorage.setItem(BREAKOUT_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(BREAKOUT_COL, nom, { millor });
 }
 
 // Funció global per al rànquing de jocs.js
-function breakoutGetPuntsGlobals() {
+async function breakoutGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(BREAKOUT_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = bkGetMillor(nom); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].millor) || 0; });
   return pts;
 }

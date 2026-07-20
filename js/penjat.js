@@ -25,17 +25,18 @@ let pjTimerInterval = null;
 let pjTempsRestant = PJ_TEMPS_SEG;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarPenjat() {
+async function iniciarPenjat() {
   if (!jugadorActiu) { mostraScreen('joc-selector'); return; }
-  const clau = `penjat_estat_${jugadorActiu}`;
-  const raw  = localStorage.getItem(clau);
-  if (raw) {
-    pjPartida = JSON.parse(raw);
+  mostraScreen('penjat-inici');
+  const contInicial = document.getElementById('penjat-inici-cont');
+  if (contInicial) contInicial.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  const dades = await jocFsCarregar(PJ_COL, jugadorActiu);
+  if (dades) {
+    pjPartida = dades;
   } else {
     pjPartida = pjGenerarPartida();
     pjGuardarPartida();
   }
-  mostraScreen('penjat-inici');
   pjRenderInici();
 }
 
@@ -404,15 +405,17 @@ function pjAturarTimer() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const PJ_COL = 'penjat_punts';
+
 function pjGuardarPartida() {
-  localStorage.setItem(`penjat_estat_${jugadorActiu}`, JSON.stringify(pjPartida));
+  jocFsDesar(PJ_COL, jugadorActiu, pjPartida);
 }
 
-function pjGetPuntsGlobals() {
+async function pjGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(PJ_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    const raw = localStorage.getItem(`penjat_estat_${nom}`);
-    pts[nom] = raw ? (JSON.parse(raw).punts || 0) : 0;
+    pts[nom] = (dades[nom] && dades[nom].punts) || 0;
   });
   return pts;
 }

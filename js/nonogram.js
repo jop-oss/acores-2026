@@ -18,9 +18,11 @@ let nonoModoMarca   = false;  // true = mode marcar X (clic dret o toggle)
 //  ENTRADA
 // ══════════════════════════════════════════════════════════════
 
-function iniciarNonogram() {
-  nonoCarregarEstat();
+async function iniciarNonogram() {
   mostraScreen('nonogram-selector');
+  const c = document.getElementById('nonogram-selector-cont');
+  if (c) c.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await nonoCarregarEstat();
   nonoRenderSelector();
 }
 
@@ -28,20 +30,20 @@ function iniciarNonogram() {
 //  PERSISTÈNCIA
 // ══════════════════════════════════════════════════════════════
 
-function nonoClauEstat(nom) { return `nonogram_estat_${nom}`; }
+const NONO_COL = 'nonogram_punts';
 
-function nonoCarregarEstat() {
+async function nonoCarregarEstat() {
   const nom = jugadorActiu;
   if (!nom) { nonoEstat = { puzzles: {} }; return; }
-  const raw = localStorage.getItem(nonoClauEstat(nom));
-  nonoEstat = raw ? JSON.parse(raw) : { puzzles: {} };
+  const d = await jocFsCarregar(NONO_COL, nom);
+  nonoEstat = d || { puzzles: {} };
   if (!nonoEstat.puzzles) nonoEstat.puzzles = {};
 }
 
 function nonoGuardarEstat() {
   const nom = jugadorActiu;
   if (!nom) return;
-  localStorage.setItem(nonoClauEstat(nom), JSON.stringify(nonoEstat));
+  jocFsDesar(NONO_COL, nom, nonoEstat);
 }
 
 function nonoGetPuzzleEstat(id) {
@@ -55,10 +57,8 @@ function nonoSetPuzzleEstat(id, data) {
 
 // Punts totals del jugador (per rànquing)
 function nonoGetPuntsTotals(nom) {
-  const clau = nonoClauEstat(nom || jugadorActiu);
-  const raw = localStorage.getItem(clau);
-  if (!raw) return 0;
-  const estat = JSON.parse(raw);
+  const estat = jocFsCacheGet(NONO_COL, nom || jugadorActiu);
+  if (!estat) return 0;
   return Object.values(estat.puzzles || {})
     .filter(p => p.completat)
     .reduce((s, p) => s + (p.punts || 0), 0);
@@ -480,7 +480,6 @@ function nonoGuardarITornar() {
 }
 
 function nonoTornarSelector() {
-  nonoCarregarEstat();
   mostraScreen('nonogram-selector');
   nonoRenderSelector();
 }
@@ -489,8 +488,9 @@ function nonoTornarSelector() {
 //  RÀNQUING (per jocs.js rankingCarregar)
 // ══════════════════════════════════════════════════════════════
 
-function nonoCarregarPuntsRanking() {
+async function nonoCarregarPuntsRanking() {
   // Retorna objecte { Jordi: 120, Anna: 50, ... }
+  await jocFsCarregarTots(NONO_COL, JUGADORS_VALIDS);
   const res = {};
   JUGADORS_VALIDS.forEach(nom => {
     res[nom] = nonoGetPuntsTotals(nom);

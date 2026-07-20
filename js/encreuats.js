@@ -27,9 +27,11 @@ let encDireccio  = 'H';    // 'H' | 'V'
 //  ENTRADA
 // ══════════════════════════════════════════════════════════════
 
-function iniciarEncreuats() {
-  encCarregarEstat();
+async function iniciarEncreuats() {
   mostraScreen('encreuats-selector');
+  const c = document.getElementById('encreuats-selector-cont');
+  if (c) c.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(ENC_COL, JUGADORS_VALIDS);
   encRenderSelector();
 }
 
@@ -37,11 +39,10 @@ function iniciarEncreuats() {
 //  PERSISTÈNCIA
 // ══════════════════════════════════════════════════════════════
 
-function encClau(nom) { return `encreuats_estat_${nom || jugadorActiu}`; }
+const ENC_COL = 'encreuats_punts';
 
 function encCarregarEstat() {
-  const raw = localStorage.getItem(encClau());
-  return raw ? JSON.parse(raw) : { puzzles: {} };
+  return jocFsCacheGet(ENC_COL, jugadorActiu) || { puzzles: {} };
 }
 
 function encGuardarProgres() {
@@ -52,7 +53,7 @@ function encGuardarProgres() {
     intents: encIntents,
     grid: encUserGrid,
   };
-  localStorage.setItem(encClau(), JSON.stringify(estat));
+  jocFsDesar(ENC_COL, jugadorActiu, estat);
 }
 
 function encGuardarCompletada(pts) {
@@ -62,18 +63,26 @@ function encGuardarCompletada(pts) {
     pts,
     intents: encIntents,
   };
-  localStorage.setItem(encClau(), JSON.stringify(estat));
+  jocFsDesar(ENC_COL, jugadorActiu, estat);
 }
 
 function encGetPuntsTotals(nom) {
-  const raw = localStorage.getItem(encClau(nom));
-  if (!raw) return 0;
-  try {
-    const estat = JSON.parse(raw);
-    return Object.values(estat.puzzles || {})
-      .filter(p => p.completada)
-      .reduce((s, p) => s + (p.pts || 0), 0);
-  } catch { return 0; }
+  const d = jocFsCacheGet(ENC_COL, nom || jugadorActiu);
+  if (!d) return 0;
+  return Object.values(d.puzzles || {})
+    .filter(p => p.completada)
+    .reduce((s, p) => s + (p.pts || 0), 0);
+}
+
+// Funció global per al rànquing de jocs.js
+async function encGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(ENC_COL, JUGADORS_VALIDS);
+  const pts = {};
+  JUGADORS_VALIDS.forEach(nom => {
+    const d = dades[nom];
+    pts[nom] = d ? Object.values(d.puzzles || {}).filter(p => p.completada).reduce((s, p) => s + (p.pts || 0), 0) : 0;
+  });
+  return pts;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -673,7 +682,6 @@ function encMostrarFinal(pts) {
 function encGuardarITornar() {
   document.removeEventListener('keydown', encOnKey);
   encGuardarProgres();
-  encCarregarEstat();
   mostraScreen('encreuats-selector');
   encRenderSelector();
 }

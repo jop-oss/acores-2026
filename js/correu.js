@@ -2,7 +2,6 @@
 //  CORREU DE LES AÇORES — Açores 2026
 // ══════════════════════════════════════════════════════════════
 
-const CORREU_STORAGE_KEY = 'correu_estat_';
 
 // ── DIMENSIONS LÒGIQUES ───────────────────────────────────────
 const CO_LW = 480, CO_LH = 300;
@@ -54,8 +53,10 @@ let coParpadeja, coParpadejaTmr;
 let coDistAcum;     // acumulador de distància per punts
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarCorreu() {
+async function iniciarCorreu() {
   mostraScreen('correu-inici');
+  document.getElementById('correu-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(CORREU_COL, JUGADORS_VALIDS);
   coRenderInici();
 }
 
@@ -732,22 +733,23 @@ function coRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const CORREU_COL = 'correu_punts';
+
 function coGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => coGetMillor(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => coGetMillor(n)));
 }
 
 function coGetMillor(nom) {
-  try {
-    const raw = localStorage.getItem(CORREU_STORAGE_KEY + nom);
-    return raw ? (JSON.parse(raw).millor || 0) : 0;
-  } catch(e) { return 0; }
+  const d = jocFsCacheGet(CORREU_COL, nom);
+  return (d && d.millor) || 0;
 }
 function coGuardarEstat(nom, punts) {
   const millor = Math.max(coGetMillor(nom), punts);
-  localStorage.setItem(CORREU_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(CORREU_COL, nom, { millor });
 }
-function correuGetPuntsGlobals() {
+async function correuGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(CORREU_COL, JUGADORS_VALIDS);
   const pts = {};
-  JUGADORS_VALIDS.forEach(nom => { pts[nom] = coGetMillor(nom); });
+  JUGADORS_VALIDS.forEach(nom => { pts[nom] = (dades[nom] && dades[nom].millor) || 0; });
   return pts;
 }

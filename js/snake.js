@@ -3,7 +3,6 @@
 // ══════════════════════════════════════════════════════════════
 
 // ── CONSTANTS ─────────────────────────────────────────────────
-const SNAKE_STORAGE_KEY = 'snake_estat_';
 const SNAKE_COLS = 20;
 const SNAKE_ROWS = 20;
 const SNAKE_SPEED_INIT = 180;   // ms per tick inicial
@@ -29,8 +28,10 @@ let snakeCellSize = 0;
 let snakeTouchStart = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarSnake() {
+async function iniciarSnake() {
   mostraScreen('snake-inici');
+  document.getElementById('snake-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(SNAKE_COL, JUGADORS_VALIDS);
   snakeMillor = snakeGetMillorJugador(jugadorActiu);
   snakeRenderInici();
 }
@@ -465,29 +466,28 @@ function snakeRenderRankingHTML() {
 }
 
 // ── PERSISTÈNCIA ──────────────────────────────────────────────
+const SNAKE_COL = 'snake_punts';
+
 function snakeGetMillorGlobal() {
-  return Math.max(0, ...['Jordi','Anna','Laia','Mons','Xu','Joa'].map(n => snakeGetMillorJugador(n)));
+  return Math.max(0, ...JUGADORS_VALIDS.map(n => snakeGetMillorJugador(n)));
 }
 
 function snakeGetMillorJugador(nom) {
-  try {
-    const raw = localStorage.getItem(SNAKE_STORAGE_KEY + nom);
-    if (!raw) return 0;
-    const d = JSON.parse(raw);
-    return d.millor || 0;
-  } catch (e) { return 0; }
+  const d = jocFsCacheGet(SNAKE_COL, nom);
+  return (d && d.millor) || 0;
 }
 
 function snakeGuardarEstat(nom, punts) {
   const millor = Math.max(snakeGetMillorJugador(nom), punts);
-  localStorage.setItem(SNAKE_STORAGE_KEY + nom, JSON.stringify({ millor }));
+  jocFsDesar(SNAKE_COL, nom, { millor }); // en segon pla, no cal esperar-lo
 }
 
 // Funció global per al rànquing de jocs.js
-function snakeGetPuntsGlobals() {
+async function snakeGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(SNAKE_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    pts[nom] = snakeGetMillorJugador(nom);
+    pts[nom] = (dades[nom] && dades[nom].millor) || 0;
   });
   return pts;
 }

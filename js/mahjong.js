@@ -94,7 +94,6 @@ const MJ_CONFIG = {
   dificil: { label: 'Difícil', emoji: '🦈', layout: 'tortuga', puntsBase: 1000, tempsMax: 1800 },
 };
 
-const MJ_STORAGE_KEY = 'mahjong_estat_';
 
 // ── ESTAT ─────────────────────────────────────────────────────
 let mjFitxes      = [];   // { id, z, r, c, simbol, eliminada, seleccionada }
@@ -109,8 +108,10 @@ let mjTotalParelles = 0;
 let mjHistorial   = []; // per desfer
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarMahjong() {
+async function iniciarMahjong() {
   mostraScreen('mahjong-inici');
+  document.getElementById('mahjong-inici-cont').innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  await jocFsCarregarTots(MJ_COL, JUGADORS_VALIDS);
   mjRenderInici();
 }
 
@@ -593,12 +594,11 @@ function mjMillorTotal(millors) {
 }
 
 // ── PERSISTÈNCIA ─────────────────────────────────────────────
+const MJ_COL = 'mahjong_punts';
+
 function mjGetMillorsJugador(nom) {
-  try {
-    const raw = localStorage.getItem(MJ_STORAGE_KEY + nom);
-    if (!raw) return { facil: null, mitja: null, dificil: null };
-    return JSON.parse(raw);
-  } catch (e) { return { facil: null, mitja: null, dificil: null }; }
+  const d = jocFsCacheGet(MJ_COL, nom);
+  return d || { facil: null, mitja: null, dificil: null };
 }
 
 function mjGuardarEstat(nom, dif, punts, temps) {
@@ -606,14 +606,15 @@ function mjGuardarEstat(nom, dif, punts, temps) {
   if (!millors[dif] || punts > millors[dif].punts) {
     millors[dif] = { punts, temps };
   }
-  localStorage.setItem(MJ_STORAGE_KEY + nom, JSON.stringify(millors));
+  jocFsDesar(MJ_COL, nom, millors);
 }
 
 // Funció global per al rànquing de jocs.js
-function mahjongGetPuntsGlobals() {
+async function mahjongGetPuntsGlobals() {
+  const dades = await jocFsCarregarTots(MJ_COL, JUGADORS_VALIDS);
   const pts = {};
   JUGADORS_VALIDS.forEach(nom => {
-    pts[nom] = mjMillorTotal(mjGetMillorsJugador(nom));
+    pts[nom] = mjMillorTotal(dades[nom] || { facil: null, mitja: null, dificil: null });
   });
   return pts;
 }

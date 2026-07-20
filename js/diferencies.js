@@ -5,7 +5,6 @@
 const DIFER_PUNTS_ESCENA  = 100;
 const DIFER_BONUS_RAPID   = 30;
 const DIFER_MAX_ERRORS    = 5;
-const DIFER_STORAGE       = 'difer_estat_';
 const DIFER_IMG_W         = 960;
 const DIFER_IMG_H         = 751;
 
@@ -16,8 +15,11 @@ let _diferInici     = 0;
 let _diferTimerInterval = null;
 
 // ── PUNT D'ENTRADA ────────────────────────────────────────────
-function iniciarDiferencies() {
+async function iniciarDiferencies() {
   mostraScreen('difer-inici');
+  const contInicial = document.getElementById('difer-inici-cont');
+  if (contInicial) contInicial.innerHTML = '<div class="joc-carregant">Carregant…</div>';
+  if (jugadorActiu) await jocFsCarregar(DIFER_COL, jugadorActiu);
   diferRenderInici();
 }
 
@@ -231,27 +233,24 @@ function diferRenderResultat(ok, temps, bonus, total) {
 }
 
 // ── PERSISTÈNCIA ───────────────────────────────────────────────
+const DIFER_COL = 'diferencies_punts';
+
 function diferCarregarEstat() {
   if (!jugadorActiu) return {};
-  try {
-    const raw = localStorage.getItem(DIFER_STORAGE + jugadorActiu);
-    return raw ? JSON.parse(raw) : {};
-  } catch(e) { return {}; }
+  return jocFsCacheGet(DIFER_COL, jugadorActiu) || {};
 }
 
 function diferGuardarEstat(estat) {
   if (!jugadorActiu) return;
-  try { localStorage.setItem(DIFER_STORAGE + jugadorActiu, JSON.stringify(estat)); } catch(e) {}
+  jocFsDesar(DIFER_COL, jugadorActiu, estat);
 }
 
-function diferGetPuntsGlobals() {
+async function diferGetPuntsGlobals() {
+  const noms = typeof JUGADORS_VALIDS !== 'undefined' ? JUGADORS_VALIDS : [];
+  const dades = await jocFsCarregarTots(DIFER_COL, noms);
   const pts = {};
-  (typeof JUGADORS_VALIDS !== 'undefined' ? JUGADORS_VALIDS : []).forEach(function(nom) {
-    try {
-      const raw = localStorage.getItem(DIFER_STORAGE + nom);
-      const d = raw ? JSON.parse(raw) : {};
-      pts[nom] = d.totalPunts || 0;
-    } catch(e) { pts[nom] = 0; }
+  noms.forEach(function(nom) {
+    pts[nom] = (dades[nom] && dades[nom].totalPunts) || 0;
   });
   return pts;
 }

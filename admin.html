@@ -781,11 +781,11 @@
   }
 
   // ── QUIZ ───────────────────────────────────────────────────
-  function renderQuiz() {
+  async function renderQuiz() {
     const tbody = document.getElementById('taula-quiz');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`quiz_estat_${nom}`);
-      const estat = raw ? JSON.parse(raw) : null;
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection('quiz_punts').doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : null;
       const pts = estat ? estat.punts : 0;
       const prog = estat && estat.completat ? 'Completat ✓'
                  : estat && estat.idx > 0   ? `${estat.idx}/100 preg.`
@@ -800,11 +800,11 @@
   }
 
   // ── MAPA ───────────────────────────────────────────────────
-  function renderMapa() {
+  async function renderMapa() {
     const tbody = document.getElementById('taula-mapa');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`joc_mapa_estat_${nom}`);
-      const estat = raw ? JSON.parse(raw) : null;
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection('mapa_punts').doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : null;
       const pts = estat ? estat.punts : 0;
       const prog = estat && estat.completat ? 'Completat ✓'
                  : estat && estat.idx > 0   ? `${estat.idx}/50 llocs`
@@ -819,11 +819,11 @@
   }
 
   // ── PARAULA AMAGADA ────────────────────────────────────────
-  function renderParaula() {
+  async function renderParaula() {
     const tbody = document.getElementById('taula-paraula');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`joc_paraula_estat_${nom}`);
-      const estat = raw ? JSON.parse(raw) : null;
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection('paraula_punts').doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : null;
       const ptsTotal = estat ? Object.values(estat.punts || {}).reduce((a,b)=>a+b,0) : 0;
       const nivells = estat ? `
         <span class="nivell-chip facil">F: ${estat.partides?.facil||0}/10</span>
@@ -957,12 +957,12 @@
       .then(renderItinHoresTothom);
   }
 
-  function renderBingo() {
+  async function renderBingo() {
     const tbody = document.getElementById('taula-bingo');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const rawPunts  = localStorage.getItem(`bingo_punts_${nom}`);
+    const snapsPunts = await Promise.all(JUGADORS.map(nom => getDb().collection('bingo_punts').doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
       const rawCartro = localStorage.getItem(`bingo_estat_${nom}`);
-      const estatPunts = rawPunts ? JSON.parse(rawPunts) : null;
+      const estatPunts = snapsPunts[i].exists ? snapsPunts[i].data() : null;
       const cartroData = rawCartro ? JSON.parse(rawCartro) : null;
       const pts = estatPunts ? estatPunts.punts : 0;
 
@@ -995,9 +995,9 @@
     } catch(e) { console.error(e); }
   }
 
-  function resetBingoJugador(nom) {
+  async function resetBingoJugador(nom) {
     if (!confirm(`Reiniciar Bingo de ${nom}?`)) return;
-    localStorage.removeItem(`bingo_punts_${nom}`);
+    await getDb().collection('bingo_punts').doc(nom).delete();
     localStorage.removeItem(`bingo_estat_${nom}`);
     renderBingo();
     mostrarToast(`${nom} · Bingo reiniciat`);
@@ -1009,8 +1009,8 @@
       await getDb().collection('bingo_partides').doc('activa').set({
         linies: [], bingo: null, acabada: false, ts: Date.now()
       });
+      await Promise.all(JUGADORS.map(nom => getDb().collection('bingo_punts').doc(nom).delete()));
       JUGADORS.forEach(nom => {
-        localStorage.removeItem(`bingo_punts_${nom}`);
         localStorage.removeItem(`bingo_estat_${nom}`);
       });
       renderBingo();
@@ -1081,29 +1081,29 @@
   }
 
   // ── RESET ──────────────────────────────────────────────────
-  const CLAUS = {
-    quiz:    nom => `quiz_estat_${nom}`,
-    mapa:    nom => `joc_mapa_estat_${nom}`,
-    paraula: nom => `joc_paraula_estat_${nom}`,
-    cifras:  nom => `cl_estat_${nom}`,
-    snake:   nom => `snake_estat_${nom}`,
-    breakout: nom => `breakout_estat_${nom}`,
-    corre:    nom => `corre_estat_${nom}`,
-    asteroid: nom => `asteroid_estat_${nom}`,
-    correu:   nom => `correu_estat_${nom}`,
-    flappy:   nom => `flappy_estat_${nom}`,
-    pescamines: nom => `pescamines_estat_${nom}`,
-    mahjong:    nom => `mahjong_estat_${nom}`,
-    sokoban:      nom => `sokoban_estat_${nom}`,
-    diferencies:  nom => `difer_estat_${nom}`,
-    ginrummy:     nom => `ginrummy_estat_${nom}`,
-    yahtzee:      nom => `yahtzee_punts_${nom}`,
-    batallanaval: nom => `batallanaval_estat_${nom}`,
-    triangles:    nom => `triangles_estat_${nom}`,
-    nonogram:     nom => `nonogram_estat_${nom}`,
-    jocfotos:     nom => `jocfotos_estat_${nom}`,
-    encreuats:    nom => `encreuats_estat_${nom}`,
-    colorfill:    nom => `colorfill_estat_${nom}`,
+  const COLS = {
+    quiz:    'quiz_punts',
+    mapa:    'mapa_punts',
+    paraula: 'paraula_punts',
+    cifras:  'cifresletres_punts',
+    snake:   'snake_punts',
+    breakout: 'breakout_punts',
+    corre:    'corre_punts',
+    asteroid: 'asteroid_punts',
+    correu:   'correu_punts',
+    flappy:   'flappy_punts',
+    pescamines: 'pescamines_punts',
+    mahjong:    'mahjong_punts',
+    sokoban:      'sokoban_punts',
+    diferencies:  'diferencies_punts',
+    ginrummy:     'ginrummy_punts',
+    yahtzee:      'yahtzee_punts',
+    batallanaval: 'batallanaval_punts',
+    triangles:    'triangles_punts',
+    nonogram:     'nonogram_punts',
+    jocfotos:     'jocfotos_punts',
+    encreuats:    'encreuats_punts',
+    colorfill:    'colorfill_punts',
   };
   const RENDERS = {
     quiz: renderQuiz, mapa: renderMapa, paraula: renderParaula,
@@ -1140,29 +1140,37 @@
   };
 
   // ── SNAKE ──────────────────────────────────────────────────
-  function renderSnake() {
-    const tbody = document.getElementById('taula-snake');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`snake_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
+  // ── Genèrica per als jocs de tipus "millor puntuació" (Firestore) ──
+  async function renderMillorSimple(tableId, jocKey, unitat) {
+    const tbody = document.getElementById(tableId);
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS[jocKey]).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const d = snaps[i].exists ? snaps[i].data() : null;
+      const millor = d ? (d.millor || 0) : 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('snake','${nom}')">Reiniciar</button></td>
+        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} ${unitat}</span></td>
+        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('${jocKey}','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }
+  function renderSnake()    { return renderMillorSimple('taula-snake', 'snake', 'pts'); }
+  function renderBreakout() { return renderMillorSimple('taula-breakout', 'breakout', 'pts'); }
+  function renderCorre()    { return renderMillorSimple('taula-corre', 'corre', 'm'); }
+  function renderAsteroid() { return renderMillorSimple('taula-asteroid', 'asteroid', 'pts'); }
+  function renderCorreu()   { return renderMillorSimple('taula-correu', 'correu', 'pts'); }
+  function renderFlappy()   { return renderMillorSimple('taula-flappy', 'flappy', 'm'); }
 
-  function resetJugador(joc, nom) {
+  async function resetJugador(joc, nom) {
     if (!confirm(`Reiniciar ${NOMS_JOCS[joc]} de ${nom}?`)) return;
-    localStorage.removeItem(CLAUS[joc](nom));
+    await getDb().collection(COLS[joc]).doc(nom).delete();
     RENDERS[joc]();
     mostrarToast(`${nom} · ${NOMS_JOCS[joc]} reiniciat`);
   }
 
-  function resetTotJoc(joc) {
+  async function resetTotJoc(joc) {
     if (!confirm(`Reiniciar ${NOMS_JOCS[joc]} de TOTS els jugadors?`)) return;
-    JUGADORS.forEach(nom => localStorage.removeItem(CLAUS[joc](nom)));
+    await Promise.all(JUGADORS.map(nom => getDb().collection(COLS[joc]).doc(nom).delete()));
     RENDERS[joc]();
     mostrarToast(`${NOMS_JOCS[joc]} reiniciat per a tots`);
   }
@@ -1235,17 +1243,17 @@
   }
 
   // ── XIFRES I LLETRES ───────────────────────────────────────
-  function renderCifras() {
+  async function renderCifras() {
     const tbody = document.getElementById('taula-cifras');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`cl_estat_${nom}`);
-      if (!raw) return `
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.cifras).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const d = snaps[i].exists ? snaps[i].data() : null;
+      if (!d) return `
         <tr>
           <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
           <td>—</td><td>—</td><td>Cap partida</td>
           <td><button class="btn-reset-jugador" disabled>Reiniciar</button></td>
         </tr>`;
-      const d = JSON.parse(raw);
       const fetes = (d.respostes || []).length;
       const total = 15;
       const estat = d.acabada ? '✅ Completada' : fetes > 0 ? `En curs (${fetes}/${total})` : 'Iniciada';
@@ -1260,85 +1268,22 @@
     }).join('');
   }
 
-  // ── BREAKOUT ───────────────────────────────────────────────
-  function renderBreakout() {
-    const tbody = document.getElementById('taula-breakout');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`breakout_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('breakout','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  // ── BREAKOUT (render genèric definit més amunt) ────────────
 
-  // ── CORRE PER LES AÇORES ───────────────────────────────────
-  function renderCorre() {
-    const tbody = document.getElementById('taula-corre');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`corre_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} m</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('corre','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  // ── CORRE PER LES AÇORES (render genèric definit més amunt) ──
 
-  // ── ASTEROID SHOOTER ───────────────────────────────────────
-  function renderAsteroid() {
-    const tbody = document.getElementById('taula-asteroid');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`asteroid_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('asteroid','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  // ── ASTEROID SHOOTER (render genèric definit més amunt) ─────
 
-  // ── CORREU DE LES AÇORES ───────────────────────────────────
-  function renderCorreu() {
-    const tbody = document.getElementById('taula-correu');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`correu_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('correu','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  // ── CORREU DE LES AÇORES (render genèric definit més amunt) ──
 
-  // ── LLANÇA'T! ──────────────────────────────────────────────
-  function renderFlappy() {
-    const tbody = document.getElementById('taula-flappy');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`flappy_estat_${nom}`);
-      const millor = raw ? (JSON.parse(raw).millor || 0) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${millor===0?'zero':''}">${millor} m</span></td>
-        <td><button class="btn-reset-jugador" ${millor===0?'disabled':''} onclick="resetJugador('flappy','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  // ── LLANÇA'T! (render genèric definit més amunt) ────────────
 
-  function renderPescamines() {
+  async function renderPescamines() {
     const tbody = document.getElementById('taula-pescamines');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`pescamines_estat_${nom}`);
-      let millor = 0;
-      if (raw) {
-        const dades = JSON.parse(raw);
-        millor = Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0);
-      }
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.pescamines).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const dades = snaps[i].exists ? snaps[i].data() : null;
+      const millor = dades ? Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0) : 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
@@ -1347,15 +1292,12 @@
     }).join('');
   }
 
-  function renderMahjong() {
+  async function renderMahjong() {
     const tbody = document.getElementById('taula-mahjong');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`mahjong_estat_${nom}`);
-      let millor = 0;
-      if (raw) {
-        const dades = JSON.parse(raw);
-        millor = Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0);
-      }
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.mahjong).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const dades = snaps[i].exists ? snaps[i].data() : null;
+      const millor = dades ? Object.values(dades).reduce((s, d) => s + (d ? d.punts : 0), 0) : 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${millor===0?'zero':''}">${millor} pts</span></td>
@@ -1365,12 +1307,12 @@
   }
 
 
-  function renderDiferencies() {
+  async function renderDiferencies() {
     const tbody = document.getElementById('taula-diferencies');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = {};
-      try { estat = JSON.parse(localStorage.getItem(`difer_estat_${nom}`) || '{}'); } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.diferencies).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : {};
       const punts = estat.totalPunts || 0;
       const escenes = (estat.completades || []).length;
       return `<tr>
@@ -1424,11 +1366,11 @@
     }
   }
 
-  function renderSokoban() {
+  async function renderSokoban() {
     const tbody = document.getElementById('taula-sokoban');
-    tbody.innerHTML = JUGADORS.map(nom => {
-      const raw = localStorage.getItem(`sokoban_estat_${nom}`);
-      const dades = raw ? JSON.parse(raw) : { completats: 0 };
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.sokoban).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const dades = snaps[i].exists ? snaps[i].data() : { completats: 0 };
       const completats = dades.completats || 0;
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
@@ -1438,12 +1380,12 @@
     }).join('');
   }
 
-  function renderGinRummy() {
+  async function renderGinRummy() {
     const tbody = document.getElementById('taula-ginrummy');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
-      try { estat = JSON.parse(localStorage.getItem(`ginrummy_estat_${nom}`) || 'null') || estat; } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.ginrummy).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : { partides: 0, puntsTotals: 0, difs: { facil: null, mitja: null, dificil: null } };
       const partides = estat.partides || 0;
       const mitjana  = partides > 0 ? Math.round(estat.puntsTotals / partides) : 0;
       const millor   = Math.max(
@@ -1461,12 +1403,12 @@
     }).join('');
   }
 
-  function renderYahtzee() {
+  async function renderYahtzee() {
     const tbody = document.getElementById('taula-yahtzee');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { partides: 0, puntsTotals: 0 };
-      try { estat = JSON.parse(localStorage.getItem(`yahtzee_punts_${nom}`) || 'null') || estat; } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.yahtzee).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : { partides: 0, puntsTotals: 0 };
       const partides = estat.partides || 0;
       const mitjana  = partides > 0 ? Math.round(estat.puntsTotals / partides) : 0;
       return `<tr>
@@ -1508,12 +1450,13 @@
     } catch(e) { mostrarToast('Error: ' + e.message); }
   }
 
-  function renderBatallaNaval() {
-    const tbody = document.getElementById('taula-batallanaval');
+  // ── Genèrica per als jocs de tipus "% de victòries" (Firestore) ──
+  async function renderPctVictories(tableId, jocKey) {
+    const tbody = document.getElementById(tableId);
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { partides: 0, victòries: 0 };
-      try { estat = JSON.parse(localStorage.getItem(`batallanaval_estat_${nom}`) || 'null') || estat; } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS[jocKey]).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : { partides: 0, victòries: 0 };
       const partides  = estat.partides || 0;
       const victories = estat.victòries || 0;
       const pct = partides > 0 ? Math.round(victories / partides * 100) : 0;
@@ -1522,32 +1465,15 @@
         <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
         <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
         <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
-        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('batallanaval','${nom}')">Reiniciar</button></td>
+        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('${jocKey}','${nom}')">Reiniciar</button></td>
       </tr>`;
     }).join('');
   }
-
-  function renderTriangles() {
-    const tbody = document.getElementById('taula-triangles');
-    if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { partides: 0, victòries: 0 };
-      try { estat = JSON.parse(localStorage.getItem(`triangles_estat_${nom}`) || 'null') || estat; } catch(e) {}
-      const partides  = estat.partides || 0;
-      const victories = estat.victòries || 0;
-      const pct = partides > 0 ? Math.round(victories / partides * 100) : 0;
-      return `<tr>
-        <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
-        <td><span class="pts-badge ${partides===0?'zero':''}">${partides}</span></td>
-        <td><span class="pts-badge ${victories===0?'zero':''}">${victories}</span></td>
-        <td><span class="pts-badge ${pct===0?'zero':''}">${pct}%</span></td>
-        <td><button class="btn-reset-jugador" ${partides===0?'disabled':''} onclick="resetJugador('triangles','${nom}')">Reiniciar</button></td>
-      </tr>`;
-    }).join('');
-  }
+  function renderBatallaNaval() { return renderPctVictories('taula-batallanaval', 'batallanaval'); }
+  function renderTriangles()    { return renderPctVictories('taula-triangles', 'triangles'); }
 
   // ── COLOR FILL ─────────────────────────────────────────────
-  function renderColorFill() {
+  async function renderColorFill() {
     const CF_NIVELLS_ADMIN = {
       petit: { top: 3 },
       mitja: { top: 4 },
@@ -1555,9 +1481,9 @@
     };
     const tbody = document.getElementById('taula-colorfill');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = {};
-      try { estat = JSON.parse(localStorage.getItem(`colorfill_estat_${nom}`) || '{}'); } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.colorfill).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : {};
       let total = 0;
       const cells = ['petit','mitja','gran'].map(key => {
         const partides = (estat[key]?.partides || [])
@@ -1577,27 +1503,19 @@
   }
 
   // ── NONOGRAM ───────────────────────────────────────────────
-  function renderNonogram() {
+  async function renderNonogram() {
     const tbody = document.getElementById('taula-nonogram');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { puzzles: {} };
-      try { estat = JSON.parse(localStorage.getItem(`nonogram_estat_${nom}`) || '{}'); } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.nonogram).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : { puzzles: {} };
       const puzzles = estat.puzzles || {};
-      const resum = { facil: [0,5], mitja: [0,5], dificil: [0,5] };
-      let pts = 0;
-      Object.values(puzzles).forEach(p => {
-        if (!p.completat) return;
-        const dif = p.nivell || 'facil';
-        if (resum[dif]) resum[dif][0]++;
-        pts += p.punts || 0;
-      });
       // Reconstruir per id (1-5 facil, 6-10 mitja, 11-15 dificil)
       const ids = Object.keys(puzzles).map(Number);
       const facil   = ids.filter(id => id >= 1  && id <= 5).filter(id => puzzles[id]?.completat).length;
       const mitja   = ids.filter(id => id >= 6  && id <= 10).filter(id => puzzles[id]?.completat).length;
       const dificil = ids.filter(id => id >= 11 && id <= 15).filter(id => puzzles[id]?.completat).length;
-      pts = ids.reduce((s, id) => s + (puzzles[id]?.completat ? (puzzles[id]?.punts || 0) : 0), 0);
+      const pts = ids.reduce((s, id) => s + (puzzles[id]?.completat ? (puzzles[id]?.punts || 0) : 0), 0);
       return `<tr>
         <td><div class="jugador-cel"><img src="${IMGS[nom]}" alt="${nom}"><span>${nom}</span></div></td>
         <td><span class="pts-badge ${facil===0?'zero':''}">${facil}/5</span></td>
@@ -1610,12 +1528,12 @@
   }
 
   // ── JOC FOTOS ──────────────────────────────────────────────
-  function renderJocFotos() {
+  async function renderJocFotos() {
     const tbody = document.getElementById('taula-jocfotos');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = {};
-      try { estat = JSON.parse(localStorage.getItem(`jocfotos_estat_${nom}`) || '{}'); } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.jocfotos).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : {};
       const index   = estat.index || 0;
       const pts     = estat.ptsTotal || 0;
       const encert  = estat.fotoRespostes || 0;
@@ -1630,12 +1548,12 @@
   }
 
   // ── ENCREUATS ──────────────────────────────────────────────
-  function renderEncreuats() {
+  async function renderEncreuats() {
     const tbody = document.getElementById('taula-encreuats');
     if (!tbody) return;
-    tbody.innerHTML = JUGADORS.map(nom => {
-      let estat = { puzzles: {} };
-      try { estat = JSON.parse(localStorage.getItem(`encreuats_estat_${nom}`) || '{}'); } catch(e) {}
+    const snaps = await Promise.all(JUGADORS.map(nom => getDb().collection(COLS.encreuats).doc(nom).get()));
+    tbody.innerHTML = JUGADORS.map((nom, i) => {
+      const estat = snaps[i].exists ? snaps[i].data() : { puzzles: {} };
       const puzzles = Object.values(estat.puzzles || {});
       const completats = puzzles.filter(p => p.completada).length;
       const pts = puzzles.filter(p => p.completada).reduce((s, p) => s + (p.pts || 0), 0);

@@ -132,8 +132,7 @@ function renderJugadorsGrid() {
     const estatQuiz = carregarEstatJugador(nom);
     const estatMapa = mapaCarregarEstat(nom);
     const estatParaula = paCarregarEstat(nom);
-    const rawBingo = localStorage.getItem(`bingo_punts_${nom}`);
-    const estatBingo = rawBingo ? JSON.parse(rawBingo) : null;
+    const estatBingo = jocFsCacheGet(BINGO_PUNTS_COL, nom);
 
     const ptsQuiz = estatQuiz ? estatQuiz.punts : 0;
     const ptsMapa = estatMapa ? estatMapa.punts : 0;
@@ -225,14 +224,21 @@ let _rankingDades = null; // cache de totes les dades
 let _rankingFiltreJoc = "tots";
 
 async function rankingCarregar() {
+  // Precàrrega de Quiz, Mapa, Paraula i Bingo (es llegeixen síncron a sota)
+  await Promise.all([
+    jocFsCarregarTots(QUIZ_COL, JUGADORS_VALIDS),
+    jocFsCarregarTots(MAPA_COL, JUGADORS_VALIDS),
+    jocFsCarregarTots(PA_COL, JUGADORS_VALIDS),
+    jocFsCarregarTots(BINGO_PUNTS_COL, JUGADORS_VALIDS),
+  ]);
+
   // Dades locals
   const dades = {};
   JUGADORS_VALIDS.forEach((nom) => {
     const estatQuiz = carregarEstatJugador(nom);
     const estatMapa = mapaCarregarEstat(nom);
     const estatParaula = paCarregarEstat(nom);
-    const rawBingo = localStorage.getItem(`bingo_punts_${nom}`);
-    const estatBingo = rawBingo ? JSON.parse(rawBingo) : null;
+    const estatBingo = jocFsCacheGet(BINGO_PUNTS_COL, nom);
     dades[nom] = {
       quiz: estatQuiz ? estatQuiz.punts : 0,
       mapa: estatMapa ? estatMapa.punts : 0,
@@ -283,75 +289,75 @@ async function rankingCarregar() {
     });
   } catch (e) {}
 
-  // Cifras y Lletres (localStorage)
+  // Cifras y Lletres (Firestore)
   if (typeof clGetPuntsGlobals === 'function') {
-    const ptsCifras = clGetPuntsGlobals();
+    const ptsCifras = await clGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].cifras = ptsCifras[nom] || 0; });
   }
 
-  // El Penjat (localStorage)
+  // El Penjat (Firestore)
   if (typeof pjGetPuntsGlobals === 'function') {
-    const ptsPenjat = pjGetPuntsGlobals();
+    const ptsPenjat = await pjGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].penjat = ptsPenjat[nom] || 0; });
   }
 
-  // Snake (localStorage)
+  // Snake (Firestore)
   if (typeof snakeGetPuntsGlobals === 'function') {
-    const ptsSnake = snakeGetPuntsGlobals();
+    const ptsSnake = await snakeGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].snake = ptsSnake[nom] || 0; });
   }
 
-  // Breakout (localStorage)
+  // Breakout (Firestore)
   if (typeof breakoutGetPuntsGlobals === 'function') {
-    const ptsBreakout = breakoutGetPuntsGlobals();
+    const ptsBreakout = await breakoutGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].breakout = ptsBreakout[nom] || 0; });
   }
 
-  // Corre per les Açores (localStorage)
+  // Corre per les Açores (Firestore)
   if (typeof correGetPuntsGlobals === 'function') {
-    const ptsCorre = correGetPuntsGlobals();
+    const ptsCorre = await correGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].corre = ptsCorre[nom] || 0; });
   }
 
-  // Asteroid Shooter (localStorage)
+  // Asteroid Shooter (Firestore)
   if (typeof asteroidGetPuntsGlobals === 'function') {
-    const ptsAst = asteroidGetPuntsGlobals();
+    const ptsAst = await asteroidGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].asteroid = ptsAst[nom] || 0; });
   }
 
-  // Correu de les Açores (localStorage)
+  // Correu de les Açores (Firestore)
   if (typeof correuGetPuntsGlobals === 'function') {
-    const ptsCorreu = correuGetPuntsGlobals();
+    const ptsCorreu = await correuGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].correu = ptsCorreu[nom] || 0; });
   }
 
-  // Flappy Açores (localStorage)
+  // Flappy Açores (Firestore)
   if (typeof flappyGetPuntsGlobals === 'function') {
-    const ptsFlappy = flappyGetPuntsGlobals();
+    const ptsFlappy = await flappyGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].flappy = ptsFlappy[nom] || 0; });
   }
 
-  // Pescamines (localStorage)
+  // Pescamines (Firestore)
   if (typeof pescaminesGetPuntsGlobals === 'function') {
-    const ptsPm = pescaminesGetPuntsGlobals();
+    const ptsPm = await pescaminesGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].pescamines = ptsPm[nom] || 0; });
   }
 
-  // Mahjong (localStorage)
+  // Mahjong (Firestore)
   if (typeof mahjongGetPuntsGlobals === 'function') {
-    const ptsMj = mahjongGetPuntsGlobals();
+    const ptsMj = await mahjongGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].mahjong = ptsMj[nom] || 0; });
   }
 
-  // Llança Bombes (localStorage)
+  // Llança Bombes (Firestore)
   if (typeof llancabombesGetPuntsGlobals === 'function') {
-    const ptsLb = llancabombesGetPuntsGlobals();
+    const ptsLb = await llancabombesGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].llancabombes = ptsLb[nom] || 0; });
   }
 
-  // Sokoban (localStorage)
+  // Sokoban (Firestore)
   if (typeof sokobanGetPuntsGlobals === 'function') {
-    const ptsSk = sokobanGetPuntsGlobals();
+    const ptsSk = await sokobanGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].sokoban = ptsSk[nom] || 0; });
   }
 
@@ -361,65 +367,57 @@ async function rankingCarregar() {
     JUGADORS_VALIDS.forEach(nom => { dades[nom].scrabble = ptsScrabble[nom] || 0; });
   } catch(e) {}
 
-  // Busca les Diferències (localStorage)
+  // Busca les Diferències (Firestore)
   if (typeof diferGetPuntsGlobals === 'function') {
-    const ptsDifer = diferGetPuntsGlobals();
+    const ptsDifer = await diferGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].diferencies = ptsDifer[nom] || 0; });
   }
 
-  // Gin Rummy (localStorage, usa mitjana)
+  // Gin Rummy (Firestore, usa mitjana)
   if (typeof ginRummyGetPuntsGlobals === 'function') {
-    const ptsGr = ginRummyGetPuntsGlobals();
+    const ptsGr = await ginRummyGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].ginrummy = ptsGr[nom] || 0; });
   }
 
-  // Yahtzee (localStorage, usa mitjana)
+  // Yahtzee (Firestore, usa mitjana)
   if (typeof yhGetPuntsGlobals === 'function') {
-    const ptsYh = yhGetPuntsGlobals();
+    const ptsYh = await yhGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].yahtzee = ptsYh[nom] || 0; });
   }
 
-  // Batalla Naval (localStorage, usa % victòries)
+  // Batalla Naval (Firestore, usa % victòries)
   if (typeof batallaNavalGetPuntsGlobals === 'function') {
-    const ptsBN = batallaNavalGetPuntsGlobals();
+    const ptsBN = await batallaNavalGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].batallanaval = ptsBN[nom] || 0; });
   }
 
-  // Triangles (localStorage, usa % victòries)
+  // Triangles (Firestore, usa % victòries)
   if (typeof trianglesGetPuntsGlobals === 'function') {
-    const ptsTR = trianglesGetPuntsGlobals();
+    const ptsTR = await trianglesGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].triangles = ptsTR[nom] || 0; });
   }
 
-  // Nonogram (localStorage)
+  // Nonogram (Firestore)
   if (typeof nonoCarregarPuntsRanking === 'function') {
-    const ptsNono = nonoCarregarPuntsRanking();
+    const ptsNono = await nonoCarregarPuntsRanking();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].nonogram = ptsNono[nom] || 0; });
   }
 
-  // Zoom out! (localStorage)
-  JUGADORS_VALIDS.forEach(nom => {
-    try {
-      const raw = localStorage.getItem(`jocfotos_estat_${nom}`);
-      dades[nom].jocfotos = raw ? (JSON.parse(raw).ptsTotal || 0) : 0;
-    } catch(e) {}
-  });
+  // Zoom out! (Firestore)
+  if (typeof jfGetPuntsGlobals === 'function') {
+    const ptsJf = await jfGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].jocfotos = ptsJf[nom] || 0; });
+  }
 
-  // Encreuats (localStorage)
-  JUGADORS_VALIDS.forEach(nom => {
-    try {
-      const raw = localStorage.getItem(`encreuats_estat_${nom}`);
-      if (raw) {
-        const estat = JSON.parse(raw);
-        dades[nom].encreuats = Object.values(estat.puzzles || {})
-          .filter(p => p.completada).reduce((s, p) => s + (p.pts || 0), 0);
-      }
-    } catch(e) {}
-  });
+  // Encreuats (Firestore)
+  if (typeof encGetPuntsGlobals === 'function') {
+    const ptsEnc = await encGetPuntsGlobals();
+    JUGADORS_VALIDS.forEach(nom => { dades[nom].encreuats = ptsEnc[nom] || 0; });
+  }
 
-  // Color Fill (localStorage)
+  // Color Fill (Firestore)
   if (typeof colorfillGetPuntsGlobals === 'function') {
-    const ptsCF = colorfillGetPuntsGlobals();
+    const ptsCF = await colorfillGetPuntsGlobals();
     JUGADORS_VALIDS.forEach(nom => { dades[nom].colorfill = ptsCF[nom] || 0; });
   }
 
@@ -629,17 +627,21 @@ function jocsModalIdentificacioTancar() {
   document.getElementById("modal-identificacio")?.classList.remove("visible");
 }
 
-function seleccionarModeJoc(mode) {
+async function seleccionarModeJoc(mode) {
   if (mode === "quiz") {
+    await jocFsCarregarTots(QUIZ_COL, JUGADORS_VALIDS);
     mostraScreen("start");
     renderStartScreen();
   } else if (mode === "qui-que") {
     iniciarQuiQueSoc();
   } else if (mode === "mapa") {
+    await jocFsCarregarTots(MAPA_COL, JUGADORS_VALIDS);
     mapaIniciarPantalla();
   } else if (mode === "paraula") {
+    await jocFsCarregarTots(PA_COL, JUGADORS_VALIDS);
     iniciarParaulaAmagada();
   } else if (mode === "bingo") {
+    await jocFsCarregarTots(BINGO_PUNTS_COL, JUGADORS_VALIDS);
     iniciarBingo();
   } else if (mode === "trivial") {
     iniciarTrivial();
@@ -981,16 +983,12 @@ function confirmarSortir() {
   mostraScreen("joc-selector");
 }
 
+const QUIZ_COL = 'quiz_punts';
 function guardarEstatJugador(nom, estat) {
-  localStorage.setItem(`quiz_estat_${nom}`, JSON.stringify(estat));
+  jocFsDesar(QUIZ_COL, nom, estat);
 }
 function carregarEstatJugador(nom) {
-  try {
-    const raw = localStorage.getItem(`quiz_estat_${nom}`);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  return jocFsCacheGet(QUIZ_COL, nom);
 }
 
 // ── CONFETTI ──────────────────────────────────────────────────
@@ -1378,7 +1376,6 @@ function qqsNovaPartida() {
 //  ON ÉS AIXÒ? — MAPA
 // ══════════════════════════════════════════════════════════════
 
-const MAPA_STORAGE_KEY = "joc_mapa_estat_";
 const MAPA_TOTAL = typeof LLOCS_MAPA !== "undefined" ? LLOCS_MAPA.length : 50;
 const MAPA_PUNTS_MAX = MAPA_TOTAL * 10;
 const AZORES_CENTER = [38.5, -27.8];
@@ -1737,16 +1734,12 @@ function mapaConfirmarSortir() {
   mostraScreen("mapa-start");
 }
 
+const MAPA_COL = 'mapa_punts';
 function mapaGuardarEstat(nom, estat) {
-  localStorage.setItem(MAPA_STORAGE_KEY + nom, JSON.stringify(estat));
+  jocFsDesar(MAPA_COL, nom, estat);
 }
 function mapaCarregarEstat(nom) {
-  try {
-    const raw = localStorage.getItem(MAPA_STORAGE_KEY + nom);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  return jocFsCacheGet(MAPA_COL, nom);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -2275,17 +2268,13 @@ function paActualitzarIntentsInfo() {
     `Intent ${paIntentActual} de ${paIntentMax}`;
 }
 
+const PA_COL = 'paraula_punts';
 function paGuardarEstat(nom, estat) {
-  localStorage.setItem(PA_STORAGE_KEY + nom, JSON.stringify(estat));
+  jocFsDesar(PA_COL, nom, estat);
 }
 
 function paCarregarEstat(nom) {
-  try {
-    const raw = localStorage.getItem(PA_STORAGE_KEY + nom);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  return jocFsCacheGet(PA_COL, nom);
 }
 
 // Teclat físic
@@ -2695,23 +2684,17 @@ function bingoCarregarCartroLocal() {
   }
 }
 
+const BINGO_PUNTS_COL = 'bingo_punts';
+
 function bingoCarregarEstatLocal(nom) {
   nom = nom || jugadorActiu;
-  try {
-    const raw = localStorage.getItem(BINGO_PUNTS_STORAGE_KEY + nom);
-    return raw ? JSON.parse(raw) : null;
-  } catch (e) {
-    return null;
-  }
+  return jocFsCacheGet(BINGO_PUNTS_COL, nom);
 }
 
 function bingoSumarPunts(pts) {
   const estat = bingoCarregarEstatLocal() || { punts: 0 };
   estat.punts += pts;
-  localStorage.setItem(
-    BINGO_PUNTS_STORAGE_KEY + jugadorActiu,
-    JSON.stringify(estat),
-  );
+  jocFsDesar(BINGO_PUNTS_COL, jugadorActiu, estat);
   const el = document.getElementById("bingo-score");
   if (el) el.textContent = estat.punts;
   bingoRenderRanking();
