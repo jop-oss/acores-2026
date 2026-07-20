@@ -3575,6 +3575,7 @@
   transition: background .1s, transform .1s;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  touch-action: manipulation;
 }
 .cr-btn-accio span {
   font-size: .65rem;

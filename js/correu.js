@@ -145,14 +145,10 @@ function coComençar() {
       </div>
       <div id="co-cartes-bar" class="co-cartes-bar"></div>
       <div class="cr-botons-accio">
-        <button class="cr-btn-accio cr-btn-lliscar"
-          onpointerdown="coAccio('avall')"
-          ontouchstart="coAccio('avall');event.preventDefault()">
+        <button class="cr-btn-accio cr-btn-lliscar" onpointerdown="coAccio('avall')">
           ▼<span>Avall</span>
         </button>
-        <button class="cr-btn-accio cr-btn-salt"
-          onpointerdown="coAccio('amunt')"
-          ontouchstart="coAccio('amunt');event.preventDefault()">
+        <button class="cr-btn-accio cr-btn-salt" onpointerdown="coAccio('amunt')">
           ▲<span>Amunt</span>
         </button>
       </div>

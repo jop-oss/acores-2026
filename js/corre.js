@@ -298,14 +298,10 @@ function crComençar() {
         </div>
       </div>
       <div class="cr-botons-accio">
-        <button class="cr-btn-accio cr-btn-lliscar"
-          onpointerdown="crAccio('lliscar')"
-          ontouchstart="crAccio('lliscar');event.preventDefault()">
+        <button class="cr-btn-accio cr-btn-lliscar" onpointerdown="crAccio('lliscar')">
           ▼<span>Llisca</span>
         </button>
-        <button class="cr-btn-accio cr-btn-salt"
-          onpointerdown="crAccio('salt')"
-          ontouchstart="crAccio('salt');event.preventDefault()">
+        <button class="cr-btn-accio cr-btn-salt" onpointerdown="crAccio('salt')">
           ▲<span>Salta</span>
         </button>
       </div>
