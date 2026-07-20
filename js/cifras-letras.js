@@ -186,10 +186,10 @@ function clRenderInici() {
   clRenderRanquingGlobal();
 }
 
-function clRenderRanquingGlobal() {
+async function clRenderRanquingGlobal() {
   const el = document.getElementById("cl-ranking-list");
   if (!el) return;
-  const pts = clGetPuntsGlobals();
+  const pts = await clGetPuntsGlobals();
   const llista = JUGADORS_VALIDS.map((nom) => ({
     nom,
     punts: pts[nom] || 0,

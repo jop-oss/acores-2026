@@ -196,8 +196,8 @@ function bkComençar() {
   document.addEventListener('keydown', bkOnKey);
   document.addEventListener('keyup', bkOnKeyUp);
   bkCanvas.addEventListener('mousemove', bkOnMouse);
-  bkCanvas.addEventListener('touchmove', bkOnTouch, { passive: true });
-  bkCanvas.addEventListener('touchstart', bkOnTouchStart, { passive: true });
+  bkCanvas.addEventListener('touchmove', bkOnTouch, { passive: false });
+  bkCanvas.addEventListener('touchstart', bkOnTouchStart, { passive: false });
   window.addEventListener('resize', bkAjustarCanvas);
 }
 
@@ -333,10 +333,12 @@ function bkOnMouse(e) {
 }
 
 function bkOnTouchStart(e) {
+  e.preventDefault();
   const rect = bkCanvas.getBoundingClientRect();
   bkTouchX = (e.touches[0].clientX - rect.left) / bkScala;
 }
 function bkOnTouch(e) {
+  e.preventDefault();
   if (!e.touches.length) return;
   const rect = bkCanvas.getBoundingClientRect();
   const mx = (e.touches[0].clientX - rect.left) / bkScala;

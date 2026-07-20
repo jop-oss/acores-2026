@@ -135,8 +135,9 @@ function snakeComençar() {
   document.addEventListener('keydown', snakeOnKey);
 
   // Swipe mòbil al canvas
-  snakeCanvas.addEventListener('touchstart', snakeOnTouchStart, { passive: true });
-  snakeCanvas.addEventListener('touchend', snakeOnTouchEnd, { passive: true });
+  snakeCanvas.addEventListener('touchstart', snakeOnTouchStart, { passive: false });
+  snakeCanvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+  snakeCanvas.addEventListener('touchend', snakeOnTouchEnd, { passive: false });
 
   window.addEventListener('resize', snakeAjustarCanvas);
 }
@@ -414,11 +415,13 @@ function snakeOnKey(e) {
 }
 
 function snakeOnTouchStart(e) {
+  e.preventDefault();
   const t = e.touches[0];
   snakeTouchStart = { x: t.clientX, y: t.clientY };
 }
 
 function snakeOnTouchEnd(e) {
+  e.preventDefault();
   if (!snakeTouchStart) return;
   const t = e.changedTouches[0];
   const dx = t.clientX - snakeTouchStart.x;

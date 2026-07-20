@@ -124,10 +124,10 @@ function pjRenderInici() {
   pjRenderRanquing();
 }
 
-function pjRenderRanquing() {
+async function pjRenderRanquing() {
   const el = document.getElementById('penjat-ranking-list');
   if (!el) return;
-  const pts = pjGetPuntsGlobals();
+  const pts = await pjGetPuntsGlobals();
   const llista = JUGADORS_VALIDS.map(nom => ({ nom, punts: pts[nom] || 0 })).sort((a,b) => b.punts - a.punts);
   const maxPts = llista[0]?.punts || 1;
   const posEmoji = ['🥇','🥈','🥉'];

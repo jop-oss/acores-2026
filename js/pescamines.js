@@ -411,12 +411,13 @@ function pmAfegirLongPress() {
   tauler.addEventListener('touchstart', (e) => {
     const cel = e.target.closest('.pm-cel');
     if (!cel) return;
+    e.preventDefault();
     pressIdx = parseInt(cel.dataset.idx);
     pressTimer = setTimeout(() => {
       pmMarcar(e, pressIdx);
       pressTimer = null;
     }, 400);
-  }, { passive: true });
+  }, { passive: false });
 
   tauler.addEventListener('touchend', () => {
     if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }

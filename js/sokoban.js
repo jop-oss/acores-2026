@@ -557,8 +557,9 @@ function skAfegirControls() {
   document.addEventListener('keydown', skOnKey);
   const wrap = document.getElementById('sk-canvas-wrap');
   if (wrap) {
-    wrap.addEventListener('touchstart', skOnTouchStart, { passive: true });
-    wrap.addEventListener('touchend',   skOnTouchEnd,   { passive: true });
+    wrap.addEventListener('touchstart', skOnTouchStart, { passive: false });
+    wrap.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+    wrap.addEventListener('touchend',   skOnTouchEnd,   { passive: false });
   }
   window.addEventListener('resize', skOnResize);
 }
@@ -587,11 +588,13 @@ function skOnKey(e) {
 }
 
 function skOnTouchStart(e) {
+  e.preventDefault();
   const t = e.touches[0];
   skTouchInici = { x: t.clientX, y: t.clientY };
 }
 
 function skOnTouchEnd(e) {
+  e.preventDefault();
   if (!skTouchInici) return;
   const t  = e.changedTouches[0];
   const dx = t.clientX - skTouchInici.x;
