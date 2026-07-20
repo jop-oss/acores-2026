@@ -3858,6 +3858,34 @@
 .pm-stat-val   { font-size: 1rem; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--text); min-width: 2ch; text-align: center; }
 .pm-stat-centre .pm-stat-val { color: var(--verd2); min-width: 4ch; }
 
+/* ── Selector de mode (alternativa al toc llarg) ── */
+.pm-mode-tria {
+  display: flex;
+  gap: .5rem;
+  width: 100%;
+  max-width: 320px;
+}
+.pm-mode-btn {
+  flex: 1;
+  padding: .5rem .8rem;
+  border-radius: 10px;
+  border: 1px solid rgba(106,171,122,.25);
+  background: rgba(255,255,255,.04);
+  color: var(--text2);
+  font-size: .85rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background .12s, border-color .12s, color .12s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.pm-mode-btn.actiu {
+  background: rgba(106,171,122,.22);
+  border-color: var(--verd2);
+  color: var(--text);
+}
+
 /* ── Tauler ── */
 .pm-tauler-cont {
   width: 100%;
@@ -3890,6 +3918,8 @@
   cursor: pointer;
   transition: background .08s, transform .05s;
   border: 1px solid transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .pm-cel.tapada {
   background: rgba(45, 90, 61, 0.35);

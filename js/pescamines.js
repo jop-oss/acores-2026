@@ -117,12 +117,32 @@ function pmComençar() {
           </div>
         </div>
       </div>
+      <div class="pm-mode-tria">
+        <button class="pm-mode-btn actiu" id="pm-mode-revelar" onclick="pmCanviarMode(false)">👆 Revelar</button>
+        <button class="pm-mode-btn" id="pm-mode-marcar" onclick="pmCanviarMode(true)">🚩 Marcar</button>
+      </div>
       <div class="pm-tauler-cont">
         <div class="pm-tauler" id="pm-tauler"></div>
       </div>
     </div>`;
 
   pmInicialitzarTauler();
+}
+
+// ── MODE DE TOC (alternativa al toc llarg) ─────────────────────
+let pmModeMarcar = false;
+function pmCanviarMode(marcar) {
+  pmModeMarcar = marcar;
+  document.getElementById('pm-mode-revelar')?.classList.toggle('actiu', !marcar);
+  document.getElementById('pm-mode-marcar')?.classList.toggle('actiu', marcar);
+}
+
+function pmTocarCel(f, c, idx, e) {
+  if (pmModeMarcar) {
+    pmMarcar(e, idx);
+  } else {
+    pmRevelar(f, c);
+  }
 }
 
 // ── TAULER ────────────────────────────────────────────────────
@@ -135,6 +155,7 @@ function pmInicialitzarTauler() {
   pmGuanyat = false;
   pmSegons = 0;
   pmPunts = 0;
+  pmModeMarcar = false;
   clearInterval(pmTimer);
 
   // Crea cel·les buides
@@ -205,7 +226,7 @@ function pmRenderTauler() {
     return `<div class="pm-cel ${pmCelClasse(cel)}"
                  data-idx="${idx}"
                  oncontextmenu="pmMarcar(event,${idx}); return false;"
-                 onclick="pmRevelar(${f},${c})"></div>`;
+                 onclick="pmTocarCel(${f},${c},${idx},event)"></div>`;
   }).join('');
 
   // Long-press per mòbil
@@ -285,9 +306,19 @@ function pmRevelarCel(f, c) {
   }
 }
 
+let pmUltimMarcat = { idx: -1, ts: 0 };
 function pmMarcar(e, idx) {
   e.preventDefault();
   if (!pmActiu) return;
+
+  // Protecció: si aquesta mateixa cel·la ja s'ha marcat/desmarcat fa
+  // menys de mig segon, ignorem la crida (evita el doble disparament
+  // quan el navegador dispara el seu propi "contextmenu" natiu just
+  // després del temporitzador de pulsació llarga al mòbil)
+  const ara = Date.now();
+  if (pmUltimMarcat.idx === idx && ara - pmUltimMarcat.ts < 500) return;
+  pmUltimMarcat = { idx, ts: ara };
+
   const cel = pmTauler[idx];
   if (cel.revelada) return;
 
