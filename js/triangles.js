@@ -354,7 +354,9 @@ function trXY(e) {
   const rect = trCanvas.getBoundingClientRect();
   const sx = trCanvas.width  / rect.width;
   const sy = trCanvas.height / rect.height;
-  const src = e.touches ? e.touches[0] : (e.changedTouches ? e.changedTouches[0] : e);
+  const src = (e.touches && e.touches.length > 0) ? e.touches[0]
+            : (e.changedTouches && e.changedTouches.length > 0) ? e.changedTouches[0]
+            : e;
   return { x: (src.clientX - rect.left) * sx, y: (src.clientY - rect.top) * sy };
 }
 

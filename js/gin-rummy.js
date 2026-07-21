@@ -159,17 +159,35 @@ function grBarrejar(arr) {
   return a;
 }
 
-// ── ORDENACIÓ AUTOMÀTICA DE LA MÀ ────────────────────────────
-// Ordena per pal (oros, copes, espases, bastos, comodí) i dins del pal per número
+// ── ORDENACIÓ DE LA MÀ ────────────────────────────────────────
+// Mode "pal": agrupa per pal (oros, copes, espases, bastos, comodí) i dins per número
+// Mode "numero": agrupa per número i dins per pal
 const GR_ORDRE_PALS = { oros: 0, copes: 1, espases: 2, bastos: 3, comodi: 4 };
+let grCartaJustAgafadaId = null; // per ressaltar la carta acabada d'agafar
+let grModeOrdre = 'pal'; // 'pal' | 'numero'
 
 function grOrdenarMa(ma) {
-  return [...ma].sort((a, b) => {
-    const pa = GR_ORDRE_PALS[a.pal] ?? 4;
-    const pb = GR_ORDRE_PALS[b.pal] ?? 4;
-    if (pa !== pb) return pa - pb;
-    return a.num - b.num;
-  });
+  const arr = [...ma];
+  if (grModeOrdre === 'numero') {
+    arr.sort((a, b) => {
+      if (a.num !== b.num) return a.num - b.num;
+      return (GR_ORDRE_PALS[a.pal] ?? 4) - (GR_ORDRE_PALS[b.pal] ?? 4);
+    });
+  } else {
+    arr.sort((a, b) => {
+      const pa = GR_ORDRE_PALS[a.pal] ?? 4;
+      const pb = GR_ORDRE_PALS[b.pal] ?? 4;
+      if (pa !== pb) return pa - pb;
+      return a.num - b.num;
+    });
+  }
+  return arr;
+}
+
+function grOrdenarManualment() {
+  grModeOrdre = grModeOrdre === 'pal' ? 'numero' : 'pal';
+  grMaJugador = grOrdenarMa(grMaJugador);
+  grRenderJoc();
 }
 function grComençar() {
   mostraScreen('ginrummy-joc');
@@ -179,6 +197,8 @@ function grComençar() {
   grPilaDesc   = [];
   grIaDesc     = [];
   grCartaSelec = null;
+  grCartaJustAgafadaId = null;
+  grModeOrdre  = 'pal';
   grTorn       = 'jugador';
   grFase       = 'agafar';
   grActiu      = true;
@@ -255,11 +275,12 @@ function grRenderJoc() {
       <div class="gr-seccio gr-seccio-jugador">
         <div class="gr-seccio-cap">
           <span>👤 ${jugadorActiu}</span>
+          <button class="gr-btn-ordenar" onclick="grOrdenarManualment()" title="Canvia l'ordre de la mà">↕️ ${grModeOrdre === 'pal' ? 'Per número' : 'Per pal'}</button>
           <span class="gr-dw-badge">Deadwood: <strong>${dw.total}</strong> pts</span>
         </div>
         <div class="gr-ma gr-ma-jugador" id="gr-ma-jugador">
           ${grMaJugador.map((carta, i) => `
-            <div class="gr-carta gr-carta-${carta.pal}${enMeld.has(i) ? ' gr-en-meld' : ''}${grCartaSelec === i ? ' gr-seleccionada' : ''}${grFase === 'descartar' && grTorn === 'jugador' ? ' gr-clicable' : ''}"
+            <div class="gr-carta gr-carta-${carta.pal}${enMeld.has(i) ? ' gr-en-meld' : ''}${grCartaSelec === i ? ' gr-seleccionada' : ''}${carta.id === grCartaJustAgafadaId ? ' gr-nova' : ''}${grFase === 'descartar' && grTorn === 'jugador' ? ' gr-clicable' : ''}"
                  onclick="${grFase === 'descartar' && grTorn === 'jugador' ? 'grSeleccionarCarta(' + i + ')' : ''}">
               ${grRenderCartaContingut(carta)}
             </div>`).join('')}
@@ -294,7 +315,9 @@ function grAgafarMunt() {
     grRepartirDescAMunt();
     if (grPilaMunt.length === 0) return;
   }
-  grMaJugador.push(grPilaMunt.pop());
+  const nova = grPilaMunt.pop();
+  grCartaJustAgafadaId = nova.id;
+  grMaJugador.push(nova);
   grMaJugador = grOrdenarMa(grMaJugador);
   grFase = 'descartar';
   grCartaSelec = null;
@@ -304,7 +327,9 @@ function grAgafarMunt() {
 function grAgafarDesc() {
   if (grFase !== 'agafar' || grTorn !== 'jugador' || !grActiu) return;
   if (grPilaDesc.length === 0) return;
-  grMaJugador.push(grPilaDesc.pop());
+  const nova = grPilaDesc.pop();
+  grCartaJustAgafadaId = nova.id;
+  grMaJugador.push(nova);
   grMaJugador = grOrdenarMa(grMaJugador);
   grFase = 'descartar';
   grCartaSelec = null;
@@ -353,6 +378,7 @@ function grDescartar() {
   grPilaDesc.push(carta);
   grIaDesc.push(carta);
   grCartaSelec = null;
+  grCartaJustAgafadaId = null;
   grFase = 'agafar';
   grTorn = 'ia';
   grRenderJoc();
@@ -367,6 +393,7 @@ function grTancarGin() {
   const carta = grMaJugador.splice(grCartaSelec, 1)[0];
   grPilaDesc.push(carta);
   grCartaSelec = null;
+  grCartaJustAgafadaId = null;
   grActiu = false;
   grResoldre('gin');
 }
@@ -379,6 +406,7 @@ function grTancarKnock() {
   const carta = grMaJugador.splice(grCartaSelec, 1)[0];
   grPilaDesc.push(carta);
   grCartaSelec = null;
+  grCartaJustAgafadaId = null;
   grActiu = false;
   grResoldre('knock');
 }

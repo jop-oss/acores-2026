@@ -4793,6 +4793,39 @@
   border-radius: 6px;
   background: rgba(106,171,122,.15);
 }
+.gr-nova {
+  border-color: #e8c96a !important;
+  box-shadow: 0 0 0 2px rgba(232,201,106,.5), 0 4px 14px rgba(232,201,106,.35);
+  animation: grNovaPols 1.1s ease-in-out infinite;
+}
+.gr-nova::before {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  font-size: .8rem;
+  z-index: 2;
+}
+@keyframes grNovaPols {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(232,201,106,.5), 0 4px 14px rgba(232,201,106,.35); }
+  50%      { box-shadow: 0 0 0 3px rgba(232,201,106,.85), 0 4px 18px rgba(232,201,106,.55); }
+}
+
+.gr-btn-ordenar {
+  background: rgba(106,171,122,.12);
+  border: 1px solid rgba(106,171,122,.3);
+  color: var(--verd2);
+  border-radius: 8px;
+  padding: .2rem .55rem;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.gr-btn-ordenar:hover {
+  background: rgba(106,171,122,.22);
+  border-color: rgba(106,171,122,.5);
+}
 
 /* ── ACCIONS ─────────────────────────────────────────────────── */
 .gr-accions {
