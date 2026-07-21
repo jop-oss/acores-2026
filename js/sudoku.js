@@ -212,6 +212,18 @@ async function sudokuRenderRankingGlobal() {
 }
 
 // ── JUGAR UN SUDOKU ───────────────────────────────────────────
+// ── (DES)APLANAR GRAELLA ──────────────────────────────────────
+// Firestore no admet arrays niats (array dins d'array), així que
+// la graella 9×9 es desa com un array pla de 81 caselles.
+function sudokuAplanar(grid) {
+  return grid.flat();
+}
+function sudokuDesaplanar(pla) {
+  const grid = [];
+  for (let r = 0; r < 9; r++) grid.push(pla.slice(r * 9, r * 9 + 9));
+  return grid;
+}
+
 async function sudokuJugar(puzzleId) {
   sudokuActual      = SUDOKU_PUZZLES.find(s => s.id === puzzleId);
   sudokuEstatActual = sudokuPartida.sudokus.find(s => s.puzzleId === puzzleId);
@@ -219,7 +231,7 @@ async function sudokuJugar(puzzleId) {
 
   // Restaura o inicialitza el grid
   if (sudokuEstatActual.gridActual) {
-    sudokuGrid = sudokuEstatActual.gridActual.map(r => [...r]);
+    sudokuGrid = sudokuDesaplanar(sudokuEstatActual.gridActual);
   } else {
     sudokuGrid = sudokuActual.puzzle.map(r => [...r]);
   }
@@ -489,7 +501,7 @@ async function sudokuGuardarProgres() {
   const idx = sudokuPartida.sudokus.findIndex(s => s.puzzleId === sudokuActual.id);
   if (idx === -1) return;
 
-  sudokuPartida.sudokus[idx].gridActual = sudokuGrid.map(r => [...r]);
+  sudokuPartida.sudokus[idx].gridActual = sudokuAplanar(sudokuGrid);
   await ref.update({ sudokus: sudokuPartida.sudokus });
 }
 
