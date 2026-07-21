@@ -490,6 +490,8 @@ function encActualitzarCel(r, c) {
   cel.classList.remove('enc-cel--error', 'enc-cel--ok');
 }
 
+let _encMotActiuAnterior = null;
+
 function encMostrarClue() {
   if (!encCelActiva) return;
   const clue = document.getElementById('enc-defs-clue');
@@ -502,12 +504,9 @@ function encMostrarClue() {
   let numDef = null;
 
   if (p.tipus === 'ppcc') {
-    // PPCC: usem grid_nums
     const [r0, c0] = mot.cels[0];
     numDef = p.grid_nums[r0][c0];
   } else {
-    // 10x10: el número de definició és l'ordre del mot en la graella
-    // Comptem quants mots hi ha abans del mot actiu
     const [r0, c0] = mot.cels[0];
     numDef = encOrdreMotHV(r0, c0, encDireccio);
   }
@@ -521,7 +520,11 @@ function encMostrarClue() {
   });
   clue.textContent = def || '—';
 
-  // Ressaltar
+  // Ressaltar i fer scroll NOMÉS si ha canviat el mot actiu
+  const clauMot = `${encDireccio}-${numDef}`;
+  const motHaCanviat = clauMot !== _encMotActiuAnterior;
+  _encMotActiuAnterior = clauMot;
+
   document.querySelectorAll('.enc-def-item--actiu').forEach(el => el.classList.remove('enc-def-item--actiu'));
   const listId = encDireccio === 'H' ? 'enc-hdef-list' : 'enc-vdef-list';
   const list = document.getElementById(listId);
@@ -529,7 +532,9 @@ function encMostrarClue() {
     list.querySelectorAll('.enc-def-item').forEach(item => {
       if (parseInt(item.textContent) === numDef) {
         item.classList.add('enc-def-item--actiu');
-        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (motHaCanviat) {
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       }
     });
   }
