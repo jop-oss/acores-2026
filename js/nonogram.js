@@ -183,7 +183,7 @@ function nonoSeleccionarPuzzle(id) {
   // Carregar progrés si n'hi ha
   const pEstat = nonoGetPuzzleEstat(id);
   if (pEstat && pEstat.grid && !pEstat.completat) {
-    nonoUserGrid = pEstat.grid.map(r => [...r]);
+    nonoUserGrid = nonoDesaplanar(pEstat.grid, nonoPuzzle.mida);
     nonoErrors   = pEstat.errors || 0;
   } else {
     nonoUserGrid = Array.from({ length: nonoPuzzle.mida }, () =>
@@ -370,7 +370,7 @@ function nonoAcabar(fourthError) {
     completat: true,
     punts: pts,
     errors: nonoErrors,
-    grid: nonoUserGrid.map(r => [...r]),
+    grid: nonoAplanar(nonoUserGrid),
   });
 
   // Revelar solució completa
@@ -464,13 +464,23 @@ function nonoToggleMarca() {
 
 // ── GUARDAR I NAVEGAR ─────────────────────────────────────────
 
+// Firestore no admet arrays niats: la graella es desa com un array pla
+function nonoAplanar(grid) {
+  return grid.flat();
+}
+function nonoDesaplanar(pla, cols) {
+  const grid = [];
+  for (let i = 0; i < pla.length; i += cols) grid.push(pla.slice(i, i + cols));
+  return grid;
+}
+
 function nonoGuardarProgres() {
   if (nonoCompletada) return;
   nonoSetPuzzleEstat(nonoPuzzle.id, {
     completat: false,
     punts: 0,
     errors: nonoErrors,
-    grid: nonoUserGrid.map(r => [...r]),
+    grid: nonoAplanar(nonoUserGrid),
   });
 }
 

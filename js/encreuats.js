@@ -45,13 +45,23 @@ function encCarregarEstat() {
   return jocFsCacheGet(ENC_COL, jugadorActiu) || { puzzles: {} };
 }
 
+// Firestore no admet arrays niats: la graella es desa com un array pla
+function encAplanar(grid) {
+  return grid.flat();
+}
+function encDesaplanar(pla, cols) {
+  const grid = [];
+  for (let i = 0; i < pla.length; i += cols) grid.push(pla.slice(i, i + cols));
+  return grid;
+}
+
 function encGuardarProgres() {
   const estat = encCarregarEstat();
   if (!encPuzzle || encCompletada) return;
   estat.puzzles[encPuzzle.id] = {
     completada: false,
     intents: encIntents,
-    grid: encUserGrid,
+    grid: encAplanar(encUserGrid),
   };
   jocFsDesar(ENC_COL, jugadorActiu, estat);
 }
@@ -164,12 +174,12 @@ function encSeleccionar(id) {
 
   const estat = encCarregarEstat();
   const pEstat = estat.puzzles[id];
+  const rows = encPuzzle.tipus === 'ppcc' ? encPuzzle.rows : encPuzzle.mida;
+  const cols = encPuzzle.tipus === 'ppcc' ? encPuzzle.cols : encPuzzle.mida;
   if (pEstat && !pEstat.completada && pEstat.grid) {
-    encUserGrid = pEstat.grid.map(r => [...r]);
+    encUserGrid = encDesaplanar(pEstat.grid, cols);
     encIntents = pEstat.intents || 0;
   } else {
-    const rows = encPuzzle.tipus === 'ppcc' ? encPuzzle.rows : encPuzzle.mida;
-    const cols = encPuzzle.tipus === 'ppcc' ? encPuzzle.cols : encPuzzle.mida;
     encUserGrid = Array.from({ length: rows }, () => Array(cols).fill(''));
   }
 
@@ -226,6 +236,10 @@ function encRenderJoc() {
           </div>
         </div>
       </div>
+
+      <input type="text" id="enc-input-mobil" class="enc-input-mobil"
+             autocomplete="off" autocapitalize="characters" autocorrect="off"
+             spellcheck="false" inputmode="text">
     </div>`;
 
   encAfegirListeners();
@@ -327,8 +341,11 @@ function encNumCel(r, c) {
 //  INTERACCIÓ
 // ══════════════════════════════════════════════════════════════
 
+const ENC_SENTINELLA = ' '; // caràcter fix perquè el retrocés sempre disparí un event, fins i tot al mòbil
+
 function encAfegirListeners() {
   const taula = document.getElementById('enc-taula');
+  const inputMobil = document.getElementById('enc-input-mobil');
   if (!taula) return;
 
   taula.addEventListener('click', e => {
@@ -345,39 +362,64 @@ function encAfegirListeners() {
     }
     encActualitzarActiva();
     encMostrarClue();
+    encFocusInputMobil();
   });
 
-  // Teclat
-  document.addEventListener('keydown', encOnKey);
+  // Input ocult: capta tant el teclat virtual (mòbil) com el físic (escriptori)
+  if (inputMobil) {
+    inputMobil.value = ENC_SENTINELLA;
+    inputMobil.addEventListener('input', encOnInput);
+    inputMobil.addEventListener('keydown', encOnKeyNavegacio);
+  }
 }
 
-function encOnKey(e) {
+function encFocusInputMobil() {
+  const inputMobil = document.getElementById('enc-input-mobil');
+  if (!inputMobil) return;
+  inputMobil.value = ENC_SENTINELLA;
+  inputMobil.focus();
+}
+
+function encOnInput(e) {
+  if (!encCelActiva || encCompletada) return;
+  const valor = e.target.value;
+
+  if (valor.length === 0) {
+    // S'ha esborrat la sentinella sense escriure res nou → retrocés
+    encEsborrarLletraActiva();
+  } else {
+    // Agafem l'últim caràcter escrit (per si el mòbil hi afegeix res estrany pel mig)
+    const ll = valor.slice(-1).toUpperCase();
+    if (/^[A-ZÀ-ÿ]$/.test(ll) || ll === '·') {
+      const { r, c } = encCelActiva;
+      encUserGrid[r][c] = ll;
+      encActualitzarCel(r, c);
+      encGuardarProgres();
+      if (encDireccio === 'H') encMoureCursor(0, 1);
+      else encMoureCursor(1, 0);
+    }
+  }
+  // Sempre tornem la sentinella perquè el proper retrocés funcioni
+  e.target.value = ENC_SENTINELLA;
+}
+
+function encEsborrarLletraActiva() {
   if (!encCelActiva || encCompletada) return;
   const { r, c } = encCelActiva;
+  encUserGrid[r][c] = '';
+  encActualitzarCel(r, c);
+  encGuardarProgres();
+}
 
-  if (e.key === 'Backspace' || e.key === 'Delete') {
-    encUserGrid[r][c] = '';
-    encActualitzarCel(r, c);
-    encGuardarProgres();
-    return;
-  }
+// Navegació (fletxes, tabulador) — es manté per a teclat físic connectat
+function encOnKeyNavegacio(e) {
+  if (!encCelActiva || encCompletada) return;
 
-  if (e.key === 'ArrowRight') { encMoureCursor(0, 1); return; }
-  if (e.key === 'ArrowLeft')  { encMoureCursor(0, -1); return; }
-  if (e.key === 'ArrowDown')  { encMoureCursor(1, 0); return; }
-  if (e.key === 'ArrowUp')    { encMoureCursor(-1, 0); return; }
+  if (e.key === 'ArrowRight') { e.preventDefault(); encMoureCursor(0, 1); return; }
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); encMoureCursor(0, -1); return; }
+  if (e.key === 'ArrowDown')  { e.preventDefault(); encMoureCursor(1, 0); return; }
+  if (e.key === 'ArrowUp')    { e.preventDefault(); encMoureCursor(-1, 0); return; }
   if (e.key === 'Tab') { e.preventDefault(); encMoureCursor(encDireccio==='H'?0:1, encDireccio==='H'?1:0); return; }
-
-  // Lletra
-  const ll = e.key.toUpperCase();
-  if (/^[A-ZÀ-ÿ·L·L]$/.test(ll) || ll === '·') {
-    encUserGrid[r][c] = ll;
-    encActualitzarCel(r, c);
-    encGuardarProgres();
-    // Avançar automàticament
-    if (encDireccio === 'H') encMoureCursor(0, 1);
-    else encMoureCursor(1, 0);
-  }
 }
 
 function encMoureCursor(dr, dc) {
@@ -521,6 +563,7 @@ function encClickDef(dir, idx) {
           encCelActiva = { r, c };
           encActualitzarActiva();
           encMostrarClue();
+          encFocusInputMobil();
           return;
         }
       }
@@ -536,6 +579,7 @@ function encClickDef(dir, idx) {
           encCelActiva = { r, c };
           encActualitzarActiva();
           encMostrarClue();
+          encFocusInputMobil();
           return;
         }
       }
@@ -547,6 +591,7 @@ function encClickDef(dir, idx) {
           encCelActiva = { r, c };
           encActualitzarActiva();
           encMostrarClue();
+          encFocusInputMobil();
           return;
         }
       }
@@ -680,7 +725,6 @@ function encMostrarFinal(pts) {
 // ══════════════════════════════════════════════════════════════
 
 function encGuardarITornar() {
-  document.removeEventListener('keydown', encOnKey);
   encGuardarProgres();
   mostraScreen('encreuats-selector');
   encRenderSelector();

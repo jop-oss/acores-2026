@@ -6437,6 +6437,25 @@
 .enc-joc-nom { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.05rem; color: var(--text); flex: 1; }
 .enc-joc-pts { font-size: .82rem; color: var(--verd2); font-weight: 700; white-space: nowrap; }
 
+/* Input ocult: existeix i és enfocable (per fer sortir el teclat virtual
+   al mòbil), però no es veu. font-size:16px evita el zoom automàtic d'iOS
+   Safari en enfocar un input amb lletra més petita. */
+.enc-input-mobil {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: none;
+  outline: none;
+  padding: 0;
+  font-size: 16px;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+}
+
 .enc-joc-body {
   display: grid;
   grid-template-columns: auto 1fr;
