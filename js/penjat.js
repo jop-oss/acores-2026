@@ -261,6 +261,18 @@ function pjRenderJoc() {
   // ── Botó pista ────────────────────────────────────────────
   const mostrarPista = estat.errors >= PJ_MAX_ERRORS - 1 && !estat.pistaUsada;
   document.getElementById('pj-btn-pista').style.display = mostrarPista ? 'inline-flex' : 'none';
+
+  // ── Text de pista (reiniciat cada paraula) ────────────────
+  const pistaTextEl = document.getElementById('pj-pista-text');
+  if (pistaTextEl) {
+    if (estat.pistaUsada) {
+      pistaTextEl.textContent = `Pista: ${estat.categoria}`;
+      pistaTextEl.style.display = 'block';
+    } else {
+      pistaTextEl.textContent = '';
+      pistaTextEl.style.display = 'none';
+    }
+  }
 }
 
 function pjPremerLletra(lletra) {
