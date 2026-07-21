@@ -542,13 +542,26 @@ function astIniciarJoystick() {
   const stick = document.getElementById('ast-joy-stick');
   if (!area) return;
   const maxR = 34;
+  const baseR = 45; // radi visual del cercle base (90px / 2)
+
+  // Posiciona el cercle base allà on el dit ha tocat, dins la zona
+  function posicionaBase(clientX, clientY) {
+    const rect = area.getBoundingClientRect();
+    let x = clientX - rect.left;
+    let y = clientY - rect.top;
+    x = Math.max(baseR, Math.min(rect.width - baseR, x));
+    y = Math.max(baseR, Math.min(rect.height - baseR, y));
+    base.style.left = x + 'px';
+    base.style.top = y + 'px';
+    return { x: rect.left + x, y: rect.top + y };
+  }
 
   area.addEventListener('touchstart', e => {
     e.preventDefault();
     const t = e.changedTouches[0];
-    const rect = base.getBoundingClientRect();
-    astJoyOrigin = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    astJoyOrigin = posicionaBase(t.clientX, t.clientY);
     astJoyId = t.identifier;
+    base.classList.add('actiu');
     if (!astActiu) astTogglePausa();
   }, { passive: false });
 
@@ -570,6 +583,10 @@ function astIniciarJoystick() {
     astJoyVec = { x: 0, y: 0 };
     astJoyId = null;
     if (stick) stick.style.transform = '';
+    base.classList.remove('actiu');
+    // Torna el cercle base a la posició de repòs (centrada)
+    base.style.left = '50%';
+    base.style.top = '50%';
   };
   area.addEventListener('touchend', endJoy);
   area.addEventListener('touchcancel', endJoy);
