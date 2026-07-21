@@ -56,24 +56,24 @@ function encDesaplanar(pla, cols) {
 }
 
 function encGuardarProgres() {
-  const estat = encCarregarEstat();
-  if (!encPuzzle || encCompletada) return;
-  estat.puzzles[encPuzzle.id] = {
+  if (!encPuzzle || encCompletada || !jugadorActiu) return;
+  const dades = {
     completada: false,
     intents: encIntents,
     grid: encAplanar(encUserGrid),
   };
-  jocFsDesar(ENC_COL, jugadorActiu, estat);
+  // set+merge toca NOMÉS el puzzle actual, sense passar per la caché
+  // d'altres puzzles que podrien tenir arrays niats
+  jocFsDb().collection(ENC_COL).doc(jugadorActiu)
+    .set({ puzzles: { [encPuzzle.id]: dades } }, { merge: true })
+    .catch(e => console.error('Error desant encreuats:', e));
 }
 
 function encGuardarCompletada(pts) {
-  const estat = encCarregarEstat();
-  estat.puzzles[encPuzzle.id] = {
-    completada: true,
-    pts,
-    intents: encIntents,
-  };
-  jocFsDesar(ENC_COL, jugadorActiu, estat);
+  if (!encPuzzle || !jugadorActiu) return;
+  jocFsDb().collection(ENC_COL).doc(jugadorActiu)
+    .set({ puzzles: { [encPuzzle.id]: { completada: true, pts, intents: encIntents } } }, { merge: true })
+    .catch(e => console.error('Error desant encreuats completat:', e));
 }
 
 function encGetPuntsTotals(nom) {
@@ -171,6 +171,7 @@ function encSeleccionar(id) {
   encCompletada = false;
   encCelActiva = null;
   encDireccio = 'H';
+  _encMotActiuAnterior = null;
 
   const estat = encCarregarEstat();
   const pEstat = estat.puzzles[id];
