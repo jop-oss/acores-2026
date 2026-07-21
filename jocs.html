@@ -304,51 +304,56 @@
     <!-- COLUMNA DRETA: rànquing -->
     <div class="joc-selector-right">
       <div class="ranking-panel">
-        <div class="ranking-header">
+        <div class="ranking-header" onclick="rankingTogglePanel()">
           <span class="ranking-title">🏅 Rànquing</span>
+          <button class="ranking-toggle-btn" aria-label="Plega o desplega el rànquing">
+            <span id="ranking-toggle-icon">▾</span>
+          </button>
         </div>
 
-        <!-- Filtres per joc -->
-        <div class="ranking-filtres-joc">
-          <button class="rfj-btn active" onclick="rankingFiltrarJoc('tots', this)">Tots</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('quiz', this)">🌋 Quiz</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('mapa', this)">📍 Mapa</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('paraula', this)">🔤 Paraula</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('bingo', this)">🎯 Bingo</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎓 Trivial</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('sudoku', this)">🔢 Sudoku</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">🧮 Xifres</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('asteroid', this)">🚀 Asteroid</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('correu', this)">📬 Correu</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('flappy', this)">🐦 Flappy</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">⌛ Scrabble</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('batallanaval', this)">⚓ Batalla Naval</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('triangles', this)">🔺 Triangles</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('encreuats', this)">📝 Encreuats</button>
-          <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🎨 Color Fill</button>
-        </div>
+        <div class="ranking-body">
+          <!-- Filtres per joc -->
+          <div class="ranking-filtres-joc">
+            <button class="rfj-btn active" onclick="rankingFiltrarJoc('tots', this)">Tots</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('quiz', this)">🌋 Quiz</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('mapa', this)">📍 Mapa</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('paraula', this)">🔤 Paraula</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('bingo', this)">🎯 Bingo</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('trivial', this)">🎓 Trivial</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('sudoku', this)">🔢 Sudoku</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('cifras', this)">🧮 Xifres</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('penjat', this)">🪢 Penjat</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('snake', this)">🐍 Snake</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('breakout', this)">🧱 Breakout</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('corre', this)">🏃 Corre</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('asteroid', this)">🚀 Asteroid</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('correu', this)">📬 Correu</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('flappy', this)">🐦 Flappy</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('pescamines', this)">💣 Mines</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('mahjong', this)">🀄 Mahjong</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('sokoban', this)">📦 Sokoban</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('scrabble', this)">⌛ Scrabble</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('diferencies', this)">🔍 Diferències</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('ginrummy', this)">🃏 Gin Rummy</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('yahtzee', this)">🎲 Yahtzee</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('batallanaval', this)">⚓ Batalla Naval</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('triangles', this)">🔺 Triangles</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('nonogram', this)">🧩 Nonogram</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('jocfotos', this)">📸 Zoom out!</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('encreuats', this)">📝 Encreuats</button>
+            <button class="rfj-btn" onclick="rankingFiltrarJoc('colorfill', this)">🎨 Color Fill</button>
+          </div>
 
-        <!-- Llista de jugadors -->
-        <div id="ranking-llista" class="ranking-llista">
-          <div class="ranking-loading">Carregant…</div>
-        </div>
+          <!-- Llista de jugadors -->
+          <div id="ranking-llista" class="ranking-llista">
+            <div class="ranking-loading">Carregant…</div>
+          </div>
 
-        <!-- Detall d'un jugador -->
-        <div id="ranking-detall" class="ranking-detall" style="display:none">
-          <button class="ranking-detall-back" onclick="rankingTancarDetall()">← Tornar al rànquing</button>
-          <div id="ranking-detall-cos"></div>
+          <!-- Detall d'un jugador -->
+          <div id="ranking-detall" class="ranking-detall" style="display:none">
+            <button class="ranking-detall-back" onclick="rankingTancarDetall()">← Tornar al rànquing</button>
+            <div id="ranking-detall-cos"></div>
+          </div>
         </div>
       </div>
     </div>

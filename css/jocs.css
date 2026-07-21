@@ -176,8 +176,20 @@
     /* Columna dreta: rànquing */
     .joc-selector-right{position:sticky;top:80px}
     .ranking-panel{background:var(--bg2);border:1px solid var(--border);border-radius:18px;overflow:hidden;max-height:calc(100vh - 100px);display:flex;flex-direction:column}
-    .ranking-header{padding:1rem 1.25rem .75rem;border-bottom:1px solid var(--border);flex-shrink:0}
+    .ranking-header{padding:1rem 1.25rem .75rem;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
     .ranking-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text)}
+    .ranking-toggle-btn{display:none;background:none;border:none;color:var(--text2);font-size:1rem;cursor:pointer;padding:.2rem .4rem;line-height:1}
+    /* Al mòbil, el cos del rànquing es queda plegat per defecte perquè no calgui
+       fer molt scroll per arribar a la llista de jocs. A escriptori no canvia res
+       (display:contents fa que aquest embolcall sigui transparent per al layout). */
+    .ranking-body{display:contents}
+    @media(max-width:700px){
+      .joc-selector-right{position:static}
+      .ranking-panel{max-height:none}
+      .ranking-toggle-btn{display:flex;align-items:center;justify-content:center}
+      .ranking-body{display:none}
+      .ranking-panel.expandit .ranking-body{display:block}
+    }
     .ranking-filtres-joc{display:flex;flex-wrap:wrap;gap:.35rem;padding:.75rem 1rem;border-bottom:1px solid var(--border);flex-shrink:0}
     .rfj-btn{background:transparent;border:1px solid var(--border);border-radius:20px;padding:.25rem .65rem;font-size:.75rem;color:var(--text2);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
     .rfj-btn:hover{border-color:var(--verd2);color:var(--text)}

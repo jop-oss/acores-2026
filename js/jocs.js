@@ -433,6 +433,14 @@ function rankingTotal(nom, filtre) {
   return d[filtre] || 0;
 }
 
+function rankingTogglePanel() {
+  const panel = document.querySelector('.ranking-panel');
+  if (!panel) return;
+  const obert = panel.classList.toggle('expandit');
+  const icon = document.getElementById('ranking-toggle-icon');
+  if (icon) icon.textContent = obert ? '▴' : '▾';
+}
+
 function rankingFiltrarJoc(filtre, btn) {
   _rankingFiltreJoc = filtre;
   document
