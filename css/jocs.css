@@ -3891,7 +3891,7 @@
   width: 100%;
   overflow-x: auto;
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   padding-bottom: .5rem;
 }
 .pm-tauler {
@@ -4065,7 +4065,7 @@
   width: 100%;
   overflow: auto;
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   padding: .5rem;
   -webkit-overflow-scrolling: touch;
 }
@@ -4436,7 +4436,7 @@
     .sc-torn-accions { display:flex; gap:.4rem; flex-wrap:wrap; }
 
     /* Tauler */
-    .sc-tauler-wrap { overflow:auto; padding:.5rem; display:flex; justify-content:center; }
+    .sc-tauler-wrap { overflow:auto; padding:.5rem; display:flex; justify-content:safe center; }
     .sc-tauler { display:grid; grid-template-columns:repeat(15, 1fr); gap:1px; background:#b0a090; border:3px solid #8a7060; border-radius:6px; width:min(480px, calc(100vw - 1rem)); aspect-ratio:1/1; }
     .sc-cel { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; background:#d4c9b8; transition:background .12s; min-width:0; overflow:hidden; }
     .sc-cel:hover { background:#c8bba8; }
@@ -4495,7 +4495,7 @@
     .sc-validar-paraula { padding:.3rem .7rem; border-radius:20px; font-weight:700; font-size:.85rem; }
     .sc-validar-paraula.valida { background:rgba(106,171,122,.15); color:var(--verd2); border:1px solid var(--verd); }
     .sc-validar-paraula.dubte { background:rgba(240,180,41,.12); color:var(--gold); border:1px solid rgba(240,180,41,.4); }
-    .sc-validar-tauler-wrap { overflow:auto; display:flex; justify-content:center; margin-bottom:1rem; }
+    .sc-validar-tauler-wrap { overflow:auto; display:flex; justify-content:safe center; margin-bottom:1rem; }
     .sc-validar-btns { display:flex; gap:.75rem; flex-wrap:wrap; }
 
     /* Fi de partida */

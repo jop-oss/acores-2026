@@ -442,7 +442,6 @@ function pmAfegirLongPress() {
   tauler.addEventListener('touchstart', (e) => {
     const cel = e.target.closest('.pm-cel');
     if (!cel) return;
-    e.preventDefault();
     pressIdx = parseInt(cel.dataset.idx);
     pressTimer = setTimeout(() => {
       pmMarcar(e, pressIdx);
